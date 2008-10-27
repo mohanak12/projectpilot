@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using ProjectPilot.Framework;
+using ProjectPilot.Portal.Models;
 
 namespace ProjectPilot.Portal
 {
@@ -17,15 +19,21 @@ namespace ProjectPilot.Portal
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                "Default",                                              // Route name
-                "{controller}/{action}/{id}",                           // URL with parameters
-                new { controller = "Home", action = "Index", id = "" }  // Parameter defaults
+                "ProjectOverview",                                              // Route name
+                "ProjectView/Overview/{projectId}",
+                new { controller = "ProjectView", action = "Overview" }
             );
 
             routes.MapRoute(
-                "Project",                                              // Route name
-                "{controller}/{action}/{projectId}/{moduleId}",                           // URL with parameters
-                new { controller = "ProjectView", action = "Details", projectId = "", moduleId="" }  // Parameter defaults
+                "ProjectModule",                                              // Route name
+                "ProjectView/Module/{projectId}/{moduleId}",
+                new { controller = "ProjectView", action = "Module", projectId = "", moduleId = "" }
+            );
+
+            routes.MapRoute(
+                "Default",                                              // Route name
+                "{controller}/{action}/{id}",                           // URL with parameters
+                new { controller = "Home", action = "Index", id = "" }  // Parameter defaults
             );
 
         }
@@ -33,6 +41,15 @@ namespace ProjectPilot.Portal
         protected void Application_Start()
         {
             RegisterRoutes(RouteTable.Routes);
+        }
+
+        protected void Session_Start()
+        {
+            ProjectRegistry projectRegistry = new ProjectRegistry();
+            IFileManager fileManager = new DefaultFileManager(projectRegistry);
+            projectRegistry.FileManager = fileManager;
+
+            Session["Facade"] = new DefaultFacade(projectRegistry);
         }
     }
 }

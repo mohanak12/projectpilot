@@ -8,7 +8,7 @@ using ProjectPilot.Framework.Projects;
 
 namespace ProjectPilot.Portal.Views.Home
 {
-    public partial class Home : ViewPage<IList<Project>>
+    public partial class Home : ViewPage<ICollection<Project>>
     {
         protected void Page_Load(object sender, EventArgs e)
         {

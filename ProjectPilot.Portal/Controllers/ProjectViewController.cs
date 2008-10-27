@@ -6,17 +6,22 @@ using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using ProjectPilot.Framework;
 using ProjectPilot.Framework.Projects;
+using ProjectPilot.Portal.Models;
 
 namespace ProjectPilot.Portal.Controllers
 {
-    public class ProjectViewController : Controller
+    public class ProjectViewController : ProjectPilotControllerBase
     {
-        public ActionResult Details(string projectId)
+        public ActionResult Overview(string projectId, string moduleName)
         {
-            Project project = new Project("bhwr", "Mobilkom BHWR");
-            project.Modules.Add(new StaticHtmlPageModule("SVN Stats", "SvnStats.html"));
+            Project project = Facade.GetProject (projectId);
+            return View("ProjectView", new ProjectViewModel(project, null));
+        }
 
-            return View("ProjectView", project);
+        public ActionResult Module(string projectId, string moduleId)
+        {
+            Project project = Facade.GetProject(projectId);
+            return View("ProjectView", new ProjectViewModel(project, moduleId));
         }
     }
 }

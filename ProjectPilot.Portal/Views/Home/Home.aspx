@@ -34,7 +34,7 @@
                                                     <tr>
                                                         <td>
                                                             <%# 
-                        Html.ActionLink((string)Eval("ProjectName"), String.Format("Details/{0}", Eval("ProjectId")), "ProjectView")%>
+                        Html.ActionLink((string)Eval("ProjectName"), String.Format("Overview/{0}/", Eval("ProjectId")), "ProjectView")%>
                                                         </td>
                                                     </tr>
                                                 </ItemTemplate>

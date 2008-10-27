@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ProjectPilot.Framework.Modules;
 
 namespace ProjectPilot.Framework.Projects
 {
@@ -11,11 +12,6 @@ namespace ProjectPilot.Framework.Projects
         {
             this.projectId = projectId;
             this.projectName = projectName;
-        }
-
-        public IList<IProjectModule> Modules
-        {
-            get { return modules; }
         }
 
         public string ProjectId
@@ -30,7 +26,22 @@ namespace ProjectPilot.Framework.Projects
             set { projectName = value; }
         }
 
-        private List<IProjectModule> modules = new List<IProjectModule>();
+        public void AddModule(IProjectModule projectModule)
+        {
+            modules.Add(projectModule.ModuleId, projectModule);
+        }
+
+        public IProjectModule GetModule (string moduleId)
+        {
+            return modules[moduleId];
+        }
+
+        public ICollection<IProjectModule> ListModules()
+        {
+            return modules.Values;
+        }
+
+        private Dictionary<string, IProjectModule> modules = new Dictionary<string, IProjectModule>();
         private string projectId;
         private string projectName;
     }
