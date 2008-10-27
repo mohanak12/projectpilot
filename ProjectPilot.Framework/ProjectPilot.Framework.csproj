@@ -53,6 +53,7 @@
     <Compile Include="CCNet\CCNetProjectStatisticsData.cs" />
     <Compile Include="CCNet\CCNetProjectStatisticsPlugIn.cs" />
     <Compile Include="Charts\FluentChart.cs" />
+    <Compile Include="IProjectModule.cs" />
     <Compile Include="Projects\Project.cs" />
     <Compile Include="RevisionControlHistory\IRevisionControlHistoryPlugIn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

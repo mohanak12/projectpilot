@@ -22,6 +22,12 @@ namespace ProjectPilot.Portal
                 new { controller = "Home", action = "Index", id = "" }  // Parameter defaults
             );
 
+            routes.MapRoute(
+                "Project",                                              // Route name
+                "{controller}/{action}/{projectId}/{moduleId}",                           // URL with parameters
+                new { controller = "ProjectView", action = "Details", projectId = "", moduleId="" }  // Parameter defaults
+            );
+
         }
 
         protected void Application_Start()

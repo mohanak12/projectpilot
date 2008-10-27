@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
+using ProjectPilot.Framework;
 using ProjectPilot.Framework.Projects;
 
 namespace ProjectPilot.Portal.Controllers
@@ -14,12 +15,14 @@ namespace ProjectPilot.Portal.Controllers
         {
             Project[] projects = new Project[]
                                      {
-                                         new Project("EBSy"), 
-                                         new Project("Mobi-Info"), 
-                                         new Project("Mobilkom BHWR"),
-                                         new Project("Octopus"), 
-                                         new Project("ProjectPilot"), 
+                                         new Project("ebsy", "EBSy"), 
+                                         new Project("mobiinfo", "Mobi-Info"), 
+                                         new Project("bhwr", "Mobilkom BHWR"),
+                                         new Project("octopus", "Octopus"), 
+                                         new Project("projectpilot", "ProjectPilot"), 
                                      };
+
+            projects[2].Modules.Add(new StaticHtmlPageModule("SVN Stats", "SvnStats.html"));
 
             return View("Home", projects);
         }
