@@ -7,17 +7,31 @@ namespace ProjectPilot.Framework.Projects
 {
     public class Project
     {
-        public Project(string name)
+        public Project(string projectId, string projectName)
         {
-            this.name = name;
+            this.projectId = projectId;
+            this.projectName = projectName;
         }
 
-        public string Name
+        public IList<IProjectModule> Modules
         {
-            get { return name; }
-            set { name = value; }
+            get { return modules; }
         }
 
-        private string name;
+        public string ProjectId
+        {
+            get { return projectId; }
+            set { projectId = value; }
+        }
+
+        public string ProjectName
+        {
+            get { return projectName; }
+            set { projectName = value; }
+        }
+
+        private List<IProjectModule> modules = new List<IProjectModule>();
+        private string projectId;
+        private string projectName;
     }
 }

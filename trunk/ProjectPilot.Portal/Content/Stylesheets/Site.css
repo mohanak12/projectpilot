@@ -1,0 +1,46 @@
+﻿body
+{
+    font-family: Tahoma;
+}
+
+#projectlist 
+{
+    border-color:silver;
+    border-style:solid;
+    border-width:1px 0;
+    padding:0.3em;
+    width:40em;
+}
+
+.sidebar 
+{
+    background-color:#FFFFFF;
+    min-width:11.5em;
+    padding-right:1em;
+    vertical-align:top;
+    width:11.5em;
+}
+
+.sidebar a.no_link:link, .sidebar a.no_link:visited 
+{
+    background-color:#3366CC;
+    border-bottom:1px solid #3366CC;
+    color:#FFFFFF;
+    text-decoration:none;
+}
+
+.sidebar .sectionlink 
+{
+    margin:2px 0;
+}
+
+.sidebar .sectionlink p.active_indent 
+{
+    background-color:#3366CC;
+    border:1px solid #3366CC;
+}
+.sidebar .sectionlink p.inactive_indent 
+{
+    background-color:#D5DFF3;
+    border:1px solid #BFC7D9;
+}
