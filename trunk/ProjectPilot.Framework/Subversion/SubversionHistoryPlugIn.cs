@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Xml;
 using ProjectPilot.Framework.RevisionControlHistory;
@@ -8,9 +10,30 @@ namespace ProjectPilot.Framework.Subversion
 {
     public class SubversionHistoryPlugIn : IRevisionControlHistoryPlugIn
     {
+        public SubversionHistoryPlugIn(string svnToolPath, string svnRootPath)
+        {
+            this.svnToolPath = svnToolPath;
+            this.svnRootPath = svnRootPath;
+        }
+
         public RevisionControlHistoryData FetchHistory()
         {
-            throw new System.NotImplementedException();
+            // svn log d:\svn\mobilkom.nl-bhwr\trunk\src -v --xml --non-interactive >D:\BuildArea\builds\mobilkom.nl-bhwr\svn-log.xml
+            using (Process process = new Process())
+            {
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.FileName = svnToolPath;
+                process.StartInfo.Arguments = String.Format(CultureInfo.InvariantCulture, @"log ""{0}"" --xml --non-interactive",
+                    svnRootPath);
+                process.Start();
+
+                process.WaitForExit();
+
+                RevisionControlHistoryData historyData = LoadHistory(process.StandardOutput.BaseStream);
+
+                return historyData;
+            }
         }
 
         static public RevisionControlHistoryData LoadHistory (Stream stream)
@@ -86,7 +109,6 @@ namespace ProjectPilot.Framework.Subversion
             RevisionControlHistoryEntry entry = new RevisionControlHistoryEntry();
             entry.Revision = xmlReader.GetAttribute("revision");
 
-
             xmlReader.Read();
 
             while (xmlReader.NodeType != XmlNodeType.EndElement)
@@ -142,5 +164,8 @@ namespace ProjectPilot.Framework.Subversion
 
             entry.SetPaths(pathsCollected.ToArray());
         }
+
+        private readonly string svnToolPath;// = @"C:\Program Files\CollabNet Subversion\svn.exe";
+        private string svnRootPath;
     }
 }

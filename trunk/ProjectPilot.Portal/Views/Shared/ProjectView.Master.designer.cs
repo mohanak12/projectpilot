@@ -8,36 +8,36 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ProjectPilot.Portal.Views {
+namespace ProjectPilot.Portal.Views.Shared {
     
     
     public partial class ProjectView {
         
         /// <summary>
-        /// form1 control.
+        /// head control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
         
         /// <summary>
-        /// ProjectModulesList control.
+        /// ModuleListPlaceHolder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView ProjectModulesList;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder ModuleListPlaceHolder;
         
         /// <summary>
-        /// form2 control.
+        /// ModulePlaceHolder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form2;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder ModulePlaceHolder;
     }
 }

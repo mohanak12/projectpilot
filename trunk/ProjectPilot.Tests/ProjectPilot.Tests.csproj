@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Framework\CCNet\CCNetTests.cs" />
     <Compile Include="Framework\ChartsTests.cs" />
+    <Compile Include="Framework\Modules\RevisionControlStatsModuleTests.cs" />
     <Compile Include="Framework\Subversion\HistoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

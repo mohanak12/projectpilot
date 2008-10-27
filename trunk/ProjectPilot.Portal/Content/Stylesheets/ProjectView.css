@@ -1,0 +1,12 @@
+﻿.navigation
+{
+    float: left;
+    width: 200px;
+    background-color: #CCFFFF;
+}
+.content
+{
+    float: right;
+    width: 500px;
+    background-color: #FFEAFF;
+}
