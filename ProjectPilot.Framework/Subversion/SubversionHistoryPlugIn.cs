@@ -4,16 +4,33 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Xml;
+using ProjectPilot.Framework.Projects;
 using ProjectPilot.Framework.RevisionControlHistory;
 
 namespace ProjectPilot.Framework.Subversion
 {
     public class SubversionHistoryPlugIn : IRevisionControlHistoryPlugIn
     {
-        public SubversionHistoryPlugIn(string svnToolPath, string svnRootPath)
+        public SubversionHistoryPlugIn(Project project, string svnToolPath, string svnRootPath)
         {
+            this.project = project;
             this.svnToolPath = svnToolPath;
             this.svnRootPath = svnRootPath;
+        }
+
+        public Project Project
+        {
+            get { return project; }
+        }
+
+        public string ModuleId
+        {
+            get { return "svn"; }
+        }
+
+        public string ModuleName
+        {
+            get { return "Subversion History"; }
         }
 
         public RevisionControlHistoryData FetchHistory()
@@ -165,6 +182,7 @@ namespace ProjectPilot.Framework.Subversion
             entry.SetPaths(pathsCollected.ToArray());
         }
 
+        private readonly Project project;
         private readonly string svnToolPath;// = @"C:\Program Files\CollabNet Subversion\svn.exe";
         private string svnRootPath;
     }

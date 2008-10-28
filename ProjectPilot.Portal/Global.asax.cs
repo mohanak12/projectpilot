@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using ProjectPilot.Framework;
+using ProjectPilot.Framework.Modules;
+using ProjectPilot.Framework.Projects;
 using ProjectPilot.Portal.Models;
 
 namespace ProjectPilot.Portal
@@ -46,8 +48,23 @@ namespace ProjectPilot.Portal
         protected void Session_Start()
         {
             ProjectRegistry projectRegistry = new ProjectRegistry();
+
             IFileManager fileManager = new DefaultFileManager(projectRegistry);
             projectRegistry.FileManager = fileManager;
+
+            Project[] projectsToAdd = new Project[]
+                                     {
+                                         new Project("ebsy", "EBSy"), 
+                                         new Project("mobiinfo", "Mobi-Info"), 
+                                         new Project("bhwr", "Mobilkom BHWR"),
+                                         new Project("octopus", "Octopus"), 
+                                         new Project("projectpilot", "ProjectPilot"), 
+                                     };
+            projectsToAdd[2].AddModule(
+                new StaticHtmlPageModule(projectsToAdd[2], "SVNStats", "SVN Stats", "SvnStats.html", fileManager));
+
+            foreach (Project project in projectsToAdd)
+                projectRegistry.AddProject(project);
 
             Session["Facade"] = new DefaultFacade(projectRegistry);
         }
