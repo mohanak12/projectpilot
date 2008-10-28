@@ -35,6 +35,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\BrekiViews\Brejc.Common.Library.dll</HintPath>
     </Reference>
+    <Reference Include="NVelocity, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\NVelocity\NVelocity.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -63,6 +67,7 @@
     <Compile Include="Charts\FluentChart.cs" />
     <Compile Include="IFileManager.cs" />
     <Compile Include="IProjectRegistry.cs" />
+    <Compile Include="ITemplateEngine.cs" />
     <Compile Include="Modules\IGenerator.cs" />
     <Compile Include="Modules\IProjectModule.cs" />
     <Compile Include="Modules\IScheduled.cs" />

@@ -14,19 +14,6 @@ namespace ProjectPilot.Framework
     {
         public ProjectRegistry()
         {
-            Project[] projectsToAdd = new Project[]
-                                     {
-                                         new Project("ebsy", "EBSy"), 
-                                         new Project("mobiinfo", "Mobi-Info"), 
-                                         new Project("bhwr", "Mobilkom BHWR"),
-                                         new Project("octopus", "Octopus"), 
-                                         new Project("projectpilot", "ProjectPilot"), 
-                                     };
-            projectsToAdd[2].AddModule(
-                new StaticHtmlPageModule(fileManager, projectsToAdd[2].ProjectId, "SVNStats", "SVN Stats", "SvnStats.html"));
-
-            foreach (Project project in projectsToAdd)
-                projects.Add(project.ProjectId, project);
         }
 
         public IFileManager FileManager
@@ -41,9 +28,14 @@ namespace ProjectPilot.Framework
             set { projects = value; }
         }
 
+        public void AddProject (Project projectToAdd)
+        {
+            projects.Add(projectToAdd.ProjectId, projectToAdd);
+        }
+
         public Project GetProject(string projectId)
         {
-            throw new System.NotImplementedException();
+            return projects[projectId];
         }
 
         public ICollection<Project> ListAllProjects()

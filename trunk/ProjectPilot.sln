@@ -15,6 +15,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectPilot.Tests", "Proje
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectPilot.Portal", "ProjectPilot.Portal\ProjectPilot.Portal.csproj", "{6DA03484-3AE8-44AC-A479-4A1155EAF9E7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{0EBE64E9-CBA6-428D-B4BE-42ED11B35896}"
+	ProjectSection(SolutionItems) = preProject
+		Data\Templates\RevisionControlHistory.vm = Data\Templates\RevisionControlHistory.vm
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,5 +44,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FBCD0FCA-E178-493F-BF6B-D4004FEF975A} = {29C5C89F-901C-4804-8A0D-B085445B48E3}
+		{0EBE64E9-CBA6-428D-B4BE-42ED11B35896} = {29C5C89F-901C-4804-8A0D-B085445B48E3}
 	EndGlobalSection
 EndGlobal

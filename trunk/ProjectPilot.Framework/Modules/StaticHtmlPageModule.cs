@@ -1,13 +1,19 @@
 using ProjectPilot.Framework.Modules;
+using ProjectPilot.Framework.Projects;
 
 namespace ProjectPilot.Framework.Modules
 {
     public class StaticHtmlPageModule : IProjectModule, IViewable
     {
-        public StaticHtmlPageModule(IFileManager fileManager, string projectId, string moduleId, string moduleName, string pageName)
+        public StaticHtmlPageModule(
+            Project project, 
+            string moduleId, 
+            string moduleName, 
+            string pageName, 
+            IFileManager fileManager)
         {
             this.fileManager = fileManager;
-            this.projectId = projectId;
+            this.project = project;
             this.moduleId = moduleId;
             this.moduleName = moduleName;
             this.pageName = pageName;
@@ -23,9 +29,9 @@ namespace ProjectPilot.Framework.Modules
             get { return moduleName; }
         }
 
-        public string ProjectId
+        public Project Project
         {
-            get { return projectId; }
+            get { return project; }
         }
 
         public string FetchHtmlReport()
@@ -37,6 +43,6 @@ namespace ProjectPilot.Framework.Modules
         private string moduleId;
         private string moduleName;
         private string pageName;
-        private readonly string projectId;
+        private readonly Project project;
     }
 }
