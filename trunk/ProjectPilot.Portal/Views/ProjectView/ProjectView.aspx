@@ -5,7 +5,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ModuleListPlaceHolder" runat="server">
-    <form id="form1" runat="server">
     <table class="maincontent" cellspacing="0" cellpadding="0" border="0">
         <tbody>
             <tr>
@@ -25,16 +24,15 @@
             </tr>
         </tbody>
     </table>
-    </form>
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="ModulePlaceHolder" runat="server">
-    <form id="form2" runat="server">
     <% 
         if (ViewData.Model.ModuleId != null)
         {
             IProjectModule moduleToShow = ViewData.Model.Module;
+            IViewable viewableModule = (IViewable)moduleToShow;
+            Response.Write(viewableModule.FetchHtmlReport());
         }
 %>
-    </form>
 </asp:Content>

@@ -40,7 +40,7 @@ namespace ProjectPilot.Framework
 
         public ICollection<Project> ListAllProjects()
         {
-            throw new System.NotImplementedException();
+            return projects.Values;
         }
 
         private IFileManager fileManager;

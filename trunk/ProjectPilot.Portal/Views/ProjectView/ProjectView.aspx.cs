@@ -21,6 +21,7 @@ namespace ProjectPilot.Portal.Views
             if (ViewData.Model.ModuleId != null)
             {
                 IProjectModule moduleToShow = ViewData.Model.Module;
+                IViewable viewableModule = (IViewable)moduleToShow;
             }
         }
     }

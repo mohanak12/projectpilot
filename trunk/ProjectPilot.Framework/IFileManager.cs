@@ -14,18 +14,21 @@ namespace ProjectPilot.Framework
 
     public class DefaultFileManager : IFileManager
     {
-        public DefaultFileManager(IProjectRegistry projectRegistry)
+        public DefaultFileManager(string storageRootDir, IProjectRegistry projectRegistry)
         {
+            this.storageRootDir = storageRootDir;
             this.projectRegistry = projectRegistry;
         }
 
         public string GetFullFileName(string domain, string localFileName)
         {
-            return String.Format(CultureInfo.InvariantCulture,
+            string fullFileName = String.Format(CultureInfo.InvariantCulture,
                 "{0}{1}{2}",
                 domain,
                 Path.DirectorySeparatorChar,
                 localFileName);
+            fullFileName = Path.Combine(storageRootDir, fullFileName);
+            return fullFileName;
         }
 
         public string GetProjectFullFileName(string projectId, string moduleId, string localFileName, bool assertDirPathExists)
@@ -39,6 +42,7 @@ namespace ProjectPilot.Framework
                 projectId,
                 moduleId,
                 localFileName);
+            fullFileName = Path.Combine(storageRootDir, fullFileName);
 
             if (assertDirPathExists)
                 CreateDirectories(fullFileName, true);
@@ -72,6 +76,7 @@ namespace ProjectPilot.Framework
             }
         }
 
+        private readonly string storageRootDir;
         private readonly IProjectRegistry projectRegistry;
     }
 }

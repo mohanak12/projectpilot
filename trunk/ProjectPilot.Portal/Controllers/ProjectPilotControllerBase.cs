@@ -9,6 +9,12 @@ namespace ProjectPilot.Portal.Controllers
 {
     public abstract class ProjectPilotControllerBase : Controller
     {
+        protected override void ExecuteCore()
+        {
+            this.webContext = new DefaultProjectPilotWebContext(this.Session);
+            base.ExecuteCore();
+        }
+
         protected IProjectPilotFacade Facade
         {
             get
@@ -16,5 +22,12 @@ namespace ProjectPilot.Portal.Controllers
                 return (IProjectPilotFacade)Session["Facade"];
             }
         }
+
+        protected IProjectPilotWebContext WebContext
+        {
+            get { return webContext; }
+        }
+
+        private IProjectPilotWebContext webContext;
     }
 }

@@ -49,7 +49,8 @@ namespace ProjectPilot.Portal
         {
             ProjectRegistry projectRegistry = new ProjectRegistry();
 
-            IFileManager fileManager = new DefaultFileManager(projectRegistry);
+            IFileManager fileManager = new DefaultFileManager(@"D:\MyStuff\projects\ProjectPilot\ProjectPilot.Tests\bin\Debug" ,
+                projectRegistry);
             projectRegistry.FileManager = fileManager;
 
             Project[] projectsToAdd = new Project[]
@@ -62,6 +63,8 @@ namespace ProjectPilot.Portal
                                      };
             projectsToAdd[2].AddModule(
                 new StaticHtmlPageModule(projectsToAdd[2], "SVNStats", "SVN Stats", "SvnStats.html", fileManager));
+            projectsToAdd[2].AddModule(
+                new RevisionControlStatsModule(projectsToAdd[2], null, fileManager, null));
 
             foreach (Project project in projectsToAdd)
                 projectRegistry.AddProject(project);

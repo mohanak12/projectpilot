@@ -41,7 +41,7 @@ namespace ProjectPilot.Framework.Modules
 
         public string FetchHtmlReport()
         {
-            throw new System.NotImplementedException();
+            return fileManager.FetchProjectFile(project.ProjectId, ModuleId, "RevisionControlHistory.html");
         }
 
         public void Generate()

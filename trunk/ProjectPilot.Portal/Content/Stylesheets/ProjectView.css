@@ -1,12 +1,17 @@
-﻿.navigation
+﻿body
 {
+    font-family:Tahoma;
+    font-size:small;
+}
+
+.navigation
+{
+    padding: 0px 10px 0px 10px;
+    background-color: #CCCCFF;
     float: left;
-    width: 200px;
-    background-color: #CCFFFF;
+    margin: 0px 10px 0px 10px;
 }
 .content
 {
-    float: right;
-    width: 500px;
-    background-color: #FFEAFF;
+    margin: 10px;
 }
