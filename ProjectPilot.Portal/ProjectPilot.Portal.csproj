@@ -75,8 +75,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Breadcrumb.cs" />
+    <Compile Include="Models\DefaultBreadcrumbsManager.cs" />
     <Compile Include="Models\DefaultFacade.cs" />
+    <Compile Include="Models\DefaultProjectPilotWebContext.cs" />
+    <Compile Include="Models\IBreadcrumbsManager.cs" />
     <Compile Include="Models\IProjectPilotFacade.cs" />
+    <Compile Include="Models\IProjectPilotWebContext.cs" />
     <Compile Include="Models\ProjectViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\Home\Home.aspx.cs">
@@ -86,6 +91,7 @@
     <Compile Include="Views\Home\Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\BreadcrumbsFilterAttribute.cs" />
     <Compile Include="Views\ProjectView\ProjectView.aspx.cs">
       <DependentUpon>ProjectView.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

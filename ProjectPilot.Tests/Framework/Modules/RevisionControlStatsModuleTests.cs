@@ -23,7 +23,7 @@ namespace ProjectPilot.Tests.Framework.Modules
             Project project = new Project("bhwr", "Mobilkom BHWR");
             projectRegistry.AddProject(project);
 
-            IFileManager fileManager = new DefaultFileManager(projectRegistry);
+            IFileManager fileManager = new DefaultFileManager("", projectRegistry);
             projectRegistry.FileManager = fileManager;
 
             IFileManager templateFileManager = MockRepository.GenerateStub<IFileManager>();
