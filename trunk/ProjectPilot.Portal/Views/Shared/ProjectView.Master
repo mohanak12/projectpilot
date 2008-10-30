@@ -18,8 +18,8 @@
                 foreach (var item in (Breadcrumb[])ViewData["Breadcrumbs"])
                 {
             %>
-            <a href="<%= Server.HtmlEncode(item.Url) %>">
-                <%= item.LinkText %></a> &raquo;
+            &raquo; <a href="<%= Server.HtmlEncode(item.Url) %>">
+                <%= item.LinkText %></a> 
             <% 
                 } 
             %>

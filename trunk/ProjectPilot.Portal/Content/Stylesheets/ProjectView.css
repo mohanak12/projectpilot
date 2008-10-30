@@ -4,14 +4,22 @@
     font-size:small;
 }
 
+.breadcrumbs
+{
+    margin: 10px;
+}
+
 .navigation
 {
     padding: 0px 10px 0px 10px;
     background-color: #CCCCFF;
     float: left;
     margin: 0px 10px 0px 10px;
+    height:auto;
 }
 .content
 {
-    margin: 10px;
+    margin: 0px;
+    float:left;
+    padding-left:5px;
 }
