@@ -1,40 +1,10 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" >
-<head>
-    <title>$project.ProjectName Project Revision Control History</title>
-    <STYLE type="text/css">
-        .MainDiv
-        {
-            font-family:Tahoma;
-        }
-        
-        .h1
-        {
-        }
-        
-        .ReportDiv
-        {
-            margin:10px;
-            float:left;
-        }
-        
-        .ReportImage
-        {
-            border:0;
-            width:100%;
-        }
-        
-    </STYLE>
-</head>
-<body>
     <div class="MainDiv">
         <h1>$project.ProjectName Revision Control Statistics</h1>
     
     #foreach ($reportImage in $reportImages)
         <div class="ReportDiv">
-            <img class="ReportImage" src="$reportImage" alt="$reportImage" width="1000" />
+            <img class="ReportImage" src="$webSiteUrl$reportImage" alt="$reportImage" width="1000" />
         </div>
-    </div>
     #end
-</body>
-</html>
+    </div>

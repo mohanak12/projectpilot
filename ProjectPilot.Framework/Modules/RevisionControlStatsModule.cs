@@ -57,6 +57,7 @@ namespace ProjectPilot.Framework.Modules
             // and save it to the project's storage location
             Hashtable templateContext = new Hashtable();
             templateContext.Add("project", project);
+            templateContext.Add("webSiteUrl", "http://localhost/ProjectPilot/Storage/Projects/bhwr/RevisionControlStats/");
             templateContext.Add("reportImages", new string[] { "CommitsPerDayPerAuthorChart.png", "CommittedFilesPerDayPerActionChart.png" });
             templateEngine.ApplyTemplate(
                 "RevisionControlHistory.vm", 
