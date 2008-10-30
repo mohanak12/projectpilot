@@ -1,8 +1,4 @@
-#summary One-sentence summary of this page.
-
-= Introduction =
-
-This page describes in short the stuff new project members should know about this project.
+#summary Describes in short the stuff new project members should know about this project.
 
 = Details =
 
