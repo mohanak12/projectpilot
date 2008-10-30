@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using ProjectPilot.Framework;
-using ProjectPilot.Framework.Projects;
 using ProjectPilot.Portal.Models;
 
 namespace ProjectPilot.Portal.Controllers
