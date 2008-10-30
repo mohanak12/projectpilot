@@ -16,6 +16,7 @@ This list is orientation-only. It should give new members an idea of what they c
  * Continuous integration (see http://martinfowler.com/articles/continuousIntegration.html)
  * Test-driven development (TDD) (see http://en.wikipedia.org/wiki/Test-driven_development)
  * Collective code ownership (see http://www.extremeprogramming.org/rules/collective.html)
+ * Paper prototyping (see http://www.nngroup.com/reports/prototyping/video_stills.html)
 
 === Technologies ===
  * ASP.NET MVC
