@@ -7,9 +7,35 @@ This page describes in short the stuff new project members should know about thi
 = Details =
 
 == Important Links ==
-* Main project page on Google Code: http://code.google.com/p/projectpilot/
+ * Main project page on Google Code: http://code.google.com/p/projectpilot/
+ * Subversion repository URL: https://projectpilot.googlecode.com/svn/trunk
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+== What Approaches/Technologies/Tools Are Used ==
+This list is orientation-only. It should give new members an idea of what they can learn by contributing to this project:
+
+=== Approaches ===
+ * Continuous integration (see http://martinfowler.com/articles/continuousIntegration.html)
+ * Test-driven development (TDD) (see http://en.wikipedia.org/wiki/Test-driven_development)
+ * Collective code ownership (see http://www.extremeprogramming.org/rules/collective.html)
+
+=== Technologies ===
+ * ASP.NET MVC
+ * Inversion of control (IoC) containers (see http://martinfowler.com/articles/injection.html)
+ * Fluent interfaces (see http://martinfowler.com/bliki/FluentInterface.html)
+ 
+=== Tools And Libraries ===
+ * CruiseControl.NET
+ * Subversion, Tortoise.SVN, AnkhSVN
+ * Castle Windsor IoC
+ * MbUnit / Gallio (for writing tests)
+ * Rhino.Mocks (mocking framework)
+ * Selenium (for testing Web applications)
+ * NVelocity (template engine)
+ * ZedGraph (charting library)
+ * many others...
+
+== Requirements ==
+ * VisualStudio 2008 (Professional is enough)
+ * ASP.NET MVC add-on for VS
+ * Resharper 4.1
+ * TestDriven.NET (it's free for open-source projects)
