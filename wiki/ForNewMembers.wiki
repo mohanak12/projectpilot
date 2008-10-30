@@ -1,0 +1,15 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+This page describes in short the stuff new project members should know about this project.
+
+= Details =
+
+== Important Links ==
+* Main project page on Google Code: http://code.google.com/p/projectpilot/
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
