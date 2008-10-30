@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ProjectPilot.Framework.Projects;
 
 namespace ProjectPilot.Framework.Modules
 {

@@ -6,7 +6,6 @@ using System.Text;
 using MbUnit.Framework;
 using ProjectPilot.Framework;
 using ProjectPilot.Framework.Modules;
-using ProjectPilot.Framework.Projects;
 using ProjectPilot.Framework.RevisionControlHistory;
 using ProjectPilot.Framework.Subversion;
 using Rhino.Mocks;
@@ -19,11 +18,14 @@ namespace ProjectPilot.Tests.Framework.Modules
         [Test]
         public void Test()
         {
+            ProjectPilotConfiguration projectPilotConfiguration = new ProjectPilotConfiguration();
+            projectPilotConfiguration.ProjectPilotWebAppRootUrl = "http://localhost/projectpilot/";
+
             ProjectRegistry projectRegistry = new ProjectRegistry();
             Project project = new Project("bhwr", "Mobilkom BHWR");
             projectRegistry.AddProject(project);
 
-            IFileManager fileManager = new DefaultFileManager("", projectRegistry);
+            IFileManager fileManager = new DefaultFileManager("", projectPilotConfiguration, projectRegistry);
             projectRegistry.FileManager = fileManager;
 
             IFileManager templateFileManager = MockRepository.GenerateStub<IFileManager>();

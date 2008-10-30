@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using ProjectPilot.Framework.Charts;
-using ProjectPilot.Framework.Modules;
-using ProjectPilot.Framework.Projects;
 using ProjectPilot.Framework.RevisionControlHistory;
 using ZedGraph;
 
@@ -39,33 +37,7 @@ namespace ProjectPilot.Framework.Modules
             get { return project; }
         }
 
-        public string FetchHtmlReport()
-        {
-            return fileManager.FetchProjectFile(project.ProjectId, ModuleId, "RevisionControlHistory.html");
-        }
-
-        public void Generate()
-        {
-            // retrieve the latest history from the revision control
-            RevisionControlHistoryData history = rcHistoryPlugIn.FetchHistory();
-
-            // generate charts and save them to the project's storage location
-            DrawCommitsPerDayPerAuthorChart(history);
-            DrawCommittedFilesPerDayPerActionChart(history);
-
-            // generate wrapper HTML document
-            // and save it to the project's storage location
-            Hashtable templateContext = new Hashtable();
-            templateContext.Add("project", project);
-            templateContext.Add("webSiteUrl", "http://localhost/ProjectPilot/Storage/Projects/bhwr/RevisionControlStats/");
-            templateContext.Add("reportImages", new string[] { "CommitsPerDayPerAuthorChart.png", "CommittedFilesPerDayPerActionChart.png" });
-            templateEngine.ApplyTemplate(
-                "RevisionControlHistory.vm", 
-                templateContext, 
-                fileManager.GetProjectFullFileName(project.ProjectId, ModuleId, "RevisionControlHistory.html", true));
-        }
-
-        public void DrawCommitsPerDayPerAuthorChart(RevisionControlHistoryData history)
+        public string DrawCommitsPerDayPerAuthorChart(RevisionControlHistoryData history)
         {
             FluentChart chart = FluentChart.Create("Commits History", null, "commits per day")
                 .SetBarSettings(BarType.Stack, 0)
@@ -92,9 +64,11 @@ namespace ProjectPilot.Framework.Modules
 
             chart
                 .ExportToBitmap(chartImageFileName, ImageFormat.Png, 2000, 800, 600);
+
+            return chartImageFileName;
         }
 
-        public void DrawCommittedFilesPerDayPerActionChart(RevisionControlHistoryData history)
+        public string DrawCommittedFilesPerDayPerActionChart(RevisionControlHistoryData history)
         {
             FluentChart chart = FluentChart.Create("Committed Files History", null, "commited files per day")
                 .SetBarSettings(BarType.Stack, 0)
@@ -121,6 +95,43 @@ namespace ProjectPilot.Framework.Modules
 
             chart
                 .ExportToBitmap(chartImageFileName, ImageFormat.Png, 2000, 800, 600);
+
+            return chartImageFileName;
+        }
+
+        public string FetchHtmlReport()
+        {
+            return fileManager.FetchProjectFile(project.ProjectId, ModuleId, "RevisionControlHistory.html");
+        }
+
+        public void Generate()
+        {
+            // retrieve the latest history from the revision control
+            RevisionControlHistoryData history = rcHistoryPlugIn.FetchHistory();
+
+            List<string> chartImageFileNames = new List<string>();
+            
+            // generate charts and save their storage locations
+            chartImageFileNames.Add(DrawCommitsPerDayPerAuthorChart(history));
+            chartImageFileNames.Add(DrawCommittedFilesPerDayPerActionChart(history));
+
+            // translate storage locations to URLs
+            for (int i = 0; i < chartImageFileNames.Count; i++)
+            {
+                string chartImageFileName = chartImageFileNames[i];
+                Uri url = fileManager.TranslateToUrl(chartImageFileName);
+                chartImageFileNames[i] = url.ToString();
+            }
+
+            // generate wrapper HTML document
+            // and save it to the project's storage location
+            Hashtable templateContext = new Hashtable();
+            templateContext.Add("project", project);
+            templateContext.Add("reportImages", chartImageFileNames);
+            templateEngine.ApplyTemplate(
+                "RevisionControlHistory.vm", 
+                templateContext, 
+                fileManager.GetProjectFullFileName(project.ProjectId, ModuleId, "RevisionControlHistory.html", true));
         }
 
         private readonly IFileManager fileManager;

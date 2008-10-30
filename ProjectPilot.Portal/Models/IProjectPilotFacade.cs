@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using ProjectPilot.Framework.Projects;
+using ProjectPilot.Framework;
 
 namespace ProjectPilot.Portal.Models
 {

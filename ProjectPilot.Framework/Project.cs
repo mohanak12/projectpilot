@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using ProjectPilot.Framework.Modules;
 
-namespace ProjectPilot.Framework.Projects
+namespace ProjectPilot.Framework
 {
     public class Project
     {

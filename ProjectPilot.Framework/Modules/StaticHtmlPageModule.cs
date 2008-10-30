@@ -1,5 +1,4 @@
 using ProjectPilot.Framework.Modules;
-using ProjectPilot.Framework.Projects;
 
 namespace ProjectPilot.Framework.Modules
 {

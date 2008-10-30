@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ProjectPilot.Framework.Modules;
-using ProjectPilot.Framework.Projects;
 using ProjectPilot.Portal.Models;
 
 namespace ProjectPilot.Portal.Views

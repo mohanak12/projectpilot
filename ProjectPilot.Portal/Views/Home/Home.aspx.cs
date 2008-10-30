@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using ProjectPilot.Framework.Projects;
+using ProjectPilot.Framework;
 
 
 namespace ProjectPilot.Portal.Views.Home

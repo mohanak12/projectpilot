@@ -6,7 +6,6 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using ProjectPilot.Framework;
 using ProjectPilot.Framework.Modules;
-using ProjectPilot.Framework.Projects;
 using ProjectPilot.Portal.Models;
 
 namespace ProjectPilot.Portal
@@ -49,8 +48,12 @@ namespace ProjectPilot.Portal
         {
             ProjectRegistry projectRegistry = new ProjectRegistry();
 
-            IFileManager fileManager = new DefaultFileManager(@"D:\MyStuff\projects\ProjectPilot\ProjectPilot.Tests\bin\Debug" ,
-                projectRegistry);
+            ProjectPilotConfiguration projectPilotConfiguration = new ProjectPilotConfiguration();
+            projectPilotConfiguration.ProjectPilotWebAppRootUrl = this.Request.ApplicationPath;
+
+            IFileManager fileManager = new DefaultFileManager(
+                @"D:\MyStuff\projects\ProjectPilot\ProjectPilot.Tests\bin\Debug", projectPilotConfiguration, projectRegistry);
+
             projectRegistry.FileManager = fileManager;
 
             Project[] projectsToAdd = new Project[]
