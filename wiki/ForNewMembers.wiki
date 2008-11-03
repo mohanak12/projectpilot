@@ -19,14 +19,14 @@ This list is orientation-only. It should give new members an idea of what they c
  * Paper prototyping (see http://www.nngroup.com/reports/prototyping/video_stills.html)
 
 === Technologies ===
- * ASP.NET MVC
+ * ASP.NET MVC (see [http://weblogs.asp.net/scottgu/archive/2007/11/13/asp-net-mvc-framework-part-1.aspx ScottGu's tutorial])
  * Inversion of control (IoC) containers (see http://martinfowler.com/articles/injection.html)
  * Fluent interfaces (see http://martinfowler.com/bliki/FluentInterface.html)
  
 === Tools And Libraries ===
  * CruiseControl.NET
  * Subversion, Tortoise.SVN, AnkhSVN
- * Castle Windsor IoC
+ * Castle Windsor IoC (see [http://www.castleproject.org/container/gettingstarted/index.html Getting Started] Castle tutorial)
  * MbUnit / Gallio (for writing tests)
  * Rhino.Mocks (mocking framework)
  * Selenium (for testing Web applications)
