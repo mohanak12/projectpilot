@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using ProjectPilot.Framework.Modules;
 
 namespace ProjectPilot.Framework.Modules
@@ -38,9 +39,11 @@ namespace ProjectPilot.Framework.Modules
             throw new System.NotImplementedException();
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         private readonly IFileManager fileManager;
         private string moduleId;
         private string moduleName;
+        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         private string pageName;
         private readonly Project project;
     }

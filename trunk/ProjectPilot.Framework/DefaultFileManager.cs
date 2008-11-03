@@ -69,7 +69,7 @@ namespace ProjectPilot.Framework
         /// </returns>
         public Uri TranslateToUrl(string fileName)
         {
-            return new Uri(new Uri(configuration.ProjectPilotWebAppRootUrl), fileName);
+            return new Uri(new Uri(configuration.ProjectPilotWebAppRootUrl), new Uri(fileName));
         }
 
         private void CreateDirectories(string filePath, bool includesFileName)

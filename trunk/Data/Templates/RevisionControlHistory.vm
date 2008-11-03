@@ -1,10 +1,8 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-    <div class="MainDiv">
-        <h1>$project.ProjectName Revision Control Statistics</h1>
+    <div class="ModuleDiv">
+        <p class="ModuleHeader">$project.ProjectName Revision Control Statistics</p>
     
     #foreach ($reportImage in $reportImages)
-        <div class="ReportDiv">
-            <img class="ReportImage" src="$reportImage" alt="$reportImage" />
-        </div>
+        <img class="ModuleImage" src="$reportImage" alt="$reportImage" />
     #end
     </div>

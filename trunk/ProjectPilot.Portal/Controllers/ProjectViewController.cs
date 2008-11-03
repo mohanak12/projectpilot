@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -13,7 +14,7 @@ namespace ProjectPilot.Portal.Controllers
     public class ProjectViewController : ProjectPilotControllerBase
     {
         [BreadcrumbsFilter("Project {0}", "CurrentProjectName", 1)]
-        public ActionResult Overview(string projectId, string moduleName)
+        public ActionResult Overview(string projectId)
         {
             Project project = Facade.GetProject (projectId);
             this.WebContext.CurrentProjectName = project.ProjectName;

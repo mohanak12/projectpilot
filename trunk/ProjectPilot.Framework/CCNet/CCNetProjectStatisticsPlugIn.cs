@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,7 @@ using System.Xml;
 
 namespace ProjectPilot.Framework.CCNet
 {
+    [SuppressMessage("Microsoft.Design", "CA1053:StaticHolderTypesShouldNotHaveConstructors")]
     public class CCNetProjectStatisticsPlugIn
     {
         static public CCNetProjectStatisticsData Load (Stream stream)
@@ -45,6 +47,8 @@ namespace ProjectPilot.Framework.CCNet
             return null;
         }
 
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "reader")]
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "data")]
         private static void ReadStatistics(object data, XmlReader reader)
         {
             throw new NotImplementedException();
