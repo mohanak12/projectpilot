@@ -44,7 +44,7 @@ namespace ProjectPilot.Tests.Framework.Subversion
             }
 
             chart
-                .ExportToBitmap("test.png", ImageFormat.Png, 2000, 800, 600);
+                .ExportToBitmap("test.png", ImageFormat.Png, 2000, 800);
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace ProjectPilot.Tests.Framework.Subversion
             }
 
             chart
-                .ExportToBitmap("test.png", ImageFormat.Png, 2000, 800, 600);
+                .ExportToBitmap("test.png", ImageFormat.Png, 2000, 800);
         }
     
         private RevisionControlHistoryData LoadHistoryFromFile()

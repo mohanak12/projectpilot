@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 
 namespace ProjectPilot.Framework.RevisionControlHistory
 {
-    public class RevisionControlHistoryDataMiner
+    public sealed class RevisionControlHistoryDataMiner
     {
+        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
         public static IDictionary<string, SortedList<DateTime, double>> FetchCommitsPerAuthorPerDay(RevisionControlHistoryData data)
         {
             Dictionary<string, SortedList<DateTime, double>> commitsPerDay = new Dictionary<string, SortedList<DateTime, double>>();
@@ -27,6 +29,7 @@ namespace ProjectPilot.Framework.RevisionControlHistory
             return commitsPerDay;
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
         public static IDictionary<RevisionControlHistoryEntryAction, SortedList<DateTime, double>> 
             FetchCommittedFilesPerActionTypePerDay(RevisionControlHistoryData data)
         {
@@ -50,6 +53,10 @@ namespace ProjectPilot.Framework.RevisionControlHistory
             }
 
             return commitsPerDay;
+        }
+
+        private RevisionControlHistoryDataMiner()
+        {
         }
     }
 }

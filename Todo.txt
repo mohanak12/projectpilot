@@ -1,0 +1,1 @@
+- add licenses to 3rd party libraries

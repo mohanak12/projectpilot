@@ -17,7 +17,7 @@ namespace ProjectPilot.Framework.RevisionControlHistory
             set { message = value; }
         }
 
-        public RevisionControlHistoryEntryPath[] Paths
+        public ICollection<RevisionControlHistoryEntryPath> Paths
         {
             get { return paths; }
         }

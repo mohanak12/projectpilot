@@ -40,7 +40,7 @@ namespace ProjectPilot.Tests.Framework
             }
 
             chart
-                .ExportToBitmap("test.png", ImageFormat.Png, 1000, 800, 600);
+                .ExportToBitmap("test.png", ImageFormat.Png, 1000, 800);
         }
     }
 }

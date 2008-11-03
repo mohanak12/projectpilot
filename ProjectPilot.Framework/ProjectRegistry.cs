@@ -14,10 +14,9 @@ namespace ProjectPilot.Framework
             set { fileManager = value; }
         }
 
-        public Dictionary<string, Project> Projects
+        public IDictionary<string, Project> Projects
         {
             get { return projects; }
-            set { projects = value; }
         }
 
         public void AddProject (Project projectToAdd)

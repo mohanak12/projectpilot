@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using MbUnit.Framework;
@@ -15,7 +16,7 @@ namespace ProjectPilot.Tests.Framework.CCNet
         public void Test()
         {
             RemoteCruiseManagerFactory factory = new RemoteCruiseManagerFactory();
-            string url = string.Format("tcp://kopernik3:21234/CruiseManager.rem");
+            string url = string.Format(CultureInfo.InvariantCulture, "tcp://kopernik3:21234/CruiseManager.rem");
             ICruiseManager mgr = factory.GetCruiseManager(url);
 
             string proj = mgr.GetProject("PartnerWeb.Bhwr");

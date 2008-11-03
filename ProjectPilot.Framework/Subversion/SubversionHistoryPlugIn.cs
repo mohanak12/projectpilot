@@ -141,7 +141,7 @@ namespace ProjectPilot.Framework.Subversion
                         entry.Message = xmlReader.ReadElementContentAsString();
                         break;
                     case "paths":
-                        ReadPaths(entry, historyData, xmlReader);
+                        ReadPaths(entry, xmlReader);
                         break;
                     default:
                         throw new NotSupportedException();
@@ -155,7 +155,6 @@ namespace ProjectPilot.Framework.Subversion
 
         private static void ReadPaths(
             RevisionControlHistoryEntry entry, 
-            RevisionControlHistoryData historyData, 
             XmlReader xmlReader)
         {
             xmlReader.Read();

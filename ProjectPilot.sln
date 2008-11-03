@@ -20,6 +20,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{
 		Data\Templates\RevisionControlHistory.vm = Data\Templates\RevisionControlHistory.vm
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BB954124-DAFA-410B-B0DE-671B1DEB1024}"
+	ProjectSection(SolutionItems) = preProject
+		Build.bat = Build.bat
+		ChangeLog.txt = ChangeLog.txt
+		CustomDictionary.xml = CustomDictionary.xml
+		Scripts\NAntCommon.build = Scripts\NAntCommon.build
+		ProjectPilot.build = ProjectPilot.build
+		ProjectPilot.FxCop = ProjectPilot.FxCop
+		ProjectPilot.ProjectVersion.txt = ProjectPilot.ProjectVersion.txt
+		Todo.txt = Todo.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

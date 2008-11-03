@@ -8,7 +8,7 @@ using ZedGraph;
 
 namespace ProjectPilot.Framework.Charts
 {
-    public class FluentChart
+    public class FluentChart : IDisposable
     {
         public static FluentChart Create(string chartTitle, string xAxisTitle, string yAxisTitle)
         {
@@ -70,13 +70,12 @@ namespace ProjectPilot.Framework.Charts
         public FluentChart ExportToBitmap (string fileName, 
             ImageFormat imageFormat,
             int width, 
-            int heigth, 
-            float dpi)
+            int height)
         {
             zedGraph.AxisChange();
             zedGraph.Update();
 
-            using (Image image = zedGraph.GraphPane.GetImage(width, heigth, 10, true))
+            using (Image image = zedGraph.GraphPane.GetImage(width, height, 10, true))
             {
                 image.Save(fileName, imageFormat);
             }
@@ -84,6 +83,7 @@ namespace ProjectPilot.Framework.Charts
             return this;
         }
 
+        [CLSCompliant(false)]
         public FluentChart SetBarSettings (BarType barType, float minClusterGap)
         {
             zedGraph.GraphPane.BarSettings.Type = barType;
@@ -98,7 +98,8 @@ namespace ProjectPilot.Framework.Charts
             return this;
         }
 
-        public FluentChart SetSymbol (SymbolType symbolType, string symbolColor, float symbolSize)
+        [CLSCompliant(false)]
+        public FluentChart SetSymbol(SymbolType symbolType, string symbolColor, float symbolSize)
         {
             LineItem lineItem = (LineItem)currentCurveItem;
             lineItem.Symbol = new Symbol(symbolType, Color.FromName(symbolColor));
@@ -152,6 +153,41 @@ namespace ProjectPilot.Framework.Charts
             }
         }
 
+        #region IDisposable Members
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or
+        /// resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Disposes the object.
+        /// </summary>
+        /// <param name="disposing">If <code>false</code>, cleans up native resources. 
+        /// If <code>true</code> cleans up both managed and native resources</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (false == disposed)
+            {
+                if (disposing)
+                {
+                    if (zedGraph != null)
+                        zedGraph.Dispose();
+                }
+
+                disposed = true;
+            }
+        }
+
+        private bool disposed;
+
+        #endregion
+                
         private ZedGraphControl zedGraph;
         private CurveItem currentCurveItem;
     }

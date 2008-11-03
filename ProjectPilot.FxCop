@@ -1,0 +1,329 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FxCopProject Version="1.36" Name="My FxCop Project">
+ <ProjectOptions>
+  <SharedProject>True</SharedProject>
+  <Stylesheet Apply="False">d:\mystuff\projects\projectpilot\lib\microsoft fxcop 1.36\Xml\FxCopReport.xsl</Stylesheet>
+  <SaveMessages>
+   <Project Status="Active, Excluded" NewOnly="False" />
+   <Report Status="Active" NewOnly="False" />
+  </SaveMessages>
+  <ProjectFile Compress="True" DefaultTargetCheck="True" DefaultRuleCheck="True" SaveByRuleGroup="" Deterministic="True" />
+  <EnableMultithreadedLoad>True</EnableMultithreadedLoad>
+  <EnableMultithreadedAnalysis>True</EnableMultithreadedAnalysis>
+  <SourceLookup>True</SourceLookup>
+  <AnalysisExceptionsThreshold>10</AnalysisExceptionsThreshold>
+  <RuleExceptionsThreshold>1</RuleExceptionsThreshold>
+  <Spelling Locale="en-US" />
+  <OverrideRuleVisibilities>False</OverrideRuleVisibilities>
+  <CustomDictionaries SearchFxCopDir="True" SearchUserProfile="True" SearchProjectDir="True" />
+  <SearchGlobalAssemblyCache>False</SearchGlobalAssemblyCache>
+  <DeadlockDetectionTimeout>120</DeadlockDetectionTimeout>
+  <IgnoreGeneratedCode>False</IgnoreGeneratedCode>
+ </ProjectOptions>
+ <Targets>
+  <Target Name="$(ProjectDir)/ProjectPilot.Framework/bin/Release/ProjectPilot.Framework.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/ProjectPilot.Portal/bin/ProjectPilot.Portal.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/ProjectPilot.Tests/bin/Release/ProjectPilot.Tests.dll" Analyze="True" AnalyzeAllChildren="True" />
+ </Targets>
+ <Rules>
+  <RuleFiles>
+   <RuleFile Name="$(FxCopDir)\Rules\DesignRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\GlobalizationRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\InteroperabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\MobilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\NamingRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\PerformanceRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\PortabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\SecurityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\UsageRules.dll" Enabled="True" AllRulesEnabled="True" />
+  </RuleFiles>
+  <Groups />
+  <Settings />
+ </Rules>
+ <FxCopReport Version="1.36">
+  <Namespaces>
+   <Namespace Name="ProjectPilot.Framework.CCNet">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-11-03 07:17:41Z">
+      <Issue>
+       <Item>ProjectPilot.Framework.CCNet</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="ProjectPilot.Framework.Charts">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-11-03 07:17:41Z">
+      <Issue>
+       <Item>ProjectPilot.Framework.Charts</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="ProjectPilot.Framework.Subversion">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-11-03 07:17:41Z">
+      <Issue>
+       <Item>ProjectPilot.Framework.Subversion</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="ProjectPilot.Portal">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-11-03 07:17:41Z">
+      <Issue>
+       <Item>ProjectPilot.Portal</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="ProjectPilot.Portal.Controllers">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-11-03 07:17:41Z">
+      <Issue>
+       <Item>ProjectPilot.Portal.Controllers</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="ProjectPilot.Portal.Views">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-11-03 07:17:41Z">
+      <Issue>
+       <Item>ProjectPilot.Portal.Views</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="ProjectPilot.Portal.Views.Home">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-11-03 07:17:41Z">
+      <Issue>
+       <Item>ProjectPilot.Portal.Views.Home</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="ProjectPilot.Portal.Views.Shared">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-11-03 07:17:41Z">
+      <Issue>
+       <Item>ProjectPilot.Portal.Views.Shared</Item>
+      </Issue>
+     </Message>
+     <Message Id="Shared" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Status="Excluded" Created="2008-11-03 07:17:41Z">
+      <Issue Name="Namespace">
+       <Item>ProjectPilot.Portal.Views.Shared</Item>
+       <Item>Shared</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+  </Namespaces>
+  <Targets>
+   <Target Name="$(ProjectDir)/ProjectPilot.Portal/bin/ProjectPilot.Portal.dll">
+    <Modules>
+     <Module Name="projectpilot.portal.dll">
+      <Namespaces>
+       <Namespace Name="ProjectPilot.Portal">
+        <Types>
+         <Type Name="_Default">
+          <Messages>
+           <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Excluded" Created="2008-11-03 08:37:42Z">
+            <Issue Name="Type">
+             <Item>'_Default'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="MvcApplication">
+          <Members>
+           <Member Name="#Application_Start()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-11-03 07:17:41Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'MvcApplication.Application_Start()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="ProjectPilot.Portal.Views">
+        <Types>
+         <Type Name="Site">
+          <Members>
+           <Member Name="#ContentPlaceHolder1">
+            <Messages>
+             <Message Id="PlaceHolder" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-11-03 07:17:41Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>PlaceHolder</Item>
+               <Item>'Site.ContentPlaceHolder1'</Item>
+               <Item>Placeholder</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="ProjectPilot.Portal.Views.Home">
+        <Types>
+         <Type Name="Home">
+          <Messages>
+           <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Status="Excluded" Created="2008-11-03 07:17:41Z">
+            <Issue>
+             <Item>'Home'</Item>
+             <Item>ProjectPilot.Portal.Views.Home</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="ProjectPilot.Portal.Views.Shared">
+        <Types>
+         <Type Name="ProjectView">
+          <Members>
+           <Member Name="#ModuleListPlaceHolder">
+            <Messages>
+             <Message Id="PlaceHolder" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-11-03 07:17:41Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>PlaceHolder</Item>
+               <Item>'ProjectView.ModuleListPlaceHolder'</Item>
+               <Item>Placeholder</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ModulePlaceHolder">
+            <Messages>
+             <Message Id="PlaceHolder" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-11-03 07:17:41Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>PlaceHolder</Item>
+               <Item>'ProjectView.ModulePlaceHolder'</Item>
+               <Item>Placeholder</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/ProjectPilot.Tests/bin/Release/ProjectPilot.Tests.dll">
+    <Modules>
+     <Module Name="projectpilot.tests.dll">
+      <Namespaces>
+       <Namespace Name="ProjectPilot.Tests.Framework">
+        <Types>
+         <Type Name="ChartsTests">
+          <Members>
+           <Member Name="#Test()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-11-03 08:37:42Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'ChartsTests.Test()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="ProjectPilot.Tests.Framework.CCNet">
+        <Types>
+         <Type Name="CCNetTests">
+          <Members>
+           <Member Name="#Test()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-11-03 08:37:42Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'CCNetTests.Test()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="ProjectPilot.Tests.Framework.Modules">
+        <Types>
+         <Type Name="RevisionControlStatsModuleTests">
+          <Members>
+           <Member Name="#Setup()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-11-03 08:37:42Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'RevisionControlStatsModuleTests.Setup()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Test()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-11-03 08:37:42Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'RevisionControlStatsModuleTests.Test()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="ProjectPilot.Tests.Framework.Subversion">
+        <Types>
+         <Type Name="HistoryTests">
+          <Members>
+           <Member Name="#LoadHistoryFromFile()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-11-03 08:37:42Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'HistoryTests.LoadHistoryFromFile()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+  </Targets>
+  <Rules>
+   <Rule TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020">
+    <Resolution Name="Default">Consider merging the types defined in '{0}' with another namespace.</Resolution>
+   </Rule>
+   <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
+    <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707">
+    <Resolution Name="Type">Remove the underscores from type name {0}.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716">
+    <Resolution Name="Namespace">Rename namespace {0} so that it no longer conflicts with the reserved language keyword '{1}'. Using a reserved keyword as the name of a namespace makes it harder for consumers in other languages to use the namespace.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
+    <Resolution Name="Default">The 'this' parameter (or 'Me' in Visual Basic) of {0} is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
+   </Rule>
+   <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
+    <Resolution Name="Default">The type name {0} conflicts in whole or in part with the namespace name '{1}'. Change either name to eliminate the conflict.</Resolution>
+   </Rule>
+  </Rules>
+ </FxCopReport>
+</FxCopProject>

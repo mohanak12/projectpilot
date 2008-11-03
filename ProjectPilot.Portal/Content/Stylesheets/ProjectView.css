@@ -7,19 +7,39 @@
 .breadcrumbs
 {
     margin: 10px;
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+    padding-bottom: 3px;
 }
 
 .navigation
 {
-    padding: 0px 10px 0px 10px;
+    padding: 0px 10px 100px 10px;
     background-color: #CCCCFF;
     float: left;
     margin: 0px 10px 0px 10px;
-    height:auto;
+    width: 15%;
 }
+
 .content
 {
     margin: 0px;
-    float:left;
+    float: left;
+    width: 70%;
+    clear: right;
+    border-left-style: solid;
+    border-left-width:thick;
+    border-left-color: #FFFF71;
     padding-left:5px;
+}
+
+.ModuleHeader
+{
+    font-size:x-large;
+}
+
+.ModuleImage
+{
+    width:95%;
+    padding:5px;
 }
