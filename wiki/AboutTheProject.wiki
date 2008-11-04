@@ -25,3 +25,4 @@ There are also some other interesting tools and libraries which should be invest
  * [http://www.opensolaris.org/os/project/opengrok/ OpenGrok] - source code search and cross reference engine.
  * [http://code.google.com/p/cs2project/ CS2Project] - capable of indexing source code files (at the moment only C# code can be parsed) and searching among them with various parameters, like class, property and method names, as well as full-text queries
  * [http://www.umlgraph.org/ UMLGraph] - allows the declarative specification and drawing of UML class and sequence diagrams
+ * [http://zvtm.sourceforge.net/zgrviewer.html ZGRViewer, a GraphViz/DOT Viewer] - this could be used for showing various graphs on the portal/. It includes a Java applet.
