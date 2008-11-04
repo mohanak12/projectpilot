@@ -33,6 +33,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Castle-net.2.0-release-2007-9-20\bin\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.DynamicProxy, Version=1.1.5.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Castle-net.2.0-release-2007-9-20\bin\Castle.DynamicProxy.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MicroKernel, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Castle-net.2.0-release-2007-9-20\bin\Castle.MicroKernel.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Castle-net.2.0-release-2007-9-20\bin\Castle.Windsor.dll</HintPath>
+    </Reference>
     <Reference Include="Gallio, Version=3.0.4.485, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Gallio\bin\Gallio.dll</HintPath>
@@ -72,8 +88,10 @@
     <Compile Include="Framework\CCNet\CCNetTests.cs" />
     <Compile Include="Framework\ChartsTests.cs" />
     <Compile Include="Framework\Modules\RevisionControlStatsModuleTests.cs" />
+    <Compile Include="Framework\Runners\DefaultRunnerTests.cs" />
     <Compile Include="Framework\Subversion\HistoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WindsorContainerGraphs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProjectPilot.Framework\ProjectPilot.Framework.csproj">
@@ -83,6 +101,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ProjectPilot.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SampleConfigurations\ProjectPilot.config.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

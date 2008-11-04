@@ -5,7 +5,10 @@ namespace ProjectPilot.Framework
 {
     public interface IProjectRegistry
     {
+        int ProjectsCount { get; }
+
+        void AddProject (Project projectToAdd);
         Project GetProject(string projectId);
-        ICollection<Project> ListAllProjects();        
+        ICollection<Project> ListAllProjects();
     }
 }

@@ -10,14 +10,11 @@ namespace ProjectPilot.Framework.Modules
 {
     public class RevisionControlStatsModule : IProjectModule, IGenerator, IViewable
     {
-        public RevisionControlStatsModule(
-            Project project, 
-            IRevisionControlHistoryPlugIn rcHistoryPlugIn,
+        public RevisionControlStatsModule(IRevisionControlHistoryModule rcHistoryModule,
             IFileManager fileManager,
             ITemplateEngine templateEngine)
         {
-            this.project = project;
-            this.rcHistoryPlugIn = rcHistoryPlugIn;
+            this.rcHistoryModule = rcHistoryModule;
             this.fileManager = fileManager;
             this.templateEngine = templateEngine;
         }
@@ -35,6 +32,7 @@ namespace ProjectPilot.Framework.Modules
         public Project Project
         {
             get { return project; }
+            set { project = value; }
         }
 
         public string DrawCommitsPerDayPerAuthorChart(RevisionControlHistoryData history)
@@ -107,7 +105,7 @@ namespace ProjectPilot.Framework.Modules
         public void Generate()
         {
             // retrieve the latest history from the revision control
-            RevisionControlHistoryData history = rcHistoryPlugIn.FetchHistory();
+            RevisionControlHistoryData history = rcHistoryModule.FetchHistory();
 
             List<string> chartImageFileNames = new List<string>();
             
@@ -135,8 +133,8 @@ namespace ProjectPilot.Framework.Modules
         }
 
         private readonly IFileManager fileManager;
-        private readonly Project project;
-        private IRevisionControlHistoryPlugIn rcHistoryPlugIn;
+        private Project project;
+        private IRevisionControlHistoryModule rcHistoryModule;
         private readonly ITemplateEngine templateEngine;
     }
 }

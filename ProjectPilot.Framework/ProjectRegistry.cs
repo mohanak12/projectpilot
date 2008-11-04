@@ -8,6 +8,12 @@ namespace ProjectPilot.Framework
         {
         }
 
+        public ProjectRegistry(IEnumerable<Project> projects)
+        {
+            foreach (Project project in projects)
+                AddProject(project);
+        }
+
         public IFileManager FileManager
         {
             get { return fileManager; }
@@ -17,6 +23,11 @@ namespace ProjectPilot.Framework
         public IDictionary<string, Project> Projects
         {
             get { return projects; }
+        }
+
+        public int ProjectsCount
+        {
+            get { return projects.Count; }
         }
 
         public void AddProject (Project projectToAdd)

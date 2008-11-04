@@ -60,6 +60,15 @@
      </Message>
     </Messages>
    </Namespace>
+   <Namespace Name="ProjectPilot.Framework.Runners">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-11-04 13:46:45Z">
+      <Issue>
+       <Item>ProjectPilot.Framework.Runners</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
    <Namespace Name="ProjectPilot.Framework.Subversion">
     <Messages>
      <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-11-03 07:17:41Z">
@@ -120,8 +129,83 @@
      </Message>
     </Messages>
    </Namespace>
+   <Namespace Name="ProjectPilot.Tests">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-11-04 13:46:45Z">
+      <Issue>
+       <Item>ProjectPilot.Tests</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="ProjectPilot.Tests.Framework">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-11-04 13:46:45Z">
+      <Issue>
+       <Item>ProjectPilot.Tests.Framework</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="ProjectPilot.Tests.Framework.CCNet">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-11-04 13:46:45Z">
+      <Issue>
+       <Item>ProjectPilot.Tests.Framework.CCNet</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="ProjectPilot.Tests.Framework.Modules">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-11-04 13:46:45Z">
+      <Issue>
+       <Item>ProjectPilot.Tests.Framework.Modules</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="ProjectPilot.Tests.Framework.Runners">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-11-04 13:46:45Z">
+      <Issue>
+       <Item>ProjectPilot.Tests.Framework.Runners</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="ProjectPilot.Tests.Framework.Subversion">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-11-04 13:46:45Z">
+      <Issue>
+       <Item>ProjectPilot.Tests.Framework.Subversion</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
   </Namespaces>
   <Targets>
+   <Target Name="$(ProjectDir)/ProjectPilot.Framework/bin/Release/ProjectPilot.Framework.dll">
+    <Modules>
+     <Module Name="projectpilot.framework.dll">
+      <Namespaces>
+       <Namespace Name="ProjectPilot.Framework.Runners">
+        <Types>
+         <Type Name="IRunner">
+          <Messages>
+           <Message TypeName="AvoidEmptyInterfaces" Category="Microsoft.Design" CheckId="CA1040" Status="Excluded" Created="2008-11-04 13:46:45Z">
+            <Issue>
+             <Item>'IRunner'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
    <Target Name="$(ProjectDir)/ProjectPilot.Portal/bin/ProjectPilot.Portal.dll">
     <Modules>
      <Module Name="projectpilot.portal.dll">
@@ -306,6 +390,9 @@
    </Target>
   </Targets>
   <Rules>
+   <Rule TypeName="AvoidEmptyInterfaces" Category="Microsoft.Design" CheckId="CA1040">
+    <Resolution Name="Default">Define a custom attribute to replace {0}.</Resolution>
+   </Rule>
    <Rule TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020">
     <Resolution Name="Default">Consider merging the types defined in '{0}' with another namespace.</Resolution>
    </Rule>

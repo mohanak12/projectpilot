@@ -7,13 +7,32 @@ namespace ProjectPilot.Framework
     public class DefaultFileManager : IFileManager
     {
         public DefaultFileManager(
-            string storageRootDir, 
-            IProjectPilotConfiguration configuration,
-            IProjectRegistry projectRegistry)
+            string storageRootDir,
+            IProjectPilotConfiguration configuration)
         {
             this.storageRootDir = storageRootDir;
             this.configuration = configuration;
+        }
+
+        public DefaultFileManager(
+            string storageRootDir, 
+            IProjectPilotConfiguration configuration,
+            IProjectRegistry projectRegistry)
+            : this (storageRootDir, configuration)
+        {
             this.projectRegistry = projectRegistry;
+        }
+
+        public IProjectPilotConfiguration Configuration
+        {
+            get { return configuration; }
+            set { configuration = value; }
+        }
+
+        public IProjectRegistry ProjectRegistry
+        {
+            get { return projectRegistry; }
+            set { projectRegistry = value; }
         }
 
         public string GetFullFileName(string domain, string localFileName)
@@ -85,8 +104,8 @@ namespace ProjectPilot.Framework
             }
         }
 
-        private readonly IProjectPilotConfiguration configuration;
-        private readonly IProjectRegistry projectRegistry;
-        private readonly string storageRootDir;
+        private IProjectPilotConfiguration configuration;
+        private IProjectRegistry projectRegistry;
+        private string storageRootDir;
     }
 }
