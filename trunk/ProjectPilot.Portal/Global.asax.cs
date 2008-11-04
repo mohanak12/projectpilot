@@ -67,7 +67,7 @@ namespace ProjectPilot.Portal
             projectsToAdd[2].AddModule(
                 new StaticHtmlPageModule(projectsToAdd[2], "SVNStats", "SVN Stats", "SvnStats.html", fileManager));
             projectsToAdd[2].AddModule(
-                new RevisionControlStatsModule(projectsToAdd[2], null, fileManager, null));
+                new RevisionControlStatsModule(null, fileManager, null));
 
             foreach (Project project in projectsToAdd)
                 projectRegistry.AddProject(project);

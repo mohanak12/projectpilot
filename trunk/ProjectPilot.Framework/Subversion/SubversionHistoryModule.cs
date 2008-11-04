@@ -8,18 +8,12 @@ using ProjectPilot.Framework.RevisionControlHistory;
 
 namespace ProjectPilot.Framework.Subversion
 {
-    public class SubversionHistoryPlugIn : IRevisionControlHistoryPlugIn
+    public class SubversionHistoryModule : IRevisionControlHistoryModule
     {
-        public SubversionHistoryPlugIn(Project project, string svnToolPath, string svnRootPath)
+        public SubversionHistoryModule(string svnToolPath, string svnRootPath)
         {
-            this.project = project;
             this.svnToolPath = svnToolPath;
             this.svnRootPath = svnRootPath;
-        }
-
-        public Project Project
-        {
-            get { return project; }
         }
 
         public string ModuleId
@@ -30,6 +24,12 @@ namespace ProjectPilot.Framework.Subversion
         public string ModuleName
         {
             get { return "Subversion History"; }
+        }
+
+        public Project Project
+        {
+            get { return project; }
+            set { project = value; }
         }
 
         public RevisionControlHistoryData FetchHistory()
@@ -180,7 +180,7 @@ namespace ProjectPilot.Framework.Subversion
             entry.SetPaths(pathsCollected.ToArray());
         }
 
-        private readonly Project project;
+        private Project project;
         private readonly string svnToolPath;// = @"C:\Program Files\CollabNet Subversion\svn.exe";
         private string svnRootPath;
     }

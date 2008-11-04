@@ -79,7 +79,7 @@
     <Compile Include="Project.cs" />
     <Compile Include="ProjectPilotConfiguration.cs" />
     <Compile Include="ProjectRegistry.cs" />
-    <Compile Include="RevisionControlHistory\IRevisionControlHistoryPlugIn.cs" />
+    <Compile Include="RevisionControlHistory\IRevisionControlHistoryModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RevisionControlHistory\RevisionControlHistoryData.cs" />
     <Compile Include="RevisionControlHistory\RevisionControlHistoryDataMiner.cs" />
@@ -88,7 +88,9 @@
     <Compile Include="RevisionControlHistory\RevisionControlHistoryEntryPath.cs" />
     <Compile Include="Modules\RevisionControlStatsModule.cs" />
     <Compile Include="Modules\StaticHtmlPageModule.cs" />
-    <Compile Include="Subversion\SubversionHistoryPlugIn.cs" />
+    <Compile Include="Runners\DefaultRunner.cs" />
+    <Compile Include="Runners\IRunner.cs" />
+    <Compile Include="Subversion\SubversionHistoryModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ProjectPilot.snk" />

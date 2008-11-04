@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 using MbUnit.Framework;
 using ProjectPilot.Framework;
 using ProjectPilot.Framework.Modules;
@@ -37,22 +33,22 @@ namespace ProjectPilot.Tests.Framework.Modules
             RevisionControlHistoryData data;
             using (Stream stream = File.OpenRead(@"..\..\..\Data\Samples\svn-log.xml"))
             {
-                data = SubversionHistoryPlugIn.LoadHistory(stream);
+                data = SubversionHistoryModule.LoadHistory(stream);
             }
 
-            IRevisionControlHistoryPlugIn revisionControlHistoryPlugIn = MockRepository.GenerateStub<IRevisionControlHistoryPlugIn>();
-            revisionControlHistoryPlugIn.Stub(action => action.FetchHistory()).Return(data);
+            IRevisionControlHistoryModule revisionControlHistoryModule = MockRepository.GenerateStub<IRevisionControlHistoryModule>();
+            revisionControlHistoryModule.Stub(action => action.FetchHistory()).Return(data);
 
-            //IRevisionControlHistoryPlugIn revisionControlHistoryPlugIn = new SubversionHistoryPlugIn(
+            //IRevisionControlHistoryModule revisionControlHistoryModule = new SubversionHistoryModule(
             //    project.ProjectId,
             //    @"C:\Program Files\CollabNet Subversion\svn.exe",
             //    @"D:\svn\mobilkom.nl-bhwr\trunk\src");
 
             RevisionControlStatsModule module = new RevisionControlStatsModule(
-                project, 
-                revisionControlHistoryPlugIn,
+                revisionControlHistoryModule,
                 fileManager,
                 templateEngine);
+            module.Project = project;
 
             module.Generate();
         }

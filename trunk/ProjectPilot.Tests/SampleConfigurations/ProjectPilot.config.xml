@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration xmlns="MyWindsorSchema">
+  <properties>
+    <svnToolPath>C:\Program Files\CollabNet Subversion\svn.exe</svnToolPath>
+  </properties>
+  <components>
+    <component 
+      id="DefaultRunner"
+      service="ProjectPilot.Framework.Runners.IRunner, ProjectPilot.Framework"
+      type="ProjectPilot.Framework.Runners.DefaultRunner, ProjectPilot.Framework"/>
+
+    <component
+      id="ProjectRegistry"
+      service="ProjectPilot.Framework.IProjectRegistry, ProjectPilot.Framework"
+      type="ProjectPilot.Framework.ProjectRegistry, ProjectPilot.Framework">
+      <!--<parameters>
+        <projects>
+          <list>
+            <item>${ProjectBhwr}</item>
+          </list>
+        </projects>
+      </parameters>-->
+    </component>
+
+    <component
+      id="FileManager"
+      service="ProjectPilot.Framework.IFileManager, ProjectPilot.Framework"
+      type="ProjectPilot.Framework.DefaultFileManager, ProjectPilot.Framework">
+      <parameters>
+        <storageRootDir>Storage</storageRootDir>
+      </parameters>
+    </component>
+
+    <component
+      id="ProjectPilotConfiguration"
+      service="ProjectPilot.Framework.IProjectPilotConfiguration, ProjectPilot.Framework"
+      type="ProjectPilot.Framework.ProjectPilotConfiguration, ProjectPilot.Framework">
+      <parameters>
+        <ProjectPilotWebAppRootUrl>http://localhost/ProjectPilot</ProjectPilotWebAppRootUrl>
+      </parameters>
+    </component>
+
+    <component
+      id="TemplateEngine"
+      service="ProjectPilot.Framework.ITemplateEngine, ProjectPilot.Framework"
+      type="ProjectPilot.Framework.DefaultTemplateEngine, ProjectPilot.Framework"/>
+
+    <!-- BHWR project -->
+    <component
+      id="ProjectBhwr"
+      type="ProjectPilot.Framework.Project, ProjectPilot.Framework">
+      <parameters>
+        <projectId>bhwr</projectId>
+        <projectName>Mobilkom BHWR</projectName>
+        <!--<modules>
+          <list>
+            <item>${RcsModule}</item>
+          </list>
+        </modules>-->
+      </parameters>
+    </component>
+
+    <component
+      id="SvnModule"
+      service="ProjectPilot.Framework.RevisionControlHistory.IRevisionControlHistoryModule, ProjectPilot.Framework"
+      type="ProjectPilot.Framework.Subversion.SubversionHistoryModule, ProjectPilot.Framework">
+      <parameters>
+        <svnToolPath>#{svnToolPath}</svnToolPath>
+        <svnRootPath>D:\svn\mobilkom.nl-bhwr\trunk\src</svnRootPath>
+      </parameters>
+    </component>
+
+    <component
+      id="RcsModule"
+      type="ProjectPilot.Framework.Modules.RevisionControlStatsModule, ProjectPilot.Framework">
+    </component>
+  </components>
+</configuration>

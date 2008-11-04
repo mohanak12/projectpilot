@@ -14,6 +14,23 @@ namespace ProjectPilot.Framework
             this.projectName = projectName;
         }
 
+        public Project(string projectId, string projectName, IProjectRegistry projectRegistry)
+            : this (projectId, projectName)
+        {
+            projectRegistry.AddProject(this);
+        }
+
+        public Project(
+            string projectId, 
+            string projectName, 
+            IProjectRegistry projectRegistry,
+            IEnumerable<IProjectModule> modules)
+            : this (projectId, projectName, projectRegistry)
+        {
+            foreach (IProjectModule module in modules)
+                AddModule(module);
+        }
+
         public string ProjectId
         {
             get { return projectId; }
