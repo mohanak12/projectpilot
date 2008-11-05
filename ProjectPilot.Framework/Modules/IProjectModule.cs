@@ -9,6 +9,6 @@ namespace ProjectPilot.Framework.Modules
     {
         string ModuleId { get; }
         string ModuleName { get; }
-        Project Project { get; }
+        string ProjectId { get; set; }
     }
 }

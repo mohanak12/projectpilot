@@ -2,6 +2,7 @@
 using Castle.Windsor;
 using MbUnit.Framework;
 using ProjectPilot.Framework;
+using ProjectPilot.Framework.Modules;
 using ProjectPilot.Framework.Runners;
 
 namespace ProjectPilot.Tests.Framework.Runners
@@ -26,6 +27,12 @@ namespace ProjectPilot.Tests.Framework.Runners
 
             IProjectRegistry projectRegistry = windsorContainer.Resolve<IProjectRegistry>();
             Assert.AreEqual(1, projectRegistry.ProjectsCount);
+
+            Project project = projectRegistry.GetProject("bhwr");
+            Assert.IsNotNull(project);
+
+            Assert.AreEqual(1, project.ModulesCount);
+            IProjectModule module = project.GetModule("RevisionControlStats");
         }
 
         void Kernel_HandlerRegistered(Castle.MicroKernel.IHandler handler, ref bool stateChanged)

@@ -26,7 +26,7 @@ namespace ProjectPilot.TestFramework
                     sb.AppendLine("{");
                     sb.AppendLine("    Tester tester = new Tester();");
                     TestCase testCase = testSpecs.GetTestCase(testCaseName);
-                    List<TestAction> testActions = testCase.TestActions;
+                    IList<TestAction> testActions = testCase.TestActions;
                     foreach (TestAction testAction in testActions)
                     {
                         if (testAction.HasParameters)

@@ -52,11 +52,11 @@
       <parameters>
         <projectId>bhwr</projectId>
         <projectName>Mobilkom BHWR</projectName>
-        <!--<modules>
+        <modules>
           <list>
             <item>${RcsModule}</item>
           </list>
-        </modules>-->
+        </modules>
       </parameters>
     </component>
 

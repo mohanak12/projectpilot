@@ -313,37 +313,6 @@
      </Module>
     </Modules>
    </Target>
-   <Target Name="$(ProjectDir)/ProjectPilot.TestFramework/bin/Release/ProjectPilot.TestFramework.dll">
-    <Modules>
-     <Module Name="projectpilot.testframework.dll">
-      <Namespaces>
-       <Namespace Name="ProjectPilot.TestFramework">
-        <Types>
-         <Type Name="TestSpecsProcessor">
-          <Members>
-           <Member Name="#Process(System.String)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-11-05 08:24:45Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'TestSpecsProcessor.Process(string)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="testSpecs" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-11-05 08:24:45Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'testSpecs'</Item>
-               <Item>'TestSpecsProcessor.Process(string)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
-      </Namespaces>
-     </Module>
-    </Modules>
-   </Target>
    <Target Name="$(ProjectDir)/ProjectPilot.Tests/bin/Release/ProjectPilot.Tests.dll">
     <Modules>
      <Module Name="projectpilot.tests.dll">
@@ -427,6 +396,19 @@
        </Namespace>
        <Namespace Name="ProjectPilot.Tests.TestFramework">
         <Types>
+         <Type Name="CSharpTestCodeGeneratorTests">
+          <Members>
+           <Member Name="#Test()">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-11-05 12:32:24Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'CSharpTestCodeGeneratorTests.Test()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="XmlTestSpecsParserTests">
           <Members>
            <Member Name="#Test()">
@@ -465,9 +447,6 @@
    </Rule>
    <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
     <Resolution Name="Default">The 'this' parameter (or 'Me' in Visual Basic) of {0} is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
-   </Rule>
-   <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
-    <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
    </Rule>
    <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
     <Resolution Name="Default">The type name {0} conflicts in whole or in part with the namespace name '{1}'. Change either name to eliminate the conflict.</Resolution>

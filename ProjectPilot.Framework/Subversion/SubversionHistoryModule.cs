@@ -26,10 +26,10 @@ namespace ProjectPilot.Framework.Subversion
             get { return "Subversion History"; }
         }
 
-        public Project Project
+        public string ProjectId
         {
-            get { return project; }
-            set { project = value; }
+            get { return projectId; }
+            set { projectId = value; }
         }
 
         public RevisionControlHistoryData FetchHistory()
@@ -180,7 +180,7 @@ namespace ProjectPilot.Framework.Subversion
             entry.SetPaths(pathsCollected.ToArray());
         }
 
-        private Project project;
+        private string projectId;
         private readonly string svnToolPath;// = @"C:\Program Files\CollabNet Subversion\svn.exe";
         private string svnRootPath;
     }

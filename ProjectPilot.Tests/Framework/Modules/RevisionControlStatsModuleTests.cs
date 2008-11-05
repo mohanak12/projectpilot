@@ -46,9 +46,10 @@ namespace ProjectPilot.Tests.Framework.Modules
 
             RevisionControlStatsModule module = new RevisionControlStatsModule(
                 revisionControlHistoryModule,
+                projectRegistry,
                 fileManager,
                 templateEngine);
-            module.Project = project;
+            project.AddModule(module);
 
             module.Generate();
         }
