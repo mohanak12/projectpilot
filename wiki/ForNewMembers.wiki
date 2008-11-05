@@ -44,3 +44,4 @@ This list is orientation-only. It should give new members an idea of what they c
  * ASP.NET MVC add-on for VS
  * Resharper 4.1
  * TestDriven.NET (it's free for open-source projects)
+ * AnkhSVN 
