@@ -21,6 +21,9 @@ namespace ProjectPilot.Tests.TestFramework
         <selectProject>Mobi-Info</selectProject>
         <selectModule name='SVN'/>
     </TestCase>
+    <TestCase id='myFirstTestCase2'>
+        <goToHomePage/>
+    </TestCase>
 </TestSpecs>
 ");
 

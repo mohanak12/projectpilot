@@ -4,14 +4,9 @@ namespace ProjectPilot.TestFramework
 {
     public class TestCase
     {
-        /// <summary>
-        /// Adds test action to Test case.
-        /// </summary>
-        /// <param name="testAction"><see cref="testAction"/></param>
-        /// 
-        public void AddTestAction(TestAction testAction)
+        public TestCase(string testCaseName)
         {
-            testActions.Add(testAction);
+            this.testCaseName = testCaseName;
         }
 
         /// <summary>
@@ -21,6 +16,27 @@ namespace ProjectPilot.TestFramework
         public int TestActionsCount
         {
             get { return testActions.Count; }
+        }
+
+        /// <summary>
+        /// Gets or sets the TestCase name.
+        /// </summary>
+        public string TestCaseName
+        {
+            get
+            {
+                return testCaseName;
+            }
+        }
+
+        /// <summary>
+        /// Adds test action to Test case.
+        /// </summary>
+        /// <param name="testAction"><see cref="testAction"/></param>
+        /// 
+        public void AddTestAction(TestAction testAction)
+        {
+            testActions.Add(testAction);
         }
 
         /// <summary>
@@ -42,14 +58,16 @@ namespace ProjectPilot.TestFramework
             return null;
         }
 
-        /// <summary>
-        /// Gets or sets the TestCase name.
-        /// </summary>
-        public string TestCaseName { get; set; }
+        public List<TestAction> TestActions
+        {
+            get { return testActions; }
+        }
 
         /// <summary>
         /// Collection of Test actions.
         /// </summary>
         private List<TestAction> testActions = new List<TestAction>();
+
+        private string testCaseName;
     }
 }
