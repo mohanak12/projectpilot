@@ -16,10 +16,11 @@ namespace ProjectPilot.Tests.TestFramework
             XmlTestSpecsParser parser = new XmlTestSpecsParser(
                 @"
 <TestSpecs>
-    <myFirstTestCase>
+    <TestCase id='myFirstTestCase'>
         <goToHomePage/>
-        <selectProject a=""attrA"">Mobi-Info</selectProject>
-    </myFirstTestCase>
+        <selectProject>Mobi-Info</selectProject>
+        <selectModule name='SVN'/>
+    </TestCase>
 </TestSpecs>
 ");
 
@@ -30,7 +31,7 @@ namespace ProjectPilot.Tests.TestFramework
             TestCase testCase = testSpecs.GetTestCase("myFirstTestCase");
             Assert.IsNotNull(testCase);
 
-            Assert.AreEqual(2, testCase.TestActionsCount);
+            Assert.AreEqual(3, testCase.TestActionsCount);
 
             Assert.AreEqual("myFirstTestCase", testCase.TestCaseName);
 
@@ -41,6 +42,10 @@ namespace ProjectPilot.Tests.TestFramework
             testAction = testCase.GetTestAction("selectProject");
             Assert.AreEqual("selectProject", testAction.ActionName);
             Assert.AreEqual("Mobi-Info", testAction.Parameter);
+
+            testAction = testCase.GetTestAction("selectModule");
+            Assert.AreEqual("selectModule", testAction.ActionName);
+            Assert.AreEqual("SVN", testAction.Parameter);
         }
     }
 }
