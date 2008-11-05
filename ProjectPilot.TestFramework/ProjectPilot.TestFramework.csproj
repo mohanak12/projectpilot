@@ -47,6 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="ITestCodeGenerator.cs" />
     <Compile Include="ITestSpecsParser.cs" />
     <Compile Include="TestAction.cs" />
