@@ -11,10 +11,12 @@ namespace ProjectPilot.Framework.Modules
     public class RevisionControlStatsModule : IProjectModule, IGenerator, IViewable
     {
         public RevisionControlStatsModule(IRevisionControlHistoryModule rcHistoryModule,
+            IProjectRegistry projectRegistry,
             IFileManager fileManager,
             ITemplateEngine templateEngine)
         {
             this.rcHistoryModule = rcHistoryModule;
+            this.projectRegistry = projectRegistry;
             this.fileManager = fileManager;
             this.templateEngine = templateEngine;
         }
@@ -29,10 +31,10 @@ namespace ProjectPilot.Framework.Modules
             get { return "Revision Control Stats"; }
         }
 
-        public Project Project
+        public string ProjectId
         {
-            get { return project; }
-            set { project = value; }
+            get { return projectId; }
+            set { projectId = value; }
         }
 
         public string DrawCommitsPerDayPerAuthorChart(RevisionControlHistoryData history)
@@ -55,7 +57,7 @@ namespace ProjectPilot.Framework.Modules
             }
 
             string chartImageFileName = fileManager.GetProjectFullFileName(
-                project.ProjectId, 
+                projectId, 
                 ModuleId, 
                 "CommitsPerDayPerAuthorChart.png", 
                 true);
@@ -86,7 +88,7 @@ namespace ProjectPilot.Framework.Modules
             }
 
             string chartImageFileName = fileManager.GetProjectFullFileName(
-                project.ProjectId, 
+                projectId, 
                 ModuleId, 
                 "CommittedFilesPerDayPerActionChart.png", 
                 true);
@@ -99,7 +101,7 @@ namespace ProjectPilot.Framework.Modules
 
         public string FetchHtmlReport()
         {
-            return fileManager.FetchProjectFile(project.ProjectId, ModuleId, "RevisionControlHistory.html");
+            return fileManager.FetchProjectFile(projectId, ModuleId, "RevisionControlHistory.html");
         }
 
         public void Generate()
@@ -124,16 +126,17 @@ namespace ProjectPilot.Framework.Modules
             // generate wrapper HTML document
             // and save it to the project's storage location
             Hashtable templateContext = new Hashtable();
-            templateContext.Add("project", project);
+            templateContext.Add("project", projectRegistry.GetProject(projectId));
             templateContext.Add("reportImages", chartImageFileNames);
             templateEngine.ApplyTemplate(
                 "RevisionControlHistory.vm", 
                 templateContext, 
-                fileManager.GetProjectFullFileName(project.ProjectId, ModuleId, "RevisionControlHistory.html", true));
+                fileManager.GetProjectFullFileName(projectId, ModuleId, "RevisionControlHistory.html", true));
         }
 
         private readonly IFileManager fileManager;
-        private Project project;
+        private string projectId;
+        private IProjectRegistry projectRegistry;
         private IRevisionControlHistoryModule rcHistoryModule;
         private readonly ITemplateEngine templateEngine;
     }

@@ -9,6 +9,11 @@ namespace ProjectPilot.TestFramework
             this.testCaseName = testCaseName;
         }
 
+        public IList<TestAction> TestActions
+        {
+            get { return testActions; }
+        }
+
         /// <summary>
         /// Total number of collected test actions.
         /// </summary>
@@ -56,11 +61,6 @@ namespace ProjectPilot.TestFramework
                 }
             }
             return null;
-        }
-
-        public List<TestAction> TestActions
-        {
-            get { return testActions; }
         }
 
         /// <summary>

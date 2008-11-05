@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using ProjectPilot.Framework.Modules;
 
 namespace ProjectPilot.Framework
@@ -41,6 +38,11 @@ namespace ProjectPilot.Framework
         {
             get { return projectName; }
             set { projectName = value; }
+        }
+
+        public int ModulesCount
+        {
+            get { return modules.Count; }
         }
 
         public void AddModule(IProjectModule projectModule)
