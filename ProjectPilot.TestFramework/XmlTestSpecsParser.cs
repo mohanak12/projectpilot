@@ -1,3 +1,4 @@
+using System;
 using System.Xml;
 
 namespace ProjectPilot.TestFramework
@@ -18,25 +19,40 @@ namespace ProjectPilot.TestFramework
             xmlDocument.LoadXml(xmlSpecs);
 
             if (xmlDocument.DocumentElement != null)
+            {
                 foreach (XmlNode testCaseNode in xmlDocument.DocumentElement.ChildNodes)
                 {
-                    string testCaseName = testCaseNode.Name;
-                    TestCase testCase = new TestCase {TestCaseName = testCaseName};
-
-                    foreach (XmlNode testActionNode in testCaseNode.ChildNodes)
+                    //<TestCase id='myFirstTestCase'>
+                    string testCaseName = String.Empty;
+                    foreach (XmlAttribute attribute in testCaseNode.Attributes)
                     {
-                        string testActionName = testActionNode.Name;
-                        string testActionParameter = testActionNode.InnerText;
-                        TestAction testAction = new TestAction
-                                                    {
-                                                        ActionName = testActionName,
-                                                        Parameter = testActionParameter
-                                                    };
-                        testCase.AddTestAction(testAction);
-                    }
-                    testSpecs.AddTestCase(testCase);
-                }
+                        if (attribute.Name.Equals("id"))
+                        {
+                            testCaseName = attribute.InnerText;
+                        }
+                        TestCase testCase = new TestCase {TestCaseName = testCaseName};
 
+                        foreach (XmlNode testActionNode in testCaseNode.ChildNodes)
+                        {
+                            string testActionName = testActionNode.Name;
+                            string testActionParameter = testActionNode.InnerText;
+                            //if node has attribute, first attribute is parameter
+                            foreach (XmlAttribute testActionAttribute in testActionNode.Attributes)
+                            {
+                                testActionParameter = testActionAttribute.InnerText;
+                                break;
+                            }
+                            TestAction testAction = new TestAction
+                                                        {
+                                                            ActionName = testActionName,
+                                                            Parameter = testActionParameter
+                                                        };
+                            testCase.AddTestAction(testAction);
+                        }
+                        testSpecs.AddTestCase(testCase);
+                    }
+                }
+            }
             return testSpecs;
         }
 
