@@ -30,7 +30,8 @@ namespace ProjectPilot.TestFramework
                         {
                             testCaseName = attribute.InnerText;
                         }
-                        TestCase testCase = new TestCase {TestCaseName = testCaseName};
+
+                        TestCase testCase = new TestCase (testCaseName);
 
                         foreach (XmlNode testActionNode in testCaseNode.ChildNodes)
                         {
@@ -42,11 +43,7 @@ namespace ProjectPilot.TestFramework
                                 testActionParameter = testActionAttribute.InnerText;
                                 break;
                             }
-                            TestAction testAction = new TestAction
-                                                        {
-                                                            ActionName = testActionName,
-                                                            Parameter = testActionParameter
-                                                        };
+                            TestAction testAction = new TestAction(testActionName, testActionParameter);
                             testCase.AddTestAction(testAction);
                         }
                         testSpecs.AddTestCase(testCase);

@@ -87,6 +87,7 @@
     <Compile Include="Framework\Runners\DefaultRunnerTests.cs" />
     <Compile Include="Framework\Subversion\HistoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestFramework\CSharpTestCodeGeneratorTests.cs" />
     <Compile Include="TestFramework\XmlTestSpecsParserTests.cs" />
     <Compile Include="WindsorContainerGraphs.cs" />
   </ItemGroup>

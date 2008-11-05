@@ -13,6 +13,16 @@ namespace ProjectPilot.TestFramework
         }
 
         /// <summary>
+        /// Adds test case to collection.
+        /// </summary>
+        /// <param name="testCase"><see cref="testCase"/></param>
+        /// 
+        public void AddTestCase(TestCase testCase)
+        {
+            testCases.Add(testCase.TestCaseName, testCase);
+        }
+
+        /// <summary>
         /// Returns specified test case.
         /// </summary>
         /// <param name="testCaseName"><see cref="TestCase.TestCaseName"/></param>
@@ -22,14 +32,9 @@ namespace ProjectPilot.TestFramework
             return testCases[testCaseName];
         }
 
-        /// <summary>
-        /// Adds test case to collection.
-        /// </summary>
-        /// <param name="testCase"><see cref="testCase"/></param>
-        /// 
-        public void AddTestCase(TestCase testCase)
+        public Dictionary<string, TestCase> TestCases
         {
-            testCases.Add(testCase.TestCaseName, testCase);
+            get { return testCases; }
         }
 
         /// <summary>
