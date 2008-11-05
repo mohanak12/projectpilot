@@ -1,0 +1,13 @@
+#summary Describes the workfloe developers should follow when (before) committing their changes to the SVN.
+
+Commit Workflow:
+ # Save all files in the VisualStudio
+ # Update from SVN
+ # If there are any conflicts, resolve them (consult Igor Brejc if necessary)
+ # Run *Build.bat* from the command line.
+ # If the build fails, you have to integrate your changes to make the build run (that's why it's called "continuous integration" :). Then proceed back to step 1.
+ # If the build runs...
+ # In VisualStudio, open AnhkSVN's *Pending Changes* window and add all files with the *New* status to the Subversion.
+ # After you've done this, use TortoiseSVN to commit all files *from root of the project*.
+ # Don't forget to enter a (oneliner) commit message in the TortoiseSVN dialog. This will make tracking changes *much* easier.
+ # You're done - now get back to coding :)
