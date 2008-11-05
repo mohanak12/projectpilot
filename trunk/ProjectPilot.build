@@ -13,7 +13,7 @@
   <property name="BuildEngine" value="MSBuild"/>
   <property name="ProjectSolutionFile" value="${ProjectId}.sln" />
   <property name="ProjectKey" value="${ProjectId}.snk" />
-  <property name="ProjectTitle" value="PartnerWeb.Bhwr" />
+  <property name="ProjectTitle" value="PilotProject" />
   <property name="BuildRoot" value="${project::get-base-directory()}\Builds"/>
   <property name="RestartIis" value="false" />
   <property name="CreateCommonAssemblyInfo" value="true"/>
