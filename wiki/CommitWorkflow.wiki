@@ -1,4 +1,4 @@
-#summary Describes the workfloe developers should follow when (before) committing their changes to the SVN.
+#summary Describes the workflow developers should follow when (before) committing their changes to the SVN.
 
 Commit Workflow:
  # Save all files in the VisualStudio
