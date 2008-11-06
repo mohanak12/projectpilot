@@ -51,6 +51,8 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="CSharpTestCodeGenerator.cs" />
+    <Compile Include="FileCodeWriter.cs" />
+    <Compile Include="ICodeWriter.cs" />
     <Compile Include="ITestCodeGenerator.cs" />
     <Compile Include="ITestSpecsParser.cs" />
     <Compile Include="TestAction.cs" />

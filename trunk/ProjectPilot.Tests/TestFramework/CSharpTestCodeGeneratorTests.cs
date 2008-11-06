@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using MbUnit.Framework;
 using ProjectPilot.TestFramework;
+using Rhino.Mocks;
 
 namespace ProjectPilot.Tests.TestFramework
 {
@@ -8,11 +9,12 @@ namespace ProjectPilot.Tests.TestFramework
     public class CSharpTestCodeGeneratorTests
     {
         [Test]
-        public void Test()
+        public void GenerateTest()
         {
-            const string outputFileName = "generatedcode.cs";
+            // setup
+            ICodeWriter mockCodeWriter = MockRepository.GenerateMock<ICodeWriter>();
 
-            ITestCodeGenerator generator = new CSharpTestCodeGenerator(outputFileName);
+            ITestCodeGenerator generator = new CSharpTestCodeGenerator(mockCodeWriter);
 
             TestSpecs testSpecs = new TestSpecs();
 
@@ -25,11 +27,17 @@ namespace ProjectPilot.Tests.TestFramework
             testCase.AddTestAction(new TestAction("testaction1"));
             testSpecs.AddTestCase(testCase);
 
+            // expectations
+            mockCodeWriter.Expect(writer => writer.WriteLine("void testcase1()"));
+
+            // execution
             generator.Generate(testSpecs);
 
+            // post-conditions
+            mockCodeWriter.VerifyAllExpectations();
+
             // now check the file contents
-            const string expectedFile = @"
-void testcase1()
+            const string expectedFile = @"void testcase1()
 {
     Tester tester = new Tester();
     tester.testaction1();
@@ -42,15 +50,6 @@ void testcase2()
     tester.testaction1();
 }
 ";
-            string fileText;
-            using (Stream stream = File.OpenRead(outputFileName))
-            {
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    fileText = reader.ReadToEnd();
-                }
-            }
-            Assert.AreEqual(fileText, expectedFile);
         }
     }
 }
