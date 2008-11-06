@@ -11,7 +11,7 @@ namespace ProjectPilot.Tests.Framework.Runners
     public class DefaultRunnerTests
     {
         [Test]
-        public void ConfigureRunner()
+        public void StartAndStopRunner()
         {   
             WindsorContainer windsorContainer = new WindsorContainer(@"SampleConfigurations\ProjectPilot.config.xml");
             windsorContainer.Kernel.ComponentCreated += new Castle.MicroKernel.ComponentInstanceDelegate(Kernel_ComponentCreated);
