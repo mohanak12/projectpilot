@@ -1,0 +1,9 @@
+#summary What requirements are needed for the development environment?
+
+ * [http://www.microsoft.com/downloads/details.aspx?familyid=AB99342F-5D1A-413D-8319-81DA479AB0D7&displaylang=en .NET 3.5 Service pack 1]
+ * VisualStudio 2008 (Standard should be enough)
+ * ASP.NET MVC add-on for VS (currently beta)
+ * Resharper 4.1 (it's not absolutely necessary, just recommended)
+ * TestDriven.NET (it's free for open-source projects)
+ * [http://www.gallio.org/Downloads.aspx Gallio]
+ * AnkhSVN 
