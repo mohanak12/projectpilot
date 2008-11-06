@@ -29,7 +29,7 @@ namespace ProjectPilot.Tests.TestFramework
 
             TestSpecs testSpecs = parser.Parse();
 
-            Assert.AreEqual(1, testSpecs.TestCasesCount);
+            Assert.AreEqual(2, testSpecs.TestCasesCount);
 
             TestCase testCase = testSpecs.GetTestCase("myFirstTestCase");
             Assert.IsNotNull(testCase);

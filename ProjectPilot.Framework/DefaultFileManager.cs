@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 
@@ -86,9 +87,10 @@ namespace ProjectPilot.Framework
         /// <returns>
         /// An URL through which this file can be accessed via Web
         /// </returns>
+        [SuppressMessage("Microsoft.Usage", "CA2234:PassSystemUriObjectsInsteadOfStrings")]
         public Uri TranslateToUrl(string fileName)
         {
-            return new Uri(new Uri(configuration.ProjectPilotWebAppRootUrl), new Uri(fileName));
+            return new Uri(new Uri(configuration.ProjectPilotWebAppRootUrl), fileName);
         }
 
         private void CreateDirectories(string filePath, bool includesFileName)

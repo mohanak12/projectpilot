@@ -12,7 +12,7 @@ namespace ProjectPilot.Tests.Framework.Runners
     {
         [Test]
         public void ConfigureRunner()
-        {
+        {   
             WindsorContainer windsorContainer = new WindsorContainer(@"SampleConfigurations\ProjectPilot.config.xml");
             windsorContainer.Kernel.ComponentCreated += new Castle.MicroKernel.ComponentInstanceDelegate(Kernel_ComponentCreated);
             windsorContainer.Kernel.ComponentModelCreated += new Castle.MicroKernel.ComponentModelDelegate(Kernel_ComponentModelCreated);
@@ -22,17 +22,21 @@ namespace ProjectPilot.Tests.Framework.Runners
 
             WindsorContainerGraphs.GenerateDependencyGraph(windsorContainer, "graph.dot");
 
-            IRunner runner = windsorContainer.Resolve<IRunner>();
-            Project[] projects = windsorContainer.Kernel.ResolveServices<Project>();
+            using (IRunner runner = windsorContainer.Resolve<IRunner>())
+            {
+                Project[] projects = windsorContainer.Kernel.ResolveServices<Project>();
 
-            IProjectRegistry projectRegistry = windsorContainer.Resolve<IProjectRegistry>();
-            Assert.AreEqual(1, projectRegistry.ProjectsCount);
+                IProjectRegistry projectRegistry = windsorContainer.Resolve<IProjectRegistry>();
+                Assert.AreEqual(1, projectRegistry.ProjectsCount);
 
-            Project project = projectRegistry.GetProject("bhwr");
-            Assert.IsNotNull(project);
+                Project project = projectRegistry.GetProject("bhwr");
+                Assert.IsNotNull(project);
 
-            Assert.AreEqual(1, project.ModulesCount);
-            IProjectModule module = project.GetModule("RevisionControlStats");
+                Assert.AreEqual(1, project.ModulesCount);
+                IProjectModule module = project.GetModule("RevisionControlStats");
+
+                runner.Start();
+            }
         }
 
         void Kernel_HandlerRegistered(Castle.MicroKernel.IHandler handler, ref bool stateChanged)

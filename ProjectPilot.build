@@ -31,6 +31,8 @@
       <include name="ProjectPilot.Framework\obj\${ProjectConfig}\**"/>
       <include name="ProjectPilot.Framework.Portal\bin\**"/>
       <include name="ProjectPilot.Framework.Portal\obj\${ProjectConfig}\**"/>
+      <include name="ProjectPilot.TestFramework\bin\${ProjectConfig}\**"/>
+      <include name="ProjectPilot.TestFramework\obj\${ProjectConfig}\**"/>
       <include name="ProjectPilot.Tests\bin\${ProjectConfig}\**"/>
       <include name="ProjectPilot.Tests\obj\${ProjectConfig}\**"/>
 
@@ -51,8 +53,7 @@
   </target>
 
   <!--<target name="test.unit.custom">
-    <property name="UnitTestEngine" value="MbUnit"/>
-    <property name="MbUnitBin" value=".\lib\MbUnit" />
+    <property name="UnitTestEngine" value="Gallio"/>
     <property name="NCoverVersion" value="1.5.8"/>
     <property name="NCoverExplorerVersion" value="1.3.6.36"/>
     <property name="StopIfTestsFail" value="true" />

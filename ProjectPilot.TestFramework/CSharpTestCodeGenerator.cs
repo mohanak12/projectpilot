@@ -18,9 +18,9 @@ namespace ProjectPilot.TestFramework
             ICollection<string> testCasesKeys = testCases.Keys;
             foreach (string testCaseName in testCasesKeys)
             {
-                writer.WriteLine("void {0}()", testCaseName);
-                writer.WriteLine("{");
-                writer.WriteLine("    Tester tester = new Tester();");
+                WriteLine("void {0}()", testCaseName);
+                WriteLine("{");
+                WriteLine("    Tester tester = new Tester();");
 
                 TestCase testCase = testSpecs.GetTestCase(testCaseName);
                 IList<TestAction> testActions = testCase.TestActions;
@@ -28,20 +28,29 @@ namespace ProjectPilot.TestFramework
                 {
                     if (testAction.HasParameters)
                     {
-                        writer.WriteLine("    tester.{0}(\"{1}\");", testAction.ActionName,
+                        WriteLine("    tester.{0}(\"{1}\");", testAction.ActionName,
                                         testAction.Parameter);
                     }
                     else
                     {
-                        writer.WriteLine("    tester.{0}();", testAction.ActionName);
+                        WriteLine("    tester.{0}();", testAction.ActionName);
                     }
-                    writer.WriteLine(string.Empty);
+                    WriteLine(string.Empty);
                 }
-                writer.WriteLine("}");
-                writer.WriteLine(string.Empty);
+                WriteLine("}");
+                WriteLine(string.Empty);
             }
         }
 
+        private void WriteLine (string line)
+        {
+            writer.WriteLine(line);
+        }
+
+        private void WriteLine(string format, params object[] args)
+        {
+            writer.WriteLine(string.Format(CultureInfo.InvariantCulture, format, args));
+        }
         private readonly ICodeWriter writer;
     }
 }

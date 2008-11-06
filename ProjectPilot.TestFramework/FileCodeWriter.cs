@@ -7,7 +7,6 @@ namespace ProjectPilot.TestFramework
     {
         public FileCodeWriter(string fileName)
         {
-            this.fileName = fileName;
             writer = new StreamWriter(fileName);
         }
 
@@ -64,7 +63,6 @@ namespace ProjectPilot.TestFramework
 
         #endregion
 
-        private readonly string fileName;
         private StreamWriter writer;
     }
 }
