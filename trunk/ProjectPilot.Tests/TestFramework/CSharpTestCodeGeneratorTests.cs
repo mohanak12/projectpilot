@@ -29,27 +29,23 @@ namespace ProjectPilot.Tests.TestFramework
 
             // expectations
             mockCodeWriter.Expect(writer => writer.WriteLine("void testcase1()"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("{"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("    Tester tester = new Tester();"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("    tester.testaction1();"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("    tester.testaction2(\"parameter\");"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("}"));
+            mockCodeWriter.Expect(writer => writer.WriteLine(string.Empty));
+            mockCodeWriter.Expect(writer => writer.WriteLine("void testcase2()"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("{"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("    Tester tester = new Tester();"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("    tester.testaction1();"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("}"));
 
             // execution
             generator.Generate(testSpecs);
 
             // post-conditions
             mockCodeWriter.VerifyAllExpectations();
-
-            // now check the file contents
-            const string expectedFile = @"void testcase1()
-{
-    Tester tester = new Tester();
-    tester.testaction1();
-    tester.testaction2(""parameter"");
-}
-
-void testcase2()
-{
-    Tester tester = new Tester();
-    tester.testaction1();
-}
-";
         }
     }
 }

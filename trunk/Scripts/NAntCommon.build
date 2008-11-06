@@ -602,6 +602,23 @@
               <arg value="/verbose"/>
             </exec>
           </if>
+
+          <if test="${UnitTestEngine=='Gallio'}">
+            <mkdir dir="${CruiseControlDir}"/>
+
+            <exec
+                program="lib\Gallio\bin\Gallio.Echo.exe">
+              <arg value="${AssemblyToTest}"/>
+              <arg value="/report-directory:${UnitTestResultsDir}"/>
+              <arg value="/report-name-format:${UnitTestResultsFile}-results" />
+              <arg value="/report-type:xml"/>
+              <!--<arg value="/filter-category:${IncludeTestCategories}"
+                  if="${property::exists('IncludeTestCategories') and string::get-length(IncludeTestCategories) > 0}" />
+              <arg value="/exclude-category:${CompleteExcludeTestCategories}"
+                  unless="${property::exists('IncludeTestCategories') and string::get-length(IncludeTestCategories) > 0}"  />-->
+              <arg value="/verbosity:Verbose"/>
+            </exec>
+          </if>
         </if>
 
         <if test="${NoCoverage != 'True'}">
@@ -639,6 +656,31 @@
               <arg value="/exclude-category:${CompleteExcludeTestCategories}"
                   unless="${property::exists('IncludeTestCategories') and string::get-length(IncludeTestCategories) > 0}"  />
               <arg value="/verbose"/>
+              <arg value="//x"/>
+              <arg value="${UnitTestResultsDir}\${UnitTestResultsFile}-coverage.xml"/>
+              <arg value="//ea"/>
+              <arg value="MbUnit.Framework.TestFixtureAttribute"/>
+              <arg value="//w"/>
+              <arg value="${path::get-directory-name (AssemblyToTest)}"/>
+              <arg value="//v"/>
+            </exec>
+          </if>
+
+          <if test="${UnitTestEngine=='Gallio'}">
+            <mkdir dir="${CruiseControlDir}"/>
+
+            <exec
+                program="lib\NCover v${NCoverVersion}\ncover.console.exe">
+              <arg value="lib\Gallio\bin\Gallio.Echo.exe"/>
+              <arg value="${AssemblyToTest}"/>
+              <arg value="/report-directory:${UnitTestResultsDir}"/>
+              <arg value="/report-name-format:${UnitTestResultsFile}-results" />
+              <arg value="/report-type:xml"/>
+              <!--<arg value="/filter:Category=${IncludeTestCategories}"
+                  if="${property::exists('IncludeTestCategories') and string::get-length(IncludeTestCategories) > 0}" />
+              <arg value="/exclude-category:${CompleteExcludeTestCategories}"
+                  unless="${property::exists('IncludeTestCategories') and string::get-length(IncludeTestCategories) > 0}"  />-->
+              <arg value="/verbosity:Verbose"/>
               <arg value="//x"/>
               <arg value="${UnitTestResultsDir}\${UnitTestResultsFile}-coverage.xml"/>
               <arg value="//ea"/>

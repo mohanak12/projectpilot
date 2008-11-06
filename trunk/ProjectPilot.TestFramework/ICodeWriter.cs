@@ -6,6 +6,5 @@ namespace ProjectPilot.TestFramework
     {
         void Close();
         void WriteLine(string line);
-        void WriteLine(string format, params object[] args);
     }
 }
