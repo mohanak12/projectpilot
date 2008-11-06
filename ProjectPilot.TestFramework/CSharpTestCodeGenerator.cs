@@ -7,46 +7,41 @@ namespace ProjectPilot.TestFramework
 {
     public class CSharpTestCodeGenerator : ITestCodeGenerator
     {
-        public CSharpTestCodeGenerator(string fileName)
+        public CSharpTestCodeGenerator(ICodeWriter writer)
         {
-            this.fileName = fileName;
+            this.writer = writer;
         }
 
         public void Generate(TestSpecs testSpecs)
         {
-            StringBuilder sb = new StringBuilder();
-            using (StreamWriter sw = new StreamWriter(fileName))
+            Dictionary<string, TestCase> testCases = testSpecs.TestCases;
+            ICollection<string> testCasesKeys = testCases.Keys;
+            foreach (string testCaseName in testCasesKeys)
             {
-                Dictionary<string, TestCase> testCases = testSpecs.TestCases;
-                ICollection<string> testCasesKeys = testCases.Keys;
-                foreach (string testCaseName in testCasesKeys)
+                writer.WriteLine("void {0}()", testCaseName);
+                writer.WriteLine("{");
+                writer.WriteLine("    Tester tester = new Tester();");
+
+                TestCase testCase = testSpecs.GetTestCase(testCaseName);
+                IList<TestAction> testActions = testCase.TestActions;
+                foreach (TestAction testAction in testActions)
                 {
-                    sb.AppendFormat(CultureInfo.InvariantCulture, "void {0}()", testCaseName);
-                    sb.AppendLine();
-                    sb.AppendLine("{");
-                    sb.AppendLine("    Tester tester = new Tester();");
-                    TestCase testCase = testSpecs.GetTestCase(testCaseName);
-                    IList<TestAction> testActions = testCase.TestActions;
-                    foreach (TestAction testAction in testActions)
+                    if (testAction.HasParameters)
                     {
-                        if (testAction.HasParameters)
-                        {
-                            sb.AppendFormat(CultureInfo.InvariantCulture, "    tester.{0}(\"{1}\");", testAction.ActionName,
-                                            testAction.Parameter);
-                        }
-                        else
-                        {
-                            sb.AppendFormat(CultureInfo.InvariantCulture, "    tester.{0}();", testAction.ActionName);
-                        }
-                        sb.AppendLine();
+                        writer.WriteLine("    tester.{0}(\"{1}\");", testAction.ActionName,
+                                        testAction.Parameter);
                     }
-                    sb.AppendLine("}");
-                    sb.AppendLine();
+                    else
+                    {
+                        writer.WriteLine("    tester.{0}();", testAction.ActionName);
+                    }
+                    writer.WriteLine(string.Empty);
                 }
-                sw.Write(sb.ToString());
+                writer.WriteLine("}");
+                writer.WriteLine(string.Empty);
             }
         }
 
-        private readonly string fileName;
+        private readonly ICodeWriter writer;
     }
 }
