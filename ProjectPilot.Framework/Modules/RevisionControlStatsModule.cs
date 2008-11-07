@@ -2,15 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
+using System.Threading;
 using ProjectPilot.Framework.Charts;
 using ProjectPilot.Framework.RevisionControlHistory;
 using ZedGraph;
 
 namespace ProjectPilot.Framework.Modules
 {
-    public class RevisionControlStatsModule : IProjectModule, IGenerator, IViewable
+    public class RevisionControlStatsModule : IProjectModule, IViewable, ITask
     {
-        public RevisionControlStatsModule(IRevisionControlHistoryModule rcHistoryModule,
+        public RevisionControlStatsModule(
+            IRevisionControlHistoryModule rcHistoryModule,
             IProjectRegistry projectRegistry,
             IFileManager fileManager,
             ITemplateEngine templateEngine)
@@ -37,7 +39,48 @@ namespace ProjectPilot.Framework.Modules
             set { projectId = value; }
         }
 
-        public string DrawCommitsPerDayPerAuthorChart(RevisionControlHistoryData history)
+        public ITrigger Trigger
+        {
+            get { return trigger; }
+            set { trigger = value; }
+        }
+
+        public void ExecuteTask(WaitHandle stopSignal)
+        {
+            // retrieve the latest history from the revision control
+            RevisionControlHistoryData history = rcHistoryModule.FetchHistory();
+
+            List<string> chartImageFileNames = new List<string>();
+            
+            // generate charts and save their storage locations
+            chartImageFileNames.Add(DrawCommitsPerDayPerAuthorChart(history));
+            chartImageFileNames.Add(DrawCommittedFilesPerDayPerActionChart(history));
+
+            // translate storage locations to URLs
+            for (int i = 0; i < chartImageFileNames.Count; i++)
+            {
+                string chartImageFileName = chartImageFileNames[i];
+                Uri url = fileManager.TranslateToUrl(chartImageFileName);
+                chartImageFileNames[i] = url.ToString();
+            }
+
+            // generate wrapper HTML document
+            // and save it to the project's storage location
+            Hashtable templateContext = new Hashtable();
+            templateContext.Add("project", projectRegistry.GetProject(projectId));
+            templateContext.Add("reportImages", chartImageFileNames);
+            templateEngine.ApplyTemplate(
+                "RevisionControlHistory.vm", 
+                templateContext, 
+                fileManager.GetProjectFullFileName(projectId, ModuleId, "RevisionControlHistory.html", true));
+        }
+
+        public string FetchHtmlReport()
+        {
+            return fileManager.FetchProjectFile(projectId, ModuleId, "RevisionControlHistory.html");
+        }
+
+        private string DrawCommitsPerDayPerAuthorChart(RevisionControlHistoryData history)
         {
             FluentChart chart = FluentChart.Create("Commits History", null, "commits per day")
                 .SetBarSettings(BarType.Stack, 0)
@@ -68,7 +111,7 @@ namespace ProjectPilot.Framework.Modules
             return chartImageFileName;
         }
 
-        public string DrawCommittedFilesPerDayPerActionChart(RevisionControlHistoryData history)
+        private string DrawCommittedFilesPerDayPerActionChart(RevisionControlHistoryData history)
         {
             FluentChart chart = FluentChart.Create("Committed Files History", null, "commited files per day")
                 .SetBarSettings(BarType.Stack, 0)
@@ -99,45 +142,11 @@ namespace ProjectPilot.Framework.Modules
             return chartImageFileName;
         }
 
-        public string FetchHtmlReport()
-        {
-            return fileManager.FetchProjectFile(projectId, ModuleId, "RevisionControlHistory.html");
-        }
-
-        public void Generate()
-        {
-            // retrieve the latest history from the revision control
-            RevisionControlHistoryData history = rcHistoryModule.FetchHistory();
-
-            List<string> chartImageFileNames = new List<string>();
-            
-            // generate charts and save their storage locations
-            chartImageFileNames.Add(DrawCommitsPerDayPerAuthorChart(history));
-            chartImageFileNames.Add(DrawCommittedFilesPerDayPerActionChart(history));
-
-            // translate storage locations to URLs
-            for (int i = 0; i < chartImageFileNames.Count; i++)
-            {
-                string chartImageFileName = chartImageFileNames[i];
-                Uri url = fileManager.TranslateToUrl(chartImageFileName);
-                chartImageFileNames[i] = url.ToString();
-            }
-
-            // generate wrapper HTML document
-            // and save it to the project's storage location
-            Hashtable templateContext = new Hashtable();
-            templateContext.Add("project", projectRegistry.GetProject(projectId));
-            templateContext.Add("reportImages", chartImageFileNames);
-            templateEngine.ApplyTemplate(
-                "RevisionControlHistory.vm", 
-                templateContext, 
-                fileManager.GetProjectFullFileName(projectId, ModuleId, "RevisionControlHistory.html", true));
-        }
-
         private readonly IFileManager fileManager;
         private string projectId;
         private IProjectRegistry projectRegistry;
         private IRevisionControlHistoryModule rcHistoryModule;
         private readonly ITemplateEngine templateEngine;
+        private ITrigger trigger = new NullTrigger();
     }
 }

@@ -52,7 +52,7 @@ namespace ProjectPilot.Tests.Framework.Modules
             module.ProjectId = "bhwr";
             project.AddModule(module);
 
-            module.Generate();
+            module.ExecuteTask(null);
         }
 
         [SetUp]

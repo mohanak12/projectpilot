@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace ProjectPilot.Framework
 {
@@ -36,6 +37,16 @@ namespace ProjectPilot.Framework
             set { projectRegistry = value; }
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
+        public T DeserializeFromXmlFile<T>(string fileName)
+        {
+            using (Stream stream = File.Open(fileName, FileMode.Create))
+            {
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
+                return (T) xmlSerializer.Deserialize(stream);
+            }
+        }
+
         public string GetFullFileName(string domain, string localFileName)
         {
             string fullFileName = String.Format(CultureInfo.InvariantCulture,
@@ -47,7 +58,7 @@ namespace ProjectPilot.Framework
             return fullFileName;
         }
 
-        public string GetProjectFullFileName(string projectId, string moduleId, string localFileName, bool assertDirPathExists)
+        public string GetProjectFullFileName(string projectId, string moduleId, string localFileName, bool ensureDirPathExists)
         {
             Project project = projectRegistry.GetProject(projectId);
 
@@ -60,7 +71,7 @@ namespace ProjectPilot.Framework
                                                 localFileName);
             fullFileName = Path.Combine(storageRootDir, fullFileName);
 
-            if (assertDirPathExists)
+            if (ensureDirPathExists)
                 CreateDirectories(fullFileName, true);
 
             return fullFileName;
@@ -77,6 +88,21 @@ namespace ProjectPilot.Framework
                 return File.ReadAllText(fullFileName);
             else
                 return null;
+        }
+
+        public bool FileExists(string fileName)
+        {
+            return File.Exists(fileName);
+        }
+
+        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
+        public void SerializeIntoXmlFile<T>(string fileName, T value)
+        {
+            using (Stream stream = File.Open(fileName, FileMode.Create))
+            {
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
+                xmlSerializer.Serialize(stream, value);
+            }
         }
 
         /// <summary>

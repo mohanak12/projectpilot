@@ -1,4 +1,5 @@
-﻿using Castle.Core;
+﻿using System.Threading;
+using Castle.Core;
 using Castle.Windsor;
 using MbUnit.Framework;
 using ProjectPilot.Framework;
@@ -36,6 +37,7 @@ namespace ProjectPilot.Tests.Framework.Runners
                 IProjectModule module = project.GetModule("RevisionControlStats");
 
                 runner.Start();
+                Thread.Sleep(5000);
             }
         }
 
