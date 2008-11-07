@@ -34,7 +34,7 @@ namespace ProjectPilot.TestFramework
 
         public bool HasParameters
         {
-            get { return actionParameters.Count > 0 ? true : false; }
+			get { return parameter != null ? true : false; }
         }
 
         /// <summary>
