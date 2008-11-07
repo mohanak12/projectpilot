@@ -27,9 +27,14 @@ namespace ProjectPilot.TestFramework
             get { return actionName; }
         }
 
+        public void AddActionParameter(ActionParameters actionParameter)
+        {
+            actionParameters.Add(actionParameter);
+        }
+
         public bool HasParameters
         {
-            get { return parameter != null ? true : false; }
+            get { return actionParameters.Count > 0 ? true : false; }
         }
 
         /// <summary>
@@ -44,7 +49,7 @@ namespace ProjectPilot.TestFramework
         }
 
         private string actionName;
-
+        private List<ActionParameters> actionParameters = new List<ActionParameters>();
         private string parameter;
     }
 }
