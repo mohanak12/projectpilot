@@ -34,6 +34,8 @@ namespace ProjectPilot.Framework.Subversion
 
         public RevisionControlHistoryData FetchHistory()
         {
+            // TODO: get the last revision number that was collected previously
+
             // svn log d:\svn\mobilkom.nl-bhwr\trunk\src -v --xml --non-interactive >D:\BuildArea\builds\mobilkom.nl-bhwr\svn-log.xml
             using (Process process = new Process())
             {
@@ -47,6 +49,8 @@ namespace ProjectPilot.Framework.Subversion
                 process.WaitForExit();
 
                 RevisionControlHistoryData historyData = LoadHistory(process.StandardOutput.BaseStream);
+
+                // TODO: save the last revision number that was collected previously
 
                 return historyData;
             }

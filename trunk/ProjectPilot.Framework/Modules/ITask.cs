@@ -18,6 +18,6 @@ namespace ProjectPilot.Framework.Modules
         /// <summary>
         /// Executes the task.
         /// </summary>
-        void Execute(WaitHandle stopSignal);
+        void ExecuteTask(WaitHandle stopSignal);
     }
 }

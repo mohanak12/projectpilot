@@ -41,6 +41,12 @@
     </component>
 
     <component
+      id="TimeProvider"
+      service="ProjectPilot.Framework.ITimeProvider, ProjectPilot.Framework"
+      type="ProjectPilot.Framework.StandardTimeProvider, ProjectPilot.Framework">
+    </component>
+    
+    <component
       id="TemplateEngine"
       service="ProjectPilot.Framework.ITemplateEngine, ProjectPilot.Framework"
       type="ProjectPilot.Framework.DefaultTemplateEngine, ProjectPilot.Framework"/>
@@ -73,6 +79,14 @@
     <component
       id="RcsModule"
       type="ProjectPilot.Framework.Modules.RevisionControlStatsModule, ProjectPilot.Framework">
+    </component>
+    <component
+      id="RcsModuleTrigger"
+      service="ProjectPilot.Framework.Modules.ITrigger, ProjectPilot.Framework"
+      type="ProjectPilot.Framework.Modules.PeriodicTrigger, ProjectPilot.Framework">
+      <parameters>
+        <period>10000</period>
+      </parameters>
     </component>
   </components>
 </configuration>

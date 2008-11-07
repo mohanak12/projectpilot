@@ -120,7 +120,7 @@ namespace ProjectPilot.Framework.Runners
                         break;
 
                     // execute the task
-                    task.Execute(stopAllThreadsSignal);
+                    task.ExecuteTask(stopAllThreadsSignal);
 
                     // mark the task trigger event as handled
                     task.Trigger.MarkEventAsHandled();

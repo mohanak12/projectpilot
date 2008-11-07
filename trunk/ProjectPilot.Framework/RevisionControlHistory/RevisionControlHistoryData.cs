@@ -37,6 +37,18 @@ namespace ProjectPilot.Framework.RevisionControlHistory
             entries.Add(entry.Time, entry);
         }
 
+        /// <summary>
+        /// Returns a <see cref="String"/> that represents the current object.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="String"/> that represents the current object.
+        /// </returns>
+        public override string ToString()
+        {
+            return String.Format(System.Globalization.CultureInfo.InvariantCulture,
+                "Entries: {0}", entries.Count);
+        }
+                
         private readonly SortedList<DateTime, RevisionControlHistoryEntry> entries = new SortedList<DateTime, RevisionControlHistoryEntry>();
     }
 }
