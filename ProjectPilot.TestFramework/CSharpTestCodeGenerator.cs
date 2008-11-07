@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
-using System.Text;
 
 namespace ProjectPilot.TestFramework
 {
@@ -29,7 +27,7 @@ namespace ProjectPilot.TestFramework
                     if (testAction.HasParameters)
                     {
                         WriteLine("    tester.{0}(\"{1}\");", testAction.ActionName,
-                                        testAction.Parameter);
+                                  testAction.Parameter);
                     }
                     else
                     {
@@ -42,7 +40,7 @@ namespace ProjectPilot.TestFramework
             }
         }
 
-        private void WriteLine (string line)
+        private void WriteLine(string line)
         {
             writer.WriteLine(line);
         }
@@ -51,6 +49,7 @@ namespace ProjectPilot.TestFramework
         {
             writer.WriteLine(string.Format(CultureInfo.InvariantCulture, format, args));
         }
+
         private readonly ICodeWriter writer;
     }
 }

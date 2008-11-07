@@ -52,6 +52,7 @@
     </Compile>
     <Compile Include="CSharpTestCodeGenerator.cs" />
     <Compile Include="FileCodeWriter.cs" />
+    <Compile Include="HtmlTestCodeGenerator.cs" />
     <Compile Include="ICodeWriter.cs" />
     <Compile Include="ITestCodeGenerator.cs" />
     <Compile Include="ITestSpecsParser.cs" />
