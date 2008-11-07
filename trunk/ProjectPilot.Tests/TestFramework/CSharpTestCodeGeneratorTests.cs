@@ -1,5 +1,4 @@
-﻿using System.IO;
-using MbUnit.Framework;
+﻿using MbUnit.Framework;
 using ProjectPilot.TestFramework;
 using Rhino.Mocks;
 
