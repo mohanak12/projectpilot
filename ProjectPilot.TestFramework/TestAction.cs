@@ -1,55 +1,89 @@
-﻿using System;
+﻿#region
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Collections.ObjectModel;
+
+#endregion
 
 namespace ProjectPilot.TestFramework
 {
-    public class TestAction
-    {
-        public TestAction(string actionName, string parameter)
-        {
-            this.actionName = actionName;
-            this.parameter = parameter;
-        }
+	public class TestAction
+	{
+		public TestAction(string actionName)
+		{
+			this.actionName = actionName;
+		}
 
-        public TestAction(string actionName)
-        {
-            this.actionName = actionName;
-        }
 
-        /// <summary>
-        /// Name of the action.
-        /// </summary>
-        /// <example><c>selectProject</c> in <selectProject>Mobi-Info</selectProject></example>
-        public string ActionName
-        {
-            get { return actionName; }
-        }
 
-        public void AddActionParameter(ActionParameters actionParameter)
-        {
-            actionParameters.Add(actionParameter);
-        }
+		public TestAction
+			(string actionName,
+			 ActionParameters actionParameter)
+		{
+			this.actionName = actionName;
+			AddActionParameter(actionParameter);
+		}
 
-        public bool HasParameters
-        {
-			get { return parameter != null ? true : false; }
-        }
 
-        /// <summary>
-        /// Action's parameter.
-        /// </summary>
-        /// <example>
-        /// <c>Mobi-Info</c> in <selectProject>Mobi-Info</selectProject>
-        /// </example>
-        public string Parameter
-        {
-            get { return parameter; }
-        }
 
-        private string actionName;
-        private List<ActionParameters> actionParameters = new List<ActionParameters>();
-        private string parameter;
-    }
+		/// <summary>
+		/// Name of the action.
+		/// </summary>
+		/// <example><c>selectProject</c> in <selectProject>Mobi-Info</selectProject></example>
+		public string ActionName
+		{
+			get { return actionName; }
+		}
+
+
+
+		/// <summary>
+		/// Add action parameter.
+		/// </summary>
+		/// <param name="actionParameter"><see cref="ActionParameters"/></param>
+		/// <example>url=http://asd.html</example>
+		/// <example>name=parameter1</example>
+		/// 
+		public void AddActionParameter(ActionParameters actionParameter)
+		{
+			actionParameters.Add(actionParameter);
+		}
+
+
+
+		public int ActionParametersCount
+		{
+			get { return actionParameters.Count; }
+		}
+
+		public IList<ActionParameters> GetActionParameters
+		{
+			get { return actionParameters; }
+		}
+
+
+
+		public string GetParameterKeyValue(string parameterKey)
+		{
+			foreach (ActionParameters actionParameter in actionParameters)
+			{
+				if (actionParameter.ParameterKey.Equals(parameterKey))
+				{
+					return actionParameter.ParameterValue;
+				}
+			}
+			return null;
+		}
+
+
+
+		public bool HasParameters
+		{
+			get { return actionParameters.Count > 0 ? true : false; }
+		}
+
+		private readonly string actionName;
+
+		private readonly List<ActionParameters> actionParameters = new List<ActionParameters>();
+	}
 }
