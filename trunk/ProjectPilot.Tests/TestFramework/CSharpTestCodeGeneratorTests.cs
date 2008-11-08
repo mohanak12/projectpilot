@@ -19,7 +19,9 @@ namespace ProjectPilot.Tests.TestFramework
 
             TestCase testCase = new TestCase("testcase1");
             testCase.AddTestAction(new TestAction("testaction1"));
-            testCase.AddTestAction(new TestAction("testaction2", "parameter"));
+			TestAction testAction = new TestAction("testaction2");
+			testAction.AddActionParameter(new ActionParameters("name", "parOne"));
+			testCase.AddTestAction(testAction);
             testSpecs.AddTestCase(testCase);
 
             testCase = new TestCase("testcase2");
@@ -31,7 +33,7 @@ namespace ProjectPilot.Tests.TestFramework
             mockCodeWriter.Expect(writer => writer.WriteLine("{"));
             mockCodeWriter.Expect(writer => writer.WriteLine("    Tester tester = new Tester();"));
             mockCodeWriter.Expect(writer => writer.WriteLine("    tester.testaction1();"));
-            mockCodeWriter.Expect(writer => writer.WriteLine("    tester.testaction2(\"parameter\");"));
+			mockCodeWriter.Expect(writer => writer.WriteLine("    tester.testaction2(\"parOne\");"));
             mockCodeWriter.Expect(writer => writer.WriteLine("}"));
             mockCodeWriter.Expect(writer => writer.WriteLine(string.Empty));
             mockCodeWriter.Expect(writer => writer.WriteLine("void testcase2()"));

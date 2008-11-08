@@ -31,22 +31,34 @@ namespace ProjectPilot.TestFramework
                             testCaseName = attribute.InnerText;
                         }
 
-                        TestCase testCase = new TestCase (testCaseName);
+                    	if (testCaseName != null)
+                    	{
+                    		TestCase testCase = new TestCase (testCaseName);
 
-                        foreach (XmlNode testActionNode in testCaseNode.ChildNodes)
-                        {
-                            string testActionName = testActionNode.Name;
-                            string testActionParameter = testActionNode.InnerText;
-                            //if node has attribute, first attribute is parameter
-                            foreach (XmlAttribute testActionAttribute in testActionNode.Attributes)
-                            {
-                                testActionParameter = testActionAttribute.InnerText;
-                                break;
-                            }
-                            TestAction testAction = new TestAction(testActionName, testActionParameter);
-                            testCase.AddTestAction(testAction);
-                        }
-                        testSpecs.AddTestCase(testCase);
+                    		foreach (XmlNode testActionNode in testCaseNode.ChildNodes)
+                    		{
+                    			string defaultParameterValue = testActionNode.InnerText;
+								string testActionName = testActionNode.Name;
+								TestAction testAction = new TestAction(testActionName);
+								foreach (XmlAttribute testActionAttribute in testActionNode.Attributes)
+                    			{
+                    				string parameterKey = testActionAttribute.Name;
+                    				string parameterValue = testActionAttribute.InnerText;
+                    				ActionParameters actionpaParameters = new ActionParameters(parameterKey, parameterValue);
+									testAction.AddActionParameter(actionpaParameters);
+                    			}
+								if (!testAction.HasParameters && defaultParameterValue.Length > 0)
+								{
+									testAction.AddActionParameter(new ActionParameters("default", defaultParameterValue));
+								}
+                    			testCase.AddTestAction(testAction);
+                    		}
+                    		testSpecs.AddTestCase(testCase);
+                    	}
+						else
+                    	{
+                    		throw new NotImplementedException("Test case ID not set!");
+                    	}
                     }
                 }
             }
