@@ -1,0 +1,22 @@
+#summary Contains some basic guidelines for writing unit tests.
+
+ # First rule: *do write unit tests*. Code coverage is a more or less good indicator of how well certain code is covered with tests.
+ # The test class should typically be named *WhatIsTested* Tests (example: `SessionStateTests`)
+ # Give the test method a meaningful name (see example below).
+ # Write *description of a test case* (test method) which will describe what the unit test does (what and how it tests). Keep it short but keep it useful:
+ # *Keep tests short*. Try to test only one feature with a single test method. This will make tests more understandable for everybody and easier to detect what's wrong if the test fails.
+
+Example test mathod:
+{{{
+        /// <summary>
+        /// Tests creating of a new <see cref="ISessionState"/> object.
+        /// </summary>
+        [Test]
+        public void FetchEmptySession()
+        {
+            using (ISessionState sessionState = sessionStorage.LoadSession("testId"))
+            {
+                Assert.IsNotNull(sessionState);
+            }
+        }
+}}}
