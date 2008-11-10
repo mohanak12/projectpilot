@@ -9,7 +9,7 @@ using Rhino.Mocks;
 namespace ProjectPilot.Tests.Framework.Modules
 {
     [TestFixture]
-    public class RevisionControlStatsModuleTests
+    public class RevisionControlStatsTests
     {
         [Test]
         public void Test()
@@ -33,19 +33,19 @@ namespace ProjectPilot.Tests.Framework.Modules
             RevisionControlHistoryData data;
             using (Stream stream = File.OpenRead(@"..\..\..\Data\Samples\svn-log.xml"))
             {
-                data = SubversionHistoryModule.LoadHistory(stream);
+                data = SubversionHistoryFacility.LoadHistory(stream);
             }
 
-            IRevisionControlHistoryModule revisionControlHistoryModule = MockRepository.GenerateStub<IRevisionControlHistoryModule>();
-            revisionControlHistoryModule.Stub(action => action.FetchHistory()).Return(data);
+            IRevisionControlHistoryFacility revisionControlHistoryFacility = MockRepository.GenerateStub<IRevisionControlHistoryFacility>();
+            revisionControlHistoryFacility.Stub(action => action.FetchHistory()).Return(data);
 
-            //IRevisionControlHistoryModule revisionControlHistoryModule = new SubversionHistoryModule(
+            //IRevisionControlHistoryFacility revisionControlHistoryFacility = new SubversionHistoryFacility(
             //    project.ProjectId,
             //    @"C:\Program Files\CollabNet Subversion\svn.exe",
             //    @"D:\svn\mobilkom.nl-bhwr\trunk\src");
 
             RevisionControlStatsModule module = new RevisionControlStatsModule(
-                revisionControlHistoryModule,
+                revisionControlHistoryFacility,
                 projectRegistry,
                 fileManager,
                 templateEngine);

@@ -78,7 +78,7 @@ namespace ProjectPilot.Tests.Framework.Subversion
             RevisionControlHistoryData data;
             using (Stream stream = File.OpenRead(@"..\..\..\Data\Samples\svn-log.xml"))
             {
-                data = SubversionHistoryModule.LoadHistory(stream);
+                data = SubversionHistoryFacility.LoadHistory(stream);
             }
             return data;
         }

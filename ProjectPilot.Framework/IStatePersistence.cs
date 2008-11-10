@@ -17,13 +17,13 @@ namespace ProjectPilot.Framework
         /// </summary>
         /// <returns>State object.</returns>
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        T LoadState<T>(string projectId, string moduleId, string objectId) where T : class;
+        T LoadState<T>() where T : class;
 
         /// <summary>
         /// Saves the state to the persistent storage.
         /// </summary>
         /// <param name="state">The state object.</param>
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        void SaveState<T>(string projectId, string moduleId, string objectId, T state) where T : class;
+        void SaveState<T>(T state) where T : class;
     }
 }

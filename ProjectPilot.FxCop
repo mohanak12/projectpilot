@@ -215,36 +215,6 @@
     <Modules>
      <Module Name="projectpilot.framework.dll">
       <Namespaces>
-       <Namespace Name="ProjectPilot.Framework.CCNet">
-        <Types>
-         <Type Name="CCNetProjectStatisticsBuildEntry">
-          <Members>
-           <Member Name="#Parameters">
-            <Messages>
-             <Message TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227" Created="2008-11-10 07:33:43Z">
-              <Issue>
-               <Item>'CCNetProjectStatisticsBuildEntry.Parameters'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="CCNetProjectStatisticsData">
-          <Members>
-           <Member Name="#Builds">
-            <Messages>
-             <Message TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227" Created="2008-11-10 07:33:43Z">
-              <Issue>
-               <Item>'CCNetProjectStatisticsData.Builds'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
        <Namespace Name="ProjectPilot.Framework.Runners">
         <Types>
          <Type Name="IRunner">
@@ -382,15 +352,6 @@
        </Namespace>
        <Namespace Name="ProjectPilot.Tests.Framework.CCNet">
         <Types>
-         <Type Name="CCNetProjectStatisticsBuildEntryTest">
-          <Messages>
-           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2008-11-10 07:33:43Z">
-            <Issue>
-             <Item>'CCNetProjectStatisticsBuildEntryTest'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="CCNetTests">
           <Members>
            <Member Name="#Test()">
@@ -398,32 +359,6 @@
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-11-03 08:37:42Z" FixCategory="DependsOnFix">
               <Issue>
                <Item>'CCNetTests.Test()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
-       <Namespace Name="ProjectPilot.Tests.Framework.Modules">
-        <Types>
-         <Type Name="RevisionControlStatsModuleTests">
-          <Members>
-           <Member Name="#Setup()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-11-03 08:37:42Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'RevisionControlStatsModuleTests.Setup()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Test()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-11-03 08:37:42Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'RevisionControlStatsModuleTests.Test()'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -477,12 +412,6 @@
    </Rule>
    <Rule TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020">
     <Resolution Name="Default">Consider merging the types defined in '{0}' with another namespace.</Resolution>
-   </Rule>
-   <Rule TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812">
-    <Resolution Name="Default">{0} is an internal class that is apparently never instantiated. If so, remove the code from the assembly. If this class is intended to contain only static methods, consider adding a private constructor to prevent the compiler from generating a default constructor.</Resolution>
-   </Rule>
-   <Rule TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227">
-    <Resolution Name="Default">Change {0} to be read-only by removing the property setter.</Resolution>
    </Rule>
    <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
     <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>

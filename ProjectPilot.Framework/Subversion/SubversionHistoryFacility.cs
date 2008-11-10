@@ -3,56 +3,78 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Text;
 using System.Xml;
 using ProjectPilot.Framework.RevisionControlHistory;
 
 namespace ProjectPilot.Framework.Subversion
 {
-    public class SubversionHistoryModule : IRevisionControlHistoryModule
+    public class SubversionHistoryFacility : IRevisionControlHistoryFacility
     {
-        public SubversionHistoryModule(string svnToolPath, string svnRootPath)
+        public SubversionHistoryFacility(
+            string facilityId,
+            string svnToolPath, 
+            string svnRootPath,
+            ISessionStorage sessionStorage)
         {
+            this.facilityId = facilityId;
             this.svnToolPath = svnToolPath;
             this.svnRootPath = svnRootPath;
-        }
-
-        public string ModuleId
-        {
-            get { return "svn"; }
-        }
-
-        public string ModuleName
-        {
-            get { return "Subversion History"; }
-        }
-
-        public string ProjectId
-        {
-            get { return projectId; }
-            set { projectId = value; }
+            this.sessionStorage = sessionStorage;
         }
 
         public RevisionControlHistoryData FetchHistory()
         {
-            // TODO: get the last revision number that was collected previously
-
-            // svn log d:\svn\mobilkom.nl-bhwr\trunk\src -v --xml --non-interactive >D:\BuildArea\builds\mobilkom.nl-bhwr\svn-log.xml
-            using (Process process = new Process())
+            // load the previously fetched history from the persistent storage
+            using (ISessionState sessionState = sessionStorage.LoadSession(String.Format(
+                CultureInfo.InvariantCulture,
+                "SubversionHistoryFacility_{0}", facilityId)))
             {
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.RedirectStandardOutput = true;
-                process.StartInfo.FileName = svnToolPath;
-                process.StartInfo.Arguments = String.Format(CultureInfo.InvariantCulture, @"log ""{0}"" --xml --non-interactive",
-                    svnRootPath);
-                process.Start();
+                RevisionControlHistoryData lastFetchedHistory
+                    = sessionState.GetValue<RevisionControlHistoryData>(sessionKeyLastFetchedHistory);
 
-                process.WaitForExit();
+                // find the last revision that was fetched
+                string lastRevisionFetched = null;
 
-                RevisionControlHistoryData historyData = LoadHistory(process.StandardOutput.BaseStream);
+                if (lastFetchedHistory != null)
+                    lastRevisionFetched = lastFetchedHistory.LastRevision;
 
-                // TODO: save the last revision number that was collected previously
+                // svn log d:\svn\mobilkom.nl-bhwr\trunk\src -v --xml --non-interactive >D:\BuildArea\builds\mobilkom.nl-bhwr\svn-log.xml
+                // -r 1729:HEAD
 
-                return historyData;
+                using (Process process = new Process())
+                {
+                    StringBuilder argumentsBuilder = new StringBuilder();
+                    argumentsBuilder.AppendFormat(CultureInfo.InvariantCulture,
+                        @"log ""{0}"" --xml --non-interactive",
+                        svnRootPath);
+
+                    // add revisions range, if we have history data fetched previously
+                    if (lastRevisionFetched != null)
+                    {
+                        int lastRevisionFetchedInt = Int32.Parse(lastRevisionFetched, CultureInfo.InvariantCulture);
+                        argumentsBuilder.AppendFormat(CultureInfo.InvariantCulture,
+                            " -r {0}:HEAD", lastRevisionFetchedInt + 1);
+                    }
+
+                    process.StartInfo.UseShellExecute = false;
+                    process.StartInfo.RedirectStandardOutput = true;
+                    process.StartInfo.FileName = svnToolPath;
+                    process.StartInfo.Arguments = argumentsBuilder.ToString();
+                    process.Start();
+
+                    process.WaitForExit();
+
+                    // merge the two histories
+                    RevisionControlHistoryData historyData = LoadHistory(process.StandardOutput.BaseStream);
+                    if (lastFetchedHistory != null)
+                        historyData.Merge(lastFetchedHistory);
+                    
+                    // save the new history to the session state
+                    sessionState.SetValue(sessionKeyLastFetchedHistory, historyData);
+
+                    return historyData;
+                }
             }
         }
 
@@ -102,6 +124,8 @@ namespace ProjectPilot.Framework.Subversion
                     return RevisionControlHistoryEntryAction.Delete;
                 case "M":
                     return RevisionControlHistoryEntryAction.Modify;
+                case "R":
+                    return RevisionControlHistoryEntryAction.Replace;
                 default:
                     throw new NotSupportedException();
             }
@@ -184,7 +208,9 @@ namespace ProjectPilot.Framework.Subversion
             entry.SetPaths(pathsCollected.ToArray());
         }
 
-        private string projectId;
+        private readonly ISessionStorage sessionStorage;
+        private readonly string facilityId;
+        private const string sessionKeyLastFetchedHistory = "LastFetchedHistory";
         private readonly string svnToolPath;// = @"C:\Program Files\CollabNet Subversion\svn.exe";
         private string svnRootPath;
     }

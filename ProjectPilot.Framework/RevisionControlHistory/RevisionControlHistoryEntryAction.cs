@@ -6,5 +6,6 @@ namespace ProjectPilot.Framework.RevisionControlHistory
         Add,
         Delete,
         Modify,
+        Replace
     }
 }
