@@ -4,19 +4,11 @@ namespace ProjectPilot.Framework.CCNet
 {
     public class CCNetProjectStatisticsBuildEntry
     {
-        #region Private members
-
-        private string buildLabel;
-        private string buildStatus;
-        private Dictionary<string, string> parameters = new Dictionary<string, string>();
-
-        #endregion
-
         #region Public properties
 
         public string BuildLabel
         {
-            get { return buildLabel; }
+            get { return buildLabel; }  
             set { buildLabel = value; }
         }
 
@@ -30,6 +22,14 @@ namespace ProjectPilot.Framework.CCNet
         {
             get { return parameters; }
         }
+
+        #endregion
+
+        #region Private members
+
+        private string buildLabel;
+        private string buildStatus;
+        private Dictionary<string, string> parameters = new Dictionary<string, string>();
 
         #endregion
     }
