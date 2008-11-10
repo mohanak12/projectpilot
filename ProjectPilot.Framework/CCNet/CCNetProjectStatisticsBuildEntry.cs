@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace ProjectPilot.Framework.CCNet
 {
@@ -7,11 +6,8 @@ namespace ProjectPilot.Framework.CCNet
     {
         #region Private members
 
-        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         private string buildLabel;
-        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         private string buildStatus;
-        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         private Dictionary<string, string> parameters = new Dictionary<string, string>();
 
         #endregion
@@ -30,10 +26,9 @@ namespace ProjectPilot.Framework.CCNet
             set { buildStatus = value; }
         }
 
-        public Dictionary<string, string> Parameters
+        public IDictionary<string, string> Parameters
         {
             get { return parameters; }
-            set { parameters = value; }
         }
 
         #endregion
