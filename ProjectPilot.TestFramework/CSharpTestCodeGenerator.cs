@@ -26,7 +26,7 @@ namespace ProjectPilot.TestFramework
                 {
                     if (testAction.HasParameters)
                     {
-                    	foreach (ActionParameters actionParameters in testAction.ActionParameters)
+                    	foreach (TestActionParameter actionParameters in testAction.ActionParameters)
                     	{
 							WriteLine("    tester.{0}(\"{1}\");", testAction.ActionName,
 									  actionParameters.ParameterValue);

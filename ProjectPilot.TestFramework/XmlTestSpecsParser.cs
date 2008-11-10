@@ -44,12 +44,12 @@ namespace ProjectPilot.TestFramework
                     			{
                     				string parameterKey = testActionAttribute.Name;
                     				string parameterValue = testActionAttribute.InnerText;
-                    				ActionParameters actionpaParameters = new ActionParameters(parameterKey, parameterValue);
-									testAction.AddActionParameter(actionpaParameters);
+                    				TestActionParameter testActionParameter = new TestActionParameter(parameterKey, parameterValue);
+									testAction.AddActionParameter(testActionParameter);
                     			}
 								if (!testAction.HasParameters && defaultParameterValue.Length > 0)
 								{
-									testAction.AddActionParameter(new ActionParameters("default", defaultParameterValue));
+									testAction.AddActionParameter(new TestActionParameter("default", defaultParameterValue));
 								}
                     			testCase.AddTestAction(testAction);
                     		}
