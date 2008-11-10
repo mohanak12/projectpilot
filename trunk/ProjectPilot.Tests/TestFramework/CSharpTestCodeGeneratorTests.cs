@@ -20,7 +20,7 @@ namespace ProjectPilot.Tests.TestFramework
             TestCase testCase = new TestCase("testcase1");
             testCase.AddTestAction(new TestAction("testaction1"));
 			TestAction testAction = new TestAction("testaction2");
-			testAction.AddActionParameter(new ActionParameters("name", "parOne"));
+			testAction.AddActionParameter(new TestActionParameter("name", "parOne"));
 			testCase.AddTestAction(testAction);
             testSpecs.AddTestCase(testCase);
 

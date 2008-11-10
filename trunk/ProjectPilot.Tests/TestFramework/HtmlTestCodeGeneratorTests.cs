@@ -21,11 +21,11 @@ namespace ProjectPilot.Tests.TestFramework
 			TestSpecs testSpecs = new TestSpecs();
 
 			TestCase testCase = new TestCase("Open Page");
-			testCase.AddTestAction(new TestAction("NavigateTo", new ActionParameters("url", "http://test.aspx")));
+			testCase.AddTestAction(new TestAction("NavigateTo", new TestActionParameter("url", "http://test.aspx")));
 			testSpecs.AddTestCase(testCase);
 
 			testCase = new TestCase("Select module");
-			testCase.AddTestAction(new TestAction("SelectModule", new ActionParameters("name", "Mobi-Info")));
+			testCase.AddTestAction(new TestAction("SelectModule", new TestActionParameter("name", "Mobi-Info")));
 			testSpecs.AddTestCase(testCase);
 
 			ICodeWriter mockWriter = MockRepository.GenerateMock<ICodeWriter>();

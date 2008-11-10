@@ -1,8 +1,8 @@
 namespace ProjectPilot.TestFramework
 {
-    public class ActionParameters
+    public class TestActionParameter
     {
-        public ActionParameters(string parameterKey, string parameterValue)
+        public TestActionParameter(string parameterKey, string parameterValue)
         {
             this.parameterKey = parameterKey;
             this.parameterValue = parameterValue;
