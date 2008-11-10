@@ -5,10 +5,29 @@ using System.Xml;
 
 namespace ProjectPilot.Framework.CCNet
 {
-    [SuppressMessage("Microsoft.Design", "CA1053:StaticHolderTypesShouldNotHaveConstructors")]
+    //[SuppressMessage("Microsoft.Design", "CA1053:StaticHolderTypesShouldNotHaveConstructors")]
     public class CCNetProjectStatisticsPlugIn
     {
+        #region Ctor
+
+        public CCNetProjectStatisticsPlugIn()
+        {}
+
+        public CCNetProjectStatisticsPlugIn(Uri url, string projectName)
+        {
+            this.url = url;
+            this.projectName = projectName;
+        }
+
+        #endregion
+
         #region Public method
+
+        public CCNetProjectStatisticsData FetchStatistics()
+        {
+            //throw new NotImplementedException();
+            return null;
+        }
 
         static public CCNetProjectStatisticsData Load(Stream stream)
         {
@@ -52,8 +71,6 @@ namespace ProjectPilot.Framework.CCNet
 
         #region Private methods
 
-        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "xmlReader")]
-        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "data")]
         private static void ReadStatistics(CCNetProjectStatisticsData data, XmlReader xmlReader)
         {
             xmlReader.Read();
@@ -120,6 +137,17 @@ namespace ProjectPilot.Framework.CCNet
                 throw new NotSupportedException();
             }
         }
+
+        #endregion
+
+        #region Private members
+
+
+        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
+        private Uri url;
+
+        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
+        private string projectName;
 
         #endregion
     }

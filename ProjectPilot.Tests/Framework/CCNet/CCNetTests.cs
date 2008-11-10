@@ -15,11 +15,16 @@ namespace ProjectPilot.Tests.Framework.CCNet
         public void Test()
         {
             RemoteCruiseManagerFactory factory = new RemoteCruiseManagerFactory();
-            string url = string.Format(CultureInfo.InvariantCulture, "tcp://firefly:21234/CruiseManager.rem");
-            ICruiseManager mgr = factory.GetCruiseManager(url);
+            Uri url = new Uri(string.Format(CultureInfo.InvariantCulture, "tcp://firefly:21234/CruiseManager.rem"));
+            string projectName = "ProjectPilot";
+            ICruiseManager mgr = factory.GetCruiseManager(url.ToString());
 
-            string proj = mgr.GetProject("ProjectPilot");
-            string stat = mgr.GetStatisticsDocument("ProjectPilot");
+            CCNetProjectStatisticsPlugIn plugIn = new CCNetProjectStatisticsPlugIn
+                (url, projectName);
+            CCNetProjectStatisticsData statisticsPlugIn = plugIn.FetchStatistics();
+
+            string proj = mgr.GetProject(projectName);
+            string stat = mgr.GetStatisticsDocument(projectName);
             //File.WriteAllText("ccnet.stats.xml", stat);
         }
 
