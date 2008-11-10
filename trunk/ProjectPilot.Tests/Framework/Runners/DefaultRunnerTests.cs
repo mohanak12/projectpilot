@@ -5,6 +5,7 @@ using MbUnit.Framework;
 using ProjectPilot.Framework;
 using ProjectPilot.Framework.Modules;
 using ProjectPilot.Framework.Runners;
+using Rhino.Mocks;
 
 namespace ProjectPilot.Tests.Framework.Runners
 {
@@ -22,6 +23,9 @@ namespace ProjectPilot.Tests.Framework.Runners
             windsorContainer.Kernel.HandlerRegistered += new Castle.MicroKernel.HandlerDelegate(Kernel_HandlerRegistered);
 
             WindsorContainerGraphs.GenerateDependencyGraph(windsorContainer, "graph.dot");
+
+            IStatePersistence mockStatePersistence = MockRepository.GenerateMock<IStatePersistence>();
+            //mockStatePersistence.Expect(obj => obj.LoadState<>() )
 
             using (IRunner runner = windsorContainer.Resolve<IRunner>())
             {

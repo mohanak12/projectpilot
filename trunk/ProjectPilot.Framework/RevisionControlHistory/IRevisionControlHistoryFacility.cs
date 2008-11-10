@@ -2,7 +2,7 @@ using ProjectPilot.Framework.Modules;
 
 namespace ProjectPilot.Framework.RevisionControlHistory
 {
-    public interface IRevisionControlHistoryModule : IProjectModule
+    public interface IRevisionControlHistoryFacility
     {
         RevisionControlHistoryData FetchHistory();
     }

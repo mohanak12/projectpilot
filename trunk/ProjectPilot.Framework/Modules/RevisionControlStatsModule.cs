@@ -12,12 +12,12 @@ namespace ProjectPilot.Framework.Modules
     public class RevisionControlStatsModule : IProjectModule, IViewable, ITask
     {
         public RevisionControlStatsModule(
-            IRevisionControlHistoryModule rcHistoryModule,
+            IRevisionControlHistoryFacility rcHistoryFacility,
             IProjectRegistry projectRegistry,
             IFileManager fileManager,
             ITemplateEngine templateEngine)
         {
-            this.rcHistoryModule = rcHistoryModule;
+            this.rcHistoryFacility = rcHistoryFacility;
             this.projectRegistry = projectRegistry;
             this.fileManager = fileManager;
             this.templateEngine = templateEngine;
@@ -48,7 +48,7 @@ namespace ProjectPilot.Framework.Modules
         public void ExecuteTask(WaitHandle stopSignal)
         {
             // retrieve the latest history from the revision control
-            RevisionControlHistoryData history = rcHistoryModule.FetchHistory();
+            RevisionControlHistoryData history = rcHistoryFacility.FetchHistory();
 
             List<string> chartImageFileNames = new List<string>();
             
@@ -145,7 +145,7 @@ namespace ProjectPilot.Framework.Modules
         private readonly IFileManager fileManager;
         private string projectId;
         private IProjectRegistry projectRegistry;
-        private IRevisionControlHistoryModule rcHistoryModule;
+        private IRevisionControlHistoryFacility rcHistoryFacility;
         private readonly ITemplateEngine templateEngine;
         private ITrigger trigger = new NullTrigger();
     }
