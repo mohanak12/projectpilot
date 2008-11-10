@@ -12,12 +12,12 @@ namespace ProjectPilot.Tests.Framework.CCNet
         public void Test()
         {
             RemoteCruiseManagerFactory factory = new RemoteCruiseManagerFactory();
-            string url = string.Format(CultureInfo.InvariantCulture, "tcp://kopernik3:21234/CruiseManager.rem");
+            string url = string.Format(CultureInfo.InvariantCulture, "tcp://firefly:21234/CruiseManager.rem");
             ICruiseManager mgr = factory.GetCruiseManager(url);
 
-            string proj = mgr.GetProject("PartnerWeb.Bhwr");
-            string stat = mgr.GetStatisticsDocument("PartnerWeb.Bhwr");
-            File.WriteAllText("ccnet.stats.xml", stat);
+            string proj = mgr.GetProject("ProjectPilot");
+            string stat = mgr.GetStatisticsDocument("ProjectPilot");
+            //File.WriteAllText("ccnet.stats.xml", stat);
         }
     }
 }
