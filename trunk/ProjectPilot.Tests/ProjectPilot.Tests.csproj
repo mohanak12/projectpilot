@@ -81,6 +81,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Framework\CCNet\CCNetProjectStatisticsBuildEntryTest.cs" />
     <Compile Include="Framework\CCNet\CCNetTests.cs" />
     <Compile Include="Framework\ChartsTests.cs" />
     <Compile Include="Framework\Modules\RevisionControlStatsModuleTests.cs" />

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Xml;
 
 namespace ProjectPilot.Framework.CCNet
@@ -11,7 +8,9 @@ namespace ProjectPilot.Framework.CCNet
     [SuppressMessage("Microsoft.Design", "CA1053:StaticHolderTypesShouldNotHaveConstructors")]
     public class CCNetProjectStatisticsPlugIn
     {
-        static public CCNetProjectStatisticsData Load (Stream stream)
+        #region Public method
+
+        static public CCNetProjectStatisticsData Load(Stream stream)
         {
             CCNetProjectStatisticsData data = new CCNetProjectStatisticsData();
 
@@ -23,6 +22,7 @@ namespace ProjectPilot.Framework.CCNet
             using (XmlReader xmlReader = XmlReader.Create(stream, xmlReaderSettings))
             {
                 xmlReader.Read();
+
                 while (false == xmlReader.EOF)
                 {
                     switch (xmlReader.NodeType)
@@ -32,10 +32,11 @@ namespace ProjectPilot.Framework.CCNet
                             continue;
 
                         case XmlNodeType.Element:
-                            if (xmlReader.Name != "log")
-                                throw new XmlException("<log> element expected.");
+                            if (xmlReader.Name != "statistics")
+                                throw new XmlException("<statistics> (root) element expected.");
 
                             ReadStatistics(data, xmlReader);
+
                             return data;
 
                         default:
@@ -47,11 +48,79 @@ namespace ProjectPilot.Framework.CCNet
             return null;
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "reader")]
+        #endregion
+
+        #region Private methods
+
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "xmlReader")]
         [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "data")]
-        private static void ReadStatistics(object data, XmlReader reader)
+        private static void ReadStatistics(CCNetProjectStatisticsData data, XmlReader xmlReader)
         {
-            throw new NotImplementedException();
+            xmlReader.Read();
+
+            while (xmlReader.NodeType != XmlNodeType.EndElement)
+            {
+                switch (xmlReader.Name)
+                {
+                    case "timestamp":
+
+                        xmlReader.Read();
+
+                        break;
+
+                    case "integration":
+
+                        CCNetProjectStatisticsBuildEntry entry = new CCNetProjectStatisticsBuildEntry();
+                        entry.BuildLabel = ReadAttribute(xmlReader, "build-label");
+                        entry.BuildStatus = ReadAttribute(xmlReader, "status");
+
+                        ReadIntegrationEntry(entry, xmlReader);
+
+                        data.Builds.Add(entry);
+
+                        break;
+                    default:
+                        throw new NotSupportedException();
+                }
+            }
         }
+
+        private static void ReadIntegrationEntry(CCNetProjectStatisticsBuildEntry data, XmlReader xmlReader)
+        {
+            xmlReader.Read();
+
+            while (xmlReader.NodeType != XmlNodeType.EndElement)
+            {
+                switch (xmlReader.Name)
+                {
+                    case "statistic":
+
+                        string key = ReadAttribute(xmlReader, "name");
+                        string value = xmlReader.ReadElementContentAsString();
+
+                        data.Parameters.Add(key, value);
+
+                        break;
+                    default:
+                        throw new NotSupportedException();
+                }
+            }
+
+            xmlReader.Read();
+        }
+
+        private static string ReadAttribute(XmlReader xmlReader, string attributeName)
+        {
+            try
+            {
+                return xmlReader.GetAttribute(attributeName);
+            }
+            catch (Exception)
+            {
+                throw new NotSupportedException();
+            }
+        }
+
+        #endregion
     }
 }
