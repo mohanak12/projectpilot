@@ -60,6 +60,9 @@
     </Compile>
     <Compile Include="CCNet\CCNetProjectStatisticsBuildEntry.cs" />
     <Compile Include="CCNet\CCNetProjectStatisticsData.cs" />
+    <Compile Include="CCNet\CCNetProjectStatisticsGraph.cs" />
+    <Compile Include="CCNet\CCNetProjectStatisticsGraphParameter.cs" />
+    <Compile Include="CCNet\CCNetProjectStatisticsModule.cs" />
     <Compile Include="CCNet\CCNetProjectStatisticsPlugIn.cs" />
     <Compile Include="Charts\FluentChart.cs" />
     <Compile Include="DefaultFileManager.cs" />
