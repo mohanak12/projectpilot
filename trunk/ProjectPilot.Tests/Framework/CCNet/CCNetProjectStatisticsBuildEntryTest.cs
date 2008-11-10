@@ -5,7 +5,7 @@ using ProjectPilot.Framework.CCNet;
 namespace ProjectPilot.Tests.Framework.CCNet
 {
     [TestFixture]
-    class CCNetProjectStatisticsBuildEntryTest
+    public class CCNetProjectStatisticsBuildEntryTest
     {
         [Test]
         public void LoadStatistics()

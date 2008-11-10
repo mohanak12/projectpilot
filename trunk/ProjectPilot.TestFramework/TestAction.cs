@@ -40,7 +40,7 @@ namespace ProjectPilot.TestFramework
 		/// <summary>
 		/// Add action parameter.
 		/// </summary>
-		/// <param name="actionParameter"><see cref="ActionParameters"/></param>
+		/// <param name="actionParameter"><see cref="TestFramework.ActionParameters"/></param>
 		/// <example>url=http://asd.html</example>
 		/// <example>name=parameter1</example>
 		/// 
@@ -56,7 +56,7 @@ namespace ProjectPilot.TestFramework
 			get { return actionParameters.Count; }
 		}
 
-		public IList<ActionParameters> GetActionParameters
+		public IList<ActionParameters> ActionParameters
 		{
 			get { return actionParameters; }
 		}
