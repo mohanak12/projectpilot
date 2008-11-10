@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
 
 namespace ProjectPilot.Framework
@@ -37,14 +38,24 @@ namespace ProjectPilot.Framework
             set { projectRegistry = value; }
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public T DeserializeFromXmlFile<T>(string fileName)
+        public void DeleteFile(string fileName)
         {
-            using (Stream stream = File.Open(fileName, FileMode.Create))
+            File.Delete(fileName);
+        }
+
+        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
+        public T DeserializeFromFile<T>(string fileName)
+        {
+            using (Stream stream = File.Open(fileName, FileMode.Open))
             {
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
-                return (T) xmlSerializer.Deserialize(stream);
+                BinaryFormatter formatter = new BinaryFormatter();
+                return (T)formatter.Deserialize(stream);
             }
+        }
+
+        public void EnsurePathExists(string path)
+        {
+            CreateDirectories(path, true);
         }
 
         public string GetFullFileName(string domain, string localFileName)
@@ -96,12 +107,12 @@ namespace ProjectPilot.Framework
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public void SerializeIntoXmlFile<T>(string fileName, T value)
+        public void SerializeIntoFile<T>(string fileName, T value)
         {
             using (Stream stream = File.Open(fileName, FileMode.Create))
             {
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
-                xmlSerializer.Serialize(stream, value);
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(stream, value);
             }
         }
 

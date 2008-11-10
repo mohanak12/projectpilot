@@ -5,15 +5,17 @@ namespace ProjectPilot.Framework
 {
     public interface IFileManager
     {
+        void DeleteFile(string fileName);
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        T DeserializeFromXmlFile<T>(string fileName);
+        T DeserializeFromFile<T>(string fileName);
+        void EnsurePathExists(string path);
         string GetFullFileName(string domain, string localFileName);
         string GetProjectFullFileName(string projectId, string moduleId, string localFileName, bool ensureDirPathExists);
         string FetchProjectFile(string projectId, string moduleId, string localFileName);
         bool FileExists(string fileName);
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        void SerializeIntoXmlFile<T>(string fileName, T value);
+        void SerializeIntoFile<T>(string fileName, T value);
 
         /// <summary>
         /// Translates the relative file name of a file within ProjectPilot Web application's root to an URL through

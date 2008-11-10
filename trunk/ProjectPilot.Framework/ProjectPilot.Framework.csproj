@@ -67,6 +67,7 @@
     <Compile Include="Charts\FluentChart.cs" />
     <Compile Include="DefaultFileManager.cs" />
     <Compile Include="DefaultTemplateEngine.cs" />
+    <Compile Include="FileSessionStorage.cs" />
     <Compile Include="FileStatePersistence.cs" />
     <Compile Include="IFileManager.cs" />
     <Compile Include="IProjectPilotConfiguration.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Modules\StaticHtmlPageModule.cs" />
     <Compile Include="Runners\DefaultRunner.cs" />
     <Compile Include="Runners\IRunner.cs" />
+    <Compile Include="SessionState.cs" />
     <Compile Include="StandardTimeProvider.cs" />
     <Compile Include="Subversion\SubversionHistoryFacility.cs" />
   </ItemGroup>

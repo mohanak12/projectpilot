@@ -42,7 +42,7 @@ namespace ProjectPilot.Framework
             if (false == fileManager.FileExists (fullFileName))
                 return null;
 
-            T stateObject = fileManager.DeserializeFromXmlFile<T>(fullFileName);
+            T stateObject = fileManager.DeserializeFromFile<T>(fullFileName);
 
             return stateObject;
         }
@@ -52,7 +52,7 @@ namespace ProjectPilot.Framework
         {
             string fullFileName = ConstructStateFileName(true);
 
-            fileManager.SerializeIntoXmlFile<T>(fullFileName, state);
+            fileManager.SerializeIntoFile<T>(fullFileName, state);
         }
 
         private string ConstructStateFileName(bool ensurePathExists)
