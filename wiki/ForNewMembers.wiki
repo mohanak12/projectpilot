@@ -4,7 +4,8 @@
 
 == Important Links ==
  * Main project page on Google Code: http://code.google.com/p/projectpilot/
- * Subversion repository URL: https://projectpilot.googlecode.com/svn/trunk
+ * Subversion repository URL (for members): https://projectpilot.googlecode.com/svn/trunk
+ * Subversion repository URL (read-only): http://projectpilot.googlecode.com/svn/trunk
 
 == How To Become A Member ==
 This project is currently in its initial stages. Until a first stable release is achieved, the project will be of internal nature (just a selected group of developers from HERMES SoftLab). You need to be a project member in order to modify the code. This is how you become one:
