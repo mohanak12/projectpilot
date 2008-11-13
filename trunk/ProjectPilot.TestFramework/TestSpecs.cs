@@ -5,7 +5,7 @@ namespace ProjectPilot.TestFramework
     public class TestSpecs
     {
         /// <summary>
-        /// Gets total count of test cases in colelction.
+        /// Gets total count of test cases in collection.
         /// </summary>
         public int TestCasesCount
         {
@@ -32,6 +32,9 @@ namespace ProjectPilot.TestFramework
             return testCases[testCaseName];
         }
 
+        /// <summary>
+        /// Gets collection of test cases. <see cref="TestCase"/>
+        /// </summary>
         public Dictionary<string, TestCase> TestCases
         {
             get { return testCases; }
