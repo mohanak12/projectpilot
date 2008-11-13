@@ -155,6 +155,15 @@
      </Message>
     </Messages>
    </Namespace>
+   <Namespace Name="ProjectPilot.Tests.BuildScriptsTests">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-11-11 09:51:59Z">
+      <Issue>
+       <Item>ProjectPilot.Tests.BuildScriptsTests</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
    <Namespace Name="ProjectPilot.Tests.Framework">
     <Messages>
      <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-11-04 13:46:45Z">
