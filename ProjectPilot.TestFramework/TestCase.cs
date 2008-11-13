@@ -4,11 +4,18 @@ namespace ProjectPilot.TestFramework
 {
     public class TestCase
     {
+        /// <summary>
+        /// Creates new Test Case.
+        /// </summary>
+        /// <param name="testCaseName">Test case name</param>
         public TestCase(string testCaseName)
         {
             this.testCaseName = testCaseName;
         }
 
+        /// <summary>
+        /// Gets list of collected test actions. <see cref="TestAction"/>
+        /// </summary>
         public IList<TestAction> TestActions
         {
             get { return testActions; }
