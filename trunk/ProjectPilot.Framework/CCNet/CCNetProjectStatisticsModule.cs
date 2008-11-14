@@ -146,14 +146,14 @@ namespace ProjectPilot.Framework.CCNet
                 }
 
                 //Add data to graph parameters
-                AddExtractChartData(entry, graphParameter.ParametersList, newParameter);
+                AddExtractedData(entry, graphParameter.ParametersList, newParameter);
             }
 
             //Draw chart
             return DrawChart(graphParameter.ParametersList, graphParameter.GraphName, xLabels, xScale);
         }
 
-        private static void AddExtractChartData(CCNetProjectStatisticsBuildEntry entry, 
+        private static void AddExtractedData(CCNetProjectStatisticsBuildEntry entry, 
             IEnumerable<KeyValuePair<string, List<double>>> parameters, 
             bool newParameter)
         {
