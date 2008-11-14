@@ -5,10 +5,10 @@ namespace ProjectPilot.Framework.CCNet
 {
     public class CCNetProjectStatisticsGraph
     {
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public void AddParameter<T>(string parameterName)
+        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
+        public void AddParameter(string graphName, IDictionary<string, List<double>> parametersList)
         {
-            parameters.Add(new CCNetProjectStatisticsGraphParameter(parameterName, typeof(T)));
+            parameters.Add(new CCNetProjectStatisticsGraphParameter(graphName, parametersList));
         }
 
         private List<CCNetProjectStatisticsGraphParameter> parameters = new List<CCNetProjectStatisticsGraphParameter>();

@@ -19,80 +19,46 @@ namespace ProjectPilot.Tests.Framework.CCNet
         [Test]
         public void DrawBuildReportChartTest()
         {
-            CCNetProjectStatisticsData data;
-            using (Stream stream = File.OpenRead(@"..\..\..\Data\Samples\ccnet.stats.xml"))
-            {
-                data = CCNetProjectStatisticsPlugIn.Load(stream);
-            }
+            //CCNetProjectStatisticsData data;
+            //using (Stream stream = File.OpenRead(@"..\..\..\Data\Samples\ccnet.stats.xml"))
+            //{
+            //    data = CCNetProjectStatisticsPlugIn.Load(stream);
+            //}
 
-            //Project name and version
-            List<string> xLabels = new List<string>();
+            string graphName = "Build Report";
+
+            //List<CCNetProjectStatisticsGraph> graphs = new List<CCNetProjectStatisticsGraph>();
+
+            IDictionary<string, List<double>> parameters = new Dictionary<string, List<double>>();
+            parameters.Add("Success", new List<double>());
+            parameters.Add("Failure", new List<double>());
+            parameters.Add("Exception", new List<double>());
+
+            parameters["Success"].AddRange(new double[] {0, 0, 1, 1, 1, 0});
+            parameters["Failure"].AddRange(new double[] {2, 3, 1, 1, 0, 1});
+            parameters["Exception"].AddRange(new double[] {0, 0, 1, 1, 4, 2});
 
             //Locate data on X-Axis
-            List<int> xScale = new List<int> { 0 };
+            List<int> xScaleValues = new List<int> {0, 1, 2, 3, 4, 5};
 
-            //Values on Y-Axis
-            List<double> ySuccess = new List<double>();
-            List<double> yFailure = new List<double>();
-            List<double> yException = new List<double>();
-
-            //Fill X and Y Axis with data
-            foreach (CCNetProjectStatisticsBuildEntry build in data.Builds)
-            {
-                CCNetProjectStatisticsBuildEntry tempBuild = build;
-
-                if (build.BuildLabel != xLabels.Find(
-                                             temp => temp == tempBuild.BuildLabel))
-                {
-                    xLabels.Add(build.BuildLabel);
-                    //Each build name must increase scale on X-Axis
-                    xScale.Add(xScale[xScale.Count - 1] + 1);
-                    ySuccess.Add(0);
-                    yFailure.Add(0);
-                    yException.Add(0);
-                }
-
-                //Add build statistics
-                switch (build.BuildStatus)
-                {
-                    case "Success":
-
-                        ySuccess[ySuccess.Count - 1] = ySuccess[ySuccess.Count - 1] + 1;
-
-                        break;
-
-                    case "Failure":
-
-                        yFailure[yFailure.Count - 1] = yFailure[yFailure.Count - 1] + 1;
-
-                        break;
-
-                    case "Exception":
-
-                        yException[yException.Count - 1] = yException[yException.Count - 1] + 1;
-
-                        break;
-
-                    default:
-                        continue;
-                }
-            }
+            //Labels on X-Axis
+            List<string> xLabels = new List<string> { "Test0", "Test1", "Test2", "Test3", "Test4", "Test5" };
 
             //Draw chart
-            FluentChart chart = FluentChart.Create("Build Report", null, null)
-                //Failed builds
-                .AddLineSeries("Failed Builds", "Red")
-                .AddData(AddValuesToSortedList(xScale, yFailure))
-                .SetLabelsToXAxis(xLabels)
-                .SetSymbol(SymbolType.Circle, "Red", 4, true)
-                //Exceptions in build
-                .AddLineSeries("Exceptions", "Blue")
-                .AddData(AddValuesToSortedList(xScale, yException))
-                .SetSymbol(SymbolType.Circle, "Blue", 4, true)
-                //Successful builds
-                .AddLineSeries("Successful Builds", "Green")
-                .AddData(AddValuesToSortedList(xScale, ySuccess))
-                .SetSymbol(SymbolType.Circle, "Green", 4, true);
+            string[] colors = new string[] { "Green", "Red", "Blue", "Yellow", "Black", "Grey" };
+
+            //Draw chart
+            FluentChart chart = FluentChart.Create(graphName, null, null)
+                .SetLabelsToXAxis(xLabels);
+
+            int i = 0;
+            foreach (KeyValuePair<string, List<double>> parameter in parameters)
+            {
+                chart
+                    .AddLineSeries(parameter.Key, colors[i])
+                    .AddData(AddValuesToSortedList(xScaleValues, parameter.Value))
+                    .SetSymbol(SymbolType.Circle, colors[i++], 4, true);
+            }
 
             chart
                 .ExportToBitmap("test.png", ImageFormat.Png, 2000, 800);
@@ -114,20 +80,30 @@ namespace ProjectPilot.Tests.Framework.CCNet
         [Test,Ignore]
         public void GraphsTest()
         {
-            //CCNetProjectStatisticsPlugIn plugIn = new CCNetProjectStatisticsPlugIn();
-
             List<CCNetProjectStatisticsGraph> graphs = new List<CCNetProjectStatisticsGraph>();
 
-            CCNetProjectStatisticsGraph graph = new CCNetProjectStatisticsGraph();
-            graph.AddParameter<TimeSpan>("Build Report");
+            IDictionary<string, List<double>> dic = new Dictionary<string, List<double>>();
+            dic.Add("FxCop Warnings", new List<double>());
+            dic.Add("FxCop Errors", new List<double>());
 
+            CCNetProjectStatisticsGraph graph = new CCNetProjectStatisticsGraph();
+            graph.AddParameter("FxCop Info", dic);
             graphs.Add(graph);
+
+            //IDictionary<string, List<double>> dic = new Dictionary<string, List<double>>();
+            //dic.Add("Success", new List<double>());
+            //dic.Add("Failure", new List<double>());
+            //dic.Add("Exception", new List<double>());
+
+            //CCNetProjectStatisticsGraph graph = new CCNetProjectStatisticsGraph();
+            //graph.AddParameter("Build Report", dic);
+            //graphs.Add(graph);
 
             ProjectPilotConfiguration projectPilotConfiguration = new ProjectPilotConfiguration();
             projectPilotConfiguration.ProjectPilotWebAppRootUrl = "http://localhost/projectpilot/";
 
             ProjectRegistry projectRegistry = new ProjectRegistry();
-            Project project = new Project("bhwr", "");
+            Project project = new Project("CCNetStatistics", "");
             projectRegistry.AddProject(project);
 
             IFileManager fileManager = new DefaultFileManager("", projectPilotConfiguration);
@@ -149,7 +125,7 @@ namespace ProjectPilot.Tests.Framework.CCNet
             plugIn.Stub(action => action.FetchStatistics()).Return(data);
 
             CCNetProjectStatisticsModule module = new CCNetProjectStatisticsModule(plugIn, graphs, fileManager, templateEngine);
-            module.ProjectId = "bhwr";
+            module.ProjectId = "CCNetStatistics";
             project.AddModule(module);
 
             module.ExecuteTask(null);

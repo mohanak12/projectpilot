@@ -86,6 +86,27 @@ namespace ProjectPilot.Framework.CCNet
 
         #region Private methods
 
+        private static void AddBuildStatus(CCNetProjectStatisticsBuildEntry data, string status)
+        {
+            //Add build status parameters to parameter list
+            data.Parameters.Add("Success", "0");
+            data.Parameters.Add("Exception", "0");
+            data.Parameters.Add("Failure", "0");
+
+            switch (status)
+            {
+                case "Exception":
+                    data.Parameters["Exception"] = "1";
+                    break;
+                case "Failure":
+                    data.Parameters["Failure"] = "1";
+                    break;
+                case "Success":
+                    data.Parameters["Success"] = "1";
+                    break;
+            }
+        }
+
         private static void ReadStatistics(CCNetProjectStatisticsData data, XmlReader xmlReader)
         {
             xmlReader.Read();
@@ -104,9 +125,8 @@ namespace ProjectPilot.Framework.CCNet
 
                         CCNetProjectStatisticsBuildEntry entry = new CCNetProjectStatisticsBuildEntry();
                         entry.BuildLabel = ReadAttribute(xmlReader, "build-label");
-                        entry.BuildStatus = ReadAttribute(xmlReader, "status");
 
-                        ReadIntegrationEntry(entry, xmlReader);
+                        ReadIntegrationEntry(entry, ReadAttribute(xmlReader, "status"), xmlReader);
 
                         data.Builds.Add(entry);
 
@@ -117,9 +137,11 @@ namespace ProjectPilot.Framework.CCNet
             }
         }
 
-        private static void ReadIntegrationEntry(CCNetProjectStatisticsBuildEntry data, XmlReader xmlReader)
+        private static void ReadIntegrationEntry(CCNetProjectStatisticsBuildEntry data, string status, XmlReader xmlReader)
         {
             xmlReader.Read();
+
+            AddBuildStatus(data, status);
 
             while (xmlReader.NodeType != XmlNodeType.EndElement)
             {

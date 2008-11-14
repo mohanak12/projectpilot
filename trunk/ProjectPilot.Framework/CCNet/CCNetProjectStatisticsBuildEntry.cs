@@ -6,17 +6,7 @@ namespace ProjectPilot.Framework.CCNet
     {
         #region Public properties
 
-        public string BuildLabel
-        {
-            get { return buildLabel; }  
-            set { buildLabel = value; }
-        }
-
-        public string BuildStatus
-        {
-            get { return buildStatus; }
-            set { buildStatus = value; }
-        }
+        public string BuildLabel { get; set; }
 
         public IDictionary<string, string> Parameters
         {
@@ -27,8 +17,6 @@ namespace ProjectPilot.Framework.CCNet
 
         #region Private members
 
-        private string buildLabel;
-        private string buildStatus;
         private Dictionary<string, string> parameters = new Dictionary<string, string>();
 
         #endregion
