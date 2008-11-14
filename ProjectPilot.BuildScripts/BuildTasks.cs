@@ -83,6 +83,8 @@ namespace ProjectPilot.BuildScripts
 
         public BuildTasks CleanOutput()
         {
+            LogTarget("CleanOutput");
+
             foreach (ProjectToBuild project in projects)
             {
                 // first check that the project directory exists
@@ -113,6 +115,8 @@ namespace ProjectPilot.BuildScripts
 
         public BuildTasks CompileSolution()
         {
+            LogTarget("CompileSolution");
+
             AddProgramArgument(GetFullPath(productId, ".sln"));
             AddProgramArgument("/p:Configuration={0}", buildConfiguration);
             AddProgramArgument("/consoleloggerparameters:NoSummary");
@@ -139,11 +143,13 @@ namespace ProjectPilot.BuildScripts
         public void Dispose()
         {
             if (false == hasFailed)
-                Log("BUILD SUCCESSFUL");
+                Log("BUILD SUCCEEDED");
         }
 
         public BuildTasks GenerateCommonAssemblyInfo()
         {
+            LogTarget("GenerateCommonAssemblyInfo");
+
             if (fileVersion == null)
                 Fail("Assembly file version is not set.");
 
@@ -203,6 +209,8 @@ namespace ProjectPilot.BuildScripts
 
         public BuildTasks FxCop()
         {
+            LogTarget("FxCop");
+
             string fxProjectPath = GetFullPath(productId, ".FxCop");
 
             AssertFileExists("FxCop project file", fxProjectPath);
@@ -243,7 +251,7 @@ namespace ProjectPilot.BuildScripts
 
         public BuildTasks ReadVersionInfo()
         {
-            Log("Reading project version");
+            LogTarget("ReadVersionInfo");
 
             using (Stream stream = File.Open(GetFullPath(productId, ".ProjectVersion.txt"), FileMode.Open))
             {
@@ -271,13 +279,20 @@ namespace ProjectPilot.BuildScripts
                 processStartInfo.CreateNoWindow = true;
                 processStartInfo.ErrorDialog = false;
                 processStartInfo.RedirectStandardError = true;
+                processStartInfo.RedirectStandardOutput = true;
                 processStartInfo.UseShellExecute = false;
 
                 process.StartInfo = processStartInfo;
+                process.ErrorDataReceived += new DataReceivedEventHandler(process_ErrorDataReceived);
+                process.OutputDataReceived += new DataReceivedEventHandler(process_OutputDataReceived);
                 process.Start();
+
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
+
                 process.WaitForExit();
 
-                Log("Exit code: {0}", process.ExitCode);
+                //Log("Exit code: {0}", process.ExitCode);
 
                 if (process.ExitCode != 0)
                     Fail("Program '{0}' returned exit code {1}.", programExePath, process.ExitCode);
@@ -288,8 +303,19 @@ namespace ProjectPilot.BuildScripts
             return this;
         }
 
+        private void process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+        {
+        }
+
+        void process_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            Log("     [exec] {0}", e.Data);
+        }
+
         public BuildTasks RunTests()
         {
+            LogTarget("RunTests");
+
             string unitTestResultsDir = GetFullPath(buildDir);
             unitTestResultsDir = Path.Combine(unitTestResultsDir, "UnitTestResults");
 
@@ -345,6 +371,13 @@ namespace ProjectPilot.BuildScripts
         {
             return Path.Combine(productRootDir, String.Format(CultureInfo.InvariantCulture,
                 "{0}{1}", fileName, extension));
+        }
+
+        private void LogTarget (string targetName)
+        {
+            Log(String.Empty);
+            Log("{0}:", targetName);
+            Log(String.Empty);
         }
 
         private string buildConfiguration = "Release";
