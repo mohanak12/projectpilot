@@ -1,0 +1,8 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <div class="ModuleDiv">
+        <p class="ModuleHeader">$project.ProjectName Build Report Statistics</p>
+    
+    #foreach ($reportImage in $reportImages)
+        <img class="ModuleImage" src="$reportImage" alt="$reportImage" />
+    #end
+    </div>

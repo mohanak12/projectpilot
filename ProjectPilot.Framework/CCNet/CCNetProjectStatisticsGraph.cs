@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
 
 namespace ProjectPilot.Framework.CCNet
 {
@@ -15,5 +12,10 @@ namespace ProjectPilot.Framework.CCNet
         }
 
         private List<CCNetProjectStatisticsGraphParameter> parameters = new List<CCNetProjectStatisticsGraphParameter>();
+
+        public IList<CCNetProjectStatisticsGraphParameter> GraphParameters
+        {
+            get { return parameters; }
+        }
     }
 }

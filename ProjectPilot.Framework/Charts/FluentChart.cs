@@ -26,7 +26,7 @@ namespace ProjectPilot.Framework.Charts
             return this;
         }
 
-        public void AddData(SortedList<int, double> dataValues)
+        public FluentChart AddData(SortedList<int, double> dataValues)
         {
             int minValue = 0;
             int maxValue = dataValues.Keys[dataValues.Count - 1];
@@ -38,6 +38,8 @@ namespace ProjectPilot.Framework.Charts
                 else
                     AddDataPair(i, 0);
             }
+
+            return this;
         }
 
         public void AddDataByDate(SortedList<DateTime, double> dataValues, DateTime minDate, DateTime maxDate)
@@ -91,6 +93,13 @@ namespace ProjectPilot.Framework.Charts
             return this;
         }
 
+        public FluentChart SetLabelsToXAxis(IList<string> labels)
+        {
+            zedGraph.GraphPane.XAxis.Type = AxisType.Text;
+            zedGraph.GraphPane.XAxis.Scale.TextLabels = labels.ToArray();
+            return this;
+        }
+
         public FluentChart SetLineWidth(float lineWidth)
         {
             LineItem lineItem = (LineItem)currentCurveItem;
@@ -99,11 +108,17 @@ namespace ProjectPilot.Framework.Charts
         }
 
         [CLSCompliant(false)]
-        public FluentChart SetSymbol(SymbolType symbolType, string symbolColor, float symbolSize)
+        public FluentChart SetSymbol(SymbolType symbolType, string symbolColor, float symbolSize, bool fillSymbol)
         {
             LineItem lineItem = (LineItem)currentCurveItem;
             lineItem.Symbol = new Symbol(symbolType, Color.FromName(symbolColor));
             lineItem.Symbol.Size = symbolSize;
+            
+            if (fillSymbol)
+            {
+                lineItem.Symbol.Fill = new Fill(Color.FromName(symbolColor));
+            }
+
             return this;
         }
 
