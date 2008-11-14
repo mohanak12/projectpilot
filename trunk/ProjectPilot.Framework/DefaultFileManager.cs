@@ -3,7 +3,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Xml.Serialization;
 
 namespace ProjectPilot.Framework
 {
@@ -17,25 +16,10 @@ namespace ProjectPilot.Framework
             this.configuration = configuration;
         }
 
-        public DefaultFileManager(
-            string storageRootDir, 
-            IProjectPilotConfiguration configuration,
-            IProjectRegistry projectRegistry)
-            : this (storageRootDir, configuration)
-        {
-            this.projectRegistry = projectRegistry;
-        }
-
         public IProjectPilotConfiguration Configuration
         {
             get { return configuration; }
             set { configuration = value; }
-        }
-
-        public IProjectRegistry ProjectRegistry
-        {
-            get { return projectRegistry; }
-            set { projectRegistry = value; }
         }
 
         public void DeleteFile(string fileName)
@@ -71,8 +55,6 @@ namespace ProjectPilot.Framework
 
         public string GetProjectFullFileName(string projectId, string moduleId, string localFileName, bool ensureDirPathExists)
         {
-            Project project = projectRegistry.GetProject(projectId);
-
             // construct the file name
             string fullFileName = String.Format(CultureInfo.InvariantCulture,
                                                 "Storage{0}Projects{0}{1}{0}{2}{0}{3}",
@@ -90,8 +72,6 @@ namespace ProjectPilot.Framework
 
         public string FetchProjectFile(string projectId, string moduleId, string localFileName)
         {
-            Project project = projectRegistry.GetProject(projectId);
-
             // construct the file name
             string fullFileName = GetProjectFullFileName(projectId, moduleId, localFileName, false);
 
@@ -144,7 +124,6 @@ namespace ProjectPilot.Framework
         }
 
         private IProjectPilotConfiguration configuration;
-        private IProjectRegistry projectRegistry;
         private string storageRootDir;
     }
 }

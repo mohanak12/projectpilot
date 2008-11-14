@@ -52,7 +52,7 @@ namespace ProjectPilot.Portal
             projectPilotConfiguration.ProjectPilotWebAppRootUrl = this.Request.ApplicationPath;
 
             IFileManager fileManager = new DefaultFileManager(
-                @"D:\MyStuff\projects\ProjectPilot\ProjectPilot.Tests\bin\Debug", projectPilotConfiguration, projectRegistry);
+                @"D:\MyStuff\projects\ProjectPilot\ProjectPilot.Tests\bin\Debug", projectPilotConfiguration);
 
             projectRegistry.FileManager = fileManager;
 
