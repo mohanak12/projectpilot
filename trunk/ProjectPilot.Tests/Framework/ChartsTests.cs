@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
 using MbUnit.Framework;
 using ProjectPilot.Framework.Charts;
 using ZedGraph;
@@ -31,7 +28,7 @@ namespace ProjectPilot.Tests.Framework
             chart
                 .AddLineSeries("Test bar 2", "blue")
                 .SetLineWidth(2)
-                .SetSymbol(SymbolType.Circle, "green", 5);
+                .SetSymbol(SymbolType.Circle, "green", 5, false);
 
             for (int i = 0; i < 100; i++)
             {

@@ -5,31 +5,46 @@ using System.Xml;
 
 namespace ProjectPilot.Framework.CCNet
 {
-    //[SuppressMessage("Microsoft.Design", "CA1053:StaticHolderTypesShouldNotHaveConstructors")]
-    public class CCNetProjectStatisticsPlugIn
+    [SuppressMessage("Microsoft.Design", "CA1053:StaticHolderTypesShouldNotHaveConstructors")]
+    public class CCNetProjectStatisticsPlugIn : ICCNetProjectStatisticsPlugIn
     {
-        #region Ctor
+        //#region Ctor
 
-        public CCNetProjectStatisticsPlugIn()
-        {}
+        //public CCNetProjectStatisticsPlugIn()
+        //{}
 
-        public CCNetProjectStatisticsPlugIn(Uri url, string projectName)
-        {
-            this.url = url;
-            this.projectName = projectName;
-        }
+        //public CCNetProjectStatisticsPlugIn(Uri url, string projectName)
+        //{
+        //    this.url = url;
+        //    this.projectName = projectName;
+        //}
 
-        #endregion
+        //#endregion
 
         #region Public method
 
         public CCNetProjectStatisticsData FetchStatistics()
         {
-            //throw new NotImplementedException();
-            return null;
+            CCNetProjectStatisticsData data;
+
+            //Replace with correct value
+            //RemoteCruiseManagerFactory factory = new RemoteCruiseManagerFactory();
+            //Uri url = new Uri(string.Format(CultureInfo.InvariantCulture, "tcp://firefly:21234/CruiseManager.rem"));
+            //string projectName = "ProjectPilot";
+            //ICruiseManager mgr = factory.GetCruiseManager(url.ToString());
+
+            //string proj = mgr.GetProject(projectName);
+            //string stat = mgr.GetStatisticsDocument(projectName);
+
+            using (Stream stream = File.OpenRead(@"..\..\..\Data\Samples\ccnet.stats.xml"))
+            {
+                data = Load(stream);
+            }
+
+            return data;
         }
 
-        static public CCNetProjectStatisticsData Load(Stream stream)
+        public static CCNetProjectStatisticsData Load(Stream stream)
         {
             CCNetProjectStatisticsData data = new CCNetProjectStatisticsData();
 
@@ -140,15 +155,15 @@ namespace ProjectPilot.Framework.CCNet
 
         #endregion
 
-        #region Private members
+        //#region Private members
 
 
-        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        private Uri url;
+        //[SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
+        //private Uri url;
 
-        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        private string projectName;
+        //[SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
+        //private string projectName;
 
-        #endregion
+        //#endregion
     }
 }
