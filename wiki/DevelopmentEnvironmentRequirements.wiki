@@ -1,5 +1,6 @@
 #summary What requirements are needed for the development environment?
 
+ * IIS installed on the machine (IIS 6 is enough)
  * [http://www.microsoft.com/downloads/details.aspx?familyid=AB99342F-5D1A-413D-8319-81DA479AB0D7&displaylang=en .NET 3.5 Service pack 1]
  * VisualStudio 2008 (Standard should be enough)
  * ASP.NET MVC add-on for VS (currently beta)
