@@ -57,6 +57,7 @@
     <Compile Include="CodeAnalysis\ICodeAnalyzer.cs" />
     <Compile Include="CodeAnalysis\ICodeEntity.cs" />
     <Compile Include="CodeAnalysis\InterfaceEntity.cs" />
+    <Compile Include="CodeAnalysis\UmlClassDiagramGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

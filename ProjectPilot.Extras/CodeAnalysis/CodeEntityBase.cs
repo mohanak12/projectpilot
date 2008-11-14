@@ -4,6 +4,17 @@ namespace ProjectPilot.Extras.CodeAnalysis
 {
     public abstract class CodeEntityBase : ICodeEntity
     {
+        public CodeEntityAnalysisState AnalysisState
+        {
+            get { return analysisState; }
+            set { analysisState = value; }
+        }
+
+        public ICollection<ICodeEntity> Ancestors
+        {
+            get { return ancestors; }
+        }
+
         public string EntityFullName
         {
             get { return entityFullName; }
@@ -12,6 +23,12 @@ namespace ProjectPilot.Extras.CodeAnalysis
         public string EntityShortName
         {
             get { return entityShortName; }
+        }
+
+        public int UniqueId
+        {
+            get { return uniqueId; }
+            set { uniqueId = value; }
         }
 
         public void AddAncestor (ICodeEntity ancestor)
@@ -27,8 +44,10 @@ namespace ProjectPilot.Extras.CodeAnalysis
             this.entityFullName = entityFullName;
         }
 
+        private CodeEntityAnalysisState analysisState = CodeEntityAnalysisState.NotAnalyzed;
         private List<ICodeEntity> ancestors = new List<ICodeEntity> ();
         private readonly string entityFullName;
         private string entityShortName;
+        private int uniqueId;
     }
 }
