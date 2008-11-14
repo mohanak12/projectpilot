@@ -338,6 +338,37 @@
      </Module>
     </Modules>
    </Target>
+   <Target Name="$(ProjectDir)/ProjectPilot.TestFramework/bin/Release/ProjectPilot.TestFramework.dll">
+    <Modules>
+     <Module Name="projectpilot.testframework.dll">
+      <Namespaces>
+       <Namespace Name="ProjectPilot.TestFramework">
+        <Types>
+         <Type Name="BrowserType">
+          <Members>
+           <Member Name="#Firefox">
+            <Messages>
+             <Message Id="Firefox" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-11-14 10:26:27Z">
+              <Issue Name="Member">
+               <Item>Firefox</Item>
+               <Item>'BrowserType.Firefox'</Item>
+              </Issue>
+              <Notes>
+               <User Name="ajeznik">
+                <Note Id="0" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
    <Target Name="$(ProjectDir)/ProjectPilot.Tests/bin/Release/ProjectPilot.Tests.dll">
     <Modules>
      <Module Name="projectpilot.tests.dll">
@@ -415,6 +446,11 @@
     </Modules>
    </Target>
   </Targets>
+  <Notes>
+   <User Name="ajeznik">
+    <Note Id="0" Modified="2008-11-14 10:34:54Z">Firefox is spelled correct</Note>
+   </User>
+  </Notes>
   <Rules>
    <Rule TypeName="AvoidEmptyInterfaces" Category="Microsoft.Design" CheckId="CA1040">
     <Resolution Name="Default">Define a custom attribute to replace {0}.</Resolution>
@@ -424,6 +460,9 @@
    </Rule>
    <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
     <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
+    <Resolution Name="Member">Correct the spelling of '{0}' in member name {1} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707">
     <Resolution Name="Type">Remove the underscores from type name {0}.</Resolution>
