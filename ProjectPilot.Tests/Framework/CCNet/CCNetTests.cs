@@ -19,16 +19,6 @@ namespace ProjectPilot.Tests.Framework.CCNet
         [Test]
         public void DrawBuildReportChartTest()
         {
-            //CCNetProjectStatisticsData data;
-            //using (Stream stream = File.OpenRead(@"..\..\..\Data\Samples\ccnet.stats.xml"))
-            //{
-            //    data = CCNetProjectStatisticsPlugIn.Load(stream);
-            //}
-
-            string graphName = "Build Report";
-
-            //List<CCNetProjectStatisticsGraph> graphs = new List<CCNetProjectStatisticsGraph>();
-
             IDictionary<string, List<double>> parameters = new Dictionary<string, List<double>>();
             parameters.Add("Success", new List<double>());
             parameters.Add("Failure", new List<double>());
@@ -48,7 +38,7 @@ namespace ProjectPilot.Tests.Framework.CCNet
             string[] colors = new string[] { "Green", "Red", "Blue", "Yellow", "Black", "Grey" };
 
             //Draw chart
-            FluentChart chart = FluentChart.Create(graphName, null, null)
+            FluentChart chart = FluentChart.Create("Build Report", null, null)
                 .SetLabelsToXAxis(xLabels);
 
             int i = 0;
@@ -62,19 +52,6 @@ namespace ProjectPilot.Tests.Framework.CCNet
 
             chart
                 .ExportToBitmap("test.png", ImageFormat.Png, 2000, 800);
-        }
-
-        [Test]
-        public void Test()
-        {
-            RemoteCruiseManagerFactory factory = new RemoteCruiseManagerFactory();
-            Uri url = new Uri(string.Format(CultureInfo.InvariantCulture, "tcp://firefly:21234/CruiseManager.rem"));
-            string projectName = "ProjectPilot";
-            ICruiseManager mgr = factory.GetCruiseManager(url.ToString());
-
-            string proj = mgr.GetProject(projectName);
-            string stat = mgr.GetStatisticsDocument(projectName);
-            //File.WriteAllText("ccnet.stats.xml", stat);
         }
 
         [Test,Ignore]
@@ -129,6 +106,19 @@ namespace ProjectPilot.Tests.Framework.CCNet
             project.AddModule(module);
 
             module.ExecuteTask(null);
+        }
+
+        [Test]
+        public void Test()
+        {
+            RemoteCruiseManagerFactory factory = new RemoteCruiseManagerFactory();
+            Uri url = new Uri(string.Format(CultureInfo.InvariantCulture, "tcp://firefly:21234/CruiseManager.rem"));
+            string projectName = "ProjectPilot";
+            ICruiseManager mgr = factory.GetCruiseManager(url.ToString());
+
+            string proj = mgr.GetProject(projectName);
+            string stat = mgr.GetStatisticsDocument(projectName);
+            //File.WriteAllText("ccnet.stats.xml", stat);
         }
 
         #region Private helpers
