@@ -5,6 +5,6 @@
  * VisualStudio 2008 (Standard should be enough)
  * ASP.NET MVC add-on for VS (currently beta)
  * Resharper 4.1 (it's not absolutely necessary, just recommended)
- * TestDriven.NET (it's free for open-source projects)
+ * TestDriven.NET (it's free for open-source projects, but give gmail account when registering)
  * [http://www.gallio.org/Downloads.aspx Gallio]
  * AnkhSVN 
