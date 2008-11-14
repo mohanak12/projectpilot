@@ -1,10 +1,13 @@
-﻿using System.Threading;
+﻿using System.IO;
+using System.Threading;
 using Castle.Core;
 using Castle.Windsor;
 using MbUnit.Framework;
 using ProjectPilot.Framework;
 using ProjectPilot.Framework.Modules;
+using ProjectPilot.Framework.RevisionControlHistory;
 using ProjectPilot.Framework.Runners;
+using ProjectPilot.Framework.Subversion;
 using Rhino.Mocks;
 
 namespace ProjectPilot.Tests.Framework.Runners
@@ -25,7 +28,18 @@ namespace ProjectPilot.Tests.Framework.Runners
             WindsorContainerGraphs.GenerateDependencyGraph(windsorContainer, "graph.dot");
 
             IStatePersistence mockStatePersistence = MockRepository.GenerateMock<IStatePersistence>();
-            //mockStatePersistence.Expect(obj => obj.LoadState<>() )
+
+            // prepare test history data
+            RevisionControlHistoryData data;
+            using (Stream stream = File.OpenRead(@"..\..\..\Data\Samples\svn-log.xml"))
+            {
+                data = SubversionHistoryFacility.LoadHistory(stream);
+            }
+
+            IRevisionControlHistoryFacility mockRcsHistoryFacility = MockRepository.GenerateMock<IRevisionControlHistoryFacility>();
+            mockRcsHistoryFacility.Stub(action => action.FetchHistory()).Return(data);
+
+            windsorContainer.Kernel.AddComponentInstance("RcsHistoryFacility", typeof(IRevisionControlHistoryFacility), mockRcsHistoryFacility);
 
             using (IRunner runner = windsorContainer.Resolve<IRunner>())
             {
@@ -34,7 +48,7 @@ namespace ProjectPilot.Tests.Framework.Runners
                 IProjectRegistry projectRegistry = windsorContainer.Resolve<IProjectRegistry>();
                 Assert.AreEqual(1, projectRegistry.ProjectsCount);
 
-                Project project = projectRegistry.GetProject("bhwr");
+                Project project = projectRegistry.GetProject("projectpilot");
                 Assert.IsNotNull(project);
 
                 Assert.AreEqual(1, project.ModulesCount);
@@ -43,6 +57,20 @@ namespace ProjectPilot.Tests.Framework.Runners
                 runner.Start();
                 Thread.Sleep(5000);
             }
+        }
+
+        [SetUp]
+        public void Setup()
+        {
+            // copy templates
+            DirectoryInfo directory = new DirectoryInfo(@"..\..\..\Data\Templates");
+
+            if (false == Directory.Exists(@"Storage"))
+                Directory.CreateDirectory(@"Storage");
+            if (false == Directory.Exists(@"Storage\Templates"))
+                Directory.CreateDirectory(@"Storage\Templates");
+            foreach (FileInfo templateFile in directory.GetFiles())
+                templateFile.CopyTo(Path.Combine(@"Storage\Templates", templateFile.Name));
         }
 
         void Kernel_HandlerRegistered(Castle.MicroKernel.IHandler handler, ref bool stateChanged)

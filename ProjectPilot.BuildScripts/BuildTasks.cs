@@ -57,6 +57,14 @@ namespace ProjectPilot.BuildScripts
             return this;
         }
 
+        public BuildTasks AddTestProject(string projectName)
+        {
+            ProjectToBuild project = new ProjectToBuild(projectName);
+            project.IsTestProject = true;
+            projects.Add(project);
+            return this;
+        }
+
         public BuildTasks AddWebProject(string projectName)
         {
             ProjectToBuild project = new ProjectToBuild(projectName);
@@ -276,6 +284,30 @@ namespace ProjectPilot.BuildScripts
             }
 
             programArgs.Clear();
+
+            return this;
+        }
+
+        public BuildTasks RunTests()
+        {
+            string unitTestResultsDir = GetFullPath(buildDir);
+            unitTestResultsDir = Path.Combine(unitTestResultsDir, "UnitTestResults");
+
+            int testRun = 0;
+            foreach (ProjectToBuild project in projects)
+            {
+                if (false == project.IsTestProject)
+                    continue;
+
+                AddProgramArgument(GetFullPath(project.GetProjectAssemblyFileName(buildConfiguration)));
+                AddProgramArgument("/report-directory:{0}", unitTestResultsDir);
+                AddProgramArgument("/report-name-format:TestResults{0}-results", testRun);
+                AddProgramArgument("/report-type:xml");
+                AddProgramArgument("/verbosity:verbose");
+                RunProgram(GetFullPath(@"lib\Gallio\bin\Gallio.Echo.exe"));
+
+                testRun++;
+            }
 
             return this;
         }

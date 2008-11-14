@@ -28,6 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		ChangeLog.txt = ChangeLog.txt
 		CustomDictionary.xml = CustomDictionary.xml
 		Scripts\NAntCommon.build = Scripts\NAntCommon.build
+		NewBuild.bat = NewBuild.bat
 		ProjectPilot.build = ProjectPilot.build
 		ProjectPilot.FxCop = ProjectPilot.FxCop
 		ProjectPilot.ProjectVersion.txt = ProjectPilot.ProjectVersion.txt

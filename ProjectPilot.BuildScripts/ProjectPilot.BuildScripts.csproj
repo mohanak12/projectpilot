@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="BuildFailedException.cs" />
     <Compile Include="BuildLogger.cs" />
+    <Compile Include="BuildScript.cs" />
     <Compile Include="BuildTasks.cs" />
     <Compile Include="IBuildLogger.cs" />
     <Compile Include="ProjectToBuild.cs" />

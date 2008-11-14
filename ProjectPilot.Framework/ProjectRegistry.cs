@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace ProjectPilot.Framework
@@ -37,6 +38,9 @@ namespace ProjectPilot.Framework
 
         public Project GetProject(string projectId)
         {
+            if (projectId == null)
+                throw new ArgumentNullException ("projectId");                
+            
             return projects[projectId];
         }
 

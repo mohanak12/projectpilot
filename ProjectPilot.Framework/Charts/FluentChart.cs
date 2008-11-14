@@ -42,7 +42,7 @@ namespace ProjectPilot.Framework.Charts
             return this;
         }
 
-        public void AddDataByDate(SortedList<DateTime, double> dataValues, DateTime minDate, DateTime maxDate)
+        public FluentChart AddDataByDate(SortedList<DateTime, double> dataValues, DateTime minDate, DateTime maxDate)
         {
             for (DateTime date = minDate; date <= maxDate; date = date.AddDays(1))
             {
@@ -51,6 +51,8 @@ namespace ProjectPilot.Framework.Charts
                 else
                     AddDataPair((double)new XDate(date), 0);
             }
+
+            return this;
         }
 
         public FluentChart AddLineSeries(string label, string color)

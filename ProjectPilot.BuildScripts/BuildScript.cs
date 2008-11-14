@@ -1,22 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using MbUnit.Framework;
 using ProjectPilot.BuildScripts;
 
-namespace ProjectPilot.Tests.BuildScriptsTests
+//css_ref bin\Debug\ProjectPilot.BuildScripts.dll;
+
+namespace ProjectPilot.BuildScripts
 {
-    [TestFixture]
-    public class TestBuild
+    public class BuildScript
     {
-        [Test,Ignore]
-        public void Test()
+        static public int Main(string[] args)
         {
             using (BuildTasks script = new BuildTasks("ProjectPilot"))
             {
                 script
-                    .SetProductRootDir(@"..\..\..")
+                    //.SetProductRootDir(@"..\..\..")
                     .SetCompanyInfo("HERMES SoftLab d.d.", "Copyright (C) 2008 HERMES SoftLab d.d.", "")
 
                     .ReadVersionInfo()
@@ -36,6 +34,8 @@ namespace ProjectPilot.Tests.BuildScriptsTests
 
                     .Finished();
             }
+
+            return 0;
         }
     }
 }

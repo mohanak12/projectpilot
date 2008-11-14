@@ -130,7 +130,7 @@ namespace ProjectPilot.Tests.Framework.CCNet
             Project project = new Project("bhwr", "");
             projectRegistry.AddProject(project);
 
-            IFileManager fileManager = new DefaultFileManager("", projectPilotConfiguration, projectRegistry);
+            IFileManager fileManager = new DefaultFileManager("", projectPilotConfiguration);
             projectRegistry.FileManager = fileManager;
 
             IFileManager templateFileManager = MockRepository.GenerateStub<IFileManager>();

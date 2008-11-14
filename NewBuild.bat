@@ -1,0 +1,1 @@
+lib\cs-script\cscs.exe ProjectPilot.BuildScripts\BuildScript.cs

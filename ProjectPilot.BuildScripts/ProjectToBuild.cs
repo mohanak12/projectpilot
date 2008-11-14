@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Globalization;
+using System.Linq;
 using System.Text;
 
 namespace ProjectPilot.BuildScripts
@@ -16,6 +17,12 @@ namespace ProjectPilot.BuildScripts
             set { isMainProject = value; }
         }
 
+        public bool IsTestProject
+        {
+            get { return isTestProject; }
+            set { isTestProject = value; }
+        }
+
         public bool IsWebProject
         {
             get { return isWebProject; }
@@ -27,7 +34,17 @@ namespace ProjectPilot.BuildScripts
             get { return projectName; }
         }
 
+        public string GetProjectAssemblyFileName (string buildConfiguration)
+        {
+            return string.Format(
+                CultureInfo.InvariantCulture,
+                @"{0}\bin\{1}\{0}.dll",
+                projectName,
+                buildConfiguration);
+        }
+
         private bool isMainProject;
+        private bool isTestProject;
         private bool isWebProject;
         private string projectName;
     }

@@ -48,6 +48,7 @@ namespace ProjectPilot.Framework
         public void AddModule(IProjectModule projectModule)
         {
             modules.Add(projectModule.ModuleId, projectModule);
+            projectModule.ProjectId = projectId;
         }
 
         public IProjectModule GetModule (string moduleId)
