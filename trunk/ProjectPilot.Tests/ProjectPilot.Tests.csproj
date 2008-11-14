@@ -82,6 +82,7 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="BuildScriptsTests\TestBuild.cs" />
+    <Compile Include="Extras\CodeAnalysisTests.cs" />
     <Compile Include="Framework\CCNet\CCNetProjectStatisticsBuildEntryTest.cs" />
     <Compile Include="Framework\CCNet\CCNetTests.cs" />
     <Compile Include="Framework\ChartsTests.cs" />
@@ -99,6 +100,10 @@
     <ProjectReference Include="..\ProjectPilot.BuildScripts\ProjectPilot.BuildScripts.csproj">
       <Project>{37E1DED5-072D-456C-9FC2-465A7784C56F}</Project>
       <Name>ProjectPilot.BuildScripts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProjectPilot.Extras\ProjectPilot.Extras.csproj">
+      <Project>{59083E4A-3659-4D8E-805F-52321D1B84DE}</Project>
+      <Name>ProjectPilot.Extras</Name>
     </ProjectReference>
     <ProjectReference Include="..\ProjectPilot.Framework\ProjectPilot.Framework.csproj">
       <Project>{C87F10BF-4132-4B75-9C07-CB0B1FCE6440}</Project>
