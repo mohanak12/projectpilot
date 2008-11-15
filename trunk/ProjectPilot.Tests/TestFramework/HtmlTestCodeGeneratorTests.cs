@@ -24,7 +24,7 @@ namespace ProjectPilot.Tests.TestFramework
 			testCase.AddTestAction(new TestAction("NavigateTo", new TestActionParameter("url", "http://test.aspx")));
 			testSpecs.AddTestCase(testCase);
 
-			testCase = new TestCase("Select module");
+			testCase = new TestCase("Select module", "Functional");
 			testCase.AddTestAction(new TestAction("SelectModule", new TestActionParameter("name", "Mobi-Info")));
 			testSpecs.AddTestCase(testCase);
 
@@ -32,9 +32,9 @@ namespace ProjectPilot.Tests.TestFramework
 			ITestCodeGenerator generator = new HtmlTestCodeGenerator(mockWriter);
 
 			mockWriter.Expect(writer => writer.WriteLine("<body>"));
-			mockWriter.Expect(writer => writer.WriteLine("<h1>Open Page</h1>"));
+			mockWriter.Expect(writer => writer.WriteLine("<h1>Open Page <i>Smoke</i></h1>"));
 			mockWriter.Expect(writer => writer.WriteLine("<i>NavigateTo</i>http://test.aspx<br />"));
-			mockWriter.Expect(writer => writer.WriteLine("<h1>Select module</h1>"));
+			mockWriter.Expect(writer => writer.WriteLine("<h1>Select module <i>Functional</i></h1>"));
 			mockWriter.Expect(writer => writer.WriteLine("<i>SelectModule</i>Mobi-Info<br />"));
 			mockWriter.Expect(writer => writer.WriteLine("</body>"));
 
