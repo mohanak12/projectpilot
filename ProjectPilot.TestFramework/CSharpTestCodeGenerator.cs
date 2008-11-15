@@ -16,7 +16,9 @@ namespace ProjectPilot.TestFramework
             ICollection<string> testCasesKeys = testCases.Keys;
             foreach (string testCaseName in testCasesKeys)
             {
-                WriteLine("void {0}()", testCaseName);
+				WriteLine("[Test]");
+				WriteLine("[Category(\"{0}\")]", testCases[testCaseName].TestCaseCategory);
+				WriteLine("public void {0}()", testCaseName);
                 WriteLine("{");
                 WriteLine("    Tester tester = new Tester();");
 

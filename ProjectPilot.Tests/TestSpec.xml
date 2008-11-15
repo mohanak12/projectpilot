@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TestSpecs>
+	<!-- just a comment -->
+	<TestCase id='Open home page' category='Smoke'>
+		<OpenPage url='http://localhost/ProjectPilot.Portal'></OpenPage>
+	</TestCase>
+	<TestCase id='Search for projects' category='Smoke'>
+		<OpenPage url='http://localhost/ProjectPilot.Portal'></OpenPage>
+		<ClickButton id='Search'></ClickButton>
+	</TestCase>
+	<TestCase id='Select project Ebsy' category='Regression'>
+		<OpenPage url='http://localhost/ProjectPilot.Portal'></OpenPage>
+		<TypeText id='SearchQuery'>Ebsy</TypeText>
+		<ClickButton id='Search'></ClickButton>
+		<ClickLink href='/home/Ebsy/'></ClickLink>
+	</TestCase>
+</TestSpecs>

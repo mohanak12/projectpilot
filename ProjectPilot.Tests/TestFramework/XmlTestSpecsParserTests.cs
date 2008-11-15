@@ -21,7 +21,7 @@ namespace ProjectPilot.Tests.TestFramework
         <selectProject>Mobi-Info</selectProject>
         <selectModule name='SVN' description='some fancy module'>ignored description</selectModule>
     </TestCase>
-    <TestCase id='myFirstTestCase2'>
+    <TestCase id='myFirstTestCase2' category='Smoke'>
         <goToHomePage/>
     </TestCase>
 </TestSpecs>

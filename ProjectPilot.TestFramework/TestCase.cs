@@ -4,7 +4,21 @@ namespace ProjectPilot.TestFramework
 {
     public class TestCase
     {
-        /// <summary>
+    	/// <summary>
+    	/// Creates new test case with speified category.
+    	/// </summary>
+    	/// <param name="testCaseName">Name of the test case.</param>
+    	/// <param name="testCaseCategory">Test category (Smoke, Regression, Functional, ...)</param>
+		public TestCase(string testCaseName,
+    	                string testCaseCategory)
+    	{
+    		this.testCaseName = testCaseName;
+    		this.testCaseCategory = testCaseCategory;
+    	}
+
+
+
+    	/// <summary>
         /// Creates new Test Case.
         /// </summary>
         /// <param name="testCaseName">Test case name</param>
@@ -13,7 +27,9 @@ namespace ProjectPilot.TestFramework
             this.testCaseName = testCaseName;
         }
 
-        /// <summary>
+
+
+    	/// <summary>
         /// Gets list of collected test actions. <see cref="TestAction"/>
         /// </summary>
         public IList<TestAction> TestActions
@@ -21,7 +37,7 @@ namespace ProjectPilot.TestFramework
             get { return testActions; }
         }
 
-        /// <summary>
+    	/// <summary>
         /// Total number of collected test actions.
         /// </summary>
         /// 
@@ -30,8 +46,16 @@ namespace ProjectPilot.TestFramework
             get { return testActions.Count; }
         }
 
-        /// <summary>
-        /// Gets or sets the TestCase name.
+    	/// <summary>
+    	/// Gets testcase category.
+    	/// </summary>
+		public string TestCaseCategory
+    	{
+    		get { return testCaseCategory; }
+    	}
+
+    	/// <summary>
+        /// Gets the TestCase name.
         /// </summary>
         public string TestCaseName
         {
@@ -73,8 +97,9 @@ namespace ProjectPilot.TestFramework
         /// <summary>
         /// Collection of Test actions.
         /// </summary>
-        private List<TestAction> testActions = new List<TestAction>();
+        private readonly List<TestAction> testActions = new List<TestAction>();
 
-        private string testCaseName;
+        private readonly string testCaseName;
+    	private readonly string testCaseCategory = "Smoke";
     }
 }

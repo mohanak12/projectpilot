@@ -22,7 +22,7 @@ namespace ProjectPilot.TestFramework
 			Dictionary<string, TestCase> testCases = testSpecs.TestCases;
 			foreach (string testCaseName in testCases.Keys)
 			{
-				WriteLine("<h1>{0}</h1>", testCaseName);
+				WriteLine("<h1>{0} <i>{1}</i></h1>", testCaseName, testCases[testCaseName].TestCaseCategory);
 				TestCase testCase = testSpecs.GetTestCase(testCaseName);
 				foreach (TestAction testAction in testCase.TestActions)
 				{
