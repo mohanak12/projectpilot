@@ -138,15 +138,6 @@
      </Message>
     </Messages>
    </Namespace>
-   <Namespace Name="ProjectPilot.Framework.Metrics">
-    <Messages>
-     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2008-11-21 12:42:44Z">
-      <Issue>
-       <Item>ProjectPilot.Framework.Metrics</Item>
-      </Issue>
-     </Message>
-    </Messages>
-   </Namespace>
    <Namespace Name="ProjectPilot.Framework.Runners">
     <Messages>
      <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-11-04 13:46:45Z">
@@ -257,15 +248,6 @@
      <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-11-04 13:46:45Z">
       <Issue>
        <Item>ProjectPilot.Tests.Framework.CCNet</Item>
-      </Issue>
-     </Message>
-    </Messages>
-   </Namespace>
-   <Namespace Name="ProjectPilot.Tests.Framework.Metrics">
-    <Messages>
-     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2008-11-21 12:42:44Z">
-      <Issue>
-       <Item>ProjectPilot.Tests.Framework.Metrics</Item>
       </Issue>
      </Message>
     </Messages>
@@ -478,43 +460,6 @@
          </Type>
         </Types>
        </Namespace>
-       <Namespace Name="ProjectPilot.Tests.Framework.Metrics">
-        <Types>
-         <Type Name="LocStatsTest">
-          <Members>
-           <Member Name="#a">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2008-11-21 12:42:44Z">
-              <Issue>
-               <Item>'LocStatsTest.a'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Bla()">
-            <Messages>
-             <Message Id="Bla" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-11-21 12:42:44Z">
-              <Issue Name="Member">
-               <Item>Bla</Item>
-               <Item>'LocStatsTest.Bla()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Blaa()">
-            <Messages>
-             <Message Id="Blaa" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-11-21 12:42:44Z">
-              <Issue Name="Member">
-               <Item>Blaa</Item>
-               <Item>'LocStatsTest.Blaa()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
        <Namespace Name="ProjectPilot.Tests.Framework.Subversion">
         <Types>
          <Type Name="HistoryTests">
@@ -563,12 +508,7 @@
    <Rule TypeName="AvoidEmptyInterfaces" Category="Microsoft.Design" CheckId="CA1040">
     <Resolution Name="Default">Define a custom attribute to replace {0}.</Resolution>
    </Rule>
-   <Rule TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020">
-    <Resolution Name="Default">Consider merging the types defined in '{0}' with another namespace.</Resolution>
-   </Rule>
-   <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
-    <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
-   </Rule>
+   <Rule TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" />
    <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
     <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
    </Rule>

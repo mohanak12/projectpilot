@@ -10,6 +10,9 @@
       <Word>svn</Word>
       <Word>x</Word>
       <Word>y</Word>
+      <Word>Eloc</Word>
+      <Word>Sloc</Word>
+      <Word>Cloc</Word>
     </Recognized>
     <Deprecated>
       <!-- Be sure to pascal-case deprecated terms and preferred alternates     -->

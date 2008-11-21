@@ -87,6 +87,7 @@
     <Compile Include="Framework\CCNet\GraphBuildingTests2.cs" />
     <Compile Include="Framework\CCNet\GraphBuildingTests.cs" />
     <Compile Include="Framework\ChartsTests.cs" />
+    <Compile Include="Framework\Metrics\LocStatsTest.cs" />
     <Compile Include="Framework\Modules\RevisionControlStatsTests.cs" />
     <Compile Include="Framework\Runners\DefaultRunnerTests.cs" />
     <Compile Include="Framework\SessionStateTests.cs" />

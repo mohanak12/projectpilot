@@ -79,6 +79,9 @@
     <Compile Include="IStatePersistence.cs" />
     <Compile Include="ITemplateEngine.cs" />
     <Compile Include="ITimeProvider.cs" />
+    <Compile Include="Metrics\ILocStats.cs" />
+    <Compile Include="Metrics\LocStats.cs" />
+    <Compile Include="Metrics\LocStatsData.cs" />
     <Compile Include="Modules\IProjectModule.cs" />
     <Compile Include="Modules\ITask.cs" />
     <Compile Include="Modules\ITrigger.cs" />
