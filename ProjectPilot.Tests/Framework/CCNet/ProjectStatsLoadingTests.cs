@@ -5,19 +5,19 @@ using ProjectPilot.Framework.CCNet;
 namespace ProjectPilot.Tests.Framework.CCNet
 {
     [TestFixture]
-    public class CCNetProjectStatisticsBuildEntryTest
+    public class ProjectStatsLoadingTests
     {
         [Test]
         public void LoadStatistics()
         {
-            CCNetProjectStatisticsData data = LoadStatisticsFromFile();
+            ProjectStatsData data = LoadStatisticsFromFile();
 
             Assert.AreEqual(data.Builds.Count, 844);
         }
 
-        private static CCNetProjectStatisticsData LoadStatisticsFromFile()
+        private static ProjectStatsData LoadStatisticsFromFile()
         {
-            CCNetProjectStatisticsData data;
+            ProjectStatsData data;
             using (Stream stream = File.OpenRead(@"..\..\..\Data\Samples\ccnet.stats.xml"))
             {
                 data = CCNetProjectStatisticsPlugIn.Load(stream);

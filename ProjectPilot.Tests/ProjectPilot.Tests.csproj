@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{AAF9E493-30D9-4372-8D69-6D346DB05489}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -83,8 +83,9 @@
     </Compile>
     <Compile Include="BuildScriptsTests\TestBuild.cs" />
     <Compile Include="Extras\CodeAnalysisTests.cs" />
-    <Compile Include="Framework\CCNet\CCNetProjectStatisticsBuildEntryTest.cs" />
-    <Compile Include="Framework\CCNet\CCNetTests.cs" />
+    <Compile Include="Framework\CCNet\ProjectStatsLoadingTests.cs" />
+    <Compile Include="Framework\CCNet\GraphBuildingTests2.cs" />
+    <Compile Include="Framework\CCNet\GraphBuildingTests.cs" />
     <Compile Include="Framework\ChartsTests.cs" />
     <Compile Include="Framework\Modules\RevisionControlStatsTests.cs" />
     <Compile Include="Framework\Runners\DefaultRunnerTests.cs" />

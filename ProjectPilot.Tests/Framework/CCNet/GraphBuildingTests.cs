@@ -14,7 +14,7 @@ using ZedGraph;
 namespace ProjectPilot.Tests.Framework.CCNet
 {
     [TestFixture]
-    public class CCNetTests
+    public class GraphBuildingTests
     {
         [Test]
         public void DrawBuildReportChartTest()
@@ -57,24 +57,24 @@ namespace ProjectPilot.Tests.Framework.CCNet
         [Test,Ignore]
         public void GraphsTest()
         {
-            List<CCNetProjectStatisticsGraph> graphs = new List<CCNetProjectStatisticsGraph>();
+            List<ProjectStatsGraph> graphs = new List<ProjectStatsGraph>();
 
-            //CCNetProjectStatisticsGraph graph = new CCNetProjectStatisticsGraph();
+            //ProjectStatsGraph graph = new ProjectStatsGraph();
             //graph.GraphName = "FxCop Info";
             //graph.AddParameter<double>("Blue", "FxCop Warnings");
             //graph.AddParameter<double>("Red", "FxCop Errors");
 
             //graphs.Add(graph);
 
-            CCNetProjectStatisticsGraph graph = new CCNetProjectStatisticsGraph();
+            ProjectStatsGraph graph = new ProjectStatsGraph();
             graph.GraphName = "Build report";
-            graph.AddParameter<double>("Green", "Success");
-            graph.AddParameter<double>("Red", "Failure");
-            graph.AddParameter<double>("Blue", "Exception");
+            graph.AddParameter<double>("Success", "Green");
+            graph.AddParameter<double>("Failure", "Red");
+            graph.AddParameter<double>("Exception", "Blue");
 
             graphs.Add(graph);
 
-            //CCNetProjectStatisticsGraph graph = new CCNetProjectStatisticsGraph();
+            //ProjectStatsGraph graph = new ProjectStatsGraph();
             //graph.GraphName = "Build duration";
             //graph.AddParameter<TimeSpan>("Green", "Duration");
 
@@ -96,7 +96,7 @@ namespace ProjectPilot.Tests.Framework.CCNet
             ITemplateEngine templateEngine = new DefaultTemplateEngine(templateFileManager);
 
             //Prepare test data
-            CCNetProjectStatisticsData data;
+            ProjectStatsData data;
             using (Stream stream = File.OpenRead(@"..\..\..\Data\Samples\ccnet.stats.xml"))
             {
                 data = CCNetProjectStatisticsPlugIn.Load(stream);

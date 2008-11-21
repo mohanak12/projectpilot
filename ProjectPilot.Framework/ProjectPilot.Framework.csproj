@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{C87F10BF-4132-4B75-9C07-CB0B1FCE6440}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -58,12 +58,13 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="CCNet\CCNetProjectStatisticsBuildEntry.cs" />
-    <Compile Include="CCNet\CCNetProjectStatisticsData.cs" />
-    <Compile Include="CCNet\CCNetProjectStatisticsGraph.cs" />
-    <Compile Include="CCNet\CCNetProjectStatisticsGraphParameter.cs" />
+    <Compile Include="CCNet\ProjectStatsBuildEntry.cs" />
+    <Compile Include="CCNet\ProjectStatsData.cs" />
+    <Compile Include="CCNet\ProjectStatsGraph.cs" />
+    <Compile Include="CCNet\ProjectStatsGraphParameter.cs" />
     <Compile Include="CCNet\CCNetProjectStatisticsModule.cs" />
     <Compile Include="CCNet\CCNetProjectStatisticsPlugIn.cs" />
+    <Compile Include="CCNet\ProjectStatsGraphData.cs" />
     <Compile Include="CCNet\ICCNetProjectStatisticsPlugIn.cs" />
     <Compile Include="Charts\FluentChart.cs" />
     <Compile Include="DefaultFileManager.cs" />
