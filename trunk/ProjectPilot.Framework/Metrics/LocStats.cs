@@ -18,14 +18,16 @@ namespace ProjectPilot.Framework.Metrics
             int eloc = 0;
 
             int isComment = 0;
-            bool prevEmpty = false;
-
+            bool notEmpty = false;
+            
             LocStatsData returnData = new LocStatsData(sloc, cloc, eloc);
 
             char tmpChar = '\0';
+            char prevChar = '\0';
 
             for (int i = 0; i < code.Length; i++)
             {
+                prevChar = tmpChar;
                 tmpChar = code[i];
 
                 // Counting comments
@@ -44,17 +46,20 @@ namespace ProjectPilot.Framework.Metrics
                 if (tmpChar == '\n')
                 {
                     sloc++;
-                    if (prevEmpty == true)
+                    if (notEmpty == false)
                         eloc++;
+                    else
+                        notEmpty = false;
+
                 }
-                else
-                    prevEmpty = false;
+                else if(tmpChar != '\r')
+                    notEmpty = true;
             }
 
             if (tmpChar != '\n') sloc++; //The last line doesn't allways end with a \n but still needs to be counted
 
             returnData.Cloc = cloc;
-            returnData.Eloc = 1;
+            returnData.Eloc = eloc;
             returnData.Sloc = sloc;
             
             return returnData;
