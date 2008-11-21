@@ -5,17 +5,20 @@ namespace ProjectPilot.Framework.CCNet
 {
     public class CCNetProjectStatisticsGraph
     {
-        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
-        public void AddParameter(string graphName, IDictionary<string, List<double>> parametersList)
+        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
+        public void AddParameter<T>(string graphColor, IList<double> parameterList,
+            string parameterName)
         {
-            parameters.Add(new CCNetProjectStatisticsGraphParameter(graphName, parametersList));
+            parameters.Add(new CCNetProjectStatisticsGraphParameter(graphColor, parameterList, parameterName, typeof(T)));
         }
-
-        private List<CCNetProjectStatisticsGraphParameter> parameters = new List<CCNetProjectStatisticsGraphParameter>();
 
         public IList<CCNetProjectStatisticsGraphParameter> GraphParameters
         {
             get { return parameters; }
         }
+
+        public string GraphName { set; get; }
+
+        private List<CCNetProjectStatisticsGraphParameter> parameters = new List<CCNetProjectStatisticsGraphParameter>();
     }
 }

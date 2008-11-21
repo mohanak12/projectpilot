@@ -1,30 +1,42 @@
+using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace ProjectPilot.Framework.CCNet
 {
     public class CCNetProjectStatisticsGraphParameter
     {
-        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
-        public CCNetProjectStatisticsGraphParameter(string graphName, IDictionary<string, List<double>> parametersList)
+        public CCNetProjectStatisticsGraphParameter(string graphColor, IList<double> parameterList, 
+            string parameterName, Type parameterType)
         {
-            this.graphName = graphName;
-            this.parametersList = parametersList;
+            this.graphColor = graphColor;
+            this.parameterList = parameterList;
+            this.parameterName = parameterName;
+            this.parameterType = parameterType;
+        }
+        
+        public string GraphColor
+        {
+            get { return graphColor; }
         }
 
-        public string GraphName
+        public IList<double> ParameterList
         {
-            get { return graphName; }
+            get { return parameterList; }
         }
 
-
-        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
-        public IDictionary<string, List<double>> ParametersList
+        public string ParameterName
         {
-            get { return parametersList; }
+            get { return parameterName; }
         }
 
-        private string graphName;
-        private IDictionary<string, List<double>> parametersList;
+        public Type ParameterType
+        {
+            get { return parameterType; }
+        }
+
+        private string graphColor;
+        private IList<double> parameterList;
+        private string parameterName;
+        private Type parameterType;
     }
 }

@@ -61,8 +61,7 @@ namespace ProjectPilot.Framework.CCNet
             //Build statistic for graphs
             foreach (CCNetProjectStatisticsGraph graph in graphs)
             {
-                //Tukaj se izbere stevilo grafov
-                PrepareChartData(graph.GraphParameters, data, chartImageFileNames);
+                chartImageFileNames.Add(ExtractChartData(data, graph));
             }
 
             // translate storage locations to URLs
@@ -84,6 +83,8 @@ namespace ProjectPilot.Framework.CCNet
                 fileManager.GetProjectFullFileName(projectId, ModuleId, "CCNetReportStatistics.html", true));
         }
 
+        
+
         private static SortedList<int, double> AddValuesToSortedList(IList<int> xValues, IList<double> yValues)
         {
             SortedList<int, double> sortedList = new SortedList<int, double>();
@@ -96,19 +97,37 @@ namespace ProjectPilot.Framework.CCNet
             return sortedList;
         }
 
-        private void PrepareChartData(IEnumerable<CCNetProjectStatisticsGraphParameter> graphParameters,
-            CCNetProjectStatisticsData data,
-             IList<string> chartImageFileNames)
+        private string DrawChart(IEnumerable<CCNetProjectStatisticsGraphParameter> parameters,
+            string graphName,
+            IList<string> xLabels,
+            IList<int> xScaleValues)
         {
-            
-            foreach (CCNetProjectStatisticsGraphParameter graphParameter in graphParameters)
+            //Draw chart
+            FluentChart chart = FluentChart.Create(graphName, null, null)
+                .SetLabelsToXAxis(xLabels);
+
+            foreach (CCNetProjectStatisticsGraphParameter parameter in parameters)
             {
-                chartImageFileNames.Add(ExtractChartData(data, graphParameter));
+                chart
+                    .AddLineSeries(parameter.ParameterName, parameter.GraphColor)
+                    .AddData(AddValuesToSortedList(xScaleValues, parameter.ParameterList))
+                    .SetSymbol(SymbolType.Circle, parameter.GraphColor, 4, true);
             }
+
+            string chartImageFileName = fileManager.GetProjectFullFileName(
+                projectId,
+                ModuleId,
+                "CCNetBuildReportChart.png",
+                true);
+
+            chart
+                .ExportToBitmap(chartImageFileName, ImageFormat.Png, 2000, 800);
+
+            return chartImageFileName;
         }
 
-        private string ExtractChartData(CCNetProjectStatisticsData data, 
-            CCNetProjectStatisticsGraphParameter graphParameter)
+        private string ExtractChartData(CCNetProjectStatisticsData data,
+            CCNetProjectStatisticsGraph graph)
         {
             //Project name
             List<string> xLabels = new List<string>();
@@ -126,6 +145,7 @@ namespace ProjectPilot.Framework.CCNet
                 bool newParameter = false;
 
                 //Add build name, increase scale on X-Axis
+                //Graphs for build report
                 if (build.BuildLabel != xLabels.Find(
                                              temp => temp == entry.BuildLabel))
                 {
@@ -135,73 +155,44 @@ namespace ProjectPilot.Framework.CCNet
                     //X-Axis value for build
                     if (xScale.Count == 0)
                     {
-                        xScale.Add(0);   
+                        xScale.Add(0);
                     }
                     else
                     {
-                        xScale.Add(xScale[xScale.Count - 1] + 1);    
+                        xScale.Add(xScale[xScale.Count - 1] + 1);
                     }
 
                     newParameter = true;
                 }
-
+                
                 //Add data to graph parameters
-                AddExtractedData(entry, graphParameter.ParametersList, newParameter);
+                AddDataToParamterList(entry, graph.GraphParameters, newParameter);
             }
 
             //Draw chart
-            return DrawChart(graphParameter.ParametersList, graphParameter.GraphName, xLabels, xScale);
+            return DrawChart(graph.GraphParameters, graph.GraphName, xLabels, xScale);
         }
 
-        private static void AddExtractedData(CCNetProjectStatisticsBuildEntry entry, 
-            IEnumerable<KeyValuePair<string, List<double>>> parameters, 
-            bool newParameter)
+        private static void AddDataToParamterList(CCNetProjectStatisticsBuildEntry entry,
+            IEnumerable<CCNetProjectStatisticsGraphParameter> graphParameter, bool newParameter)
         {
-            foreach (KeyValuePair<string, List<double>> parameter in parameters)
+            foreach (CCNetProjectStatisticsGraphParameter parameter in graphParameter)
             {
                 if (newParameter)
                 {
-                    parameter.Value.Add(0);
+                    parameter.ParameterList.Add(Convert.ToDouble(entry.Parameters[parameter.ParameterName], 
+                        CultureInfo.InvariantCulture));    
                 }
-
-                parameter.Value[parameter.Value.Count - 1] += Convert.ToDouble(entry.Parameters[parameter.Key], CultureInfo.InvariantCulture);
+                else
+                {
+                    parameter.ParameterList[parameter.ParameterList.Count - 1] +=
+                        Convert.ToDouble(entry.Parameters[parameter.ParameterName], CultureInfo.InvariantCulture);
+                }
             }
         }
 
-        private string DrawChart(IEnumerable<KeyValuePair<string, List<double>>> parameters, 
-            string graphName,
-            IList<string> xLabels,
-            IList<int> xScaleValues)
-        {
-            string[] colors = new string[] { "Green", "Red", "Blue", "Yellow", "Black", "Grey" };
-
-            //Draw chart
-            FluentChart chart = FluentChart.Create(graphName, null, null)
-                .SetLabelsToXAxis(xLabels);
-
-            int i = 0;
-            foreach (KeyValuePair<string, List<double>> parameter in parameters)
-            {
-                chart
-                    .AddLineSeries(parameter.Key, colors[i])
-                    .AddData(AddValuesToSortedList(xScaleValues, parameter.Value))
-                    .SetSymbol(SymbolType.Circle, colors[i++], 4, true);
-            }
-
-            string chartImageFileName = fileManager.GetProjectFullFileName(
-                projectId,
-                ModuleId,
-                "CCNetBuildReportChart.png",
-                true);
-
-            chart
-                .ExportToBitmap(chartImageFileName, ImageFormat.Png, 2000, 800);
-
-            return chartImageFileName;
-        }
-        
         private ICCNetProjectStatisticsPlugIn ccnetPlugIn;
-        private List<CCNetProjectStatisticsGraph> graphs = new List<CCNetProjectStatisticsGraph>();
+        private List<CCNetProjectStatisticsGraph> graphs;
         private string projectId;
         private readonly IFileManager fileManager;
         private readonly ITemplateEngine templateEngine;
