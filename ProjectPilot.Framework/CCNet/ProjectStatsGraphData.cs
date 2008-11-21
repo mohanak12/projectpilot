@@ -6,7 +6,7 @@ namespace ProjectPilot.Framework.CCNet
 {
     public class ProjectStatsGraphData
     {
-        public ProjectStatsGraphData (ProjectStatsData statsData)
+        public ProjectStatsGraphData(ProjectStatsData statsData)
         {
             // sort builds by their start times
             buildsSortedByStartTime = new SortedList<DateTime, ProjectStatsBuildEntry>();
@@ -16,7 +16,7 @@ namespace ProjectPilot.Framework.CCNet
 
             // now find out each build's order id 
             foreach (ProjectStatsBuildEntry build in buildsSortedByStartTime.Values)
-                buildsToIntegers.Add(build.BuildLabel, buildsSortedByStartTime.IndexOfValue(build));
+                buildsToIntegers.Add(build.BuildId, buildsSortedByStartTime.IndexOfValue(build));
         }
 
         [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "buildId")]
@@ -25,14 +25,13 @@ namespace ProjectPilot.Framework.CCNet
         {
             throw new NotImplementedException();
         }
-
         public SortedList<int, double> GetValuesForParameter (string parameterName)
         {
             SortedList<int, double> values = new SortedList<int, double>();
 
-            foreach (KeyValuePair<string, Dictionary<string, double>> pair in dataByBuildsByParametersByValue)
+            foreach (KeyValuePair<int, Dictionary<string, double>> pair in dataByBuildsByParametersByValue)
             {
-                string buildId = pair.Key;
+                int buildId = pair.Key;
                 Dictionary<string, double> dictionaryOfParameters = pair.Value;
                 if (dictionaryOfParameters.ContainsKey(parameterName))
                 {
@@ -45,16 +44,23 @@ namespace ProjectPilot.Framework.CCNet
             return values;
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "value")]
-        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "buildId")]
-        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "parameterName")]
-        public void SetValue(string buildId, string parameterName, double value)
+        public void SetValue(int buildId, string parameterName, double value)
         {
-            throw new NotImplementedException();
+            Dictionary<string, double> entry = new Dictionary<string, double>();
+            entry.Add(parameterName, value);
+
+            if (!dataByBuildsByParametersByValue.ContainsKey(buildId))
+            {
+                dataByBuildsByParametersByValue.Add(buildId, entry);
+            }
+            else
+            {
+                dataByBuildsByParametersByValue[buildId].Add(parameterName, value);
+            }
         }
 
         private SortedList<DateTime, ProjectStatsBuildEntry> buildsSortedByStartTime;
-        private Dictionary<string, Dictionary<string, double>> dataByBuildsByParametersByValue = new Dictionary<string, Dictionary<string, double>>();
-        private Dictionary<string, int> buildsToIntegers = new Dictionary<string, int>();
+        private Dictionary<int, Dictionary<string, double>> dataByBuildsByParametersByValue = new Dictionary<int, Dictionary<string, double>>();
+        private Dictionary<int, int> buildsToIntegers = new Dictionary<int, int>();
     }
 }

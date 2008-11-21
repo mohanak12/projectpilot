@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.Threading;
@@ -16,12 +17,21 @@ namespace ProjectPilot.Framework.CCNet
             ICCNetProjectStatisticsPlugIn ccnetPlugIn,
             IEnumerable<ProjectStatsGraph> graphs,
             IFileManager fileManager,
-            ITemplateEngine templateEngine)
+            ITemplateEngine templateEngine,
+            bool ignoreFailures,
+            bool showBuildProjectHistory)
         {
             this.ccnetPlugIn = ccnetPlugIn;
             this.graphs = (List<ProjectStatsGraph>) graphs;
             this.fileManager = fileManager;
             this.templateEngine = templateEngine;
+            this.ignoreFailures = ignoreFailures;
+            this.showBuildProjectHistory = showBuildProjectHistory;
+        }
+
+        public bool IgnoreFailures
+        {
+            get { return ignoreFailures; }
         }
 
         public string ModuleId
@@ -197,7 +207,11 @@ namespace ProjectPilot.Framework.CCNet
 
         private readonly ICCNetProjectStatisticsPlugIn ccnetPlugIn;
         private readonly List<ProjectStatsGraph> graphs;
+        private bool ignoreFailures;
         private string projectId;
+
+        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
+        private bool showBuildProjectHistory;
         private readonly IFileManager fileManager;
         private readonly ITemplateEngine templateEngine;
         private ITrigger trigger = new NullTrigger();

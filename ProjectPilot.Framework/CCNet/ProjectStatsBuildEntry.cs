@@ -11,8 +11,6 @@ namespace ProjectPilot.Framework.CCNet
             this.buildId = buildId;
         }
 
-        #region Public properties
-
         public int BuildId
         {
             get { return buildId; }
@@ -33,13 +31,7 @@ namespace ProjectPilot.Framework.CCNet
             get { return parameters; }
         }
 
-        #endregion
-
-        #region Private members
-
         private int buildId;
         private Dictionary<string, string> parameters = new Dictionary<string, string>();
-
-        #endregion
     }
 }
