@@ -84,7 +84,8 @@ namespace ProjectPilot.Framework.CCNet
         }
 
         private static void AddDataToParamterList(CCNetProjectStatisticsBuildEntry entry,
-            IEnumerable<CCNetProjectStatisticsGraphParameter> graphParameter, bool newBuildLabel)
+            IEnumerable<CCNetProjectStatisticsGraphParameter> graphParameter, 
+            bool newBuildLabel)
         {
             foreach (CCNetProjectStatisticsGraphParameter parameter in graphParameter)
             {
@@ -113,16 +114,15 @@ namespace ProjectPilot.Framework.CCNet
             return sortedList;
         }
 
-        private string DrawChart(IEnumerable<CCNetProjectStatisticsGraphParameter> parameters,
-            string graphName,
+        private string DrawChart(CCNetProjectStatisticsGraph graph,
             IList<string> xLabels,
             IList<int> xScaleValues)
         {
             // Draw chart
-            FluentChart chart = FluentChart.Create(graphName, null, null)
+            FluentChart chart = FluentChart.Create(graph.GraphName, null, null)
                 .SetLabelsToXAxis(xLabels);
 
-            foreach (CCNetProjectStatisticsGraphParameter parameter in parameters)
+            foreach (CCNetProjectStatisticsGraphParameter parameter in graph.GraphParameters)
             {
                 chart
                     .AddLineSeries(parameter.ParameterName, parameter.GraphColor)
@@ -187,11 +187,11 @@ namespace ProjectPilot.Framework.CCNet
             }
 
             // Draw chart with filled parameters
-            return DrawChart(graph.GraphParameters, graph.GraphName, xLabels, xScale);
+            return DrawChart(graph, xLabels, xScale);
         }
 
-        private ICCNetProjectStatisticsPlugIn ccnetPlugIn;
-        private List<CCNetProjectStatisticsGraph> graphs;
+        private readonly ICCNetProjectStatisticsPlugIn ccnetPlugIn;
+        private readonly List<CCNetProjectStatisticsGraph> graphs;
         private string projectId;
         private readonly IFileManager fileManager;
         private readonly ITemplateEngine templateEngine;
