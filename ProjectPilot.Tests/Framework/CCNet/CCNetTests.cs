@@ -59,21 +59,31 @@ namespace ProjectPilot.Tests.Framework.CCNet
         {
             List<CCNetProjectStatisticsGraph> graphs = new List<CCNetProjectStatisticsGraph>();
 
-            IDictionary<string, List<double>> dic = new Dictionary<string, List<double>>();
-            dic.Add("FxCop Warnings", new List<double>());
-            dic.Add("FxCop Errors", new List<double>());
+            //IDictionary<string, List<double>> dic = new Dictionary<string, List<double>>();
+            //dic.Add("FxCop Warnings", new List<double>());
+            //dic.Add("FxCop Errors", new List<double>());
 
-            CCNetProjectStatisticsGraph graph = new CCNetProjectStatisticsGraph();
-            graph.AddParameter("FxCop Info", dic);
-            graphs.Add(graph);
+            //CCNetProjectStatisticsGraph graph = new CCNetProjectStatisticsGraph();
+            //graph.AddParameter("FxCop Info", dic);
+            //graphs.Add(graph);
 
             //IDictionary<string, List<double>> dic = new Dictionary<string, List<double>>();
             //dic.Add("Success", new List<double>());
             //dic.Add("Failure", new List<double>());
             //dic.Add("Exception", new List<double>());
 
+            CCNetProjectStatisticsGraph graph = new CCNetProjectStatisticsGraph();
+            graph.GraphName = "Build report";
+            graph.AddParameter<double>("Green", new List<double>(), "Success");
+            graph.AddParameter<double>("Red", new List<double>(), "Failure");
+            graph.AddParameter<double>("Blue", new List<double>(), "Exception");
+            graphs.Add(graph);
+
+            //IDictionary<string, List<double>> dic = new Dictionary<string, List<double>>();
+            //dic.Add("Duration", new List<double>());
+
             //CCNetProjectStatisticsGraph graph = new CCNetProjectStatisticsGraph();
-            //graph.AddParameter("Build Report", dic);
+            //graph.AddParameter<TimeSpan>("Build Duration", dic);
             //graphs.Add(graph);
 
             ProjectPilotConfiguration projectPilotConfiguration = new ProjectPilotConfiguration();
