@@ -105,7 +105,7 @@ namespace ProjectPilot.Tests.Framework.CCNet
             ICCNetProjectStatisticsPlugIn plugIn = MockRepository.GenerateStub<ICCNetProjectStatisticsPlugIn>();
             plugIn.Stub(action => action.FetchStatistics()).Return(data);
 
-            CCNetProjectStatisticsModule module = new CCNetProjectStatisticsModule(plugIn, graphs, fileManager, templateEngine);
+            CCNetProjectStatisticsModule module = new CCNetProjectStatisticsModule(plugIn, graphs, fileManager, templateEngine, true, false);
             module.ProjectId = "CCNetStatistics";
             project.AddModule(module);
 
