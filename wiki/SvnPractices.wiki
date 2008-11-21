@@ -1,0 +1,3 @@
+#summary Contains useful information on working with Subversion
+
+ * TortoiseSVN - resolving conflicts: [http://tortoisesvn.net/docs/release/TortoiseSVN_en/tsvn-dug-conflicts.html]
