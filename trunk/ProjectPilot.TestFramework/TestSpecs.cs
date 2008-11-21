@@ -16,7 +16,6 @@ namespace ProjectPilot.TestFramework
         /// Adds test case to collection.
         /// </summary>
         /// <param name="testCase"><see cref="testCase"/></param>
-        /// 
         public void AddTestCase(TestCase testCase)
         {
             testCases.Add(testCase.TestCaseName, testCase);
@@ -43,7 +42,6 @@ namespace ProjectPilot.TestFramework
         /// <summary>
         /// List of test cases.
         /// </summary>
-        /// 
         private Dictionary<string, TestCase> testCases = new Dictionary<string, TestCase>();
     }
 }

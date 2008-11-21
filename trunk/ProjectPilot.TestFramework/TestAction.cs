@@ -9,7 +9,7 @@ namespace ProjectPilot.TestFramework
     public class TestAction
     {
         /// <summary>
-        /// Adds new test action.
+        /// Initializes a new instance of the TestAction class.
         /// </summary>
         /// <param name="actionName">Name of the action</param>
         public TestAction(string actionName)
@@ -17,23 +17,21 @@ namespace ProjectPilot.TestFramework
             this.actionName = actionName;
         }
 
-
         /// <summary>
-        /// Adds new test action with action parameters.
+        /// Initializes a new instance of the TestAction class.
         /// </summary>
         /// <param name="actionName">Name of the action</param>
         /// <param name="testActionParameter">Action parameters <see cref="testActionParameter"/></param>
-        public TestAction
-            (string actionName,
-             TestActionParameter testActionParameter)
+        public TestAction (
+            string actionName,
+            TestActionParameter testActionParameter)
         {
             this.actionName = actionName;
             AddActionParameter(testActionParameter);
         }
 
-
         /// <summary>
-        /// Name of the action.
+        /// Gets the name of the action.
         /// </summary>
         /// <example><c>selectProject</c> in <selectProject>Mobi-Info</selectProject></example>
         public string ActionName
@@ -41,19 +39,16 @@ namespace ProjectPilot.TestFramework
             get { return actionName; }
         }
 
-
         /// <summary>
         /// Add action parameter.
         /// </summary>
         /// <param name="testActionParameter"><see cref="TestActionParameter"/></param>
         /// <example>url=http://asd.html</example>
         /// <example>name=parameter1</example>
-        /// 
         public void AddActionParameter(TestActionParameter testActionParameter)
         {
             actionParameters.Add(testActionParameter);
         }
-
 
         /// <summary>
         /// Gets number of action parameters in test action.
@@ -70,7 +65,6 @@ namespace ProjectPilot.TestFramework
         {
             get { return actionParameters; }
         }
-
 
         /// <summary>
         /// Gets <c>value</c> of specified <c>key</c>.
@@ -90,12 +84,12 @@ namespace ProjectPilot.TestFramework
                     return actionParameter.ParameterValue;
                 }
             }
+
             return null;
         }
 
-
         /// <summary>
-        /// Returns <c>true</c> if Test actions has parameters.
+        /// Gets a value indicating whether the test actiona has parameters.
         /// </summary>
         public bool HasParameters
         {

@@ -396,7 +396,7 @@ namespace ProjectPilot.BuildScripts
         private string companyCopyright;
         private string companyName;
         private string companyTrademark;
-        private string cruiseControlDir;
+        private string cruiseControlDir = String.Empty;
         private Version fileVersion;
         private bool hasFailed;
         private bool isRunningUnderCruiseControl;

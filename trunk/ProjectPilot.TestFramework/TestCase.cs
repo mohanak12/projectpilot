@@ -4,22 +4,19 @@ namespace ProjectPilot.TestFramework
 {
     public class TestCase
     {
-    	/// <summary>
-    	/// Creates new test case with speified category.
-    	/// </summary>
-    	/// <param name="testCaseName">Name of the test case.</param>
-    	/// <param name="testCaseCategory">Test category (Smoke, Regression, Functional, ...)</param>
-		public TestCase(string testCaseName,
-    	                string testCaseCategory)
-    	{
-    		this.testCaseName = testCaseName;
-    		this.testCaseCategory = testCaseCategory;
-    	}
+        /// <summary>
+        /// Initializes a new instance of the TestCase class with specified category.
+        /// </summary>
+        /// <param name="testCaseName">Name of the test case.</param>
+        /// <param name="testCaseCategory">Test category (Smoke, Regression, Functional, ...)</param>
+        public TestCase(string testCaseName, string testCaseCategory)
+        {
+            this.testCaseName = testCaseName;
+            this.testCaseCategory = testCaseCategory;
+        }
 
-
-
-    	/// <summary>
-        /// Creates new Test Case.
+        /// <summary>
+        /// Initializes a new instance of the TestCase class.
         /// </summary>
         /// <param name="testCaseName">Test case name</param>
         public TestCase(string testCaseName)
@@ -27,9 +24,7 @@ namespace ProjectPilot.TestFramework
             this.testCaseName = testCaseName;
         }
 
-
-
-    	/// <summary>
+        /// <summary>
         /// Gets list of collected test actions. <see cref="TestAction"/>
         /// </summary>
         public IList<TestAction> TestActions
@@ -37,24 +32,23 @@ namespace ProjectPilot.TestFramework
             get { return testActions; }
         }
 
-    	/// <summary>
-        /// Total number of collected test actions.
+        /// <summary>
+        /// Gets the total number of collected test actions.
         /// </summary>
-        /// 
         public int TestActionsCount
         {
             get { return testActions.Count; }
         }
 
-    	/// <summary>
-    	/// Gets testcase category.
-    	/// </summary>
-		public string TestCaseCategory
-    	{
-    		get { return testCaseCategory; }
-    	}
+        /// <summary>
+        /// Gets testcase category.
+        /// </summary>
+        public string TestCaseCategory
+        {
+            get { return testCaseCategory; }
+        }
 
-    	/// <summary>
+        /// <summary>
         /// Gets the TestCase name.
         /// </summary>
         public string TestCaseName
@@ -69,7 +63,6 @@ namespace ProjectPilot.TestFramework
         /// Adds test action to Test case.
         /// </summary>
         /// <param name="testAction"><see cref="testAction"/></param>
-        /// 
         public void AddTestAction(TestAction testAction)
         {
             testActions.Add(testAction);
@@ -80,7 +73,6 @@ namespace ProjectPilot.TestFramework
         /// </summary>
         /// <param name="testActionName">Test action Name <see cref="TestAction.ActionName"/></param>
         /// <returns><see cref="TestAction"/></returns>
-        /// 
         public TestAction GetTestAction(string testActionName)
         {
             foreach (TestAction testAction in testActions)
@@ -91,6 +83,7 @@ namespace ProjectPilot.TestFramework
                     return testAction;
                 }
             }
+
             return null;
         }
 
@@ -100,6 +93,6 @@ namespace ProjectPilot.TestFramework
         private readonly List<TestAction> testActions = new List<TestAction>();
 
         private readonly string testCaseName;
-    	private readonly string testCaseCategory = "Smoke";
+        private readonly string testCaseCategory = "Smoke";
     }
 }

@@ -16,9 +16,9 @@ namespace ProjectPilot.TestFramework
             ICollection<string> testCasesKeys = testCases.Keys;
             foreach (string testCaseName in testCasesKeys)
             {
-				WriteLine("[Test]");
-				WriteLine("[Category(\"{0}\")]", testCases[testCaseName].TestCaseCategory);
-				WriteLine("public void {0}()", testCaseName);
+                WriteLine("[Test]");
+                WriteLine("[Category(\"{0}\")]", testCases[testCaseName].TestCaseCategory);
+                WriteLine("public void {0}()", testCaseName);
                 WriteLine("{");
                 WriteLine("    Tester tester = new Tester();");
 
@@ -28,18 +28,19 @@ namespace ProjectPilot.TestFramework
                 {
                     if (testAction.HasParameters)
                     {
-                    	foreach (TestActionParameter actionParameters in testAction.ActionParameters)
-                    	{
-							WriteLine("    tester.{0}(\"{1}\");", testAction.ActionName,
-									  actionParameters.ParameterValue);
-                    	}
+                        foreach (TestActionParameter actionParameters in testAction.ActionParameters)
+                        {
+                            WriteLine("    tester.{0}(\"{1}\");", testAction.ActionName, actionParameters.ParameterValue);
+                        }
                     }
                     else
                     {
                         WriteLine("    tester.{0}();", testAction.ActionName);
                     }
+
                     WriteLine(string.Empty);
                 }
+
                 WriteLine("}");
                 WriteLine(string.Empty);
             }

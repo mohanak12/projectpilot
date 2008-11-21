@@ -121,6 +121,6 @@ namespace ProjectPilot.Framework
         private string sessionHolderId;
         [NonSerialized]
         private ISessionStorage sessionStorage;
-        private Dictionary<string,object> sessionValues = new Dictionary<string, object>();
+        private Dictionary<string, object> sessionValues = new Dictionary<string, object>();
     }
 }
