@@ -1,1 +1,1 @@
-"D:\MyStuff\projects\ProjectPilot\lib\Microsoft StyleCop 4.3\StyleCopSettingsEditor.exe" "D:\MyStuff\projects\ProjectPilot\Settings.StyleCop"
+"D:\MyStuff\projects\ProjectPilot\lib\Microsoft StyleCop\StyleCopSettingsEditor.exe" "D:\MyStuff\projects\ProjectPilot\Settings.StyleCop"

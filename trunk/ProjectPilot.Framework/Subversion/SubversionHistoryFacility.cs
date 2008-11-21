@@ -26,12 +26,14 @@ namespace ProjectPilot.Framework.Subversion
         public RevisionControlHistoryData FetchHistory()
         {
             // load the previously fetched history from the persistent storage
-            using (ISessionState sessionState = sessionStorage.LoadSession(String.Format(
-                CultureInfo.InvariantCulture,
-                "SubversionHistoryFacility_{0}", facilityId)))
+            using (ISessionState sessionState = sessionStorage.LoadSession(
+                String.Format(
+                    CultureInfo.InvariantCulture,
+                    "SubversionHistoryFacility_{0}", 
+                    facilityId)))
             {
                 RevisionControlHistoryData lastFetchedHistory
-                    = sessionState.GetValue<RevisionControlHistoryData>(sessionKeyLastFetchedHistory);
+                    = sessionState.GetValue<RevisionControlHistoryData>(SessionKeyLastFetchedHistory);
 
                 // find the last revision that was fetched
                 string lastRevisionFetched = null;
@@ -45,7 +47,8 @@ namespace ProjectPilot.Framework.Subversion
                 using (Process process = new Process())
                 {
                     StringBuilder argumentsBuilder = new StringBuilder();
-                    argumentsBuilder.AppendFormat(CultureInfo.InvariantCulture,
+                    argumentsBuilder.AppendFormat(
+                        CultureInfo.InvariantCulture,
                         @"log ""{0}"" --xml --non-interactive",
                         svnRootPath);
 
@@ -53,8 +56,10 @@ namespace ProjectPilot.Framework.Subversion
                     if (lastRevisionFetched != null)
                     {
                         int lastRevisionFetchedInt = Int32.Parse(lastRevisionFetched, CultureInfo.InvariantCulture);
-                        argumentsBuilder.AppendFormat(CultureInfo.InvariantCulture,
-                            " -r {0}:HEAD", lastRevisionFetchedInt + 1);
+                        argumentsBuilder.AppendFormat(
+                            CultureInfo.InvariantCulture,
+                            " -r {0}:HEAD", 
+                            lastRevisionFetchedInt + 1);
                     }
 
                     process.StartInfo.UseShellExecute = false;
@@ -71,14 +76,14 @@ namespace ProjectPilot.Framework.Subversion
                         historyData.Merge(lastFetchedHistory);
                     
                     // save the new history to the session state
-                    sessionState.SetValue(sessionKeyLastFetchedHistory, historyData);
+                    sessionState.SetValue(SessionKeyLastFetchedHistory, historyData);
 
                     return historyData;
                 }
             }
         }
 
-        static public RevisionControlHistoryData LoadHistory (Stream stream)
+        public static RevisionControlHistoryData LoadHistory(Stream stream)
         {
             RevisionControlHistoryData historyData = new RevisionControlHistoryData();
 
@@ -210,7 +215,7 @@ namespace ProjectPilot.Framework.Subversion
 
         private readonly ISessionStorage sessionStorage;
         private readonly string facilityId;
-        private const string sessionKeyLastFetchedHistory = "LastFetchedHistory";
+        private const string SessionKeyLastFetchedHistory = "LastFetchedHistory";
         private readonly string svnToolPath;// = @"C:\Program Files\CollabNet Subversion\svn.exe";
         private string svnRootPath;
     }

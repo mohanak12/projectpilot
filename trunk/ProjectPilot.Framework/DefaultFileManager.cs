@@ -44,11 +44,12 @@ namespace ProjectPilot.Framework
 
         public string GetFullFileName(string domain, string localFileName)
         {
-            string fullFileName = String.Format(CultureInfo.InvariantCulture,
-                                                "{0}{1}{2}",
-                                                domain,
-                                                Path.DirectorySeparatorChar,
-                                                localFileName);
+            string fullFileName = String.Format(
+                CultureInfo.InvariantCulture,
+                "{0}{1}{2}",
+                domain,
+                Path.DirectorySeparatorChar,
+                localFileName);
             fullFileName = Path.Combine(storageRootDir, fullFileName);
             return fullFileName;
         }
@@ -56,12 +57,13 @@ namespace ProjectPilot.Framework
         public string GetProjectFullFileName(string projectId, string moduleId, string localFileName, bool ensureDirPathExists)
         {
             // construct the file name
-            string fullFileName = String.Format(CultureInfo.InvariantCulture,
-                                                "Storage{0}Projects{0}{1}{0}{2}{0}{3}",
-                                                Path.DirectorySeparatorChar,
-                                                projectId,
-                                                moduleId,
-                                                localFileName);
+            string fullFileName = String.Format(
+                CultureInfo.InvariantCulture,
+                "Storage{0}Projects{0}{1}{0}{2}{0}{3}",
+                Path.DirectorySeparatorChar,
+                projectId,
+                moduleId,
+                localFileName);
             fullFileName = Path.Combine(storageRootDir, fullFileName);
 
             if (ensureDirPathExists)

@@ -9,15 +9,15 @@ namespace ProjectPilot.Framework.Metrics
     {
         public LocStats()
         {
-
         }
+
         public LocStatsData CountLoc(string code)
         {
-            int sloc=0;
+            int sloc = 0;
             int cloc = 0;
             int eloc = 0;
 
-            int isComment = 0 ;
+            int isComment = 0;
             bool prevEmpty = false;
 
             LocStatsData returnData = new LocStatsData(sloc, cloc, eloc);
@@ -49,8 +49,8 @@ namespace ProjectPilot.Framework.Metrics
                 }
                 else
                     prevEmpty = false;
-            
             }
+
             if (tmpChar != '\n') sloc++; //The last line doesn't allways end with a \n but still needs to be counted
 
             returnData.Cloc = cloc;

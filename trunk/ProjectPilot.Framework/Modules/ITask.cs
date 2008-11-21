@@ -18,6 +18,7 @@ namespace ProjectPilot.Framework.Modules
         /// <summary>
         /// Executes the task.
         /// </summary>
+        /// <param name="stopSignal">The stop signal to use to stop the task prematurely.</param>
         void ExecuteTask(WaitHandle stopSignal);
     }
 }
