@@ -5,7 +5,8 @@ namespace ProjectPilot.Framework.Modules
 {
     public class StaticHtmlPageModule : IProjectModule, IViewable
     {
-        public StaticHtmlPageModule(string moduleId, 
+        public StaticHtmlPageModule(
+            string moduleId, 
             string moduleName, 
             string pageName, 
             IFileManager fileManager)

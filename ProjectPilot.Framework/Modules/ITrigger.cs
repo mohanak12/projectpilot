@@ -9,7 +9,7 @@ namespace ProjectPilot.Framework.Modules
         /// Determines whether the trigger has been triggered.
         /// </summary>
         /// <returns>
-        /// 	<c>true</c> if the trigger is triggered; otherwise, <c>false</c>.
+        /// <c>true</c> if the trigger is triggered; otherwise, <c>false</c>.
         /// </returns>
         bool IsTriggered();
 

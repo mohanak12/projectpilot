@@ -30,6 +30,7 @@ namespace ProjectPilot.Framework.Runners
         /// <summary>
         /// Stops the runner.
         /// </summary>
+        /// <param name="timeoutInMilliseconds">The maximum time allowed for the runner to stop.</param>
         public void Stop(int timeoutInMilliseconds)
         {
             // if the control thread is not running, we have nothing to stop

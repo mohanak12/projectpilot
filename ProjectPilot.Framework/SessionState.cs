@@ -26,7 +26,7 @@ namespace ProjectPilot.Framework
         }
 
         /// <summary>
-        /// Gets the unique ID of the session holder.
+        /// Gets or sets the unique ID of the session holder.
         /// </summary>
         /// <value>The session holder ID.</value>
         public string SessionHolderId
@@ -98,7 +98,7 @@ namespace ProjectPilot.Framework
         /// </summary>
         /// <param name="valueKey">The session value key.</param>
         /// <returns>
-        /// 	<c>true</c> if the session contains the specified value; otherwise, <c>false</c>.
+        ///     <c>true</c> if the session contains the specified value; otherwise, <c>false</c>.
         /// </returns>
         public bool HasValue(string valueKey)
         {

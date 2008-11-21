@@ -94,8 +94,10 @@ namespace ProjectPilot.Framework.RevisionControlHistory
         /// </returns>
         public override string ToString()
         {
-            return String.Format(System.Globalization.CultureInfo.InvariantCulture,
-                "Entries: {0}", entries.Count);
+            return String.Format(
+                System.Globalization.CultureInfo.InvariantCulture,
+                "Entries: {0}", 
+                entries.Count);
         }
                 
         private readonly SortedList<DateTime, RevisionControlHistoryEntry> entries = new SortedList<DateTime, RevisionControlHistoryEntry>();

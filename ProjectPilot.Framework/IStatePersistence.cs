@@ -15,6 +15,7 @@ namespace ProjectPilot.Framework
         /// <summary>
         /// Loads the state from persistent storage.
         /// </summary>
+        /// <typeparam name="T">The type of the state object.</typeparam>
         /// <returns>State object.</returns>
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         T LoadState<T>() where T : class;
@@ -22,6 +23,7 @@ namespace ProjectPilot.Framework
         /// <summary>
         /// Saves the state to the persistent storage.
         /// </summary>
+        /// <typeparam name="T">The type of the state object.</typeparam>
         /// <param name="state">The state object.</param>
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         void SaveState<T>(T state) where T : class;
