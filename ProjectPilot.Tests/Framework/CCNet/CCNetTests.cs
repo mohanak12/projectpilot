@@ -59,31 +59,25 @@ namespace ProjectPilot.Tests.Framework.CCNet
         {
             List<CCNetProjectStatisticsGraph> graphs = new List<CCNetProjectStatisticsGraph>();
 
-            //IDictionary<string, List<double>> dic = new Dictionary<string, List<double>>();
-            //dic.Add("FxCop Warnings", new List<double>());
-            //dic.Add("FxCop Errors", new List<double>());
-
             //CCNetProjectStatisticsGraph graph = new CCNetProjectStatisticsGraph();
-            //graph.AddParameter("FxCop Info", dic);
-            //graphs.Add(graph);
+            //graph.GraphName = "FxCop Info";
+            //graph.AddParameter<double>("Blue", "FxCop Warnings");
+            //graph.AddParameter<double>("Red", "FxCop Errors");
 
-            //IDictionary<string, List<double>> dic = new Dictionary<string, List<double>>();
-            //dic.Add("Success", new List<double>());
-            //dic.Add("Failure", new List<double>());
-            //dic.Add("Exception", new List<double>());
+            //graphs.Add(graph);
 
             CCNetProjectStatisticsGraph graph = new CCNetProjectStatisticsGraph();
             graph.GraphName = "Build report";
-            graph.AddParameter<double>("Green", new List<double>(), "Success");
-            graph.AddParameter<double>("Red", new List<double>(), "Failure");
-            graph.AddParameter<double>("Blue", new List<double>(), "Exception");
+            graph.AddParameter<double>("Green", "Success");
+            graph.AddParameter<double>("Red", "Failure");
+            graph.AddParameter<double>("Blue", "Exception");
+
             graphs.Add(graph);
 
-            //IDictionary<string, List<double>> dic = new Dictionary<string, List<double>>();
-            //dic.Add("Duration", new List<double>());
-
             //CCNetProjectStatisticsGraph graph = new CCNetProjectStatisticsGraph();
-            //graph.AddParameter<TimeSpan>("Build Duration", dic);
+            //graph.GraphName = "Build duration";
+            //graph.AddParameter<TimeSpan>("Green", "Duration");
+
             //graphs.Add(graph);
 
             ProjectPilotConfiguration projectPilotConfiguration = new ProjectPilotConfiguration();

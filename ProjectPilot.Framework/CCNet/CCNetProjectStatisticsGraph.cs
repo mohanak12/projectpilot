@@ -6,10 +6,9 @@ namespace ProjectPilot.Framework.CCNet
     public class CCNetProjectStatisticsGraph
     {
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public void AddParameter<T>(string graphColor, IList<double> parameterList,
-            string parameterName)
+        public void AddParameter<T>(string graphColor, string parameterName)
         {
-            parameters.Add(new CCNetProjectStatisticsGraphParameter(graphColor, parameterList, parameterName, typeof(T)));
+            parameters.Add(new CCNetProjectStatisticsGraphParameter(graphColor, parameterName, typeof(T)));
         }
 
         public IList<CCNetProjectStatisticsGraphParameter> GraphParameters
