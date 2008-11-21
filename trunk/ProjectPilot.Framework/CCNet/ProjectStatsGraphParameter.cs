@@ -4,25 +4,25 @@ using System.Collections.Generic;
 namespace ProjectPilot.Framework.CCNet
 {
     /// <summary>
-    /// CCNetProjectStatisticsGraphParameter contains all parameters for one graph.
+    /// ProjectStatsGraphParameter contains all parameters for one graph.
     /// </summary>
-    public class CCNetProjectStatisticsGraphParameter
+    public class ProjectStatsGraphParameter
     {
-        public CCNetProjectStatisticsGraphParameter(string graphColor, string parameterName, Type parameterType)
+        public ProjectStatsGraphParameter(string parameterName, Type parameterType, string seriesColor)
         {
-            this.graphColor = graphColor;
+            this.seriesColor = seriesColor;
             this.parameterName = parameterName;
             this.parameterType = parameterType;
         }
         
-        public string GraphColor
+        public string SeriesColor
         {
-            get { return graphColor; }
+            get { return seriesColor; }
         }
 
-        public IList<double> ParameterList
+        public IList<double> ValueList
         {
-            get { return parameterList; }
+            get { return valueList; }
         }
 
         public string ParameterName
@@ -35,8 +35,8 @@ namespace ProjectPilot.Framework.CCNet
             get { return parameterType; }
         }
 
-        private string graphColor;
-        private IList<double> parameterList = new List<double>();
+        private string seriesColor;
+        private IList<double> valueList = new List<double>();
         private string parameterName;
         private Type parameterType;
     }

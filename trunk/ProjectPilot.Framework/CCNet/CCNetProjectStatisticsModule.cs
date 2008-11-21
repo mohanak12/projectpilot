@@ -14,12 +14,12 @@ namespace ProjectPilot.Framework.CCNet
     {
         public CCNetProjectStatisticsModule(
             ICCNetProjectStatisticsPlugIn ccnetPlugIn,
-            IEnumerable<CCNetProjectStatisticsGraph> graphs,
+            IEnumerable<ProjectStatsGraph> graphs,
             IFileManager fileManager,
             ITemplateEngine templateEngine)
         {
             this.ccnetPlugIn = ccnetPlugIn;
-            this.graphs = (List<CCNetProjectStatisticsGraph>) graphs;
+            this.graphs = (List<ProjectStatsGraph>) graphs;
             this.fileManager = fileManager;
             this.templateEngine = templateEngine;
         }
@@ -54,12 +54,12 @@ namespace ProjectPilot.Framework.CCNet
         public void ExecuteTask(WaitHandle stopSignal)
         {
             // Get statistic data
-            CCNetProjectStatisticsData data = ccnetPlugIn.FetchStatistics();
+            ProjectStatsData data = ccnetPlugIn.FetchStatistics();
             
             IList<string> chartImageFileNames = new List<string>();
 
             // Build statistic for graphs
-            foreach (CCNetProjectStatisticsGraph graph in graphs)
+            foreach (ProjectStatsGraph graph in graphs)
             {
                 chartImageFileNames.Add(ExtractChartData(data, graph));
             }
@@ -83,20 +83,20 @@ namespace ProjectPilot.Framework.CCNet
                 fileManager.GetProjectFullFileName(projectId, ModuleId, "CCNetReportStatistics.html", true));
         }
 
-        private static void AddDataToParamterList(CCNetProjectStatisticsBuildEntry entry,
-            IEnumerable<CCNetProjectStatisticsGraphParameter> graphParameter, 
+        private static void AddDataToParamterList(ProjectStatsBuildEntry entry,
+            IEnumerable<ProjectStatsGraphParameter> graphParameter, 
             bool newBuildLabel)
         {
-            foreach (CCNetProjectStatisticsGraphParameter parameter in graphParameter)
+            foreach (ProjectStatsGraphParameter parameter in graphParameter)
             {
                 if (newBuildLabel)
                 {
-                    parameter.ParameterList.Add(Convert.ToDouble(entry.Parameters[parameter.ParameterName],
+                    parameter.ValueList.Add(Convert.ToDouble(entry.Parameters[parameter.ParameterName],
                         CultureInfo.InvariantCulture));
                 }
                 else
                 {
-                    parameter.ParameterList[parameter.ParameterList.Count - 1] +=
+                    parameter.ValueList[parameter.ValueList.Count - 1] +=
                         Convert.ToDouble(entry.Parameters[parameter.ParameterName], CultureInfo.InvariantCulture);
                 }
             }
@@ -114,7 +114,7 @@ namespace ProjectPilot.Framework.CCNet
             return sortedList;
         }
 
-        private string DrawChart(CCNetProjectStatisticsGraph graph,
+        private string DrawChart(ProjectStatsGraph graph,
             IList<string> xLabels,
             IList<int> xScaleValues)
         {
@@ -122,12 +122,12 @@ namespace ProjectPilot.Framework.CCNet
             FluentChart chart = FluentChart.Create(graph.GraphName, null, null)
                 .SetLabelsToXAxis(xLabels);
 
-            foreach (CCNetProjectStatisticsGraphParameter parameter in graph.GraphParameters)
+            foreach (ProjectStatsGraphParameter parameter in graph.GraphParameters)
             {
                 chart
-                    .AddLineSeries(parameter.ParameterName, parameter.GraphColor)
-                    .AddData(AddValuesToSortedList(xScaleValues, parameter.ParameterList))
-                    .SetSymbol(SymbolType.Circle, parameter.GraphColor, 4, true);
+                    .AddLineSeries(parameter.ParameterName, parameter.SeriesColor)
+                    .AddData(AddValuesToSortedList(xScaleValues, parameter.ValueList))
+                    .SetSymbol(SymbolType.Circle, parameter.SeriesColor, 4, true);
             }
 
             string chartImageFileName = fileManager.GetProjectFullFileName(
@@ -142,8 +142,8 @@ namespace ProjectPilot.Framework.CCNet
             return chartImageFileName;
         }
 
-        private string ExtractChartData(CCNetProjectStatisticsData data,
-            CCNetProjectStatisticsGraph graph)
+        private string ExtractChartData(ProjectStatsData data,
+            ProjectStatsGraph graph)
         {
             // Project name
             List<string> xLabels = new List<string>();
@@ -152,11 +152,11 @@ namespace ProjectPilot.Framework.CCNet
             List<int> xScale = new List<int>();
 
             // Fill X and Y Axis with data
-            foreach (CCNetProjectStatisticsBuildEntry build in data.Builds)
+            foreach (ProjectStatsBuildEntry build in data.Builds)
             {
                 if (xLabels.Count == 50) break;
 
-                CCNetProjectStatisticsBuildEntry entry = build;
+                ProjectStatsBuildEntry entry = build;
 
                 bool newBuildLabel = false;
 
@@ -191,7 +191,7 @@ namespace ProjectPilot.Framework.CCNet
         }
 
         private readonly ICCNetProjectStatisticsPlugIn ccnetPlugIn;
-        private readonly List<CCNetProjectStatisticsGraph> graphs;
+        private readonly List<ProjectStatsGraph> graphs;
         private string projectId;
         private readonly IFileManager fileManager;
         private readonly ITemplateEngine templateEngine;

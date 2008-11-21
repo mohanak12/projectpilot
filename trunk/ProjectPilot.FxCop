@@ -233,6 +233,71 @@
     <Modules>
      <Module Name="projectpilot.framework.dll">
       <Namespaces>
+       <Namespace Name="ProjectPilot.Framework.CCNet">
+        <Types>
+         <Type Name="ProjectStatsBuildEntry">
+          <Members>
+           <Member Name="#BuildStartTime">
+            <Accessors>
+             <Accessor Name="#get_BuildStartTime()">
+              <Messages>
+               <Message Id="System.DateTime.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2008-11-21 11:51:57Z">
+                <Issue>
+                 <Item>'DateTime.Parse(string)'</Item>
+                 <Item>'ProjectStatsBuildEntry.BuildStartTime.get()'</Item>
+                 <Item>'DateTime.Parse(string, IFormatProvider)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ProjectStatsGraphData">
+          <Members>
+           <Member Name="#GetValue(System.String,System.String)">
+            <Messages>
+             <Message Id="buildId" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-11-21 11:51:57Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'buildId'</Item>
+               <Item>'ProjectStatsGraphData.GetValue(string, string)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="parameterName" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-11-21 11:51:57Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'parameterName'</Item>
+               <Item>'ProjectStatsGraphData.GetValue(string, string)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SetValue(System.String,System.String,System.Double)">
+            <Messages>
+             <Message Id="buildId" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-11-21 11:51:57Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'buildId'</Item>
+               <Item>'ProjectStatsGraphData.SetValue(string, string, double)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="parameterName" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-11-21 11:51:57Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'parameterName'</Item>
+               <Item>'ProjectStatsGraphData.SetValue(string, string, double)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="value" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-11-21 11:51:57Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'value'</Item>
+               <Item>'ProjectStatsGraphData.SetValue(string, string, double)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
        <Namespace Name="ProjectPilot.Framework.Runners">
         <Types>
          <Type Name="IRunner">
@@ -399,23 +464,6 @@
          </Type>
         </Types>
        </Namespace>
-       <Namespace Name="ProjectPilot.Tests.Framework.CCNet">
-        <Types>
-         <Type Name="CCNetTests">
-          <Members>
-           <Member Name="#Test()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-11-03 08:37:42Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'CCNetTests.Test()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
        <Namespace Name="ProjectPilot.Tests.Framework.Subversion">
         <Types>
          <Type Name="HistoryTests">
@@ -477,13 +525,21 @@
     <Resolution Name="Type">Remove the underscores from type name {0}.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716">
+    <Resolution Name="Member">Rename virtual/interface member {0} so that it no longer conflicts with the reserved language keyword '{1}'. Using a reserved keyword as the name of a virtual/interface member makes it harder for consumers in other languages to override/implement the member.</Resolution>
     <Resolution Name="Namespace">Rename namespace {0} so that it no longer conflicts with the reserved language keyword '{1}'. Using a reserved keyword as the name of a namespace makes it harder for consumers in other languages to use the namespace.</Resolution>
    </Rule>
    <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
     <Resolution Name="Default" />
    </Rule>
+   <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
+    <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
+   </Rule>
+   <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
+    <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Resolution>
+   </Rule>
    <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
     <Resolution Name="Default">The type name {0} conflicts in whole or in part with the namespace name '{1}'. Change either name to eliminate the conflict.</Resolution>
+    <Resolution Name="System">The type name {0} conflicts in whole or in part with the namespace name '{1}' defined in the .NET Framework. Rename the type to eliminate the conflict.</Resolution>
    </Rule>
   </Rules>
  </FxCopReport>

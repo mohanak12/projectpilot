@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace ProjectPilot.Framework.CCNet
 {
-    public class CCNetProjectStatisticsBuildEntry
+    public class ProjectStatsBuildEntry
     {
         #region Public properties
 
@@ -11,6 +13,14 @@ namespace ProjectPilot.Framework.CCNet
         public IDictionary<string, string> Parameters
         {
             get { return parameters; }
+        }
+
+        public DateTime BuildStartTime
+        {
+            get
+            {
+                return DateTime.Parse(parameters["StartTime"], CultureInfo.InvariantCulture);
+            }
         }
 
         #endregion

@@ -70,7 +70,7 @@ namespace ProjectPilot.Tests.Framework.Runners
             if (false == Directory.Exists(@"Storage\Templates"))
                 Directory.CreateDirectory(@"Storage\Templates");
             foreach (FileInfo templateFile in directory.GetFiles())
-                templateFile.CopyTo(Path.Combine(@"Storage\Templates", templateFile.Name));
+                templateFile.CopyTo(Path.Combine(@"Storage\Templates", templateFile.Name), true);
         }
 
         void Kernel_HandlerRegistered(Castle.MicroKernel.IHandler handler, ref bool stateChanged)

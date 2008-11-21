@@ -2,11 +2,11 @@
 
 namespace ProjectPilot.Framework.CCNet
 {
-    public class CCNetProjectStatisticsData
+    public class ProjectStatsData
     {
         #region Public property
 
-        public IList<CCNetProjectStatisticsBuildEntry> Builds
+        public IList<ProjectStatsBuildEntry> Builds
         {
             get { return builds; }
         }
@@ -15,7 +15,7 @@ namespace ProjectPilot.Framework.CCNet
 
         #region Private member
 
-        private List<CCNetProjectStatisticsBuildEntry> builds = new List<CCNetProjectStatisticsBuildEntry>();
+        private List<ProjectStatsBuildEntry> builds = new List<ProjectStatsBuildEntry>();
 
         #endregion
     }

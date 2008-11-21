@@ -10,9 +10,9 @@ namespace ProjectPilot.Framework.CCNet
     {
         #region Public method
 
-        public CCNetProjectStatisticsData FetchStatistics()
+        public ProjectStatsData FetchStatistics()
         {
-            CCNetProjectStatisticsData data;
+            ProjectStatsData data;
 
             using (Stream stream = File.OpenRead(@"..\..\..\Data\Samples\ccnet.stats.xml"))
             {
@@ -22,9 +22,9 @@ namespace ProjectPilot.Framework.CCNet
             return data;
         }
 
-        public static CCNetProjectStatisticsData Load(Stream stream)
+        public static ProjectStatsData Load(Stream stream)
         {
-            CCNetProjectStatisticsData data = new CCNetProjectStatisticsData();
+            ProjectStatsData data = new ProjectStatsData();
 
             XmlReaderSettings xmlReaderSettings = new XmlReaderSettings();
             xmlReaderSettings.IgnoreComments = true;
@@ -64,7 +64,7 @@ namespace ProjectPilot.Framework.CCNet
 
         #region Private methods
 
-        private static void AddBuildStatus(CCNetProjectStatisticsBuildEntry data, string status)
+        private static void AddBuildStatus(ProjectStatsBuildEntry data, string status)
         {
             //Add build status parameters to parameter list
             data.Parameters.Add("Success", "0");
@@ -85,7 +85,7 @@ namespace ProjectPilot.Framework.CCNet
             }
         }
 
-        private static void ReadStatistics(CCNetProjectStatisticsData data, XmlReader xmlReader)
+        private static void ReadStatistics(ProjectStatsData data, XmlReader xmlReader)
         {
             xmlReader.Read();
 
@@ -101,7 +101,7 @@ namespace ProjectPilot.Framework.CCNet
 
                     case "integration":
 
-                        CCNetProjectStatisticsBuildEntry entry = new CCNetProjectStatisticsBuildEntry();
+                        ProjectStatsBuildEntry entry = new ProjectStatsBuildEntry();
                         entry.BuildLabel = ReadAttribute(xmlReader, "build-label");
 
                         ReadIntegrationEntry(entry, ReadAttribute(xmlReader, "status"), xmlReader);
@@ -115,7 +115,7 @@ namespace ProjectPilot.Framework.CCNet
             }
         }
 
-        private static void ReadIntegrationEntry(CCNetProjectStatisticsBuildEntry data, string status, XmlReader xmlReader)
+        private static void ReadIntegrationEntry(ProjectStatsBuildEntry data, string status, XmlReader xmlReader)
         {
             xmlReader.Read();
 
