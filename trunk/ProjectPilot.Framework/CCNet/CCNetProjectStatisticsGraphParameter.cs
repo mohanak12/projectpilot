@@ -3,13 +3,14 @@ using System.Collections.Generic;
 
 namespace ProjectPilot.Framework.CCNet
 {
+    /// <summary>
+    /// CCNetProjectStatisticsGraphParameter contains all parameters for one graph.
+    /// </summary>
     public class CCNetProjectStatisticsGraphParameter
     {
-        public CCNetProjectStatisticsGraphParameter(string graphColor, IList<double> parameterList, 
-            string parameterName, Type parameterType)
+        public CCNetProjectStatisticsGraphParameter(string graphColor, string parameterName, Type parameterType)
         {
             this.graphColor = graphColor;
-            this.parameterList = parameterList;
             this.parameterName = parameterName;
             this.parameterType = parameterType;
         }
@@ -35,7 +36,7 @@ namespace ProjectPilot.Framework.CCNet
         }
 
         private string graphColor;
-        private IList<double> parameterList;
+        private IList<double> parameterList = new List<double>();
         private string parameterName;
         private Type parameterType;
     }
