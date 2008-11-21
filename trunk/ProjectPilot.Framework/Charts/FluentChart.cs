@@ -71,7 +71,8 @@ namespace ProjectPilot.Framework.Charts
             return this;
         }
 
-        public FluentChart ExportToBitmap (string fileName, 
+        public FluentChart ExportToBitmap (
+            string fileName, 
             ImageFormat imageFormat,
             int width, 
             int height)
@@ -159,13 +160,13 @@ namespace ProjectPilot.Framework.Charts
 
             if (String.IsNullOrEmpty(xAxisTitle))
             {
-                zedGraph.GraphPane.XAxis.Title.Text = "";
+                zedGraph.GraphPane.XAxis.Title.Text = String.Empty;
                 zedGraph.GraphPane.XAxis.Title.IsVisible = false;
             }
 
             if (String.IsNullOrEmpty(yAxisTitle))
             {
-                zedGraph.GraphPane.YAxis.Title.Text = "";
+                zedGraph.GraphPane.YAxis.Title.Text = String.Empty;
                 zedGraph.GraphPane.YAxis.Title.IsVisible = false;
             }
         }

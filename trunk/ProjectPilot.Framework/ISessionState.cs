@@ -44,7 +44,7 @@ namespace ProjectPilot.Framework
         /// </summary>
         /// <param name="valueKey">The session value key.</param>
         /// <returns>
-        /// 	<c>true</c> if the session contains the specified value; otherwise, <c>false</c>.
+        /// <c>true</c> if the session contains the specified value; otherwise, <c>false</c>.
         /// </returns>
         bool HasValue(string valueKey);
 

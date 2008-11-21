@@ -6,14 +6,19 @@ namespace ProjectPilot.Framework.CCNet
 {
     public class ProjectStatsBuildEntry
     {
+        public ProjectStatsBuildEntry(int buildId)
+        {
+            this.buildId = buildId;
+        }
+
         #region Public properties
 
-        public string BuildLabel { get; set; }
-
-        public IDictionary<string, string> Parameters
+        public int BuildId
         {
-            get { return parameters; }
+            get { return buildId; }
         }
+
+        public string BuildLabel { get; set; }
 
         public DateTime BuildStartTime
         {
@@ -23,10 +28,16 @@ namespace ProjectPilot.Framework.CCNet
             }
         }
 
+        public IDictionary<string, string> Parameters
+        {
+            get { return parameters; }
+        }
+
         #endregion
 
         #region Private members
 
+        private int buildId;
         private Dictionary<string, string> parameters = new Dictionary<string, string>();
 
         #endregion

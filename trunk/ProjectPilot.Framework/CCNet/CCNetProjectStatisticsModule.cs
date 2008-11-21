@@ -83,7 +83,8 @@ namespace ProjectPilot.Framework.CCNet
                 fileManager.GetProjectFullFileName(projectId, ModuleId, "CCNetReportStatistics.html", true));
         }
 
-        private static void AddDataToParamterList(ProjectStatsBuildEntry entry,
+        private static void AddDataToParamterList(
+            ProjectStatsBuildEntry entry,
             IEnumerable<ProjectStatsGraphParameter> graphParameter, 
             bool newBuildLabel)
         {
@@ -91,7 +92,9 @@ namespace ProjectPilot.Framework.CCNet
             {
                 if (newBuildLabel)
                 {
-                    parameter.ValueList.Add(Convert.ToDouble(entry.Parameters[parameter.ParameterName],
+                    parameter.ValueList.Add(
+                        Convert.ToDouble(
+                        entry.Parameters[parameter.ParameterName],
                         CultureInfo.InvariantCulture));
                 }
                 else
@@ -114,7 +117,8 @@ namespace ProjectPilot.Framework.CCNet
             return sortedList;
         }
 
-        private string DrawChart(ProjectStatsGraph graph,
+        private string DrawChart(
+            ProjectStatsGraph graph,
             IList<string> xLabels,
             IList<int> xScaleValues)
         {
@@ -142,7 +146,8 @@ namespace ProjectPilot.Framework.CCNet
             return chartImageFileName;
         }
 
-        private string ExtractChartData(ProjectStatsData data,
+        private string ExtractChartData(
+            ProjectStatsData data,
             ProjectStatsGraph graph)
         {
             // Project name

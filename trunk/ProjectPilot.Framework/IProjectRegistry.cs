@@ -8,7 +8,9 @@ namespace ProjectPilot.Framework
         int ProjectsCount { get; }
 
         void AddProject (Project projectToAdd);
+
         Project GetProject(string projectId);
+        
         ICollection<Project> ListAllProjects();
     }
 }
