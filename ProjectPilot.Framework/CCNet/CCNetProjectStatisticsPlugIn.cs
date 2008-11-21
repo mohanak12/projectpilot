@@ -89,6 +89,7 @@ namespace ProjectPilot.Framework.CCNet
         {
             xmlReader.Read();
 
+            int buildIdCounter = 0;
             while (xmlReader.NodeType != XmlNodeType.EndElement)
             {
                 switch (xmlReader.Name)
@@ -101,7 +102,7 @@ namespace ProjectPilot.Framework.CCNet
 
                     case "integration":
 
-                        ProjectStatsBuildEntry entry = new ProjectStatsBuildEntry();
+                        ProjectStatsBuildEntry entry = new ProjectStatsBuildEntry(buildIdCounter++);
                         entry.BuildLabel = ReadAttribute(xmlReader, "build-label");
 
                         ReadIntegrationEntry(entry, ReadAttribute(xmlReader, "status"), xmlReader);
