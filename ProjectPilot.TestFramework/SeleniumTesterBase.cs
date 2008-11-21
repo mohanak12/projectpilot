@@ -23,12 +23,14 @@ namespace ProjectPilot.TestFramework
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
 
-            browserType = (BrowserType) Enum.Parse(typeof (BrowserType),
-                                                   ConfigurationManager.AppSettings["BrowserType"],
-                                                   true);
+            browserType = (BrowserType) Enum.Parse(
+                typeof(BrowserType),
+                ConfigurationManager.AppSettings["BrowserType"],
+                true);
             testMachine = ConfigurationManager.AppSettings["TestMachine"];
-            seleniumPort = int.Parse(ConfigurationManager.AppSettings["SeleniumPort"],
-                                     CultureInfo.InvariantCulture);
+            seleniumPort = int.Parse(
+                ConfigurationManager.AppSettings["SeleniumPort"],
+                CultureInfo.InvariantCulture);
             seleniumSpeed = ConfigurationManager.AppSettings["SeleniumSpeed"];
             browserUrl = ConfigurationManager.AppSettings["BrowserUrl"];
             targetUrl = new Uri(ConfigurationManager.AppSettings["TargetUrl"]);
@@ -51,8 +53,7 @@ namespace ProjectPilot.TestFramework
             selenium = new DefaultSelenium(testMachine, seleniumPort, browserExe, browserUrl);
             selenium.Start();
 
-            Console.WriteLine("Started Selenium session (browser type={0})",
-                              browserType);
+            Console.WriteLine("Started Selenium session (browser type={0})", browserType);
 
             // sets the speed of execution of GUI commands
             if (false == String.IsNullOrEmpty(seleniumSpeed))
@@ -95,9 +96,12 @@ namespace ProjectPilot.TestFramework
         /// <returns>The same <see cref="SeleniumTesterBase"/> object.</returns>
         public SeleniumTesterBase AssertButtonAvailable(string controlId)
         {
-            Assert.IsFalse(selenium.IsElementPresent(
-                               String.Format(CultureInfo.InvariantCulture,
-                                             "xpath=//a[contains(@href,'{0}')]", controlId)));
+            Assert.IsFalse(
+                selenium.IsElementPresent(
+                    String.Format(
+                        CultureInfo.InvariantCulture,
+                        "xpath=//a[contains(@href,'{0}')]", 
+                        controlId)));
 
             return this;
         }
@@ -110,15 +114,16 @@ namespace ProjectPilot.TestFramework
         /// <returns>The same <see cref="SeleniumTesterBase"/> object.</returns>
         public SeleniumTesterBase AssertDropDownContainsValues(string controlId, params string[] parameters)
         {
-            string locatorForDropDown = string.Format(CultureInfo.CurrentCulture,
-                                                      "xpath=//select[contains(@id,'{0}')]", controlId);
+            string locatorForDropDown = string.Format(
+                CultureInfo.CurrentCulture,
+                "xpath=//select[contains(@id,'{0}')]", 
+                controlId);
             string[] itemValues = selenium.GetSelectOptions(locatorForDropDown);
             List<string> list = new List<string>(itemValues);
             Assert.AreEqual(parameters.Length, itemValues.Length);
             foreach (string parameter in parameters)
-            {
                 Assert.IsTrue(list.Contains(parameter));
-            }
+
             return this;
         }
 
@@ -134,8 +139,7 @@ namespace ProjectPilot.TestFramework
 
             foreach (string errorCode in errorCodesList)
             {
-                Assert.IsTrue(selenium.IsTextPresent(errorCode),
-                    "Error '{0}' is missing.", errorCode);
+                Assert.IsTrue(selenium.IsTextPresent(errorCode), "Error '{0}' is missing.", errorCode);
             }
 
             return this;
@@ -167,11 +171,16 @@ namespace ProjectPilot.TestFramework
         {
             Uri absoluteUrl = new Uri(selenium.GetLocation());
             string localPath = absoluteUrl.LocalPath;
-            Assert.AreEqual(pageName, Path.GetFileName(localPath),
-                            String.Format(CultureInfo.InvariantCulture,
-                                          "Page '{0}' was expected, actually it is '{1}'.",
-                                          pageName,
-                                          Path.GetFileName(localPath)));
+            string assertMessage = String.Format(
+                CultureInfo.InvariantCulture,
+                "Page '{0}' was expected, actually it is '{1}'.",
+                pageName,
+                Path.GetFileName(localPath));
+
+            Assert.AreEqual(
+                pageName, 
+                Path.GetFileName(localPath),
+                assertMessage);
 
             if (pageId != null)
             {
@@ -192,11 +201,12 @@ namespace ProjectPilot.TestFramework
         public SeleniumTesterBase AssertLabelText(string controlId, string labelText)
         {
             string text = selenium.GetText("xpath=//span[contains(@id,'" + controlId + "')]");
-            Assert.AreEqual(labelText,
-                            text,
-                            "Label Text '{0}' was expected, actually it is '{1}'",
-                            labelText,
-                            text);
+            Assert.AreEqual(
+                labelText,
+                text,
+                "Label Text '{0}' was expected, actually it is '{1}'",
+                labelText,
+                text);
 
             return this;
         }
@@ -212,11 +222,12 @@ namespace ProjectPilot.TestFramework
         public SeleniumTesterBase AssertTextBoxValue(string controlId, string textBoxValue)
         {
             string text = selenium.GetValue("xpath=//input[contains(@id,'" + controlId + "')]");
-            Assert.AreEqual(textBoxValue,
-                            text,
-                            "TextBox Text '{0}' was expected, actually it is '{1}",
-                            textBoxValue,
-                            text);
+            Assert.AreEqual(
+                textBoxValue,
+                text,
+                "TextBox Text '{0}' was expected, actually it is '{1}",
+                textBoxValue,
+                text);
 
             return this;
         }
@@ -224,14 +235,17 @@ namespace ProjectPilot.TestFramework
         /// <summary>
         /// Asserts that the value is part of selection.
         /// </summary>
-        /// <param name="tariffDisplayInfo">value to select, which is checked for its appearance.</param>
+        /// <param name="value">value to select, which is checked for its appearance.</param>
         /// <returns>
         /// The same <see cref="SeleniumTesterBase"/> object.
         /// </returns>
-        public SeleniumTesterBase AssertIsLabelTextAvailable(string tariffDisplayInfo)
+        public SeleniumTesterBase AssertIsLabelTextAvailable(string value)
         {
-            Assert.IsTrue(selenium.IsElementPresent("xpath=//label[text()='" + tariffDisplayInfo + "']"),
-                          "Tariff '{0}' is not available", tariffDisplayInfo);
+            Assert.IsTrue(
+                selenium.IsElementPresent(
+                    "xpath=//label[text()='" + value + "']"),
+                    "Value '{0}' is not available", 
+                    value);
             return this;
         }
 
@@ -266,10 +280,11 @@ namespace ProjectPilot.TestFramework
             {
             }
 
-            Assert.AreEqual(null,
-                            text,
-                            "Label with Id '{0}' was not expected but was found.",
-                            controlId);
+            Assert.AreEqual(
+                null,
+                text,
+                "Label with Id '{0}' was not expected but was found.",
+                controlId);
             return this;
         }
 
@@ -281,19 +296,33 @@ namespace ProjectPilot.TestFramework
         /// <returns>The same <see cref="SeleniumTesterBase"/> object.</returns>
         public SeleniumTesterBase AssertRadioButtonContainsValues(string groupName, params string[] parameters)
         {
-            Assert.AreEqual(parameters.Length,
-                            selenium.GetXpathCount(String.Format(CultureInfo.InvariantCulture,
-                                                                 "//input[@type='radio' and @name='{0}']", groupName)),
-                            "Radio button '{0}' does not contain the expected number of values.", groupName);
+            decimal count = selenium.GetXpathCount(
+                String.Format(
+                    CultureInfo.InvariantCulture,
+                    "//input[@type='radio' and @name='{0}']", 
+                    groupName));
+
+            Assert.AreEqual(
+                parameters.Length,
+                    count,
+                "Radio button '{0}' does not contain the expected number of values.", 
+                groupName);
+
             foreach (string parameter in parameters)
             {
                 if (false == String.IsNullOrEmpty(parameter))
                     Assert.IsTrue(
-                        selenium.IsElementPresent(String.Format(CultureInfo.InvariantCulture,
-                                                                "xpath=//input[@type='radio' and @name='{0}' and @value='{1}']",
-                                                                groupName, parameter)),
-                        "Radio button '{0}' does not contain the expected value '{1}'.", groupName, parameter);
+                        selenium.IsElementPresent(
+                            String.Format(
+                                CultureInfo.InvariantCulture,
+                                "xpath=//input[@type='radio' and @name='{0}' and @value='{1}']",
+                                groupName, 
+                                parameter)),
+                            "Radio button '{0}' does not contain the expected value '{1}'.", 
+                            groupName, 
+                            parameter);
             }
+
             return this;
         }
 
@@ -308,10 +337,15 @@ namespace ProjectPilot.TestFramework
             try
             {
                 Assert.IsFalse(
-                    selenium.IsEditable(String.Format(CultureInfo.InvariantCulture,
-                                                      "xpath=//input[@type='radio' and @name='{0}' and @value='{1}']",
-                                                      groupName, value)),
-                    "Radio button '{0}' value '{1}' is not disabled.", groupName, value);
+                    selenium.IsEditable(
+                        String.Format(
+                            CultureInfo.InvariantCulture,
+                            "xpath=//input[@type='radio' and @name='{0}' and @value='{1}']",
+                            groupName, 
+                            value)),
+                    "Radio button '{0}' value '{1}' is not disabled.", 
+                    groupName, 
+                    value);
             }
             catch (SeleniumException)
             {
@@ -320,7 +354,6 @@ namespace ProjectPilot.TestFramework
 
             return this;
         }
-
 
         /// <summary>
         /// Asserts that specified value in radio is selected.
@@ -331,8 +364,12 @@ namespace ProjectPilot.TestFramework
         /// </returns>
         public SeleniumTesterBase AssertIsRadioButtonValueSelected(string controlValue)
         {
-            Assert.IsTrue(selenium.IsChecked(String.Format(CultureInfo.InvariantCulture,
-                                                           "xpath=//input[@type='radio' and @value='{0}']", controlValue)));
+            Assert.IsTrue(
+                selenium.IsChecked(
+                    String.Format(
+                        CultureInfo.InvariantCulture,
+                        "xpath=//input[@type='radio' and @value='{0}']", 
+                        controlValue)));
             return this;
         }
 
@@ -341,11 +378,12 @@ namespace ProjectPilot.TestFramework
         /// </summary>
         /// <param name="selected">true if checkbox is seleced, otherwise false</param>
         /// <param name="locator">checkbox control locator (e.g."xpath=//input[contains(@id,'ctl00_MainContentPlaceholder_ContentPanel1_CheckBox1')]")</param>
-        /// <returns></returns>
+        /// <returns>
+        /// The same <see cref="SeleniumTesterBase"/> object.
+        /// </returns>
         public SeleniumTesterBase AssertCheckBoxState(bool selected, string locator)
         {
-            Assert.AreEqual(selected,
-                            selenium.IsChecked(locator));
+            Assert.AreEqual(selected, selenium.IsChecked(locator));
             return this;
         }
 
@@ -359,8 +397,10 @@ namespace ProjectPilot.TestFramework
         /// </returns>
         public SeleniumTesterBase AssertSelectedDropDownValue(string dropDownControlId, object expectedValue)
         {
-            string locatorForDropDown = string.Format(CultureInfo.CurrentCulture,
-                                                      "xpath=//select[contains(@id,'{0}')]", dropDownControlId);
+            string locatorForDropDown = string.Format(
+                CultureInfo.CurrentCulture,
+                "xpath=//select[contains(@id,'{0}')]", 
+                dropDownControlId);
             string selectedValue = selenium.GetSelectedValue(locatorForDropDown);
 
             Assert.AreEqual(expectedValue.ToString(), selectedValue);
@@ -401,8 +441,11 @@ namespace ProjectPilot.TestFramework
         /// </returns>
         public SeleniumTesterBase ClickOnLink(string controlId)
         {
-            selenium.Click(String.Format(CultureInfo.InvariantCulture,
-                                         "xpath=//a[contains(@href,'{0}')]", controlId));
+            selenium.Click(
+                String.Format(
+                    CultureInfo.InvariantCulture,
+                    "xpath=//a[contains(@href,'{0}')]", 
+                    controlId));
             selenium.WaitForPageToLoad("10000");
             //Pause();
             return this;
@@ -417,8 +460,11 @@ namespace ProjectPilot.TestFramework
         /// </returns>
         public SeleniumTesterBase ClickOnButton(string controlId)
         {
-            selenium.Click(String.Format(CultureInfo.InvariantCulture,
-                                         "xpath=//input[contains(@id,'{0}')]", controlId));
+            selenium.Click(
+                String.Format(
+                    CultureInfo.InvariantCulture,
+                    "xpath=//input[contains(@id,'{0}')]", 
+                    controlId));
             selenium.WaitForPageToLoad("10000");
             //Pause();
             return this;
@@ -433,8 +479,11 @@ namespace ProjectPilot.TestFramework
         /// </returns>
         public SeleniumTesterBase ClickOnLinkButton(string controlId)
         {
-            selenium.Click(String.Format(CultureInfo.InvariantCulture,
-                                         "xpath=//a[contains(@id,'{0}')]", controlId));
+            selenium.Click(
+                String.Format(
+                    CultureInfo.InvariantCulture,
+                    "xpath=//a[contains(@id,'{0}')]", 
+                    controlId));
             selenium.WaitForPageToLoad("10000");
             //Pause();
             return this;
@@ -466,8 +515,12 @@ namespace ProjectPilot.TestFramework
             if (false == confirm)
                 selenium.ChooseCancelOnNextConfirmation();
 
-            selenium.Click(String.Format(CultureInfo.InvariantCulture,
-                                         "xpath=//{0}[contains(@id,'{1}')]", controlName, controlId));
+            selenium.Click(
+                String.Format(
+                    CultureInfo.InvariantCulture,
+                    "xpath=//{0}[contains(@id,'{1}')]", 
+                    controlName, 
+                    controlId));
 
             Assert.IsTrue(selenium.IsConfirmationPresent());
             Assert.AreEqual(confirmationText, selenium.GetConfirmation());
@@ -517,14 +570,21 @@ namespace ProjectPilot.TestFramework
         {
             if (value)
             {
-                selenium.Check(String.Format(CultureInfo.InvariantCulture,
-                                             "xpath=//input[contains(@id,'{0}')]", controlId));
+                selenium.Check(
+                    String.Format(
+                    CultureInfo.InvariantCulture,
+                    "xpath=//input[contains(@id,'{0}')]", 
+                    controlId));
             }
             else
             {
-                selenium.Uncheck(String.Format(CultureInfo.InvariantCulture,
-                                               "xpath=//input[contains(@id,'{0}')]", controlId));
+                selenium.Uncheck(
+                    String.Format(
+                    CultureInfo.InvariantCulture,
+                    "xpath=//input[contains(@id,'{0}')]", 
+                    controlId));
             }
+
             return this;
         }
 
@@ -538,9 +598,12 @@ namespace ProjectPilot.TestFramework
         /// </returns>
         public SeleniumTesterBase EnterValue(string inputControlId, string value)
         {
-            selenium.Type(String.Format(CultureInfo.InvariantCulture,
-                                        "xpath=//input[contains(@id,'{0}') or contains(@name,'{0}')]", inputControlId),
-                          value);
+            selenium.Type(
+                String.Format(
+                    CultureInfo.InvariantCulture,
+                    "xpath=//input[contains(@id,'{0}') or contains(@name,'{0}')]", 
+                    inputControlId),
+                value);
             return this;
         }
 
@@ -567,8 +630,12 @@ namespace ProjectPilot.TestFramework
         /// </returns>
         public SeleniumTesterBase SelectItem(string inputControlId, string value)
         {
-            selenium.Select(String.Format(CultureInfo.InvariantCulture,
-                                          "xpath=//select[contains(@id,'{0}')]", inputControlId), value);
+            selenium.Select(
+                String.Format(
+                    CultureInfo.InvariantCulture,
+                    "xpath=//select[contains(@id,'{0}')]", 
+                    inputControlId), 
+                value);
             return Pause();
         }
 

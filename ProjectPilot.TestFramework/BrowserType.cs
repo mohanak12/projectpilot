@@ -3,15 +3,12 @@ namespace ProjectPilot.TestFramework
     public enum BrowserType
     {
         /// <summary>
-        /// None
-        /// </summary>
-        None,
-        /// <summary>
-        /// Internet Explorer
+        /// Internet Explorer browser.
         /// </summary>
         InternetExplorer,
+
         /// <summary>
-        /// Firefox
+        /// Firefox browser.
         /// </summary>
         Firefox,
     }

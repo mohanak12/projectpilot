@@ -26,9 +26,9 @@ namespace ProjectPilot.Framework.CCNet
             throw new NotImplementedException();
         }
 
-        public SortedList<int,double> GetValuesForParameter (string parameterName)
+        public SortedList<int, double> GetValuesForParameter (string parameterName)
         {
-            SortedList<int,double> values = new SortedList<int, double>();
+            SortedList<int, double> values = new SortedList<int, double>();
 
             foreach (KeyValuePair<string, Dictionary<string, double>> pair in dataByBuildsByParametersByValue)
             {
