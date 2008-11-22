@@ -1,10 +1,9 @@
 using System;
-using System.Collections.Generic;
 
 namespace ProjectPilot.Framework.CCNet
 {
     /// <summary>
-    /// ProjectStatsGraphParameter contains all parameters for one graph.
+    /// Class ProjectStatsGraphParameter contains all parameters for one graph.
     /// </summary>
     public class ProjectStatsGraphParameter
     {
@@ -20,11 +19,6 @@ namespace ProjectPilot.Framework.CCNet
             get { return seriesColor; }
         }
 
-        public IList<double> ValueList
-        {
-            get { return valueList; }
-        }
-
         public string ParameterName
         {
             get { return parameterName; }
@@ -35,9 +29,8 @@ namespace ProjectPilot.Framework.CCNet
             get { return parameterType; }
         }
 
-        private string seriesColor;
-        private IList<double> valueList = new List<double>();
-        private string parameterName;
-        private Type parameterType;
+        private readonly string seriesColor;
+        private readonly string parameterName;
+        private readonly Type parameterType;
     }
 }

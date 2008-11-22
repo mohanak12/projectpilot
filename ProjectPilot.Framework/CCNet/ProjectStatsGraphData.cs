@@ -19,39 +19,47 @@ namespace ProjectPilot.Framework.CCNet
                 buildsToIntegers.Add(build.BuildId, buildsSortedByStartTime.IndexOfValue(build));
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "buildId")]
-        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "parameterName")]
-        public double GetValue(string buildId, string parameterName)
+        public void IncValue(int buildId, string parameterName, double value)
         {
-            throw new NotImplementedException();
+            Dictionary<string, double> entry = dataByBuildsByParametersByValue[buildId];
+            entry[parameterName] += value;
         }
+
+        public void ClearDictionary()
+        {
+            dataByBuildsByParametersByValue.Clear();
+        }
+
+        public double GetValue(int buildId, string parameterName)
+        {
+            Dictionary<string, double> value = dataByBuildsByParametersByValue[buildId];
+
+            return value[parameterName];
+        }
+
         public SortedList<int, double> GetValuesForParameter (string parameterName)
         {
             SortedList<int, double> values = new SortedList<int, double>();
 
+            int i = 0;
             foreach (KeyValuePair<int, Dictionary<string, double>> pair in dataByBuildsByParametersByValue)
             {
-                int buildId = pair.Key;
                 Dictionary<string, double> dictionaryOfParameters = pair.Value;
                 if (dictionaryOfParameters.ContainsKey(parameterName))
                 {
-                    int buildOrderId = buildsToIntegers[buildId];
                     double parameterValue = dictionaryOfParameters[parameterName];
-                    values.Add(buildOrderId, parameterValue);
+                    values.Add(i++, parameterValue);
                 }
             }
-
+        
             return values;
         }
 
         public void SetValue(int buildId, string parameterName, double value)
         {
-            Dictionary<string, double> entry = new Dictionary<string, double>();
-            entry.Add(parameterName, value);
-
             if (!dataByBuildsByParametersByValue.ContainsKey(buildId))
             {
-                dataByBuildsByParametersByValue.Add(buildId, entry);
+                dataByBuildsByParametersByValue.Add(buildId, new Dictionary<string, double> { {parameterName, value} });
             }
             else
             {
@@ -60,7 +68,8 @@ namespace ProjectPilot.Framework.CCNet
         }
 
         private SortedList<DateTime, ProjectStatsBuildEntry> buildsSortedByStartTime;
-        private Dictionary<int, Dictionary<string, double>> dataByBuildsByParametersByValue = new Dictionary<int, Dictionary<string, double>>();
+        private Dictionary<int, Dictionary<string, double>> 
+            dataByBuildsByParametersByValue = new Dictionary<int, Dictionary<string, double>>();
         private Dictionary<int, int> buildsToIntegers = new Dictionary<int, int>();
     }
 }

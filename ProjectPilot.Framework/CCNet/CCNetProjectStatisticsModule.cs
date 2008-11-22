@@ -29,11 +29,6 @@ namespace ProjectPilot.Framework.CCNet
             this.showBuildProjectHistory = showBuildProjectHistory;
         }
 
-        public bool IgnoreFailures
-        {
-            get { return ignoreFailures; }
-        }
-
         public string ModuleId
         {
             get { return "CCNetProjectStatistics";  }
@@ -63,17 +58,24 @@ namespace ProjectPilot.Framework.CCNet
 
         public void ExecuteTask(WaitHandle stopSignal)
         {
-            // Get statistic data
+            // get statistic data
             ProjectStatsData data = ccnetPlugIn.FetchStatistics();
-            
+            // sort statistics data by buildId
+            ProjectStatsGraphData graphData = new ProjectStatsGraphData(data);
+
             IList<string> chartImageFileNames = new List<string>();
 
-            // Build statistic for graphs
+            // prepare build statistic data and create graph
             foreach (ProjectStatsGraph graph in graphs)
             {
-                chartImageFileNames.Add(ExtractChartData(data, graph));
+                // clear list of data
+                graphData.ClearDictionary();
+                // prepare list of data for graph
+                PrepareDataMatrix(data, graph, graphData);
+                // draw chart
+                chartImageFileNames.Add(DrawChart(graph, graphData));
             }
-
+            
             // translate storage locations to URLs
             for (int i = 0; i < chartImageFileNames.Count; i++)
             {
@@ -93,124 +95,112 @@ namespace ProjectPilot.Framework.CCNet
                 fileManager.GetProjectFullFileName(projectId, ModuleId, "CCNetReportStatistics.html", true));
         }
 
-        private static void AddDataToParamterList(
-            ProjectStatsBuildEntry entry,
-            IEnumerable<ProjectStatsGraphParameter> graphParameter, 
-            bool newBuildLabel)
-        {
-            foreach (ProjectStatsGraphParameter parameter in graphParameter)
-            {
-                if (newBuildLabel)
-                {
-                    parameter.ValueList.Add(
-                        Convert.ToDouble(
-                        entry.Parameters[parameter.ParameterName],
-                        CultureInfo.InvariantCulture));
-                }
-                else
-                {
-                    parameter.ValueList[parameter.ValueList.Count - 1] +=
-                        Convert.ToDouble(entry.Parameters[parameter.ParameterName], CultureInfo.InvariantCulture);
-                }
-            }
-        }
-
-        private static SortedList<int, double> AddValuesToSortedList(IList<int> xValues, IList<double> yValues)
-        {
-            SortedList<int, double> sortedList = new SortedList<int, double>();
-
-            for (int i = 0; i < yValues.Count; i++)
-            {
-                sortedList.Add(xValues[i], yValues[i]);
-            }
-
-            return sortedList;
-        }
-
-        private string DrawChart(
-            ProjectStatsGraph graph,
-            IList<string> xLabels,
-            IList<int> xScaleValues)
+        private string DrawChart(ProjectStatsGraph graph, ProjectStatsGraphData graphData)
         {
             // Draw chart
-            FluentChart chart = FluentChart.Create(graph.GraphName, null, null)
-                .SetLabelsToXAxis(xLabels);
-
-            foreach (ProjectStatsGraphParameter parameter in graph.GraphParameters)
+            using (FluentChart chart = FluentChart.Create(graph.GraphName, graph.XAxisTitle, graph.YAxisTitle))
             {
+                chart.SetLabelsToXAxis(xLabels);
+
+                foreach (ProjectStatsGraphParameter parameter in graph.GraphParameters)
+                {
+                    chart
+                        .AddLineSeries(parameter.ParameterName, parameter.SeriesColor)
+                        .AddData(graphData.GetValuesForParameter(parameter.ParameterName))
+                        .SetSymbol(SymbolType.Circle, parameter.SeriesColor, 4, true);
+                }
+
+                string chartImageFileName = fileManager.GetProjectFullFileName(
+                    projectId,
+                    ModuleId,
+                    "CCNetBuildReportChart.png",
+                    true);
+
                 chart
-                    .AddLineSeries(parameter.ParameterName, parameter.SeriesColor)
-                    .AddData(AddValuesToSortedList(xScaleValues, parameter.ValueList))
-                    .SetSymbol(SymbolType.Circle, parameter.SeriesColor, 4, true);
+                    .ExportToBitmap(chartImageFileName, ImageFormat.Png, 2000, 800);
+
+                return chartImageFileName;
             }
-
-            string chartImageFileName = fileManager.GetProjectFullFileName(
-                projectId,
-                ModuleId,
-                "CCNetBuildReportChart.png",
-                true);
-
-            chart
-                .ExportToBitmap(chartImageFileName, ImageFormat.Png, 2000, 800);
-
-            return chartImageFileName;
         }
 
-        private string ExtractChartData(
-            ProjectStatsData data,
-            ProjectStatsGraph graph)
+        /// <summary>
+        /// Copy necessary build data to data matrix
+        /// </summary>
+        private void PrepareDataMatrix(ProjectStatsData data, ProjectStatsGraph graph, ProjectStatsGraphData graphData)
         {
-            // Project name
-            List<string> xLabels = new List<string>();
+            int buildId = 0;
 
-            // Locate data on X-Axis
-            List<int> xScale = new List<int>();
-
-            // Fill X and Y Axis with data
-            foreach (ProjectStatsBuildEntry build in data.Builds)
+            // go through all builds
+            for (int i = 0; i < data.Builds.Count; i++)
             {
-                if (xLabels.Count == 50) break;
-
-                ProjectStatsBuildEntry entry = build;
-
-                bool newBuildLabel = false;
-
-                // Add build name, increase scale on X-Axis
-                // Graphs for build report
-                // if the current build label has not already been added to the xLabels
-                if (build.BuildLabel != xLabels.Find(
-                                             temp => temp == entry.BuildLabel))
+                // show last 50 builds on graph if parameter is set to false
+                if (!showBuildProjectHistory)
                 {
-                    // Build name
-                    xLabels.Add(build.BuildLabel);
+                    if (i < data.Builds.Count - buildNumbers)
+                        continue;
+                }
 
-                    // X-Axis value for build
-                    if (xScale.Count == 0)
+                ProjectStatsBuildEntry entry = data.Builds[i];
+
+                // only successful builds are allowed
+                if (ignoreFailures && entry.Parameters["Success"] == "0")
+                {
+                    continue;
+                }
+
+                bool addValue = false;
+                
+                // if the current build label has not already been added to the xLabels
+                // group builds by build name
+                if (entry.BuildLabel != xLabels.Find(temp => temp == entry.BuildLabel))
+                {
+                    // add build name to list. Build name will be shown on x-axis
+                    xLabels.Add(entry.BuildLabel);
+
+                    // this two values are used only for grouping builds with same name
+                    // grouping is used only for create build report statistic
+                    addValue = true;
+                    buildId = entry.BuildId;
+                }
+
+                // go through all parameters
+                foreach (ProjectStatsGraphParameter parameter in graph.GraphParameters)
+                {
+                    double value = 0;
+
+                    if (entry.Parameters.ContainsKey(parameter.ParameterName))
                     {
-                        xScale.Add(0);
+                        if (parameter.ParameterType == typeof(TimeSpan))
+                        {
+                            value = TimeSpan.Parse(entry.Parameters[parameter.ParameterName]).TotalSeconds;
+                        }
+                        else if (parameter.ParameterType == typeof(double))
+                        {
+                            value = Convert.ToDouble(entry.Parameters[parameter.ParameterName],
+                                CultureInfo.InvariantCulture);
+                        }
+                    }
+
+                    if (addValue)
+                    {
+                        // set value for parameter name
+                        graphData.SetValue(buildId, parameter.ParameterName, value);
                     }
                     else
                     {
-                        xScale.Add(xScale[xScale.Count - 1] + 1);
+                        // increment value
+                        graphData.IncValue(buildId, parameter.ParameterName, value);
                     }
-
-                    newBuildLabel = true;
                 }
-                
-                // Add data to graph parameters
-                AddDataToParamterList(entry, graph.GraphParameters, newBuildLabel);
             }
-
-            // Draw chart with filled parameters
-            return DrawChart(graph, xLabels, xScale);
         }
 
+        private List<string> xLabels = new List<string>();
         private readonly ICCNetProjectStatisticsPlugIn ccnetPlugIn;
         private readonly List<ProjectStatsGraph> graphs;
         private bool ignoreFailures;
         private string projectId;
-
-        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
+        private const int buildNumbers = 10;
         private bool showBuildProjectHistory;
         private readonly IFileManager fileManager;
         private readonly ITemplateEngine templateEngine;

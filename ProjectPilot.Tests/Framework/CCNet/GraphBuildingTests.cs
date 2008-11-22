@@ -66,19 +66,27 @@ namespace ProjectPilot.Tests.Framework.CCNet
 
             //graphs.Add(graph);
 
+            //ProjectStatsGraph graph = new ProjectStatsGraph();
+            //graph.GraphName = "Build report";
+            //graph.AddParameter<double>("Success", "Green");
+            //graph.AddParameter<double>("Failure", "Red");
+            //graph.AddParameter<double>("Exception", "Blue");
+
+            //graphs.Add(graph);
+
             ProjectStatsGraph graph = new ProjectStatsGraph();
-            graph.GraphName = "Build report";
-            graph.AddParameter<double>("Success", "Green");
-            graph.AddParameter<double>("Failure", "Red");
-            graph.AddParameter<double>("Exception", "Blue");
+            graph.GraphName = "Build duration";
+            graph.YAxisTitle = "Seconds";
+            graph.AddParameter<TimeSpan>("Duration", "Green");
 
             graphs.Add(graph);
 
             //ProjectStatsGraph graph = new ProjectStatsGraph();
-            //graph.GraphName = "Build duration";
-            //graph.AddParameter<TimeSpan>("Green", "Duration");
-
+            //graph.GraphName = "MbUnit Tests";
+            //graph.AddParameter<double>("MbUnit TestCount", "Red");
+            //graph.AddParameter<double>("MbUnit TestPassed", "Green");
             //graphs.Add(graph);
+
 
             ProjectPilotConfiguration projectPilotConfiguration = new ProjectPilotConfiguration();
             projectPilotConfiguration.ProjectPilotWebAppRootUrl = "http://localhost/projectpilot/";
@@ -105,7 +113,10 @@ namespace ProjectPilot.Tests.Framework.CCNet
             ICCNetProjectStatisticsPlugIn plugIn = MockRepository.GenerateStub<ICCNetProjectStatisticsPlugIn>();
             plugIn.Stub(action => action.FetchStatistics()).Return(data);
 
-            CCNetProjectStatisticsModule module = new CCNetProjectStatisticsModule(plugIn, graphs, fileManager, templateEngine, true, false);
+            //Ignore failures only if you want to build build report statistic
+            CCNetProjectStatisticsModule module = new CCNetProjectStatisticsModule(
+                plugIn, graphs, fileManager, templateEngine, true, false);
+
             module.ProjectId = "CCNetStatistics";
             project.AddModule(module);
 

@@ -298,11 +298,12 @@
         <Types>
          <Type Name="CCNetProjectStatisticsModule">
           <Members>
-           <Member Name="#showBuildProjectHistory">
+           <Member Name="#.ctor(ProjectPilot.Framework.CCNet.ICCNetProjectStatisticsPlugIn,System.Collections.Generic.IEnumerable`1&lt;ProjectPilot.Framework.CCNet.ProjectStatsGraph&gt;,ProjectPilot.Framework.IFileManager,ProjectPilot.Framework.ITemplateEngine,System.Boolean,System.Boolean)">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2008-11-21 14:15:57Z">
+             <Message Id="ignoreFailures" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-11-22 10:58:48Z" FixCategory="DependsOnFix">
               <Issue>
-               <Item>'CCNetProjectStatisticsModule.showBuildProjectHistory'</Item>
+               <Item>'ignoreFailures'</Item>
+               <Item>'CCNetProjectStatisticsModule.CCNetProjectStatisticsModule(ICCNetProjectStatisticsPlugIn, IEnumerable&lt;ProjectStatsGraph&gt;, IFileManager, ITemplateEngine, bool, bool)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -528,9 +529,6 @@
    <Rule TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020">
     <Resolution Name="Default" />
    </Rule>
-   <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
-    <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
-   </Rule>
    <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
     <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
    </Rule>
@@ -546,6 +544,9 @@
    </Rule>
    <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
     <Resolution Name="Default" />
+   </Rule>
+   <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
+    <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
    </Rule>
    <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
     <Resolution Name="Default">The type name {0} conflicts in whole or in part with the namespace name '{1}'. Change either name to eliminate the conflict.</Resolution>
