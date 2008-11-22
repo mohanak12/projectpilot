@@ -20,7 +20,7 @@ namespace ProjectPilot.Tests.Framework.CCNet
             graph.AddParameter<int>("MbUnit TestFailed", "Red");
             graph.AddParameter<int>("MbUnit TestPassed", "Green");
             graph.AddParameter<int>("MbUnit TestIgnored", "Yellow");
-            graph.AddParameter<TimeSpan>("Duration", "Blue");
+            //graph.AddParameter<TimeSpan>("Duration", "Blue");
 
             //Prepare test data
             ProjectStatsData data;
