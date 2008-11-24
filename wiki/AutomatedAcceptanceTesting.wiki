@@ -2,7 +2,7 @@
 
 Possible code names: Accipio, Symfono
 
-== 1. Specifying business actions ==
+=== 1. Specifying business actions ===
  * Who: business analysts
  * When: typically at the start of the project, once the requirements are known. Also if the requirements change.
  * Inputs: functional specifications, GUI mock-ups
@@ -60,13 +60,13 @@ Possible code names: Accipio, Symfono
 
 NOTE: a special XML schema (XSD) will be available for this type of XML file. This will make writing such files easier in VisualStudio, since VS provides Intellisense for XML files with schemas. It will also enable automatic validation of actions files.
 
-== 2. Generating test specifications XML schema file ==
+=== 2. Generating test specifications XML schema file ===
  * Who: automatic tool
  * When: every time business actions XML file changes
  * Inputs: business actions XML file
  * Outputs: XML schema file for writing XML test specifications using the available business actions
 
-== 3. Writing test cases ==
+=== 3. Writing test cases ===
  * Who: business analysts, testers, developers
  * When: throughout the project lifetime
  * Inputs: business actions XML file, XML schema (see step 2)
@@ -92,7 +92,7 @@ NOTE: a special XML schema (XSD) will be available for this type of XML file. Th
 <suite>
 }}}
 
-== 4. Generating testing source code and documentation ==
+=== 4. Generating testing source code and documentation ===
  * Who: automatic tool
  * When: in each build
  * Inputs: business actions XML file, business actions XML schema, test cases XML file
@@ -132,13 +132,19 @@ public class BankingTestSuite
 }
 }}}
 
-== 5. Implementing testing code ==
+=== 5. Implementing testing code ===
  * Who: developers, testers
  * When: from the project start until all of the test actions have been implemented
  * Inputs: business actions XML file
  * Outputs: C# TestRunner(s) code
 
 The test runner is a C# class which is executed in generated tests. Each test action specified in the step 1 must be implemented as a method of the test runner. It will have a common base (skeleton) implementation (called TestRunnerBase) available in the library from which all test runners should inherit.
+
+=== 6. Running tests ===
+ * Who: developers, automated tool
+ * When: throughout the project lifecycle
+ * Inputs: C# test code
+ * Outputs: test results in XML form
 
 The test runner should emit an XML log file with the results of testing. These results will then be automatically fed to some reporting tool (CruiseControl.NET or something else) to visualize test results.
 
