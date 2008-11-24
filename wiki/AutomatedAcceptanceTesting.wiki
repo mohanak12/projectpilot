@@ -1,6 +1,6 @@
 #summary Basic ideas
 
-Possible code names: Accipio, Symfono
+Code name: Accipio
 
 === 1. Specifying business actions ===
  * Who: business analysts
