@@ -73,15 +73,28 @@ NOTE: a special XML schema (XSD) will be available for this type of XML file. Th
  * Outputs: XML files containing test cases, like:
 {{{
 <suite>
-    <case id="Testing money transfer">
-        <GoToPortal/>
-        <SignIn username="john" password="doe"/>
-        <ViewAccount accountId="34528"/>
-        <ClickActionTranfer/>
-        <EnterTransferAmount>644.33</EnterTransferAmount>
-        <EnterDestinationAccountNumber>23677</EnterDestinationAccountNumber>
-        <ConfirmTransfer/>
-        <AssertOperationSuccessful/>
+    <case id="MoneyTransfer">
+        <description>Tests money transfers from one account to another using the online banking portal.</description>
+        <covers>R15</covers>
+        <covers>R211</covers>
+        <steps>
+            <GoToPortal/>
+            <SignIn username="john" password="doe"/>
+            <ViewAccount accountId="34528"/>
+            <ClickActionTranfer/>
+            <EnterTransferAmount>644.33</EnterTransferAmount>
+            <EnterDestinationAccountNumber>23677</EnterDestinationAccountNumber>
+            <ConfirmTransfer/>
+            <AssertOperationSuccessful/>
+        </steps>
     </case>
 <suite>
 }}}
+
+== 4. Generating testing source code and documentation ==
+ * Who: automatic tool
+ * When: in each build
+ * Inputs: business actions XML file, business actions XML schema, test cases XML file
+ * Outputs: 
+  * C# code files which execute the specified tests
+  * Test case documentation in HTML format
