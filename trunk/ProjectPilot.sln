@@ -40,6 +40,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectPilot.BuildScripts",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectPilot.Extras", "ProjectPilot.Extras\ProjectPilot.Extras.csproj", "{59083E4A-3659-4D8E-805F-52321D1B84DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectPilot.TestFramework.Console", "ProjectPilot.TestFramework.Console\ProjectPilot.TestFramework.Console.csproj", "{2A84FEA1-0FC3-4885-B25A-F25C14978C7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +72,10 @@ Global
 		{59083E4A-3659-4D8E-805F-52321D1B84DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59083E4A-3659-4D8E-805F-52321D1B84DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59083E4A-3659-4D8E-805F-52321D1B84DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A84FEA1-0FC3-4885-B25A-F25C14978C7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A84FEA1-0FC3-4885-B25A-F25C14978C7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A84FEA1-0FC3-4885-B25A-F25C14978C7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A84FEA1-0FC3-4885-B25A-F25C14978C7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
