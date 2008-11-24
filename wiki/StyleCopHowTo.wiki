@@ -10,9 +10,10 @@ Certain StyleCop rules have been turned off for ProjectPilot, things like:
  * "elements must be documented"
  * "file must have header"
  * "single line comments must not be followed by blank line"
-...
+ * ...
 This was done in order to avoid excessive number of violations for the legacy code. But this doesn't mean that the code elements should not be documented, for example.
-The rules exclusions are stored in the [http://code.google.com/p/projectpilot/source/browse/trunk/Settings.StyleCop Settings.StyleCop] file.
+
+The rules exclusions are stored in the [http://code.google.com/p/projectpilot/source/browse/trunk/Settings.StyleCop Settings.StyleCop] file. Exclusions can be edited by running the [http://code.google.com/p/projectpilot/source/browse/trunk/EditStyleCopRules.bat] file, but this should be done in agreement with the project lead.
 
 In future StyleCop will be configured to *report errors instead of warnings* - developers will not be able to compile the project until any coding style violations are fixed.
 
