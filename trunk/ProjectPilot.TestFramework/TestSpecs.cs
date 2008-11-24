@@ -15,7 +15,7 @@ namespace ProjectPilot.TestFramework
         /// <summary>
         /// Adds test case to collection.
         /// </summary>
-        /// <param name="testCase"><see cref="testCase"/></param>
+        /// <param name="testCase">See <see cref="testCase"/></param>
         public void AddTestCase(TestCase testCase)
         {
             testCases.Add(testCase.TestCaseName, testCase);
@@ -24,8 +24,8 @@ namespace ProjectPilot.TestFramework
         /// <summary>
         /// Returns specified test case.
         /// </summary>
-        /// <param name="testCaseName"><see cref="TestCase.TestCaseName"/></param>
-        /// <returns></returns>
+        /// <param name="testCaseName">See <see cref="TestCase.TestCaseName"/></param>
+        /// <returns>Specified Test case <see cref="TestCase"/></returns>
         public TestCase GetTestCase(string testCaseName)
         {
             return testCases[testCaseName];
