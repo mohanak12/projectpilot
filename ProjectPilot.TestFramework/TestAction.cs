@@ -42,7 +42,7 @@ namespace ProjectPilot.TestFramework
         /// <summary>
         /// Add action parameter.
         /// </summary>
-        /// <param name="testActionParameter"><see cref="TestActionParameter"/></param>
+        /// <param name="testActionParameter">See <see cref="TestActionParameter"/></param>
         /// <example>url=http://asd.html</example>
         /// <example>name=parameter1</example>
         public void AddActionParameter(TestActionParameter testActionParameter)

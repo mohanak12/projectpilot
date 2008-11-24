@@ -62,7 +62,7 @@ namespace ProjectPilot.TestFramework
         /// <summary>
         /// Adds test action to Test case.
         /// </summary>
-        /// <param name="testAction"><see cref="testAction"/></param>
+        /// <param name="testAction">See <see cref="testAction"/></param>
         public void AddTestAction(TestAction testAction)
         {
             testActions.Add(testAction);
@@ -72,7 +72,7 @@ namespace ProjectPilot.TestFramework
         /// Returns specified test action.
         /// </summary>
         /// <param name="testActionName">Test action Name <see cref="TestAction.ActionName"/></param>
-        /// <returns><see cref="TestAction"/></returns>
+        /// <returns>See <see cref="TestAction"/></returns>
         public TestAction GetTestAction(string testActionName)
         {
             foreach (TestAction testAction in testActions)
