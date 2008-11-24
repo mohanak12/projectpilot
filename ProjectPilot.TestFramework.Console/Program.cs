@@ -44,6 +44,7 @@ namespace ProjectPilot.TestFramework.Console
 									ICodeWriter writer = new FileCodeWriter(fileWithCode);
 									ITestCodeGenerator cSharpCode = new CSharpTestCodeGenerator(writer);
 									cSharpCode.Generate(testSpecs);
+									writer.Close();
 								}
 								else
 								{
