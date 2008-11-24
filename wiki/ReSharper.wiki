@@ -1,0 +1,3 @@
+#summary http://www.jetbrains.com/resharper/
+
+http://www.jetbrains.com/resharper/
