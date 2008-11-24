@@ -72,7 +72,7 @@ NOTE: a special XML schema (XSD) will be available for this type of XML file. Th
  * Inputs: business actions XML file, XML schema (see step 2)
  * Outputs: XML files containing test cases, like:
 {{{
-<suite id="Banking">
+<suite id="Banking" runner="OnlineBanking">
     <description>Contains test cases which cover online banking functionality.</description>
     <case id="MoneyTransfer">
         <description>Tests money transfers from one account to another using the online banking portal.</description>
@@ -108,20 +108,43 @@ public class BankingTestSuite
    /// <summary>Tests money transfers from one account to another using the online banking portal.</summary>
    public void MoneyTransferTestCase
    {
-      using (TestRunner runner = new TestRunner())
+      using (OnlineBankingTestRunner runner = new OnlineBankingTestRunner())
       {
          runner
             // Open the online banking portal web site in the browser
             .GoToPortal()
+            // ...
             .SignIn("john", "doe")
             // Click on the "View" button for the account '34528'
             .ViewAccount(34528)
+            // ...
             .ClickActionTranfer()
+            // ...
             .EnterTransferAmount(644.33)
+            // ...
             .EnterDestinationAccountNumber(23677)
+            // ...
             .ConfirmTransfer()
+            // ...
             .AssertOperationSuccessful();
       }
    }
 }
 }}}
+
+== 5. Implementing testing code ==
+ * Who: developers, testers
+ * When: from the project start until all of the test actions have been implemented
+ * Inputs: business actions XML file
+ * Outputs: C# TestRunner(s) code
+
+The test runner is a C# class which is executed in generated tests. Each test action specified in the step 1 must be implemented as a method of the test runner. It will have a common base (skeleton) implementation (called TestRunnerBase) available in the library from which all test runners should inherit.
+
+The test runner should emit an XML log file with the results of testing. These results will then be automatically fed to some reporting tool (CruiseControl.NET or something else) to visualize test results.
+
+Each test case can have three different outcomes:
+ * Successful
+ * Failed
+ * Not yet implemented - if any of the test actions throw NotImplementedException
+
+In addition to showing results per test case, they should also be grouped by specifications they cover. 
