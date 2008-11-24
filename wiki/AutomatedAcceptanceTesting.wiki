@@ -5,7 +5,7 @@
  * Inputs: functional specifications, GUI mock-ups
  * Outputs: XML document describing available business actions, something like:
 {{{
-<testspecs>
+<actions>
     <action id="GoToPortal">
        <description>Open the online banking portal web site in the browser</description>
     </action>
@@ -38,5 +38,7 @@
     <action id="ConfirmTransfer">
        <description>Click on the "OK" button to confirm the transfer of money between accounts</description>
     </action>
-</testspecs>
+</actions
 }}}
+
+NOTE: a special XML schema (XSD) will be available for this type of XML file. This will make writing such files easier in VisualStudio, since VS provides Intellisense for XML files with schemas. It will also enable automatic validation of actions files.
