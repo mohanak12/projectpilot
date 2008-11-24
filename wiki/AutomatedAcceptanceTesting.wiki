@@ -1,6 +1,8 @@
 #summary Basic ideas
 
-== 1. Specifying Business Actions ==
+Possible code names: Accipio, Symfono
+
+== 1. Specifying business actions ==
  * Who: business analysts
  * Inputs: functional specifications, GUI mock-ups
  * Outputs: XML document describing available business actions, something like:
@@ -38,7 +40,22 @@
     <action id="ConfirmTransfer">
        <description>Click on the "OK" button to confirm the transfer of money between accounts</description>
     </action>
-</actions
+
+    <function id="TransferMoney">
+        <steps>
+            <run action="ViewAccount"/>
+            <run action="ClickActionTranfer"/>
+            <run action="EnterTransferAmount"/>
+            <run action="EnterDestinationAccountNumber"/>
+            <run action="ConfirmTransfer"/>
+        <steps>        
+    </function>
+</actions>
 }}}
 
 NOTE: a special XML schema (XSD) will be available for this type of XML file. This will make writing such files easier in VisualStudio, since VS provides Intellisense for XML files with schemas. It will also enable automatic validation of actions files.
+
+== 2. Generating test specifications XML schema file ==
+ * Who: automatic tool
+ * Inputs: business actions XML file
+ * Outputs: XML schema file for writing XML test specifications using the available business actions
