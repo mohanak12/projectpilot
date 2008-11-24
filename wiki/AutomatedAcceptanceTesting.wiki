@@ -141,7 +141,7 @@ public class BankingTestSuite
 The test runner is a C# class which is executed in generated tests. Each test action specified in the step 1 must be implemented as a method of the test runner. It will have a common base (skeleton) implementation (called TestRunnerBase) available in the library from which all test runners should inherit.
 
 === 6. Running tests ===
- * Who: developers, automated tool
+ * Who: anyone + automated tool
  * When: throughout the project lifecycle
  * Inputs: C# test code
  * Outputs: test results in XML form
