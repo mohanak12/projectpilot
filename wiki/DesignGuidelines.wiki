@@ -1,7 +1,7 @@
 #summary Design guidelines and coding style used in ProjectPilot.
 
 == Introduction ==
-In general we follow Microsoft's design guidelines. We use FxCop as part of the build, it enforces some of these guidelines. In future we might decide to go one step further and use Microsoft's StyleCop to enforce coding style even further.
+In general we follow Microsoft's design guidelines. We use StyleCop and FxCop tools as part of the build, they enforce some of these guidelines. See the StyleCopHowTo on some basic instructions in using the StyleCop.
 
 == Some Coding Style Guidelines ==
 This page describes only some of the most important coding style guidelines, for the rest of them please consult the links below.
