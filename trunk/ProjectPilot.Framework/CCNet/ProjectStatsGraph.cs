@@ -17,7 +17,9 @@ namespace ProjectPilot.Framework.CCNet
         }
 
         public string GraphName { set; get; }
+
         public string XAxisTitle { set; get; }
+
         public string YAxisTitle { set; get; }
 
         private readonly List<ProjectStatsGraphParameter> parameters = new List<ProjectStatsGraphParameter>();

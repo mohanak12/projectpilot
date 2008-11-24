@@ -59,7 +59,7 @@ namespace ProjectPilot.Framework.CCNet
         {
             if (!dataByBuildsByParametersByValue.ContainsKey(buildId))
             {
-                dataByBuildsByParametersByValue.Add(buildId, new Dictionary<string, double> { {parameterName, value} });
+                dataByBuildsByParametersByValue.Add(buildId, new Dictionary<string, double> { { parameterName, value } });
             }
             else
             {
@@ -70,6 +70,7 @@ namespace ProjectPilot.Framework.CCNet
         private SortedList<DateTime, ProjectStatsBuildEntry> buildsSortedByStartTime;
         private Dictionary<int, Dictionary<string, double>> 
             dataByBuildsByParametersByValue = new Dictionary<int, Dictionary<string, double>>();
+
         private Dictionary<int, int> buildsToIntegers = new Dictionary<int, int>();
     }
 }

@@ -123,7 +123,7 @@ namespace ProjectPilot.Tests.Framework.CCNet
             module.ExecuteTask(null);
         }
 
-        [Test]
+        [Test,Explicit("This test should not be run automatically"),]
         public void Test()
         {
             RemoteCruiseManagerFactory factory = new RemoteCruiseManagerFactory();
