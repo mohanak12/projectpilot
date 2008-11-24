@@ -4,6 +4,7 @@ Possible code names: Accipio, Symfono
 
 == 1. Specifying business actions ==
  * Who: business analysts
+ * When: typically at the start of the project, once the requirements are known. Also if the requirements change.
  * Inputs: functional specifications, GUI mock-ups
  * Outputs: XML document describing available business actions, something like:
 {{{
@@ -41,6 +42,10 @@ Possible code names: Accipio, Symfono
        <description>Click on the "OK" button to confirm the transfer of money between accounts</description>
     </action>
 
+    <action id="AssertOperationSuccessful">
+       <description>Assert the operation was successful</description>
+    </action>
+
     <function id="TransferMoney">
         <steps>
             <run action="ViewAccount"/>
@@ -57,5 +62,26 @@ NOTE: a special XML schema (XSD) will be available for this type of XML file. Th
 
 == 2. Generating test specifications XML schema file ==
  * Who: automatic tool
+ * When: every time business actions XML file changes
  * Inputs: business actions XML file
  * Outputs: XML schema file for writing XML test specifications using the available business actions
+
+== 3. Writing test cases ==
+ * Who: business analysts, testers, developers
+ * When: throughout the project lifetime
+ * Inputs: business actions XML file, XML schema (see step 2)
+ * Outputs: XML files containing test cases, like:
+{{{
+<suite>
+    <case id="Testing money transfer">
+        <GoToPortal/>
+        <SignIn username="john" password="doe"/>
+        <ViewAccount accountId="34528"/>
+        <ClickActionTranfer/>
+        <EnterTransferAmount>644.33</EnterTransferAmount>
+        <EnterDestinationAccountNumber>23677</EnterDestinationAccountNumber>
+        <ConfirmTransfer/>
+        <AssertOperationSuccessful/>
+    </case>
+<suite>
+}}}
