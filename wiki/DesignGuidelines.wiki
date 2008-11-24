@@ -15,6 +15,8 @@ The order must follow these rules (in order of importance):
 === Miscellaneous ===
  * Keep each class/interface in its own file.
  * Use 4 spaces instead of tabs in !VisualStudio. Otherwise changes of formatting will be shown as real changes.
+ * Write meaningful XML comments. You can use [http://www.roland-weigelt.de/ghostdoc/ Ghostdoc] to help you write them.
+
 
 == Links ==
  * [http://msdn.microsoft.com/en-us/library/ms229042.aspx Design Guidelines for Developing Class Libraries]
