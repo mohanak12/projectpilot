@@ -72,7 +72,8 @@ NOTE: a special XML schema (XSD) will be available for this type of XML file. Th
  * Inputs: business actions XML file, XML schema (see step 2)
  * Outputs: XML files containing test cases, like:
 {{{
-<suite>
+<suite id="Banking">
+    <description>Contains test cases which cover online banking functionality.</description>
     <case id="MoneyTransfer">
         <description>Tests money transfers from one account to another using the online banking portal.</description>
         <covers>R15</covers>
@@ -98,3 +99,29 @@ NOTE: a special XML schema (XSD) will be available for this type of XML file. Th
  * Outputs: 
   * C# code files which execute the specified tests
   * Test case documentation in HTML format
+
+The sample generated source code:
+{{{
+/// <summary>Contains test cases which cover online banking functionality.</summary>
+public class BankingTestSuite
+{
+   /// <summary>Tests money transfers from one account to another using the online banking portal.</summary>
+   public void MoneyTransferTestCase
+   {
+      using (TestRunner runner = new TestRunner())
+      {
+         runner
+            // Open the online banking portal web site in the browser
+            .GoToPortal()
+            .SignIn("john", "doe")
+            // Click on the "View" button for the account '34528'
+            .ViewAccount(34528)
+            .ClickActionTranfer()
+            .EnterTransferAmount(644.33)
+            .EnterDestinationAccountNumber(23677)
+            .ConfirmTransfer()
+            .AssertOperationSuccessful();
+      }
+   }
+}
+}}}
