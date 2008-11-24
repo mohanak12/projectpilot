@@ -124,8 +124,11 @@ namespace ProjectPilot.Framework.CCNet
         }
 
         /// <summary>
-        /// Copy necessary build data to data matrix
+        /// Copy necessary build data to data matrix.
         /// </summary>
+        /// <param name="data">The CCNet project statistics data.</param>
+        /// <param name="graph">The CCNet project statistics graph.</param>
+        /// <param name="graphData">The graph data.</param>
         private void PrepareDataMatrix(ProjectStatsData data, ProjectStatsGraph graph, ProjectStatsGraphData graphData)
         {
             int buildId = 0;
@@ -136,7 +139,7 @@ namespace ProjectPilot.Framework.CCNet
                 // show last 50 builds on graph if parameter is set to false
                 if (!showBuildProjectHistory)
                 {
-                    if (i < data.Builds.Count - buildNumbers)
+                    if (i < data.Builds.Count - BuildNumbers)
                         continue;
                 }
 
@@ -176,7 +179,8 @@ namespace ProjectPilot.Framework.CCNet
                         }
                         else if (parameter.ParameterType == typeof(double))
                         {
-                            value = Convert.ToDouble(entry.Parameters[parameter.ParameterName],
+                            value = Convert.ToDouble(
+                                entry.Parameters[parameter.ParameterName],
                                 CultureInfo.InvariantCulture);
                         }
                     }
@@ -200,7 +204,7 @@ namespace ProjectPilot.Framework.CCNet
         private readonly List<ProjectStatsGraph> graphs;
         private bool ignoreFailures;
         private string projectId;
-        private const int buildNumbers = 10;
+        private const int BuildNumbers = 10;
         private bool showBuildProjectHistory;
         private readonly IFileManager fileManager;
         private readonly ITemplateEngine templateEngine;

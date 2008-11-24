@@ -1,1 +1,1 @@
-lib\cs-script\cscs.exe ProjectPilot.BuildScripts\BuildScript.cs
+lib\cs-script\cscs.exe /d ProjectPilot.BuildScripts\BuildScript.cs

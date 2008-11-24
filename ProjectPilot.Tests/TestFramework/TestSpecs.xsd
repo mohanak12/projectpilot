@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="TestSpecs" xmlns="http://projectpilot/testspecs.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://projectpilot/testspecs.xsd" elementFormDefault="qualified" >
+  <xs:element name="TestSpecs">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="TestCase">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:attribute name="id" type="xs:string" />
+              <xs:attribute name="category" type="xs:string" />
+
+              <xs:element name="OpenPage" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="url" type="xs:string"  />
+                </xs:complexType>
+              </xs:element>
+              
+              <xs:element name="TypeText" nillable="true" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute name="id" type="xs:string" />
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              
+              <xs:element name="ClickButton" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="id" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              
+              <xs:element name="ClickLink" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="href" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

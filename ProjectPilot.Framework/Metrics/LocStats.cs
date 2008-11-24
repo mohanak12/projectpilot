@@ -50,9 +50,8 @@ namespace ProjectPilot.Framework.Metrics
                         eloc++;
                     else
                         notEmpty = false;
-
                 }
-                else if(tmpChar != '\r')
+                else if (tmpChar != '\r')
                     notEmpty = true;
             }
 
