@@ -6,9 +6,11 @@
     </Unrecognized>
     <Recognized>
       <!-- place them in alphabetical order! -->
+      <Word>accipio</Word>
       <Word>ccnet</Word>
       <Word>Cloc</Word>
       <Word>Eloc</Word>
+      <Word>Firefox</Word>
       <Word>flubu</Word>
       <Word>Msmq</Word>
       <Word>mvc</Word>

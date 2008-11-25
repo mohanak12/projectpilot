@@ -21,10 +21,14 @@
   <IgnoreGeneratedCode>False</IgnoreGeneratedCode>
  </ProjectOptions>
  <Targets>
+  <AssemblyReferenceDirectories>
+   <Directory>$(ProjectDir)/ProjectPilot.TestFramework/bin/Release/</Directory>
+  </AssemblyReferenceDirectories>
+  <Target Name="$(ProjectDir)/Accipio.Console/bin/Release/Accipio.Console.exe" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/Accipio/bin/Release/Accipio.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/Flubu/bin/Release/Flubu.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/ProjectPilot.Framework/bin/Release/ProjectPilot.Framework.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/ProjectPilot.Portal/bin/ProjectPilot.Portal.dll" Analyze="True" AnalyzeAllChildren="True" />
-  <Target Name="$(ProjectDir)/ProjectPilot.TestFramework/bin/Release/ProjectPilot.TestFramework.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/ProjectPilot.Tests/bin/Release/ProjectPilot.Tests.dll" Analyze="True" AnalyzeAllChildren="True" />
  </Targets>
  <Rules>
@@ -144,16 +148,6 @@
  </Rules>
  <FxCopReport Version="1.36">
   <Namespaces>
-   <Namespace Name="Flubu.Tasks.Msmq">
-    <Messages>
-     <Message Id="Msmq" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-11-25 19:03:50Z">
-      <Issue Name="Namespace">
-       <Item>Msmq</Item>
-       <Item>Flubu.Tasks.Msmq</Item>
-      </Issue>
-     </Message>
-    </Messages>
-   </Namespace>
    <Namespace Name="ProjectPilot.Framework.CCNet">
     <Messages>
      <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-11-03 07:17:41Z">
@@ -313,33 +307,49 @@
      </Message>
     </Messages>
    </Namespace>
-   <Namespace Name="ProjectPilot.Tests.TestFramework">
-    <Messages>
-     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-11-05 08:24:15Z">
-      <Issue>
-       <Item>ProjectPilot.Tests.TestFramework</Item>
-      </Issue>
-     </Message>
-    </Messages>
-   </Namespace>
   </Namespaces>
   <Targets>
-   <Target Name="$(ProjectDir)/Flubu/bin/Release/Flubu.dll">
+   <Target Name="$(ProjectDir)/Accipio.Console/bin/Release/Accipio.Console.exe">
     <Modules>
-     <Module Name="flubu.dll">
+     <Module Name="accipio.console.exe">
       <Namespaces>
-       <Namespace Name="Flubu.Tasks.Misc">
+       <Namespace Name="Accipio.Console">
         <Types>
-         <Type Name="Log4NetConfigTask">
+         <Type Name="Program">
           <Members>
-           <Member Name="#AddConfigFile(System.String,System.String)">
+           <Member Name="#Main(System.String[])">
             <Messages>
-             <Message Id="net" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-11-25 19:03:50Z">
-              <Issue Name="MemberParameter">
-               <Item>'Log4NetConfigTask.AddConfigFile(string, string)'</Item>
-               <Item>net</Item>
-               <Item>'log4netConfigXpath'</Item>
-               <Item>Net</Item>
+             <Message Id="System.String.Equals(System.String,System.StringComparison)" TypeName="UseOrdinalStringComparison" Category="Microsoft.Globalization" CheckId="CA1309" Created="2008-11-25 20:52:21Z">
+              <Issue Name="StringComparison">
+               <Item>'Program.Main(string[])'</Item>
+               <Item>StringComparison.InvariantCultureIgnoreCase</Item>
+               <Item>'string.Equals(string, StringComparison)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/Accipio/bin/Release/Accipio.dll">
+    <Modules>
+     <Module Name="accipio.dll">
+      <Namespaces>
+       <Namespace Name="Accipio">
+        <Types>
+         <Type Name="BrowserType">
+          <Members>
+           <Member Name="#Firefox">
+            <Messages>
+             <Message Id="Firefox" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-11-25 20:52:21Z">
+              <Issue Name="Member">
+               <Item>Firefox</Item>
+               <Item>'BrowserType.Firefox'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -470,37 +480,6 @@
      </Module>
     </Modules>
    </Target>
-   <Target Name="$(ProjectDir)/ProjectPilot.TestFramework/bin/Release/ProjectPilot.TestFramework.dll">
-    <Modules>
-     <Module Name="projectpilot.testframework.dll">
-      <Namespaces>
-       <Namespace Name="ProjectPilot.TestFramework">
-        <Types>
-         <Type Name="BrowserType">
-          <Members>
-           <Member Name="#Firefox">
-            <Messages>
-             <Message Id="Firefox" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-11-14 10:26:27Z">
-              <Issue Name="Member">
-               <Item>Firefox</Item>
-               <Item>'BrowserType.Firefox'</Item>
-              </Issue>
-              <Notes>
-               <User Name="ajeznik">
-                <Note Id="0" />
-               </User>
-              </Notes>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
-      </Namespaces>
-     </Module>
-    </Modules>
-   </Target>
    <Target Name="$(ProjectDir)/ProjectPilot.Tests/bin/Release/ProjectPilot.Tests.dll">
     <Modules>
      <Module Name="projectpilot.tests.dll">
@@ -539,33 +518,11 @@
          </Type>
         </Types>
        </Namespace>
-       <Namespace Name="ProjectPilot.Tests.TestFramework">
-        <Types>
-         <Type Name="XmlTestSpecsParserTests">
-          <Members>
-           <Member Name="#Test()">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-11-05 08:24:15Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'XmlTestSpecsParserTests.Test()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
       </Namespaces>
      </Module>
     </Modules>
    </Target>
   </Targets>
-  <Notes>
-   <User Name="ajeznik">
-    <Note Id="0" Modified="2008-11-14 10:34:54Z">Firefox is spelled correct</Note>
-   </User>
-  </Notes>
   <Rules>
    <Rule TypeName="AvoidEmptyInterfaces" Category="Microsoft.Design" CheckId="CA1040">
     <Resolution Name="Default">Define a custom attribute to replace {0}.</Resolution>
@@ -576,12 +533,8 @@
    <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
     <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
    </Rule>
-   <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
-    <Resolution Name="MemberParameter">In member {0}, correct the casing of '{1}' in parameter name {2} by changing it to '{3}'.</Resolution>
-   </Rule>
    <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
     <Resolution Name="Member">Correct the spelling of '{0}' in member name {1} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
-    <Resolution Name="Namespace">Correct the spelling of '{0}' in namespace name '{1}'.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707">
     <Resolution Name="Type">Remove the underscores from type name {0}.</Resolution>
@@ -596,6 +549,9 @@
    <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
     <Resolution Name="Default">The type name {0} conflicts in whole or in part with the namespace name '{1}'. Change either name to eliminate the conflict.</Resolution>
     <Resolution Name="System">The type name {0} conflicts in whole or in part with the namespace name '{1}' defined in the .NET Framework. Rename the type to eliminate the conflict.</Resolution>
+   </Rule>
+   <Rule TypeName="UseOrdinalStringComparison" Category="Microsoft.Globalization" CheckId="CA1309">
+    <Resolution Name="StringComparison">{0} passes {1} as an argument to {2}. Replace this usage with StringComparison.Ordinal or StringComparison.OrdinalIgnoreCase if appropriate.</Resolution>
    </Rule>
   </Rules>
  </FxCopReport>

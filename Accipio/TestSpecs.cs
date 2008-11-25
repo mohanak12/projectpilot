@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Accipio;
 
-namespace ProjectPilot.TestFramework
+namespace Accipio
 {
     public class TestSpecs
     {

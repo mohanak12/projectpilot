@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace ProjectPilot.TestFramework
+namespace Accipio
 {
     public class CSharpTestCodeGenerator : ITestCodeGenerator
     {

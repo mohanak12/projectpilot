@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 
-namespace ProjectPilot.TestFramework
+namespace Accipio
 {
     public class TestSpecsProcessor
     {

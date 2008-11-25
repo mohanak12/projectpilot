@@ -25,7 +25,7 @@ namespace BuildScripts
                     .AddProject("ProjectPilot.BuildScripts")
                     .AddProject("ProjectPilot.Framework")
                     .AddMainWebProject("ProjectPilot.Portal")
-                    .AddProject("ProjectPilot.TestFramework")
+                    .AddProject("Accipio")
                     .AddProject("ProjectPilot.Tests")
 
                     .CleanOutput()

@@ -1,4 +1,4 @@
-namespace ProjectPilot.TestFramework
+namespace Accipio
 {
     public enum BrowserType
     {

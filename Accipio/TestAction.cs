@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 #endregion
 
-namespace ProjectPilot.TestFramework
+namespace Accipio
 {
     public class TestAction
     {
