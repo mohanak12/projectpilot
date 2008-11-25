@@ -21,6 +21,7 @@
   <IgnoreGeneratedCode>False</IgnoreGeneratedCode>
  </ProjectOptions>
  <Targets>
+  <Target Name="$(ProjectDir)/Flubu/bin/Release/Flubu.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/ProjectPilot.Framework/bin/Release/ProjectPilot.Framework.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/ProjectPilot.Portal/bin/ProjectPilot.Portal.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/ProjectPilot.TestFramework/bin/Release/ProjectPilot.TestFramework.dll" Analyze="True" AnalyzeAllChildren="True" />
@@ -93,7 +94,30 @@
    <RuleFile Name="$(FxCopDir)\Rules\GlobalizationRules.dll" Enabled="True" AllRulesEnabled="True" />
    <RuleFile Name="$(FxCopDir)\Rules\InteroperabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
    <RuleFile Name="$(FxCopDir)\Rules\MobilityRules.dll" Enabled="True" AllRulesEnabled="True" />
-   <RuleFile Name="$(FxCopDir)\Rules\NamingRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\NamingRules.dll" Enabled="True" AllRulesEnabled="False">
+    <Rule Name="CompoundWordsShouldBeCasedCorrectly" Enabled="True" />
+    <Rule Name="DoNotNameEnumValuesReserved" Enabled="True" />
+    <Rule Name="DoNotPrefixEnumValuesWithTypeName" Enabled="True" />
+    <Rule Name="EventsShouldNotHaveBeforeOrAfterPrefix" Enabled="True" />
+    <Rule Name="FlagsEnumsShouldHavePluralNames" Enabled="True" />
+    <Rule Name="IdentifiersShouldBeCasedCorrectly" Enabled="True" />
+    <Rule Name="IdentifiersShouldBeSpelledCorrectly" Enabled="True" />
+    <Rule Name="IdentifiersShouldDifferByMoreThanCase" Enabled="True" />
+    <Rule Name="IdentifiersShouldHaveCorrectPrefix" Enabled="True" />
+    <Rule Name="IdentifiersShouldHaveCorrectSuffix" Enabled="True" />
+    <Rule Name="IdentifiersShouldNotContainUnderscores" Enabled="True" />
+    <Rule Name="IdentifiersShouldNotHaveIncorrectPrefix" Enabled="True" />
+    <Rule Name="IdentifiersShouldNotHaveIncorrectSuffix" Enabled="True" />
+    <Rule Name="IdentifiersShouldNotMatchKeywords" Enabled="True" />
+    <Rule Name="OnlyFlagsEnumsShouldHavePluralNames" Enabled="True" />
+    <Rule Name="ParameterNamesShouldMatchBaseDeclaration" Enabled="True" />
+    <Rule Name="ParameterNamesShouldNotMatchMemberNames" Enabled="True" />
+    <Rule Name="PropertyNamesShouldNotMatchGetMethods" Enabled="True" />
+    <Rule Name="ResourceStringCompoundWordsShouldBeCasedCorrectly" Enabled="True" />
+    <Rule Name="ResourceStringsShouldBeSpelledCorrectly" Enabled="True" />
+    <Rule Name="TypeNamesShouldNotMatchNamespaces" Enabled="True" />
+    <Rule Name="UsePreferredTerms" Enabled="True" />
+   </RuleFile>
    <RuleFile Name="$(FxCopDir)\Rules\PerformanceRules.dll" Enabled="True" AllRulesEnabled="False">
     <Rule Name="AvoidExcessiveLocals" Enabled="True" />
     <Rule Name="AvoidUncalledPrivateCode" Enabled="True" />
@@ -120,6 +144,16 @@
  </Rules>
  <FxCopReport Version="1.36">
   <Namespaces>
+   <Namespace Name="Flubu.Tasks.Msmq">
+    <Messages>
+     <Message Id="Msmq" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-11-25 19:03:50Z">
+      <Issue Name="Namespace">
+       <Item>Msmq</Item>
+       <Item>Flubu.Tasks.Msmq</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
    <Namespace Name="ProjectPilot.Framework.CCNet">
     <Messages>
      <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-11-03 07:17:41Z">
@@ -290,20 +324,22 @@
    </Namespace>
   </Namespaces>
   <Targets>
-   <Target Name="$(ProjectDir)/ProjectPilot.Framework/bin/Release/ProjectPilot.Framework.dll">
+   <Target Name="$(ProjectDir)/Flubu/bin/Release/Flubu.dll">
     <Modules>
-     <Module Name="projectpilot.framework.dll">
+     <Module Name="flubu.dll">
       <Namespaces>
-       <Namespace Name="ProjectPilot.Framework.CCNet">
+       <Namespace Name="Flubu.Tasks.Misc">
         <Types>
-         <Type Name="CCNetProjectStatisticsModule">
+         <Type Name="Log4NetConfigTask">
           <Members>
-           <Member Name="#.ctor(ProjectPilot.Framework.CCNet.ICCNetProjectStatisticsPlugIn,System.Collections.Generic.IEnumerable`1&lt;ProjectPilot.Framework.CCNet.ProjectStatsGraph&gt;,ProjectPilot.Framework.IFileManager,ProjectPilot.Framework.ITemplateEngine,System.Boolean,System.Boolean)">
+           <Member Name="#AddConfigFile(System.String,System.String)">
             <Messages>
-             <Message Id="ignoreFailures" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-11-22 10:58:48Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'ignoreFailures'</Item>
-               <Item>'CCNetProjectStatisticsModule.CCNetProjectStatisticsModule(ICCNetProjectStatisticsPlugIn, IEnumerable&lt;ProjectStatsGraph&gt;, IFileManager, ITemplateEngine, bool, bool)'</Item>
+             <Message Id="net" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-11-25 19:03:50Z">
+              <Issue Name="MemberParameter">
+               <Item>'Log4NetConfigTask.AddConfigFile(string, string)'</Item>
+               <Item>net</Item>
+               <Item>'log4netConfigXpath'</Item>
+               <Item>Net</Item>
               </Issue>
              </Message>
             </Messages>
@@ -312,6 +348,14 @@
          </Type>
         </Types>
        </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/ProjectPilot.Framework/bin/Release/ProjectPilot.Framework.dll">
+    <Modules>
+     <Module Name="projectpilot.framework.dll">
+      <Namespaces>
        <Namespace Name="ProjectPilot.Framework.Runners">
         <Types>
          <Type Name="IRunner">
@@ -532,8 +576,12 @@
    <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
     <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
    </Rule>
+   <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
+    <Resolution Name="MemberParameter">In member {0}, correct the casing of '{1}' in parameter name {2} by changing it to '{3}'.</Resolution>
+   </Rule>
    <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
     <Resolution Name="Member">Correct the spelling of '{0}' in member name {1} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
+    <Resolution Name="Namespace">Correct the spelling of '{0}' in namespace name '{1}'.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707">
     <Resolution Name="Type">Remove the underscores from type name {0}.</Resolution>
@@ -544,9 +592,6 @@
    </Rule>
    <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
     <Resolution Name="Default" />
-   </Rule>
-   <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
-    <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
    </Rule>
    <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
     <Resolution Name="Default">The type name {0} conflicts in whole or in part with the namespace name '{1}'. Change either name to eliminate the conflict.</Resolution>

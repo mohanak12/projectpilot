@@ -12,7 +12,7 @@ namespace BuildScripts
 {
     public class Build
     {
-        static public int Main(string[] args)
+        public static int Main(string[] args)
         {
             using (BuildTasks script = new BuildTasks("ProjectPilot"))
             {
