@@ -76,8 +76,8 @@ NOTE: a special XML schema (XSD) will be available for this type of XML file. Th
     <description>Contains test cases which cover online banking functionality.</description>
     <case id="MoneyTransfer">
         <description>Tests money transfers from one account to another using the online banking portal.</description>
-        <covers>R15</covers>
-        <covers>R211</covers>
+        <tags>R15</tags>
+        <tags>R211</tags>
         <steps>
             <GoToPortal/>
             <SignIn username="john" password="doe"/>
@@ -111,6 +111,10 @@ public class BankingTestSuite
       using (OnlineBankingTestRunner runner = new OnlineBankingTestRunner())
       {
          runner
+            .AddDescription("Tests money transfers from one account to another using the online banking portal.")
+            .AddTag ("R15")
+            .AddTag ("R211")
+
             // Open the online banking portal web site in the browser
             .GoToPortal()
             // ...
