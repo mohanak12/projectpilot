@@ -5,7 +5,7 @@ using System.Globalization;
 
 #endregion
 
-namespace ProjectPilot.TestFramework
+namespace Accipio
 {
     public class HtmlTestCodeGenerator : ITestCodeGenerator
     {

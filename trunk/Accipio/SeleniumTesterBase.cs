@@ -7,7 +7,7 @@ using System.Threading;
 using MbUnit.Framework;
 using Selenium;
 
-namespace ProjectPilot.TestFramework
+namespace Accipio
 {
     /// <summary>
     /// Tester class for testing Web application using Selenium. The class provides a fluent interface 
@@ -24,9 +24,9 @@ namespace ProjectPilot.TestFramework
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
 
             browserType = (BrowserType) Enum.Parse(
-                typeof(BrowserType),
-                ConfigurationManager.AppSettings["BrowserType"],
-                true);
+                                            typeof(BrowserType),
+                                            ConfigurationManager.AppSettings["BrowserType"],
+                                            true);
             testMachine = ConfigurationManager.AppSettings["TestMachine"];
             seleniumPort = int.Parse(
                 ConfigurationManager.AppSettings["SeleniumPort"],
@@ -244,8 +244,8 @@ namespace ProjectPilot.TestFramework
             Assert.IsTrue(
                 selenium.IsElementPresent(
                     "xpath=//label[text()='" + value + "']"),
-                    "Value '{0}' is not available", 
-                    value);
+                "Value '{0}' is not available", 
+                value);
             return this;
         }
 
@@ -304,7 +304,7 @@ namespace ProjectPilot.TestFramework
 
             Assert.AreEqual(
                 parameters.Length,
-                    count,
+                count,
                 "Radio button '{0}' does not contain the expected number of values.", 
                 groupName);
 
@@ -318,9 +318,9 @@ namespace ProjectPilot.TestFramework
                                 "xpath=//input[@type='radio' and @name='{0}' and @value='{1}']",
                                 groupName, 
                                 parameter)),
-                            "Radio button '{0}' does not contain the expected value '{1}'.", 
-                            groupName, 
-                            parameter);
+                        "Radio button '{0}' does not contain the expected value '{1}'.", 
+                        groupName, 
+                        parameter);
             }
 
             return this;
@@ -572,17 +572,17 @@ namespace ProjectPilot.TestFramework
             {
                 selenium.Check(
                     String.Format(
-                    CultureInfo.InvariantCulture,
-                    "xpath=//input[contains(@id,'{0}')]", 
-                    controlId));
+                        CultureInfo.InvariantCulture,
+                        "xpath=//input[contains(@id,'{0}')]", 
+                        controlId));
             }
             else
             {
                 selenium.Uncheck(
                     String.Format(
-                    CultureInfo.InvariantCulture,
-                    "xpath=//input[contains(@id,'{0}')]", 
-                    controlId));
+                        CultureInfo.InvariantCulture,
+                        "xpath=//input[contains(@id,'{0}')]", 
+                        controlId));
             }
 
             return this;

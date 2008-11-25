@@ -1,6 +1,6 @@
 using System;
 
-namespace ProjectPilot.TestFramework
+namespace Accipio
 {
     public interface ICodeWriter : IDisposable
     {

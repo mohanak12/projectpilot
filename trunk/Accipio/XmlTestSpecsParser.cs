@@ -2,10 +2,11 @@
 
 using System;
 using System.Xml;
+using Accipio;
 
 #endregion
 
-namespace ProjectPilot.TestFramework
+namespace Accipio
 {
     public class XmlTestSpecsParser : ITestSpecsParser
     {

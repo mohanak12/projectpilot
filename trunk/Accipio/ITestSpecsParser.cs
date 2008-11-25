@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ProjectPilot.TestFramework
+namespace Accipio
 {
     public interface ITestSpecsParser
     {

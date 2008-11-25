@@ -31,8 +31,8 @@
       <include name="ProjectPilot.Framework\obj\${ProjectConfig}\**"/>
       <include name="ProjectPilot.Framework.Portal\bin\**"/>
       <include name="ProjectPilot.Framework.Portal\obj\${ProjectConfig}\**"/>
-      <include name="ProjectPilot.TestFramework\bin\${ProjectConfig}\**"/>
-      <include name="ProjectPilot.TestFramework\obj\${ProjectConfig}\**"/>
+      <include name="Accipio\bin\${ProjectConfig}\**"/>
+      <include name="Accipio\obj\${ProjectConfig}\**"/>
       <include name="ProjectPilot.Tests\bin\${ProjectConfig}\**"/>
       <include name="ProjectPilot.Tests\obj\${ProjectConfig}\**"/>
 
