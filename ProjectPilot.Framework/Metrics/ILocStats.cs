@@ -6,6 +6,8 @@ namespace ProjectPilot.Framework.Metrics
 {
     public interface ILocStats
     {
-        LocStatsData CountLoc(string code);
+        LocStatsData CountLocString(string code);
+
+        LocStatsData CountLocFile(string filePath);
     }
 }

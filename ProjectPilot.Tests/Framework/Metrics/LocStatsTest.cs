@@ -14,7 +14,7 @@ namespace ProjectPilot.Tests.Framework.Metrics
         public void Test1()
         {
             ILocStats locStats = new LocStats();
-            LocStatsData data = locStats.CountLoc(
+            LocStatsData data = locStats.CountLocString(
 @"// this is one comment
 /// this is another comment
 this is a statement
@@ -30,7 +30,7 @@ statement // with comment");
         public void Test2()
         {
             ILocStats locStats = new LocStats();
-            LocStatsData data = locStats.CountLoc(
+            LocStatsData data = locStats.CountLocString(
 @"// this is one comment
 /// this is another comment
 
@@ -53,6 +53,17 @@ statement // with comment"
             Assert.AreEqual(6, data.Cloc);
             Assert.AreEqual(7, data.Eloc);
             Assert.AreEqual(17, data.Sloc);
+        }
+
+        [Test]
+        public void Test3()
+        {
+            ILocStats locStats = new LocStats();
+            LocStatsData data = locStats.CountLocFile(@"c:\PilotProject\ProjectPilot.Framework\Metrics\LocStats.cs ");
+
+            Assert.AreEqual(6, data.Cloc);
+            Assert.AreEqual(21, data.Eloc);
+            Assert.AreEqual(131, data.Sloc);
         }
     }
 }
