@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.Threading;
@@ -18,14 +17,12 @@ namespace ProjectPilot.Framework.CCNet
             IEnumerable<ProjectStatsGraph> graphs,
             IFileManager fileManager,
             ITemplateEngine templateEngine,
-            bool ignoreFailures,
             bool showBuildProjectHistory)
         {
             this.ccnetPlugIn = ccnetPlugIn;
             this.graphs = (List<ProjectStatsGraph>) graphs;
             this.fileManager = fileManager;
             this.templateEngine = templateEngine;
-            this.ignoreFailures = ignoreFailures;
             this.showBuildProjectHistory = showBuildProjectHistory;
         }
 
@@ -63,6 +60,8 @@ namespace ProjectPilot.Framework.CCNet
             // sort statistics data by buildId
             ProjectStatsGraphData graphData = new ProjectStatsGraphData(data);
 
+            // labels on X-Axis
+            List<string> xLabels = new List<string>();
             IList<string> chartImageFileNames = new List<string>();
 
             // prepare build statistic data and create graph
@@ -71,9 +70,9 @@ namespace ProjectPilot.Framework.CCNet
                 // clear list of data
                 graphData.ClearDictionary();
                 // prepare list of data for graph
-                PrepareDataMatrix(data, graph, graphData);
+                PrepareDataMatrix(data, graph, graphData, xLabels);
                 // draw chart
-                chartImageFileNames.Add(DrawChart(graph, graphData));
+                chartImageFileNames.Add(DrawChart(graph, graphData, xLabels));
             }
             
             // translate storage locations to URLs
@@ -95,7 +94,7 @@ namespace ProjectPilot.Framework.CCNet
                 fileManager.GetProjectFullFileName(projectId, ModuleId, "CCNetReportStatistics.html", true));
         }
 
-        private string DrawChart(ProjectStatsGraph graph, ProjectStatsGraphData graphData)
+        private string DrawChart(ProjectStatsGraph graph, ProjectStatsGraphData graphData, IList<string> xLabels)
         {
             // Draw chart
             using (FluentChart chart = FluentChart.Create(graph.GraphName, graph.XAxisTitle, graph.YAxisTitle))
@@ -113,7 +112,7 @@ namespace ProjectPilot.Framework.CCNet
                 string chartImageFileName = fileManager.GetProjectFullFileName(
                     projectId,
                     ModuleId,
-                    "CCNetBuildReportChart.png",
+                    string.Format(CultureInfo.InvariantCulture, "CCNet{0}Chart.png", graph.GraphName.Replace(" ", string.Empty)),
                     true);
 
                 chart
@@ -129,9 +128,15 @@ namespace ProjectPilot.Framework.CCNet
         /// <param name="data">The CCNet project statistics data.</param>
         /// <param name="graph">The CCNet project statistics graph.</param>
         /// <param name="graphData">The graph data.</param>
-        private void PrepareDataMatrix(ProjectStatsData data, ProjectStatsGraph graph, ProjectStatsGraphData graphData)
+        /// <param name="xLabels">Labels that will be displayed on X-Axis</param>
+        private void PrepareDataMatrix(
+            ProjectStatsData data, 
+            ProjectStatsGraph graph, 
+            ProjectStatsGraphData graphData, 
+            List<string> xLabels)
         {
             int buildId = 0;
+            xLabels.Clear();
 
             // go through all builds
             for (int i = 0; i < data.Builds.Count; i++)
@@ -146,7 +151,7 @@ namespace ProjectPilot.Framework.CCNet
                 ProjectStatsBuildEntry entry = data.Builds[i];
 
                 // only successful builds are allowed
-                if (ignoreFailures && entry.Parameters["Success"] == "0")
+                if (graph.IgnoreFailures && entry.Parameters["Success"] == "0")
                 {
                     continue;
                 }
@@ -199,13 +204,11 @@ namespace ProjectPilot.Framework.CCNet
             }
         }
 
-        private List<string> xLabels = new List<string>();
         private readonly ICCNetProjectStatisticsPlugIn ccnetPlugIn;
         private readonly List<ProjectStatsGraph> graphs;
-        private bool ignoreFailures;
         private string projectId;
-        private const int BuildNumbers = 10;
-        private bool showBuildProjectHistory;
+        private const int BuildNumbers = 50;
+        private readonly bool showBuildProjectHistory;
         private readonly IFileManager fileManager;
         private readonly ITemplateEngine templateEngine;
         private ITrigger trigger = new NullTrigger();

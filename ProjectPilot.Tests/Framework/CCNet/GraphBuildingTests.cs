@@ -17,41 +17,133 @@ namespace ProjectPilot.Tests.Framework.CCNet
     public class GraphBuildingTests
     {
         [Test]
-        public void DrawBuildReportChartTest()
+        public void DrawChartTest()
         {
-            IDictionary<string, List<double>> parameters = new Dictionary<string, List<double>>();
-            parameters.Add("Success", new List<double>());
-            parameters.Add("Failure", new List<double>());
-            parameters.Add("Exception", new List<double>());
+            ProjectStatsGraph graph = new ProjectStatsGraph();
+            graph.GraphName = "Build duration";
+            graph.YAxisTitle = "Seconds";
+            graph.AddParameter<TimeSpan>("Duration", "Green");
 
-            parameters["Success"].AddRange(new double[] {0, 0, 1, 1, 1, 0});
-            parameters["Failure"].AddRange(new double[] {2, 3, 1, 1, 0, 1});
-            parameters["Exception"].AddRange(new double[] {0, 0, 1, 1, 4, 2});
-
-            //Locate data on X-Axis
-            List<int> xScaleValues = new List<int> {0, 1, 2, 3, 4, 5};
+            ProjectStatsData data = GetStatisticData();
 
             //Labels on X-Axis
             List<string> xLabels = new List<string> { "Test0", "Test1", "Test2", "Test3", "Test4", "Test5" };
 
-            //Draw chart
-            string[] colors = new string[] { "Green", "Red", "Blue", "Yellow", "Black", "Grey" };
+            ProjectStatsGraphData graphData = new ProjectStatsGraphData(data);
+            graphData.SetValue(0, "Duration", 12);
+            graphData.SetValue(1, "Duration", 52);
+            graphData.SetValue(2, "Duration", 2);
+            graphData.SetValue(3, "Duration", 60);
+            graphData.SetValue(4, "Duration", 10);
+            graphData.SetValue(5, "Duration", 61);
 
-            //Draw chart
-            FluentChart chart = FluentChart.Create("Build Report", null, null)
-                .SetLabelsToXAxis(xLabels);
-
-            int i = 0;
-            foreach (KeyValuePair<string, List<double>> parameter in parameters)
+            using (FluentChart chart = FluentChart.Create(graph.GraphName, graph.XAxisTitle, graph.YAxisTitle))
             {
+                chart.SetLabelsToXAxis(xLabels);
+
+                foreach (ProjectStatsGraphParameter parameter in graph.GraphParameters)
+                {
+                    chart
+                        .AddLineSeries(parameter.ParameterName, parameter.SeriesColor)
+                        .AddData(graphData.GetValuesForParameter(parameter.ParameterName))
+                        .SetSymbol(SymbolType.Circle, parameter.SeriesColor, 4, true);
+                }
+
                 chart
-                    .AddLineSeries(parameter.Key, colors[i])
-                    .AddData(AddValuesToSortedList(xScaleValues, parameter.Value))
-                    .SetSymbol(SymbolType.Circle, colors[i++], 4, true);
+                    .ExportToBitmap("test.png", ImageFormat.Png, 2000, 800);
+            }
+        }
+
+        [Test]
+        public void PrepareDataMatrixTest()
+        {
+            ProjectStatsData data = GetStatisticData();
+
+            ProjectStatsGraph graph = new ProjectStatsGraph();
+            graph.GraphName = "Build duration";
+            graph.YAxisTitle = "Seconds";
+            graph.AddParameter<TimeSpan>("Duration", "Green");
+
+            ProjectStatsGraphData graphData = new ProjectStatsGraphData(data);
+
+            int buildId = 0;
+
+            int buildNumbers = 50;
+            bool showBuildProjectHistory = false;
+            bool ignoreFailures = true;
+            List<string> xLabels = new List<string>();
+
+
+            // go through all builds
+            for (int i = 0; i < data.Builds.Count; i++)
+            {
+                // show last 50 builds on graph if parameter is set to false
+                if (!showBuildProjectHistory)
+                {
+                    if (i < data.Builds.Count - buildNumbers)
+                        continue;
+                }
+
+                ProjectStatsBuildEntry entry = data.Builds[i];
+
+                // only successful builds are allowed
+                if (ignoreFailures && entry.Parameters["Success"] == "0")
+                {
+                    continue;
+                }
+
+                bool addValue = false;
+
+                // if the current build label has not already been added to the xLabels
+                // group builds by build name
+                if (entry.BuildLabel != xLabels.Find(temp => temp == entry.BuildLabel))
+                {
+                    // add build name to list. Build name will be shown on x-axis
+                    xLabels.Add(entry.BuildLabel);
+
+                    // this two values are used only for grouping builds with same name
+                    // grouping is used only for create build report statistic
+                    addValue = true;
+                    buildId = entry.BuildId;
+                }
+
+                // go through all parameters
+                foreach (ProjectStatsGraphParameter parameter in graph.GraphParameters)
+                {
+                    double value = 0;
+
+                    if (entry.Parameters.ContainsKey(parameter.ParameterName))
+                    {
+                        if (parameter.ParameterType == typeof(TimeSpan))
+                        {
+                            value = TimeSpan.Parse(entry.Parameters[parameter.ParameterName]).TotalSeconds;
+                        }
+                        else if (parameter.ParameterType == typeof(double))
+                        {
+                            value = Convert.ToDouble(
+                                entry.Parameters[parameter.ParameterName],
+                                CultureInfo.InvariantCulture);
+                        }
+                    }
+
+                    if (addValue)
+                    {
+                        // set value for parameter name
+                        graphData.SetValue(buildId, parameter.ParameterName, value);
+                    }
+                    else
+                    {
+                        // increment value
+                        graphData.IncValue(buildId, parameter.ParameterName, value);
+                    }
+                }
+
+                Assert.AreEqual(
+                    TimeSpan.Parse(entry.Parameters["Duration"]).TotalSeconds,
+                    graphData.GetValue(entry.BuildId, "Duration"));
             }
 
-            chart
-                .ExportToBitmap("test.png", ImageFormat.Png, 2000, 800);
+            Assert.AreEqual(buildNumbers, graphData.GetValuesForParameter("Duration").Count);
         }
 
         [Test,Ignore]
@@ -59,34 +151,37 @@ namespace ProjectPilot.Tests.Framework.CCNet
         {
             List<ProjectStatsGraph> graphs = new List<ProjectStatsGraph>();
 
-            //ProjectStatsGraph graph = new ProjectStatsGraph();
-            //graph.GraphName = "FxCop Info";
-            //graph.AddParameter<double>("Blue", "FxCop Warnings");
-            //graph.AddParameter<double>("Red", "FxCop Errors");
-
-            //graphs.Add(graph);
-
-            //ProjectStatsGraph graph = new ProjectStatsGraph();
-            //graph.GraphName = "Build report";
-            //graph.AddParameter<double>("Success", "Green");
-            //graph.AddParameter<double>("Failure", "Red");
-            //graph.AddParameter<double>("Exception", "Blue");
-
-            //graphs.Add(graph);
-
             ProjectStatsGraph graph = new ProjectStatsGraph();
-            graph.GraphName = "Build duration";
+            graph.IgnoreFailures = true;
+            graph.GraphName = "FxCop Info";
+            graph.AddParameter<double>("Blue", "FxCop Warnings");
+            graph.AddParameter<double>("Red", "FxCop Errors");
+
+            graphs.Add(graph);
+
+            graph = new ProjectStatsGraph();
+            graph.IgnoreFailures = false;
+            graph.GraphName = "Build Report";
+            graph.AddParameter<double>("Success", "Green");
+            graph.AddParameter<double>("Failure", "Red");
+            graph.AddParameter<double>("Exception", "Blue");
+
+            graphs.Add(graph);
+
+            graph = new ProjectStatsGraph();
+            graph.IgnoreFailures = true;
+            graph.GraphName = "MbUnit Tests";
+            graph.AddParameter<double>("MbUnit TestCount", "Red");
+            graph.AddParameter<double>("MbUnit TestPassed", "Green");
+            graphs.Add(graph);
+
+            graph = new ProjectStatsGraph(); 
+            graph.IgnoreFailures = true;
+            graph.GraphName = "Build Duration";
             graph.YAxisTitle = "Seconds";
             graph.AddParameter<TimeSpan>("Duration", "Green");
 
             graphs.Add(graph);
-
-            //ProjectStatsGraph graph = new ProjectStatsGraph();
-            //graph.GraphName = "MbUnit Tests";
-            //graph.AddParameter<double>("MbUnit TestCount", "Red");
-            //graph.AddParameter<double>("MbUnit TestPassed", "Green");
-            //graphs.Add(graph);
-
 
             ProjectPilotConfiguration projectPilotConfiguration = new ProjectPilotConfiguration();
             projectPilotConfiguration.ProjectPilotWebAppRootUrl = "http://localhost/projectpilot/";
@@ -103,19 +198,15 @@ namespace ProjectPilot.Tests.Framework.CCNet
 
             ITemplateEngine templateEngine = new DefaultTemplateEngine(templateFileManager);
 
-            //Prepare test data
-            ProjectStatsData data;
-            using (Stream stream = File.OpenRead(@"..\..\..\Data\Samples\ccnet.stats.xml"))
-            {
-                data = CCNetProjectStatisticsPlugIn.Load(stream);
-            }
+            // prepare test data
+            ProjectStatsData data = GetStatisticData();
 
             ICCNetProjectStatisticsPlugIn plugIn = MockRepository.GenerateStub<ICCNetProjectStatisticsPlugIn>();
             plugIn.Stub(action => action.FetchStatistics()).Return(data);
 
-            //Ignore failures only if you want to build build report statistic
+            // ignore failures only if you want to build build report statistic
             CCNetProjectStatisticsModule module = new CCNetProjectStatisticsModule(
-                plugIn, graphs, fileManager, templateEngine, true, false);
+                plugIn, graphs, fileManager, templateEngine, false);
 
             module.ProjectId = "CCNetStatistics";
             project.AddModule(module);
@@ -124,7 +215,7 @@ namespace ProjectPilot.Tests.Framework.CCNet
         }
 
         [Test,Explicit("This test should not be run automatically"),]
-        public void Test()
+        public void ReadCCNetStatisticsTest()
         {
             RemoteCruiseManagerFactory factory = new RemoteCruiseManagerFactory();
             Uri url = new Uri(string.Format(CultureInfo.InvariantCulture, "tcp://firefly:21234/CruiseManager.rem"));
@@ -136,20 +227,15 @@ namespace ProjectPilot.Tests.Framework.CCNet
             //File.WriteAllText("ccnet.stats.xml", stat);
         }
 
-        #region Private helpers
-
-        private SortedList<int, double> AddValuesToSortedList(List<int> xValues, List<double> yValues)
+        private ProjectStatsData GetStatisticData()
         {
-            SortedList<int, double> sortedList = new SortedList<int, double>();
-
-            for (int i = 0; i < yValues.Count; i++)
+            ProjectStatsData data;
+            using (Stream stream = File.OpenRead(@"..\..\..\Data\Samples\ccnet.stats.xml"))
             {
-                sortedList.Add(xValues[i], yValues[i]);
+                data = CCNetProjectStatisticsPlugIn.Load(stream);
             }
 
-            return sortedList;
+            return data;
         }
-
-        #endregion
     }
 }
