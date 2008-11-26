@@ -54,9 +54,16 @@
     <Compile Include="IBuildLogger.cs" />
     <Compile Include="ProjectToBuild.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VSSolutionBrowsing\MsBuildSchema\CommonTypes.cs" />
+    <None Include="VSSolutionBrowsing\MsBuildSchema\MsBuildSchema.cs" />
+    <Compile Include="VSSolutionBrowsing\ParserContext.cs" />
+    <Compile Include="VSSolutionBrowsing\VSProject.cs" />
+    <Compile Include="VSSolutionBrowsing\VSSolution.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ProjectPilot.snk" />
+    <None Include="VSSolutionBrowsing\MsBuildSchema\Microsoft.Build.Commontypes.xsd" />
+    <None Include="VSSolutionBrowsing\MsBuildSchema\Microsoft.Build.Core.xsd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
