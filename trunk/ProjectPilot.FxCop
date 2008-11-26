@@ -312,13 +312,6 @@
    <Target Name="$(ProjectDir)/Accipio.Console/bin/Release/Accipio.Console.exe">
     <Modules>
      <Module Name="accipio.console.exe">
-      <Messages>
-       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Created="2008-11-26 04:34:25Z">
-        <Issue>
-         <Item>'Accipio.Console.exe'</Item>
-        </Issue>
-       </Message>
-      </Messages>
       <Namespaces>
        <Namespace Name="NDesk.Options">
         <Types>
@@ -681,6 +674,25 @@
     <Modules>
      <Module Name="projectpilot.framework.dll">
       <Namespaces>
+       <Namespace Name="ProjectPilot.Framework.CCNet">
+        <Types>
+         <Type Name="CCNetProjectStatisticsModule">
+          <Members>
+           <Member Name="#DrawChart(ProjectPilot.Framework.CCNet.ProjectStatsGraph,ProjectPilot.Framework.CCNet.ProjectStatsGraphData,System.Collections.Generic.IList`1&lt;System.String&gt;)">
+            <Messages>
+             <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2008-11-26 14:09:57Z">
+              <Issue>
+               <Item>'string.Format(string, object)'</Item>
+               <Item>'CCNetProjectStatisticsModule.DrawChart(ProjectStatsGraph, ProjectStatsGraphData, IList&lt;string&gt;)'</Item>
+               <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
        <Namespace Name="ProjectPilot.Framework.Runners">
         <Types>
          <Type Name="IRunner">
@@ -879,9 +891,6 @@
    </Rule>
    <Rule TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033">
     <Resolution Name="Default">Make {0} sealed (a breaking change if this class has previously shipped), implement the method non-explicitly, or implement a new method that exposes the functionality of {1} and is visible to derived classes.</Resolution>
-   </Rule>
-   <Rule TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014">
-    <Resolution Name="Default">Mark {0} with CLSCompliant(true) because it exposes externally visible types.</Resolution>
    </Rule>
    <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
     <Resolution Name="Default" />

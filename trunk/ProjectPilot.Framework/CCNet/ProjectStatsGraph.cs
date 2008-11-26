@@ -18,6 +18,8 @@ namespace ProjectPilot.Framework.CCNet
 
         public string GraphName { set; get; }
 
+        public bool IgnoreFailures { set; get; }
+
         public string XAxisTitle { set; get; }
 
         public string YAxisTitle { set; get; }
