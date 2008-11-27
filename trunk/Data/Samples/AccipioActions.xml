@@ -1,0 +1,48 @@
+<actions xmlns="http://projectpilot/AccipioActions.xsd">
+    <action id="GoToPortal">
+       <description>Open the online banking portal web site in the browser</description>
+    </action>
+
+    <action id="SignIn">
+       <description>Sign in user '{0}'</description>
+       <parameter name="username"/>
+       <parameter name="password"/>
+    </action>
+
+    <action id="ViewAccount">
+       <description>Click on the "View" button for the account '{0}'</description>
+       <parameter name="accountId" type="int"/>
+    </action>
+
+    <action id="ClickActionTranfer">
+       <description>Click on the "Transfer" button in the account actions list</description>
+    </action>
+
+    <action id="EnterTransferAmount">
+       <description>Enter the amount of {0} to transfer</description>
+       <parameter name="transferAmount" type="decimal"/>
+    </action>
+
+    <action id="EnterDestinationAccountNumber">
+       <description>Enter the destination account number '{0}'</description>
+       <parameter name="destAccountId" type="int"/>
+    </action>
+
+    <action id="ConfirmTransfer">
+       <description>Click on the "OK" button to confirm the transfer of money between accounts</description>
+    </action>
+
+    <action id="AssertOperationSuccessful">
+       <description>Assert the operation was successful</description>
+    </action>
+
+    <function id="TransferMoney">
+        <steps>
+            <run action="ViewAccount"/>
+            <run action="ClickActionTranfer"/>
+            <run action="EnterTransferAmount"/>
+            <run action="EnterDestinationAccountNumber"/>
+            <run action="ConfirmTransfer"/>
+        </steps>        
+    </function>
+</actions>
