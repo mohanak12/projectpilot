@@ -24,7 +24,7 @@ namespace Flubu.Tasks.UserInterface
 
         protected override void DoExecute (IScriptExecutionEnvironment environment)
         {
-            environment.ReportMessage (message);
+            environment.Logger.Log(message);
         }
 
         private string message;

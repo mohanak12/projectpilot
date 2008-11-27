@@ -69,7 +69,7 @@ namespace Flubu.Tasks.WindowsServices
                     timeSoFar += 500;
 
                     if (timeSoFar >= timeout.TotalMilliseconds)
-                        throw new TaskFailedException(
+                        throw new RunnerFailedException(
                             String.Format(
                                 System.Globalization.CultureInfo.InvariantCulture,
                                 "Timeout waiting for '{0}' service to reach status {1}.", 

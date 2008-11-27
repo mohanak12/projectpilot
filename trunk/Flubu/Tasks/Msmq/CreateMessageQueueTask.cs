@@ -65,19 +65,19 @@ namespace Flubu.Tasks.Msmq
             {
                 if (mode == CreateMessageQueueMode.DoNothingIfExists)
                 {
-                    environment.ReportMessage ("Message queue '{0}' already exists, doing nothing.", messageQueuePath);
+                    environment.Logger.Log("Message queue '{0}' already exists, doing nothing.", messageQueuePath);
                     return;
                 }
 
                 if (mode == CreateMessageQueueMode.FailIfAlreadyExists)
-                    throw new TaskFailedException (
+                    throw new RunnerFailedException (
                         String.Format (
                             System.Globalization.CultureInfo.InvariantCulture,
                             "Message queue '{0}' already exists.", 
                             messageQueuePath));
 
                 // otherwise delete the queue
-                environment.ReportMessage ("Message queue '{0}' already exists, it will be deleted.", messageQueuePath);
+                environment.Logger.Log("Message queue '{0}' already exists, it will be deleted.", messageQueuePath);
                 MessageQueue.Delete (messageQueuePath);
             }
 

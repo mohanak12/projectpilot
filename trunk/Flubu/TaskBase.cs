@@ -39,22 +39,22 @@ namespace Flubu
             
             try
             {
-                environment.ReportTaskStarted (this);
+                environment.Logger.ReportTaskStarted (this);
 
                 // when in dry run do not execute the task (unless it itself indicates that it is safe)
                 if (false == environment.DryRun || IsSafeToExecuteInDryRun)
                     DoExecute (environment);
 
-                environment.ReportTaskExecuted (this);
+                environment.Logger.ReportTaskExecuted (this);
             }
-            catch (TaskFailedException ex)
+            catch (RunnerFailedException ex)
             {
-                environment.ReportTaskFailed (this, ex.Message);
+                environment.Logger.ReportTaskFailed (this, ex.Message);
                 throw;
             }
             catch (Exception ex)
             {
-                environment.ReportTaskFailed (this, ex);
+                environment.Logger.ReportTaskFailed (this, ex);
                 throw;
             }
         }

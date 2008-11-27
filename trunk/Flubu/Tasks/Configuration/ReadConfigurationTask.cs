@@ -118,7 +118,7 @@ namespace Flubu.Tasks.Configuration
                 xmlDoc.Load (configurationFileName);
             }
             else
-                throw new TaskFailedException ("Either the configuration string or the configuration fileName has to be set.");
+                throw new RunnerFailedException ("Either the configuration string or the configuration fileName has to be set.");
 
             XmlNode configurationRootNode = xmlDoc.SelectSingleNode ("Configuration");
 
@@ -136,7 +136,7 @@ namespace Flubu.Tasks.Configuration
                         terminator = "/";
                     }
 
-                    environment.ReportMessage (
+                    environment.Logger.Log(
                         String.Format (
                             System.Globalization.CultureInfo.InvariantCulture,
                             "Configuration setting '{0}' has value '{1}'", 

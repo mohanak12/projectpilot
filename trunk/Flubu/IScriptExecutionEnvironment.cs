@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Flubu
 {
@@ -19,6 +17,8 @@ namespace Flubu
         ///     <c>true</c> if the script is running on Windows Server 2003; otherwise, <c>false</c>.
         /// </value>
         bool IsWinServer2003 { get; }
+
+        IFlubuLogger Logger { get; }
 
         /// <summary>
         /// Gets the .NET version number for .NET 1.0.
@@ -66,20 +66,8 @@ namespace Flubu
 
         string GetConfigurationSettingValue (string settingName);
 
-        void SetConfigurationSettingValue (string settingName, string settingValue);
-
-        void ReportMessage (string message);
-
-        void ReportMessage (string format, params object[] parameters);
-
-        void ReportTaskStarted (ITask task);
-
-        void ReportTaskExecuted (ITask task);
-
-        void ReportTaskFailed (ITask task, Exception ex);
-
-        void ReportTaskFailed (ITask task, string reason);
-
         string ReceiveInput (string prompt);
+
+        void SetConfigurationSettingValue(string settingName, string settingValue);
     }
 }

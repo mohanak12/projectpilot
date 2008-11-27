@@ -39,12 +39,12 @@ namespace Flubu.Tasks.Configuration
         protected override void DoExecute (IScriptExecutionEnvironment environment)
         {
             // log important environment information
-            environment.ReportMessage ("Machine name: {0}", Environment.MachineName);
-            environment.ReportMessage ("OS Version: {0}", Environment.OSVersion);
-            environment.ReportMessage ("User name: {0}", Environment.UserName);
-            environment.ReportMessage ("User domain name: {0}", Environment.UserDomainName);
-            environment.ReportMessage ("CLR version: {0}", Environment.Version);
-            environment.ReportMessage ("Current directory: {0}", Environment.CurrentDirectory);
+            environment.Logger.Log("Machine name: {0}", Environment.MachineName);
+            environment.Logger.Log("OS Version: {0}", Environment.OSVersion);
+            environment.Logger.Log("User name: {0}", Environment.UserName);
+            environment.Logger.Log("User domain name: {0}", Environment.UserDomainName);
+            environment.Logger.Log("CLR version: {0}", Environment.Version);
+            environment.Logger.Log("Current directory: {0}", Environment.CurrentDirectory);
         }
     }
 }

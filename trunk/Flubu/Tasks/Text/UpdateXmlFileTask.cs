@@ -95,7 +95,7 @@ namespace Flubu.Tasks.Text
                 {
                     string fullNodePath = ConstructXmlNodeFullName (node);
 
-                    environment.ReportMessage (
+                    environment.Logger.Log(
                         String.Format (
                             System.Globalization.CultureInfo.InvariantCulture,
                             "Node '{0}' will be removed.", 
@@ -125,7 +125,7 @@ namespace Flubu.Tasks.Text
                 {
                     string fullNodePath = ConstructXmlNodeFullName (node);
 
-                    environment.ReportMessage (
+                    environment.Logger.Log(
                         String.Format (
                             System.Globalization.CultureInfo.InvariantCulture,
                             "Node '{0}' will have value '{1}'", 
@@ -192,7 +192,7 @@ namespace Flubu.Tasks.Text
 
                 string fullNodePath = ConstructXmlNodeFullName (rootNode);
 
-                environment.ReportMessage (
+                environment.Logger.Log(
                     String.Format (
                         System.Globalization.CultureInfo.InvariantCulture,
                         "Node '{0}' will have a new child '{1}' with value '{2}'", 

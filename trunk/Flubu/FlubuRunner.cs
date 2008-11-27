@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Security.AccessControl;
+using System.Text;
 using Flubu.Tasks.Configuration;
 using Flubu.Tasks.EnterpriseServices;
 using Flubu.Tasks.FileSystem;
@@ -24,11 +27,24 @@ namespace Flubu
         public FlubuRunner()
         {
             scriptExecutionEnvironment = new ConsoleExecutionEnvironment("script");
+            hasFailed = true;
         }
 
         public FlubuRunner AddUserToGroup (string userName, string group)
         {
             AddUserToGroupTask.Execute(scriptExecutionEnvironment,  userName, group);
+            return this;
+        }
+
+        public FlubuRunner AddProgramArgument(string argument)
+        {
+            programArgs.Add(argument);
+            return this;
+        }
+
+        public FlubuRunner AddProgramArgument(string format, params object[] args)
+        {
+            programArgs.Add(string.Format(CultureInfo.InvariantCulture, format, args));
             return this;
         }
 
@@ -183,6 +199,27 @@ namespace Flubu
             return RunTask(task);
         }
 
+        public void Fail(string format, params object[] arguments)
+        {
+            string message = String.Format(
+                CultureInfo.InvariantCulture,
+                format,
+                arguments);
+
+            Log(message);
+
+            throw new RunnerFailedException(message);
+        }
+
+        /// <summary>
+        /// Marks the runner as having completed its work sucessfully. This is the last method
+        /// that should be called on the runner before it gets disposed.
+        /// </summary>
+        public void Complete()
+        {
+            hasFailed = false;
+        }
+
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         public FlubuRunner GetLocalIisVersionTask()
         {
@@ -228,7 +265,7 @@ namespace Flubu
 
         public FlubuRunner Log (string format, params object[] args)
         {
-            scriptExecutionEnvironment.ReportMessage(format, args);
+            scriptExecutionEnvironment.Logger.Log(format, args);
             return this;
         }
 
@@ -268,7 +305,45 @@ namespace Flubu
             return this;
         }
 
-        public FlubuRunner RunTask (ITask task)
+        public FlubuRunner RunProgram(string programExePath)
+        {
+            using (Process process = new Process())
+            {
+                StringBuilder argumentLineBuilder = new StringBuilder();
+                foreach (string programArg in programArgs)
+                    argumentLineBuilder.AppendFormat("\"{0}\" ", programArg);
+
+                Log("Running program '{0}' ('{1}')", programExePath, argumentLineBuilder);
+
+                ProcessStartInfo processStartInfo = new ProcessStartInfo(programExePath, argumentLineBuilder.ToString());
+                processStartInfo.CreateNoWindow = true;
+                processStartInfo.ErrorDialog = false;
+                processStartInfo.RedirectStandardError = true;
+                processStartInfo.RedirectStandardOutput = true;
+                processStartInfo.UseShellExecute = false;
+
+                process.StartInfo = processStartInfo;
+                process.ErrorDataReceived += new DataReceivedEventHandler(Process_ErrorDataReceived);
+                process.OutputDataReceived += new DataReceivedEventHandler(Process_OutputDataReceived);
+                process.Start();
+
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
+
+                process.WaitForExit();
+
+                //Log("Exit code: {0}", process.ExitCode);
+
+                if (process.ExitCode != 0)
+                    Fail("Program '{0}' returned exit code {1}.", programExePath, process.ExitCode);
+            }
+
+            programArgs.Clear();
+
+            return this;
+        }
+
+        public FlubuRunner RunTask(ITask task)
         {
             task.Execute(scriptExecutionEnvironment);
             return this;
@@ -375,6 +450,7 @@ namespace Flubu
             {
                 if (disposing)
                 {
+                    scriptExecutionEnvironment.Logger.ReportRunnerFinished(!hasFailed);
                 }
 
                 disposed = true;
@@ -384,7 +460,18 @@ namespace Flubu
         private bool disposed;
 
         #endregion
-                
+
+        private void Process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+        {
+        }
+
+        private void Process_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            Log("     [exec] {0}", e.Data);
+        }
+
+        private bool hasFailed;
+        private List<string> programArgs = new List<string>();
         private IScriptExecutionEnvironment scriptExecutionEnvironment;
     }
 }

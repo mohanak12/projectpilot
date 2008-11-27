@@ -10,19 +10,13 @@ namespace ProjectPilot.BuildScripts
     {
         public static int Main(string[] args)
         {
-            using (BuildTasks script = new BuildTasks("ProjectPilot"))
+            using (BuildRunner script = new BuildRunner("ProjectPilot"))
             {
                 script
                     //.SetProductRootDir(@"..\..\..")
-                    .SetCompanyInfo("HERMES SoftLab d.d.", "Copyright (C) 2008 HERMES SoftLab d.d.", "")
+                    .SetCompanyInfo("HERMES SoftLab d.d.", "Copyright (C) 2008 HERMES SoftLab d.d.", String.Empty)
 
                     .ReadVersionInfo()
-
-                    .AddProject("ProjectPilot.BuildScripts")
-                    .AddProject("ProjectPilot.Framework")
-                    .AddMainWebProject("ProjectPilot.Portal")
-                    .AddProject ("Accipio")
-                    .AddTestProject("ProjectPilot.Tests")
 
                     .CleanOutput()
                     .GenerateCommonAssemblyInfo()
@@ -31,7 +25,7 @@ namespace ProjectPilot.BuildScripts
 
                     .RunTests()
 
-                    .Finished();
+                    .Complete();
             }
 
             return 0;

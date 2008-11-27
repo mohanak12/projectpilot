@@ -44,7 +44,7 @@ namespace Flubu.Tasks.UserAccounts
                     if (ex.ErrorCode == -2147022675)
                     {
                         // if the user does not exist
-                        environment.ReportMessage(
+                        environment.Logger.Log(
                             "User '{0}' does not exist, nothing to do.",
                             userName);
                         return;

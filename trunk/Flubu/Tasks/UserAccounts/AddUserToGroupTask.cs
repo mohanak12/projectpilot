@@ -46,7 +46,7 @@ namespace Flubu.Tasks.UserAccounts
                                 if ((ex.InnerException as COMException).ErrorCode == -2147023518)
                                 {
                                     // user is already member of the group, nothing to do
-                                    environment.ReportMessage (
+                                    environment.Logger.Log(
                                             "User '{0}' is already member of the group '{1}', nothing to do.",
                                             userName, 
                                             group);
