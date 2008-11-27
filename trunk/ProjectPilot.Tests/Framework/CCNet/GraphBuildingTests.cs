@@ -24,7 +24,7 @@ namespace ProjectPilot.Tests.Framework.CCNet
             graph.YAxisTitle = "Seconds";
             graph.AddParameter<TimeSpan>("Duration", "Green");
 
-            ProjectStatsData data = GetStatisticData();
+            ProjectStatsData data = GetStatisticDataFromFile();
 
             //Labels on X-Axis
             List<string> xLabels = new List<string> { "Test0", "Test1", "Test2", "Test3", "Test4", "Test5" };
@@ -52,98 +52,6 @@ namespace ProjectPilot.Tests.Framework.CCNet
                 chart
                     .ExportToBitmap("test.png", ImageFormat.Png, 2000, 800);
             }
-        }
-
-        [Test]
-        public void PrepareDataMatrixTest()
-        {
-            ProjectStatsData data = GetStatisticData();
-
-            ProjectStatsGraph graph = new ProjectStatsGraph();
-            graph.GraphName = "Build duration";
-            graph.YAxisTitle = "Seconds";
-            graph.AddParameter<TimeSpan>("Duration", "Green");
-
-            ProjectStatsGraphData graphData = new ProjectStatsGraphData(data);
-
-            int buildId = 0;
-
-            int buildNumbers = 50;
-            bool showBuildProjectHistory = false;
-            bool ignoreFailures = true;
-            List<string> xLabels = new List<string>();
-
-
-            // go through all builds
-            for (int i = 0; i < data.Builds.Count; i++)
-            {
-                // show last 50 builds on graph if parameter is set to false
-                if (!showBuildProjectHistory)
-                {
-                    if (i < data.Builds.Count - buildNumbers)
-                        continue;
-                }
-
-                ProjectStatsBuildEntry entry = data.Builds[i];
-
-                // only successful builds are allowed
-                if (ignoreFailures && entry.Parameters["Success"] == "0")
-                {
-                    continue;
-                }
-
-                bool addValue = false;
-
-                // if the current build label has not already been added to the xLabels
-                // group builds by build name
-                if (entry.BuildLabel != xLabels.Find(temp => temp == entry.BuildLabel))
-                {
-                    // add build name to list. Build name will be shown on x-axis
-                    xLabels.Add(entry.BuildLabel);
-
-                    // this two values are used only for grouping builds with same name
-                    // grouping is used only for create build report statistic
-                    addValue = true;
-                    buildId = entry.BuildId;
-                }
-
-                // go through all parameters
-                foreach (ProjectStatsGraphParameter parameter in graph.GraphParameters)
-                {
-                    double value = 0;
-
-                    if (entry.Parameters.ContainsKey(parameter.ParameterName))
-                    {
-                        if (parameter.ParameterType == typeof(TimeSpan))
-                        {
-                            value = TimeSpan.Parse(entry.Parameters[parameter.ParameterName]).TotalSeconds;
-                        }
-                        else if (parameter.ParameterType == typeof(double))
-                        {
-                            value = Convert.ToDouble(
-                                entry.Parameters[parameter.ParameterName],
-                                CultureInfo.InvariantCulture);
-                        }
-                    }
-
-                    if (addValue)
-                    {
-                        // set value for parameter name
-                        graphData.SetValue(buildId, parameter.ParameterName, value);
-                    }
-                    else
-                    {
-                        // increment value
-                        graphData.IncValue(buildId, parameter.ParameterName, value);
-                    }
-                }
-
-                Assert.AreEqual(
-                    TimeSpan.Parse(entry.Parameters["Duration"]).TotalSeconds,
-                    graphData.GetValue(entry.BuildId, "Duration"));
-            }
-
-            Assert.AreEqual(buildNumbers, graphData.GetValuesForParameter("Duration").Count);
         }
 
         [Test,Ignore]
@@ -199,7 +107,7 @@ namespace ProjectPilot.Tests.Framework.CCNet
             ITemplateEngine templateEngine = new DefaultTemplateEngine(templateFileManager);
 
             // prepare test data
-            ProjectStatsData data = GetStatisticData();
+            ProjectStatsData data = GetStatisticDataFromFile();
 
             ICCNetProjectStatisticsPlugIn plugIn = MockRepository.GenerateStub<ICCNetProjectStatisticsPlugIn>();
             plugIn.Stub(action => action.FetchStatistics()).Return(data);
@@ -214,6 +122,101 @@ namespace ProjectPilot.Tests.Framework.CCNet
             module.ExecuteTask(null);
         }
 
+        /// <summary>
+        /// Test for prepare data for last 50 builds.
+        /// </summary>
+        [Test]
+        public void PrepareDataMatrixTest()
+        {
+            ProjectStatsData data = GetStatisticDataFromFile();
+
+            ProjectStatsGraph graph = new ProjectStatsGraph();
+            graph.IgnoreFailures = true;
+            graph.GraphName = "Build Duration";
+            graph.YAxisTitle = "Seconds";
+            graph.AddParameter<TimeSpan>("Duration", "Green");
+
+            ProjectStatsGraphData graphData = new ProjectStatsGraphData(data);
+
+            int buildId = 0;
+
+            const int buildNumbers = 50;
+            const bool showBuildProjectHistory = false;            
+            List<string> xLabels = new List<string>();
+
+            // go through all builds
+            for (int i = 0; i < data.Builds.Count; i++)
+            {
+                // show last 50 builds on graph if parameter is set to false
+                if (!showBuildProjectHistory)
+                {
+                    if (i < data.Builds.Count - buildNumbers)
+                        continue;
+                }
+
+                ProjectStatsBuildEntry entry = data.Builds[i];
+
+                // ignore unsuccessful builds
+                if (graph.IgnoreFailures && entry.Parameters["Success"] == "0")
+                {
+                    continue;
+                }
+
+                // flag, that marks if parameter value will be added to the list or
+                // value will increase existing value (depends on buildId)
+                bool addValue = false;
+
+                // if the current build label has not already been added to the xLabels
+                if (entry.BuildLabel != xLabels.Find(temp => temp == entry.BuildLabel))
+                {
+                    // add build name to list. Build name will be shown on x-axis
+                    xLabels.Add(entry.BuildLabel);
+
+                    addValue = true;
+                    buildId = entry.BuildId;
+                }
+
+                // go through all graph parameters
+                foreach (ProjectStatsGraphParameter parameter in graph.GraphParameters)
+                {
+                    double value = 0;
+
+                    // if parameter exists in build statistic then get parameter value
+                    if (entry.Parameters.ContainsKey(parameter.ParameterName))
+                    {
+                        if (parameter.ParameterType == typeof(TimeSpan))
+                        {
+                            value = TimeSpan.Parse(entry.Parameters[parameter.ParameterName]).TotalSeconds;
+                        }
+                        else if (parameter.ParameterType == typeof(double))
+                        {
+                            value = Convert.ToDouble(
+                                entry.Parameters[parameter.ParameterName],
+                                CultureInfo.InvariantCulture);
+                        }
+                    }
+
+                    if (addValue)
+                    {
+                        // set value
+                        graphData.SetValue(buildId, parameter.ParameterName, value);
+                    }
+                    else
+                    {
+                        // increment value
+                        graphData.IncValue(buildId, parameter.ParameterName, value);
+                    }
+                }
+
+                Assert.AreEqual(
+                    TimeSpan.Parse(entry.Parameters["Duration"]).TotalSeconds,
+                    graphData.GetValue(entry.BuildId, "Duration"));
+            }
+
+            Assert.AreEqual(buildNumbers, graphData.GetValuesForParameter("Duration").Count);
+        }
+
+
         [Test,Explicit("This test should not be run automatically"),]
         public void ReadCCNetStatisticsTest()
         {
@@ -227,7 +230,7 @@ namespace ProjectPilot.Tests.Framework.CCNet
             //File.WriteAllText("ccnet.stats.xml", stat);
         }
 
-        private ProjectStatsData GetStatisticData()
+        private ProjectStatsData GetStatisticDataFromFile()
         {
             ProjectStatsData data;
             using (Stream stream = File.OpenRead(@"..\..\..\Data\Samples\ccnet.stats.xml"))
