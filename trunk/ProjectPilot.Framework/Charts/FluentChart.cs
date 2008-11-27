@@ -96,7 +96,8 @@ namespace ProjectPilot.Framework.Charts
         }
 
         public FluentChart SetLabelsToXAxis(IList<string> labels)
-        {
+        {            
+            zedGraph.GraphPane.XAxis.Scale.MinorStepAuto = true;
             zedGraph.GraphPane.XAxis.Type = AxisType.Text;
             zedGraph.GraphPane.XAxis.Scale.TextLabels = labels.ToArray();
             return this;

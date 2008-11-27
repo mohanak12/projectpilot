@@ -68,7 +68,7 @@ namespace ProjectPilot.Framework.CCNet
             foreach (ProjectStatsGraph graph in graphs)
             {
                 // clear list of data
-                graphData.ClearDictionary();
+                graphData.ClearListOfData();
                 // prepare list of data for graph
                 PrepareDataMatrix(data, graph, graphData, xLabels);
                 // draw chart
@@ -101,11 +101,15 @@ namespace ProjectPilot.Framework.CCNet
             {
                 chart.SetLabelsToXAxis(xLabels);
 
+                int xScaleMaxValue = 1;
+
                 foreach (ProjectStatsGraphParameter parameter in graph.GraphParameters)
                 {
+                    SortedList<int, double> values = graphData.GetValuesForParameter(parameter.ParameterName);
+                    xScaleMaxValue = values.Count;
                     chart
                         .AddLineSeries(parameter.ParameterName, parameter.SeriesColor)
-                        .AddData(graphData.GetValuesForParameter(parameter.ParameterName))
+                        .AddData(values)
                         .SetSymbol(SymbolType.Circle, parameter.SeriesColor, 4, true);
                 }
 
@@ -114,8 +118,9 @@ namespace ProjectPilot.Framework.CCNet
                     ModuleId,
                     string.Format(CultureInfo.InvariantCulture, "CCNet{0}Chart.png", graph.GraphName.Replace(" ", string.Empty)),
                     true);
-
+                
                 chart
+                    .SetXAxis(1, xScaleMaxValue)
                     .ExportToBitmap(chartImageFileName, ImageFormat.Png, 2000, 800);
 
                 return chartImageFileName;
