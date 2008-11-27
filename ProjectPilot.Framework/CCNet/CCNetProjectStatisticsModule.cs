@@ -150,32 +150,32 @@ namespace ProjectPilot.Framework.CCNet
 
                 ProjectStatsBuildEntry entry = data.Builds[i];
 
-                // only successful builds are allowed
+                // ignore unsuccessful builds
                 if (graph.IgnoreFailures && entry.Parameters["Success"] == "0")
                 {
                     continue;
                 }
 
+                // flag, that marks if parameter value will be added to the list or
+                // value will increase existing value (depends on buildId)
                 bool addValue = false;
                 
                 // if the current build label has not already been added to the xLabels
-                // group builds by build name
                 if (entry.BuildLabel != xLabels.Find(temp => temp == entry.BuildLabel))
                 {
                     // add build name to list. Build name will be shown on x-axis
                     xLabels.Add(entry.BuildLabel);
 
-                    // this two values are used only for grouping builds with same name
-                    // grouping is used only for create build report statistic
                     addValue = true;
                     buildId = entry.BuildId;
                 }
 
-                // go through all parameters
+                // go through all graph parameters
                 foreach (ProjectStatsGraphParameter parameter in graph.GraphParameters)
                 {
                     double value = 0;
 
+                    // if parameter exists in build statistic then get parameter value
                     if (entry.Parameters.ContainsKey(parameter.ParameterName))
                     {
                         if (parameter.ParameterType == typeof(TimeSpan))
@@ -192,7 +192,7 @@ namespace ProjectPilot.Framework.CCNet
 
                     if (addValue)
                     {
-                        // set value for parameter name
+                        // set value
                         graphData.SetValue(buildId, parameter.ParameterName, value);
                     }
                     else
