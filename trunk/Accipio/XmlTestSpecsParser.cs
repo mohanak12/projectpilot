@@ -135,7 +135,7 @@ namespace Accipio
                         TestCase testCase = new TestCase(ReadAttribute(xmlReader, "id"), ReadAttribute(xmlReader, "category"));
                         testSpecs.AddTestCase(testCase);
                         ReadAction(testCase, xmlReader);
-                        
+
                         break;
 
                     default:
@@ -160,13 +160,25 @@ namespace Accipio
                     testAction.AddActionParameter(new TestActionParameter(key, value));
                 }
 
+                // move back to element
                 xmlReader.MoveToElement();
+                // move to the end of element
+                xmlReader.Read();
 
+                if (xmlReader.NodeType == XmlNodeType.Text)
+                {
+                    // TODO: there is also text node. Where to add this text node
+                    xmlReader.Read();
+                }
+
+                // add test action parameters
                 testCase.AddTestAction(testAction);
 
+                // end of Action element
                 xmlReader.Read();
             }
 
+            // end of TestCase element
             xmlReader.Read();
         }
 
