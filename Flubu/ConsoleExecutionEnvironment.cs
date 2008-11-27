@@ -66,68 +66,68 @@ namespace Flubu
             configurationSettings[settingName] = settingValue;
         }
 
-        public override void ReportMessage (string message)
-        {
-            System.Console.Out.WriteLine ("{0}[{1:T}] {2}", Indent(), DateTime.Now, message);
-            log.Info (message);
-        }
+        //public override void Log (string message)
+        //{
+        //    System.Console.Out.WriteLine ("{0}[{1:T}] {2}", Indent(), DateTime.Now, message);
+        //    log.Info (message);
+        //}
 
-        public override void ReportMessage (string format, params object[] parameters)
-        {
-            if (format == null)
-                throw new ArgumentNullException ("format");                
+        //public override void Log (string format, params object[] parameters)
+        //{
+        //    if (format == null)
+        //        throw new ArgumentNullException ("format");                
             
-            string message = String.Format (
-                System.Globalization.CultureInfo.InvariantCulture,
-                format, 
-                parameters);
-            ReportMessage (message);
-        }
+        //    string message = String.Format (
+        //        System.Globalization.CultureInfo.InvariantCulture,
+        //        format, 
+        //        parameters);
+        //    log (message);
+        //}
 
-        public override void ReportTaskStarted (ITask task)
-        {
-            if (task == null)
-                throw new ArgumentNullException ("task");
+        //public override void ReportTaskStarted (ITask task)
+        //{
+        //    if (task == null)
+        //        throw new ArgumentNullException ("task");
 
-            System.Console.Out.WriteLine ("{0}[{1:T}] TASK: {2}", Indent (), DateTime.Now, task.TaskDescription);
-            nestedTasksCounter++;
-            log.InfoFormat ("Task started: {0}", task.TaskDescription);
-        }
+        //    System.Console.Out.WriteLine ("{0}[{1:T}] TASK: {2}", Indent (), DateTime.Now, task.TaskDescription);
+        //    nestedTasksCounter++;
+        //    log.InfoFormat ("Task started: {0}", task.TaskDescription);
+        //}
 
-        public override void ReportTaskExecuted (ITask task)
-        {
-            if (task == null)
-                throw new ArgumentNullException ("task");
+        //public override void ReportTaskExecuted (ITask task)
+        //{
+        //    if (task == null)
+        //        throw new ArgumentNullException ("task");
 
-            nestedTasksCounter--;
-            System.Console.Out.WriteLine ("{0}[{1:T}] DONE", Indent (), DateTime.Now);
-            log.InfoFormat ("Task done: {0}", task.TaskDescription);
-        }
+        //    nestedTasksCounter--;
+        //    System.Console.Out.WriteLine ("{0}[{1:T}] DONE", Indent (), DateTime.Now);
+        //    log.InfoFormat ("Task done: {0}", task.TaskDescription);
+        //}
 
-        public override void ReportTaskFailed (ITask task, Exception ex)
-        {
-            if (task == null)
-                throw new ArgumentNullException ("task");                
+        //public override void ReportTaskFailed (ITask task, Exception ex)
+        //{
+        //    if (task == null)
+        //        throw new ArgumentNullException ("task");                
             
-            if (ex == null)
-                throw new ArgumentNullException ("ex");                
+        //    if (ex == null)
+        //        throw new ArgumentNullException ("ex");                
             
-            nestedTasksCounter--;
-            System.Console.Out.WriteLine ("{0}[{1:T}] FAILED", Indent (), DateTime.Now);
-            System.Console.Out.WriteLine ("{0}{1}", Indent(), ex.ToString ());
-            log.FatalFormat ("Task failed: task='{0}', exception='{1}'", task.TaskDescription, ex);
-        }
+        //    nestedTasksCounter--;
+        //    System.Console.Out.WriteLine ("{0}[{1:T}] FAILED", Indent (), DateTime.Now);
+        //    System.Console.Out.WriteLine ("{0}{1}", Indent(), ex.ToString ());
+        //    log.FatalFormat ("Task failed: task='{0}', exception='{1}'", task.TaskDescription, ex);
+        //}
 
-        public override void ReportTaskFailed (ITask task, string reason)
-        {
-            if (task == null)
-                throw new ArgumentNullException ("task");
+        //public override void ReportTaskFailed (ITask task, string reason)
+        //{
+        //    if (task == null)
+        //        throw new ArgumentNullException ("task");
 
-            nestedTasksCounter--;
-            System.Console.Out.WriteLine ("{0}[{1:T}] FAILED", Indent (), DateTime.Now);
-            System.Console.Out.WriteLine ("{0}{1}", Indent (), reason);
-            log.FatalFormat ("Task failed: task='{0}', reason='{1}'", task.TaskDescription, reason);
-        }
+        //    nestedTasksCounter--;
+        //    System.Console.Out.WriteLine ("{0}[{1:T}] FAILED", Indent (), DateTime.Now);
+        //    System.Console.Out.WriteLine ("{0}{1}", Indent (), reason);
+        //    log.FatalFormat ("Task failed: task='{0}', reason='{1}'", task.TaskDescription, reason);
+        //}
 
         public override string ReceiveInput (string prompt)
         {
@@ -135,15 +135,15 @@ namespace Flubu
             return Console.In.ReadLine ();
         }
 
-        private string Indent ()
-        {
-            return new string ('\t', nestedTasksCounter);
-        }
+        //private string Indent ()
+        //{
+        //    return new string ('\t', nestedTasksCounter);
+        //}
 
-        private int nestedTasksCounter = 0;
+        //private int nestedTasksCounter = 0;
         private Dictionary<string, string> configurationSettings = new Dictionary<string, string> ();
         private bool configureLog4Net;
 
-        private static readonly ILog log = LogManager.GetLogger("Main");
+        //private static readonly ILog log = LogManager.GetLogger("Main");
     }
 }

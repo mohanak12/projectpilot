@@ -66,9 +66,9 @@ namespace Flubu.Tasks.Iis
                             applicationPoolName);
 
                         if (failIfNotExist)
-                            throw new TaskFailedException (message);
+                            throw new RunnerFailedException (message);
                         else
-                            environment.ReportMessage (message);
+                            environment.Logger.Log(message);
                     }
                 }
                 finally

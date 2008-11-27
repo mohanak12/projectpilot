@@ -6,11 +6,28 @@ using System.Text.RegularExpressions;
 
 namespace ProjectPilot.BuildScripts.VSSolutionBrowsing
 {
+    /// <summary>
+    /// Represents a VisualStudio solution.
+    /// </summary>
     public class VSSolution
     {
-        public ReadOnlyCollection<VSProject> Projects
+        /// <summary>
+        /// Gets a read-only collection of all the projects in the solution.
+        /// </summary>
+        /// <value>A read-only collection of all the projects in the solution.</value>
+        public ReadOnlyCollection<VSProjectInfo> Projects
         {
             get { return projects.AsReadOnly(); }
+        }
+
+        /// <summary>
+        /// Gets or sets the VisualStudio project types dictionary.
+        /// </summary>
+        /// <value>The VisualStudio project types dictionary.</value>
+        public VSProjectTypesDictionary ProjectTypesDictionary
+        {
+            get { return projectTypesDictionary; }
+            set { projectTypesDictionary = value; }
         }
 
         public string SolutionDirectoryPath
@@ -31,9 +48,9 @@ namespace ProjectPilot.BuildScripts.VSSolutionBrowsing
             get { return solutionVersion; }
         }
 
-        public VSProject FindProjectById (Guid projectGuid)
+        public VSProjectInfo FindProjectById (Guid projectGuid)
         {
-            foreach (VSProject projectData in projects)
+            foreach (VSProjectInfo projectData in projects)
                 if (projectData.ProjectGuid == projectGuid)
                     return projectData;
 
@@ -44,25 +61,15 @@ namespace ProjectPilot.BuildScripts.VSSolutionBrowsing
         /// Performs the specified action on each project of the solution.
         /// </summary>
         /// <param name="action">The action delegate to perform on each project.</param>
-        public void ForEachProject (Action<VSProject> action)
+        public void ForEachProject (Action<VSProjectInfo> action)
         {
             projects.ForEach(action);
         }
-
-        //public void ForEachProjectFile (Action<VSProject> action)
-        //{
-        //    projects.ForEach (action);
-        //}
 
         public static VSSolution Load (string fileName)
         {
             VSSolution solution = new VSSolution (fileName);
             ParserContext parserContext = new ParserContext ();
-
-            Regex solutionVersionRegex = new Regex (@"^Microsoft Visual Studio Solution File, Format Version (?<version>.+)$");
-            Regex projectRegex = new Regex (@"^Project\(""(?<projectTypeGuid>.*)""\) = ""(?<name>.*)"", ""(?<path>.*)"", ""(?<projectGuid>.*)""$");
-            Regex endProjectRegex = new Regex (@"^EndProject$");
-            Regex globalRegex = new Regex (@"^Global$");
 
             using (Stream stream = File.Open (fileName, FileMode.Open, FileAccess.Read))
             {
@@ -75,13 +82,14 @@ namespace ProjectPilot.BuildScripts.VSSolutionBrowsing
                     if (line == null)
                         throw new NotSupportedException ();
 
-                    Match solutionMatch = solutionVersionRegex.Match (line);
+                    Match solutionMatch = VSSolution.regexSolutionVersion.Match (line);
 
                     if (solutionMatch.Success == false)
                         throw new NotSupportedException ();
 
-                    solution.solutionVersion = decimal.Parse (solutionMatch.Groups["version"].Value, 
-                                                              System.Globalization.CultureInfo.InvariantCulture);
+                    solution.solutionVersion = decimal.Parse (
+                        solutionMatch.Groups["version"].Value, 
+                        System.Globalization.CultureInfo.InvariantCulture);
 
                     while (true)
                     {
@@ -91,22 +99,30 @@ namespace ProjectPilot.BuildScripts.VSSolutionBrowsing
                             break;
 
                         // exit the loop when 'Global' section appears
-                        Match globalMatch = globalRegex.Match (line);
+                        Match globalMatch = VSSolution.regexGlobal.Match (line);
                         if (globalMatch.Success)
                             break;
 
-                        Match projectMatch = projectRegex.Match (line);
+                        Match projectMatch = VSSolution.regexProject.Match (line);
 
                         if (projectMatch.Success == false)
-                            throw new ArgumentException (String.Format (System.Globalization.CultureInfo.InvariantCulture,
-                                                                        "Could not parse solution file (line {0}).", parserContext.LineCount));
+                            throw new ArgumentException (
+                                String.Format (
+                                    System.Globalization.CultureInfo.InvariantCulture,
+                                    "Could not parse solution file (line {0}).", 
+                                    parserContext.LineCount));
 
-                        VSProject project = new VSProject (solution);
-                        project.ProjectGuid = new Guid (projectMatch.Groups["projectGuid"].Value);
-                        project.ProjectName = projectMatch.Groups["name"].Value;
-                        project.ProjectFileName = projectMatch.Groups["path"].Value;
-                        project.ProjectTypeGuid = new Guid (projectMatch.Groups["projectTypeGuid"].Value);
-                        solution.projects.Add (project);
+                        Guid projectGuid = new Guid (projectMatch.Groups["projectGuid"].Value);
+                        string projectName = projectMatch.Groups["name"].Value;
+                        string projectFileName = projectMatch.Groups["path"].Value;
+                        Guid projectTypeGuid = new Guid (projectMatch.Groups["projectTypeGuid"].Value);
+                        VSProjectInfo projectInfo = new VSProjectInfo(
+                            solution,
+                            projectTypeGuid,
+                            projectName,
+                            projectFileName,
+                            projectTypeGuid);
+                        solution.projects.Add(projectInfo);
 
                         // parse until the EndProject
                         while (true)
@@ -116,7 +132,7 @@ namespace ProjectPilot.BuildScripts.VSSolutionBrowsing
                             if (line == null)
                                 throw new ArgumentException ("Unexpected end of solution file.");
 
-                            Match endProjectMatch = endProjectRegex.Match (line);
+                            Match endProjectMatch = VSSolution.regexEndProject.Match (line);
 
                             if (endProjectMatch.Success)
                                 break;
@@ -148,18 +164,21 @@ namespace ProjectPilot.BuildScripts.VSSolutionBrowsing
                 //if (log.IsDebugEnabled)
                 //    log.DebugFormat ("Read line ({0}): {1}", parserContext.LineCount, line);
 
-            } while (line.Trim ().Length == 0 || line.StartsWith ("#"));
+            } 
+            while (line.Trim ().Length == 0 || line.StartsWith ("#"));
 
             return line;
         }
 
+        private List<VSProjectInfo> projects = new List<VSProjectInfo> ();
+        private VSProjectTypesDictionary projectTypesDictionary = new VSProjectTypesDictionary();
+        private static readonly Regex regexEndProject = new Regex(@"^EndProject$");
+        private static readonly Regex regexGlobal = new Regex(@"^Global$");
+        private static readonly Regex regexProject = new Regex(@"^Project\(""(?<projectTypeGuid>.*)""\) = ""(?<name>.*)"", ""(?<path>.*)"", ""(?<projectGuid>.*)""$");
+        private static readonly Regex regexSolutionVersion = new Regex(@"^Microsoft Visual Studio Solution File, Format Version (?<version>.+)$");
         private string solutionFileName;
         private decimal solutionVersion;
-        private List<VSProject> projects = new List<VSProject> ();
 
         //static readonly private ILog log = LogManager.GetLogger (typeof (VSSolution));
-
-        static public readonly Guid ProjectTypeCSGuid = new Guid ("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}");
-        static public readonly Guid ProjectTypeSolutionFolderGuid = new Guid ("{2150E333-8FDC-42A3-9474-1A3956D46DE8}");
     }
 }

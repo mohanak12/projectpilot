@@ -33,6 +33,12 @@ namespace Flubu
             }
         }
 
+        public IFlubuLogger Logger
+        {
+            get { return logger; }
+            set { logger = value; }
+        }
+
         /// <summary>
         /// Gets the .NET version number for .NET 1.0.
         /// </summary>
@@ -105,23 +111,12 @@ namespace Flubu
 
         public abstract void SetConfigurationSettingValue (string settingName, string settingValue);
 
-        public abstract void ReportMessage (string message);
-
-        public abstract void ReportMessage (string format, params object[] parameters);
-
-        public abstract void ReportTaskStarted (ITask task);
-
-        public abstract void ReportTaskExecuted (ITask task);
-
-        public abstract void ReportTaskFailed (ITask task, Exception ex);
-
-        public abstract void ReportTaskFailed (ITask task, string reason);
-
         public abstract string ReceiveInput (string prompt);
 
         #endregion
 
-        private string scriptName;
         private bool dryRun;
+        private IFlubuLogger logger;
+        private string scriptName;
     }
 }

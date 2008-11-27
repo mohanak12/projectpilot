@@ -5,21 +5,21 @@ using System.Text;
 namespace Flubu
 {
     [Serializable]
-    public class TaskFailedException : System.Exception
+    public class RunnerFailedException : System.Exception
     {
-        public TaskFailedException ()
+        public RunnerFailedException ()
         {
         }
 
-        public TaskFailedException (string message) : base (message)
+        public RunnerFailedException (string message) : base (message)
         {
         }
 
-        public TaskFailedException (string message, Exception innerException) : base (message, innerException)
+        public RunnerFailedException (string message, Exception innerException) : base (message, innerException)
         {
         }
 
-        protected TaskFailedException (
+        protected RunnerFailedException (
             System.Runtime.Serialization.SerializationInfo serializationInfo,
             System.Runtime.Serialization.StreamingContext context)
             : base (serializationInfo, context)

@@ -150,7 +150,7 @@ namespace Flubu.Tasks.Processes
 
                     if (exitCode != 0)
                     {
-                        throw new TaskFailedException (
+                        throw new RunnerFailedException (
                             String.Format (
                                 System.Globalization.CultureInfo.InvariantCulture,
                                 "The program '{0}' returned exit code {1}.",
@@ -161,7 +161,7 @@ namespace Flubu.Tasks.Processes
                 else
                 {
                     childProcess.Kill ();
-                    throw new TaskFailedException (String.Format (
+                    throw new RunnerFailedException (String.Format (
                         System.Globalization.CultureInfo.InvariantCulture,
                         "The program '{0}' did not finish in time, it had to be killed.",
                         programFilePath));

@@ -41,7 +41,7 @@ namespace Flubu.Tasks.FileSystem
             foreach (string file in Directory.GetFiles (directoryPath, filePattern))
             {
                 File.Delete (file);
-                environment.ReportMessage ("Deleted file '{0}'", file);
+                environment.Logger.Log("Deleted file '{0}'", file);
             }
         }
 

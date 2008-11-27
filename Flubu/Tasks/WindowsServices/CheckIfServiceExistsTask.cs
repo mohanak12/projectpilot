@@ -41,7 +41,7 @@ namespace Flubu.Tasks.WindowsServices
                     System.Runtime.InteropServices.SafeHandle serviceHandle = serviceController.ServiceHandle;
 
                     environment.SetConfigurationSettingValue (configurationSetting, "true");
-                    environment.ReportMessage (
+                    environment.Logger.Log(
                         String.Format (
                             System.Globalization.CultureInfo.InvariantCulture,
                             "Windows service '{0}' exists.", 
@@ -51,7 +51,7 @@ namespace Flubu.Tasks.WindowsServices
             catch (InvalidOperationException)
             {
                 environment.SetConfigurationSettingValue (configurationSetting, "false");
-                environment.ReportMessage (
+                environment.Logger.Log(
                     String.Format (
                         System.Globalization.CultureInfo.InvariantCulture,
                         "Windows service '{0}' does not exist.", 

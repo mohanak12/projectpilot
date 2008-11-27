@@ -122,7 +122,7 @@ namespace Flubu.Tasks.Iis
                         // user already exists
                         if (mode == CreateVirtualDirectoryMode.DoNothingIfExists)
                         {
-                            environment.ReportMessage (
+                            environment.Logger.Log(
                                 String.Format (
                                     System.Globalization.CultureInfo.InvariantCulture,
                                     "Virtual directory '{0}' already exists, doing nothing.", 
@@ -131,7 +131,7 @@ namespace Flubu.Tasks.Iis
                         }
                         else if (mode == CreateVirtualDirectoryMode.FailIfAlreadyExists)
                         {
-                            throw new TaskFailedException (
+                            throw new RunnerFailedException (
                                 String.Format (
                                     System.Globalization.CultureInfo.InvariantCulture,
                                     "Virtual directory '{0}' already exists.", 

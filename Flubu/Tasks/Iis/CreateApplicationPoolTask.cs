@@ -50,7 +50,7 @@ namespace Flubu.Tasks.Iis
                         // application pool already exists
                         if (mode == CreateApplicationPoolMode.DoNothingIfExists)
                         {
-                            environment.ReportMessage (
+                            environment.Logger.Log(
                                 String.Format (
                                     System.Globalization.CultureInfo.InvariantCulture,
                                     "Application pool '{0}' already exists, doing nothing.", 
@@ -59,7 +59,7 @@ namespace Flubu.Tasks.Iis
                         }
                         else if (mode == CreateApplicationPoolMode.FailIfAlreadyExists)
                         {
-                            throw new TaskFailedException (
+                            throw new RunnerFailedException (
                                 String.Format (
                                     System.Globalization.CultureInfo.InvariantCulture,
                                     "Application '{0}' already exists.", 
