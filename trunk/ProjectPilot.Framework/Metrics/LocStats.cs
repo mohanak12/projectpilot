@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-
+    
 namespace ProjectPilot.Framework.Metrics
 {
     public class LocStats : ILocStats
@@ -79,7 +79,7 @@ namespace ProjectPilot.Framework.Metrics
 
             int tmpChar = '\0';
             int prevChar = '\0';
-
+            
             if (File.Exists(filePath))
             {
                 //try
@@ -109,7 +109,9 @@ namespace ProjectPilot.Framework.Metrics
                         else
                             notEmpty = false;
                     }
-                    else if (tmpChar != '\r')
+                    else if (tmpChar != '\r' &&
+                             tmpChar != ' ' &&
+                             tmpChar != '\t')
                         notEmpty = true;
 
                     prevChar = tmpChar;
