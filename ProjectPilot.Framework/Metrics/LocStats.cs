@@ -73,6 +73,7 @@ namespace ProjectPilot.Framework.Metrics
 
             int isComment = 0;
             bool notEmpty = false;
+            bool inCommentMode = false;
 
             LocStatsData returnData = new LocStatsData(sloc, cloc, eloc);
             FileStream stream;
@@ -89,11 +90,24 @@ namespace ProjectPilot.Framework.Metrics
                 while ((tmpChar = stream.ReadByte()) != -1)
                 {
                     // Counting comments
-                    if (tmpChar == '/')
+                    if (tmpChar == '/' && inCommentMode == false)
                     {
                         isComment++;
                         if (isComment == 2)
                             cloc++;
+                    }
+                    else if (tmpChar == '*' && 
+                             prevChar == '/' &&
+                             inCommentMode == false)
+                    {
+                        inCommentMode = true;
+                        cloc++;
+                    }
+                    else if (tmpChar == '/' &&
+                             prevChar == '*' &&
+                             inCommentMode == true)
+                    {
+                        inCommentMode = false;
                     }
                     else
                     {
@@ -117,13 +131,14 @@ namespace ProjectPilot.Framework.Metrics
                     prevChar = tmpChar;
                 }
 
-                /*}
+                /*}/* /* /// 
                 catch (Exception e)
-                {
+                {////*
                     //TODO: Ask waht to do in this case
                 }*/
             }
 
+            //comment
             returnData.Cloc = cloc;
             returnData.Eloc = eloc;
             returnData.Sloc = sloc;
