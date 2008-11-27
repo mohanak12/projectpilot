@@ -61,9 +61,9 @@ statement // with comment"
             ILocStats locStats = new LocStats();
             LocStatsData data = locStats.CountLocFile(@"c:\PilotProject\ProjectPilot.Framework\Metrics\LocStats.cs ");
 
-            Assert.AreEqual(6, data.Cloc);
-            Assert.AreEqual(21, data.Eloc);
-            Assert.AreEqual(131, data.Sloc);
+            Assert.AreEqual(8, data.Cloc);
+            Assert.AreEqual(22, data.Eloc);
+            Assert.AreEqual(134, data.Sloc);
         }
     }
 }
