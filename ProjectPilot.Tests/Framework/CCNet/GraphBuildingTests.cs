@@ -27,7 +27,7 @@ namespace ProjectPilot.Tests.Framework.CCNet
             ProjectStatsData data = GetStatisticDataFromFile();
 
             //Labels on X-Axis
-            List<string> xLabels = new List<string> { "Test0", "Test1", "Test2", "Test3", "Test4", "Test5" };
+            List<string> xLabels = new List<string> { "Test0_1233345667", "Test1_1233345667", "Test2_1233345667", "Test3_1233345667", "Test4_1233345667", "Test5_1233345667" };
 
             ProjectStatsGraphData graphData = new ProjectStatsGraphData(data);
             graphData.SetValue(0, "Duration", 12);
@@ -39,8 +39,6 @@ namespace ProjectPilot.Tests.Framework.CCNet
 
             using (FluentChart chart = FluentChart.Create(graph.GraphName, graph.XAxisTitle, graph.YAxisTitle))
             {
-                chart.SetLabelsToXAxis(xLabels);
-
                 foreach (ProjectStatsGraphParameter parameter in graph.GraphParameters)
                 {
                     chart
@@ -48,6 +46,9 @@ namespace ProjectPilot.Tests.Framework.CCNet
                         .AddData(graphData.GetValuesForParameter(parameter.ParameterName))
                         .SetSymbol(SymbolType.Circle, parameter.SeriesColor, 4, true);
                 }
+
+                chart.SetXAxis(1, 6);
+                chart.SetLabelsToXAxis(xLabels);
 
                 chart
                     .ExportToBitmap("test.png", ImageFormat.Png, 2000, 800);

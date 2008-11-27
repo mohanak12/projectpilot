@@ -18,15 +18,15 @@ namespace ProjectPilot.Framework.CCNet
                 buildsToIntegers.Add(build.BuildId, buildsSortedByStartTime.IndexOfValue(build));
         }
 
+        public void ClearListOfData()
+        {
+            dataByBuildsByParametersByValue.Clear();
+        }
+
         public void IncValue(int buildId, string parameterName, double value)
         {
             Dictionary<string, double> entry = dataByBuildsByParametersByValue[buildId];
             entry[parameterName] += value;
-        }
-
-        public void ClearDictionary()
-        {
-            dataByBuildsByParametersByValue.Clear();
         }
 
         public double GetValue(int buildId, string parameterName)
