@@ -1,12 +1,4 @@
-﻿#region
-
-using System;
-using System.IO;
-using Accipio;
-
-#endregion
-
-namespace Accipio.Console
+﻿namespace Accipio.Console
 {
     internal class Program
     {

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 
 namespace Accipio
 {
     public interface ITestSpecsParser
     {
-        TestSpecs Parse();
+        TestSpecs Parse(Stream stream);
     }
 }

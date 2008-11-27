@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 
 namespace Accipio.Console
@@ -24,6 +26,7 @@ namespace Accipio.Console
             string generatorCommand = args[0];
             InputArgument inputArgument = 
                 (InputArgument) Enum.Parse(typeof (InputArgument), generatorCommand, true);
+            
             switch (inputArgument)
             {
                 case InputArgument.BusinessAction:
@@ -36,6 +39,13 @@ namespace Accipio.Console
                         //   2. parsing XML file and retrieving TestActions, parameters etc
                         //     - check that action ID's and parameter names do not have whitespaces
                         //   3. generating XSD file which contains these actions
+                        IGenerator generator = new BusinessAction(GetXmlFileContent(args[1]));
+                        if (!generator.Parse())
+                        {
+                            System.Console.WriteLine("Parsing error...");
+                            return;
+                        }
+                        generator.Process();
                         break;
                     }
                 case InputArgument.TestSpec:
@@ -54,6 +64,33 @@ namespace Accipio.Console
                         break;
                     }
             }
+        }
+
+        private static string GetXmlFileContent(string fileName)
+        {
+            string fileShema = fileName;
+            FileInfo fileInfoShema = new FileInfo(fileShema);
+            if (File.Exists(fileInfoShema.FullName))
+            {
+                if (fileInfoShema.Extension.Equals(".xml", StringComparison.OrdinalIgnoreCase))
+                {
+                    return ReadFile(fileInfoShema.FullName);
+                }
+            }
+            return String.Empty;
+        }
+
+        private static string ReadFile(string fileName)
+        {
+            string content;
+            using (StreamReader streamReader = new StreamReader(fileName))
+            {
+                content = streamReader.ReadToEnd();
+                streamReader.Close();
+                streamReader.Dispose();
+            }
+            return content;
+
         }
 
         private static void ShowHelp()

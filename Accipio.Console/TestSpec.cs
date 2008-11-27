@@ -5,7 +5,7 @@ namespace Accipio.Console
     /// </summary>
     public class TestSpec : IGenerator
     {
-        public void Parse()
+        public bool Parse()
         {
             throw new System.NotImplementedException();
         }
