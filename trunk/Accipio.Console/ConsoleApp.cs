@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using NDesk.Options;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using System.Reflection;
 
 namespace Accipio.Console
 {
@@ -35,38 +31,17 @@ namespace Accipio.Console
         public void Process()
         {
             ShowBanner();
-
-            try
-            {
-
-            }
-            catch (OptionException ex)
-            {
-                System.Console.Out.WriteLine("ERROR: {0}", ex.Message);
-                ShowHelp();
-            }
-            catch (ArgumentException ex)
-            {
-                System.Console.Out.WriteLine("ERROR: {0}", ex.Message);
-                ShowHelp();
-            }
+            System.Console.WriteLine(args.Length);
         }
 
         private static void ShowBanner()
         {
             FileVersionInfo version = 
 // ReSharper disable AssignNullToNotNullAttribute
-                FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly ().Location);
+                FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
 // ReSharper restore AssignNullToNotNullAttribute
-            System.Console.Out.WriteLine ("Accipio.Console v{0}", version.FileVersion);
-            System.Console.Out.WriteLine ();
-        }
-
-        private static void ShowHelp()
-        {
-            System.Console.Out.WriteLine ();
-            System.Console.WriteLine ("Usage: Accipio.Conole [OPTIONS]");
-            System.Console.Out.WriteLine ();
+            System.Console.WriteLine("Accipio.Console v{0}", version.FileVersion);
+            System.Console.WriteLine();
         }
 
         private readonly string[] args;

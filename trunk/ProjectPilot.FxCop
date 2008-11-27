@@ -674,25 +674,6 @@
     <Modules>
      <Module Name="projectpilot.framework.dll">
       <Namespaces>
-       <Namespace Name="ProjectPilot.Framework.CCNet">
-        <Types>
-         <Type Name="CCNetProjectStatisticsModule">
-          <Members>
-           <Member Name="#DrawChart(ProjectPilot.Framework.CCNet.ProjectStatsGraph,ProjectPilot.Framework.CCNet.ProjectStatsGraphData,System.Collections.Generic.IList`1&lt;System.String&gt;)">
-            <Messages>
-             <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2008-11-26 14:09:57Z">
-              <Issue>
-               <Item>'string.Format(string, object)'</Item>
-               <Item>'CCNetProjectStatisticsModule.DrawChart(ProjectStatsGraph, ProjectStatsGraphData, IList&lt;string&gt;)'</Item>
-               <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
        <Namespace Name="ProjectPilot.Framework.Runners">
         <Types>
          <Type Name="IRunner">
