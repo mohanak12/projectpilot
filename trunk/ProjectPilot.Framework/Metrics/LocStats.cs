@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
     
 namespace ProjectPilot.Framework.Metrics
 {
@@ -10,6 +11,68 @@ namespace ProjectPilot.Framework.Metrics
     {
         public LocStats()
         {
+        }
+
+        public LocStatsData CountLocString(Stream stream)
+        {
+            int sloc = 0;
+            int cloc = 0;
+            int eloc = 0;
+
+            bool inCommentMode = false;
+
+            LocStatsData returnData = new LocStatsData(sloc, cloc, eloc);
+
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                while (true)
+                {
+                    string line = reader.ReadLine();
+                    if (line == null)
+                        break;
+                    else
+                    {
+                        sloc++;
+                    }
+
+                    int commentIndex = line.IndexOf(@"//", StringComparison.Ordinal);
+                    int oldIndexStart = line.IndexOf(@"/*", StringComparison.Ordinal);
+                    int oldIndexEnd = line.IndexOf(@"*/", StringComparison.Ordinal);
+                    int narekovajIndex = line.IndexOf("\"", StringComparison.Ordinal);
+
+                    if (oldIndexStart > -1 && inCommentMode != true)
+                    {
+                        if (commentIndex != -1 && 
+                            commentIndex < oldIndexStart)
+                            break;
+                        
+                        if (oldIndexEnd > oldIndexStart)
+                            cloc++;
+                        else
+                            inCommentMode = true;
+                    }
+                    
+                    if (commentIndex > -1 &&
+                        oldIndexStart < commentIndex &&
+                        inCommentMode == false)
+                        cloc++;
+
+                    if (oldIndexEnd > -1 &&
+                        inCommentMode == true)
+                    {
+                        cloc++;
+                        inCommentMode = false;
+                    }
+                    
+                    //Regex regex = new Regex(""); 
+                }
+            }
+
+            returnData.Cloc = cloc;
+            returnData.Eloc = eloc;
+            returnData.Sloc = sloc;
+
+            return returnData;
         }
 
         public LocStatsData CountLocString(string code)
