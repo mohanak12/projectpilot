@@ -9,19 +9,7 @@ namespace Accipio.Console
     {
         public void Parse(string[] args)
         {
-            CheckForValidInputArguments(args);
-        }
-
-        private static void CheckForValidInputArguments(string[] args)
-        {
-            for (int i = 1; i<args.Length-1;i++ )
-            {
-                FileInfo fileInfo = new FileInfo(args[i]);
-                if (!File.Exists(fileInfo.FullName))
-                {
-                    throw new FileNotFoundException("File not found!");
-                }
-            }
+            AccipioHelper.CheckForValidInputArguments(args);
         }
 
         public void Process()
