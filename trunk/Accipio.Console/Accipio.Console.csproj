@@ -69,7 +69,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Accipio\Accipio.csproj">
       <Project>{97619247-E00B-41B7-AF3F-D24A35F6602A}</Project>
-      <Name>ProjectPilot.TestFramework</Name>
+      <Name>Accipio</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

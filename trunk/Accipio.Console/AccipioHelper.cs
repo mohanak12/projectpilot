@@ -21,19 +21,16 @@ namespace Accipio.Console
             {
                 if (fileInfoShema.Extension.Equals(".xml", StringComparison.OrdinalIgnoreCase))
                 {
-                    return ReadFile(fileInfoShema.FullName);
+                    return File.OpenRead(fileInfoShema.FullName);
+                }
+
+                if (fileInfoShema.Extension.Equals(".xsd", StringComparison.OrdinalIgnoreCase))
+                {
+                    return File.OpenRead(fileInfoShema.FullName);
                 }
             }
 
             return null;
-        }
-
-        private static Stream ReadFile(string fileName)
-        {
-            using (Stream stream = File.OpenRead(fileName))
-            {
-               return stream;
-            }
         }
     }
 }

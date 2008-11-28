@@ -14,5 +14,14 @@ namespace ProjectPilot.Tests.AccipioTests
 
             Assert.IsNotNull(stream);
         }
+
+        [Test]
+        public void ParseTest()
+        {
+            string fileName = @"..\..\..\Data\Samples\AccipioActions.xml";
+
+            IGenerator generator = new BusinessActionGenerator();
+            generator.Parse(new string[] { fileName });
+        }
     }
 }
