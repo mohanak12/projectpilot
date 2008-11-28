@@ -31,6 +31,12 @@ namespace Accipio
         }
 
         /// <summary>
+        /// Gets or sets the action description.
+        /// </summary>
+        /// <value>The action description.</value>
+        public string ActionDescription { get; set; }
+
+        /// <summary>
         /// Gets the name of the action.
         /// </summary>
         /// <example><c>selectProject</c> in <selectProject>Mobi-Info</selectProject></example>

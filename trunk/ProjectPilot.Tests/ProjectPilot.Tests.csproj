@@ -122,16 +122,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ProjectPilot.snk" />
-    <None Include="AccipioTests\TestSpecs.xsd">
-      <SubType>
-      </SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="SampleConfigurations\ProjectPilot.config.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="AccipioTests\TestSpec.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
