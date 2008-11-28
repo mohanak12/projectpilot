@@ -5,9 +5,9 @@ namespace Accipio.Console
     /// <summary>
     /// Generate business actions XML schema file.
     /// </summary>
-    public class BusinessAction : IGenerator
+    public class BusinessActionGenerator : IGenerator
     {
-        public BusinessAction(string content)
+        public BusinessActionGenerator(string content)
         {
             this.content = content;
         }
@@ -17,7 +17,7 @@ namespace Accipio.Console
             get { return content; }
         }
 
-        public bool Parse()
+        public void Parse(string[] args)
         {
             //validating XML with schema file (automatic)
 
@@ -32,7 +32,7 @@ namespace Accipio.Console
             //}
             //generating XSD file which contains these actions
 
-            return true;
+            //return true;
         }
 
         public void Process()

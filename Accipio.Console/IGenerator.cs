@@ -2,7 +2,7 @@ namespace Accipio.Console
 {
     public interface IGenerator
     {
-        bool Parse();
+        void Parse(string[] args);
         void Process();
     }
 }

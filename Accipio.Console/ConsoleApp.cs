@@ -39,12 +39,13 @@ namespace Accipio.Console
                         //   2. parsing XML file and retrieving TestActions, parameters etc
                         //     - check that action ID's and parameter names do not have whitespaces
                         //   3. generating XSD file which contains these actions
-                        IGenerator generator = new BusinessAction(GetXmlFileContent(args[1]));
-                        if (!generator.Parse())
-                        {
-                            System.Console.WriteLine("Parsing error...");
-                            return;
-                        }
+                        IGenerator generator = new BusinessActionGenerator(GetXmlFileContent(args[1]));
+                        generator.Parse(args);
+                        //if (!generator.Parse())
+                        //{
+                        //    System.Console.WriteLine("Parsing error...");
+                        //    return;
+                        //}
                         generator.Process();
                         break;
                     }
