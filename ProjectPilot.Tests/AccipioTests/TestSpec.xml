@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <TestSpecs xmlns="http://projectpilot/testspecs.xsd">
 	<!-- just a comment -->
-	<TestCase id='Open home page' category='Smoke'>
+	<TestCase id='OpenHomePage' category='Smoke'>
 		<OpenPage url='http://localhost/ProjectPilot.Portal1'></OpenPage>
 	</TestCase>
-	<TestCase id='Search for projects' category='Smoke'>
+	<TestCase id='SearchForProjects' category='Smoke'>
 		<OpenPage url='http://localhost/ProjectPilot.Portal2'></OpenPage>
 		<ClickButton id='Search'></ClickButton>
 	</TestCase>
-	<TestCase id='Select project Ebsy' category='Regression'>
+	<TestCase id='SelectProjectEbsy' category='Regression'>
 		<OpenPage url='http://localhost/ProjectPilot.Portal3'></OpenPage>
 		<TypeText id='SearchQuery'>Ebsy</TypeText>
 		<ClickButton id='Search'></ClickButton>
 		<ClickLink href='/home/Ebsy/'></ClickLink>
 	</TestCase>
-  <TestCase id='Test'>
-    <OpenPage url=''/>
-    <ClickButton id='test'/>
-  </TestCase>
+	<TestCase id='Test'>
+		<OpenPage url=''/>
+		<ClickButton id='test'/>
+	</TestCase>
 </TestSpecs>

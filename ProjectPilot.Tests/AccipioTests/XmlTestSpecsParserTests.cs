@@ -10,56 +10,36 @@ namespace ProjectPilot.Tests.AccipioTests
         [Test]
         public void Test()
         {
-//            XmlTestSpecsParser parser = new XmlTestSpecsParser(
-//                @"
-//<TestSpecs>
-//    <TestCase id='myFirstTestCase'>
-//        <goToHomePage/>
-//        <selectProject>Mobi-Info</selectProject>
-//        <selectModule name='SVN' description='some fancy module'>ignored description</selectModule>
-//    </TestCase>
-//    <TestCase id='myFirstTestCase2' category='Smoke'>
-//        <goToHomePage/>
-//    </TestCase>
-//</TestSpecs>
-//");
+            TestSpecs testSpecs;
             using (Stream stream = File.OpenRead("..\\..\\AccipioTests\\TestSpec.xml"))
             {
-                XmlTestSpecsParser parser = new XmlTestSpecsParser("");
-                parser.Parse(stream);
+                XmlTestSpecsParser parser = new XmlTestSpecsParser(stream);
+                testSpecs = parser.Parse();
             }
 
-            //TestSpecs testSpecs = parser.Parse(stream);
 
-        //    Assert.AreEqual(2, testSpecs.TestCasesCount);
+            Assert.AreEqual(4, testSpecs.TestCasesCount);
 
-        //    TestCase testCase = testSpecs.GetTestCase("myFirstTestCase");
-        //    Assert.IsNotNull(testCase);
+            TestCase testCase = testSpecs.GetTestCase("OpenHomePage");
+            Assert.IsNotNull(testCase);
+            Assert.AreEqual("OpenHomePage", testCase.TestCaseName);
+            Assert.AreEqual(1, testCase.TestActionsCount);
 
-        //    Assert.AreEqual(3, testCase.TestActionsCount);
+            TestAction testAction = testCase.GetTestAction("OpenPage");
+            Assert.IsNotNull(testAction);
+            Assert.AreEqual("OpenPage", testAction.ActionName);
+            Assert.IsTrue(testAction.HasParameters, "Action should have 1 parameter!");
 
-        //    Assert.AreEqual("myFirstTestCase", testCase.TestCaseName);
-
-        //    TestAction testAction = testCase.GetTestAction("goToHomePage");
-        //    Assert.IsNotNull(testAction);
-        //    Assert.AreEqual("goToHomePage", testAction.ActionName);
-        //    Assert.IsFalse(testAction.HasParameters, "Action should not contain any parameters!");
-
-        //    testAction = testCase.GetTestAction("selectProject");
-        //    Assert.AreEqual("selectProject", testAction.ActionName);
-        //    Assert.IsTrue(testAction.HasParameters, "Action should have 1 parameter!");
-        //    Assert.AreEqual(1, testAction.ActionParametersCount);
-        //    Assert.IsNotNull(testAction.GetParameterKeyValue("default"));
-        //    Assert.AreEqual("Mobi-Info", testAction.GetParameterKeyValue("default"));
-        //    Assert.IsNull(testAction.GetParameterKeyValue("name"));
-
-        //    testAction = testCase.GetTestAction("selectModule");
-        //    Assert.AreEqual("selectModule", testAction.ActionName);
-        //    Assert.AreEqual(2, testAction.ActionParametersCount);
-        //    Assert.IsNotNull(testAction.GetParameterKeyValue("name"));
-        //    Assert.AreEqual("SVN", testAction.GetParameterKeyValue("name"));
-        //    Assert.IsNotNull(testAction.GetParameterKeyValue("description"));
-        //    Assert.AreEqual("some fancy module", testAction.GetParameterKeyValue("description"));
+            testCase = testSpecs.GetTestCase("SelectProjectEbsy");
+            Assert.IsNotNull(testCase);
+            Assert.AreEqual(4, testCase.TestActionsCount);
+            testAction = testCase.GetTestAction("ClickButton");
+            Assert.IsNotNull(testAction);
+            Assert.AreEqual(1, testAction.ActionParametersCount);
+            Assert.AreEqual("ClickButton", testAction.ActionName);
+            Assert.IsTrue(testAction.HasParameters, "Action should have 1 parameter!");
+            Assert.IsNotNull(testAction.GetParameterKeyValue("id"));
+            Assert.AreEqual("Search", testAction.GetParameterKeyValue("id"));
         }
     }
 }
