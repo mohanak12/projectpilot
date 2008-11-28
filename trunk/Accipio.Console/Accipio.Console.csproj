@@ -53,7 +53,7 @@
     <Compile Include="..\lib\NDesk.Options\Options.cs">
       <Link>Options.cs</Link>
     </Compile>
-    <Compile Include="BusinessAction.cs" />
+    <Compile Include="BusinessActionGenerator.cs" />
     <Compile Include="ConsoleApp.cs" />
     <Compile Include="IGenerator.cs" />
     <Compile Include="InputArgument.cs" />
