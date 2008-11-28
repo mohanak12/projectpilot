@@ -48,7 +48,9 @@ namespace Accipio.Console
                             // # Outputs:
                             //   * C# code files which execute the specified tests
                             //   * Test case documentation in HTML format 
-
+                            IGenerator generator = new TestSpecGenerator();
+                            generator.Parse(args);
+                            generator.Process();
                             break;
                         }
                     default:

@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{FBCD
 		Data\Samples\AccipioActions.xsd = Data\Samples\AccipioActions.xsd
 		Data\Samples\ccnet.stats.xml = Data\Samples\ccnet.stats.xml
 		Data\Samples\svn-log.xml = Data\Samples\svn-log.xml
+		Data\Samples\TestSpec.xml = Data\Samples\TestSpec.xml
+		Data\Samples\TestSpecs.xsd = Data\Samples\TestSpecs.xsd
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectPilot.Framework", "ProjectPilot.Framework\ProjectPilot.Framework.csproj", "{C87F10BF-4132-4B75-9C07-CB0B1FCE6440}"

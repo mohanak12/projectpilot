@@ -11,7 +11,7 @@ namespace ProjectPilot.Tests.AccipioTests
         public void Test()
         {
             TestSpecs testSpecs;
-            using (Stream stream = File.OpenRead("..\\..\\AccipioTests\\TestSpec.xml"))
+            using (Stream stream = File.OpenRead("..\\..\\..\\Data\\Samples\\TestSpec.xml"))
             {
                 XmlTestSpecsParser parser = new XmlTestSpecsParser(stream);
                 testSpecs = parser.Parse();
