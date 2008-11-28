@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 
 namespace Accipio.Console
 {
@@ -7,18 +8,13 @@ namespace Accipio.Console
     /// </summary>
     public class BusinessActionGenerator : IGenerator
     {
-        public BusinessActionGenerator(string content)
-        {
-            this.content = content;
-        }
-
-        public string Content
-        {
-            get { return content; }
-        }
 
         public void Parse(string[] args)
         {
+
+            Stream stream = AccipioHelper.GetXmlFileContent(args[0]);
+            //AccipioHelper.ReadFile(args[0]);
+
             //validating XML with schema file (automatic)
 
             //parsing XML file and retrieving TestActions, parameters etc
@@ -41,7 +37,5 @@ namespace Accipio.Console
         }
 
         public string OutputFile { get; set; }
-
-        private readonly string content;
     }
 }

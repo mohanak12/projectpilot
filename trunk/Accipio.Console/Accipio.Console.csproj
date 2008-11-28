@@ -54,6 +54,7 @@
       <Link>Options.cs</Link>
     </Compile>
     <Compile Include="BusinessActionGenerator.cs" />
+    <Compile Include="AccipioHelper.cs" />
     <Compile Include="ConsoleApp.cs" />
     <Compile Include="IGenerator.cs" />
     <Compile Include="InputArgument.cs" />
