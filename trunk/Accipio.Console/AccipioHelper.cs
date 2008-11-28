@@ -6,11 +6,8 @@ namespace Accipio.Console
     /// <summary>
     /// AccipioHelper class contains helper methods
     /// </summary>
-    class AccipioHelper
+    public static class AccipioHelper
     {
-        private AccipioHelper()
-        { }
-
         /// <summary>
         /// Gets the content from xml file.
         /// </summary>
@@ -33,13 +30,10 @@ namespace Accipio.Console
 
         private static Stream ReadFile(string fileName)
         {
-            Stream content;
-            using (StreamReader streamReader = new StreamReader(fileName))
+            using (Stream stream = File.OpenRead(fileName))
             {
-                content = streamReader.BaseStream;
+               return stream;
             }
-
-            return content;
         }
     }
 }
