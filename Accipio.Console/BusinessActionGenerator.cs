@@ -22,7 +22,7 @@ namespace Accipio.Console
             // read xml file
             using (Stream stream = AccipioHelper.GetXmlFileContent(args[0]))
             {
-                ValidateXmlDocument(stream);
+                AccipioHelper.ValidateXmlDocument(stream, @"..\..\..\Data\Samples\AccipioActions.xsd");
             }
 
 
@@ -44,50 +44,11 @@ namespace Accipio.Console
             //return true;
         }
 
-        /// <summary>
-        /// Validate xml document with predefined xsd schema
-        /// </summary>
-        /// <param name="stream">Xml file to be validated</param>
-        private void ValidateXmlDocument(Stream stream)
-        {
-            // create and set validation settings
-            XmlReaderSettings xmlReaderSettings = new XmlReaderSettings();
-            xmlReaderSettings.ValidationType = ValidationType.Schema;
-            // add schema
-            XmlSchemaSet xmlSchemaSet = new XmlSchemaSet();
-            xmlSchemaSet.Add(null, @"..\..\..\Data\Samples\AccipioActions.xsd");
-            xmlReaderSettings.Schemas = xmlSchemaSet;
-            xmlReaderSettings.ValidationEventHandler += new ValidationEventHandler(this.ValidationCallBack);
-
-            // create reader
-            XmlReader xmlReader = XmlReader.Create(stream, xmlReaderSettings);
-
-            // parse file
-            while (xmlReader.Read())
-            { }
-
-            if (validationStatus.Length > 0)
-            {
-                throw new XmlException(string.Format(CultureInfo.InvariantCulture, 
-                    "Xml file does not match to validation schema. Details: {0}", validationStatus));
-            }
-        }
-
-        /// <summary>
-        /// Save validation error
-        /// </summary>
-        private void ValidationCallBack(object sender, ValidationEventArgs args)
-        {
-            validationStatus.Append(string.Format(CultureInfo.InvariantCulture, "Validation Error: {0} \n", args.Message));
-        } 
-
         public void Process()
         {
             throw new NotImplementedException();
         }
 
         public string OutputFile { get; set; }
-
-        private StringBuilder validationStatus = new StringBuilder(); 
     }
 }
