@@ -82,6 +82,7 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AccipioTests\BusinessActionGeneratorTest.cs" />
+    <Compile Include="AccipioTests\TestSpecGeneratorTests.cs" />
     <Compile Include="BuildScriptsTests\TestBuild.cs" />
     <Compile Include="Extras\CodeAnalysisTests.cs" />
     <Compile Include="Framework\CCNet\ProjectStatsLoadingTests.cs" />
