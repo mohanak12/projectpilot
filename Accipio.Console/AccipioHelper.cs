@@ -18,7 +18,7 @@ namespace Accipio.Console
         /// <param name="args">Input arguments</param>
         public static void CheckForValidInputArguments(string[] args)
         {
-            for (int i = 1; i<args.Length-1;i++ )
+            for (int i = 1; i<args.Length;i++ )
             {
                 FileInfo fileInfo = new FileInfo(args[i]);
                 if (!File.Exists(fileInfo.FullName))
