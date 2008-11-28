@@ -8,10 +8,8 @@ namespace Accipio.Console
     /// </summary>
     public class BusinessActionGenerator : IGenerator
     {
-
         public void Parse(string[] args)
         {
-
             Stream stream = AccipioHelper.GetXmlFileContent(args[0]);
             //AccipioHelper.ReadFile(args[0]);
 

@@ -81,6 +81,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AccipioTests\BusinessActionGeneratorTest.cs" />
     <Compile Include="BuildScriptsTests\TestBuild.cs" />
     <Compile Include="Extras\CodeAnalysisTests.cs" />
     <Compile Include="Framework\CCNet\ProjectStatsLoadingTests.cs" />
@@ -98,6 +99,10 @@
     <Compile Include="WindsorContainerGraphs.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Accipio.Console\Accipio.Console.csproj">
+      <Project>{2A84FEA1-0FC3-4885-B25A-F25C14978C7E}</Project>
+      <Name>Accipio.Console</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Accipio\Accipio.csproj">
       <Project>{97619247-E00B-41B7-AF3F-D24A35F6602A}</Project>
       <Name>Accipio</Name>
