@@ -13,6 +13,22 @@ namespace Accipio.Console
     public static class AccipioHelper
     {
         /// <summary>
+        /// Checks if input arguments are existing files.
+        /// </summary>
+        /// <param name="args">Input arguments</param>
+        public static void CheckForValidInputArguments(string[] args)
+        {
+            for (int i = 1; i<args.Length-1;i++ )
+            {
+                FileInfo fileInfo = new FileInfo(args[i]);
+                if (!File.Exists(fileInfo.FullName))
+                {
+                    throw new FileNotFoundException(fileInfo.FullName);
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets the content from xml file.
         /// </summary>
         /// <param name="fileName">Xml file name to be readed as stream</param>
@@ -75,6 +91,6 @@ namespace Accipio.Console
             validationStatus.Append(string.Format(CultureInfo.InvariantCulture, "Validation Error: {0} \n", args.Message));
         }
 
-        private static StringBuilder validationStatus = new StringBuilder(); 
+        private static StringBuilder validationStatus = new StringBuilder();
     }
 }
