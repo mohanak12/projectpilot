@@ -670,6 +670,29 @@
      </Module>
     </Modules>
    </Target>
+   <Target Name="$(ProjectDir)/Flubu/bin/Release/Flubu.dll">
+    <Modules>
+     <Module Name="flubu.dll">
+      <Namespaces>
+       <Namespace Name="Flubu">
+        <Types>
+         <Type Name="NAntLikeFlubuLogger">
+          <Messages>
+           <Message Id="AntLike" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2008-11-27 20:56:16Z">
+            <Issue Name="TypeShouldBeDiscreteTerm">
+             <Item>AntLike</Item>
+             <Item>'NAntLikeFlubuLogger'</Item>
+             <Item>Antlike</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
    <Target Name="$(ProjectDir)/ProjectPilot.Framework/bin/Release/ProjectPilot.Framework.dll">
     <Modules>
      <Module Name="projectpilot.framework.dll">
@@ -843,6 +866,7 @@
    </Rule>
    <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
     <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
+    <Resolution Name="TypeShouldBeDiscreteTerm">The compound word '{0}' in type name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}'.</Resolution>
    </Rule>
    <Rule TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002">
     <Resolution Name="Default">Change {0} in {1} to use Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; or KeyedCollection&lt;K,V&gt;</Resolution>

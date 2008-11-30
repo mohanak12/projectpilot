@@ -18,7 +18,7 @@ namespace Flubu
         /// </value>
         bool IsWinServer2003 { get; }
 
-        IFlubuLogger Logger { get; }
+        IFlubuLogger Logger { get; set; }
 
         /// <summary>
         /// Gets the .NET version number for .NET 1.0.

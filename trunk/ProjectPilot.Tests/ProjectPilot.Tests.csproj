@@ -108,6 +108,10 @@
       <Project>{97619247-E00B-41B7-AF3F-D24A35F6602A}</Project>
       <Name>Accipio</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Flubu\Flubu.csproj">
+      <Project>{5E8B73D7-B9DC-4DCF-93B6-4BFB5E845575}</Project>
+      <Name>Flubu</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ProjectPilot.BuildScripts\ProjectPilot.BuildScripts.csproj">
       <Project>{37E1DED5-072D-456C-9FC2-465A7784C56F}</Project>
       <Name>ProjectPilot.BuildScripts</Name>
@@ -122,9 +126,20 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="AccipioTests\TestSuite.xsc">
+      <DependentUpon>TestSuite.xsd</DependentUpon>
+    </None>
+    <None Include="AccipioTests\TestSuite.xsd">
+      <SubType>
+      </SubType>
+    </None>
+    <None Include="AccipioTests\TestSuite.xss">
+      <DependentUpon>TestSuite.xsd</DependentUpon>
+    </None>
     <None Include="ProjectPilot.snk" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AccipioTests\TestSuite.xml" />
     <Content Include="SampleConfigurations\ProjectPilot.config.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

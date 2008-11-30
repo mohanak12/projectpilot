@@ -30,6 +30,11 @@ namespace Flubu
             hasFailed = true;
         }
 
+        public IScriptExecutionEnvironment ScriptExecutionEnvironment
+        {
+            get { return scriptExecutionEnvironment; }
+        }
+
         public FlubuRunner AddUserToGroup (string userName, string group)
         {
             AddUserToGroupTask.Execute(scriptExecutionEnvironment,  userName, group);
@@ -135,9 +140,9 @@ namespace Flubu
             return RunTask(task);
         }
 
-        public FlubuRunner DeleteDirectory(string directoryPath)
+        public FlubuRunner DeleteDirectory(string directoryPath, bool failIfNotExists)
         {
-            DeleteDirectoryTask.Execute(scriptExecutionEnvironment, directoryPath);
+            DeleteDirectoryTask.Execute(scriptExecutionEnvironment, directoryPath, failIfNotExists);
             return this;
         }
 
@@ -467,7 +472,7 @@ namespace Flubu
 
         private void Process_OutputDataReceived(object sender, DataReceivedEventArgs e)
         {
-            Log("     [exec] {0}", e.Data);
+            scriptExecutionEnvironment.Logger.LogExternalProgramOutput(e.Data);
         }
 
         private bool hasFailed;

@@ -57,6 +57,15 @@ namespace ProjectPilot.BuildScripts.VSSolutionBrowsing
             throw new ArgumentException ("Project not found.");
         }
 
+        public VSProjectInfo FindProjectByName(string projectName)
+        {
+            foreach (VSProjectInfo projectData in projects)
+                if (projectData.ProjectName == projectName)
+                    return projectData;
+
+            throw new ArgumentException("Project not found.");
+        }
+
         /// <summary>
         /// Performs the specified action on each project of the solution.
         /// </summary>

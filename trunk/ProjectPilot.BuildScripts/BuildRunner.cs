@@ -60,7 +60,7 @@ namespace ProjectPilot.BuildScripts
 
                 projectBinPath = Path.Combine(productRootDir, projectBinPath);
 
-                DeleteDirectory(projectBinPath);
+                DeleteDirectory(projectBinPath, false);
 
                 string projectObjPath = String.Format(
                     CultureInfo.InvariantCulture,
@@ -68,7 +68,7 @@ namespace ProjectPilot.BuildScripts
                     projectInfo.ProjectName,
                     buildConfiguration);
                 projectObjPath = Path.Combine(productRootDir, projectObjPath);
-                DeleteDirectory(projectObjPath);
+                DeleteDirectory(projectObjPath, false);
             });
 
             return this;
@@ -80,6 +80,7 @@ namespace ProjectPilot.BuildScripts
 
             AddProgramArgument(GetFullPath(productId, ".sln"));
             AddProgramArgument("/p:Configuration={0}", buildConfiguration);
+            AddProgramArgument("/p:Platform=Any CPU");
             AddProgramArgument("/consoleloggerparameters:NoSummary");
 
             return (BuildRunner) RunProgram(@"C:\Windows\Microsoft.NET\Framework\v3.5\msbuild.exe");           
@@ -168,7 +169,24 @@ namespace ProjectPilot.BuildScripts
 
         public BuildRunner LoadSolution (string solutionFileName)
         {
-            solution = VSSolution.Load(solutionFileName);
+            solution = VSSolution.Load(GetFullPath(solutionFileName));
+
+            solution.ForEachProject(delegate (VSProjectInfo projectInfo)
+                                        {
+                                            if (projectInfo.ProjectTypeGuid != VSProjectType.CSharpProjectType.ProjectTypeGuid)
+                                                return;
+
+                                            projectExtendedInfos.Add(
+                                                projectInfo.ProjectName, 
+                                                new VSProjectExtendedInfo(projectInfo));
+                                        });
+
+            return this;
+        }
+
+        public BuildRunner MarkAsWebProject(string projectName)
+        {
+            projectExtendedInfos[projectName].IsWebProject = true;
             return this;
         }
 
@@ -176,7 +194,12 @@ namespace ProjectPilot.BuildScripts
         {
             LogTarget("ReadVersionInfo");
 
-            using (Stream stream = File.Open(GetFullPath(productId, ".ProjectVersion.txt"), FileMode.Open))
+            string projectVersionFileName = GetFullPath(productId, ".ProjectVersion.txt");
+
+            if (false == File.Exists(projectVersionFileName))
+                Fail("Project version file ('{0}') is missing.", projectVersionFileName);
+
+            using (Stream stream = File.Open(projectVersionFileName, FileMode.Open))
             {
                 using (StreamReader reader = new StreamReader(stream))
                 {
@@ -188,28 +211,31 @@ namespace ProjectPilot.BuildScripts
             return this;
         }
 
-        public BuildRunner RunTests()
+        public BuildRunner RunTests(string projectName)
         {
             LogTarget("RunTests");
 
             string unitTestResultsDir = GetFullPath(buildDir);
             unitTestResultsDir = Path.Combine(unitTestResultsDir, "UnitTestResults");
 
-            int testRun = 0;
-            //foreach (ProjectToBuild project in projects)
-            //{
-            //    if (false == project.IsTestProject)
-            //        continue;
+            VSProjectInfo projectInfo = solution.FindProjectByName(projectName);
+            string testedAssembly = projectInfo.ProjectDirectoryPath;
+            testedAssembly = Path.Combine(
+                testedAssembly, 
+                String.Format(
+                    CultureInfo.InvariantCulture,
+                    @"bin\{0}\{1}.dll",
+                    buildConfiguration,
+                    projectInfo.ProjectName));
 
-            //    AddProgramArgument(GetFullPath(project.GetProjectAssemblyFileName(buildConfiguration)));
-            //    AddProgramArgument("/report-directory:{0}", unitTestResultsDir);
-            //    AddProgramArgument("/report-name-format:TestResults{0}-results", testRun);
-            //    AddProgramArgument("/report-type:xml");
-            //    AddProgramArgument("/verbosity:verbose");
-            //    RunProgram(GetFullPath(@"lib\Gallio\bin\Gallio.Echo.exe"));
+            AddProgramArgument(testedAssembly);
+            AddProgramArgument("/report-directory:{0}", unitTestResultsDir);
+            AddProgramArgument("/report-name-format:TestResults-{0}", testRuns);
+            AddProgramArgument("/report-type:xml");
+            AddProgramArgument("/verbosity:verbose");
+            RunProgram(GetFullPath(@"lib\Gallio\bin\Gallio.Echo.exe"));
 
-            //    testRun++;
-            //}
+            testRuns++;
 
             return this;
         }
@@ -271,5 +297,6 @@ namespace ProjectPilot.BuildScripts
         private string productRootDir = String.Empty;
         private Dictionary<string, VSProjectExtendedInfo> projectExtendedInfos = new Dictionary<string, VSProjectExtendedInfo>();
         private VSSolution solution;
+        private int testRuns = 0;
     }
 }

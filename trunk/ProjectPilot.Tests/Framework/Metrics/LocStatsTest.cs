@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 using MbUnit.Framework;
 using ProjectPilot.Framework.Metrics;
 
@@ -56,7 +52,7 @@ statement // with comment"
             Assert.AreEqual(17, data.Sloc);
         }
 
-        [Test, Ignore]
+        [Test,Pending("Have to use a static C# file")]
         public void Test3()
         {
             ILocStats locStats = new LocStats();
