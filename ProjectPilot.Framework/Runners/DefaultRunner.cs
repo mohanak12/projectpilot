@@ -96,7 +96,7 @@ namespace ProjectPilot.Framework.Runners
             queuedTasks = new List<ITask>();
 
             // while the stop signal is not set
-            while (false == stopAllThreadsSignal.WaitOne(waitTime))
+            while (false == stopAllThreadsSignal.WaitOne(waitTime, false))
             {
                 // collect pending tasks
                 foreach (Project project in projectRegistry.ListAllProjects())
@@ -117,7 +117,7 @@ namespace ProjectPilot.Framework.Runners
                 while (queuedTasks.Count > 0)
                 {
                     ITask task = queuedTasks[0];
-                    if (stopAllThreadsSignal.WaitOne(TimeSpan.Zero))
+                    if (stopAllThreadsSignal.WaitOne(TimeSpan.Zero, false))
                         break;
 
                     // execute the task

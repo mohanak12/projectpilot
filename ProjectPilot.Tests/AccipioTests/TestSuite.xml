@@ -1,0 +1,24 @@
+<suite id="Banking" runner="OnlineBanking" xmlns="brezveze" >
+    <description>Contains test cases which cover online banking functionality.</description>
+    <case id="MoneyTransfer">
+        <description>Tests money transfers from one account to another using the online banking portal.</description>
+        <tags>R15</tags>
+        <tags>R211</tags>
+        <steps>
+            <GoToPortal/>
+            <SignIn username="john" password="doe"/>
+            <ViewAccount accountId="34528"/>
+            <ClickActionTransfer/>
+            <EnterTransferAmount>644.33</EnterTransferAmount>
+            <EnterDestinationAccountNumber>23677</EnterDestinationAccountNumber>
+            <ConfirmTransfer/>
+            <AssertOperationSuccessful/>
+        </steps>
+    </case>
+
+  <case id="TestCase2">
+    <steps>
+      <AssertOperationSuccessful />
+    </steps>
+  </case>
+</suite>

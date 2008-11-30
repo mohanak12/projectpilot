@@ -461,6 +461,7 @@
           <exec program="C:\Windows\Microsoft.NET\Framework\v3.5\msbuild.exe" verbose="true">
             <arg value="${ProjectId}.sln"/>
             <arg value="/p:Configuration=${ProjectConfig}"/>
+            <arg value="/p:Platform=Any CPU"/>
             <arg value="/consoleloggerparameters:NoSummary"/>
           </exec>
         </if>

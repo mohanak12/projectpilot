@@ -5,6 +5,12 @@ namespace Flubu.Tasks.FileSystem
 {
     public class DeleteDirectoryTask : TaskBase
     {
+        public DeleteDirectoryTask (string directoryPath, bool failIfNotExists)
+        {
+            this.directoryPath = directoryPath;
+            this.failIfNotExists = failIfNotExists;
+        }
+
         /// <summary>
         /// Gets the task description.
         /// </summary>
@@ -20,24 +26,27 @@ namespace Flubu.Tasks.FileSystem
             }
         }
 
-        public DeleteDirectoryTask (string directoryPath)
-        {
-            this.directoryPath = directoryPath;
-        }
-
         public static void Execute(
             IScriptExecutionEnvironment environment,
-            string directoryPath)
+            string directoryPath,
+            bool failIfNotExists)
         {
-            DeleteDirectoryTask task = new DeleteDirectoryTask (directoryPath);
+            DeleteDirectoryTask task = new DeleteDirectoryTask (directoryPath, failIfNotExists);
             task.Execute (environment);
         }
 
         protected override void DoExecute (IScriptExecutionEnvironment environment)
         {
+            if (false == Directory.Exists(directoryPath))
+            {
+                if (false == failIfNotExists)
+                    return;
+            }
+
             Directory.Delete (directoryPath, true);
         }
 
         private string directoryPath;
+        private readonly bool failIfNotExists;
     }
 }

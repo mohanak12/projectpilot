@@ -33,6 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CustomDictionary.xml = CustomDictionary.xml
 		Scripts\NAntCommon.build = Scripts\NAntCommon.build
 		NewBuild.bat = NewBuild.bat
+		PrepareBuildScript.bat = PrepareBuildScript.bat
 		ProjectPilot.build = ProjectPilot.build
 		ProjectPilot.ProjectVersion.txt = ProjectPilot.ProjectVersion.txt
 		Todo.txt = Todo.txt

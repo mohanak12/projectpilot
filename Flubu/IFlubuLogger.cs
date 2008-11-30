@@ -2,11 +2,13 @@ using System;
 
 namespace Flubu
 {
-    public interface IFlubuLogger
+    public interface IFlubuLogger : IDisposable
     {
         void Log(string message);
 
         void Log(string format, params object[] args);
+
+        void LogExternalProgramOutput(string output);
 
         void ReportRunnerFinished(bool success);
 
