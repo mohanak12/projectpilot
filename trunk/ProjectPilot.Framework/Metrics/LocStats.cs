@@ -30,31 +30,40 @@ namespace ProjectPilot.Framework.Metrics
                     string line = reader.ReadLine();
                     if (line == null)
                         break;
-                    else
-                    {
-                        sloc++;
-                    }
 
+                    Regex regex = new Regex(@"\S");
+                    
+                    if (!regex.IsMatch(line))
+                        eloc++;
+                    
+                    sloc++;
+                    
                     int commentIndex = line.IndexOf(@"//", StringComparison.Ordinal);
                     int oldIndexStart = line.IndexOf(@"/*", StringComparison.Ordinal);
                     int oldIndexEnd = line.IndexOf(@"*/", StringComparison.Ordinal);
-                    int narekovajIndex = line.IndexOf("\"", StringComparison.Ordinal);
+                    int quoteIndex1 = line.IndexOf("\"", StringComparison.Ordinal);
+                    int quoteIndex2 = line.LastIndexOf("\"", StringComparison.Ordinal);
 
-                    if (oldIndexStart > -1 && inCommentMode != true)
+                    if (oldIndexStart > -1 && 
+                        inCommentMode != true &&
+                        !(quoteIndex1 < oldIndexStart && 
+                          oldIndexStart < quoteIndex2))
                     {
-                        if (commentIndex != -1 && 
-                            commentIndex < oldIndexStart)
-                            break;
-                        
-                        if (oldIndexEnd > oldIndexStart)
-                            cloc++;
-                        else
-                            inCommentMode = true;
+                        if (commentIndex == -1 ||
+                            commentIndex > oldIndexStart)
+                        {
+                            if (oldIndexEnd > oldIndexStart)
+                                cloc++;
+                            else
+                                inCommentMode = true;
+                        }
                     }
                     
                     if (commentIndex > -1 &&
-                        oldIndexStart < commentIndex &&
-                        inCommentMode == false)
+                        (oldIndexStart == -1 || oldIndexStart > commentIndex) &&
+                        inCommentMode == false &&
+                        !(quoteIndex1 < commentIndex &&
+                          commentIndex < quoteIndex2))
                         cloc++;
 
                     if (oldIndexEnd > -1 &&
@@ -63,8 +72,6 @@ namespace ProjectPilot.Framework.Metrics
                         cloc++;
                         inCommentMode = false;
                     }
-                    
-                    //Regex regex = new Regex(""); 
                 }
             }
 

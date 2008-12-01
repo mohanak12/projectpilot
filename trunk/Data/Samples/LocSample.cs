@@ -1,72 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-    
+﻿/*Sample file for counting the number of comment in .cs files
+ The result should be:
+ Single lines of code (sloc):   56
+ Number of comments (cloc):      8 
+ Empty lines of code: (eloc):    9 */
+
+using System;
+
+// Single comment
 namespace ProjectPilot.Framework.Metrics
 {
-    public class LocStats : ILocStats
+    /*old style multiline comment: //not another comment
+      still same comment /*not another comment
+      finished: */
+    public class LocStatsData
     {
-            LocStatsData returnData = new LocStatsData(sloc, cloc, eloc);
-
-                while (true)
-                {
-                    string line = reader.ReadLine();
-                    if (line == null)
-                        break;
-                    else
-                    {
-                        sloc++;
-                    }
-
-                    /*Regex regex = new Regex("");*/
-                }
-            }
-            return returnData;
-        }
-
-        public LocStatsData CountLocString(string code)
-        {
-
-            if (tmpChar != '\n') sloc++; //The last line doesn't allways end with a \n but still needs to be counted
         
-
-        }
-
-        public LocStatsData CountLocFile(string filePath)
+        /*old style single line comment*/
+        public LocStatsData(int sloc, int cloc, int eloc)
         {
-            int sloc = 0;
-            int cloc = 0;
-            int eloc = 0;
-
-            /*string line = "// this is not a comment!!!";*/
-
-            if (File.Exists(filePath))
-            {
-                //try
-                //{
-                stream = File.Open(filePath, FileMode.Open, FileAccess.Read);
-
-                while ((tmpChar = stream.ReadByte()) != -1)
-                {
-                    // Counting comments
-                    if (tmpChar == '\n')
-                    {
-                        sloc++;
-                        if (notEmpty == false)
-                            eloc++;
-                        else
-                            notEmpty = false;
-                    }
-
-                /*}/* /* /// 
-                catch (Exception e)
-                {////*
-                    //plkjlkjlj
-                }*/
-            }
-
-            //comment
-
-            return returnData;
+            this.sloc = sloc;
+            this.cloc = cloc;
+            this.eloc = eloc;
         }
+
+        /// xml comment
+        public int Cloc
+        {
+            get { return cloc; }
+            set { cloc = value; }
+        }
+
+        //old style comment /*inside single line comment*/ should't be counted
+        public int Eloc
+        {
+            get { return eloc; }
+            set { eloc = value; }
+        }
+
+        //multiple single line comments //only one should be //counted
+        public int Sloc
+        {
+            get { return sloc; }
+            set { sloc = value; }
+        }
+        //empty line with spaces or tabs should also be counted as eloc
+                            
+        string text = "/*not a comment*/";
+        string text = "//not a comment";
+        
+        private int cloc;
+        private int eloc;
+        private int sloc;
+        
     }
 }
