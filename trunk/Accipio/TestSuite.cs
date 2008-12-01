@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using Accipio;
 
 namespace Accipio
 {
-    public class TestSpecs
+    public class TestSuite
     {
         /// <summary>
         /// Gets total count of test cases in collection.

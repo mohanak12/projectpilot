@@ -14,15 +14,15 @@ namespace ProjectPilot.Tests.AccipioTests
         [Test]
         public void GenerateTestSpec()
         {
-            TestSpecs testSpecs = new TestSpecs();
+            TestSuite testSuite = new TestSuite();
 
             TestCase testCase = new TestCase("Open Page");
             testCase.AddTestAction(new TestAction("NavigateTo", new TestActionParameter("url", "http://test.aspx")));
-            testSpecs.AddTestCase(testCase);
+            testSuite.AddTestCase(testCase);
 
             testCase = new TestCase("Select module", "Functional");
             testCase.AddTestAction(new TestAction("SelectModule", new TestActionParameter("name", "Mobi-Info")));
-            testSpecs.AddTestCase(testCase);
+            testSuite.AddTestCase(testCase);
 
             ICodeWriter mockWriter = MockRepository.GenerateMock<ICodeWriter>();
             ITestCodeGenerator generator = new HtmlTestCodeGenerator(mockWriter);
@@ -34,7 +34,7 @@ namespace ProjectPilot.Tests.AccipioTests
             mockWriter.Expect(writer => writer.WriteLine("<i>SelectModule</i>Mobi-Info<br />"));
             mockWriter.Expect(writer => writer.WriteLine("</body>"));
 
-            generator.Generate(testSpecs);
+            generator.Generate(testSuite);
 
             mockWriter.VerifyAllExpectations();
         }

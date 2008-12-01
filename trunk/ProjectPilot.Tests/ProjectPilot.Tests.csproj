@@ -82,7 +82,7 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AccipioTests\BusinessActionGeneratorTest.cs" />
-    <Compile Include="AccipioTests\TestSpecGeneratorTests.cs" />
+    <Compile Include="AccipioTests\TestCodeGeneratorTests.cs" />
     <Compile Include="BuildScriptsTests\TestBuild.cs" />
     <Compile Include="Extras\CodeAnalysisTests.cs" />
     <Compile Include="Framework\CCNet\ProjectStatsLoadingTests.cs" />
@@ -96,7 +96,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AccipioTests\CSharpTestCodeGeneratorTests.cs" />
     <Compile Include="AccipioTests\HtmlTestCodeGeneratorTests.cs" />
-    <Compile Include="AccipioTests\XmlTestSpecsParserTests.cs" />
+    <Compile Include="AccipioTests\XmlTestSuiteParserTests.cs" />
     <Compile Include="WindsorContainerGraphs.cs" />
   </ItemGroup>
   <ItemGroup>

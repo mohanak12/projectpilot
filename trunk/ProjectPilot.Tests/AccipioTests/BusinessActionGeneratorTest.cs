@@ -8,20 +8,12 @@ namespace ProjectPilot.Tests.AccipioTests
     public class BusinessActionGeneratorTest
     {
         [Test]
-        public void GetXmlFileContentTest()
-        {
-            Stream stream = AccipioHelper.GetXmlFileContent(@"..\..\..\Data\Samples\AccipioActions.xml");
-
-            Assert.IsNotNull(stream);
-        }
-
-        [Test]
         public void ParseTest()
         {
             string fileName = @"..\..\..\Data\Samples\AccipioActions.xml";
 
-            IGenerator generator = new BusinessActionGenerator();
-            generator.Parse(new string[] { fileName });
+            IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null);
+            consoleCommand.ParseArguments(new string[] { fileName });
         }
     }
 }
