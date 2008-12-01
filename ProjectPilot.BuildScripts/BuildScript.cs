@@ -16,6 +16,7 @@ namespace ProjectPilot.BuildScripts
                 script.ScriptExecutionEnvironment.Logger = new NAntLikeFlubuLogger(System.Console.Out);
                 script
                     //.SetProductRootDir(@"..\..\..")
+                    .PrepareBuildDirectory()
                     .SetCompanyInfo("HERMES SoftLab d.d.", "Copyright (C) 2008 HERMES SoftLab d.d.", String.Empty)
                     .ReadVersionInfo();
 
