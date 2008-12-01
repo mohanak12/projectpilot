@@ -194,6 +194,19 @@ namespace ProjectPilot.BuildScripts
             return this;
         }
 
+        public BuildRunner PrepareBuildDirectory()
+        {
+            LogTarget("PrepareBuildDirectory");
+
+            string fullBuildDir = GetFullPath(buildDir);
+
+            DeleteDirectory(fullBuildDir, false);
+
+            CreateDirectory(fullBuildDir);
+
+            return this;
+        }
+
         public BuildRunner ReadVersionInfo()
         {
             LogTarget("ReadVersionInfo");
@@ -292,7 +305,7 @@ namespace ProjectPilot.BuildScripts
         private string companyCopyright;
         private string companyName;
         private string companyTrademark;
-        private string cruiseControlDir = String.Empty;
+        private string cruiseControlDir = "CruiseControl";
         private Version fileVersion;
         private IBuildLogger logger = new BuildLogger();
         private readonly string productId;
