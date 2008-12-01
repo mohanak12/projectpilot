@@ -163,7 +163,7 @@ namespace ProjectPilot.BuildScripts
                     RunProgram(GetFullPath(@".\lib\Microsoft FxCop 1.36\FxCop.exe"));
                 }
                 else
-                    File.Copy(fxReportPath, cruiseControlDir);
+                    File.Copy(fxReportPath, ccnetDir);
 
                 Fail("FxCop found violations in the code.");
             }
@@ -306,13 +306,16 @@ namespace ProjectPilot.BuildScripts
                 // if the CCNet emits the listener file path, we will produce the file
                 if (ccnetListenerFile != null)
                 {
+                    string logText = String.Format(
+                        CultureInfo.InvariantCulture,
+                        @"<Item Time='{0}' Data='{1}'/>",
+                        //@"<data><Item Time='{0}' Data='{1}'/></data>",
+                        DateTime.Now.ToString("u"),
+                        targetName);
+
                     File.WriteAllText(
                         ccnetListenerFile, 
-                        String.Format(
-                            CultureInfo.InvariantCulture,
-                            @"<data><Item Time='{0}' Data='{1}'/></data>",
-                            DateTime.Now.ToString("u"),
-                            targetName));
+                        logText);
                 }
             }
         }
@@ -322,7 +325,7 @@ namespace ProjectPilot.BuildScripts
         private string companyCopyright;
         private string companyName;
         private string companyTrademark;
-        private string cruiseControlDir = "CruiseControl";
+        private string ccnetDir = "CruiseControl";
         private Version fileVersion;
         private IBuildLogger logger = new BuildLogger();
         private readonly string productId;
