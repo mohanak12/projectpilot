@@ -58,9 +58,9 @@ statement // with comment"
             ILocStats locStats = new LocStats();
             LocStatsData data = locStats.CountLocFile(@"c:\PilotProject\Data\Samples\LocSample.cs");
 
-            Assert.AreEqual(11, data.Cloc); //TODO: Wrong!!! comment inside string should not be counted
-            Assert.AreEqual(29, data.Eloc);
-            Assert.AreEqual(183, data.Sloc);
+            Assert.AreEqual(8, data.Cloc); //TODO: Wrong!!! comment inside string should not be counted
+            Assert.AreEqual(9, data.Eloc);
+            Assert.AreEqual(56, data.Sloc);
         }
 
         [Test,Ignore]
@@ -73,8 +73,8 @@ statement // with comment"
             LocStatsData data = locStats.CountLocString(stream);
 
             Assert.AreEqual(8, data.Cloc);
-            Assert.AreEqual(0, data.Eloc);
-            Assert.AreEqual(183, data.Sloc);
+            Assert.AreEqual(9, data.Eloc);
+            Assert.AreEqual(56, data.Sloc);
         }
     }
 }

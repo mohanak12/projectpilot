@@ -23,6 +23,7 @@
  <Targets>
   <AssemblyReferenceDirectories>
    <Directory>$(ProjectDir)/ProjectPilot.TestFramework/bin/Release/</Directory>
+   <Directory>$(ProjectDir)/Scripts/</Directory>
   </AssemblyReferenceDirectories>
   <Target Name="$(ProjectDir)/Accipio.Console/bin/Release/Accipio.Console.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/Accipio/bin/Release/Accipio.dll" Analyze="True" AnalyzeAllChildren="True" />
@@ -663,29 +664,6 @@
             </Messages>
            </Member>
           </Members>
-         </Type>
-        </Types>
-       </Namespace>
-      </Namespaces>
-     </Module>
-    </Modules>
-   </Target>
-   <Target Name="$(ProjectDir)/Flubu/bin/Release/Flubu.dll">
-    <Modules>
-     <Module Name="flubu.dll">
-      <Namespaces>
-       <Namespace Name="Flubu">
-        <Types>
-         <Type Name="NAntLikeFlubuLogger">
-          <Messages>
-           <Message Id="AntLike" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2008-11-27 20:56:16Z">
-            <Issue Name="TypeShouldBeDiscreteTerm">
-             <Item>AntLike</Item>
-             <Item>'NAntLikeFlubuLogger'</Item>
-             <Item>Antlike</Item>
-            </Issue>
-           </Message>
-          </Messages>
          </Type>
         </Types>
        </Namespace>
