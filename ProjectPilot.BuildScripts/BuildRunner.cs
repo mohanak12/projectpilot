@@ -306,6 +306,14 @@ namespace ProjectPilot.BuildScripts
                 // if the CCNet emits the listener file path, we will produce the file
                 if (ccnetListenerFile != null)
                 {
+                    // delete the old contents of the listener file on the first use
+                    if (false == isCcnetListenerFileInitialized
+                        && File.Exists(ccnetListenerFile))
+                    {
+                        File.Delete(ccnetListenerFile);
+                        isCcnetListenerFileInitialized = true;
+                    }
+
                     string logText = String.Format(
                         CultureInfo.InvariantCulture,
                         @"<Item Time='{0}' Data='{1}'/>",
@@ -313,9 +321,13 @@ namespace ProjectPilot.BuildScripts
                         DateTime.Now.ToString("u"),
                         targetName);
 
-                    File.WriteAllText(
-                        ccnetListenerFile, 
-                        logText);
+                    using (Stream stream = File.Open(ccnetListenerFile, FileMode.OpenOrCreate))
+                    {
+                        using (StreamWriter writer = new StreamWriter(stream))
+                        {
+                            writer.WriteLine(logText);
+                        }
+                    }
                 }
             }
         }
@@ -327,6 +339,7 @@ namespace ProjectPilot.BuildScripts
         private string companyTrademark;
         private string ccnetDir = "CruiseControl";
         private Version fileVersion;
+        private bool isCcnetListenerFileInitialized;
         private IBuildLogger logger = new BuildLogger();
         private readonly string productId;
         private string productName;

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{97619247-E00B-41B7-AF3F-D24A35F6602A}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -71,10 +71,10 @@
     <Compile Include="ITestSpecsParser.cs" />
     <Compile Include="TestAction.cs" />
     <Compile Include="TestCase.cs" />
-    <Compile Include="TestSpecs.cs" />
+    <Compile Include="TestSuite.cs" />
     <Compile Include="TestSpecsProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="XmlTestSpecsParser.cs" />
+    <Compile Include="XmlTestSuiteParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ProjectPilot.snk" />

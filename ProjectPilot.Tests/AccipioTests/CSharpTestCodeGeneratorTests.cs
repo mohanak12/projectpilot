@@ -15,18 +15,18 @@ namespace ProjectPilot.Tests.AccipioTests
 
             ITestCodeGenerator generator = new CSharpTestCodeGenerator(mockCodeWriter);
 
-            TestSpecs testSpecs = new TestSpecs();
+            TestSuite testSuite = new TestSuite();
 
             TestCase testCase = new TestCase("testcase1");
             testCase.AddTestAction(new TestAction("testaction1"));
             TestAction testAction = new TestAction("testaction2");
             testAction.AddActionParameter(new TestActionParameter("name", "parOne"));
             testCase.AddTestAction(testAction);
-            testSpecs.AddTestCase(testCase);
+            testSuite.AddTestCase(testCase);
 
             testCase = new TestCase("testcase2", "Regression");
             testCase.AddTestAction(new TestAction("testaction1"));
-            testSpecs.AddTestCase(testCase);
+            testSuite.AddTestCase(testCase);
 
             // expectations
             mockCodeWriter.Expect(writer => writer.WriteLine("[Test]"));
@@ -47,7 +47,7 @@ namespace ProjectPilot.Tests.AccipioTests
             mockCodeWriter.Expect(writer => writer.WriteLine("}"));
 
             // execution
-            generator.Generate(testSpecs);
+            generator.Generate(testSuite);
 
             // post-conditions
             mockCodeWriter.VerifyAllExpectations();

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -10,9 +11,9 @@ namespace Accipio
             this.writer = writer;
         }
 
-        public void Generate(TestSpecs testSpecs)
+        public void Generate(TestSuite testSuite)
         {
-            Dictionary<string, TestCase> testCases = testSpecs.TestCases;
+            Dictionary<string, TestCase> testCases = testSuite.TestCases;
             ICollection<string> testCasesKeys = testCases.Keys;
             foreach (string testCaseName in testCasesKeys)
             {
@@ -22,7 +23,7 @@ namespace Accipio
                 WriteLine("{");
                 WriteLine("    Tester tester = new Tester();");
 
-                TestCase testCase = testSpecs.GetTestCase(testCaseName);
+                TestCase testCase = testSuite.GetTestCase(testCaseName);
                 IList<TestAction> testActions = testCase.TestActions;
                 foreach (TestAction testAction in testActions)
                 {

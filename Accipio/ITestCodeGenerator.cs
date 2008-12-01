@@ -1,7 +1,9 @@
+using System;
+
 namespace Accipio
 {
     public interface ITestCodeGenerator
     {
-        void Generate(TestSpecs testSpecs);
+        void Generate(TestSuite testSuite);
     }
 }

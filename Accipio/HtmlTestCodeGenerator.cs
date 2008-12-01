@@ -1,5 +1,6 @@
 #region
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -14,14 +15,14 @@ namespace Accipio
             this.writer = writer;
         }
 
-        public void Generate(TestSpecs testSpecs)
+        public void Generate(TestSuite testSuite)
         {
             WriteLine("<body>");
-            Dictionary<string, TestCase> testCases = testSpecs.TestCases;
+            Dictionary<string, TestCase> testCases = testSuite.TestCases;
             foreach (string testCaseName in testCases.Keys)
             {
                 WriteLine("<h1>{0} <i>{1}</i></h1>", testCaseName, testCases[testCaseName].TestCaseCategory);
-                TestCase testCase = testSpecs.GetTestCase(testCaseName);
+                TestCase testCase = testSuite.GetTestCase(testCaseName);
                 foreach (TestAction testAction in testCase.TestActions)
                 {
                     WriteLine(testAction);

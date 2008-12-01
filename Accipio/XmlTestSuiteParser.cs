@@ -8,14 +8,29 @@ using System.Xml;
 
 namespace Accipio
 {
-    public class XmlTestSpecsParser : ITestSpecsParser
+    public class XmlTestSuiteParser : ITestSpecsParser, IDisposable
     {
-        public XmlTestSpecsParser(Stream xmlSpecs)
+        public XmlTestSuiteParser(Stream xmlSpecs)
         {
-            this.xmlSpecs = xmlSpecs;
+            this.xmlSpecsStream = xmlSpecs;
         }
 
-        public TestSpecs Parse()
+        public XmlTestSuiteParser (string testSuiteFileName)
+        {
+            this.xmlSpecsStream = File.OpenRead(testSuiteFileName);
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or
+        /// resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        public TestSuite Parse()
         {
             XmlReaderSettings xmlReaderSettings =
                 new XmlReaderSettings
@@ -25,9 +40,9 @@ namespace Accipio
                         IgnoreWhitespace = true
                     };
 
-            TestSpecs testSpecs = new TestSpecs();
+            TestSuite testSuite = new TestSuite();
 
-            using (XmlReader xmlReader = XmlReader.Create(xmlSpecs, xmlReaderSettings))
+            using (XmlReader xmlReader = XmlReader.Create(xmlSpecsStream, xmlReaderSettings))
             {
                 xmlReader.Read();
 
@@ -43,10 +58,10 @@ namespace Accipio
 
                         case XmlNodeType.Element:
                             {
-                                if (xmlReader.Name != "TestSpecs")
-                                    throw new XmlException("<TestSpecs> (root) element expected.");
+                                if (xmlReader.Name != "suite")
+                                    throw new XmlException("<suite> (root) element expected.");
 
-                                ReadTestSpec(testSpecs, xmlReader);
+                                ReadTestSuite(testSuite, xmlReader);
 
                                 break;
                             }
@@ -59,10 +74,28 @@ namespace Accipio
                 }
             }
 
-            return testSpecs;
+            return testSuite;
         }
 
-        private static void ReadTestSpec(TestSpecs testSpecs, XmlReader xmlReader)
+        /// <summary>
+        /// Disposes the object.
+        /// </summary>
+        /// <param name="disposing">If <code>false</code>, cleans up native resources. 
+        /// If <code>true</code> cleans up both managed and native resources</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (false == disposed)
+            {
+                if (disposing)
+                {
+                    xmlSpecsStream.Dispose();
+                }
+
+                disposed = true;
+            }
+        }
+
+        private static void ReadTestSuite(TestSuite testSuite, XmlReader xmlReader)
         {
             xmlReader.Read();
 
@@ -70,12 +103,12 @@ namespace Accipio
             {
                 switch (xmlReader.Name)
                 {
-                    case "TestCase":
+                    case "case":
                         {
                             string testCaseName = ReadAttribute(xmlReader, "id");
                             string testCaseCategory = ReadAttribute(xmlReader, "category");
                             TestCase testCase = new TestCase(testCaseName, testCaseCategory);
-                            testSpecs.AddTestCase(testCase);
+                            testSuite.AddTestCase(testCase);
                             ReadAction(testCase, xmlReader);
                             break;
                         }
@@ -131,6 +164,7 @@ namespace Accipio
             return xmlReader.GetAttribute(attributeName);
         }
 
-        private readonly Stream xmlSpecs;
+        private bool disposed;
+        private readonly Stream xmlSpecsStream;
     }
 }

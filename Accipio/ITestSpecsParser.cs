@@ -2,6 +2,6 @@
 {
     public interface ITestSpecsParser
     {
-        TestSpecs Parse();
+        TestSuite Parse();
     }
 }
