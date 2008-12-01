@@ -298,6 +298,23 @@ namespace ProjectPilot.BuildScripts
             Log(String.Empty);
             Log("{0}:", targetName);
             Log(String.Empty);
+
+            if (IsRunningUnderCruiseControl)
+            {
+                string ccnetListenerFile = System.Environment.GetEnvironmentVariable("CCNetListenerFile");
+
+                // if the CCNet emits the listener file path, we will produce the file
+                if (ccnetListenerFile != null)
+                {
+                    File.WriteAllText(
+                        ccnetListenerFile, 
+                        String.Format(
+                            CultureInfo.InvariantCulture,
+                            @"<data><Item Time='{0}' Data='{1}'/></data>",
+                            DateTime.Now.ToString("u"),
+                            targetName));
+                }
+            }
         }
 
         private string buildConfiguration = "Release";
