@@ -17,7 +17,11 @@ namespace ProjectPilot.BuildScripts
 
         public bool IsRunningUnderCruiseControl
         {
-            get { return isRunningUnderCruiseControl; }
+            get
+            {
+                string ccnetBuildCondition = System.Environment.GetEnvironmentVariable("CCNetBuildCondition");
+                return ccnetBuildCondition != null;
+            }
         }
 
         public BuildRunner AssertFileExists(string fileDescription, string fileName)
@@ -152,7 +156,7 @@ namespace ProjectPilot.BuildScripts
             // check if the report file was generated
             if (File.Exists(fxReportPath))
             {
-                if (false == isRunningUnderCruiseControl)
+                if (false == IsRunningUnderCruiseControl)
                 {
                     // run FxCop GUI
                     AddProgramArgument(fxProjectPath);
@@ -290,7 +294,6 @@ namespace ProjectPilot.BuildScripts
         private string companyTrademark;
         private string cruiseControlDir = String.Empty;
         private Version fileVersion;
-        private bool isRunningUnderCruiseControl;
         private IBuildLogger logger = new BuildLogger();
         private readonly string productId;
         private string productName;
