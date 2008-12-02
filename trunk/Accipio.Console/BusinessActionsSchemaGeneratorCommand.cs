@@ -62,8 +62,8 @@ namespace Accipio.Console
             // path to xsd schema file
             string xsdSchemaFilePath = @"businessActionValidationSchema.xsd";
 
-            // generating XSD schema file which contains business actions
-            XmlDocument xmlSchemaDocument = GenerateXsdSchema(businessActionData);
+            // generating XSD schema file with business actions validation parameters
+            XmlDocument xmlSchemaDocument = GenerateXsdSchema();
 
             // write xsd schema to file
             using (Stream xsdSchemaDocument = File.OpenWrite(xsdSchemaFilePath))
@@ -78,8 +78,7 @@ namespace Accipio.Console
         /// <param name="xmlDocument">Represents xml document</param>
         /// <param name="xmlNode">Parent node</param>
         /// <param name="nameSpace">Namespace of xsd document</param>
-        /// <param name="businessActionData">Data to be inserted into xsd template document</param>
-        private void CreateChildNodes(XmlDocument xmlDocument, XmlNode xmlNode, string nameSpace, BusinessActionData businessActionData)
+        private void CreateChildNodes(XmlDocument xmlDocument, XmlNode xmlNode, string nameSpace)
         {
             foreach (BusinessActionEntry entry in businessActionData.Actions)
             {
@@ -113,9 +112,8 @@ namespace Accipio.Console
         /// <summary>
         /// Generate xsd file
         /// </summary>
-        /// <param name="businessActionData">Data to be inserted into xsd template document</param>
         /// <returns>Xsd schema</returns>
-        private XmlDocument GenerateXsdSchema(BusinessActionData businessActionData)
+        private XmlDocument GenerateXsdSchema()
         {
             string xsdTemplate = @"..\..\..\Data\Samples\TestSuiteTemplate.xsd";
 
@@ -136,7 +134,7 @@ namespace Accipio.Console
                 nsman.AddNamespace("xs", nameSpace);
 
                 XmlNode xmlNode = xmlElement.SelectSingleNode("//xs:element[@name='steps']/xs:complexType/xs:sequence", nsman);
-                CreateChildNodes(xmlDocument, xmlNode, nameSpace, businessActionData);
+                CreateChildNodes(xmlDocument, xmlNode, nameSpace);
 
                 return xmlDocument;
             }
