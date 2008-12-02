@@ -60,7 +60,14 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="BusinessActionEntry.cs" />
+    <Compile Include="BusinessFunctionEntry.cs" />
+    <Compile Include="BusinessActionParameters.cs" />
+    <Compile Include="BusinessActionData.cs" />
+    <Compile Include="BusinessActionsXmlParser.cs" />
     <Compile Include="BrowserType.cs" />
+    <Compile Include="BusinessFunctionSteps.cs" />
+    <Compile Include="IBusinessActionXmlParser.cs" />
     <Compile Include="SeleniumTesterBase.cs" />
     <Compile Include="TestActionParameter.cs" />
     <Compile Include="CSharpTestCodeGenerator.cs" />
