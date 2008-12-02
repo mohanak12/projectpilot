@@ -18,6 +18,15 @@ namespace Accipio.Console
             this.nextCommandInChain = nextCommandInChain;
         }
 
+        /// <summary>
+        /// Returns the first <see cref="IConsoleCommand"/> in the command chain
+        /// which can understand the provided command-line arguments.
+        /// </summary>
+        /// <param name="args">The command-line arguments.</param>
+        /// <returns>
+        /// The first <see cref="IConsoleCommand"/> which can understand the provided command-line arguments
+        /// or <c>null</c> if none of the console commands can understand them.
+        /// </returns>
         public IConsoleCommand ParseArguments(string[] args)
         {
             if (args.Length < 1
@@ -48,6 +57,9 @@ namespace Accipio.Console
             return this;
         }
 
+        /// <summary>
+        /// Processes the command.
+        /// </summary>
         public void ProcessCommand()
         {
             foreach (string testSuiteFileName in testSuitesFileNames)
