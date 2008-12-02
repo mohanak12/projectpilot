@@ -55,7 +55,7 @@ namespace ProjectPilot.Tests.Framework.CCNet
             }
         }
 
-        [Test,Ignore]
+        [Test]
         public void GraphsTest()
         {
             List<ProjectStatsGraph> graphs = new List<ProjectStatsGraph>();
