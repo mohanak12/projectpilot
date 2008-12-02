@@ -15,7 +15,7 @@ namespace ProjectPilot.Tests.AccipioTests
 
             IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null);
             consoleCommand.ParseArguments(new string[] { "baschema", fileName });
-            //consoleCommand.ProcessCommand();
+            consoleCommand.ProcessCommand();
         }
 
         [Test]
