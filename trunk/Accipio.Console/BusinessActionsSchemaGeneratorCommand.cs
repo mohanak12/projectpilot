@@ -48,21 +48,9 @@ namespace Accipio.Console
             // validating XML with schema file (automatic)
             helper.ValidateXmlDocument(businessActionsXmlFileName, @"..\..\..\Data\Samples\AccipioActions.xsd");
 
-            // parsing XML file and retrieving TestActions, parameters etc
-            BusinessActionData businessActionData = ParseXmlToObject(businessActionsXmlFileName);
+            // parsing XML file
+            ParseXmlToObject(businessActionsXmlFileName);
 
-            // path to xsd schema file
-            string xsdSchemaFilePath = @"businessActionValidationSchema.xsd";
-
-            // generating XSD file which contains these actions
-            XmlDocument xmlSchemaDocument = GenerateXsdSchema(businessActionData);
-
-            // write xsd schema to file
-            using (Stream xsdSchemaDocument = File.OpenWrite(xsdSchemaFilePath))
-            {
-                xmlSchemaDocument.Save(xsdSchemaDocument);
-            }
-            
             return this;
         }
 
@@ -71,7 +59,17 @@ namespace Accipio.Console
         /// </summary>
         public void ProcessCommand()
         {
-            throw new NotImplementedException();
+            // path to xsd schema file
+            string xsdSchemaFilePath = @"businessActionValidationSchema.xsd";
+
+            // generating XSD schema file which contains business actions
+            XmlDocument xmlSchemaDocument = GenerateXsdSchema(businessActionData);
+
+            // write xsd schema to file
+            using (Stream xsdSchemaDocument = File.OpenWrite(xsdSchemaFilePath))
+            {
+                xmlSchemaDocument.Save(xsdSchemaDocument);
+            }
         }
 
         /// <summary>
@@ -182,19 +180,16 @@ namespace Accipio.Console
         /// Parse business action xml document to object
         /// </summary>
         /// <param name="businessActionsXmlFileName">file name of business action</param>
-        /// <returns>Bussines actions</returns>
-        private BusinessActionData ParseXmlToObject(string businessActionsXmlFileName)
+        private void ParseXmlToObject(string businessActionsXmlFileName)
         {
-            BusinessActionData businessActionData;
             using (Stream xmlStream = File.OpenRead(businessActionsXmlFileName))
             {
                 IBusinessActionXmlParser businessActionXmlParser = new BusinessActionsXmlParser(xmlStream);
                 businessActionData = businessActionXmlParser.Parse();
             }
-
-            return businessActionData;
         }
 
+        private BusinessActionData businessActionData;
         private readonly IConsoleCommand nextCommandInChain;
     }
 }
