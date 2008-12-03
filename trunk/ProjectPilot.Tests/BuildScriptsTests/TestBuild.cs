@@ -45,7 +45,7 @@ namespace ProjectPilot.Tests.BuildScriptsTests
                 script
                     .LoadSolution("ProjectPilot.sln");
                 script
-                    .MarkAsWebProject("ProjectPilot.Portal");
+                    .RegisterAsWebProject("ProjectPilot.Portal", "http://localhost/ProjectPortal");
 
                 script
                     .CleanOutput();

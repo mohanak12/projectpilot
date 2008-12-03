@@ -29,6 +29,7 @@ namespace Flubu
 
         public void ReportRunnerFinished(bool success)
         {
+            Log(String.Empty);
             Log(success ? "BUILD SUCCESS" : "BUILD FAILED");
         }
 

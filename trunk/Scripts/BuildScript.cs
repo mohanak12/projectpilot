@@ -21,20 +21,16 @@ namespace ProjectPilot.BuildScripts
                     .ReadVersionInfo();
 
                 script
-                    .LoadSolution("ProjectPilot.sln");
-                script
-                    .MarkAsWebProject("ProjectPilot.Portal");
+                    .LoadSolution("ProjectPilot.sln")
+                    .RegisterAsWebProject("ProjectPilot.Portal", "http://localhost/ProjectPilot");
 
                 script
-                    .CleanOutput();
-                script
-                    .GenerateCommonAssemblyInfo();
-                script
-                    .CompileSolution();
-                script
-                    .FxCop();
-                script
+                    .CleanOutput()
+                    .GenerateCommonAssemblyInfo()
+                    .CompileSolution()
+                    .FxCop()
                     .RunTests("ProjectPilot.Tests");
+
                 script
                     .Complete();
             }

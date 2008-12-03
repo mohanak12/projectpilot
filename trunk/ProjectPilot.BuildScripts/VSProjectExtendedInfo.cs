@@ -1,3 +1,4 @@
+using System;
 using ProjectPilot.BuildScripts.VSSolutionBrowsing;
 
 namespace ProjectPilot.BuildScripts
@@ -15,12 +16,19 @@ namespace ProjectPilot.BuildScripts
             set { isWebProject = value; }
         }
 
+        public Uri WebApplicationUrl
+        {
+            get { return webApplicationUrl; }
+            set { webApplicationUrl = value; }
+        }
+
         public VSProjectInfo ProjectInfo
         {
             get { return projectInfo; }
         }
 
-        private readonly VSProjectInfo projectInfo;
         private bool isWebProject;
+        private readonly VSProjectInfo projectInfo;
+        private Uri webApplicationUrl;
     }
 }
