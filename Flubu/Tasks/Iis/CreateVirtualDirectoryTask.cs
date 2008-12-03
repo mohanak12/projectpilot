@@ -114,12 +114,12 @@ namespace Flubu.Tasks.Iis
 
                 try
                 {
-                    // first check if the user already exists
+                    // first check if the virtual directory already exists
                     try
                     {
                         virtualDirEntry = parent.Children.Find (virtualDirectoryName, "IIsWebVirtualDir");
 
-                        // user already exists
+                        // virtual directory already exists
                         if (mode == CreateVirtualDirectoryMode.DoNothingIfExists)
                         {
                             environment.Logger.Log(
@@ -137,11 +137,11 @@ namespace Flubu.Tasks.Iis
                                     "Virtual directory '{0}' already exists.", 
                                     virtualDirectoryName));
                         }
-                        // otherwise we should update the existing application pool
+                        // otherwise we should update the existing virtual directory
                     }
                     catch (DirectoryNotFoundException)
                     {
-                        // application pool does not exist, go on and add it
+                        // virtual directory does not exist, go on and add it
                         virtualDirEntry = parent.Children.Add (virtualDirectoryName, "IIsWebVirtualDir");
                     }
 

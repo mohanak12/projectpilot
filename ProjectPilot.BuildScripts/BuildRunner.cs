@@ -24,6 +24,15 @@ namespace ProjectPilot.BuildScripts
             }
         }
 
+        /// <summary>
+        /// Gets the <see cref="VSSolution"/> object for the loaded VisualStudio solution.
+        /// </summary>
+        /// <value>The <see cref="VSSolution"/> object.</value>
+        public VSSolution Solution
+        {
+            get { return solution; }
+        }
+
         public BuildRunner AssertFileExists(string fileDescription, string fileName)
         {
             if (false == File.Exists(fileName))
@@ -82,12 +91,59 @@ namespace ProjectPilot.BuildScripts
         {
             LogTarget("CompileSolution");
 
-            AddProgramArgument(GetFullPath(productId, ".sln"));
+            AddProgramArgument(MakePathFromRootDir(productId) + ".sln");
             AddProgramArgument("/p:Configuration={0}", buildConfiguration);
             AddProgramArgument("/p:Platform=Any CPU");
             AddProgramArgument("/consoleloggerparameters:NoSummary");
 
             return (BuildRunner) RunProgram(@"C:\Windows\Microsoft.NET\Framework\v3.5\msbuild.exe");           
+        }
+
+        /// <summary>
+        /// Formats the string (using <see cref="CultureInfo.InvariantCulture"/>).
+        /// </summary>
+        /// <param name="format">The format string.</param>
+        /// <param name="args">The arguments.</param>
+        /// <returns>A formatted string.</returns>
+        public static string FormatString(string format, params object[] args)
+        {
+            return String.Format(CultureInfo.InvariantCulture, format, args);
+        }
+
+        public BuildRunner FxCop()
+        {
+            LogTarget("FxCop");
+
+            string fxProjectPath = MakePathFromRootDir(productId) + ".FxCop";
+
+            AssertFileExists("FxCop project file", fxProjectPath);
+
+            string fxReportPath = Path.Combine(productRootDir, buildDir);
+            fxReportPath = Path.Combine(fxReportPath, productId);
+            fxReportPath = String.Format(CultureInfo.InvariantCulture, "{0}.FxCopReport.xml", fxReportPath);
+
+            AddProgramArgument(@"/project:{0}", fxProjectPath);
+            AddProgramArgument(@"/out:{0}", fxReportPath);
+            AddProgramArgument(@"/dictionary:CustomDictionary.xml");
+            AddProgramArgument(@"/ignoregeneratedcode");
+            RunProgram(MakePathFromRootDir(@".\lib\Microsoft FxCop 1.36\FxCopCmd.exe"));
+
+            // check if the report file was generated
+            if (File.Exists(fxReportPath))
+            {
+                if (false == IsRunningUnderCruiseControl)
+                {
+                    // run FxCop GUI
+                    AddProgramArgument(fxProjectPath);
+                    RunProgram(MakePathFromRootDir(@".\lib\Microsoft FxCop 1.36\FxCop.exe"));
+                }
+                else
+                    File.Copy(fxReportPath, ccnetDir);
+
+                Fail("FxCop found violations in the code.");
+            }
+
+            return this;
         }
 
         public BuildRunner GenerateCommonAssemblyInfo()
@@ -135,45 +191,9 @@ namespace ProjectPilot.BuildScripts
             return this;
         }
 
-        public BuildRunner FxCop()
-        {
-            LogTarget("FxCop");
-
-            string fxProjectPath = GetFullPath(productId, ".FxCop");
-
-            AssertFileExists("FxCop project file", fxProjectPath);
-
-            string fxReportPath = Path.Combine(productRootDir, buildDir);
-            fxReportPath = Path.Combine(fxReportPath, productId);
-            fxReportPath = String.Format(CultureInfo.InvariantCulture, "{0}.FxCopReport.xml", fxReportPath);
-
-            AddProgramArgument(@"/project:{0}", fxProjectPath);
-            AddProgramArgument(@"/out:{0}", fxReportPath);
-            AddProgramArgument(@"/dictionary:CustomDictionary.xml");
-            AddProgramArgument(@"/ignoregeneratedcode");
-            RunProgram(GetFullPath(@".\lib\Microsoft FxCop 1.36\FxCopCmd.exe"));
-
-            // check if the report file was generated
-            if (File.Exists(fxReportPath))
-            {
-                if (false == IsRunningUnderCruiseControl)
-                {
-                    // run FxCop GUI
-                    AddProgramArgument(fxProjectPath);
-                    RunProgram(GetFullPath(@".\lib\Microsoft FxCop 1.36\FxCop.exe"));
-                }
-                else
-                    File.Copy(fxReportPath, ccnetDir);
-
-                Fail("FxCop found violations in the code.");
-            }
-
-            return this;
-        }
-
         public BuildRunner LoadSolution (string solutionFileName)
         {
-            solution = VSSolution.Load(GetFullPath(solutionFileName));
+            solution = VSSolution.Load(MakePathFromRootDir(solutionFileName));
 
             solution.ForEachProject(delegate (VSProjectInfo projectInfo)
                                         {
@@ -188,17 +208,11 @@ namespace ProjectPilot.BuildScripts
             return this;
         }
 
-        public BuildRunner MarkAsWebProject(string projectName)
-        {
-            projectExtendedInfos[projectName].IsWebProject = true;
-            return this;
-        }
-
         public BuildRunner PrepareBuildDirectory()
         {
             LogTarget("PrepareBuildDirectory");
 
-            string fullBuildDir = GetFullPath(buildDir);
+            string fullBuildDir = MakePathFromRootDir(buildDir);
 
             DeleteDirectory(fullBuildDir, false);
 
@@ -211,7 +225,7 @@ namespace ProjectPilot.BuildScripts
         {
             LogTarget("ReadVersionInfo");
 
-            string projectVersionFileName = GetFullPath(productId, ".ProjectVersion.txt");
+            string projectVersionFileName = MakePathFromRootDir(productId) + ".ProjectVersion.txt";
 
             if (false == File.Exists(projectVersionFileName))
                 Fail("Project version file ('{0}') is missing.", projectVersionFileName);
@@ -228,11 +242,25 @@ namespace ProjectPilot.BuildScripts
             return this;
         }
 
+        /// <summary>
+        /// Registers the specified project as a web project.
+        /// </summary>
+        /// <param name="projectName">Name of the project.</param>
+        /// <param name="webApplicationUrl">The project's Web application URL.</param>
+        /// <returns>The same instance of this <see cref="BuildRunner"/>.</returns>
+        public BuildRunner RegisterAsWebProject(string projectName, string webApplicationUrl)
+        {
+            VSProjectExtendedInfo projectExtendedInfo = projectExtendedInfos[projectName];
+            projectExtendedInfo.IsWebProject = true;
+            projectExtendedInfo.WebApplicationUrl = new Uri(webApplicationUrl);
+            return this;
+        }
+
         public BuildRunner RunTests(string projectName)
         {
             LogTarget("RunTests");
 
-            string unitTestResultsDir = GetFullPath(buildDir);
+            string unitTestResultsDir = MakePathFromRootDir(buildDir);
             unitTestResultsDir = Path.Combine(unitTestResultsDir, "UnitTestResults");
 
             VSProjectInfo projectInfo = solution.FindProjectByName(projectName);
@@ -250,7 +278,7 @@ namespace ProjectPilot.BuildScripts
             AddProgramArgument("/report-name-format:TestResults-{0}", testRuns);
             AddProgramArgument("/report-type:xml");
             AddProgramArgument("/verbosity:verbose");
-            RunProgram(GetFullPath(@"lib\Gallio\bin\Gallio.Echo.exe"));
+            RunProgram(MakePathFromRootDir(@"lib\Gallio\bin\Gallio.Echo.exe"));
 
             testRuns++;
 
@@ -281,19 +309,12 @@ namespace ProjectPilot.BuildScripts
             return this;
         }
 
-        private string GetFullPath(string fileName)
+        protected IDictionary<string, VSProjectExtendedInfo> ProjectExtendedInfos
         {
-            return Path.Combine(productRootDir, fileName);
+            get { return projectExtendedInfos; }
         }
 
-        private string GetFullPath(string fileName, string extension)
-        {
-            return Path.Combine(
-                productRootDir, 
-                String.Format(CultureInfo.InvariantCulture, "{0}{1}", fileName, extension));
-        }
-
-        private void LogTarget (string targetName)
+        protected void LogTarget (string targetName)
         {
             Log(String.Empty);
             Log("{0}:", targetName);
@@ -330,6 +351,11 @@ namespace ProjectPilot.BuildScripts
                     }
                 }
             }
+        }
+
+        protected string MakePathFromRootDir(string fileName)
+        {
+            return Path.Combine(productRootDir, fileName);
         }
 
         private string buildConfiguration = "Release";

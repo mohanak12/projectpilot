@@ -30,6 +30,15 @@ namespace Flubu
             hasFailed = true;
         }
 
+        /// <summary>
+        /// Gets the exit code of the last external program that was run by the runner.
+        /// </summary>
+        /// <value>The exit code of the last external program.</value>
+        public int LastExitCode
+        {
+            get { return lastExitCode; }
+        }
+
         public IScriptExecutionEnvironment ScriptExecutionEnvironment
         {
             get { return scriptExecutionEnvironment; }
@@ -211,7 +220,7 @@ namespace Flubu
                 format,
                 arguments);
 
-            Log(message);
+            Log("ERROR: {0}", message);
 
             throw new RunnerFailedException(message);
         }
@@ -312,6 +321,11 @@ namespace Flubu
 
         public FlubuRunner RunProgram(string programExePath)
         {
+            return RunProgram(programExePath, false);
+        }
+
+        public FlubuRunner RunProgram(string programExePath, bool ignoreExitCodes)
+        {
             using (Process process = new Process())
             {
                 StringBuilder argumentLineBuilder = new StringBuilder();
@@ -337,9 +351,11 @@ namespace Flubu
 
                 process.WaitForExit();
 
-                //Log("Exit code: {0}", process.ExitCode);
+                Log("Exit code: {0}", process.ExitCode);
 
-                if (process.ExitCode != 0)
+                lastExitCode = process.ExitCode;
+
+                if (false == ignoreExitCodes && process.ExitCode != 0)
                     Fail("Program '{0}' returned exit code {1}.", programExePath, process.ExitCode);
             }
 
@@ -476,6 +492,7 @@ namespace Flubu
         }
 
         private bool hasFailed;
+        private int lastExitCode;
         private List<string> programArgs = new List<string>();
         private IScriptExecutionEnvironment scriptExecutionEnvironment;
     }
