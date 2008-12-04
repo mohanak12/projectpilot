@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Flubu;
 
@@ -13,7 +14,9 @@ namespace ProjectPilot.BuildScripts
         {
             using (BuildRunner script = new BuildRunner("ProjectPilot"))
             {
-                script.ScriptExecutionEnvironment.Logger = new NAntLikeFlubuLogger(System.Console.Out);
+                NAntLikeFlubuLogger logger = new NAntLikeFlubuLogger();
+
+                script.ScriptExecutionEnvironment.Logger = new NAntLikeFlubuLogger();
                 script
                     //.SetProductRootDir(@"..\..\..")
                     .PrepareBuildDirectory()
