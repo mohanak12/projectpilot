@@ -2,6 +2,9 @@
 
 namespace Accipio
 {
+    /// <summary>
+    /// Saves business action id and action parameters
+    /// </summary>
     public class BusinessActionEntry
     {
         public BusinessActionEntry(string actionId)
