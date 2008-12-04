@@ -3,7 +3,7 @@ using System;
 namespace ProjectPilot.Framework.CCNet
 {
     /// <summary>
-    /// Class ProjectStatsGraphParameter contains all parameters for one graph.
+    /// Saves ccnet statistics parameter name, parameter type and color
     /// </summary>
     public class ProjectStatsGraphParameter
     {
@@ -14,16 +14,25 @@ namespace ProjectPilot.Framework.CCNet
             this.parameterType = parameterType;
         }
         
+        /// <summary>
+        /// Gets color of graph
+        /// </summary>
         public string SeriesColor
         {
             get { return seriesColor; }
         }
 
+        /// <summary>
+        /// Gets parameter name
+        /// </summary>
         public string ParameterName
         {
             get { return parameterName; }
         }
 
+        /// <summary>
+        /// Gets parameter type
+        /// </summary>
         public Type ParameterType
         {
             get { return parameterType; }

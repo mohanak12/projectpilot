@@ -1,6 +1,9 @@
 ﻿
 namespace Accipio
 {
+    /// <summary>
+    /// Saves business action parameter name and parameter type
+    /// </summary>
     public class BusinessActionParameters
     {
         public BusinessActionParameters(string parameterName, string parameterType)
@@ -9,11 +12,17 @@ namespace Accipio
             this.parameterType = parameterType;
         }
 
+        /// <summary>
+        /// Gets parameter name
+        /// </summary>
         public string ParameterName
         {
             get { return parameterName; }
         }
 
+        /// <summary>
+        /// Gets parameter type
+        /// </summary>
         public string ParameterType
         {
             get { return parameterType; }

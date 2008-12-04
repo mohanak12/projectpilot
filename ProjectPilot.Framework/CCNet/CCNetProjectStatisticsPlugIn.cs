@@ -1,16 +1,21 @@
-﻿
-using System;
-using System.Diagnostics.CodeAnalysis;
+﻿using System;
 using System.IO;
 using System.Xml;
 
 namespace ProjectPilot.Framework.CCNet
 {
-    [SuppressMessage("Microsoft.Design", "CA1053:StaticHolderTypesShouldNotHaveConstructors")]
+    /// <summary>
+    /// Implementation of <see cref="ICCNetProjectStatisticsPlugIn" /> interface to
+    /// fetch ccnet statistics data and parse data to object <see cref="ProjectStatsData"/>.
+    /// </summary>
     public class CCNetProjectStatisticsPlugIn : ICCNetProjectStatisticsPlugIn
     {
         #region Public method
 
+        /// <summary>
+        /// Fetch ccnet statistics from server where cruise control is running
+        /// </summary>
+        /// <returns>Returns object <see cref="ProjectStatsData"/> of ccnet statistics data</returns>
         public ProjectStatsData FetchStatistics()
         {
             ProjectStatsData data;

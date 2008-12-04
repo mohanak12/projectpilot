@@ -6,7 +6,7 @@ namespace Accipio
 {
     /// <summary>
     /// Implementation of <see cref="IBusinessActionXmlParser"/> interface which parse xml file 
-    /// of business actions to object
+    /// of business actions to object <see cref="BusinessActionData" />
     /// </summary>
     public class BusinessActionsXmlParser : IBusinessActionXmlParser
     {
@@ -16,7 +16,7 @@ namespace Accipio
         }
 
         /// <summary>
-        /// Parse xml to object
+        /// Parse xml to object <see cref="BusinessActionData" />
         /// </summary>
         /// <returns>
         /// <see cref="BusinessActionData" />

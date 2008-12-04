@@ -10,6 +10,10 @@ using ZedGraph;
 
 namespace ProjectPilot.Framework.CCNet
 {
+    /// <summary>
+    /// Implementation of <see cref="IProjectModule"/>, <see cref="IViewable"/> and 
+    /// <see cref="ITask"/> interfaces for generating build statistics graphs 
+    /// </summary>
     public class CCNetProjectStatisticsModule : IProjectModule, IViewable, ITask
     {
         public CCNetProjectStatisticsModule(
@@ -26,33 +30,53 @@ namespace ProjectPilot.Framework.CCNet
             this.showBuildProjectHistory = showBuildProjectHistory;
         }
 
+        /// <summary>
+        /// Gets id of module
+        /// </summary>
         public string ModuleId
         {
             get { return "CCNetProjectStatistics";  }
         }
 
+        /// <summary>
+        /// Gets name of module
+        /// </summary>
         public string ModuleName
         {
             get { return "CCNet Project Statistics"; }
         }
 
+        /// <summary>
+        /// Gets or sets id of project
+        /// </summary>
         public string ProjectId
         {
             get { return projectId; }
             set { projectId = value; }
         }
 
+        /// <summary>
+        /// Gets or sets trigger for task
+        /// </summary>
         public ITrigger Trigger
         {
             get { return trigger; }
             set { trigger = value; }
         }
 
+        /// <summary>
+        /// Check whether file was created
+        /// </summary>
+        /// <returns>Returns file content as string</returns>
         public string FetchHtmlReport()
         {
             return fileManager.FetchProjectFile(projectId, ModuleId, "CCNetReportStatistics.html");
         }
 
+        /// <summary>
+        /// Execute tasks for drawing chart
+        /// </summary>
+        /// <param name="stopSignal">stop signal</param>
         public void ExecuteTask(WaitHandle stopSignal)
         {
             // get statistic data
@@ -64,14 +88,14 @@ namespace ProjectPilot.Framework.CCNet
             List<string> xLabels = new List<string>();
             IList<string> chartImageFileNames = new List<string>();
 
-            // prepare build statistic data and create graph
+            // prepare necessary build statistic data and create graph
             foreach (ProjectStatsGraph graph in graphs)
             {
                 // clear list of data
                 graphData.ClearListOfData();
-                // prepare list of data for graph
+                // prepare list of data to be shown on graph
                 PrepareDataMatrix(data, graph, graphData, xLabels);
-                // draw chart
+                // draw graph
                 chartImageFileNames.Add(DrawChart(graph, graphData, xLabels));
             }
             
@@ -127,13 +151,6 @@ namespace ProjectPilot.Framework.CCNet
             }
         }
 
-        /// <summary>
-        /// Copy necessary build data to data matrix.
-        /// </summary>
-        /// <param name="data">The CCNet project statistics data.</param>
-        /// <param name="graph">The CCNet project statistics graph.</param>
-        /// <param name="graphData">The graph data.</param>
-        /// <param name="xLabels">Labels that will be displayed on X-Axis</param>
         private void PrepareDataMatrix(
             ProjectStatsData data, 
             ProjectStatsGraph graph, 

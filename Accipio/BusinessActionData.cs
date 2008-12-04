@@ -2,6 +2,9 @@
 
 namespace Accipio
 {
+    /// <summary>
+    /// Contains list of business actions and business functions
+    /// </summary>
     public class BusinessActionData
     {
         /// <summary>

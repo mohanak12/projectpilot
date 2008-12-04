@@ -4,6 +4,9 @@ using System.Globalization;
 
 namespace ProjectPilot.Framework.CCNet
 {
+    /// <summary>
+    /// Saves statistic data for each build
+    /// </summary>
     public class ProjectStatsBuildEntry
     {
         public ProjectStatsBuildEntry(int buildId)
@@ -11,13 +14,22 @@ namespace ProjectPilot.Framework.CCNet
             this.buildId = buildId;
         }
 
+        /// <summary>
+        /// Gets id of build
+        /// </summary>
         public int BuildId
         {
             get { return buildId; }
         }
 
+        /// <summary>
+        /// Gets or sets lable of build
+        /// </summary>
         public string BuildLabel { get; set; }
 
+        /// <summary>
+        /// Gets project build start time
+        /// </summary>
         public DateTime BuildStartTime
         {
             get
@@ -26,6 +38,9 @@ namespace ProjectPilot.Framework.CCNet
             }
         }
 
+        /// <summary>
+        /// Gets list of paramaters for specified build
+        /// </summary>
         public IDictionary<string, string> Parameters
         {
             get { return parameters; }
