@@ -89,6 +89,12 @@ namespace Accipio
         }
 
         /// <summary>
+        /// Gets or sets the test case description.
+        /// </summary>
+        /// <value>The test case description.</value>
+        public string TestCaseDescription { get; set; }
+
+        /// <summary>
         /// Collection of Test actions.
         /// </summary>
         private readonly List<TestAction> testActions = new List<TestAction>();

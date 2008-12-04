@@ -12,12 +12,12 @@ namespace Accipio
     {
         public XmlTestSuiteParser(Stream xmlSpecs)
         {
-            this.xmlSpecsStream = xmlSpecs;
+            xmlSpecsStream = xmlSpecs;
         }
 
         public XmlTestSuiteParser (string testSuiteFileName)
         {
-            this.xmlSpecsStream = File.OpenRead(testSuiteFileName);
+            xmlSpecsStream = File.OpenRead(testSuiteFileName);
         }
 
         /// <summary>
@@ -61,6 +61,8 @@ namespace Accipio
                                 if (xmlReader.Name != "suite")
                                     throw new XmlException("<suite> (root) element expected.");
 
+                                testSuite.Id = ReadAttribute(xmlReader, "id");
+                                testSuite.Runner = ReadAttribute(xmlReader, "runner");
                                 ReadTestSuite(testSuite, xmlReader);
 
                                 break;
@@ -99,26 +101,71 @@ namespace Accipio
         {
             xmlReader.Read();
 
-            while (xmlReader.NodeType != XmlNodeType.EndElement)
+            while (xmlReader.NodeType != XmlNodeType.EndElement && xmlReader.NodeType != XmlNodeType.None)
             {
                 switch (xmlReader.Name)
                 {
                     case "case":
                         {
+                            //TODO: check for white spaces in Id
                             string testCaseName = ReadAttribute(xmlReader, "id");
                             string testCaseCategory = ReadAttribute(xmlReader, "category");
                             TestCase testCase = new TestCase(testCaseName, testCaseCategory);
                             testSuite.AddTestCase(testCase);
+                            ReadTestCase(testCase, xmlReader);
+                            //xmlReader.Read();
+                            break;
+                        }
+
+                    case "description":
+                        {
+                            testSuite.Description = xmlReader.ReadElementContentAsString();
+                            break;
+                        }
+
+                    default:
+                        {
+                            throw new NotSupportedException("ReadTestSuite -> " + xmlReader.Name);
+                        }
+                }
+            }
+        }
+
+        private static void ReadTestCase(TestCase testCase, XmlReader xmlReader)
+        {
+            xmlReader.Read();
+
+            while (xmlReader.NodeType != XmlNodeType.EndElement)
+            {
+                switch (xmlReader.Name)
+                {
+                    case "description":
+                        {
+                            testCase.TestCaseDescription = xmlReader.ReadElementContentAsString();
+                            break;
+                        }
+
+                    case "tags":
+                        {
+                            //TODO: Add tags collection to test case
+                            string tag = xmlReader.ReadElementContentAsString();
+                            break;
+                        }
+
+                    case "steps":
+                        {
                             ReadAction(testCase, xmlReader);
                             break;
                         }
 
                     default:
                         {
-                            throw new NotSupportedException();
+                            throw new NotSupportedException("ReadTestCase -> " + xmlReader.Name);
                         }
                 }
             }
+
+            xmlReader.Read();
         }
 
         private static void ReadAction(TestCase testCase, XmlReader xmlReader)
@@ -129,23 +176,28 @@ namespace Accipio
             {
                 TestAction testAction = new TestAction(xmlReader.Name);
 
-                while (xmlReader.MoveToNextAttribute())
+                if (xmlReader.HasAttributes)
                 {
-                    string key = xmlReader.LocalName;
-                    string value = xmlReader.Value;
+                    while (xmlReader.MoveToNextAttribute())
+                    {
+                        string key = xmlReader.LocalName;
+                        string value = xmlReader.Value;
 
-                    testAction.AddActionParameter(new TestActionParameter(key, value));
+                        testAction.AddActionParameter(new TestActionParameter(key, value));
+                    }
+
+                    // move back to element
+                    xmlReader.MoveToElement();
                 }
 
-                // move back to element
-                xmlReader.MoveToElement();
-                // move to the end of element
-                xmlReader.Read();
-
-                if (xmlReader.NodeType == XmlNodeType.Text)
+                if (!xmlReader.IsEmptyElement)
                 {
-                    // TODO: there is also text node. Where to add this text node
                     xmlReader.Read();
+                    if (xmlReader.NodeType == XmlNodeType.Text)
+                    {
+                        string content = xmlReader.ReadContentAsString();
+                        testAction.AddActionParameter(new TestActionParameter("value", content));
+                    }
                 }
 
                 // add test action parameters
