@@ -32,6 +32,12 @@ namespace Accipio
         }
 
         /// <summary>
+        /// Gets or sets the business action data.
+        /// </summary>
+        /// <value>The <see cref="BusinessActionData"/></value>
+        public BusinessActionData BusinessActionData { get; set; }
+
+        /// <summary>
         /// Gets collection of test cases. <see cref="TestCase"/>
         /// </summary>
         public Dictionary<string, TestCase> TestCases
@@ -40,8 +46,27 @@ namespace Accipio
         }
 
         /// <summary>
+        /// Gets or sets the test suite id.
+        /// </summary>
+        /// <value>Unique id.</value>
+        public string Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the TestRunner.
+        /// </summary>
+        /// <value>TestRunner name.</value>
+        public string Runner { get; set; }
+
+        /// <summary>
+        /// Gets or sets the test suite description.
+        /// Used for class description.
+        /// </summary>
+        /// <value>The description of the suite.</value>
+        public string Description { get; set; }
+
+        /// <summary>
         /// List of test cases.
         /// </summary>
-        private Dictionary<string, TestCase> testCases = new Dictionary<string, TestCase>();
+        private readonly Dictionary<string, TestCase> testCases = new Dictionary<string, TestCase>();
     }
 }
