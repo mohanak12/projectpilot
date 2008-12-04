@@ -106,6 +106,10 @@ namespace Flubu.Tasks.FileSystem
                     string filePath = Path.Combine (destinationPathRecursive, fileInfo.Name);
 
                     fileInfo.CopyTo (filePath, overwriteExisting);
+                    environment.Logger.Log(
+                        "Copied file '{0}' to '{1}'", 
+                        fileSystemInfo.FullName,
+                        filePath);
                 }
                 else
                 {

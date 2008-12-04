@@ -24,9 +24,12 @@ namespace Flubu
 {
     public class FlubuRunner : IDisposable
     {
-        public FlubuRunner()
+        public FlubuRunner(string scriptName, string logFileName, int howManyOldLogsToKeep)
         {
-            scriptExecutionEnvironment = new ConsoleExecutionEnvironment("script");
+            scriptExecutionEnvironment = new ConsoleExecutionEnvironment(
+                scriptName, 
+                logFileName,
+                howManyOldLogsToKeep);
             hasFailed = true;
         }
 

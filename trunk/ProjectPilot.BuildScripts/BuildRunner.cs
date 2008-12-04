@@ -9,10 +9,20 @@ namespace ProjectPilot.BuildScripts
 {
     public class BuildRunner : FlubuRunner
     {
-        public BuildRunner(string productId)
+        public BuildRunner(string productId) : base (productId, @"logs\Flubu.Build.log", 0)
         {
             this.productId = productId;
             this.productName = productId;
+        }
+
+        public string BuildConfiguration
+        {
+            get { return buildConfiguration; }
+        }
+
+        public string BuildDir
+        {
+            get { return buildDir; }
         }
 
         public bool IsRunningUnderCruiseControl
@@ -24,6 +34,16 @@ namespace ProjectPilot.BuildScripts
             }
         }
 
+        public string ProductId
+        {
+            get { return productId; }
+        }
+
+        public string ProductName
+        {
+            get { return productName; }
+        }
+
         /// <summary>
         /// Gets the <see cref="VSSolution"/> object for the loaded VisualStudio solution.
         /// </summary>
@@ -31,6 +51,11 @@ namespace ProjectPilot.BuildScripts
         public VSSolution Solution
         {
             get { return solution; }
+        }
+
+        public int TestRuns
+        {
+            get { return testRuns; }
         }
 
         public BuildRunner AssertFileExists(string fileDescription, string fileName)
@@ -280,7 +305,7 @@ namespace ProjectPilot.BuildScripts
             AddProgramArgument("/verbosity:verbose");
             RunProgram(MakePathFromRootDir(@"lib\Gallio\bin\Gallio.Echo.exe"));
 
-            testRuns++;
+            IncrementTestRunsCounter();
 
             return this;
         }
@@ -312,6 +337,14 @@ namespace ProjectPilot.BuildScripts
         protected IDictionary<string, VSProjectExtendedInfo> ProjectExtendedInfos
         {
             get { return projectExtendedInfos; }
+        }
+
+        /// <summary>
+        /// Increments the test runs counter.
+        /// </summary>
+        protected void IncrementTestRunsCounter()
+        {
+            testRuns++;
         }
 
         protected void LogTarget (string targetName)
@@ -372,6 +405,6 @@ namespace ProjectPilot.BuildScripts
         private string productRootDir = String.Empty;
         private Dictionary<string, VSProjectExtendedInfo> projectExtendedInfos = new Dictionary<string, VSProjectExtendedInfo>();
         private VSSolution solution;
-        private int testRuns = 0;
+        private int testRuns;
     }
 }

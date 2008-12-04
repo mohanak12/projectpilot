@@ -1,25 +1,37 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO;
+using log4net;
 
 namespace Flubu
 {
     [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "AntLike")]
     public class NAntLikeFlubuLogger : IFlubuLogger
     {
-        public NAntLikeFlubuLogger(TextWriter writer)
+        public NAntLikeFlubuLogger()
         {
-            this.writer = writer;
+            AddWriter(System.Console.Out);
+        }
+
+        public void AddWriter (TextWriter writer)
+        {
+            this.writers.Add(writer);
         }
 
         public void Log(string message)
         {
-            writer.WriteLine(message);
+            foreach (TextWriter writer in writers)
+                writer.WriteLine(message);
+            log.Debug(message);
         }
 
         public void Log(string format, params object[] args)
         {
-            writer.WriteLine(format, args);
+            foreach (TextWriter writer in writers)
+                writer.WriteLine(format, args);
+            log.DebugFormat(CultureInfo.InvariantCulture, format, args);
         }
 
         public void LogExternalProgramOutput(string output)
@@ -86,6 +98,7 @@ namespace Flubu
 
         #endregion
                 
-        private readonly TextWriter writer;
+        private readonly List<TextWriter> writers = new List<TextWriter>();
+        private static readonly ILog log = log4net.LogManager.GetLogger("flubu");
     }
 }
