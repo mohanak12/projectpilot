@@ -44,11 +44,12 @@ namespace Accipio.Console
             for (int i = 3; i < args.Length; i++)
                 testSuitesFileNames.Add(args[i]);
 
-            //TODO: uncoment when BusinessActions ready
             //parse business actions
-            //XmlTestSuiteParser parser =
-            //    new XmlTestSuiteParser(XmlValidationHelper.GetXmlFileContent(businessActionXML.FullName));
-            //BusinessActions businessActions = parser.Parse();
+            //using (Stream xmlStream = File.OpenRead(businessActionsXmlFileName))
+            //{
+            //    IBusinessActionXmlParser businessActionXmlParser = new BusinessActionsXmlParser(xmlStream);
+            //    businessActionData = businessActionXmlParser.Parse();
+            //}
 
             //validate XML content
             XmlValidationHelper helper = new XmlValidationHelper();
@@ -96,6 +97,6 @@ namespace Accipio.Console
         private string businessActionsXmlFileName;
         private readonly IConsoleCommand nextCommandInChain;
         private List<string> testSuitesFileNames;
-        //private BusinessActions businessActions;
+        //private BusinessActionData businessActionData;
     }
 }
