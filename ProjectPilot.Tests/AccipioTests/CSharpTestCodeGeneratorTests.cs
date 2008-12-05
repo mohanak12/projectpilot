@@ -7,7 +7,7 @@ namespace ProjectPilot.Tests.AccipioTests
     [TestFixture]
     public class CSharpTestCodeGeneratorTests
     {
-        [Test, Pending("Test code generator must be changed.")]
+        [Test, Pending("FIx test code generator")]
         public void GenerateTest()
         {
             // setup
@@ -22,7 +22,10 @@ namespace ProjectPilot.Tests.AccipioTests
                                           Runner = "OnlineBanking"
                                       };
 
-            TestCase testCase = new TestCase("ViewAccountTestCase");
+            TestCase testCase = new TestCase("ViewAccountTestCase")
+                                    {
+                                        TestCaseDescription = "Tests case description."
+                                    };
             testCase.AddTestAction(new TestAction("GoToPortal"));
             TestAction testAction = new TestAction("SignIn");
             testAction.AddActionParameter(new TestActionParameter("username", "john"));
@@ -30,8 +33,37 @@ namespace ProjectPilot.Tests.AccipioTests
             testCase.AddTestAction(testAction);
             testAction = new TestAction("ViewAccount");
             testAction.AddActionParameter(new TestActionParameter("accountId", "123"));
+            testCase.AddTestAction(testAction);
             testCase.AddTestAction(new TestAction("AssertOperationSuccessful"));
             testSuite.AddTestCase(testCase);
+            
+            BusinessActionData businessActionData = new BusinessActionData();
+            BusinessActionEntry businessActionEntry =
+                new BusinessActionEntry("GoToPortal")
+                    {
+                        Description =
+                            "Open the online banking portal web site in the browser."
+                    };
+            businessActionData.Actions.Add(businessActionEntry);
+            businessActionEntry =
+                new BusinessActionEntry("SignIn")
+                {
+                    Description = "Sign in user 'john'."
+                };
+            businessActionData.Actions.Add(businessActionEntry);
+            businessActionEntry =
+                new BusinessActionEntry("ViewAccount")
+                {
+                    Description = "Click on the \"View\" button for the account '123'."
+                };
+            businessActionData.Actions.Add(businessActionEntry);
+            businessActionEntry =
+                new BusinessActionEntry("AssertOperationSuccessful")
+                {
+                    Description = "Assert the operation was successful."
+                };
+            businessActionData.Actions.Add(businessActionEntry);
+            testSuite.BusinessActionData = businessActionData;
 
             //testCase = new TestCase("testcase2", "Regression");
             //testCase.AddTestAction(new TestAction("testaction1"));
@@ -49,9 +81,9 @@ namespace ProjectPilot.Tests.AccipioTests
             mockCodeWriter.Expect(writer => writer.WriteLine("        using (OnlineBankingTestRunner runner = new OnlineBankingTestRunner())"));
             mockCodeWriter.Expect(writer => writer.WriteLine("        {"));
             mockCodeWriter.Expect(writer => writer.WriteLine("            runner"));
-            mockCodeWriter.Expect(writer => writer.WriteLine("                .AddDescription(\"Tests case description.\");"));
-            mockCodeWriter.Expect(writer => writer.WriteLine("                .AddTag (\"R15\")"));
-            mockCodeWriter.Expect(writer => writer.WriteLine("                .AddTag (\"R21.1\")"));
+            //mockCodeWriter.Expect(writer => writer.WriteLine("                .AddDescription(\"Tests case description.\");"));
+            //mockCodeWriter.Expect(writer => writer.WriteLine("                .AddTag (\"R15\")"));
+            //mockCodeWriter.Expect(writer => writer.WriteLine("                .AddTag (\"R21.1\")"));
             mockCodeWriter.Expect(writer => writer.WriteLine(string.Empty));
             mockCodeWriter.Expect(writer => writer.WriteLine("                // Open the online banking portal web site in the browser."));
             mockCodeWriter.Expect(writer => writer.WriteLine("                .GoToPortal()"));
