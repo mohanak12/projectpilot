@@ -15,21 +15,13 @@ namespace ProjectPilot.Tests.AccipioTests
         /// <summary>
         /// Test checks if Console program correctly parses XML with test cases.
         /// </summary>
-        [Test, Pending ("The test code has to be refactored")]
+        [Test, Pending("How to do it?")]
         public void ParseTestSpec()
         {
             string[] args = GetArgs();
             TestCodeGeneratorCommand testCodeGeneratorCommand = new TestCodeGeneratorCommand(null);
             testCodeGeneratorCommand.ParseArguments(args);
-
-            //testCodeGeneratorCommand.ProcessCommand();
-            //Dictionary<string, TestSuite> specs = testCodeGeneratorCommand.GetTestSpecs;
-            //Assert.IsNotNull(specs);
-            //TestSuite testSuite = specs["TestSpec.xml"];
-            //Assert.AreEqual(4, testSuite.TestCasesCount);
-            //TestCase testCase = testSuite.GetTestCase("OpenHomePage");
-            //Assert.IsNotNull(testCase);
-            //Assert.AreEqual(1, testCase.TestActionsCount);
+            testCodeGeneratorCommand.ProcessCommand();
         }
 
         private static string[] GetArgs()
@@ -38,7 +30,7 @@ namespace ProjectPilot.Tests.AccipioTests
             args[0] = "TestSpec";
             args[1] = "..\\..\\..\\Data\\Samples\\AccipioActions.xml";
             args[2] = "..\\..\\..\\Data\\Samples\\AccipioActions.xsd";
-            args[3] = "..\\..\\..\\Data\\Samples\\TestSpec.xml";
+            args[3] = "..\\..\\..\\Data\\Samples\\TestSuite.xml";
             return args;
         }
     }
