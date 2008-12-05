@@ -46,7 +46,7 @@ namespace Accipio
             {
                 xmlReader.Read();
 
-                while (false == xmlReader.EOF && xmlReader.NodeType != XmlNodeType.EndElement)
+                while (false == xmlReader.EOF)
                 {
                     switch (xmlReader.NodeType)
                     {
@@ -101,7 +101,7 @@ namespace Accipio
         {
             xmlReader.Read();
 
-            while (xmlReader.NodeType != XmlNodeType.EndElement && xmlReader.NodeType != XmlNodeType.None)
+            while (xmlReader.NodeType != XmlNodeType.EndElement)
             {
                 switch (xmlReader.Name)
                 {
@@ -113,7 +113,6 @@ namespace Accipio
                             TestCase testCase = new TestCase(testCaseName, testCaseCategory);
                             testSuite.AddTestCase(testCase);
                             ReadTestCase(testCase, xmlReader);
-                            //xmlReader.Read();
                             break;
                         }
 
@@ -129,6 +128,8 @@ namespace Accipio
                         }
                 }
             }
+
+            xmlReader.Read();
         }
 
         private static void ReadTestCase(TestCase testCase, XmlReader xmlReader)
