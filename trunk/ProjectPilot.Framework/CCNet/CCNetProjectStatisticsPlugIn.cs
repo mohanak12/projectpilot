@@ -10,8 +10,6 @@ namespace ProjectPilot.Framework.CCNet
     /// </summary>
     public class CCNetProjectStatisticsPlugIn : ICCNetProjectStatisticsPlugIn
     {
-        #region Public method
-
         /// <summary>
         /// Fetch ccnet statistics from server where cruise control is running
         /// </summary>
@@ -65,10 +63,6 @@ namespace ProjectPilot.Framework.CCNet
 
             return null;
         }
-
-        #endregion
-
-        #region Private methods
 
         private static void AddBuildStatus(ProjectStatsBuildEntry data, string status)
         {
@@ -159,7 +153,5 @@ namespace ProjectPilot.Framework.CCNet
                 throw new NotSupportedException();
             }
         }
-
-        #endregion
     }
 }

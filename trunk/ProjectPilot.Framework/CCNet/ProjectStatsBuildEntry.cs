@@ -9,6 +9,10 @@ namespace ProjectPilot.Framework.CCNet
     /// </summary>
     public class ProjectStatsBuildEntry
     {
+        /// <summary>
+        /// Initializes a new instance of the ProjectStatsBuildEntry class.
+        /// </summary>
+        /// <param name="buildId">Id of build</param>
         public ProjectStatsBuildEntry(int buildId)
         {
             this.buildId = buildId;

@@ -7,6 +7,10 @@ namespace Accipio
     /// </summary>
     public class BusinessActionEntry
     {
+        /// <summary>
+        /// Initializes a new instance of the BusinessActionEntry class.
+        /// </summary>
+        /// <param name="actionId">Id of business action</param>
         public BusinessActionEntry(string actionId)
         {
             ActionId = actionId;
