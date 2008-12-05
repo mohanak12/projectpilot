@@ -7,6 +7,12 @@ namespace ProjectPilot.Framework.CCNet
     /// </summary>
     public class ProjectStatsGraphParameter
     {
+        /// <summary>
+        /// Initializes a new instance of the ProjectStatsGraphParameter class.
+        /// </summary>
+        /// <param name="parameterName">Parameter name</param>
+        /// <param name="parameterType">Parameter type</param>
+        /// <param name="seriesColor">Graph color</param>
         public ProjectStatsGraphParameter(string parameterName, Type parameterType, string seriesColor)
         {
             this.seriesColor = seriesColor;

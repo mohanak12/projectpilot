@@ -6,6 +6,11 @@ namespace Accipio
     /// </summary>
     public class BusinessActionParameters
     {
+        /// <summary>
+        /// Initializes a new instance of the BusinessActionParameters class.
+        /// </summary>
+        /// <param name="parameterName">Name of parameter</param>
+        /// <param name="parameterType">Type of parameter</param>
         public BusinessActionParameters(string parameterName, string parameterType)
         {
             this.parameterName = parameterName;

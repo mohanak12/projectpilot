@@ -2,6 +2,7 @@
 using Accipio;
 using Accipio.Console;
 using MbUnit.Framework;
+using Rhino.Mocks;
 
 namespace ProjectPilot.Tests.AccipioTests
 {
@@ -9,13 +10,33 @@ namespace ProjectPilot.Tests.AccipioTests
     public class BusinessActionGeneratorTest
     {
         [Test]
-        public void ParseTest()
+        public void GenerateXsdValidationSchemaTest()
         {
             string fileName = @"..\..\..\Data\Samples\AccipioActions.xml";
-
             IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null);
             consoleCommand.ParseArguments(new string[] { "baschema", fileName });
             consoleCommand.ProcessCommand();
+        }
+
+        [Test]
+        public void ArgsIsNullTest()
+        {
+            IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null);
+            Assert.IsNull(consoleCommand.ParseArguments(null));
+        }
+
+        [Test]
+        public void InvalidArgsLengthTest()
+        {
+            IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null);
+            Assert.IsNull(consoleCommand.ParseArguments(new string[0]));
+        }
+
+        [Test]
+        public void InvalidStartArgument()
+        {
+            IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null);
+            Assert.IsNull(consoleCommand.ParseArguments(new string[] { "test", string.Empty }));
         }
 
         [Test]
@@ -49,7 +70,6 @@ namespace ProjectPilot.Tests.AccipioTests
                 Assert.AreEqual(data.Functions[0].Steps[0].RunActions[2], "EnterTransferAmount");
                 Assert.AreEqual(data.Functions[0].Steps[0].RunActions[3], "EnterDestinationAccountNumber");
                 Assert.AreEqual(data.Functions[0].Steps[0].RunActions[4], "ConfirmTransfer");
-
             }
         }
     }

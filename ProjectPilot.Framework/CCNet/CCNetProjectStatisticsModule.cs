@@ -16,6 +16,16 @@ namespace ProjectPilot.Framework.CCNet
     /// </summary>
     public class CCNetProjectStatisticsModule : IProjectModule, IViewable, ITask
     {
+        /// <summary>
+        /// Initializes a new instance of the CCNetProjectStatisticsModule class 
+        /// using the specified <see cref="IProjectModule" />, <see cref="IViewable" />
+        /// and <see cref="ITask" /> 
+        /// </summary>
+        /// <param name="ccnetPlugIn">Instance of <see cref="ICCNetProjectStatisticsPlugIn" /></param>
+        /// <param name="graphs">List of graphs and parameters</param>
+        /// <param name="fileManager">Instance of <see cref="IFileManager" /></param>
+        /// <param name="templateEngine">Instance of <see cref="CCNetProjectStatisticsPlugIn" /></param>
+        /// <param name="showBuildProjectHistory">Flag indicates whether graph will be made form entire history</param>
         public CCNetProjectStatisticsModule(
             ICCNetProjectStatisticsPlugIn ccnetPlugIn,
             IEnumerable<ProjectStatsGraph> graphs,

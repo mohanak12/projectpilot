@@ -10,6 +10,11 @@ namespace Accipio
     /// </summary>
     public class BusinessActionsXmlParser : IBusinessActionXmlParser
     {
+        /// <summary>
+        /// Initializes a new instance of the BusinessActionsXmlParser class 
+        /// using the specified <see cref="IBusinessActionXmlParser" />.
+        /// </summary>
+        /// <param name="xmlStream">stream of binary data</param>
         public BusinessActionsXmlParser(Stream xmlStream)
         {
             this.xmlStream = xmlStream;

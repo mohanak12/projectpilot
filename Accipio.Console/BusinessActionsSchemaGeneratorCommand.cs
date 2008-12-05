@@ -11,12 +11,33 @@ namespace Accipio.Console
     /// </summary>
     public class BusinessActionsSchemaGeneratorCommand : IConsoleCommand
     {
+        /// <summary>
+        /// Initializes a new instance of the BusinessActionsSchemaGeneratorCommand class.
+        /// </summary>
+        /// <param name="nextCommandInChain">Application arguments</param>
         public BusinessActionsSchemaGeneratorCommand(IConsoleCommand nextCommandInChain)
         {
             this.nextCommandInChain = nextCommandInChain;
         }
 
-        public string OutputFile { get; set; }
+        /// <summary>
+        /// Gets or sets output file
+        /// </summary>
+        public string OutputFile
+        {
+            get 
+            {
+                if (outputFileName == null)
+                    return @"businessActionValidationSchema.xsd";
+            
+                return outputFileName;
+            } 
+            
+            set
+            {
+                outputFileName = value;
+            }
+        }
 
         /// <summary>
         /// Returns the first <see cref="IConsoleCommand"/> in the command chain
@@ -29,6 +50,9 @@ namespace Accipio.Console
         /// </returns>
         public IConsoleCommand ParseArguments(string[] args)
         {
+            if (args == null)
+                return null;
+
             if (args.Length < 1
                 || 0 != String.Compare(args[0], "baschema", StringComparison.OrdinalIgnoreCase))
             {
@@ -42,15 +66,9 @@ namespace Accipio.Console
                 throw new ArgumentException("Missing business actions XML file name.");
             }
 
-            // read xml file
-            string businessActionsXmlFileName = args[1];
-            XmlValidationHelper helper = new XmlValidationHelper();
-            // validating XML with schema file (automatic)
-            helper.ValidateXmlDocument(businessActionsXmlFileName, @"..\..\..\Data\Samples\AccipioActions.xsd");
-
-            // parsing XML file
-            ParseXmlToObject(businessActionsXmlFileName);
-
+            // set xml file name
+            businessActionXmlFileName = args[1];
+            
             return this;
         }
 
@@ -59,14 +77,18 @@ namespace Accipio.Console
         /// </summary>
         public void ProcessCommand()
         {
-            // path to xsd schema file
-            string xsdSchemaFilePath = @"businessActionValidationSchema.xsd";
+            XmlValidationHelper helper = new XmlValidationHelper();
+            // validating XML with schema file
+            helper.ValidateXmlDocument(businessActionXmlFileName, XsdValidationSchemaFileName);
+
+            // parse XML file
+            BusinessActionData businessActionData = ParseXmlToObject(businessActionXmlFileName);
 
             // generating XSD schema file with business actions validation parameters
-            XmlDocument xmlSchemaDocument = GenerateXsdSchema();
+            XmlDocument xmlSchemaDocument = GenerateXsdSchema(businessActionData);
 
             // write xsd schema to file
-            using (Stream xsdSchemaDocument = File.OpenWrite(xsdSchemaFilePath))
+            using (Stream xsdSchemaDocument = File.OpenWrite(OutputFile))
             {
                 xmlSchemaDocument.Save(xsdSchemaDocument);
             }
@@ -75,10 +97,11 @@ namespace Accipio.Console
         /// <summary>
         /// Create child nodes from business action data object.
         /// </summary>
-        /// <param name="xmlDocument">Represents xml document</param>
+        /// <param name="xmlDocument">Represents an xml document</param>
         /// <param name="xmlNode">Parent node</param>
         /// <param name="nameSpace">Namespace of xsd document</param>
-        private void CreateChildNodes(XmlDocument xmlDocument, XmlNode xmlNode, string nameSpace)
+        /// <param name="businessActionData">Business action data</param>
+        private void CreateChildNodes(XmlDocument xmlDocument, XmlNode xmlNode, string nameSpace, BusinessActionData businessActionData)
         {
             foreach (BusinessActionEntry entry in businessActionData.Actions)
             {
@@ -108,16 +131,15 @@ namespace Accipio.Console
                 xmlNode.AppendChild(newNode);
             }
         }
-
+        
         /// <summary>
         /// Generate xsd file
         /// </summary>
-        /// <returns>Xsd schema</returns>
-        private XmlDocument GenerateXsdSchema()
+        /// <param name="businessActionData">Business action data</param>
+        /// <returns>Return xsd schema</returns>
+        private XmlDocument GenerateXsdSchema(BusinessActionData businessActionData)
         {
-            string xsdTemplate = @"..\..\..\Data\Samples\TestSuiteTemplate.xsd";
-
-            using (Stream stream = File.Open(xsdTemplate, FileMode.Open))
+            using (Stream stream = File.Open(XsdTemplateFileName, FileMode.Open))
             {
                 XmlDocument xmlDocument = new XmlDocument();
                 xmlDocument.Load(stream);
@@ -126,7 +148,7 @@ namespace Accipio.Console
 
                 if (xmlElement == null)
                 {
-                    throw new XmlException("Xsd template file is invalid");
+                    throw new XmlException("Xsd file is invalid");
                 }
 
                 string nameSpace = xmlElement.GetAttribute("xmlns:xs");
@@ -134,7 +156,7 @@ namespace Accipio.Console
                 nsman.AddNamespace("xs", nameSpace);
 
                 XmlNode xmlNode = xmlElement.SelectSingleNode("//xs:element[@name='steps']/xs:complexType/xs:sequence", nsman);
-                CreateChildNodes(xmlDocument, xmlNode, nameSpace);
+                CreateChildNodes(xmlDocument, xmlNode, nameSpace, businessActionData);
 
                 return xmlDocument;
             }
@@ -143,11 +165,11 @@ namespace Accipio.Console
         /// <summary>
         /// Create complext type node and attribute child nodes
         /// </summary>
-        /// <param name="xmlDocument">Represents xml document</param>
+        /// <param name="xmlDocument">Represents an xml document</param>
         /// <param name="xmlNode">Parent node</param>
         /// <param name="nameSpace">Namespace of xsd document</param>
         /// <param name="parameters">Action parameters</param>
-        private void CreateComplexTypeNode(XmlDocument xmlDocument, XmlNode xmlNode, string nameSpace, IEnumerable<BusinessActionParameters> parameters)
+        private static void CreateComplexTypeNode(XmlDocument xmlDocument, XmlNode xmlNode, string nameSpace, IEnumerable<BusinessActionParameters> parameters)
         {
             // create element complextype
             XmlNode complexTypeNode = xmlDocument.CreateNode(XmlNodeType.Element, "xs", "complexType", nameSpace);
@@ -178,16 +200,24 @@ namespace Accipio.Console
         /// Parse business action xml document to object
         /// </summary>
         /// <param name="businessActionsXmlFileName">file name of business action</param>
-        private void ParseXmlToObject(string businessActionsXmlFileName)
+        /// <returns>Parsed xml document as BusinessActionData object</returns>
+        private static BusinessActionData ParseXmlToObject(string businessActionsXmlFileName)
         {
+            BusinessActionData businessActionData;
+
             using (Stream xmlStream = File.OpenRead(businessActionsXmlFileName))
             {
                 IBusinessActionXmlParser businessActionXmlParser = new BusinessActionsXmlParser(xmlStream);
                 businessActionData = businessActionXmlParser.Parse();
             }
+
+            return businessActionData;
         }
 
-        private BusinessActionData businessActionData;
+        private string businessActionXmlFileName;
         private readonly IConsoleCommand nextCommandInChain;
+        private string outputFileName;
+        private const string XsdValidationSchemaFileName = @"..\..\..\Data\Samples\AccipioActions.xsd"; 
+        private const string XsdTemplateFileName = @"..\..\..\Data\Samples\TestSuiteTemplate.xsd"; 
     }
 }
