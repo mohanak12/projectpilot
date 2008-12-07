@@ -1,6 +1,6 @@
 #summary Ideas about the Accipio test runner tool
 
-Requirements:
+==Requirements==
  * the runner should provide a command-line interface for running tests
  * ideally it should be possible to run tests inside VisualStudio (with debugging)
  * the runner should reference MbUnit.Framework assembly in order to use its assertion methods
@@ -14,5 +14,7 @@ Requirements:
   * failed - the test case did not meet the acceptance requirements criteria
   * postponed/ignored - the test code hasn't been written yet
 
-Links:
+==Links==
+ * http://code.google.com/p/mb-unit/wiki/GallioObjectModel
+ * http://code.google.com/p/mb-unit/wiki/TestRunnerLifecycle
  * Gallio Archimedes - a tool which could help us, but it's not yet published (http://blog.bits-in-motion.com/2008/04/gallio-archimedes.html)
