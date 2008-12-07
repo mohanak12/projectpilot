@@ -13,3 +13,6 @@ Requirements:
   * successful - the test case has met the acceptance requirements criteria
   * failed - the test case did not meet the acceptance requirements criteria
   * postponed/ignored - the test code hasn't been written yet
+
+Links:
+ * Gallio Archimedes - a tool which could help us, but it's not yet published (http://blog.bits-in-motion.com/2008/04/gallio-archimedes.html)
