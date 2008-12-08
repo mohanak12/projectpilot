@@ -105,9 +105,11 @@ namespace Flubu
             string sourcePath, 
             string destinationPath, 
             bool overwriteExisting,
+            string inclusionPattern,
             string exclusionPattern)
         {
             CopyDirectoryStructureTask task = new CopyDirectoryStructureTask(sourcePath, destinationPath, overwriteExisting);
+            task.InclusionPattern = inclusionPattern;
             task.ExclusionPattern = exclusionPattern;
             return RunTask(task);
         }

@@ -25,6 +25,11 @@ namespace ProjectPilot.BuildScripts
             get { return buildDir; }
         }
 
+        public Version BuildVersion
+        {
+            get { return buildVersion; }
+        }
+
         public bool IsRunningUnderCruiseControl
         {
             get
@@ -42,6 +47,21 @@ namespace ProjectPilot.BuildScripts
         public string ProductName
         {
             get { return productName; }
+        }
+
+        public string ProductRootDir
+        {
+            get { return productRootDir; }
+        }
+
+        /// <summary>
+        /// Gets the dictionary of extended information about VisualStudio projects in the currently
+        /// loaded solution. The dictionary key represents the project name.
+        /// </summary>
+        /// <value>The dictionary of VS project extended information.</value>
+        public IDictionary<string, VSProjectExtendedInfo> ProjectExtendedInfos
+        {
+            get { return projectExtendedInfos; }
         }
 
         /// <summary>
@@ -72,29 +92,10 @@ namespace ProjectPilot.BuildScripts
 
             solution.ForEachProject(delegate (VSProjectInfo projectInfo)
             {             
-                // skip non-C# projects
-                if (projectInfo.ProjectTypeGuid != VSProjectType.CSharpProjectType.ProjectTypeGuid)
+                string projectBinPath = GetProjectOutputPath(projectInfo.ProjectName);
+
+                if (projectBinPath == null)
                     return;
-
-                bool isWebProject = false;
-                if (projectExtendedInfos.ContainsKey(projectInfo.ProjectName))
-                {
-                    VSProjectExtendedInfo extendedInfo = projectExtendedInfos[projectInfo.ProjectName];
-                    isWebProject = extendedInfo.IsWebProject;
-                }
-
-                string projectBinPath;
-                if (false == isWebProject)
-                    projectBinPath = String.Format(
-                        CultureInfo.InvariantCulture,
-                        @"{0}\bin\{1}",
-                        projectInfo.ProjectName,
-                        buildConfiguration);
-                else
-                    projectBinPath = String.Format(
-                        CultureInfo.InvariantCulture,
-                        @"{0}\bin",
-                        projectInfo.ProjectName);
 
                 projectBinPath = Path.Combine(productRootDir, projectBinPath);
 
@@ -175,7 +176,7 @@ namespace ProjectPilot.BuildScripts
         {
             LogTarget("GenerateCommonAssemblyInfo");
 
-            if (fileVersion == null)
+            if (buildVersion == null)
                 Fail("Assembly file version is not set.");
 
             using (Stream stream = File.Open(Path.Combine(productRootDir, "CommonAssemblyInfo.cs"), FileMode.Create))
@@ -208,12 +209,47 @@ namespace ProjectPilot.BuildScripts
             productName,
             companyCopyright,
             companyTrademark,
-            fileVersion,
-            fileVersion.ToString(2));
+            buildVersion,
+            buildVersion.ToString(2));
                 }
             }
 
             return this;
+        }
+
+        /// <summary>
+        /// Gets the output path for a specified VisualStudio project.
+        /// </summary>
+        /// <param name="projectName">Name of the project.</param>
+        /// <returns>The output path or <c>null</c> if the project is not compatibile.</returns>
+        public string GetProjectOutputPath(string projectName)
+        {
+            VSProjectInfo projectInfo = solution.FindProjectByName(projectName);
+
+            // skip non-C# projects
+            if (projectInfo.ProjectTypeGuid != VSProjectType.CSharpProjectType.ProjectTypeGuid)
+                return null;
+
+            bool isWebProject = false;
+            if (projectExtendedInfos.ContainsKey(projectInfo.ProjectName))
+            {
+                VSProjectExtendedInfo extendedInfo = projectExtendedInfos[projectInfo.ProjectName];
+                isWebProject = extendedInfo.IsWebProject;
+            }
+
+            string projectBinPath;
+            if (false == isWebProject)
+                projectBinPath = String.Format(
+                    CultureInfo.InvariantCulture,
+                    @"{0}\bin\{1}",
+                    projectInfo.ProjectName,
+                    buildConfiguration);
+            else
+                projectBinPath = String.Format(
+                    CultureInfo.InvariantCulture,
+                    @"{0}\bin",
+                    projectInfo.ProjectName);
+            return projectBinPath;
         }
 
         public BuildRunner LoadSolution (string solutionFileName)
@@ -260,7 +296,7 @@ namespace ProjectPilot.BuildScripts
                 using (StreamReader reader = new StreamReader(stream))
                 {
                     string versionAsString = reader.ReadLine();
-                    fileVersion = new Version(versionAsString);
+                    buildVersion = new Version(versionAsString);
                 }
             }
 
@@ -334,11 +370,6 @@ namespace ProjectPilot.BuildScripts
             return this;
         }
 
-        protected IDictionary<string, VSProjectExtendedInfo> ProjectExtendedInfos
-        {
-            get { return projectExtendedInfos; }
-        }
-
         /// <summary>
         /// Increments the test runs counter.
         /// </summary>
@@ -393,11 +424,11 @@ namespace ProjectPilot.BuildScripts
 
         private string buildConfiguration = "Release";
         private string buildDir = "Builds";
+        private Version buildVersion;
         private string companyCopyright;
         private string companyName;
         private string companyTrademark;
         private string ccnetDir = "CruiseControl";
-        private Version fileVersion;
         private bool isCcnetListenerFileInitialized;
         private IBuildLogger logger = new BuildLogger();
         private readonly string productId;
