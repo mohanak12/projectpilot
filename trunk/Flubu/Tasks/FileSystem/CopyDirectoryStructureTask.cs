@@ -10,6 +10,30 @@ namespace Flubu.Tasks.FileSystem
     public class CopyDirectoryStructureTask : TaskBase
     {
         /// <summary>
+        /// Gets or sets the exclusion regular expression pattern for files.
+        /// </summary>
+        /// <remarks>All files whose paths match this regular expression
+        /// will not be copied. If the <see cref="ExclusionPattern"/> is <c>null</c>, it will be ignored.</remarks>
+        /// <value>The exclusion pattern.</value>
+        public string ExclusionPattern
+        {
+            get { return exclusionPattern; }
+            set { exclusionPattern = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the inclusion regular expression pattern for files.
+        /// </summary>
+        /// <remarks>All files whose paths match this regular expression
+        /// will be copied. If the <see cref="InclusionPattern"/> is <c>null</c>, it will be ignored.</remarks>
+        /// <value>The inclusion pattern.</value>
+        public string InclusionPattern
+        {
+            get { return inclusionPattern; }
+            set { inclusionPattern = value; }
+        }
+
+        /// <summary>
         /// Gets the task description.
         /// </summary>
         /// <value>The task description.</value>
@@ -23,18 +47,6 @@ namespace Flubu.Tasks.FileSystem
                     sourcePath, 
                     destinationPath);
             }
-        }
-
-        /// <summary>
-        /// Gets or sets the exclusion pattern for files.
-        /// </summary>
-        /// <remarks>All files whose paths match this regular expression
-        /// will not be copied. If the <see cref="ExclusionPattern"/> is <c>null</c>, it will be ignored.</remarks>
-        /// <value>The exclusion pattern.</value>
-        public string ExclusionPattern
-        {
-            get { return exclusionPattern; }
-            set { exclusionPattern = value; }
         }
 
         /// <summary>
@@ -74,26 +86,31 @@ namespace Flubu.Tasks.FileSystem
         /// <param name="environment">The script execution environment.</param>
         protected override void DoExecute (IScriptExecutionEnvironment environment)
         {
+            Regex inclusionRegex = null;
+            if (inclusionPattern != null)
+                inclusionRegex = new Regex(inclusionPattern, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+
             Regex exclusionRegex = null;
             if (exclusionPattern != null)
                 exclusionRegex = new Regex (exclusionPattern, RegexOptions.IgnoreCase|RegexOptions.Singleline);
 
-            CopyStructureRecursive (environment, sourcePath, destinationPath, exclusionRegex);
+            CopyStructureRecursive (environment, sourcePath, destinationPath, inclusionRegex, exclusionRegex);
         }
 
         private void CopyStructureRecursive (
             IScriptExecutionEnvironment environment,
             string sourcePathRecursive, 
             string destinationPathRecursive,
+            Regex inclusionRegex,
             Regex exclusionRegex)
         {
+            if (inclusionRegex != null && false == inclusionRegex.IsMatch(sourcePathRecursive))
+                return;
+
             if (exclusionRegex != null && exclusionRegex.IsMatch (sourcePathRecursive))
                 return;
 
             DirectoryInfo info = new DirectoryInfo (sourcePathRecursive);
-
-            if (false == Directory.Exists (destinationPathRecursive))
-                Directory.CreateDirectory (destinationPathRecursive);
 
             foreach (FileSystemInfo fileSystemInfo in info.GetFileSystemInfos ())
             {
@@ -104,6 +121,9 @@ namespace Flubu.Tasks.FileSystem
 
                     FileInfo fileInfo = fileSystemInfo as FileInfo;
                     string filePath = Path.Combine (destinationPathRecursive, fileInfo.Name);
+
+                    if (false == Directory.Exists(destinationPathRecursive))
+                        Directory.CreateDirectory(destinationPathRecursive);
 
                     fileInfo.CopyTo (filePath, overwriteExisting);
                     environment.Logger.Log(
@@ -120,15 +140,17 @@ namespace Flubu.Tasks.FileSystem
                     CopyStructureRecursive (
                         environment, 
                         dirInfo.FullName, 
-                        subdirectoryPath, 
+                        subdirectoryPath,
+                        inclusionRegex,
                         exclusionRegex);
                 }
             }
         }
 
-        private string sourcePath;
         private string destinationPath;
-        private bool overwriteExisting;
         private string exclusionPattern;
+        private string inclusionPattern;
+        private bool overwriteExisting;
+        private string sourcePath;
     }
 }
