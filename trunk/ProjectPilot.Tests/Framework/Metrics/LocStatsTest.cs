@@ -52,19 +52,8 @@ statement // with comment"
             Assert.AreEqual(17, data.Sloc);
         }
 
-        [Test,Pending("Have to use a static C# file")]
-        public void Test3()
-        {
-            ILocStats locStats = new LocStats();
-            LocStatsData data = locStats.CountLocFile(@"c:\PilotProject\Data\Samples\LocSample.cs");
-
-            Assert.AreEqual(8, data.Cloc); //TODO: Wrong!!! comment inside string should not be counted
-            Assert.AreEqual(9, data.Eloc);
-            Assert.AreEqual(56, data.Sloc);
-        }
-
         [Test,Ignore]
-        public void Test4()
+        public void TestSampleFile()
         {
             ILocStats locStats = new LocStats();
 
