@@ -79,6 +79,7 @@ namespace Accipio.Console
         {
             XmlValidationHelper helper = new XmlValidationHelper();
             // validating XML with schema file
+            // xml document must have at least one action element
             helper.ValidateXmlDocument(businessActionXmlFileName, XsdValidationSchemaFileName);
 
             // parse XML file

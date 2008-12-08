@@ -24,6 +24,10 @@ namespace ProjectPilot.Tests.AccipioTests
             testCase.AddTestAction(new TestAction("SelectModule", new TestActionParameter("name", "Mobi-Info")));
             testSuite.AddTestCase(testCase);
 
+            testCase = new TestCase("View details");
+            testCase.AddTestAction(new TestAction("Details"));
+            testSuite.AddTestCase(testCase);
+
             ICodeWriter mockWriter = MockRepository.GenerateMock<ICodeWriter>();
             ITestCodeGenerator generator = new HtmlTestCodeGenerator(mockWriter);
 
@@ -32,6 +36,8 @@ namespace ProjectPilot.Tests.AccipioTests
             mockWriter.Expect(writer => writer.WriteLine("<i>NavigateTo</i>http://test.aspx<br />"));
             mockWriter.Expect(writer => writer.WriteLine("<h1>Select module <i>Functional</i></h1>"));
             mockWriter.Expect(writer => writer.WriteLine("<i>SelectModule</i>Mobi-Info<br />"));
+            mockWriter.Expect(writer => writer.WriteLine("<h1>View details <i>Smoke</i></h1>"));
+            mockWriter.Expect(writer => writer.WriteLine("<i>Details</i><br />"));
             mockWriter.Expect(writer => writer.WriteLine("</body>"));
 
             generator.Generate(testSuite);

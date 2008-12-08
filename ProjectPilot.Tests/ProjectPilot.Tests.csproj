@@ -82,7 +82,11 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AccipioTests\BusinessActionGeneratorTest.cs" />
+    <Compile Include="AccipioTests\ConsoleAppTest.cs" />
+    <Compile Include="AccipioTests\FileCodeWriterTest.cs" />
+    <Compile Include="AccipioTests\TestCodeGeneratorCommandTest.cs" />
     <Compile Include="AccipioTests\TestCodeGeneratorTests.cs" />
+    <Compile Include="AccipioTests\XmlValidationTest.cs" />
     <Compile Include="BuildScriptsTests\TestBuild.cs" />
     <Compile Include="Extras\CodeAnalysisTests.cs" />
     <Compile Include="Framework\CCNet\ProjectStatsLoadingTests.cs" />
@@ -139,6 +143,7 @@
     <None Include="ProjectPilot.snk" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AccipioTests\AccipioActionsIncorrectXml.xml" />
     <Content Include="AccipioTests\TestSuite.xml" />
     <Content Include="SampleConfigurations\ProjectPilot.config.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

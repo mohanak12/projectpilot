@@ -79,7 +79,6 @@
     <Compile Include="TestAction.cs" />
     <Compile Include="TestCase.cs" />
     <Compile Include="TestSuite.cs" />
-    <Compile Include="TestSpecsProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XmlTestSuiteParser.cs" />
   </ItemGroup>

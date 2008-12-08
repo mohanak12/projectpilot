@@ -12,6 +12,14 @@ namespace Accipio.Console
     public class XmlValidationHelper
     {
         /// <summary>
+        /// Gets report of validation
+        /// </summary>
+        public StringBuilder ValidationStatusReport
+        {
+            get { return validationStatus; }
+        }
+
+        /// <summary>
         /// Validate xml document with predefined xsd schema
         /// </summary>
         /// <param name="xmlFileName">File of the XML file to be validated.</param>
@@ -59,6 +67,6 @@ namespace Accipio.Console
             validationStatus.Append(string.Format(CultureInfo.InvariantCulture, "Validation Error: {0} \n", args.Message));
         }
 
-        private StringBuilder validationStatus = new StringBuilder();
+        private readonly StringBuilder validationStatus = new StringBuilder();
     }
 }

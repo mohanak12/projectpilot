@@ -29,6 +29,9 @@ namespace Accipio.Console
         /// </returns>
         public IConsoleCommand ParseArguments(string[] args)
         {
+            if (args == null)
+                return null;
+
             if (args.Length < 1
                 || 0 != String.Compare(args[0], "codegen", StringComparison.OrdinalIgnoreCase))
             {

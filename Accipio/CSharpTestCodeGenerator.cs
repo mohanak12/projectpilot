@@ -32,28 +32,40 @@ namespace Accipio
                 WriteLine(string.Empty);
                 TestCase testCase = testSuite.GetTestCase(testCaseName);
                 IList<TestAction> testActions = testCase.TestActions;
+                int counter = 1;
                 foreach (TestAction testAction in testActions)
                 {
-                    WriteLine("                /// <summary>{0}</summary>", businessActionData.GetAction(testAction.ActionName).Description);
+                    WriteLine("                // {0}", businessActionData.GetAction(testAction.ActionName).Description);
+                    string line = string.Format(CultureInfo.InvariantCulture, "                .{0}(", testAction.ActionName);
+
                     if (testAction.HasParameters)
                     {
                         foreach (TestActionParameter actionParameters in testAction.ActionParameters)
                         {
-                            WriteLine("                .{0}(\"{1}\");", testAction.ActionName, actionParameters.ParameterValue);
+                            line += string.Format(CultureInfo.InvariantCulture, "\"{0}\", ", actionParameters.ParameterValue);
                         }
+
+                        line = line.Remove(line.LastIndexOf(','));
+                    }
+
+                    if (counter == testActions.Count)
+                    {
+                        WriteLine(string.Format(CultureInfo.InvariantCulture, "{0});", line));   
                     }
                     else
                     {
-                        WriteLine("                .{0}();", testAction.ActionName);
+                        WriteLine(string.Format(CultureInfo.InvariantCulture, "{0})", line));    
                     }
+
+                    counter++;
                 }
 
                 WriteLine("        }");
                 WriteLine("    }");
+                WriteLine(string.Empty);
             }
 
             WriteLine("}");
-            WriteLine(string.Empty);
         }
 
         private void WriteLine(string line)

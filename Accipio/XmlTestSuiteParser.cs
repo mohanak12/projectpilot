@@ -50,12 +50,6 @@ namespace Accipio
                 {
                     switch (xmlReader.NodeType)
                     {
-                        case XmlNodeType.XmlDeclaration:
-                            {
-                                xmlReader.Read();
-                                continue;
-                            }
-
                         case XmlNodeType.Element:
                             {
                                 if (xmlReader.Name != "suite")
