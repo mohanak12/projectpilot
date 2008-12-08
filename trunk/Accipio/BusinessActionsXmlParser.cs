@@ -47,12 +47,6 @@ namespace Accipio
                 {
                     switch (xmlReader.NodeType)
                     {
-                        case XmlNodeType.XmlDeclaration:
-                            {
-                                xmlReader.Read();
-                                continue;
-                            }
-
                         case XmlNodeType.Element:
                             {
                                 if (xmlReader.Name != "actions")
@@ -69,11 +63,6 @@ namespace Accipio
                             }
                     }
                 }
-            }
-
-            if (businessActionData.Actions.Count == 0)
-            {
-                throw new XmlException("Missing action element in xml.");
             }
 
             return businessActionData;

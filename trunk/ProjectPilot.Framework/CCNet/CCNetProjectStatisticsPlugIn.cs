@@ -43,17 +43,13 @@ namespace ProjectPilot.Framework.CCNet
                 {
                     switch (xmlReader.NodeType)
                     {
-                        case XmlNodeType.XmlDeclaration:
-                            xmlReader.Read();
-                            continue;
-
                         case XmlNodeType.Element:
                             if (xmlReader.Name != "statistics")
                                 throw new XmlException("<statistics> (root) element expected.");
 
                             ReadStatistics(data, xmlReader);
 
-                            return data;
+                            break;
 
                         default:
                             throw new XmlException();
@@ -61,7 +57,7 @@ namespace ProjectPilot.Framework.CCNet
                 }
             }
 
-            return null;
+            return data;
         }
 
         private static void AddBuildStatus(ProjectStatsBuildEntry data, string status)
@@ -114,6 +110,8 @@ namespace ProjectPilot.Framework.CCNet
                         throw new NotSupportedException();
                 }
             }
+
+            xmlReader.Read();
         }
 
         private static void ReadIntegrationEntry(ProjectStatsBuildEntry data, string status, XmlReader xmlReader)
@@ -144,14 +142,7 @@ namespace ProjectPilot.Framework.CCNet
 
         private static string ReadAttribute(XmlReader xmlReader, string attributeName)
         {
-            try
-            {
-                return xmlReader.GetAttribute(attributeName);
-            }
-            catch (Exception)
-            {
-                throw new NotSupportedException();
-            }
+            return xmlReader.GetAttribute(attributeName);
         }
     }
 }

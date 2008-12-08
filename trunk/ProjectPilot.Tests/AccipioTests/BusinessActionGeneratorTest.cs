@@ -1,8 +1,10 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Text;
+using System.Xml;
 using Accipio;
 using Accipio.Console;
 using MbUnit.Framework;
-using Rhino.Mocks;
 
 namespace ProjectPilot.Tests.AccipioTests
 {
@@ -14,8 +16,17 @@ namespace ProjectPilot.Tests.AccipioTests
         {
             string fileName = @"..\..\..\Data\Samples\AccipioActions.xml";
             IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null);
+            string outputFile = ((BusinessActionsSchemaGeneratorCommand)consoleCommand).OutputFile;
+            Assert.AreEqual(outputFile, "businessActionValidationSchema.xsd");
+
+            // set output file name
+            ((BusinessActionsSchemaGeneratorCommand) consoleCommand).OutputFile = "OutpuXsdFile.xsd";
             consoleCommand.ParseArguments(new string[] { "baschema", fileName });
             consoleCommand.ProcessCommand();
+
+            // get output file
+            outputFile = ((BusinessActionsSchemaGeneratorCommand) consoleCommand).OutputFile;
+            Assert.IsTrue(File.Exists(outputFile));
         }
 
         [Test]
@@ -30,6 +41,13 @@ namespace ProjectPilot.Tests.AccipioTests
         {
             IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null);
             Assert.IsNull(consoleCommand.ParseArguments(new string[0]));
+        }
+
+        [Test, ExpectedException(typeof(ArgumentException))]
+        public void InvalidArgsLengthFirstArgOkTest()
+        {
+            IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null);
+            Assert.IsNull(consoleCommand.ParseArguments(new string[] { "baschema" }));
         }
 
         [Test]
@@ -70,6 +88,79 @@ namespace ProjectPilot.Tests.AccipioTests
                 Assert.AreEqual(data.Functions[0].Steps[0].RunActions[2], "EnterTransferAmount");
                 Assert.AreEqual(data.Functions[0].Steps[0].RunActions[3], "EnterDestinationAccountNumber");
                 Assert.AreEqual(data.Functions[0].Steps[0].RunActions[4], "ConfirmTransfer");
+            }
+        }
+
+        [Test]
+        public void MissingBusinessActionDataEntryTest()
+        {
+            BusinessActionData data = new BusinessActionData();
+            BusinessActionEntry entry = data.GetAction("NoAction");
+            Assert.IsNull(entry);
+        }
+
+        [Test, ExpectedException(typeof(NotSupportedException))]
+        public void NotSupportedActionsElementTest()
+        {
+            string xml = "<actions><element></element></actions>";
+
+            byte[] bytes = Encoding.ASCII.GetBytes(xml);
+            using (MemoryStream stream = new MemoryStream(bytes))
+            {
+                IBusinessActionXmlParser parser = new BusinessActionsXmlParser(stream);
+                parser.Parse();
+            }
+        }
+
+        [Test, ExpectedException(typeof(NotSupportedException))]
+        public void NotSupportedActionElementTest()
+        {
+            string xml = "<actions><action><element></element></action></actions>";
+
+            byte[] bytes = Encoding.ASCII.GetBytes(xml);
+            using (MemoryStream stream = new MemoryStream(bytes))
+            {
+                IBusinessActionXmlParser parser = new BusinessActionsXmlParser(stream);
+                parser.Parse();
+            }
+        }
+
+        [Test, ExpectedException(typeof(NotSupportedException))]
+        public void NotSupportedFunctionElementTest()
+        {
+            string xml = "<actions><function><element></element></function></actions>";
+
+            byte[] bytes = Encoding.ASCII.GetBytes(xml);
+            using (MemoryStream stream = new MemoryStream(bytes))
+            {
+                IBusinessActionXmlParser parser = new BusinessActionsXmlParser(stream);
+                parser.Parse();
+            }
+        }
+
+        [Test, ExpectedException(typeof(NotSupportedException))]
+        public void NotSupportedStepsElementTest()
+        {
+            string xml = "<actions><function><steps><element></element></steps></function></actions>";
+
+            byte[] bytes = Encoding.ASCII.GetBytes(xml);
+            using (MemoryStream stream = new MemoryStream(bytes))
+            {
+                IBusinessActionXmlParser parser = new BusinessActionsXmlParser(stream);
+                parser.Parse();
+            }
+        }
+
+        [Test, ExpectedException(typeof(XmlException))]
+        public void ParseBusinessActionsInvalidXmlTest()
+        {
+            string xml = "<actionss><action></action></actionss>";
+
+            byte[] bytes = Encoding.ASCII.GetBytes(xml);
+            using (MemoryStream stream = new MemoryStream(bytes))
+            {
+                IBusinessActionXmlParser parser = new BusinessActionsXmlParser(stream);
+                parser.Parse();
             }
         }
     }

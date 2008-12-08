@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Text;
+using System.Xml;
 using MbUnit.Framework;
 using ProjectPilot.Framework.CCNet;
 
@@ -8,21 +11,48 @@ namespace ProjectPilot.Tests.Framework.CCNet
     public class ProjectStatsLoadingTests
     {
         [Test]
-        public void LoadStatistics()
+        public void LoadStatisticsTest()
         {
-            ProjectStatsData data = LoadStatisticsFromFile();
+            ICCNetProjectStatisticsPlugIn plugIn = new CCNetProjectStatisticsPlugIn();
+            ProjectStatsData data = plugIn.FetchStatistics();
 
             Assert.AreEqual(data.Builds.Count, 844);
         }
 
-        private static ProjectStatsData LoadStatisticsFromFile()
+        [Test, ExpectedException(typeof(XmlException))]
+        public void IncorrectXmlRootElementTest()
         {
-            ProjectStatsData data;
-            using (Stream stream = File.OpenRead(@"..\..\..\Data\Samples\ccnet.stats.xml"))
+            string xml = "<statisticss><statistic></statistic></statisticss>";
+
+            byte[] bytes = Encoding.ASCII.GetBytes(xml);
+            using (MemoryStream stream = new MemoryStream(bytes))
             {
-                data = CCNetProjectStatisticsPlugIn.Load(stream);
+                CCNetProjectStatisticsPlugIn.Load(stream);
             }
-            return data;
+        }
+
+        [Test, ExpectedException(typeof(NotSupportedException))]
+        public void NotSupportedStatisticsElementTest()
+        {
+            string xml = "<statistics><statistic></statistic></statistics>";
+
+            byte[] bytes = Encoding.ASCII.GetBytes(xml);
+            using (MemoryStream stream = new MemoryStream(bytes))
+            {
+                CCNetProjectStatisticsPlugIn.Load(stream);
+            }
+        }
+
+        [Test, ExpectedException(typeof(NotSupportedException))]
+        public void NotSupportedIntegrationElementTest()
+        {
+            string xml = "<statistics><integration><element></element></integration></statistics>";
+
+            byte[] bytes = Encoding.ASCII.GetBytes(xml);
+            using (MemoryStream stream = new MemoryStream(bytes))
+            {
+                CCNetProjectStatisticsPlugIn.Load(stream);
+            }
         }
     }
 }

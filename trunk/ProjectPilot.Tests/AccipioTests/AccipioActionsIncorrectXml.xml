@@ -1,0 +1,6 @@
+﻿<actions xmlns="http://projectpilot/AccipioActions.xsd">
+  <action id="GoToPortal">
+    <description>Open the online banking portal web site in the browser</description>
+    <element />
+  </action>
+</actions>

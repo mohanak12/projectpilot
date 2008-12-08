@@ -29,13 +29,6 @@ namespace ProjectPilot.Framework.CCNet
             entry[parameterName] += value;
         }
 
-        public double GetValue(int buildId, string parameterName)
-        {
-            Dictionary<string, double> value = dataByBuildsByParametersByValue[buildId];
-
-            return value[parameterName];
-        }
-
         public SortedList<int, double> GetValuesForParameter (string parameterName)
         {
             SortedList<int, double> values = new SortedList<int, double>();
