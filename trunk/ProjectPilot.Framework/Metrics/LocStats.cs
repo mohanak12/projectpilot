@@ -49,6 +49,10 @@ namespace ProjectPilot.Framework.Metrics
                         eloc++;
                     
                     sloc++; //Incrementig the sloc at each iteration.
+
+                    //if we are in a multi line comment
+                    if (inCommentMode == true)
+                        cloc++;
                     
                     //The start of the comment '//' characters, if any present.
                     int commentIndex = line.IndexOf(@"//", StringComparison.Ordinal);
