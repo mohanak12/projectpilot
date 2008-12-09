@@ -26,7 +26,7 @@ namespace Accipio.Console
                 if (commandToExecute == null)
                     throw new ArgumentException("Unknown command.");
 
-                commandToExecute.ParseArguments(args);
+                //commandToExecute.ParseArguments(args);
                 commandToExecute.ProcessCommand();
             }
             catch (Exception ex)

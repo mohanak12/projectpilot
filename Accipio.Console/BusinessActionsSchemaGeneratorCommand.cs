@@ -21,21 +21,16 @@ namespace Accipio.Console
         }
 
         /// <summary>
-        /// Gets or sets output file
+        /// Gets output file name
         /// </summary>
         public string OutputFile
         {
             get 
             {
                 if (outputFileName == null)
-                    return @"businessActionValidationSchema.xsd";
+                    return XsdOutputFileName;
             
                 return outputFileName;
-            } 
-            
-            set
-            {
-                outputFileName = value;
             }
         }
 
@@ -61,13 +56,18 @@ namespace Accipio.Console
                 return null;
             }
 
-            if (args.Length != 2)
+            if (args.Length < 2)
             {
                 throw new ArgumentException("Missing business actions XML file name.");
             }
 
             // set xml file name
             businessActionXmlFileName = args[1];
+
+            if (args.Length == 3)
+            {
+                outputFileName = args[2];
+            }
             
             return this;
         }
@@ -218,6 +218,7 @@ namespace Accipio.Console
         private string businessActionXmlFileName;
         private readonly IConsoleCommand nextCommandInChain;
         private string outputFileName;
+        private const string XsdOutputFileName = @"BusinessActionValidationSchema.xsd";
         private const string XsdValidationSchemaFileName = @"..\..\..\Data\Samples\AccipioActions.xsd"; 
         private const string XsdTemplateFileName = @"..\..\..\Data\Samples\TestSuiteTemplate.xsd"; 
     }
