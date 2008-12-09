@@ -60,7 +60,7 @@ namespace Accipio.Console
 
             // check if file exists
             if (!fileInfo.Exists)
-                throw new IOException(string.Format(CultureInfo.InvariantCulture, "File {0} does not exists.", businessActionsXmlFileName));
+                throw new System.IO.IOException(string.Format(CultureInfo.InvariantCulture, "File {0} does not exists.", businessActionsXmlFileName));
 
             // set output file name
             outputFileName = Path.ChangeExtension(fileInfo.Name, "xsd");
