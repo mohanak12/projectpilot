@@ -14,7 +14,7 @@ namespace ProjectPilot.Tests.AccipioTests
         [Test]
         public void GenerateXsdValidationSchemaTest()
         {
-            string fileName = @"..\..\..\Data\Samples\AccipioActions.xml";
+            string fileName = @"..\..\..\Data\Samples\BusinessActions.xml";
             IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null).ParseArguments(new string[] { "baschema", fileName });
             // process command
             consoleCommand.ProcessCommand();
@@ -22,6 +22,13 @@ namespace ProjectPilot.Tests.AccipioTests
             // get output file
             string outputFile = ((BusinessActionsSchemaGeneratorCommand) consoleCommand).OutputFile;
             Assert.IsTrue(File.Exists(outputFile));
+        }
+
+        [Test, ExpectedException(typeof(IOException))]
+        public void GenerateXsdSchemaFileNotExistsTest()
+        {
+            string fileName = @"..\..\..\Data\Samples\AccipioActions123.xml";
+            IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null).ParseArguments(new string[] { "baschema", fileName });
         }
 
         [Test]
@@ -53,21 +60,9 @@ namespace ProjectPilot.Tests.AccipioTests
         }
 
         [Test]
-        public void ParseAllArgumentsTest()
-        {
-            string fileName = @"..\..\..\Data\Samples\AccipioActions.xml";
-            string outputFileName = @"output.xsd";
-
-            IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null).
-                ParseArguments(new string[] { "baschema", fileName, outputFileName });
-
-            Assert.AreEqual(((BusinessActionsSchemaGeneratorCommand)consoleCommand).OutputFile, outputFileName);
-        }
-
-        [Test]
         public void ParseBusinessActionsTest()
         {
-            using (Stream stream = File.OpenRead(@"..\..\..\Data\Samples\AccipioActions.xml"))
+            using (Stream stream = File.OpenRead(@"..\..\..\Data\Samples\BusinessActions.xml"))
             {
                 IBusinessActionXmlParser parser = new BusinessActionsXmlParser(stream);
                 BusinessActionData data = parser.Parse();

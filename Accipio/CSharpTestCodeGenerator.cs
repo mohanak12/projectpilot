@@ -28,9 +28,17 @@ namespace Accipio
                 WriteLine("        using ({0}TestRunner runner = new {0}TestRunner())", testSuite.Runner);
                 WriteLine("        {");
                 WriteLine("            runner");
+                TestCase testCase = testSuite.GetTestCase(testCaseName);
+                // add test case description
+                WriteLine("                .AddDescription(\"{0}\")", testCase.TestCaseDescription);
+                // add test case tags
+                foreach (string tag in testCase.GetTestCaseTags)
+                {
+                    WriteLine("                .AddTag(\"{0}\")", tag);
+                }
 
                 WriteLine(string.Empty);
-                TestCase testCase = testSuite.GetTestCase(testCaseName);
+                // add test case actions
                 IList<TestAction> testActions = testCase.TestActions;
                 int counter = 1;
                 foreach (TestAction testAction in testActions)

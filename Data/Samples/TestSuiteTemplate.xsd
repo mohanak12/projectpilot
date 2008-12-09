@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema id="NewDataSet" xmlns="http://projectpilot/AccipioTestSuite.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" targetNamespace="http://projectpilot/AccipioTestSuite.xsd" elementFormDefault="qualified"> 
+<xs:schema id="NewDataSet" xmlns="http://projectpilot/@test.suite.template@" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" targetNamespace="http://projectpilot/@test.suite.template@" elementFormDefault="qualified"> 
   <xs:element name="suite">
     <xs:complexType>
       <xs:sequence>

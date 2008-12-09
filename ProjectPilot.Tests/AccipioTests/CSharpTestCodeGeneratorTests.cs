@@ -25,6 +25,8 @@ namespace ProjectPilot.Tests.AccipioTests
             {
                 TestCaseDescription = "Tests case description."
             };
+            testCase.AddTestCaseTag("R15");
+            testCase.AddTestCaseTag("R21.1");
             testCase.AddTestAction(new TestAction("GoToPortal"));
             TestAction testAction = new TestAction("SignIn");
             testAction.AddActionParameter(new TestActionParameter("username", "john"));
@@ -66,18 +68,14 @@ namespace ProjectPilot.Tests.AccipioTests
             mockCodeWriter.Expect(writer => writer.WriteLine("        using (OnlineBankingTestRunner runner = new OnlineBankingTestRunner())"));
             mockCodeWriter.Expect(writer => writer.WriteLine("        {"));
             mockCodeWriter.Expect(writer => writer.WriteLine("            runner"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("                .AddDescription(\"Tests case description.\")"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("                .AddTag(\"R15\")"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("                .AddTag(\"R21.1\")"));
             mockCodeWriter.Expect(writer => writer.WriteLine(string.Empty));
-            //mockCodeWriter.Expect(writer => writer.WriteLine("                /// <summary>Open the online banking portal web site in the browser.</summary>"));
-            //mockCodeWriter.Expect(writer => writer.WriteLine("                .AddDescription(\"Tests case description.\");"));
-            //mockCodeWriter.Expect(writer => writer.WriteLine("                .AddTag (\"R15\")"));
-            //mockCodeWriter.Expect(writer => writer.WriteLine("                .AddTag (\"R21.1\")"));
-            //mockCodeWriter.Expect(writer => writer.WriteLine(string.Empty));
             mockCodeWriter.Expect(writer => writer.WriteLine("                // Open the online banking portal web site in the browser."));
             mockCodeWriter.Expect(writer => writer.WriteLine("                .GoToPortal()"));
-            //mockCodeWriter.Expect(writer => writer.WriteLine(string.Empty));
             mockCodeWriter.Expect(writer => writer.WriteLine("                // Sign in user 'john'."));
             mockCodeWriter.Expect(writer => writer.WriteLine("                .SignIn(\"john\", \"doe\")"));
-            //mockCodeWriter.Expect(writer => writer.WriteLine(string.Empty));
             mockCodeWriter.Expect(writer => writer.WriteLine("                // Assert the operation was successful."));
             mockCodeWriter.Expect(writer => writer.WriteLine("                .AssertOperationSuccessful();"));
             mockCodeWriter.Expect(writer => writer.WriteLine("        }"));

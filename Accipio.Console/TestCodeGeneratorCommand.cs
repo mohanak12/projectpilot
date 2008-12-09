@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 
 #endregion
@@ -37,26 +38,40 @@ namespace Accipio.Console
             {
                 if (nextCommandInChain != null)
                     return nextCommandInChain.ParseArguments(args);
+
                 return null;
             }
 
+            if (args.Length < 2)
+                throw new ArgumentException("Missing business actions XML file name.");
+
             testSuitesFileNames = new List<string>();
 
-            businessActionsXmlFileName = args[1];
-            businessActionsSchemaFileName = args[2];
-            for (int i = 3; i < args.Length; i++)
-                testSuitesFileNames.Add(args[i]);
+            // business action file
+            businessActionsXmlFileName = CheckIfFileExists(args[1]);
 
-            //parse business actions
+            if (args.Length < 3)
+                throw new ArgumentException("Missing test suite xsd schema file name.");
+
+            // xsd schema file for validating test suite xml files
+            string testSuiteXsdValidationSchema = CheckIfFileExists(args[2]);
+
+            XmlValidationHelper xmlValidationHelper = new XmlValidationHelper();
+
+            // add file names to list
+            for (int i = 3; i < args.Length; i++)
+            {
+                string testSuiteXmlFile = CheckIfFileExists(args[i]);
+                xmlValidationHelper.ValidateXmlDocument(testSuiteXmlFile, testSuiteXsdValidationSchema);
+                testSuitesFileNames.Add(testSuiteXmlFile);
+            }
+
+            // parse business actions
             using (Stream xmlStream = File.OpenRead(businessActionsXmlFileName))
             {
                 IBusinessActionXmlParser businessActionXmlParser = new BusinessActionsXmlParser(xmlStream);
                 businessActionData = businessActionXmlParser.Parse();
             }
-
-            //validate XML content
-            XmlValidationHelper helper = new XmlValidationHelper();
-            helper.ValidateXmlDocument(businessActionsXmlFileName, businessActionsSchemaFileName);
 
             return this;
         }
@@ -68,6 +83,8 @@ namespace Accipio.Console
         {
             foreach (string testSuiteFileName in testSuitesFileNames)
             {
+                // validate xml with xsd schema
+
                 using (XmlTestSuiteParser testSuiteParser = new XmlTestSuiteParser(testSuiteFileName))
                 {
                     TestSuite parsedTestSuite = testSuiteParser.Parse();
@@ -97,7 +114,14 @@ namespace Accipio.Console
             }
         }
 
-        private string businessActionsSchemaFileName;
+        private static string CheckIfFileExists(string fileName)
+        {
+            if (!File.Exists(fileName))
+                throw new IOException(string.Format(CultureInfo.InvariantCulture, "File {0} does not exists.", fileName));
+
+            return fileName;
+        }
+
         private string businessActionsXmlFileName;
         private readonly IConsoleCommand nextCommandInChain;
         private List<string> testSuitesFileNames;
