@@ -12,7 +12,7 @@ namespace ProjectPilot.Tests.Framework.Metrics
         {
             ILocStats locStats = new LocStats();
 
-            Stream stream = File.OpenRead(@"\PilotProject\Data\Samples\LocSample.cs");
+            Stream stream = File.OpenRead(@"..\..\..\Data\Samples\LocSample.cs");
             
             LocStatsData data = locStats.CountLocString(stream);
 
