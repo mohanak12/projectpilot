@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Accipio;
 
 namespace Accipio
 {
@@ -14,6 +13,23 @@ namespace Accipio
         {
             this.testCaseName = testCaseName;
             this.testCaseCategory = testCaseCategory;
+        }
+
+        /// <summary>
+        /// Adds test case tag to list of tags
+        /// </summary>
+        /// <param name="tag">Test case tag name</param>
+        public void AddTestCaseTag(string tag)
+        {
+            tags.Add(tag);
+        }
+
+        /// <summary>
+        /// Gets test case tags
+        /// </summary>
+        public IList<string> GetTestCaseTags
+        {
+            get { return tags; }
         }
 
         /// <summary>
@@ -98,7 +114,7 @@ namespace Accipio
         /// Collection of Test actions.
         /// </summary>
         private readonly List<TestAction> testActions = new List<TestAction>();
-
+        private readonly List<string> tags = new List<string>();
         private readonly string testCaseName;
         private readonly string testCaseCategory = "Smoke";
     }

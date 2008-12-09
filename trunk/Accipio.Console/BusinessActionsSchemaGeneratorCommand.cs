@@ -25,13 +25,7 @@ namespace Accipio.Console
         /// </summary>
         public string OutputFile
         {
-            get 
-            {
-                if (outputFileName == null)
-                    return XsdOutputFileName;
-            
-                return outputFileName;
-            }
+            get { return outputFileName; }
         }
 
         /// <summary>
@@ -57,18 +51,20 @@ namespace Accipio.Console
             }
 
             if (args.Length < 2)
-            {
                 throw new ArgumentException("Missing business actions XML file name.");
-            }
 
             // set xml file name
-            businessActionXmlFileName = args[1];
+            businessActionsXmlFileName = args[1];
 
-            if (args.Length == 3)
-            {
-                outputFileName = args[2];
-            }
-            
+            FileInfo fileInfo = new FileInfo(businessActionsXmlFileName);
+
+            // check if file exists
+            if (!fileInfo.Exists)
+                throw new IOException(string.Format(CultureInfo.InvariantCulture, "File {0} does not exists.", businessActionsXmlFileName));
+
+            // set output file name
+            outputFileName = Path.ChangeExtension(fileInfo.Name, "xsd");
+
             return this;
         }
 
@@ -77,21 +73,41 @@ namespace Accipio.Console
         /// </summary>
         public void ProcessCommand()
         {
+            // create instance of class XmlValidationHelper
             XmlValidationHelper helper = new XmlValidationHelper();
             // validating XML with schema file
             // xml document must have at least one action element
-            helper.ValidateXmlDocument(businessActionXmlFileName, XsdValidationSchemaFileName);
+            helper.ValidateXmlDocument(businessActionsXmlFileName, AccipioActoinsXsdFileName);
 
             // parse XML file
-            BusinessActionData businessActionData = ParseXmlToObject(businessActionXmlFileName);
+            BusinessActionData businessActionData = ParseXmlToObject(businessActionsXmlFileName);
 
             // generating XSD schema file with business actions validation parameters
             XmlDocument xmlSchemaDocument = GenerateXsdSchema(businessActionData);
 
             // write xsd schema to file
-            using (Stream xsdSchemaDocument = File.OpenWrite(OutputFile))
+            using (Stream xsdSchemaDocument = File.OpenWrite(outputFileName))
             {
                 xmlSchemaDocument.Save(xsdSchemaDocument);
+            }
+
+            System.Console.WriteLine(string.Format(
+                CultureInfo.InvariantCulture, 
+                "Xsd schema file was created. Full path to file {0}", 
+                new FileInfo(outputFileName).FullName));
+        }
+
+        private void ChangeSchemaAttributes(XmlNode xmlElement, XmlNamespaceManager nsman)
+        {
+            XmlNode node = xmlElement.SelectSingleNode("//xs:schema", nsman);
+
+            foreach (XmlAttribute attribute in node.Attributes)
+            {
+                if (attribute.Name == "xmlns")
+                    attribute.Value = attribute.Value.Replace("@test.suite.template@", outputFileName);
+
+                if (attribute.Name == "targetNamespace")
+                    attribute.Value = attribute.Value.Replace("@test.suite.template@", outputFileName);
             }
         }
 
@@ -113,11 +129,6 @@ namespace Accipio.Console
                 xmlAttribute.Value = entry.ActionId;
                 newNode.Attributes.Append(xmlAttribute);
 
-                // add attribute type
-                xmlAttribute = xmlDocument.CreateAttribute("type");
-                xmlAttribute.Value = "xs:string";
-                newNode.Attributes.Append(xmlAttribute);
-
                 // add attribute minOccurs
                 xmlAttribute = xmlDocument.CreateAttribute("minOccurs");
                 xmlAttribute.Value = "0";
@@ -126,6 +137,13 @@ namespace Accipio.Console
                 if (entry.ActionParameters.Count > 0)
                 {
                     CreateComplexTypeNode(xmlDocument, newNode, nameSpace, entry.ActionParameters);
+                }
+                else
+                {
+                    // add attribute type
+                    xmlAttribute = xmlDocument.CreateAttribute("type");
+                    xmlAttribute.Value = "xs:string";
+                    newNode.Attributes.Append(xmlAttribute);
                 }
 
                 // append child node
@@ -155,6 +173,9 @@ namespace Accipio.Console
                 string nameSpace = xmlElement.GetAttribute("xmlns:xs");
                 XmlNamespaceManager nsman = new XmlNamespaceManager(xmlDocument.NameTable);
                 nsman.AddNamespace("xs", nameSpace);
+
+                // change xmlns name and targetNamespace
+                ChangeSchemaAttributes(xmlElement, nsman);
 
                 XmlNode xmlNode = xmlElement.SelectSingleNode("//xs:element[@name='steps']/xs:complexType/xs:sequence", nsman);
                 CreateChildNodes(xmlDocument, xmlNode, nameSpace, businessActionData);
@@ -215,11 +236,10 @@ namespace Accipio.Console
             return businessActionData;
         }
 
-        private string businessActionXmlFileName;
+        private string businessActionsXmlFileName;
         private readonly IConsoleCommand nextCommandInChain;
         private string outputFileName;
-        private const string XsdOutputFileName = @"BusinessActionValidationSchema.xsd";
-        private const string XsdValidationSchemaFileName = @"..\..\..\Data\Samples\AccipioActions.xsd"; 
-        private const string XsdTemplateFileName = @"..\..\..\Data\Samples\TestSuiteTemplate.xsd"; 
+        private const string AccipioActoinsXsdFileName = @"..\..\..\Data\Samples\AccipioActions.xsd";
+        private const string XsdTemplateFileName = @"..\..\..\Data\Samples\TestSuiteTemplate.xsd";
     }
 }

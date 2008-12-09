@@ -15,10 +15,4 @@
             <AssertOperationSuccessful/>
         </steps>
     </case>
-	
-	<case id="TestCase2">
-		<steps>
-			<AssertOperationSuccessful />
-		</steps>
-	</case>
 </suite>

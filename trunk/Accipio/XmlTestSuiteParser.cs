@@ -135,28 +135,19 @@ namespace Accipio
                 switch (xmlReader.Name)
                 {
                     case "description":
-                        {
-                            testCase.TestCaseDescription = xmlReader.ReadElementContentAsString();
-                            break;
-                        }
-
+                        testCase.TestCaseDescription = xmlReader.ReadElementContentAsString();
+                        break;
+                        
                     case "tags":
-                        {
-                            //TODO: Add tags collection to test case
-                            string tag = xmlReader.ReadElementContentAsString();
-                            break;
-                        }
+                        testCase.AddTestCaseTag(xmlReader.ReadElementContentAsString());
+                        break;
 
                     case "steps":
-                        {
-                            ReadAction(testCase, xmlReader);
-                            break;
-                        }
-
+                        ReadAction(testCase, xmlReader);
+                        break;
+                
                     default:
-                        {
-                            throw new NotSupportedException("ReadTestCase -> " + xmlReader.Name);
-                        }
+                        throw new NotSupportedException("ReadTestCase -> " + xmlReader.Name);
                 }
             }
 
