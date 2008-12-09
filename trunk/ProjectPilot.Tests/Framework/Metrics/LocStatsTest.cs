@@ -8,56 +8,11 @@ namespace ProjectPilot.Tests.Framework.Metrics
     public class LocStatsTest
     {
         [Test]
-        public void Test1()
-        {
-            ILocStats locStats = new LocStats();
-            LocStatsData data = locStats.CountLocString(
-@"// this is one comment
-/// this is another comment
-this is a statement
-
-statement // with comment");
-
-            Assert.AreEqual(3, data.Cloc);
-            Assert.AreEqual(1, data.Eloc);
-            Assert.AreEqual(5, data.Sloc);
-        }
-
-        [Test, Ignore]
-        public void Test2()
-        {
-            ILocStats locStats = new LocStats();
-            LocStatsData data = locStats.CountLocString(
-@"// this is one comment
-/// this is another comment
-
-
-
-
-for(i=0;i<x;i++)
-{
-     sdf; //iteration
-     sdf;
-}
-///xml comment
-
-this is a statement //comment
-
-
-statement // with comment"
-);
-
-            Assert.AreEqual(6, data.Cloc);
-            Assert.AreEqual(7, data.Eloc);
-            Assert.AreEqual(17, data.Sloc);
-        }
-
-        [Test,Ignore]
-        public void TestSampleFile()
+        public void TestLocOnSampleFile()
         {
             ILocStats locStats = new LocStats();
 
-            Stream stream = File.OpenRead(@"c:\PilotProject\Data\Samples\LocSample.cs");
+            Stream stream = File.OpenRead(@"\PilotProject\Data\Samples\LocSample.cs");
             
             LocStatsData data = locStats.CountLocString(stream);
 
