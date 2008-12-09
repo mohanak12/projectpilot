@@ -1,7 +1,7 @@
 ﻿/*Sample file for counting the number of comment in .cs files
  The result should be:
  Single lines of code (sloc):   56
- Number of comments (cloc):      8 
+ comment lines of code (cloc):  14 
  Empty lines of code: (eloc):    9 */
 
 using System;
@@ -10,7 +10,7 @@ using System;
 namespace ProjectPilot.Framework.Metrics
 {
     /*old style multiline comment: //not another comment
-      still same comment /*not another comment
+      another line of comment /*not another comment
       finished: */
     public class LocStatsData
     {

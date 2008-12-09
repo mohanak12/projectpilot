@@ -16,7 +16,7 @@ namespace ProjectPilot.Tests.Framework.Metrics
             
             LocStatsData data = locStats.CountLocString(stream);
 
-            Assert.AreEqual(8, data.Cloc);
+            Assert.AreEqual(14, data.Cloc);
             Assert.AreEqual(9, data.Eloc);
             Assert.AreEqual(56, data.Sloc);
         }
