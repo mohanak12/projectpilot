@@ -14,7 +14,7 @@
        <parameter name="accountId" type="int"/>
     </action>
 
-    <action id="ClickActionTranfer">
+    <action id="ClickActionTransfer">
        <description>Click on the "Transfer" button in the account actions list</description>
     </action>
 

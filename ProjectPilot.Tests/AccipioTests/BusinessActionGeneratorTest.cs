@@ -24,10 +24,10 @@ namespace ProjectPilot.Tests.AccipioTests
             Assert.IsTrue(File.Exists(outputFile));
         }
 
-        [Test, ExpectedException(typeof(IOException))]
+        [Test, ExpectedException(typeof(System.IO.IOException))]
         public void GenerateXsdSchemaFileNotExistsTest()
         {
-            string fileName = @"..\..\..\Data\Samples\AccipioActions123.xml";
+            string fileName = @"AccipioActions123.xml";
             IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null).ParseArguments(new string[] { "baschema", fileName });
         }
 

@@ -31,7 +31,7 @@
                         <xs:attribute name="accountId" type="xs:int" />
                       </xs:complexType>
                     </xs:element>
-                    <xs:element name="ClickActionTranfer" minOccurs="0" type="xs:string" />
+                    <xs:element name="ClickActionTransfer" minOccurs="0" type="xs:string" />
                     <xs:element name="EnterTransferAmount" minOccurs="0">
                       <xs:complexType>
                         <xs:attribute name="transferAmount" type="xs:decimal" />
