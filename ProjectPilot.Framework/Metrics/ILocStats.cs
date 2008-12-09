@@ -14,13 +14,6 @@ namespace ProjectPilot.Framework.Metrics
         /// <summary>
         /// This method counts the loc statistics.
         /// </summary>
-        /// <param name="code">The code as a string object.</param>
-        /// <returns>LocStatsData object with the results.</returns>
-        LocStatsData CountLocString(string code);
-
-        /// <summary>
-        /// This method counts the loc statistics.
-        /// </summary>
         /// <param name="stream">The stream representing a single
         /// file from which we count the loc statistics.</param>
         /// <returns>LocStatsData object with the results.</returns>
