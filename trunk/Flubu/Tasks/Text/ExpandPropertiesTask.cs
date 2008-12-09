@@ -23,10 +23,16 @@ namespace Flubu.Tasks.Text
             }
         }
 
-        public ExpandPropertiesTask (string sourceFileName, string expandedFileName)
+        public ExpandPropertiesTask (
+            string sourceFileName, 
+            string expandedFileName,
+            Encoding sourceFileEncoding,
+            Encoding expandedFileEncoding)
         {
             this.sourceFileName = sourceFileName;
             this.expandedFileName = expandedFileName;
+            this.sourceFileEncoding = sourceFileEncoding;
+            this.expandedFileEncoding = expandedFileEncoding;
         }
 
         public void AddPropertyToExpand (string propertyText, string value)
@@ -37,14 +43,12 @@ namespace Flubu.Tasks.Text
         protected override void DoExecute (IScriptExecutionEnvironment environment)
         {
             string fileContents = null;
-            Encoding encoding;
 
             using (FileStream stream = File.Open (sourceFileName, FileMode.Open, FileAccess.Read))
             {
-                using (StreamReader reader = new StreamReader (stream))
+                using (StreamReader reader = new StreamReader (stream, sourceFileEncoding))
                 {
                     fileContents = reader.ReadToEnd ();
-                    encoding = reader.CurrentEncoding;
                 }
             }
 
@@ -53,14 +57,15 @@ namespace Flubu.Tasks.Text
 
             using (FileStream stream = File.Open (expandedFileName, FileMode.Create, FileAccess.Write))
             {
-                using (StreamWriter writer = new StreamWriter (stream, encoding))
+                using (StreamWriter writer = new StreamWriter (stream, expandedFileEncoding))
                     writer.Write (fileContents);
             }
         }
 
-        private string sourceFileName;
+        private Encoding expandedFileEncoding;
         private string expandedFileName;
-
         private IDictionary<string, string> properties = new Dictionary<string, string> ();
+        private Encoding sourceFileEncoding;
+        private string sourceFileName;
     }
 }
