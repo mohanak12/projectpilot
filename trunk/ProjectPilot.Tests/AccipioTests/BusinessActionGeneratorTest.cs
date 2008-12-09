@@ -15,17 +15,12 @@ namespace ProjectPilot.Tests.AccipioTests
         public void GenerateXsdValidationSchemaTest()
         {
             string fileName = @"..\..\..\Data\Samples\AccipioActions.xml";
-            IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null);
-            string outputFile = ((BusinessActionsSchemaGeneratorCommand)consoleCommand).OutputFile;
-            Assert.AreEqual(outputFile, "businessActionValidationSchema.xsd");
-
-            // set output file name
-            ((BusinessActionsSchemaGeneratorCommand) consoleCommand).OutputFile = "OutpuXsdFile.xsd";
-            consoleCommand.ParseArguments(new string[] { "baschema", fileName });
+            IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null).ParseArguments(new string[] { "baschema", fileName });
+            // process command
             consoleCommand.ProcessCommand();
 
             // get output file
-            outputFile = ((BusinessActionsSchemaGeneratorCommand) consoleCommand).OutputFile;
+            string outputFile = ((BusinessActionsSchemaGeneratorCommand) consoleCommand).OutputFile;
             Assert.IsTrue(File.Exists(outputFile));
         }
 
@@ -55,6 +50,18 @@ namespace ProjectPilot.Tests.AccipioTests
         {
             IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null);
             Assert.IsNull(consoleCommand.ParseArguments(new string[] { "test", string.Empty }));
+        }
+
+        [Test]
+        public void ParseAllArgumentsTest()
+        {
+            string fileName = @"..\..\..\Data\Samples\AccipioActions.xml";
+            string outputFileName = @"output.xsd";
+
+            IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null).
+                ParseArguments(new string[] { "baschema", fileName, outputFileName });
+
+            Assert.AreEqual(((BusinessActionsSchemaGeneratorCommand)consoleCommand).OutputFile, outputFileName);
         }
 
         [Test]
