@@ -152,10 +152,13 @@ namespace ProjectPilot.BuildScripts
             AddProgramArgument(@"/out:{0}", fxReportPath);
             AddProgramArgument(@"/dictionary:CustomDictionary.xml");
             AddProgramArgument(@"/ignoregeneratedcode");
-            RunProgram(MakePathFromRootDir(@".\lib\Microsoft FxCop 1.36\FxCopCmd.exe"));
+            RunProgram(MakePathFromRootDir(@".\lib\Microsoft FxCop 1.36\FxCopCmd.exe"), true);
 
-            // check if the report file was generated
-            if (File.Exists(fxReportPath))
+            // FxCop returns different exit codes for different things
+            // see http://msdn.microsoft.com/en-us/library/bb164705(VS.80).aspx for the list of exit codes
+            // exit code 4 means "Project load error" but it occurs when the old FxCop violations exist
+            // which are then removed from the code
+            if (LastExitCode != 0 && LastExitCode != 4)
             {
                 if (false == IsRunningUnderCruiseControl)
                 {
@@ -163,7 +166,7 @@ namespace ProjectPilot.BuildScripts
                     AddProgramArgument(fxProjectPath);
                     RunProgram(MakePathFromRootDir(@".\lib\Microsoft FxCop 1.36\FxCop.exe"));
                 }
-                else
+                else if (File.Exists(fxReportPath))
                     File.Copy(fxReportPath, ccnetDir);
 
                 Fail("FxCop found violations in the code.");

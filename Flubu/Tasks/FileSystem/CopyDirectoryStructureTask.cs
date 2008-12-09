@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -9,6 +10,29 @@ namespace Flubu.Tasks.FileSystem
     /// </summary>
     public class CopyDirectoryStructureTask : TaskBase
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CopyDirectoryStructureTask"/> class
+        /// using a specified source and destination path and an indicator whether to overwrite existing files.
+        /// </summary>
+        /// <param name="sourcePath">The source path.</param>
+        /// <param name="destinationPath">The destination path.</param>
+        /// <param name="overwriteExisting">if set to <c>true</c> the task will overwrite existing destination files.</param>
+        public CopyDirectoryStructureTask (string sourcePath, string destinationPath, bool overwriteExisting)
+        {
+            this.sourcePath = sourcePath;
+            this.destinationPath = destinationPath;
+            this.overwriteExisting = overwriteExisting;
+        }
+
+        /// <summary>
+        /// Gets the list of all destination files that were copied.
+        /// </summary>
+        /// <value>The list of all destination files that were copied.</value>
+        public IList<string> CopiedFilesList
+        {
+            get { return copiedFilesList; }
+        }
+
         /// <summary>
         /// Gets or sets the exclusion regular expression pattern for files.
         /// </summary>
@@ -50,20 +74,6 @@ namespace Flubu.Tasks.FileSystem
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CopyDirectoryStructureTask"/> class
-        /// using a specified source and destination path and an indicator whether to overwrite existing files.
-        /// </summary>
-        /// <param name="sourcePath">The source path.</param>
-        /// <param name="destinationPath">The destination path.</param>
-        /// <param name="overwriteExisting">if set to <c>true</c> the task will overwrite existing destination files.</param>
-        public CopyDirectoryStructureTask (string sourcePath, string destinationPath, bool overwriteExisting)
-        {
-            this.sourcePath = sourcePath;
-            this.destinationPath = destinationPath;
-            this.overwriteExisting = overwriteExisting;
-        }
-
-        /// <summary>
         /// Copies a directory tree from the source to the destination.
         /// </summary>
         /// <param name="environment">The script execution environment.</param>
@@ -86,6 +96,8 @@ namespace Flubu.Tasks.FileSystem
         /// <param name="environment">The script execution environment.</param>
         protected override void DoExecute (IScriptExecutionEnvironment environment)
         {
+            copiedFilesList = new List<string>();
+
             Regex inclusionRegex = null;
             if (inclusionPattern != null)
                 inclusionRegex = new Regex(inclusionPattern, RegexOptions.IgnoreCase | RegexOptions.Singleline);
@@ -130,6 +142,7 @@ namespace Flubu.Tasks.FileSystem
                         "Copied file '{0}' to '{1}'", 
                         fileSystemInfo.FullName,
                         filePath);
+                    copiedFilesList.Add(filePath);
                 }
                 else
                 {
@@ -152,5 +165,6 @@ namespace Flubu.Tasks.FileSystem
         private string inclusionPattern;
         private bool overwriteExisting;
         private string sourcePath;
+        private List<string> copiedFilesList;
     }
 }

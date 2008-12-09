@@ -34,6 +34,16 @@ namespace Flubu
         }
 
         /// <summary>
+        /// Gets the list of all copied destination files that were copied during the last execution of the <see cref="CopyDirectoryStructure(string,string,bool)"/>
+        /// or <see cref="CopyDirectoryStructure(string,string,bool,string,string)"/> call.
+        /// </summary>
+        /// <value>The last copied files list.</value>
+        public IList<string> LastCopiedFilesList
+        {
+            get { return lastCopiedFilesList; }
+        }
+
+        /// <summary>
         /// Gets the exit code of the last external program that was run by the runner.
         /// </summary>
         /// <value>The exit code of the last external program.</value>
@@ -97,7 +107,9 @@ namespace Flubu
 
         public FlubuRunner CopyDirectoryStructure (string sourcePath, string destinationPath, bool overwriteExisting)
         {
-            CopyDirectoryStructureTask.Execute(scriptExecutionEnvironment, sourcePath, destinationPath, overwriteExisting);
+            CopyDirectoryStructureTask task = new CopyDirectoryStructureTask(sourcePath, destinationPath, overwriteExisting);
+            RunTask(task);
+            lastCopiedFilesList = task.CopiedFilesList;
             return this;
         }
 
@@ -111,7 +123,12 @@ namespace Flubu
             CopyDirectoryStructureTask task = new CopyDirectoryStructureTask(sourcePath, destinationPath, overwriteExisting);
             task.InclusionPattern = inclusionPattern;
             task.ExclusionPattern = exclusionPattern;
-            return RunTask(task);
+            
+            RunTask(task);
+
+            lastCopiedFilesList = task.CopiedFilesList;
+
+            return this;
         }
 
         public FlubuRunner CopyFile (
@@ -208,9 +225,15 @@ namespace Flubu
         public FlubuRunner ExpandProperties (
             string sourceFileName, 
             string expandedFileName,
+            Encoding sourceFileEncoding,
+            Encoding expandedFileEncoding,
             IDictionary<string, string> properties)
         {
-            ExpandPropertiesTask task = new ExpandPropertiesTask(sourceFileName, expandedFileName);
+            ExpandPropertiesTask task = new ExpandPropertiesTask(
+                sourceFileName, 
+                expandedFileName,
+                sourceFileEncoding,
+                expandedFileEncoding);
 
             foreach (KeyValuePair<string, string> pair in properties)
                 task.AddPropertyToExpand(pair.Key, pair.Value);
@@ -496,6 +519,7 @@ namespace Flubu
             scriptExecutionEnvironment.Logger.LogExternalProgramOutput(e.Data);
         }
 
+        private IList<string> lastCopiedFilesList;
         private bool hasFailed;
         private int lastExitCode;
         private List<string> programArgs = new List<string>();
