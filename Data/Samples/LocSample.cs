@@ -9,7 +9,7 @@ using System;
 // Single comment
 namespace ProjectPilot.Framework.Metrics
 {
-    /*old style multiline comment: //not another comment
+    /** multiline xml comment: //not another comment
       another line of comment /*not another comment
       finished: */
     public class LocStatsData
