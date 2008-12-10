@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Flubu.BuildRunner.VSSolutionBrowsing;
+using Flubu.Builds.VSSolutionBrowsing;
 
-namespace Flubu.BuildRunner.VSSolutionBrowsing
+namespace Flubu.Builds.VSSolutionBrowsing
 {
     /// <summary>
     /// A dictionary of registered VisualStudio project types.

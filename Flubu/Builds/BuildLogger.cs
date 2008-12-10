@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using System.Globalization;
 
-namespace Flubu.BuildRunner
+namespace Flubu.Builds
 {
     public class BuildLogger : IBuildLogger
     {

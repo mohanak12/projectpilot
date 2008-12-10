@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
 using Flubu;
-using Flubu.BuildRunner;
-using Flubu.BuildRunner.VSSolutionBrowsing;
+using Flubu.Builds;
+using Flubu.Builds.VSSolutionBrowsing;
 using MbUnit.Framework;
 
 namespace ProjectPilot.Tests.BuildScriptsTests

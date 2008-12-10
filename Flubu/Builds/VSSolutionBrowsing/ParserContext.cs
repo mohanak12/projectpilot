@@ -1,4 +1,4 @@
-namespace Flubu.BuildRunner.VSSolutionBrowsing
+namespace Flubu.Builds.VSSolutionBrowsing
 {
     internal class ParserContext
     {
