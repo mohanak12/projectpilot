@@ -62,6 +62,7 @@ namespace Accipio.Console
             for (int i = 3; i < args.Length; i++)
             {
                 string testSuiteXmlFile = CheckIfFileExists(args[i]);
+                // validate xml with xsd schema
                 xmlValidationHelper.ValidateXmlDocument(testSuiteXmlFile, testSuiteXsdValidationSchema);
                 testSuitesFileNames.Add(testSuiteXmlFile);
             }
@@ -83,16 +84,14 @@ namespace Accipio.Console
         {
             foreach (string testSuiteFileName in testSuitesFileNames)
             {
-                // validate xml with xsd schema
-
                 using (XmlTestSuiteParser testSuiteParser = new XmlTestSuiteParser(testSuiteFileName))
                 {
                     TestSuite parsedTestSuite = testSuiteParser.Parse();
                     parsedTestSuite.BusinessActionData = businessActionData;
 
                     // generate c# code
-                    // TODO: add business actions descriptions to generated code
                     string codeFileName = Path.ChangeExtension(testSuiteFileName, ".cs");
+                    System.Console.WriteLine("Creating '{0}'", codeFileName);
 
                     using (ICodeWriter writer = new FileCodeWriter(codeFileName))
                     {
@@ -101,7 +100,6 @@ namespace Accipio.Console
                     }
 
                     // generate html test specifications
-                    // TODO: add business actions descriptions to test spec
                     string htmlFileName = Path.ChangeExtension(testSuiteFileName, ".html");
                     System.Console.WriteLine("Creating '{0}'", htmlFileName);
 
