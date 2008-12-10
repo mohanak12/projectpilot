@@ -125,17 +125,6 @@ namespace Flubu.Builds
             return (BuildRunner) RunProgram(@"C:\Windows\Microsoft.NET\Framework\v3.5\msbuild.exe");           
         }
 
-        /// <summary>
-        /// Formats the string (using <see cref="CultureInfo.InvariantCulture"/>).
-        /// </summary>
-        /// <param name="format">The format string.</param>
-        /// <param name="args">The arguments.</param>
-        /// <returns>A formatted string.</returns>
-        public static string FormatString(string format, params object[] args)
-        {
-            return String.Format(CultureInfo.InvariantCulture, format, args);
-        }
-
         public BuildRunner FxCop()
         {
             LogTarget("FxCop");
@@ -272,11 +261,9 @@ namespace Flubu.Builds
             return this;
         }
 
-        public void LogTarget (string targetName)
+        public override BuildRunner LogTarget(string targetName)
         {
-            Log(String.Empty);
-            Log("{0}:", targetName);
-            Log(String.Empty);
+            base.LogTarget(targetName);
 
             if (IsRunningUnderCruiseControl)
             {
@@ -309,6 +296,8 @@ namespace Flubu.Builds
                     }
                 }
             }
+
+            return this;
         }
 
         public BuildRunner PrepareBuildDirectory()
