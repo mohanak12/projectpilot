@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.IO;
 using System.Security.AccessControl;
 using System.Text;
 using Flubu.Tasks.Configuration;
@@ -22,7 +23,8 @@ using Microsoft.Win32;
 
 namespace Flubu
 {
-    public class FlubuRunner : IDisposable
+    public class FlubuRunner<TRunner> : IDisposable
+        where TRunner : FlubuRunner<TRunner>
     {
         public FlubuRunner(string scriptName, string logFileName, int howManyOldLogsToKeep)
         {
@@ -57,63 +59,72 @@ namespace Flubu
             get { return scriptExecutionEnvironment; }
         }
 
-        public FlubuRunner AddUserToGroup (string userName, string group)
+        public TRunner AddUserToGroup (string userName, string group)
         {
             AddUserToGroupTask.Execute(scriptExecutionEnvironment,  userName, group);
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner AddProgramArgument(string argument)
+        public TRunner AddProgramArgument(string argument)
         {
             programArgs.Add(argument);
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner AddProgramArgument(string format, params object[] args)
+        public TRunner AddProgramArgument(string format, params object[] args)
         {
             programArgs.Add(string.Format(CultureInfo.InvariantCulture, format, args));
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner AskUser (string prompt, string configurationSettingName)
+        public TRunner AskUser(string prompt, string configurationSettingName)
         {
             AskUserTask.Execute(scriptExecutionEnvironment, prompt, configurationSettingName);
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner CheckIfServiceExists (string serviceName, string configurationSetting)
+        public TRunner CheckIfServiceExists(string serviceName, string configurationSetting)
         {
             CheckIfServiceExistsTask.Execute(scriptExecutionEnvironment, serviceName, configurationSetting);
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner ControlApplicationPool (
+        /// <summary>
+        /// Marks the runner as having completed its work sucessfully. This is the last method
+        /// that should be called on the runner before it gets disposed.
+        /// </summary>
+        public void Complete()
+        {
+            hasFailed = false;
+        }
+
+        public TRunner ControlApplicationPool(
             string applicationPoolName, 
             ControlApplicationPoolAction action,
             bool failIfNotExist)
         {
             ControlApplicationPoolTask.Execute(scriptExecutionEnvironment, applicationPoolName, action, failIfNotExist);
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner ControlWindowsService (
+        public TRunner ControlWindowsService(
             string serviceName, 
             ControlWindowsServiceMode mode, 
             TimeSpan timeout)
         {
             ControlWindowsServiceTask.Execute(scriptExecutionEnvironment, serviceName, mode, timeout);
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner CopyDirectoryStructure (string sourcePath, string destinationPath, bool overwriteExisting)
+        public TRunner CopyDirectoryStructure(string sourcePath, string destinationPath, bool overwriteExisting)
         {
             CopyDirectoryStructureTask task = new CopyDirectoryStructureTask(sourcePath, destinationPath, overwriteExisting);
             RunTask(task);
             lastCopiedFilesList = task.CopiedFilesList;
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner CopyDirectoryStructure(
+        public TRunner CopyDirectoryStructure(
             string sourcePath, 
             string destinationPath, 
             bool overwriteExisting,
@@ -128,31 +139,40 @@ namespace Flubu
 
             lastCopiedFilesList = task.CopiedFilesList;
 
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner CopyFile (
+        public TRunner CopyFile(
             string sourceFileName,
             string destinationFileName,
             bool overwrite)
         {
             CopyFileTask.Execute(scriptExecutionEnvironment, sourceFileName, destinationFileName, overwrite);
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner CreateApplicationPool (string applicationPoolName, CreateApplicationPoolMode mode)
+        public TRunner CreateApplicationPool(string applicationPoolName, CreateApplicationPoolMode mode)
         {
             CreateApplicationPoolTask.Execute(scriptExecutionEnvironment, applicationPoolName, mode);
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner CreateDirectory (string directoryPath)
+        /// <summary>
+        /// Creates a directory.
+        /// </summary>
+        /// <param name="directoryPath">The directory path.</param>
+        /// <param name="failIfAlreadyExists">if set to <c>true</c>, the method will
+        /// throw an exception if the directory already exists.</param>
+        /// <returns>The same instance of this <see cref="TRunner"/>.</returns>
+        public TRunner CreateDirectory(string directoryPath, bool failIfAlreadyExists)
         {
-            CreateDirectoryTask.Execute(scriptExecutionEnvironment, directoryPath);
-            return this;
+            if (false == Directory.Exists(directoryPath) || failIfAlreadyExists)
+                Directory.CreateDirectory(directoryPath);
+
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner CreateMessageQueue (
+        public TRunner CreateMessageQueue(
             string messageQueuePath, 
             bool isTransactional,
             CreateMessageQueueMode mode)
@@ -161,7 +181,7 @@ namespace Flubu
             return RunTask(task);
         }
 
-        public FlubuRunner CreateUserAccount (
+        public TRunner CreateUserAccount(
             CreateUserAccountMode mode,
             string userName,
             string password,
@@ -171,31 +191,41 @@ namespace Flubu
             return RunTask(task);
         }
 
-        public FlubuRunner DeleteDirectory(string directoryPath, bool failIfNotExists)
+        public TRunner DeleteDirectory(string directoryPath, bool failIfNotExists)
         {
             DeleteDirectoryTask.Execute(scriptExecutionEnvironment, directoryPath, failIfNotExists);
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner DeleteFiles(string directoryPath, string filePattern)
+        public TRunner DeleteFiles(string directoryPath, string filePattern)
         {
             DeleteFilesTask.Execute(scriptExecutionEnvironment, directoryPath, filePattern);
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner DeleteUserAccount(string userName)
+        public TRunner DeleteUserAccount(string userName)
         {
             DeleteUserAccountTask.Execute(scriptExecutionEnvironment, userName);
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner DeleteVirtualDirectoryTask (string virtualDirectoryName, bool failIfNotExist)
+        public TRunner DeleteVirtualDirectoryTask(string virtualDirectoryName, bool failIfNotExist)
         {
             DeleteVirtualDirectoryTask task = new DeleteVirtualDirectoryTask(virtualDirectoryName, failIfNotExist);
-            return RunTask(task);
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner EditRegistryValue (
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or
+        /// resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        public TRunner EditRegistryValue(
             RegistryKey rootKey,
             string registryKeyPath,
             string registryValueName,
@@ -207,22 +237,34 @@ namespace Flubu
                 registryKeyPath,
                 registryValueName,
                 registryValueValue);
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner EnsureSqlServerIsRunning (string machineName)
+        public TRunner EnsureSqlServerIsRunning(string machineName)
         {
             EnsureSqlServerIsRunningTask task = new EnsureSqlServerIsRunningTask(machineName);
             return RunTask(task);
         }
 
-        public FlubuRunner ExecuteSqlScript (string connectionString, string scriptFilePath)
+        public TRunner ExecuteSqlCommand(string connectionString, string sqlCommandText)
         {
-            ExecuteSqlScriptTask task = new ExecuteSqlScriptTask(connectionString, scriptFilePath);
-            return RunTask(task);
+            ExecuteSqlScriptTask.ExecuteSqlCommand(
+                this.scriptExecutionEnvironment,
+                connectionString,
+                sqlCommandText);
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner ExpandProperties (
+        public TRunner ExecuteSqlScript(string connectionString, string scriptFilePath)
+        {
+            ExecuteSqlScriptTask.ExecuteSqlScriptFile(
+                this.scriptExecutionEnvironment,
+                connectionString, 
+                scriptFilePath);
+            return ReturnThisTRunner();
+        }
+
+        public TRunner ExpandProperties(
             string sourceFileName, 
             string expandedFileName,
             Encoding sourceFileEncoding,
@@ -254,22 +296,31 @@ namespace Flubu
         }
 
         /// <summary>
-        /// Marks the runner as having completed its work sucessfully. This is the last method
-        /// that should be called on the runner before it gets disposed.
+        /// Executes the specified action for each file in a directory.
         /// </summary>
-        public void Complete()
+        /// <param name="directory">The directory where to look for files.</param>
+        /// <param name="searchPattern">The search pattern - only files matching the pattern will be used.</param>
+        /// <param name="funcToExecute">The action to execute - the argument of the action will be a file name.</param>
+        /// <returns>The same instance of this <see cref="TRunner"/>.</returns>
+        public TRunner ForEachFile(
+            string directory,
+            string searchPattern,
+            Action<string> funcToExecute)
         {
-            hasFailed = false;
+            foreach (string fileName in Directory.GetFiles(directory, searchPattern))
+                funcToExecute(fileName);
+
+            return ReturnThisTRunner();
         }
 
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        public FlubuRunner GetLocalIisVersionTask()
+        public TRunner GetLocalIisVersionTask()
         {
             GetLocalIisVersionTask task = new GetLocalIisVersionTask();
             return RunTask(task);
         }
 
-        public FlubuRunner GetRegistryValue(
+        public TRunner GetRegistryValue(
             RegistryKey rootKey,
             string registryKeyPath,
             string registryValueName,
@@ -281,78 +332,84 @@ namespace Flubu
                 registryKeyPath,
                 registryValueName,
                 configurationSettingName);
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner InstallAssembly(string assemblyFileName)
+        public TRunner InstallAssembly(string assemblyFileName)
         {
             InstallAssemblyTask.Execute(scriptExecutionEnvironment, assemblyFileName);
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner InstallWindowsService (
+        public TRunner InstallWindowsService(
             string executablePath,
             string serviceName, 
             InstallWindowsServiceMode mode)
         {
             InstallWindowsServiceTask.Execute(scriptExecutionEnvironment, executablePath, serviceName, mode);
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner KillProcess (string processName)
+        public TRunner KillProcess(string processName)
         {
             KillProcessTask.Execute(scriptExecutionEnvironment, processName);
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner Log (string format, params object[] args)
+        public TRunner Log(string format, params object[] args)
         {
             scriptExecutionEnvironment.Logger.Log(format, args);
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner LogEnvironment()
+        public TRunner LogEnvironment()
         {
             LogScriptEnvironmentTask task = new LogScriptEnvironmentTask();
             return RunTask(task);
         }
 
-        public FlubuRunner ReadConfigurationFromFile(string configurationFileName)
+        public TRunner PurgeMessageQueue (string messageQueuePath)
+        {
+            PurgeMessageQueueTask.Execute(scriptExecutionEnvironment, messageQueuePath);
+            return ReturnThisTRunner();
+        }
+
+        public TRunner ReadConfigurationFromFile(string configurationFileName)
         {
             ReadConfigurationTask.ReadFromFile(scriptExecutionEnvironment, configurationFileName);
-            return this;
+            return ReturnThisTRunner();
         }
 
         [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "string")]
-        public FlubuRunner ReadConfigurationFromString(string configurationString)
+        public TRunner ReadConfigurationFromString(string configurationString)
         {
             ReadConfigurationTask.ReadFromString(scriptExecutionEnvironment, configurationString);
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner RegisterAspNet(
+        public TRunner RegisterAspNet(
             string virtualDirectoryName,
             string dotNetVersion)
         {
             RegisterAspNetTask.Execute(scriptExecutionEnvironment, virtualDirectoryName, dotNetVersion);
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner RegisterAspNet (
+        public TRunner RegisterAspNet(
             string virtualDirectoryName,
             string parentVirtualDirectoryName,
             string dotNetVersion)
         {
             RegisterAspNetTask.Execute(scriptExecutionEnvironment, virtualDirectoryName, parentVirtualDirectoryName, dotNetVersion);
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner RunProgram(string programExePath)
+        public TRunner RunProgram(string programExePath)
         {
             return RunProgram(programExePath, false);
         }
 
-        public FlubuRunner RunProgram(string programExePath, bool ignoreExitCodes)
+        public TRunner RunProgram(string programExePath, bool ignoreExitCodes)
         {
             using (Process process = new Process())
             {
@@ -389,16 +446,16 @@ namespace Flubu
 
             programArgs.Clear();
 
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner RunTask(ITask task)
+        public TRunner RunTask(ITask task)
         {
             task.Execute(scriptExecutionEnvironment);
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner SetFileAccessRule (
+        public TRunner SetFileAccessRule(
             string path, 
             string identity, 
             FileSystemRights fileSystemRights, 
@@ -408,7 +465,7 @@ namespace Flubu
             return RunTask(task);
         }
 
-        public FlubuRunner SetFileAccessRule(
+        public TRunner SetFileAccessRule(
             string path,
             IEnumerable<string> identities,
             FileSystemRights fileSystemRights,
@@ -420,7 +477,7 @@ namespace Flubu
             return RunTask(task);
         }
 
-        public FlubuRunner SetRegistryKeyPermissions (
+        public TRunner SetRegistryKeyPermissions(
             RegistryKey rootKey,
             string registryKeyPath,
             string identity,
@@ -434,58 +491,46 @@ namespace Flubu
                 identity,
                 registryRights,
                 accessControlType);
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner SetWindowsServiceAccount (
+        public TRunner SetWindowsServiceAccount(
             string serviceName, 
             string userName, 
             string password)
         {
             SetWindowsServiceAccountTask.Execute(scriptExecutionEnvironment, serviceName, userName, password);
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner Sleep (TimeSpan sleepPeriod)
+        public TRunner Sleep(TimeSpan sleepPeriod)
         {
             SleepTask.Execute(scriptExecutionEnvironment, sleepPeriod);
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner StopWindowsServiceIfExists (string serviceName)
+        public TRunner StopWindowsServiceIfExists(string serviceName)
         {
             StopWindowsServiceIfExistsTask.Execute(scriptExecutionEnvironment, serviceName);
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner TransformXmlFile (string xsltFile, string inputFile, string outputFile)
+        public TRunner TransformXmlFile(string xsltFile, string inputFile, string outputFile)
         {
             XsltTransformTask.Execute(scriptExecutionEnvironment, inputFile, outputFile, xsltFile);
-            return this;
+            return ReturnThisTRunner();
         }
 
-        public FlubuRunner UninstallAssembly (string assemblyName)
+        public TRunner UninstallAssembly(string assemblyName)
         {
             UninstallAssemblyTask task = new UninstallAssemblyTask(assemblyName);
             return RunTask(task);
         }
 
-        public FlubuRunner UninstallWindowsService (string executablePath)
+        public TRunner UninstallWindowsService(string executablePath)
         {
             UninstallWindowsServiceTask task = new UninstallWindowsServiceTask(executablePath);
             return RunTask(task);
-        }
-
-        #region IDisposable Members
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or
-        /// resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         /// <summary>
@@ -506,9 +551,10 @@ namespace Flubu
             }
         }
 
-        private bool disposed;
-
-        #endregion
+        protected TRunner ReturnThisTRunner()
+        {
+            return (TRunner) this;
+        }
 
         private void Process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
         {
@@ -519,8 +565,9 @@ namespace Flubu
             scriptExecutionEnvironment.Logger.LogExternalProgramOutput(e.Data);
         }
 
-        private IList<string> lastCopiedFilesList;
+        private bool disposed;
         private bool hasFailed;
+        private IList<string> lastCopiedFilesList;
         private int lastExitCode;
         private List<string> programArgs = new List<string>();
         private IScriptExecutionEnvironment scriptExecutionEnvironment;

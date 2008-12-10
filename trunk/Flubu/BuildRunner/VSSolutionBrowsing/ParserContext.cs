@@ -1,4 +1,4 @@
-namespace ProjectPilot.BuildScripts.VSSolutionBrowsing
+namespace Flubu.BuildRunner.VSSolutionBrowsing
 {
     internal class ParserContext
     {
@@ -7,7 +7,10 @@ namespace ProjectPilot.BuildScripts.VSSolutionBrowsing
             get { return lineCount; }
         }
 
-        public void IncrementLineCount () { lineCount++; }
+        public void IncrementLineCount ()
+        {
+            lineCount++;
+        }
 
         private int lineCount;
     }

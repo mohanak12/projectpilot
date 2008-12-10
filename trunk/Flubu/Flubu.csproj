@@ -93,6 +93,15 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="BuildRunner\BuildLogger.cs" />
+    <Compile Include="BuildRunner\BuildRunner.cs" />
+    <Compile Include="BuildRunner\IBuildLogger.cs" />
+    <Compile Include="BuildRunner\VSProjectExtendedInfo.cs" />
+    <Compile Include="BuildRunner\VSSolutionBrowsing\ParserContext.cs" />
+    <Compile Include="BuildRunner\VSSolutionBrowsing\VSProjectInfo.cs" />
+    <Compile Include="BuildRunner\VSSolutionBrowsing\VSProjectType.cs" />
+    <Compile Include="BuildRunner\VSSolutionBrowsing\VSProjectTypesDictionary.cs" />
+    <Compile Include="BuildRunner\VSSolutionBrowsing\VSSolution.cs" />
     <Compile Include="IFlubuLogger.cs" />
     <Compile Include="NAntLikeFlubuLogger.cs" />
     <Compile Include="OperatingSystem.cs" />
@@ -135,10 +144,14 @@
     <Compile Include="Tasks\Registry\GetRegistryValueTask.cs" />
     <Compile Include="Tasks\Registry\SetRegistryKeyPermissionsTask.cs" />
     <Compile Include="Tasks\SqlServer\EnsureSqlServerIsRunningTask.cs" />
+    <Compile Include="Tasks\CustomRunnerTask.cs" />
     <Compile Include="Tasks\SqlServer\ExecuteSqlScriptTask.cs" />
     <Compile Include="Tasks\Text\ExpandPropertiesTask.cs" />
+    <Compile Include="Tasks\Text\PeekXmlTask.cs" />
+    <Compile Include="Tasks\Msmq\PurgeMessageQueueTask.cs" />
     <Compile Include="Tasks\Text\UpdateXmlFileTask.cs" />
     <Compile Include="Tasks\Text\XsltTransformTask.cs" />
+    <Compile Include="Tasks\FileSystem\ZipFilesTask.cs" />
     <Compile Include="Tasks\UserAccounts\AddUserToGroupTask.cs" />
     <Compile Include="Tasks\UserAccounts\CreateUserAccountMode.cs" />
     <Compile Include="Tasks\UserAccounts\CreateUserAccountTask.cs" />

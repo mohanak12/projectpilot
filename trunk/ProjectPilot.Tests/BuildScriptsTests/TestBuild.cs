@@ -1,10 +1,9 @@
 ﻿using System;
 using System.IO;
 using Flubu;
+using Flubu.BuildRunner;
+using Flubu.BuildRunner.VSSolutionBrowsing;
 using MbUnit.Framework;
-using ProjectPilot.BuildScripts;
-using ProjectPilot.BuildScripts.SolutionBrowsing.MsBuildSchema;
-using ProjectPilot.BuildScripts.VSSolutionBrowsing;
 
 namespace ProjectPilot.Tests.BuildScriptsTests
 {
@@ -23,11 +22,6 @@ namespace ProjectPilot.Tests.BuildScriptsTests
             {
                 VSProjectType projectType = solution.ProjectTypesDictionary.FindProjectType(projectInfo.ProjectTypeGuid);
                 System.Console.Out.WriteLine("{0} ({1})", projectInfo.ProjectFileName, projectType.ProjectTypeName);
-
-                if (projectType == VSProjectType.CSharpProjectType)
-                {
-                    Project projectFile = projectInfo.LoadProjectFile();
-                }
             });
         }
 

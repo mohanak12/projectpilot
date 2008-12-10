@@ -1,7 +1,7 @@
 using System;
-using ProjectPilot.BuildScripts.VSSolutionBrowsing;
+using Flubu.BuildRunner.VSSolutionBrowsing;
 
-namespace ProjectPilot.BuildScripts
+namespace Flubu.BuildRunner
 {
     public class VSProjectExtendedInfo
     {

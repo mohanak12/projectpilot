@@ -2,9 +2,8 @@ using System;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
-using ProjectPilot.BuildScripts.SolutionBrowsing.MsBuildSchema;
 
-namespace ProjectPilot.BuildScripts.VSSolutionBrowsing
+namespace Flubu.BuildRunner.VSSolutionBrowsing
 {
     /// <summary>
     /// Holds basic information about a specific VisualStudio project.
@@ -51,29 +50,6 @@ namespace ProjectPilot.BuildScripts.VSSolutionBrowsing
         public Guid ProjectGuid
         {
             get { return projectGuid; }
-        }
-
-        /// <summary>
-        /// Loads the project file and returns the corresponding <see cref="Project"/> object.
-        /// </summary>
-        /// <returns><see cref="Project"/> object which holds all the information from the project file.</returns>
-        public Project LoadProjectFile()
-        {
-            //if (log.IsDebugEnabled)
-            //    log.DebugFormat ("LoadProjectFile '{0}'", this.ProjectFileName);
-
-            using (Stream stream = File.Open (Path.Combine (ownerSolution.SolutionDirectoryPath, ProjectFileName), FileMode.Open, FileAccess.Read))
-            {
-                XmlSerializer serializer = new XmlSerializer (typeof(Project), "http://schemas.microsoft.com/developer/msbuild/2003");
-
-                // this removes any namespaces declarations in the object's element tag
-                XmlSerializerNamespaces ns = new XmlSerializerNamespaces ();
-                ns.Add (String.Empty, "http://schemas.microsoft.com/developer/msbuild/2003");
-
-                Project project = (Project) serializer.Deserialize (stream);
-
-                return project;
-            }
         }
 
         public XmlDocument OpenProjectFileAsXmlDocument ()

@@ -51,24 +51,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuildLogger.cs" />
     <Compile Include="BuildScript.cs" />
-    <Compile Include="BuildRunner.cs" />
-    <Compile Include="IBuildLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="VSSolutionBrowsing\MsBuildSchema\CommonTypes.cs" />
-    <Compile Include="VSProjectExtendedInfo.cs" />
-    <Compile Include="VSSolutionBrowsing\MsBuildSchema\MsBuildSchema.cs" />
-    <Compile Include="VSSolutionBrowsing\ParserContext.cs" />
-    <Compile Include="VSSolutionBrowsing\VSProjectInfo.cs" />
-    <Compile Include="VSSolutionBrowsing\VSProjectType.cs" />
-    <Compile Include="VSSolutionBrowsing\VSProjectTypesDictionary.cs" />
-    <Compile Include="VSSolutionBrowsing\VSSolution.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ProjectPilot.snk" />
-    <None Include="VSSolutionBrowsing\MsBuildSchema\Microsoft.Build.Commontypes.xsd" />
-    <None Include="VSSolutionBrowsing\MsBuildSchema\Microsoft.Build.Core.xsd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Flubu\Flubu.csproj">
