@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace ProjectPilot.BuildScripts.VSSolutionBrowsing
+namespace Flubu.BuildRunner.VSSolutionBrowsing
 {
     /// <summary>
     /// Represents a VisualStudio solution.
@@ -172,7 +172,6 @@ namespace ProjectPilot.BuildScripts.VSSolutionBrowsing
 
                 //if (log.IsDebugEnabled)
                 //    log.DebugFormat ("Read line ({0}): {1}", parserContext.LineCount, line);
-
             } 
             while (line.Trim ().Length == 0 || line.StartsWith ("#"));
 

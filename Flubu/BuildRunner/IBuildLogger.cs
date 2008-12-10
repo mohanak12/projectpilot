@@ -1,4 +1,4 @@
-namespace ProjectPilot.BuildScripts
+namespace Flubu.BuildRunner
 {
     public interface IBuildLogger
     {

@@ -72,6 +72,12 @@
     <Compile Include="BrowserType.cs" />
     <Compile Include="BusinessFunctionSteps.cs" />
     <Compile Include="IBusinessActionXmlParser.cs" />
+    <Compile Include="Inservio\Framework\IInservioServicePlugIn.cs" />
+    <Compile Include="Inservio\Framework\IInservioRemoteControl.cs" />
+    <Compile Include="Inservio\Server\MethodRegistration.cs" />
+    <Compile Include="Inservio\Server\ServiceRegistration.cs" />
+    <Compile Include="Inservio\Server\ServicePlugInRegistration.cs" />
+    <Compile Include="Inservio\Server\ServicesRepository.cs" />
     <Compile Include="SeleniumTesterBase.cs" />
     <Compile Include="TestActionParameter.cs" />
     <Compile Include="CSharpTestCodeGenerator.cs" />

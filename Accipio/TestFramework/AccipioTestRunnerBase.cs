@@ -29,17 +29,6 @@ namespace Accipio.TestFramework
         }
 
         /// <summary>
-        /// Sets the description of the test case that will be run.
-        /// </summary>
-        /// <param name="description">The description of the test case.</param>
-        /// <returns>The same instance of the <see cref="TRunner"/> instance.</returns>
-        public TRunner SetDescription (string description)
-        {
-            this.description = description;
-            return (TRunner)this;
-        }
-
-        /// <summary>
         /// Adds a tags to the test case that will be run.
         /// </summary>
         /// <param name="tag">The tag to tag the test case with.</param>
@@ -49,6 +38,17 @@ namespace Accipio.TestFramework
         public TRunner AddTag(string tag)
         {
             this.tags.Add(tag);
+            return (TRunner)this;
+        }
+
+        /// <summary>
+        /// Sets the description of the test case that will be run.
+        /// </summary>
+        /// <param name="description">The description of the test case.</param>
+        /// <returns>The same instance of the <see cref="TRunner"/> instance.</returns>
+        public TRunner SetDescription (string description)
+        {
+            this.description = description;
             return (TRunner)this;
         }
 
