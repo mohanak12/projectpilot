@@ -16,34 +16,53 @@ namespace Accipio
 
         public void Generate(TestSuite testSuite)
         {
+            WriteLine(@"<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"">");
+            WriteLine(@"<html xmlns=""http://www.w3.org/1999/xhtml"" >");
+            WriteLine("<head>");
+            WriteLine("    <title>Test plan</title>");
+            WriteLine("</head>");
             WriteLine("<body>");
+            WriteLine("    <h1>{0}</h1>", testSuite.Id);
+            WriteLine("    <p>Description : <i>{0}</i></p>", testSuite.Description);
             Dictionary<string, TestCase> testCases = testSuite.TestCases;
-            foreach (string testCaseName in testCases.Keys)
+            foreach (KeyValuePair<string, TestCase> keyValuePair in testCases)
             {
-                WriteLine("<h1>{0} <i>{1}</i></h1>", testCaseName, testCases[testCaseName].TestCaseCategory);
-                TestCase testCase = testSuite.GetTestCase(testCaseName);
+                TestCase testCase = keyValuePair.Value;
+                WriteLine("    <h2>{0}</h2>", testCase.TestCaseName);
+                WriteLine("    <p>Category : <i>{0}</i></p>", testCase.TestCaseCategory);
+                WriteLine("    <p>Description : <i>{0}</i></p>", testCase.TestCaseDescription);
+                AddTestCaseTags(testCase);
+                WriteLine("    <ol>");
                 foreach (TestAction testAction in testCase.TestActions)
                 {
-                    WriteLine(testAction);
+                    WriteLine(testAction, testSuite.BusinessActionData);
                 }
+
+                WriteLine("    </ol>");
             }
 
             WriteLine("</body>");
+            WriteLine("</html>");
         }
 
-        private void WriteLine(TestAction testAction)
+        /// <summary>
+        /// Adds list of tags under test case name.
+        /// </summary>
+        /// <param name="testCase">See TestCase <see cref="testCase"/></param>
+        private void AddTestCaseTags(TestCase testCase)
         {
-            if (testAction.HasParameters)
+            if (testCase.GetTestCaseTags.Count > 0)
             {
-                foreach (TestActionParameter actionParameter in testAction.ActionParameters)
+                foreach (string testCaseTag in testCase.GetTestCaseTags)
                 {
-                    WriteLine("<i>{0}</i>{1}<br />", testAction.ActionName, actionParameter.ParameterValue);
+                    WriteLine("    <p>Tag : {0}</p>", testCaseTag);
                 }
             }
-            else
-            {
-                WriteLine("<i>{0}</i><br />", testAction.ActionName);
-            }
+        }
+
+        private void WriteLine(TestAction testAction, BusinessActionData businessActionData)
+        {
+            WriteLine("        <li>{0}</li>", businessActionData.GetAction(testAction.ActionName).Description);
         }
 
         private void WriteLine(string line)
