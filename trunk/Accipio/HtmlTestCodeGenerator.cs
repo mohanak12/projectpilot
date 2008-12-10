@@ -16,7 +16,8 @@ namespace Accipio
 
         public void Generate(TestSuite testSuite)
         {
-            WriteLine(@"<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"">");
+            WriteLine(
+                @"<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"">");
             WriteLine(@"<html xmlns=""http://www.w3.org/1999/xhtml"" >");
             WriteLine("<head>");
             WriteLine("    <title>Test plan</title>");
@@ -35,7 +36,7 @@ namespace Accipio
                 WriteLine("    <ol>");
                 foreach (TestAction testAction in testCase.TestActions)
                 {
-                    WriteLine(testAction, testSuite.BusinessActionData);
+                    AddTestStep(testAction, testSuite.BusinessActionData);
                 }
 
                 WriteLine("    </ol>");
@@ -60,9 +61,27 @@ namespace Accipio
             }
         }
 
-        private void WriteLine(TestAction testAction, BusinessActionData businessActionData)
+        private void AddTestStep(TestAction testAction, BusinessActionData businessActionData)
         {
-            WriteLine("        <li>{0}</li>", businessActionData.GetAction(testAction.ActionName).Description);
+            const string Line = "        <li>{0}</li>";
+            string description = businessActionData.GetAction(testAction.ActionName).Description;
+            string lineFormat = string.Format(CultureInfo.InvariantCulture, Line, description);
+            if (testAction.HasParameters)
+            {
+                string[] parameters = new string[testAction.ActionParametersCount];
+
+                for (int i = 0; i < testAction.ActionParameters.Count; i++)
+                {
+                    TestActionParameter testActionParameter = testAction.ActionParameters[i];
+                    parameters[i] = testActionParameter.ParameterValue;
+                }
+
+                WriteLine(lineFormat, parameters);
+            }
+            else
+            {
+                WriteLine(lineFormat);
+            }
         }
 
         private void WriteLine(string line)
@@ -70,7 +89,7 @@ namespace Accipio
             writer.WriteLine(line);
         }
 
-        private void WriteLine (
+        private void WriteLine(
             string format,
             params object[] args)
         {

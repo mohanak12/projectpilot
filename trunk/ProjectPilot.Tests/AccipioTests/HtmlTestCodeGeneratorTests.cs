@@ -21,8 +21,8 @@ namespace ProjectPilot.Tests.AccipioTests
             };
             
             // Business Action Data
-            const string actionNavigateToDescription = "Navigate to url 'http://test.aspx'";
-            const string actionSelectModuleDescription = "Select module name 'Mobi-Info'";
+            const string actionNavigateToDescription = "Navigate to url '{0}'";
+            const string actionSelectModuleDescription = "Select module name '{0}'";
             const string actionDetailsDescription = "Select details";
             
             BusinessActionData businessActionData = new BusinessActionData();
@@ -47,9 +47,10 @@ namespace ProjectPilot.Tests.AccipioTests
                 new TestActionParameter("url", "http://test.aspx");
             testAction.AddActionParameter(testActionParameter);
             testCase.AddTestAction(testAction);
-            testCase.AddTestAction(new TestAction("SelectModule"));
+            testAction = new TestAction("SelectModule");
             testActionParameter = new TestActionParameter("name", "Mobi-Info");
             testAction.AddActionParameter(testActionParameter);
+            testCase.AddTestAction(testAction);
             testCase.AddTestAction(new TestAction("Details"));
             testSuite.AddTestCase(testCase);
 
