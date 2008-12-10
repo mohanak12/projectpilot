@@ -1,9 +1,8 @@
 using System;
 using System.IO;
 using System.Xml;
-using System.Xml.Serialization;
 
-namespace Flubu.BuildRunner.VSSolutionBrowsing
+namespace Flubu.Builds.VSSolutionBrowsing
 {
     /// <summary>
     /// Holds basic information about a specific VisualStudio project.

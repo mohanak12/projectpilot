@@ -1,6 +1,6 @@
 using System;
 
-namespace Flubu.BuildRunner.VSSolutionBrowsing
+namespace Flubu.Builds.VSSolutionBrowsing
 {
     /// <summary>
     /// Contains information about a specific VisualStudio project type.

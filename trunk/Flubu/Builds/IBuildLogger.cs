@@ -1,4 +1,4 @@
-namespace Flubu.BuildRunner
+namespace Flubu.Builds
 {
     public interface IBuildLogger
     {

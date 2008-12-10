@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace Flubu.BuildRunner.VSSolutionBrowsing
+namespace Flubu.Builds.VSSolutionBrowsing
 {
     /// <summary>
     /// Represents a VisualStudio solution.

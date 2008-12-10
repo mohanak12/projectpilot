@@ -93,15 +93,15 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="BuildRunner\BuildLogger.cs" />
-    <Compile Include="BuildRunner\BuildRunner.cs" />
-    <Compile Include="BuildRunner\IBuildLogger.cs" />
-    <Compile Include="BuildRunner\VSProjectExtendedInfo.cs" />
-    <Compile Include="BuildRunner\VSSolutionBrowsing\ParserContext.cs" />
-    <Compile Include="BuildRunner\VSSolutionBrowsing\VSProjectInfo.cs" />
-    <Compile Include="BuildRunner\VSSolutionBrowsing\VSProjectType.cs" />
-    <Compile Include="BuildRunner\VSSolutionBrowsing\VSProjectTypesDictionary.cs" />
-    <Compile Include="BuildRunner\VSSolutionBrowsing\VSSolution.cs" />
+    <Compile Include="Builds\BuildLogger.cs" />
+    <Compile Include="Builds\BuildRunner.cs" />
+    <Compile Include="Builds\IBuildLogger.cs" />
+    <Compile Include="Builds\VSProjectExtendedInfo.cs" />
+    <Compile Include="Builds\VSSolutionBrowsing\ParserContext.cs" />
+    <Compile Include="Builds\VSSolutionBrowsing\VSProjectInfo.cs" />
+    <Compile Include="Builds\VSSolutionBrowsing\VSProjectType.cs" />
+    <Compile Include="Builds\VSSolutionBrowsing\VSProjectTypesDictionary.cs" />
+    <Compile Include="Builds\VSSolutionBrowsing\VSSolution.cs" />
     <Compile Include="IFlubuLogger.cs" />
     <Compile Include="NAntLikeFlubuLogger.cs" />
     <Compile Include="OperatingSystem.cs" />
