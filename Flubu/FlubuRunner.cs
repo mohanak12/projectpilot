@@ -240,6 +240,20 @@ namespace Flubu
             return ReturnThisTRunner();
         }
 
+        public TRunner EnsureDependenciesExecuted(string targetName)
+        {
+            FlubuRunnerTarget<TRunner> target = targets[targetName];
+            foreach (string dependency in target.Dependencies)
+            {
+                if (false == executedTargets.ContainsKey(dependency))
+                {
+                    RunTarget(dependency);
+                }
+            }
+
+            return ReturnThisTRunner();
+        }
+
         public TRunner EnsureSqlServerIsRunning(string machineName)
         {
             EnsureSqlServerIsRunningTask task = new EnsureSqlServerIsRunningTask(machineName);
@@ -313,6 +327,17 @@ namespace Flubu
             return ReturnThisTRunner();
         }
 
+        /// <summary>
+        /// Formats the string (using <see cref="CultureInfo.InvariantCulture"/>).
+        /// </summary>
+        /// <param name="format">The format string.</param>
+        /// <param name="args">The arguments.</param>
+        /// <returns>A formatted string.</returns>
+        public static string FormatString(string format, params object[] args)
+        {
+            return String.Format(CultureInfo.InvariantCulture, format, args);
+        }
+
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         public TRunner GetLocalIisVersionTask()
         {
@@ -366,6 +391,21 @@ namespace Flubu
         {
             LogScriptEnvironmentTask task = new LogScriptEnvironmentTask();
             return RunTask(task);
+        }
+
+        public virtual TRunner LogTarget (string targetName)
+        {
+            Log(String.Empty);
+            Log("{0}:", targetName);
+            Log(String.Empty);
+
+            return ReturnThisTRunner();
+        }
+
+        public TRunner MarkTargetAsExecuted(FlubuRunnerTarget<TRunner> target)
+        {
+            executedTargets.Add(target.TargetName, @"dummy");
+            return ReturnThisTRunner();
         }
 
         public TRunner PurgeMessageQueue (string messageQueuePath)
@@ -449,6 +489,22 @@ namespace Flubu
             return ReturnThisTRunner();
         }
 
+        /// <summary>
+        /// Runs the specified target.
+        /// </summary>
+        /// <param name="targetName">Name of the target.</param>
+        /// <returns>The same instance of this <see cref="TRunner"/>.</returns>
+        public TRunner RunTarget(string targetName)
+        {
+            if (false == targets.ContainsKey(targetName))
+                throw new ArgumentException(FormatString("The target '{0}' does not exist", targetName));
+
+            FlubuRunnerTarget<TRunner> target = targets[targetName];
+            target.Execute();
+
+            return ReturnThisTRunner();
+        }
+
         public TRunner RunTask(ITask task)
         {
             task.Execute(scriptExecutionEnvironment);
@@ -491,6 +547,17 @@ namespace Flubu
                 identity,
                 registryRights,
                 accessControlType);
+            return ReturnThisTRunner();
+        }
+
+        /// <summary>
+        /// Sets the default target for the runner.
+        /// </summary>
+        /// <param name="target">The target to be set as the default one.</param>
+        /// <returns>The same instance of this <see cref="TRunner"/>.</returns>
+        public TRunner SetDefaultTarget(FlubuRunnerTarget<TRunner> target)
+        {
+            this.defaultTarget = target;
             return ReturnThisTRunner();
         }
 
@@ -565,11 +632,14 @@ namespace Flubu
             scriptExecutionEnvironment.Logger.LogExternalProgramOutput(e.Data);
         }
 
+        private FlubuRunnerTarget<TRunner> defaultTarget;
         private bool disposed;
+        private readonly Dictionary<string, string> executedTargets = new Dictionary<string, string>();
         private bool hasFailed;
         private IList<string> lastCopiedFilesList;
         private int lastExitCode;
         private List<string> programArgs = new List<string>();
         private IScriptExecutionEnvironment scriptExecutionEnvironment;
+        private readonly Dictionary<string, FlubuRunnerTarget<TRunner>> targets = new Dictionary<string, FlubuRunnerTarget<TRunner>>();
     }
 }
