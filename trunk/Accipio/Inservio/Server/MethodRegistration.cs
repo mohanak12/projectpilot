@@ -7,6 +7,6 @@ namespace Accipio.Inservio.Server
 {
     public class MethodRegistration
     {
-        private string methodName;
+        //private string methodName;
     }
 }

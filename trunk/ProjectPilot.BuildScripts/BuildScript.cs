@@ -10,33 +10,87 @@ namespace ProjectPilot.BuildScripts
     {
         public static int Main(string[] args)
         {
-            using (BuildRunner script = new BuildRunner("ProjectPilot"))
+            using (ConcreteBuildRunner runner = new ConcreteBuildRunner("ProjectPilot"))
             {
-                NAntLikeFlubuLogger logger = new NAntLikeFlubuLogger();
+                try
+                {
+                    runner.ScriptExecutionEnvironment.Logger = new NAntLikeFlubuLogger();
 
-                script.ScriptExecutionEnvironment.Logger = new NAntLikeFlubuLogger();
-                script
-                    //.SetProductRootDir(@"..\..\..")
-                    .PrepareBuildDirectory()
-                    .SetCompanyInfo("HERMES SoftLab d.d.", "Copyright (C) 2008 HERMES SoftLab d.d.", String.Empty)
-                    .ReadVersionInfo();
+                    runner.AddTarget("load.solution").Do(TargetLoadSolution);
+                    runner.AddTarget("compile").Do(TargetCompile).DependsOn("load.solution");
+                    runner.AddTarget("stage.1").DependsOn("compile", "package");
+                    runner.AddTarget("unit.tests").Do(r => r.RunTests("ProjectPilot.Tests", false)).DependsOn("load.solution");
+                    runner.AddTarget("prepare.web").Do(r => runner.PrepareWebApplications()).DependsOn("load.solution");
+                    runner.AddTarget("rebuild").SetAsDefault().DependsOn("stage.1");
+                    runner.AddTarget("package").Do(TargetPackage).DependsOn("load.solution");
 
-                script
-                    .LoadSolution("ProjectPilot.sln")
-                    .RegisterAsWebProject("ProjectPilot.Portal", "http://localhost/ProjectPilot");
+                    // actual run
+                    if (args.Length == 0)
+                        runner.RunTarget(runner.DefaultTarget.TargetName);
+                    else
+                        runner.RunTarget(args[0]);
 
-                script
-                    .CleanOutput()
-                    .GenerateCommonAssemblyInfo()
-                    .CompileSolution()
-                    .FxCop()
-                    .RunTests("ProjectPilot.Tests");
+                    runner
+                        .Complete();
 
-                script
-                    .Complete();
+                    return 0;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                    return 1;
+                }
+                finally
+                {
+                    runner.MergeCoverageReports();
+                    runner.CopyBuildLogsToCCNet();
+                }
             }
 
             return 0;
+        }
+
+        private static void TargetCompile(ConcreteBuildRunner runner)
+        {
+            runner
+                .PrepareBuildDirectory()
+                .SetCompanyInfo(
+                    "HERMES SoftLab d.d.",
+                    "Copyright (C) 2008 HERMES SoftLab d.d.",
+                    String.Empty)
+
+                .CleanOutput()
+                .GenerateCommonAssemblyInfo()
+                .CompileSolution()
+                .FxCop();
+            runner
+                .RunTarget("unit.tests");
+        }
+
+        private static void TargetLoadSolution(ConcreteBuildRunner runner)
+        {
+            runner
+                .LoadSolution("ProjectPilot.sln");
+            runner
+                .FetchBuildVersion()
+                .RegisterAsWebProject("ProjectPilot.Portal", "http://localhost/projectpilot");
+        }
+
+        private static void TargetPackage(ConcreteBuildRunner runner)
+        {
+            runner
+                .BuildProducts
+                    .AddProject("accipio", "Accipio.Console")
+                    .AddProject("flubu", "Flubu");
+            runner
+                .CopyBuildProductFiles()
+                .PackageBuildProduct("Accipio-{1}.zip", "accipio")
+                .CopyBuildProductToCCNet(@"packages\Accipio\Accipio-latest.zip")
+                .CopyBuildProductToCCNet(@"packages\Accipio\{2}.{3}\{4}")
+
+                .PackageBuildProduct("Flubu-{1}.zip", "flubu")
+                .CopyBuildProductToCCNet(@"packages\Flubu\Flubu-latest.zip")
+                .CopyBuildProductToCCNet(@"packages\Flubu\{2}.{3}\{4}");
         }
     }
 }

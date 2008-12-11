@@ -28,13 +28,13 @@ namespace ProjectPilot.Tests.BuildScriptsTests
         [Test,Explicit]
         public void TestBuildScript()
         {
-            using (BuildRunner script = new BuildRunner("ProjectPilot"))
+            using (ConcreteBuildRunner script = new ConcreteBuildRunner("ProjectPilot"))
             {
                 script.ScriptExecutionEnvironment.Logger = new NAntLikeFlubuLogger();
                 script
                     .SetProductRootDir(@"..\..\..")
-                    .SetCompanyInfo("HERMES SoftLab d.d.", "Copyright (C) 2008 HERMES SoftLab d.d.", String.Empty)
-                    .ReadVersionInfo();
+                    .SetCompanyInfo("HERMES SoftLab d.d.", "Copyright (C) 2008 HERMES SoftLab d.d.", String.Empty);
+                    //.ReadVersionInfo();
 
                 script
                     .LoadSolution("ProjectPilot.sln");
@@ -50,7 +50,7 @@ namespace ProjectPilot.Tests.BuildScriptsTests
                 script
                     .FxCop();
                 script
-                    .RunTests("ProjectPilot.Tests");
+                    .RunTests("ProjectPilot.Tests", false);
                 script
                     .Complete();
             }

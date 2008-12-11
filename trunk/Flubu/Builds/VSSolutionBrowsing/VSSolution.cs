@@ -127,7 +127,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
                         Guid projectTypeGuid = new Guid (projectMatch.Groups["projectTypeGuid"].Value);
                         VSProjectInfo projectInfo = new VSProjectInfo(
                             solution,
-                            projectTypeGuid,
+                            projectGuid,
                             projectName,
                             projectFileName,
                             projectTypeGuid);
@@ -173,7 +173,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
                 //if (log.IsDebugEnabled)
                 //    log.DebugFormat ("Read line ({0}): {1}", parserContext.LineCount, line);
             } 
-            while (line.Trim ().Length == 0 || line.StartsWith ("#"));
+            while (line.Trim ().Length == 0 || line.StartsWith ("#", StringComparison.OrdinalIgnoreCase));
 
             return line;
         }

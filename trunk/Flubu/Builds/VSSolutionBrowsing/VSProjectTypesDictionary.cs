@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
-using Flubu.Builds.VSSolutionBrowsing;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Flubu.Builds.VSSolutionBrowsing
 {
     /// <summary>
     /// A dictionary of registered VisualStudio project types.
     /// </summary>
+    [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
     public class VSProjectTypesDictionary
     {
         public VSProjectTypesDictionary()
