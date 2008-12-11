@@ -2,6 +2,7 @@
 using Flubu;
 using Flubu.Builds;
 
+//css_ref bin\Debug\Flubu.dll;
 //css_ref ProjectPilot.BuildScripts.dll;
 
 namespace ProjectPilot.BuildScripts

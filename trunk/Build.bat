@@ -1,1 +1,1 @@
-lib\cs-script\cscs.exe /d Scripts\BuildScript.cs
+Scripts\BuildScript
