@@ -6,26 +6,18 @@ namespace Flubu.Builds.VSSolutionBrowsing
 {
     public class VSProjectReference
     {
-        public string HintPath
-        {
-            get { return hintPath; }
-            set { hintPath = value; }
-        }
-
         public string Include
         {
             get { return include; }
             set { include = value; }
         }
 
-        public bool? SpecificVersion
+        public IDictionary<string, string> Reference
         {
-            get { return specificVersion; }
-            set { specificVersion = value; }
+            get { return reference; }
         }
 
-        private string hintPath;
         private string include;
-        private bool? specificVersion;
+        private Dictionary<string, string> reference = new Dictionary<string, string>();
     }
 }
