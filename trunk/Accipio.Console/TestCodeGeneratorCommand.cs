@@ -42,7 +42,7 @@ namespace Accipio.Console
                 return null;
             }
 
-            if (args.Length < 2)
+            if (args.Length < 3)
                 throw new ArgumentException("Missing business actions XML file name.");
 
             testSuitesFileNames = new List<string>();
@@ -50,7 +50,7 @@ namespace Accipio.Console
             // business action file
             businessActionsXmlFileName = CheckIfFileExists(args[1]);
 
-            if (args.Length < 3)
+            if (args.Length < 4)
                 throw new ArgumentException("Missing test suite xsd schema file name.");
 
             // xsd schema file for validating test suite xml files

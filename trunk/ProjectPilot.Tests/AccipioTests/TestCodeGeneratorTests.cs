@@ -24,7 +24,7 @@ namespace ProjectPilot.Tests.AccipioTests
             testCodeGeneratorCommand.ProcessCommand();
         }
 
-        private static string[] GetArgs()
+        public static string[] GetArgs()
         {
             string[] args = new string[4];
             args[0] = "codegen";
