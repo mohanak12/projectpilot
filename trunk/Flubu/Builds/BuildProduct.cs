@@ -1,0 +1,35 @@
+using System.Collections.Generic;
+
+namespace Flubu.Builds
+{
+    public abstract class BuildProduct<TRunner>
+        where TRunner : FlubuRunner<TRunner>
+    {
+        public string ProductPartId
+        {
+            get { return productPartId; }
+        }
+
+        public abstract void CopyProductFiles(
+            TRunner buildRunner, 
+            string packageDirectory);
+
+        public IList<string> ListCopiedFiles()
+        {
+            return copiedFiles;
+        }
+
+        protected BuildProduct (string productPartId)
+        {
+            this.productPartId = productPartId;
+        }
+
+        protected void AddFilesToCopiedList (IEnumerable<string> fileNames)
+        {
+            copiedFiles.AddRange(fileNames);
+        }
+
+        private readonly string productPartId;
+        private List<string> copiedFiles = new List<string>();
+    }
+}
