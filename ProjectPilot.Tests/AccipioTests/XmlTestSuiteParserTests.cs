@@ -124,10 +124,10 @@ namespace ProjectPilot.Tests.AccipioTests
             Assert.AreEqual("644.33", testAction.GetParameterKeyValue("value"));
         }
 
-        [Test, ExpectedException(typeof(XmlException)), Ignore("Tests does not accept ExpectedException")]
+        [Test, ExpectedException(typeof(XmlException))]
         public void InvalidRootElementTest()
         {
-            string xml = "<suites></suites>";
+            const string xml = "<suites></suites>";
 
             byte[] bytes = Encoding.ASCII.GetBytes(xml);
             using (MemoryStream stream = new MemoryStream(bytes))
@@ -139,10 +139,10 @@ namespace ProjectPilot.Tests.AccipioTests
             }
         }
 
-        [Test, ExpectedException(typeof(NotSupportedException)), Ignore("Tests does not accept ExpectedException")]
+        [Test, ExpectedException(typeof(NotSupportedException))]
         public void InvalidSuiteElementTest()
         {
-            string xml = "<suite><element /></suite>";
+            const string xml = "<suite><element /></suite>";
 
             byte[] bytes = Encoding.ASCII.GetBytes(xml);
             using (MemoryStream stream = new MemoryStream(bytes))
@@ -154,10 +154,10 @@ namespace ProjectPilot.Tests.AccipioTests
             }
         }
 
-        [Test, ExpectedException(typeof(NotSupportedException)), Ignore("Tests does not accept ExpectedException")]
+        [Test, ExpectedException(typeof(NotSupportedException))]
         public void InvalidTestCaseElementTest()
         {
-            string xml = "<suite><case id='SearchForProjects' category='Smoke'><element /></case></suite>";
+            const string xml = "<suite><case id='SearchForProjects' category='Smoke'><element /></case></suite>";
 
             byte[] bytes = Encoding.ASCII.GetBytes(xml);
             using (MemoryStream stream = new MemoryStream(bytes))

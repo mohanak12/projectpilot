@@ -43,7 +43,7 @@ namespace Accipio
                 int counter = 1;
                 foreach (TestAction testAction in testActions)
                 {
-                    WriteLine("                // {0}", businessActionData.GetAction(testAction.ActionName).Description);
+                    AddActionDescription(testAction, businessActionData);
                     string line = string.Format(CultureInfo.InvariantCulture, "                .{0}(", testAction.ActionName);
 
                     if (testAction.HasParameters)
@@ -74,6 +74,34 @@ namespace Accipio
             }
 
             WriteLine("}");
+        }
+
+        /// <summary>
+        /// Adds the action description (Action Comment).
+        /// </summary>
+        /// <param name="testAction">The test action <see cref="TestAction"/></param>
+        /// <param name="businessActionData">The business action data <see cref="businessActionData"/></param>
+        private void AddActionDescription(TestAction testAction, BusinessActionData businessActionData)
+        {
+            const string Line = "                // {0}";
+            string description = businessActionData.GetAction(testAction.ActionName).Description;
+            string lineFormat = string.Format(CultureInfo.InvariantCulture, Line, description);
+            if (testAction.HasParameters)
+            {
+                string[] parameters = new string[testAction.ActionParametersCount];
+
+                for (int i = 0; i < testAction.ActionParameters.Count; i++)
+                {
+                    TestActionParameter testActionParameter = testAction.ActionParameters[i];
+                    parameters[i] = testActionParameter.ParameterValue;
+                }
+
+                WriteLine(lineFormat, parameters);
+            }
+            else
+            {
+                WriteLine(lineFormat);
+            }
         }
 
         private void WriteLine(string line)
