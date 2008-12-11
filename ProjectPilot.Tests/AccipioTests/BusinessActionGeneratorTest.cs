@@ -15,7 +15,7 @@ namespace ProjectPilot.Tests.AccipioTests
         public void GenerateXsdValidationSchemaTest()
         {
             string fileName = @"..\..\..\Data\Samples\BusinessActions.xml";
-            IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null).ParseArguments(new string[] { "baschema", fileName });
+            IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null).ParseArguments(new[] { "baschema", fileName });
             // process command
             consoleCommand.ProcessCommand();
 
@@ -24,11 +24,11 @@ namespace ProjectPilot.Tests.AccipioTests
             Assert.IsTrue(File.Exists(outputFile));
         }
 
-        [Test, ExpectedException(typeof(System.IO.IOException)), Ignore("Tests does not accept ExpectedException")]
+        [Test, ExpectedException(typeof(IOException))]
         public void GenerateXsdSchemaFileNotExistsTest()
         {
             string fileName = @"AccipioActions123.xml";
-            IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null).ParseArguments(new string[] { "baschema", fileName });
+            IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null).ParseArguments(new[] { "baschema", fileName });
         }
 
         [Test]
@@ -45,18 +45,18 @@ namespace ProjectPilot.Tests.AccipioTests
             Assert.IsNull(consoleCommand.ParseArguments(new string[0]));
         }
 
-        [Test, ExpectedException(typeof(ArgumentException)), Ignore("Tests does not accept ExpectedException")]
+        [Test, ExpectedException(typeof(ArgumentException))]
         public void InvalidArgsLengthFirstArgOkTest()
         {
             IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null);
-            Assert.IsNull(consoleCommand.ParseArguments(new string[] { "baschema" }));
+            Assert.IsNull(consoleCommand.ParseArguments(new[] { "baschema" }));
         }
 
         [Test]
         public void InvalidStartArgument()
         {
             IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null);
-            Assert.IsNull(consoleCommand.ParseArguments(new string[] { "test", string.Empty }));
+            Assert.IsNull(consoleCommand.ParseArguments(new[] { "test", string.Empty }));
         }
 
         [Test]
@@ -101,7 +101,7 @@ namespace ProjectPilot.Tests.AccipioTests
             Assert.IsNull(entry);
         }
 
-        [Test, ExpectedException(typeof(NotSupportedException)), Ignore("Tests does not accept ExpectedException")]
+        [Test, ExpectedException(typeof(NotSupportedException))]
         public void NotSupportedActionsElementTest()
         {
             string xml = "<actions><element></element></actions>";
@@ -114,7 +114,7 @@ namespace ProjectPilot.Tests.AccipioTests
             }
         }
 
-        [Test, ExpectedException(typeof(NotSupportedException)), Ignore("Tests does not accept ExpectedException")]
+        [Test, ExpectedException(typeof(NotSupportedException))]
         public void NotSupportedActionElementTest()
         {
             string xml = "<actions><action><element></element></action></actions>";
@@ -127,7 +127,7 @@ namespace ProjectPilot.Tests.AccipioTests
             }
         }
 
-        [Test, ExpectedException(typeof(NotSupportedException)), Ignore("Tests does not accept ExpectedException")]
+        [Test, ExpectedException(typeof(NotSupportedException))]
         public void NotSupportedFunctionElementTest()
         {
             string xml = "<actions><function><element></element></function></actions>";
@@ -140,7 +140,7 @@ namespace ProjectPilot.Tests.AccipioTests
             }
         }
 
-        [Test, ExpectedException(typeof(NotSupportedException)), Ignore("Tests does not accept ExpectedException")]
+        [Test, ExpectedException(typeof(NotSupportedException))]
         public void NotSupportedStepsElementTest()
         {
             string xml = "<actions><function><steps><element></element></steps></function></actions>";
@@ -153,7 +153,7 @@ namespace ProjectPilot.Tests.AccipioTests
             }
         }
 
-        [Test, ExpectedException(typeof(XmlException)), Ignore("Tests does not accept ExpectedException")]
+        [Test, ExpectedException(typeof(XmlException))]
         public void ParseBusinessActionsInvalidXmlTest()
         {
             string xml = "<actionss><action></action></actionss>";
