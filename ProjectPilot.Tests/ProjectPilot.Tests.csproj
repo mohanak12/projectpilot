@@ -88,6 +88,7 @@
     <Compile Include="AccipioTests\TestCodeGeneratorTests.cs" />
     <Compile Include="AccipioTests\XmlValidationTest.cs" />
     <Compile Include="BuildScriptsTests\TestBuild.cs" />
+    <Compile Include="BuildScriptsTests\VSProjectTests.cs" />
     <Compile Include="Extras\CodeAnalysisTests.cs" />
     <Compile Include="Framework\CCNet\ProjectStatsLoadingTests.cs" />
     <Compile Include="Framework\CCNet\GraphBuildingTests.cs" />

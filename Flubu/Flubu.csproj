@@ -102,7 +102,11 @@
     <Compile Include="Builds\SimpleBuildProduct.cs" />
     <Compile Include="Builds\VSProjectExtendedInfo.cs" />
     <Compile Include="Builds\VSSolutionBrowsing\ParserContext.cs" />
+    <Compile Include="Builds\VSSolutionBrowsing\VSProject.cs" />
+    <Compile Include="Builds\VSSolutionBrowsing\VSProjectCompileItem.cs" />
+    <Compile Include="Builds\VSSolutionBrowsing\VSProjectConfiguration.cs" />
     <Compile Include="Builds\VSSolutionBrowsing\VSProjectInfo.cs" />
+    <Compile Include="Builds\VSSolutionBrowsing\VSProjectReference.cs" />
     <Compile Include="Builds\VSSolutionBrowsing\VSProjectType.cs" />
     <Compile Include="Builds\VSSolutionBrowsing\VSProjectTypesDictionary.cs" />
     <Compile Include="Builds\VSSolutionBrowsing\VSSolution.cs" />
