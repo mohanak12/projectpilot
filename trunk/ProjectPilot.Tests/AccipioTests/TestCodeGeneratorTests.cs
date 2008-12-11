@@ -15,7 +15,7 @@ namespace ProjectPilot.Tests.AccipioTests
         /// <summary>
         /// Test checks if Console program correctly parses XML with test cases.
         /// </summary>
-        [Test, Pending("How to do it?")]
+        [Test]
         public void ParseTestSpec()
         {
             string[] args = GetArgs();
@@ -27,9 +27,9 @@ namespace ProjectPilot.Tests.AccipioTests
         private static string[] GetArgs()
         {
             string[] args = new string[4];
-            args[0] = "TestSpec";
-            args[1] = "..\\..\\..\\Data\\Samples\\AccipioActions.xml";
-            args[2] = "..\\..\\..\\Data\\Samples\\AccipioActions.xsd";
+            args[0] = "codegen";
+            args[1] = "..\\..\\..\\Data\\Samples\\BusinessActions.xml";
+            args[2] = "..\\..\\..\\Data\\Samples\\TestSuiteTemplate.xsd";
             args[3] = "..\\..\\..\\Data\\Samples\\TestSuite.xml";
             return args;
         }
