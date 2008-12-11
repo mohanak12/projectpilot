@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Xml;
+using System.Xml.XPath;
 
 namespace Flubu.Builds.VSSolutionBrowsing
 {
@@ -9,7 +10,12 @@ namespace Flubu.Builds.VSSolutionBrowsing
     /// </summary>
     public class VSProjectInfo
     {
-        public VSProjectInfo(VSSolution ownerSolution, Guid projectTypeGuid, string projectName, string projectFileName, Guid projectGuid)
+        public VSProjectInfo(
+            VSSolution ownerSolution, 
+            Guid projectGuid, 
+            string projectName, 
+            string projectFileName, 
+            Guid projectTypeGuid)
         {
             this.ownerSolution = ownerSolution;
             this.projectTypeGuid = projectTypeGuid;
@@ -51,7 +57,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
             get { return projectGuid; }
         }
 
-        public XmlDocument OpenProjectFileAsXmlDocument ()
+        public IXPathNavigable OpenProjectFileAsXmlDocument ()
         {
             //if (log.IsDebugEnabled)
             //    log.DebugFormat ("OpenProjectFileAsXmlDocument '{0}'", this.ProjectFileName);

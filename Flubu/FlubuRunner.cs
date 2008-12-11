@@ -36,6 +36,17 @@ namespace Flubu
         }
 
         /// <summary>
+        /// Gets the default target for this runner.
+        /// </summary>
+        /// <remarks>The default target is the one which will be executed if
+        /// the target is not specified in the command line.</remarks>
+        /// <value>The default target.</value>
+        public FlubuRunnerTarget<TRunner> DefaultTarget
+        {
+            get { return defaultTarget; }
+        }
+
+        /// <summary>
         /// Gets the list of all copied destination files that were copied during the last execution of the <see cref="CopyDirectoryStructure(string,string,bool)"/>
         /// or <see cref="CopyDirectoryStructure(string,string,bool,string,string)"/> call.
         /// </summary>
@@ -77,9 +88,24 @@ namespace Flubu
             return ReturnThisTRunner();
         }
 
+        public FlubuRunnerTarget<TRunner> AddTarget(string targetName)
+        {
+            FlubuRunnerTarget<TRunner> target = new FlubuRunnerTarget<TRunner>(ReturnThisTRunner(), targetName);
+            targets.Add(target.TargetName, target);
+            return target;
+        }
+
         public TRunner AskUser(string prompt, string configurationSettingName)
         {
             AskUserTask.Execute(scriptExecutionEnvironment, prompt, configurationSettingName);
+            return ReturnThisTRunner();
+        }
+
+        public TRunner AssertFileExists(string fileDescription, string fileName)
+        {
+            if (false == File.Exists(fileName))
+                Fail("{0} ('{1}') does not exist", fileDescription, fileName);
+
             return ReturnThisTRunner();
         }
 
@@ -212,6 +238,7 @@ namespace Flubu
         public TRunner DeleteVirtualDirectoryTask(string virtualDirectoryName, bool failIfNotExist)
         {
             DeleteVirtualDirectoryTask task = new DeleteVirtualDirectoryTask(virtualDirectoryName, failIfNotExist);
+            task.Execute(scriptExecutionEnvironment);
             return ReturnThisTRunner();
         }
 
@@ -250,6 +277,32 @@ namespace Flubu
                     RunTarget(dependency);
                 }
             }
+
+            return ReturnThisTRunner();
+        }
+
+        /// <summary>
+        /// Ensures the directory path exists. If it does not, the method creates all the 
+        /// necessary directories in the path.
+        /// </summary>
+        /// <param name="path">The path to check.</param>
+        /// <param name="containsFileName">if set to <c>true</c>, the path contains the file name.</param>
+        /// <returns>The same instance of this <see cref="TRunner"/>.</returns>
+        public TRunner EnsureDirectoryPathExists(string path, bool containsFileName)
+        {
+            // remove the file name if it is a part of the path
+            if (containsFileName)
+                return EnsureDirectoryPathExists(Path.GetDirectoryName(path), false);
+
+            if (Directory.Exists(path))
+                return ReturnThisTRunner();
+
+            string parentPath = Path.GetDirectoryName(path);
+
+            if (false == String.IsNullOrEmpty(parentPath) && false == Directory.Exists(parentPath))
+                EnsureDirectoryPathExists(parentPath, false);
+
+            Directory.CreateDirectory(path);
 
             return ReturnThisTRunner();
         }
@@ -333,6 +386,7 @@ namespace Flubu
         /// <param name="format">The format string.</param>
         /// <param name="args">The arguments.</param>
         /// <returns>A formatted string.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1000:DoNotDeclareStaticMembersOnGenericTypes")]
         public static string FormatString(string format, params object[] args)
         {
             return String.Format(CultureInfo.InvariantCulture, format, args);

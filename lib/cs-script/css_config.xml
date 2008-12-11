@@ -1,0 +1,13 @@
+<CSSConfig>
+  <defaultArguments>/verbose /sconfig</defaultArguments>
+  <defaultApartmentState>STA</defaultApartmentState>
+  <reportDetailedErrorInfo>True</reportDetailedErrorInfo>
+  <useAlternativeCompiler>lib\CSSCodeProvider.dll</useAlternativeCompiler>
+  <searchDirs>%CSSCRIPT_DIR%\Lib</searchDirs>
+  <cleanupShellCommand>csws.exe clearTemp.cs</cleanupShellCommand>
+  <doCleanupAfterNumberOfRuns>1</doCleanupAfterNumberOfRuns>
+  <hideOptions>HideMostFiles</hideOptions>
+  <hideCompilerWarnings>False</hideCompilerWarnings>
+  <inMemoryAsm>False</inMemoryAsm>
+  <TragetFramework>v3.5</TragetFramework>
+</CSSConfig>

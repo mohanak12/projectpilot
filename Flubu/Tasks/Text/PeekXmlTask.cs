@@ -20,7 +20,7 @@ namespace Flubu.Tasks.Text
                     System.Globalization.CultureInfo.InvariantCulture,
                     "Read xpath '{0}' from file '{1}' and store it into '{2}' setting.",
                     xpath, 
-                    xmlFilename, 
+                    xmlFileName, 
                     configurationSettingName);
             }
         }
@@ -40,11 +40,11 @@ namespace Flubu.Tasks.Text
         }
 
         public PeekXmlTask(
-            string xmlFilename,
+            string xmlFileName,
             string xpath,
             string configurationSettingName)
         {
-            this.xmlFilename = xmlFilename;
+            this.xmlFileName = xmlFileName;
             this.xpath = xpath;
             this.configurationSettingName = configurationSettingName;
         }
@@ -53,20 +53,20 @@ namespace Flubu.Tasks.Text
         /// Reads a specified value from an XML file and stores it as a specified configuration setting.
         /// </summary>
         /// <param name="environment">The script execution environment.</param>
-        /// <param name="xmlFilename">The name of the configuration file.</param>
+        /// <param name="xmlFileName">The name of the configuration file.</param>
         /// <param name="xpath">The xpath of the value to read.</param>
         /// <param name="configurationSettingName">Name of the configuration setting into which the XML value will be stored.</param>
         public static void Execute(
             IScriptExecutionEnvironment environment,
-            string xmlFilename,
+            string xmlFileName,
             string xpath,
             string configurationSettingName)
         {
             if (environment == null)
                 throw new ArgumentNullException("environment");
 
-            if (xmlFilename == null)
-                throw new ArgumentNullException("xmlFilename");
+            if (xmlFileName == null)
+                throw new ArgumentNullException("xmlFileName");
 
             if (xpath == null)
                 throw new ArgumentNullException("xpath");
@@ -74,7 +74,7 @@ namespace Flubu.Tasks.Text
             if (configurationSettingName == null)
                 throw new ArgumentNullException("configurationSettingName");
 
-            PeekXmlTask task = new PeekXmlTask(xmlFilename, xpath, configurationSettingName);
+            PeekXmlTask task = new PeekXmlTask(xmlFileName, xpath, configurationSettingName);
             task.Execute(environment);
         }
 
@@ -85,7 +85,7 @@ namespace Flubu.Tasks.Text
         protected override void DoExecute(IScriptExecutionEnvironment environment)
         {
             XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(xmlFilename);
+            xmlDoc.Load(xmlFileName);
 
             XmlNode node = xmlDoc.SelectSingleNode("Configuration");
 
@@ -93,7 +93,7 @@ namespace Flubu.Tasks.Text
                 environment.SetConfigurationSettingValue(configurationSettingName, node.InnerText);
         }
 
-        private string xmlFilename;
+        private string xmlFileName;
         private string xpath;
         private string configurationSettingName;
     }
