@@ -237,7 +237,7 @@ namespace Flubu.Builds
         ///             <description>File name of the last zip package (without the directory path)</description>
         ///         </item>
         ///     </list></param>
-        /// <returns>The same instance of this <see cref="BuildRunner"/>.</returns>
+        /// <returns>The same instance of this <see cref="BuildRunner{TRunner}"/>.</returns>
         public TRunner CopyBuildProductToCCNet(string buildProductDestinationFileNameFormat)
         {
             if (false == IsRunningUnderCruiseControl)
