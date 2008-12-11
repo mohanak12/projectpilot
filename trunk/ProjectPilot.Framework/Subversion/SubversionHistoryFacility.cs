@@ -9,7 +9,7 @@ using ProjectPilot.Framework.RevisionControlHistory;
 
 namespace ProjectPilot.Framework.Subversion
 {
-    public class SubversionHistoryFacility : IRevisionControlHistoryFacility
+    public class SubversionHistoryFacility : IRevisionControlHistoryFacility    
     {
         public SubversionHistoryFacility(
             string facilityId,
