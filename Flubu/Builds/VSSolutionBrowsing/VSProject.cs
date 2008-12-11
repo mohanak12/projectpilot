@@ -32,6 +32,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
         public static VSProject Load(Stream stream)
         {
             VSProject data = new VSProject();
+            data.propertiesDictionary = true;
             
             XmlReaderSettings xmlReaderSettings = new XmlReaderSettings();
             xmlReaderSettings.IgnoreComments = true;
@@ -53,8 +54,9 @@ namespace Flubu.Builds.VSSolutionBrowsing
                             if (xmlReader.Name == "Project") 
                             {
                                 data.ReadProject(xmlReader);
-                            }  
-                            //  data.properties1.Add(Test, test);
+                            }
+
+                            xmlReader.Read();
                             break;
                         default:
                             throw new XmlException();
@@ -62,7 +64,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
                 }
             }
 
-            return null;
+            return data;
         }
 
         private void ReadProject(XmlReader xmlReader)
@@ -74,29 +76,56 @@ namespace Flubu.Builds.VSSolutionBrowsing
                 switch (xmlReader.Name)
                 {
                     case "PropertyGroup":
-                        ReadPropertyGroup(xmlReader);
+                        if (this.propertiesDictionary == true)
+                        {
+                            ReadPropertyGroup(xmlReader);
+                            this.propertiesDictionary = false;
+                        }
+                        else
+                        {
+                            configurations.Add(ReadPropertyGroup(xmlReader));
+                        }
+
                         xmlReader.Read();
                         break;
                     case "ItemGroup":
                         ReadItemGroup(xmlReader);
+                        xmlReader.Read();
                          break;
-                    default:    
-                        throw new NotSupportedException();
+                    default:
+                         xmlReader.Read();
+                         continue;
                 }
             }
         }
 
-        private void ReadPropertyGroup(XmlReader xmlReader)
+        private VSProjectConfiguration ReadPropertyGroup(XmlReader xmlReader)
         {
+            VSProjectConfiguration configuration = new VSProjectConfiguration();
+
+            if (xmlReader["Condition"] != null && this.propertiesDictionary == false)
+            {
+                configuration.Condition = xmlReader["Condition"];
+            }
+
             xmlReader.Read();
             
             while (xmlReader.NodeType != XmlNodeType.EndElement)
             {
-                this.properties.Add(xmlReader.Name, xmlReader.ReadElementContentAsString());
+                if (this.propertiesDictionary == true)
+                {
+                    this.properties.Add(xmlReader.Name, xmlReader.ReadElementContentAsString());
+                }
+                else
+                {
+                    configuration.Properties.Add(xmlReader.Name, xmlReader.ReadElementContentAsString());
+                }
             }
+
+            return configuration;
         }
 
-        private VSProjectReference ReadItemGroup(XmlReader xmlReader)
+        private void ReadItemGroup(XmlReader xmlReader)
         {
             VSProjectReference reference = new VSProjectReference();
             xmlReader.Read();
@@ -108,111 +137,81 @@ namespace Flubu.Builds.VSSolutionBrowsing
                     case "Reference":
                         reference = ReadReference(xmlReader);
                         references.Add(reference);
-                        //xmlReader.Read();
+                        if (xmlReader.NodeType == XmlNodeType.EndElement)
+                        {
+                            xmlReader.Read();
+                        }
+
                         break;
+                    case "Compile":
+                        VSProjectCompileItem a = new VSProjectCompileItem();
+                        a = ReadCompile(xmlReader);
+                        compileItems.Add(a);
+
+                        if (xmlReader.NodeType == XmlNodeType.EndElement)
+                        {
+                            xmlReader.Read();
+                        }
+
+                        break;                
                     default:
-                        throw new NotSupportedException();
+                        xmlReader.Read();
+                        continue;
                 }
-
-                references.Add(reference);
             }
-
-            return reference;
         }
 
         private VSProjectReference ReadReference(XmlReader xmlReader)
         {
             VSProjectReference reference = new VSProjectReference();
-            
+
             while (xmlReader.NodeType != XmlNodeType.EndElement)
             {
-                switch (xmlReader.Name)
+                if (xmlReader.HasAttributes == true && xmlReader.NodeType != XmlNodeType.EndElement)
                 {
-                    case "Reference":
-                        if (xmlReader["Include"] != null)
-                        {
-                            reference.Include = xmlReader["Include"];
-                        }
-
-                        break;
-                    case "HintPath":
-                         reference.HintPath = ReadHintPath(xmlReader).HintPath;
-                        break;
-                    case "SpecificVersion":
-                        reference.SpecificVersion = ReadSpecificVersion(xmlReader).SpecificVersion;
-                        break;
-                    default:
-                        throw new NotSupportedException();
+                    reference.Include = xmlReader[0];
+                    xmlReader.Read();
                 }
 
-                xmlReader.Read();
-            }
-
-            return reference;
-        }
-
-        private VSProjectReference ReadHintPath(XmlReader xmlReader)
-        {
-            VSProjectReference reference = new VSProjectReference();
-
-            xmlReader.Read();
-
-            while (xmlReader.NodeType != XmlNodeType.EndElement)
-            {
-                switch (xmlReader.Name)
+                if (xmlReader.HasAttributes == false && xmlReader.NodeType != XmlNodeType.EndElement)
                 {
-                    case "HintPath":
-                        reference.HintPath = xmlReader.ReadElementContentAsString();
-                        break;
-                    default:
-                        throw new NotSupportedException();
+                    reference.Reference.Add(xmlReader.Name, xmlReader.ReadElementContentAsString());
+                }
+                else
+                {
+                    return reference;
                 }
             }
 
             return reference;
         }
 
-        private VSProjectReference ReadSpecificVersion(XmlReader xmlReader)
-        {
-            VSProjectReference reference = new VSProjectReference();
-
-            while (xmlReader.NodeType != XmlNodeType.EndElement)
-            {
-                switch (xmlReader.Name)
-                {
-                    case "SpecificVersion":
-                        xmlReader.Read();
-                        reference.SpecificVersion = bool.Parse(xmlReader.ReadString());
-                      //  reference.SpecificVersion = xmlReader.Value;
-                        break;
-                    default:
-                        throw new NotSupportedException();
-                }
-            }
-
-            return reference;
-        }
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         private VSProjectCompileItem ReadCompile(XmlReader xmlReader)
         {
             VSProjectCompileItem compile = new VSProjectCompileItem();
 
-            xmlReader.Read();
-
             while (xmlReader.NodeType != XmlNodeType.EndElement)
             {
-                switch (xmlReader.Name)
+                if (xmlReader.HasAttributes == true && xmlReader.NodeType != XmlNodeType.EndElement)
                 {
-                    case "Compile":
-                        compile.Compile = xmlReader["Include"];
-                        break;
+                    compile.Compile = xmlReader[0];
+                    xmlReader.Read();
+                }
+
+                if (xmlReader.HasAttributes == false && xmlReader.NodeType != XmlNodeType.EndElement)
+                {
+                    compile.CompileAttributes.Add(xmlReader.Name, xmlReader.ReadElementContentAsString());
+                }
+                else
+                {
+                    return compile;
                 }
             }
 
             return compile;
         }
-
+       
+        private bool propertiesDictionary;
         private Dictionary<string, string> properties = new Dictionary<string, string>();
         private List<VSProjectConfiguration> configurations = new List<VSProjectConfiguration>();
         private List<VSProjectReference> references = new List<VSProjectReference>();

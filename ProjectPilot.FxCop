@@ -671,6 +671,45 @@
      </Module>
     </Modules>
    </Target>
+   <Target Name="$(ProjectDir)/Flubu/bin/Release/Flubu.dll">
+    <Modules>
+     <Module Name="flubu.dll">
+      <Namespaces>
+       <Namespace Name="Flubu.Builds.VSSolutionBrowsing">
+        <Types>
+         <Type Name="VSProject">
+          <Members>
+           <Member Name="#ReadSpecificVersion(System.Xml.XmlReader)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-12-11 14:11:48Z">
+              <Issue>
+               <Item>'VSProject.ReadSpecificVersion(XmlReader)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="VSProjectCompileItem">
+          <Members>
+           <Member Name="#CompileAttribs">
+            <Messages>
+             <Message Id="Attribs" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-12-11 14:11:48Z">
+              <Issue Name="Member">
+               <Item>Attribs</Item>
+               <Item>'VSProjectCompileItem.CompileAttribs'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
    <Target Name="$(ProjectDir)/ProjectPilot.Framework/bin/Release/ProjectPilot.Framework.dll">
     <Modules>
      <Module Name="projectpilot.framework.dll">
@@ -793,24 +832,6 @@
     <Modules>
      <Module Name="projectpilot.tests.dll">
       <Namespaces>
-       <Namespace Name="ProjectPilot.Tests.AccipioTests">
-        <Types>
-         <Type Name="TestCodeGeneratorCommandTest">
-          <Members>
-           <Member Name="#MissingXsdShemaFile()">
-            <Messages>
-             <Message Id="Shema" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-12-11 13:51:37Z">
-              <Issue Name="Member">
-               <Item>Shema</Item>
-               <Item>'TestCodeGeneratorCommandTest.MissingXsdShemaFile()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
        <Namespace Name="ProjectPilot.Tests.Framework">
         <Types>
          <Type Name="ChartsTests">
@@ -859,6 +880,9 @@
    </Rule>
    <Rule TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021">
     <Resolution Name="Default">Consider a design that does not require that {0} be an out parameter.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
+    <Resolution Name="Default">{0} appears to have no upstream public or protected callers.</Resolution>
    </Rule>
    <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
     <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>

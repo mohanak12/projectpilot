@@ -21,7 +21,8 @@ namespace ProjectPilot.Tests.BuildScriptsTests
 
                 Assert.AreEqual(48, project.CompileItems.Count);
                 Assert.AreEqual(2, project.Configurations.Count);
-                Assert.AreEqual(10, project.References.Count);
+                Assert.AreEqual(9, project.References.Count);
+                Assert.AreEqual(14, project.Properties.Count);
             }
         }
     }
