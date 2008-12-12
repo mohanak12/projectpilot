@@ -1,0 +1,58 @@
+<actions xmlns="http://projectpilot/AccipioActions.xsd">
+	<action id="GoToPortal">
+       <description>Open the ProjectPilot web site '{0}' in the browser.</description>
+       <parameter name="url" />
+    </action>
+
+    <action id="FindButton">
+       <description>Find button with id '{0}'.</description>
+       <parameter name="name" />
+    </action>
+
+	<action id="ClickButton">
+		<description>Click button with id '{0}'.</description>
+		<parameter name="name" />
+	</action>
+
+	<action id="FindTextBox">
+       <description>Find textbox with id '{0}'.</description>
+		<parameter name="name" />
+    </action>
+
+	<action id="TypeText">
+		<description>Type '{0}' into textbox with id '{1}'.</description>
+		<parameter name="searchText" />
+		<parameter name="name" />
+	</action>
+
+	<action id="ProjectExists">
+		<description>Confirm that project '{0}' is listed on page.</description>
+		<parameter name="href"/>
+	</action>
+
+	<action id="ProjectSelect">
+       <description>Select project '{0}'.</description>
+		<parameter name="href"/>
+    </action>
+
+	<action id="ConfirmSelection">
+		<description>Confirm that correct project was selected.</description>
+	</action>
+
+	<action id="AssertOperationSuccessful">
+       <description>Assert the operation was successful.</description>
+    </action>
+
+    <function id="FindProject">
+        <steps>
+			<run action="GoToPortal"/>
+            <run action="TypeText"/>
+            <run action="ClickButton"/>
+			<run action="ProjectExists"/>
+            <run action="SelectProject"/>
+            <run action="ConfirmSelection"/>
+			<run action="AssertOperationSuccessful"/>
+		</steps>        
+    </function>
+	
+</actions>
