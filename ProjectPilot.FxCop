@@ -794,6 +794,32 @@
     <Modules>
      <Module Name="projectpilot.tests.dll">
       <Namespaces>
+       <Namespace Name="ProjectPilot.Tests.BuildScriptsTests">
+        <Types>
+         <Type Name="VSProjectTests">
+          <Members>
+           <Member Name="#TestVSProject_1()">
+            <Messages>
+             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2008-12-12 09:16:06Z">
+              <Issue Name="Member">
+               <Item>'VSProjectTests.TestVSProject_1()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#TestVSProject_2()">
+            <Messages>
+             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2008-12-12 09:16:06Z">
+              <Issue Name="Member">
+               <Item>'VSProjectTests.TestVSProject_2()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
        <Namespace Name="ProjectPilot.Tests.Framework">
         <Types>
          <Type Name="ChartsTests">
@@ -861,6 +887,7 @@
     <Resolution Name="Default">Rename {0} to end in '{1}'.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707">
+    <Resolution Name="Member">Remove the underscores from member name {0}.</Resolution>
     <Resolution Name="Type">Remove the underscores from type name {0}.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716">

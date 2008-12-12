@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{FBCD
 		Data\Samples\ccnet.stats.xml = Data\Samples\ccnet.stats.xml
 		Data\Samples\LocSample.cs = Data\Samples\LocSample.cs
 		Data\Samples\ProjectPilot.Framework.csproj = Data\Samples\ProjectPilot.Framework.csproj
+		Data\Samples\ProjectPilot.Portal.csproj = Data\Samples\ProjectPilot.Portal.csproj
 		Data\Samples\svn-log.xml = Data\Samples\svn-log.xml
 		Data\Samples\TestSpec.xml = Data\Samples\TestSpec.xml
 		Data\Samples\TestSpecs.xsd = Data\Samples\TestSpecs.xsd

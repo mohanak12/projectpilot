@@ -59,7 +59,8 @@ namespace Flubu.Builds.VSSolutionBrowsing
                             xmlReader.Read();
                             break;
                         default:
-                            throw new XmlException();
+                            xmlReader.Read();
+                            continue;
                     }
                 }
             }
