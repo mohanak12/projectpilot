@@ -77,7 +77,7 @@ namespace Accipio.Console
             XmlValidationHelper helper = new XmlValidationHelper();
             // validating XML with schema file
             // xml document must have at least one action element
-            helper.ValidateXmlDocument(businessActionsXmlFileName, AccipioActoinsXsdFileName);
+            helper.ValidateXmlDocument(businessActionsXmlFileName, AccipioActionsXsdFileName);
 
             // parse XML file
             BusinessActionData businessActionData = ParseXmlToObject(businessActionsXmlFileName);
@@ -239,7 +239,7 @@ namespace Accipio.Console
         private string businessActionsXmlFileName;
         private readonly IConsoleCommand nextCommandInChain;
         private string outputFileName;
-        private const string AccipioActoinsXsdFileName = @"..\..\..\Data\Samples\AccipioActions.xsd";
+        private const string AccipioActionsXsdFileName = @"..\..\..\Data\Samples\AccipioActions.xsd";
         private const string XsdTemplateFileName = @"..\..\..\Data\Samples\TestSuiteTemplate.xsd";
     }
 }
