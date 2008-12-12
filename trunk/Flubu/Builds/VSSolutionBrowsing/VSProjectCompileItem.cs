@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Flubu.Builds.VSSolutionBrowsing
 {
+    /// <summary>
+    /// Holds information about C# files inside of VisualStudio project.
+    /// </summary>
     public class VSProjectCompileItem
     {   
         public string Compile

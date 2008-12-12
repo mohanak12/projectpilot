@@ -127,7 +127,6 @@ namespace Flubu.Builds.VSSolutionBrowsing
 
         private void ReadItemGroup(XmlReader xmlReader)
         {
-            VSProjectReference reference = new VSProjectReference();
             xmlReader.Read();
 
             while (xmlReader.NodeType != XmlNodeType.EndElement)
@@ -135,6 +134,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
                 switch (xmlReader.Name)
                 {
                     case "Reference":
+                        VSProjectReference reference = new VSProjectReference();
                         reference = ReadReference(xmlReader);
                         references.Add(reference);
                         if (xmlReader.NodeType == XmlNodeType.EndElement)
@@ -144,9 +144,9 @@ namespace Flubu.Builds.VSSolutionBrowsing
 
                         break;
                     case "Compile":
-                        VSProjectCompileItem a = new VSProjectCompileItem();
-                        a = ReadCompile(xmlReader);
-                        compileItems.Add(a);
+                        VSProjectCompileItem compileitems = new VSProjectCompileItem();
+                        compileitems = ReadCompile(xmlReader);
+                        compileItems.Add(compileitems);
 
                         if (xmlReader.NodeType == XmlNodeType.EndElement)
                         {
@@ -175,7 +175,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
 
                 if (xmlReader.HasAttributes == false && xmlReader.NodeType != XmlNodeType.EndElement)
                 {
-                    reference.Reference.Add(xmlReader.Name, xmlReader.ReadElementContentAsString());
+                    reference.ReferenceAttributes.Add(xmlReader.Name, xmlReader.ReadElementContentAsString());
                 }
                 else
                 {

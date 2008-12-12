@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Flubu.Builds.VSSolutionBrowsing
 {
+    /// <summary>
+    /// Contains information of compile configuration.
+    /// </summary>
     public class VSProjectConfiguration
     {
         public string Condition
