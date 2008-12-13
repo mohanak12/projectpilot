@@ -138,7 +138,7 @@ namespace Flubu.Tasks.FileSystem
                         Directory.CreateDirectory(destinationPathRecursive);
 
                     fileInfo.CopyTo (filePath, overwriteExisting);
-                    environment.Logger.Log(
+                    environment.LogMessage(
                         "Copied file '{0}' to '{1}'", 
                         fileSystemInfo.FullName,
                         filePath);

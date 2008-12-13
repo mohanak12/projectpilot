@@ -15,8 +15,6 @@ namespace ProjectPilot.BuildScripts
             {
                 try
                 {
-                    runner.ScriptExecutionEnvironment.Logger = new NAntLikeFlubuLogger();
-
                     runner.AddTarget("load.solution").Do(TargetLoadSolution);
                     runner.AddTarget("compile").Do(TargetCompile).DependsOn("load.solution");
                     runner.AddTarget("stage.1").DependsOn("compile", "package");

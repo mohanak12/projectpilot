@@ -112,11 +112,9 @@ namespace Flubu.Tasks.WindowsServices
                 catch (System.ComponentModel.Win32Exception ex)
                 {
                     // 1073
-                    environment.Logger.Log(
-                        String.Format (
-                            System.Globalization.CultureInfo.InvariantCulture,
+                    environment.LogMessage(
                             "ex.ErrorCode = {0}", 
-                            ex.NativeErrorCode));
+                            ex.NativeErrorCode);
                     throw;
                 }
             }

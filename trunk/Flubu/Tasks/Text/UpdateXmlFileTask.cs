@@ -95,11 +95,7 @@ namespace Flubu.Tasks.Text
                 {
                     string fullNodePath = ConstructXmlNodeFullName (node);
 
-                    environment.Logger.Log(
-                        String.Format (
-                            System.Globalization.CultureInfo.InvariantCulture,
-                            "Node '{0}' will be removed.", 
-                            fullNodePath));
+                    environment.LogMessage("Node '{0}' will be removed.", fullNodePath);
 
                     if (node.NodeType == XmlNodeType.Element)
                         node.ParentNode.RemoveChild (node);
@@ -125,12 +121,10 @@ namespace Flubu.Tasks.Text
                 {
                     string fullNodePath = ConstructXmlNodeFullName (node);
 
-                    environment.Logger.Log(
-                        String.Format (
-                            System.Globalization.CultureInfo.InvariantCulture,
+                    environment.LogMessage(
                             "Node '{0}' will have value '{1}'", 
                             fullNodePath, 
-                            xpathUpdates[xpath]));
+                            xpathUpdates[xpath]);
 
                     if (node.NodeType == XmlNodeType.Attribute)
                         node.Value = xpathUpdates[xpath];
@@ -192,13 +186,11 @@ namespace Flubu.Tasks.Text
 
                 string fullNodePath = ConstructXmlNodeFullName (rootNode);
 
-                environment.Logger.Log(
-                    String.Format (
-                        System.Globalization.CultureInfo.InvariantCulture,
+                environment.LogMessage(
                         "Node '{0}' will have a new child '{1}' with value '{2}'", 
                         fullNodePath, 
                         childNode.Name, 
-                        addition.Value));
+                        addition.Value);
             }
 
             xmldoc.Save (fileName);

@@ -1,20 +1,19 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Flubu
 {
     public abstract class ScriptExecutionEnvironmentBase : IScriptExecutionEnvironment
     {
-        #region IScriptExecutionEnvironment Members
-
         /// <summary>
-        /// Gets or sets the name of the script.
+        /// Gets or sets a value indicating whether to dry-run the script. 
+        /// When set to <c>true</c>, the tasks are not really executed,
+        /// instead just a log of activities is created.
         /// </summary>
-        /// <value>The name of the script.</value>
-        public string ScriptName
+        public bool DryRun
         {
-            get { return scriptName; }
-            set { scriptName = value; }
+            get { return dryRun; } set { dryRun = value; }
         }
 
         /// <summary>
@@ -28,15 +27,14 @@ namespace Flubu
             get
             {
                 return Environment.OSVersion.Platform == PlatformID.Win32NT
-                    && Environment.OSVersion.Version.Major == 5
-                    && Environment.OSVersion.Version.Minor == 2;
+                       && Environment.OSVersion.Version.Major == 5
+                       && Environment.OSVersion.Version.Minor == 2;
             }
         }
 
-        public IFlubuLogger Logger
+        public IList<IFlubuLogger> Loggers
         {
-            get { return logger; }
-            set { logger = value; }
+            get { return loggers; }
         }
 
         /// <summary>
@@ -76,12 +74,32 @@ namespace Flubu
         }
 
         /// <summary>
+        /// Gets or sets the name of the script.
+        /// </summary>
+        /// <value>The name of the script.</value>
+        public string ScriptName
+        {
+            get { return scriptName; }
+            set { scriptName = value; }
+        }
+
+        /// <summary>
         /// Gets the Windows system root directory path.
         /// </summary>
         /// <value>The Windows system root directory path.</value>
         public string SystemRootDir
         {
             get { return Environment.GetEnvironmentVariable ("SystemRoot"); }
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or
+        /// resetting unmanaged resources.
+        /// </summary>
+        public void Dispose ()
+        {
+            Dispose (true);
+            GC.SuppressFinalize (this);
         }
 
         /// <summary>
@@ -97,26 +115,80 @@ namespace Flubu
             return Path.Combine (fwRootDir, dotNetVersion);
         }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether to dry-run the script. 
-        /// When set to <c>true</c>, the tasks are not really executed,
-        /// instead just a log of activities is created.
-        /// </summary>
-        public bool DryRun
-        {
-            get { return dryRun; } set { dryRun = value; }
-        }
-
         public abstract string GetConfigurationSettingValue (string settingName);
 
-        public abstract void SetConfigurationSettingValue (string settingName, string settingValue);
+        public void LogMessage(string message)
+        {
+            foreach (IFlubuLogger logger in loggers)
+                logger.LogMessage(message);
+        }
+
+        public void LogMessage(string format, params object[] args)
+        {
+            foreach (IFlubuLogger logger in loggers)
+                logger.LogMessage(format, args);
+        }
+
+        public void LogRunnerFinished(bool success, TimeSpan buildDuration)
+        {
+            foreach (IFlubuLogger logger in loggers)
+                logger.LogRunnerFinished(success, buildDuration);
+        }
+
+        public void LogTargetFinished()
+        {
+            foreach (IFlubuLogger logger in loggers)
+                logger.LogTargetFinished();
+        }
+
+        public void LogTargetStarted(string targetName)
+        {
+            foreach (IFlubuLogger logger in loggers)
+                logger.LogTargetStarted(targetName);
+        }
+
+        public void LogTaskFinished()
+        {
+            foreach (IFlubuLogger logger in loggers)
+                logger.LogTaskFinished();
+        }
+
+        public void LogTaskStarted(string taskDescription)
+        {
+            foreach (IFlubuLogger logger in loggers)
+                logger.LogTargetStarted(taskDescription);
+        }
 
         public abstract string ReceiveInput (string prompt);
 
-        #endregion
+        public abstract void SetConfigurationSettingValue (string settingName, string settingValue);
 
+        /// <summary>
+        /// Disposes the object.
+        /// </summary>
+        /// <param name="disposing">If <code>false</code>, cleans up native resources. 
+        /// If <code>true</code> cleans up both managed and native resources</param>
+        protected virtual void Dispose (bool disposing)
+        {
+            if (false == disposed)
+            {
+                // TODO: clean native resources         
+
+                if (disposing)
+                {
+                    foreach (IFlubuLogger logger in loggers)
+                        logger.Dispose();
+                }
+
+                disposed = true;
+            }
+        }
+
+        private bool disposed;
         private bool dryRun;
-        private IFlubuLogger logger;
+        
+        private readonly List<IFlubuLogger> loggers = new List<IFlubuLogger>();
+        
         private string scriptName;
     }
 }

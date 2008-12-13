@@ -442,7 +442,7 @@ namespace Flubu
 
         public TRunner Log(string format, params object[] args)
         {
-            scriptExecutionEnvironment.Logger.Log(format, args);
+            scriptExecutionEnvironment.LogMessage(format, args);
             return ReturnThisTRunner();
         }
 
@@ -450,15 +450,6 @@ namespace Flubu
         {
             LogScriptEnvironmentTask task = new LogScriptEnvironmentTask();
             return RunTask(task);
-        }
-
-        public virtual TRunner LogTarget (string targetName)
-        {
-            Log(String.Empty);
-            Log("{0}:", targetName);
-            Log(String.Empty);
-
-            return ReturnThisTRunner();
         }
 
         public TRunner MarkTargetAsExecuted(FlubuRunnerTarget<TRunner> target)
@@ -670,8 +661,8 @@ namespace Flubu
             {
                 if (disposing)
                 {
-                    if (scriptExecutionEnvironment.Logger != null)
-                        scriptExecutionEnvironment.Logger.ReportRunnerFinished(!hasFailed, buildTime.Elapsed);
+                    scriptExecutionEnvironment.LogRunnerFinished(!hasFailed, buildTime.Elapsed);
+                    scriptExecutionEnvironment.Dispose();
                 }
 
                 disposed = true;
@@ -689,7 +680,7 @@ namespace Flubu
 
         private void Process_OutputDataReceived(object sender, DataReceivedEventArgs e)
         {
-            scriptExecutionEnvironment.Logger.LogExternalProgramOutput(e.Data);
+            scriptExecutionEnvironment.LogMessage(e.Data);
         }
 
         private Stopwatch buildTime = new Stopwatch();

@@ -122,11 +122,9 @@ namespace Flubu.Tasks.Iis
                         // virtual directory already exists
                         if (mode == CreateVirtualDirectoryMode.DoNothingIfExists)
                         {
-                            environment.Logger.Log(
-                                String.Format (
-                                    System.Globalization.CultureInfo.InvariantCulture,
+                            environment.LogMessage(
                                     "Virtual directory '{0}' already exists, doing nothing.", 
-                                    virtualDirectoryName));
+                                    virtualDirectoryName);
                             return;
                         }
                         else if (mode == CreateVirtualDirectoryMode.FailIfAlreadyExists)

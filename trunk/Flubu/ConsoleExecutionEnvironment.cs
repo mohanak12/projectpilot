@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using log4net.Appender;
 using log4net.Layout;
@@ -36,6 +35,8 @@ namespace Flubu
             appender.ActivateOptions ();
 
             log4net.Config.BasicConfigurator.Configure (appender);
+
+            this.Loggers.Add(new MulticoloredConsoleLogger(System.Console.Out));
         }
 
         public override string GetConfigurationSettingValue (string settingName)

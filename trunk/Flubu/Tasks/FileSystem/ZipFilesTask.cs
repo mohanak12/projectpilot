@@ -23,7 +23,7 @@ namespace Flubu.Tasks.FileSystem
             {
                 return String.Format(
                     CultureInfo.InvariantCulture,
-                    "Zipping {1} files to the '{0}' archive.",
+                    "Zipping {1} files to the '{0}' archive",
                     zipFileName,
                     filesToZip.Count);
             }
@@ -46,7 +46,7 @@ namespace Flubu.Tasks.FileSystem
                         // cut off the leading part of the path (up to the root directory of the package)
                         string basedFileName = fileName.Substring(baseDir.Length + 1);
 
-                        environment.Logger.Log("Zipping file '{0}'", basedFileName);
+                        environment.LogMessage("Zipping file '{0}'", basedFileName);
 
                         ZipEntry entry = new ZipEntry(basedFileName);
                         entry.DateTime = File.GetLastWriteTime(fileName);

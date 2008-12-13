@@ -58,11 +58,9 @@ namespace Flubu.Tasks.UserAccounts
                         // user already exists
                         if (mode == CreateUserAccountMode.DoNothingIfExists)
                         {
-                            environment.Logger.Log(
-                                String.Format (
-                                    System.Globalization.CultureInfo.InvariantCulture,
+                            environment.LogMessage(
                                     "User '{0}' already exists, doing nothing.", 
-                                    userName));
+                                    userName);
                             return;
                         }
                         else if (mode == CreateUserAccountMode.FailIfAlreadyExists)
