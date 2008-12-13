@@ -521,12 +521,12 @@ namespace Flubu.Builds
                     Log("CCNetListenerFile: '{0}'", ccnetListenerFile);
 
                     // delete the old contents of the listener file on the first use
-                    if (false == isCcnetListenerFileInitialized
-                        && File.Exists(ccnetListenerFile))
-                    {
-                        File.Delete(ccnetListenerFile);
-                        isCcnetListenerFileInitialized = true;
-                    }
+                    //if (false == isCcnetListenerFileInitialized
+                    //    && File.Exists(ccnetListenerFile))
+                    //{
+                    //    File.Delete(ccnetListenerFile);
+                    //    isCcnetListenerFileInitialized = true;
+                    //}
 
                     string logText = String.Format(
                         CultureInfo.InvariantCulture,
@@ -838,7 +838,7 @@ namespace Flubu.Builds
         private string companyName;
         private string companyTrademark;
         private bool coverageResultsExist;
-        private bool isCcnetListenerFileInitialized;
+        //private bool isCcnetListenerFileInitialized;
         private string lastZipPackageFileName;
         private readonly string productId;
         private string productName;
