@@ -737,44 +737,63 @@ namespace Flubu.Builds
 
             string gallioEchoExePath = MakePathFromRootDir(@"lib\Gallio\bin\Gallio.Echo.exe");
 
-            if (collectCoverageData)
-                AddProgramArgument(gallioEchoExePath);
-
-            AddProgramArgument(testedAssemblyFileName);
-            AddProgramArgument("/report-directory:{0}", buildLogsDir);
-            AddProgramArgument("/report-name-format:TestResults-{0}", TestRuns);
-            AddProgramArgument("/report-type:xml");
-            AddProgramArgument("/verbosity:verbose");
-            //AddProgramArgument("/runner:IsolatedAppDomain");
-
-            //// create a list of our assemblies which we want to measure coverage of
-            //StringBuilder assembliesList = new StringBuilder();
-            //this.Solution.ForEachProject(delegate(VSProjectInfo projectInfo)
-            //{
-            // if (projectInfo.ProjectTypeGuid == VSProjectType.CSharpProjectType.ProjectTypeGuid)
-            //     assembliesList.AppendFormat("{0};", projectInfo.ProjectName);
-            //});
-
-            if (collectCoverageData)
+            try
             {
-                AddProgramArgument("//reg");
-                //AddProgramArgument("//a");
-                //AddProgramArgument(assembliesList.ToString());
-                AddProgramArgument("//x");
-                AddProgramArgument(@"{0}\Coverage-{1}.xml", buildLogsDir, TestRuns);
-                AddProgramArgument("//ea");
-                AddProgramArgument("MbUnit.Framework.TestFixtureAttribute");
-                AddProgramArgument("//w");
-                AddProgramArgument(Path.GetDirectoryName(testedAssemblyFileName));
-                AddProgramArgument("//v");
-                RunProgram(MakePathFromRootDir(@"lib\NCover v1.5.8\NCover.Console.exe"));
+                if (collectCoverageData)
+                {
+                    AddProgramArgument(@"lib\NCover v1.5.8\CoverLib.dll");
+                    AddProgramArgument("/s");
+                    RunProgram("regsvr32");
 
-                coverageResultsExist = true;
+                    AddProgramArgument(gallioEchoExePath);
+                }
+
+                AddProgramArgument(testedAssemblyFileName);
+                AddProgramArgument("/report-directory:{0}", buildLogsDir);
+                AddProgramArgument("/report-name-format:TestResults-{0}", TestRuns);
+                AddProgramArgument("/report-type:xml");
+                AddProgramArgument("/verbosity:verbose");
+                //AddProgramArgument("/runner:IsolatedAppDomain");
+
+                //// create a list of our assemblies which we want to measure coverage of
+                //StringBuilder assembliesList = new StringBuilder();
+                //this.Solution.ForEachProject(delegate(VSProjectInfo projectInfo)
+                //{
+                // if (projectInfo.ProjectTypeGuid == VSProjectType.CSharpProjectType.ProjectTypeGuid)
+                //     assembliesList.AppendFormat("{0};", projectInfo.ProjectName);
+                //});
+
+                if (collectCoverageData)
+                {
+                    //AddProgramArgument("//reg");
+                    //AddProgramArgument("//a");
+                    //AddProgramArgument(assembliesList.ToString());
+                    AddProgramArgument("//x");
+                    AddProgramArgument(@"{0}\Coverage-{1}.xml", buildLogsDir, TestRuns);
+                    AddProgramArgument("//ea");
+                    AddProgramArgument("MbUnit.Framework.TestFixtureAttribute");
+                    AddProgramArgument("//w");
+                    AddProgramArgument(Path.GetDirectoryName(testedAssemblyFileName));
+                    AddProgramArgument("//v");
+                    RunProgram(MakePathFromRootDir(@"lib\NCover v1.5.8\NCover.Console.exe"));
+
+                    coverageResultsExist = true;
+                }
+                else
+                    RunProgram(gallioEchoExePath);
+
+                IncrementTestRunsCounter();
             }
-            else
-                RunProgram(gallioEchoExePath);
-
-            IncrementTestRunsCounter();
+            finally
+            {
+                if (collectCoverageData)
+                {
+                    AddProgramArgument(@"lib\NCover v1.5.8\CoverLib.dll");
+                    AddProgramArgument("/s");
+                    AddProgramArgument("/u");
+                    RunProgram("regsvr32");
+                }                
+            }
 
             return ReturnThisTRunner();
         }

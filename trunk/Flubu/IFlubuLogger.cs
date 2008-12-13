@@ -5,6 +5,10 @@ namespace Flubu
 {
     public interface IFlubuLogger : IDisposable
     {
+        void LogError(string message);
+
+        void LogError(string format, params object[] args);
+
         void LogMessage (string message);
 
         void LogMessage (string format, params object[] args);

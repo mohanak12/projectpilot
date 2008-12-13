@@ -1,1 +1,1 @@
-Scripts\BuildScript
+Scripts\BuildScript %*

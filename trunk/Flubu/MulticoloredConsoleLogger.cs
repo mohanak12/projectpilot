@@ -38,6 +38,16 @@ namespace Flubu
             GC.SuppressFinalize (this);
         }
 
+        public void LogError(string message)
+        {
+            WriteLine(ConsoleColor.Red, message);
+        }
+
+        public void LogError(string format, params object[] args)
+        {
+            WriteLine(ConsoleColor.Red, format, args);
+        }
+
         public void LogMessage(string message)
         {
             WriteLine (ConsoleColor.DarkGray, message);
