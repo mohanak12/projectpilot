@@ -29,6 +29,7 @@
   <Target Name="$(ProjectDir)/Accipio.Console/bin/Release/Accipio.Console.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/Accipio/bin/Release/Accipio.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/Flubu/bin/Release/Flubu.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/ProjectPilot.Extras/bin/Release/ProjectPilot.Extras.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/ProjectPilot.Framework/bin/Release/ProjectPilot.Framework.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/ProjectPilot.Portal/bin/ProjectPilot.Portal.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/ProjectPilot.Tests/bin/Release/ProjectPilot.Tests.dll" Analyze="True" AnalyzeAllChildren="True" />
@@ -672,6 +673,69 @@
      </Module>
     </Modules>
    </Target>
+   <Target Name="$(ProjectDir)/Flubu/bin/Release/Flubu.dll">
+    <Modules>
+     <Module Name="flubu.dll">
+      <Namespaces>
+       <Namespace Name="Flubu.Builds.VSSolutionBrowsing">
+        <Types>
+         <Type Name="VSSolution">
+          <Members>
+           <Member Name="#ProjectInfos">
+            <Messages>
+             <Message Id="Infos" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-12-13 07:34:56Z">
+              <Issue Name="Member">
+               <Item>Infos</Item>
+               <Item>'VSSolution.ProjectInfos'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/ProjectPilot.Extras/bin/Release/ProjectPilot.Extras.dll">
+    <Modules>
+     <Module Name="projectpilot.extras.dll">
+      <Namespaces>
+       <Namespace Name="ProjectPilot.Extras.CodeAnalysis">
+        <Types>
+         <Type Name="AssemblyCodeAnalyzer">
+          <Members>
+           <Member Name="#ShouldBeIncluded(System.Type)">
+            <Messages>
+             <Message Id="System.String.StartsWith(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2008-12-13 07:34:56Z">
+              <Issue>
+               <Item>'AssemblyCodeAnalyzer.ShouldBeIncluded(Type)'</Item>
+               <Item>'string.StartsWith(string)'</Item>
+               <Item>'string.StartsWith(string, StringComparison)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="UmlClassDiagramGenerator">
+          <Messages>
+           <Message Id="Uml" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-12-13 07:34:56Z">
+            <Issue Name="Type">
+             <Item>Uml</Item>
+             <Item>'UmlClassDiagramGenerator'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
    <Target Name="$(ProjectDir)/ProjectPilot.Framework/bin/Release/ProjectPilot.Framework.dll">
     <Modules>
      <Module Name="projectpilot.framework.dll">
@@ -794,32 +858,6 @@
     <Modules>
      <Module Name="projectpilot.tests.dll">
       <Namespaces>
-       <Namespace Name="ProjectPilot.Tests.BuildScriptsTests">
-        <Types>
-         <Type Name="VSProjectTests">
-          <Members>
-           <Member Name="#TestVSProject_1()">
-            <Messages>
-             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2008-12-12 09:16:06Z">
-              <Issue Name="Member">
-               <Item>'VSProjectTests.TestVSProject_1()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TestVSProject_2()">
-            <Messages>
-             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2008-12-12 09:16:06Z">
-              <Issue Name="Member">
-               <Item>'VSProjectTests.TestVSProject_2()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
        <Namespace Name="ProjectPilot.Tests.Framework">
         <Types>
          <Type Name="ChartsTests">
@@ -882,12 +920,12 @@
    <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
     <Resolution Name="Member">Correct the spelling of '{0}' in member name {1} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
     <Resolution Name="MemberParameterMoreMeaningfulName">In method {0}, consider providing a more meaningful name than parameter name {1}.</Resolution>
+    <Resolution Name="Type">Correct the spelling of '{0}' in type name {1}.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldHaveCorrectSuffix" Category="Microsoft.Naming" CheckId="CA1710">
     <Resolution Name="Default">Rename {0} to end in '{1}'.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707">
-    <Resolution Name="Member">Remove the underscores from member name {0}.</Resolution>
     <Resolution Name="Type">Remove the underscores from type name {0}.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716">

@@ -6,7 +6,7 @@ using System.Xml.XPath;
 namespace Flubu.Builds.VSSolutionBrowsing
 {
     /// <summary>
-    /// Holds basic information about a specific VisualStudio project.
+    /// Holds information about a VisualStudio project.
     /// </summary>
     public class VSProjectInfo
     {
@@ -29,21 +29,21 @@ namespace Flubu.Builds.VSSolutionBrowsing
             get { return ownerSolution; }
         }
 
-        public Guid ProjectTypeGuid
+        /// <summary>
+        /// Gets or sets the <see cref="VSProject"/> object holding the detailed information about this VisualStudio
+        /// project.
+        /// </summary>
+        /// <value>The <see cref="VSProject"/> object .</value>
+        public VSProject Project
         {
-            get { return projectTypeGuid; }
+            get { return project; }
+            set { project = value; }
         }
 
-        public string ProjectName
-        {
-            get { return projectName; }
-        }
-
-        public string ProjectFileName
-        {
-            get { return projectFileName; }
-        }
-
+        /// <summary>
+        /// Gets the path to the directory where the project file is located.
+        /// </summary>
+        /// <value>The project directory path.</value>
         public string ProjectDirectoryPath
         {
             get
@@ -52,9 +52,42 @@ namespace Flubu.Builds.VSSolutionBrowsing
             }
         }
 
+        /// <summary>
+        /// Gets the name of the project file. The file name is relative to the solution's directory.
+        /// </summary>
+        /// <remarks>The full path to the project file can be retrieved using the <see cref="ProjectFileNameFull"/>
+        /// property.</remarks>
+        /// <value>The name of the project file.</value>
+        public string ProjectFileName
+        {
+            get { return projectFileName; }
+        }
+
+        /// <summary>
+        /// Gets the full path to the project file.
+        /// </summary>
+        /// <value>The full path to the project file.</value>
+        public string ProjectFileNameFull
+        {
+            get
+            {
+                return Path.Combine(ownerSolution.SolutionDirectoryPath, ProjectFileName);
+            }
+        }
+
         public Guid ProjectGuid
         {
             get { return projectGuid; }
+        }
+
+        public string ProjectName
+        {
+            get { return projectName; }
+        }
+
+        public Guid ProjectTypeGuid
+        {
+            get { return projectTypeGuid; }
         }
 
         public IXPathNavigable OpenProjectFileAsXmlDocument ()
@@ -70,22 +103,8 @@ namespace Flubu.Builds.VSSolutionBrowsing
             }
         }
 
-        //public void SaveProjectFromXmlDocument (XmlDocument xmlDoc)
-        //{
-        //    if (xmlDoc == null)
-        //        throw new ArgumentNullException ("xmlDoc");                
-            
-        //    //if (log.IsDebugEnabled)
-        //    //    log.DebugFormat ("SaveProjectAsXmlDocument '{0}'", this.ProjectFileName);
-
-        //    using (FileWithBackup file = new FileWithBackup (Path.Combine (ownerSolution.SolutionDirectoryPath, ProjectFileName)))
-        //    {
-        //        xmlDoc.Save (file.Stream);
-        //        file.MarkAsValid ();
-        //    }
-        //}
-
         private readonly VSSolution ownerSolution;
+        private VSProject project;
         private readonly string projectFileName;
         private readonly Guid projectGuid;
         private readonly string projectName;

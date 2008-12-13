@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Xml;
 
 namespace Flubu.Builds.VSSolutionBrowsing
@@ -29,43 +26,46 @@ namespace Flubu.Builds.VSSolutionBrowsing
             get { return references; }
         }
 
-        public static VSProject Load(Stream stream)
+        public static VSProject Load(string projectFileName)
         {
-            VSProject data = new VSProject();
-            data.propertiesDictionary = true;
-            
-            XmlReaderSettings xmlReaderSettings = new XmlReaderSettings();
-            xmlReaderSettings.IgnoreComments = true;
-            xmlReaderSettings.IgnoreProcessingInstructions = true;
-            xmlReaderSettings.IgnoreWhitespace = true;
-
-            using (XmlReader xmlReader = XmlReader.Create(stream, xmlReaderSettings))
+            using (Stream stream = File.OpenRead (projectFileName))
             {
-                xmlReader.Read();
-                while (false == xmlReader.EOF)
+                VSProject data = new VSProject();
+                data.propertiesDictionary = true;
+
+                XmlReaderSettings xmlReaderSettings = new XmlReaderSettings();
+                xmlReaderSettings.IgnoreComments = true;
+                xmlReaderSettings.IgnoreProcessingInstructions = true;
+                xmlReaderSettings.IgnoreWhitespace = true;
+
+                using (XmlReader xmlReader = XmlReader.Create(stream, xmlReaderSettings))
                 {
-                    switch (xmlReader.NodeType)
+                    xmlReader.Read();
+                    while (false == xmlReader.EOF)
                     {
-                        case XmlNodeType.XmlDeclaration:
-                            xmlReader.Read();
-                            break;
+                        switch (xmlReader.NodeType)
+                        {
+                            case XmlNodeType.XmlDeclaration:
+                                xmlReader.Read();
+                                break;
 
-                        case XmlNodeType.Element:
-                            if (xmlReader.Name == "Project") 
-                            {
-                                data.ReadProject(xmlReader);
-                            }
+                            case XmlNodeType.Element:
+                                if (xmlReader.Name == "Project")
+                                {
+                                    data.ReadProject(xmlReader);
+                                }
 
-                            xmlReader.Read();
-                            break;
-                        default:
-                            xmlReader.Read();
-                            continue;
+                                xmlReader.Read();
+                                break;
+                            default:
+                                xmlReader.Read();
+                                continue;
+                        }
                     }
                 }
-            }
 
-            return data;
+                return data;
+            }
         }
 
         private void ReadProject(XmlReader xmlReader)
@@ -135,8 +135,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
                 switch (xmlReader.Name)
                 {
                     case "Reference":
-                        VSProjectReference reference = new VSProjectReference();
-                        reference = ReadReference(xmlReader);
+                        VSProjectReference reference = ReadReference(xmlReader);
                         references.Add(reference);
                         if (xmlReader.NodeType == XmlNodeType.EndElement)
                         {
@@ -145,8 +144,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
 
                         break;
                     case "Compile":
-                        VSProjectCompileItem compileitems = new VSProjectCompileItem();
-                        compileitems = ReadCompile(xmlReader);
+                        VSProjectCompileItem compileitems = ReadCompile(xmlReader);
                         compileItems.Add(compileitems);
 
                         if (xmlReader.NodeType == XmlNodeType.EndElement)
@@ -162,13 +160,13 @@ namespace Flubu.Builds.VSSolutionBrowsing
             }
         }
 
-        private VSProjectReference ReadReference(XmlReader xmlReader)
+        private static VSProjectReference ReadReference(XmlReader xmlReader)
         {
             VSProjectReference reference = new VSProjectReference();
 
             while (xmlReader.NodeType != XmlNodeType.EndElement)
             {
-                if (xmlReader.HasAttributes == true && xmlReader.NodeType != XmlNodeType.EndElement)
+                if (xmlReader.HasAttributes && xmlReader.NodeType != XmlNodeType.EndElement)
                 {
                     reference.Include = xmlReader[0];
                     xmlReader.Read();
@@ -187,13 +185,13 @@ namespace Flubu.Builds.VSSolutionBrowsing
             return reference;
         }
 
-        private VSProjectCompileItem ReadCompile(XmlReader xmlReader)
+        private static VSProjectCompileItem ReadCompile(XmlReader xmlReader)
         {
             VSProjectCompileItem compile = new VSProjectCompileItem();
 
             while (xmlReader.NodeType != XmlNodeType.EndElement)
             {
-                if (xmlReader.HasAttributes == true && xmlReader.NodeType != XmlNodeType.EndElement)
+                if (xmlReader.HasAttributes && xmlReader.NodeType != XmlNodeType.EndElement)
                 {
                     compile.Compile = xmlReader[0];
                     xmlReader.Read();
@@ -211,12 +209,12 @@ namespace Flubu.Builds.VSSolutionBrowsing
 
             return compile;
         }
-       
+
+        private readonly List<VSProjectCompileItem> compileItems = new List<VSProjectCompileItem>();
+        private readonly List<VSProjectConfiguration> configurations = new List<VSProjectConfiguration>();
+        private readonly Dictionary<string, string> properties = new Dictionary<string, string>();
         private bool propertiesDictionary;
-        private Dictionary<string, string> properties = new Dictionary<string, string>();
-        private List<VSProjectConfiguration> configurations = new List<VSProjectConfiguration>();
-        private List<VSProjectReference> references = new List<VSProjectReference>();
-        private List<VSProjectCompileItem> compileItems = new List<VSProjectCompileItem>();
+        private readonly List<VSProjectReference> references = new List<VSProjectReference>();
     }
 }
 

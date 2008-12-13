@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{AAF9E493-30D9-4372-8D69-6D346DB05489}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -87,7 +87,7 @@
     <Compile Include="AccipioTests\TestCodeGeneratorCommandTest.cs" />
     <Compile Include="AccipioTests\TestCodeGeneratorTests.cs" />
     <Compile Include="AccipioTests\XmlValidationTest.cs" />
-    <Compile Include="BuildScriptsTests\TestBuild.cs" />
+    <Compile Include="BuildScriptsTests\VSSolutionBrowsingTests.cs" />
     <Compile Include="BuildScriptsTests\VSProjectTests.cs" />
     <Compile Include="Extras\CodeAnalysisTests.cs" />
     <Compile Include="Framework\CCNet\ProjectStatsLoadingTests.cs" />

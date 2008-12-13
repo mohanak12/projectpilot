@@ -47,8 +47,6 @@ namespace ProjectPilot.BuildScripts
                     runner.CopyBuildLogsToCCNet();
                 }
             }
-
-            return 0;
         }
 
         private static void TargetCompile(ConcreteBuildRunner runner)
