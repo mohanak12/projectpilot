@@ -126,7 +126,7 @@ namespace Flubu.Builds
 
         public TRunner CleanOutput()
         {
-            LogTarget("CleanOutput");
+            ScriptExecutionEnvironment.LogTaskStarted("Cleaning solution outputs");
 
             solution.ForEachProject(
                 delegate (VSProjectInfo projectInfo)
@@ -149,12 +149,13 @@ namespace Flubu.Builds
                         DeleteDirectory(projectObjPath, false);
                     });
 
+            ScriptExecutionEnvironment.LogTaskFinished();
             return ReturnThisTRunner();
         }
 
         public TRunner CompileSolution()
         {
-            LogTarget("CompileSolution");
+            ScriptExecutionEnvironment.LogTaskStarted ("Compiling the solution");
 
             AddProgramArgument(MakePathFromRootDir(productId) + ".sln");
             AddProgramArgument("/p:Configuration={0}", buildConfiguration);
@@ -163,7 +164,8 @@ namespace Flubu.Builds
 
             RunProgram(@"C:\Windows\Microsoft.NET\Framework\v3.5\msbuild.exe");
 
-            return ReturnThisTRunner();
+            ScriptExecutionEnvironment.LogTaskFinished ();
+            return ReturnThisTRunner ();
         }
 
         /// <summary>
@@ -327,7 +329,7 @@ namespace Flubu.Builds
         /// </returns>
         public TRunner FetchBuildVersion()
         {
-            LogTarget("FetchBuildVersion");
+            ScriptExecutionEnvironment.LogTaskStarted("Fetching the build version");
 
             if (IsRunningUnderCruiseControl)
             {
@@ -362,12 +364,13 @@ namespace Flubu.Builds
 
             Log("Project build version: {0}", BuildVersion);
 
+            ScriptExecutionEnvironment.LogTaskFinished();
             return ReturnThisTRunner();
         }
 
         public TRunner FxCop()
         {
-            LogTarget("FxCop");
+            ScriptExecutionEnvironment.LogTargetStarted("Running FxCop analysis");
 
             string fxProjectPath = MakePathFromRootDir(productId) + ".FxCop";
 
@@ -404,12 +407,13 @@ namespace Flubu.Builds
                 Fail("FxCop found violations in the code.");
             }
 
+            ScriptExecutionEnvironment.LogTargetFinished();
             return ReturnThisTRunner();
         }
 
         public TRunner GenerateCommonAssemblyInfo()
         {
-            LogTarget("GenerateCommonAssemblyInfo");
+            ScriptExecutionEnvironment.LogTaskStarted("Generating CommonAssemblyInfo file");
 
             if (buildVersion == null)
                 Fail("Assembly file version is not set.");
@@ -448,6 +452,8 @@ namespace Flubu.Builds
                         buildVersion.ToString(2));
                 }
             }
+
+            ScriptExecutionEnvironment.LogTaskFinished();
 
             return ReturnThisTRunner();
         }
@@ -507,46 +513,36 @@ namespace Flubu.Builds
             return ReturnThisTRunner();
         }
 
-        public override TRunner LogTarget(string targetName)
-        {
-            base.LogTarget(targetName);
+        //public override TRunner LogTarget(string targetName)
+        //{
+        //    base.LogTarget(targetName);
 
-            if (IsRunningUnderCruiseControl)
-            {
-                string ccnetListenerFile = System.Environment.GetEnvironmentVariable("CCNetListenerFile");
+        //    if (IsRunningUnderCruiseControl)
+        //    {
+        //        string ccnetListenerFile = System.Environment.GetEnvironmentVariable("CCNetListenerFile");
 
-                // if the CCNet emits the listener file path, we will produce the file
-                if (ccnetListenerFile != null)
-                {
-                    Log("CCNetListenerFile: '{0}'", ccnetListenerFile);
+        //        // if the CCNet emits the listener file path, we will produce the file
+        //        if (ccnetListenerFile != null)
+        //        {
+        //            string logText = String.Format(
+        //                CultureInfo.InvariantCulture,
+        //                @"<Item Time='{0}' Data='{1}'/>",
+        //                //@"<data><Item Time='{0}' Data='{1}'/></data>",
+        //                DateTime.Now.ToString("u", CultureInfo.InvariantCulture),
+        //                targetName);
 
-                    // delete the old contents of the listener file on the first use
-                    //if (false == isCcnetListenerFileInitialized
-                    //    && File.Exists(ccnetListenerFile))
-                    //{
-                    //    File.Delete(ccnetListenerFile);
-                    //    isCcnetListenerFileInitialized = true;
-                    //}
+        //            using (Stream stream = File.Open(ccnetListenerFile, FileMode.Append))
+        //            {
+        //                using (StreamWriter writer = new StreamWriter(stream))
+        //                {
+        //                    writer.WriteLine(logText);
+        //                }
+        //            }
+        //        }
+        //    }
 
-                    string logText = String.Format(
-                        CultureInfo.InvariantCulture,
-                        @"<Item Time='{0}' Data='{1}'/>",
-                        //@"<data><Item Time='{0}' Data='{1}'/></data>",
-                        DateTime.Now.ToString("u", CultureInfo.InvariantCulture),
-                        targetName);
-
-                    using (Stream stream = File.Open(ccnetListenerFile, FileMode.Append))
-                    {
-                        using (StreamWriter writer = new StreamWriter(stream))
-                        {
-                            writer.WriteLine(logText);
-                        }
-                    }
-                }
-            }
-
-            return ReturnThisTRunner();
-        }
+        //    return ReturnThisTRunner();
+        //}
 
         public TRunner MergeCoverageReports()
         {
@@ -615,12 +611,14 @@ namespace Flubu.Builds
 
         public TRunner PrepareBuildDirectory()
         {
-            LogTarget("PrepareBuildDirectory");
+            ScriptExecutionEnvironment.LogTaskStarted("Preparing the build directory");
 
             string fullBuildDir = MakePathFromRootDir(buildDir);
 
             DeleteDirectory(fullBuildDir, false);
             CreateDirectory(fullBuildDir, true);
+
+            ScriptExecutionEnvironment.LogTaskFinished();
 
             return ReturnThisTRunner();
         }
@@ -838,7 +836,6 @@ namespace Flubu.Builds
         private string companyName;
         private string companyTrademark;
         private bool coverageResultsExist;
-        //private bool isCcnetListenerFileInitialized;
         private string lastZipPackageFileName;
         private readonly string productId;
         private string productName;

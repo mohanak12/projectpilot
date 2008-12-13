@@ -136,12 +136,10 @@ namespace Flubu.Tasks.Configuration
                         terminator = "/";
                     }
 
-                    environment.Logger.Log(
-                        String.Format (
-                            System.Globalization.CultureInfo.InvariantCulture,
+                    environment.LogMessage(
                             "Configuration setting '{0}' has value '{1}'", 
                             settingName, 
-                            node.InnerText));
+                            node.InnerText);
                     environment.SetConfigurationSettingValue (settingName.ToString (), node.InnerText);
                 }
             }

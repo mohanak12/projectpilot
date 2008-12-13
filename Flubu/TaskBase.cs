@@ -37,26 +37,13 @@ namespace Flubu
             if (environment  == null)
                 throw new ArgumentNullException ("environment");
             
-            try
-            {
-                environment.Logger.ReportTaskStarted (this);
+            environment.LogTaskStarted(this.TaskDescription);
 
-                // when in dry run do not execute the task (unless it itself indicates that it is safe)
-                if (false == environment.DryRun || IsSafeToExecuteInDryRun)
-                    DoExecute (environment);
+            // when in dry run do not execute the task (unless it itself indicates that it is safe)
+            if (false == environment.DryRun || IsSafeToExecuteInDryRun)
+                DoExecute (environment);
 
-                environment.Logger.ReportTaskExecuted (this);
-            }
-            catch (RunnerFailedException ex)
-            {
-                environment.Logger.ReportTaskFailed (this, ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                environment.Logger.ReportTaskFailed (this, ex);
-                throw;
-            }
+            environment.LogTaskFinished();
         }
 
         /// <summary>

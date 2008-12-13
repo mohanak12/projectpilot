@@ -43,7 +43,7 @@ namespace Flubu.Tasks.Processes
             Process[] processByName = Process.GetProcessesByName (processName);
             foreach (Process process in processByName)
             {
-                environment.Logger.Log("Killing process '{0}'", process.ProcessName);
+                environment.LogMessage("Killing process '{0}'", process.ProcessName);
                 process.Kill ();
             }
         }

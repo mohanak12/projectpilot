@@ -677,58 +677,79 @@
     <Modules>
      <Module Name="flubu.dll">
       <Namespaces>
-       <Namespace Name="Flubu.Builds.VSSolutionBrowsing">
+       <Namespace Name="Flubu">
         <Types>
-         <Type Name="VSSolution">
+         <Type Name="IFlubuLogger">
           <Members>
-           <Member Name="#ProjectInfos">
+           <Member Name="#LogRunnerFinished(System.Boolean,System.TimeSpan)">
             <Messages>
-             <Message Id="Infos" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-12-13 07:34:56Z">
-              <Issue Name="Member">
-               <Item>Infos</Item>
-               <Item>'VSSolution.ProjectInfos'</Item>
+             <Message Id="LogRunner" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2008-12-13 11:34:18Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>LogRunner</Item>
+               <Item>'IFlubuLogger.LogRunnerFinished(bool, TimeSpan)'</Item>
+               <Item>Logrunner</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
           </Members>
          </Type>
-        </Types>
-       </Namespace>
-      </Namespaces>
-     </Module>
-    </Modules>
-   </Target>
-   <Target Name="$(ProjectDir)/ProjectPilot.Extras/bin/Release/ProjectPilot.Extras.dll">
-    <Modules>
-     <Module Name="projectpilot.extras.dll">
-      <Namespaces>
-       <Namespace Name="ProjectPilot.Extras.CodeAnalysis">
-        <Types>
-         <Type Name="AssemblyCodeAnalyzer">
+         <Type Name="ScriptExecutionEnvironmentBase">
           <Members>
-           <Member Name="#ShouldBeIncluded(System.Type)">
+           <Member Name="#Dispose()">
             <Messages>
-             <Message Id="System.String.StartsWith(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2008-12-13 07:34:56Z">
-              <Issue>
-               <Item>'AssemblyCodeAnalyzer.ShouldBeIncluded(Type)'</Item>
-               <Item>'string.StartsWith(string)'</Item>
-               <Item>'string.StartsWith(string, StringComparison)'</Item>
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2008-12-13 11:34:18Z">
+              <Issue Name="NotCalled">
+               <Item>'ScriptExecutionEnvironmentBase.Dispose()'</Item>
+               <Item>'GC.SuppressFinalize(object)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Created="2008-12-13 11:34:18Z" FixCategory="Breaking">
+              <Issue Name="NoAllowedExceptions" Level="Error">
+               <Item>'ScriptExecutionEnvironmentBase.Dispose()'</Item>
+               <Item>'NotImplementedException'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2008-12-13 11:34:18Z">
+              <Issue Name="DisposeImplementation">
+               <Item>'ScriptExecutionEnvironmentBase.Dispose()'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
           </Members>
          </Type>
-         <Type Name="UmlClassDiagramGenerator">
+         <Type Name="StandardFlubuLogger">
           <Messages>
-           <Message Id="Uml" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2008-12-13 07:34:56Z">
-            <Issue Name="Type">
-             <Item>Uml</Item>
-             <Item>'UmlClassDiagramGenerator'</Item>
+           <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2008-12-13 11:34:18Z">
+            <Issue Name="ProvideDisposeBool">
+             <Item>'StandardFlubuLogger'</Item>
             </Issue>
            </Message>
           </Messages>
+          <Members>
+           <Member Name="#Dispose()">
+            <Messages>
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2008-12-13 11:34:18Z">
+              <Issue Name="NotCalled">
+               <Item>'StandardFlubuLogger.Dispose()'</Item>
+               <Item>'GC.SuppressFinalize(object)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Created="2008-12-13 11:34:18Z" FixCategory="Breaking">
+              <Issue Name="NoAllowedExceptions" Level="Error">
+               <Item>'StandardFlubuLogger.Dispose()'</Item>
+               <Item>'NotImplementedException'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2008-12-13 11:34:18Z">
+              <Issue Name="DisposeImplementation">
+               <Item>'StandardFlubuLogger.Dispose()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
          </Type>
         </Types>
        </Namespace>
@@ -907,20 +928,23 @@
    <Rule TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021">
     <Resolution Name="Default">Consider a design that does not require that {0} be an out parameter.</Resolution>
    </Rule>
+   <Rule TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816">
+    <Resolution Name="NotCalled">Change {0} to call {1}. This will prevent unnecessary finalization of the object once it has been disposed and it has fallen out of scope.</Resolution>
+   </Rule>
    <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
     <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
-    <Resolution Name="TypeShouldBeDiscreteTerm">The compound word '{0}' in type name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}'.</Resolution>
    </Rule>
    <Rule TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002">
     <Resolution Name="Default">Change {0} in {1} to use Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; or KeyedCollection&lt;K,V&gt;</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065">
+    <Resolution Name="NoAllowedExceptions">{0} creates an exception of type {1}. Exceptions should not be raised in this type of method. If this exception instance might be raised, change this method's logic so it no longer raises an exception.</Resolution>
    </Rule>
    <Rule TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004">
     <Resolution Name="Default">Consider a design where {0} doesn't require explicit type parameter {1} in any call to it.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
-    <Resolution Name="Member">Correct the spelling of '{0}' in member name {1} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
     <Resolution Name="MemberParameterMoreMeaningfulName">In method {0}, consider providing a more meaningful name than parameter name {1}.</Resolution>
-    <Resolution Name="Type">Correct the spelling of '{0}' in type name {1}.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldHaveCorrectSuffix" Category="Microsoft.Naming" CheckId="CA1710">
     <Resolution Name="Default">Rename {0} to end in '{1}'.</Resolution>
@@ -929,9 +953,12 @@
     <Resolution Name="Type">Remove the underscores from type name {0}.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716">
-    <Resolution Name="Member">Rename virtual/interface member {0} so that it no longer conflicts with the reserved language keyword '{1}'. Using a reserved keyword as the name of a virtual/interface member makes it harder for consumers in other languages to override/implement the member.</Resolution>
     <Resolution Name="Namespace">Rename namespace {0} so that it no longer conflicts with the reserved language keyword '{1}'. Using a reserved keyword as the name of a namespace makes it harder for consumers in other languages to use the namespace.</Resolution>
     <Resolution Name="Type">Rename type {0} so that it no longer conflicts with the reserved language keyword '{1}'. Using a reserved keyword as the name of a type makes it harder for consumers in other languages to use the type.</Resolution>
+   </Rule>
+   <Rule TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063">
+    <Resolution Name="DisposeImplementation">Modify {0} so that it calls Dispose(true), then calls GC.SuppressFinalize on the current object instance ('this' or 'Me' in Visual Basic), and then returns.</Resolution>
+    <Resolution Name="ProvideDisposeBool">Provide an overridable implementation of Dispose(bool) on {0} or mark the type as sealed. A call to Dispose(false) should only clean up native resources. A call to Dispose(true) should clean up both managed and native resources.</Resolution>
    </Rule>
    <Rule TypeName="ImplementStandardExceptionConstructors" Category="Microsoft.Design" CheckId="CA1032">
     <Resolution Name="MissingConstructor">Add the following constructor to {0}: {1}.</Resolution>
@@ -953,7 +980,6 @@
    </Rule>
    <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
     <Resolution Name="Default">The type name {0} conflicts in whole or in part with the namespace name '{1}'. Change either name to eliminate the conflict.</Resolution>
-    <Resolution Name="System">The type name {0} conflicts in whole or in part with the namespace name '{1}' defined in the .NET Framework. Rename the type to eliminate the conflict.</Resolution>
    </Rule>
    <Rule TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726">
     <Resolution Name="MemberParameterNoAlternate">In member {0}, replace the term '{1}' in parameter name {2} with an appropriate alternate or remove it entirely.</Resolution>

@@ -38,7 +38,7 @@ namespace Flubu
 
         public void Execute()
         {
-            runner.LogTarget(this.targetName);
+            runner.ScriptExecutionEnvironment.LogTargetStarted(this.targetName);
 
             runner.MarkTargetAsExecuted(this);
             runner.EnsureDependenciesExecuted(this.TargetName);
@@ -46,6 +46,8 @@ namespace Flubu
             // we can have actionless targets (that only depend on other targets)
             if (targetAction != null)
                 targetAction(runner);
+
+            runner.ScriptExecutionEnvironment.LogTargetFinished();
         }
 
         public FlubuRunnerTarget<TRunner> Do (Action<TRunner> targetAction)

@@ -2,7 +2,7 @@ using System;
 
 namespace Flubu
 {
-    public interface IScriptExecutionEnvironment
+    public interface IScriptExecutionEnvironment : IFlubuLogger
     {
         /// <summary>
         /// Gets or sets the name of the script.
@@ -18,7 +18,7 @@ namespace Flubu
         /// </value>
         bool IsWinServer2003 { get; }
 
-        IFlubuLogger Logger { get; set; }
+        //IFlubuLogger Logger { get; set; }
 
         /// <summary>
         /// Gets the .NET version number for .NET 1.0.

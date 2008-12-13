@@ -68,7 +68,7 @@ namespace Flubu.Tasks.Iis
                         if (failIfNotExist)
                             throw new RunnerFailedException (message);
                         else
-                            environment.Logger.Log(message);
+                            environment.LogMessage(message);
                     }
                 }
                 finally

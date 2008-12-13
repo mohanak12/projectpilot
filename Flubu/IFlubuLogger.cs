@@ -1,23 +1,23 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Flubu
 {
     public interface IFlubuLogger : IDisposable
     {
-        void Log(string message);
+        void LogMessage (string message);
 
-        void Log(string format, params object[] args);
+        void LogMessage (string format, params object[] args);
 
-        void LogExternalProgramOutput(string output);
-
-        void ReportRunnerFinished(bool success, TimeSpan buildDuration);
-
-        void ReportTaskStarted(ITask task);
-
-        void ReportTaskExecuted(ITask task);
-
-        void ReportTaskFailed(ITask task, Exception ex);
-
-        void ReportTaskFailed(ITask task, string reason);
+        [SuppressMessage ("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "LogRunner")]
+        void LogRunnerFinished (bool success, TimeSpan buildDuration);
+        
+        void LogTargetFinished();
+        
+        void LogTargetStarted (string targetName);
+        
+        void LogTaskFinished();
+        
+        void LogTaskStarted(string taskDescription);
     }
 }

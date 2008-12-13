@@ -65,7 +65,7 @@ namespace Flubu.Tasks.Msmq
             {
                 if (mode == CreateMessageQueueMode.DoNothingIfExists)
                 {
-                    environment.Logger.Log("Message queue '{0}' already exists, doing nothing.", messageQueuePath);
+                    environment.LogMessage("Message queue '{0}' already exists, doing nothing.", messageQueuePath);
                     return;
                 }
 
@@ -77,7 +77,7 @@ namespace Flubu.Tasks.Msmq
                             messageQueuePath));
 
                 // otherwise delete the queue
-                environment.Logger.Log("Message queue '{0}' already exists, it will be deleted.", messageQueuePath);
+                environment.LogMessage("Message queue '{0}' already exists, it will be deleted.", messageQueuePath);
                 MessageQueue.Delete (messageQueuePath);
             }
 

@@ -53,7 +53,7 @@ namespace Flubu.Tasks.Iis
                 "IIS/MinorVersion");
             innerTask.Execute (environment);
 
-            environment.Logger.Log(
+            environment.LogMessage(
                 "Local IIS has version {0}.{1}",
                 environment.GetConfigurationSettingValue ("IIS/MajorVersion"),
                 environment.GetConfigurationSettingValue ("IIS/MinorVersion"));
