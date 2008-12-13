@@ -10,7 +10,6 @@ namespace ProjectPilot.Tests.AccipioTests
         /// <summary>
         /// Test checks generation of html file context for Test spec.
         /// </summary>
-        /// 
         [Test]
         public void GenerateTestSpec()
         {
@@ -21,19 +20,19 @@ namespace ProjectPilot.Tests.AccipioTests
             };
             
             // Business Action Data
-            const string actionNavigateToDescription = "Navigate to url '{0}'";
-            const string actionSelectModuleDescription = "Select module name '{0}'";
-            const string actionDetailsDescription = "Select details";
+            const string ActionNavigateToDescription = "Navigate to url '{0}'";
+            const string ActionSelectModuleDescription = "Select module name '{0}'";
+            const string ActionDetailsDescription = "Select details";
             
             BusinessActionData businessActionData = new BusinessActionData();
             BusinessActionEntry businessActionEntry = new BusinessActionEntry("NavigateTo");
-            businessActionEntry.Description = actionNavigateToDescription;
+            businessActionEntry.Description = ActionNavigateToDescription;
             businessActionData.Actions.Add(businessActionEntry);
             businessActionEntry = new BusinessActionEntry("SelectModule");
-            businessActionEntry.Description = actionSelectModuleDescription;
+            businessActionEntry.Description = ActionSelectModuleDescription;
             businessActionData.Actions.Add(businessActionEntry);
             businessActionEntry = new BusinessActionEntry("Details");
-            businessActionEntry.Description = actionDetailsDescription;
+            businessActionEntry.Description = ActionDetailsDescription;
             businessActionData.Actions.Add(businessActionEntry);
             testSuite.BusinessActionData = businessActionData;
             

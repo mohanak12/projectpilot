@@ -10,11 +10,11 @@ namespace ProjectPilot.Tests.AccipioTests
         [Test]
         public void XmlValidationWithSchemaTest()
         {
-            const string xmlFileName = @"..\..\..\Data\Samples\BusinessActions.xml";
-            const string xsdFileName = @"..\..\..\Data\Samples\AccipioActions.xsd";
+            const string XmlFileName = @"..\..\..\Data\Samples\BusinessActions.xml";
+            const string XsdFileName = @"..\..\..\Data\Samples\AccipioActions.xsd";
 
             XmlValidationHelper xmlValidationHelper = new XmlValidationHelper();
-            xmlValidationHelper.ValidateXmlDocument(xmlFileName, xsdFileName);
+            xmlValidationHelper.ValidateXmlDocument(XmlFileName, XsdFileName);
 
             Assert.AreEqual(xmlValidationHelper.ValidationStatusReport.Length, 0);
         }
@@ -22,11 +22,11 @@ namespace ProjectPilot.Tests.AccipioTests
         [Test, ExpectedException(typeof(XmlException))]
         public void XmlValidationFailedTest()
         {
-            const string xmlFileName = @"..\..\AccipioTests\AccipioActionsIncorrectXml.xml";
-            const string xsdFileName = @"..\..\..\Data\Samples\AccipioActions.xsd";
+            const string XmlFileName = @"..\..\AccipioTests\AccipioActionsIncorrectXml.xml";
+            const string XsdFileName = @"..\..\..\Data\Samples\AccipioActions.xsd";
 
             XmlValidationHelper xmlValidationHelper = new XmlValidationHelper();
-            xmlValidationHelper.ValidateXmlDocument(xmlFileName, xsdFileName);
+            xmlValidationHelper.ValidateXmlDocument(XmlFileName, XsdFileName);
         }
     }
 }

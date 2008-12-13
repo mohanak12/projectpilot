@@ -127,9 +127,9 @@ namespace ProjectPilot.Tests.AccipioTests
         [Test, ExpectedException(typeof(XmlException))]
         public void InvalidRootElementTest()
         {
-            const string xml = "<suites></suites>";
+            const string Xml = "<suites></suites>";
 
-            byte[] bytes = Encoding.ASCII.GetBytes(xml);
+            byte[] bytes = Encoding.ASCII.GetBytes(Xml);
             using (MemoryStream stream = new MemoryStream(bytes))
             {
                 using (XmlTestSuiteParser parser = new XmlTestSuiteParser(stream))
@@ -142,9 +142,9 @@ namespace ProjectPilot.Tests.AccipioTests
         [Test, ExpectedException(typeof(NotSupportedException))]
         public void InvalidSuiteElementTest()
         {
-            const string xml = "<suite><element /></suite>";
+            const string Xml = "<suite><element /></suite>";
 
-            byte[] bytes = Encoding.ASCII.GetBytes(xml);
+            byte[] bytes = Encoding.ASCII.GetBytes(Xml);
             using (MemoryStream stream = new MemoryStream(bytes))
             {
                 using (XmlTestSuiteParser parser = new XmlTestSuiteParser(stream))
@@ -157,9 +157,9 @@ namespace ProjectPilot.Tests.AccipioTests
         [Test, ExpectedException(typeof(NotSupportedException))]
         public void InvalidTestCaseElementTest()
         {
-            const string xml = "<suite><case id='SearchForProjects' category='Smoke'><element /></case></suite>";
+            const string Xml = "<suite><case id='SearchForProjects' category='Smoke'><element /></case></suite>";
 
-            byte[] bytes = Encoding.ASCII.GetBytes(xml);
+            byte[] bytes = Encoding.ASCII.GetBytes(Xml);
             using (MemoryStream stream = new MemoryStream(bytes))
             {
                 using (XmlTestSuiteParser parser = new XmlTestSuiteParser(stream))

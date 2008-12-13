@@ -39,10 +39,11 @@ namespace Flubu
             Log("     [exec] {0}", output);
         }
 
-        public void ReportRunnerFinished(bool success)
+        public void ReportRunnerFinished(bool success, TimeSpan buildDuration)
         {
             Log(String.Empty);
-            Log(success ? "BUILD SUCCESS" : "BUILD FAILED");
+            Log(success ? "BUILD SUCCESSFUL" : "BUILD FAILED");
+            Log("Build duration: {0} ({1} seconds)", buildDuration, (int)buildDuration.TotalSeconds);
         }
 
         public void ReportTaskStarted(ITask task)

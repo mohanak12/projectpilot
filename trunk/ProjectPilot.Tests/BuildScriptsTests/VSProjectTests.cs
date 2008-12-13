@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MbUnit.Framework;
-using System.IO;
+﻿using System.Linq;
 using Flubu.Builds.VSSolutionBrowsing;
+using MbUnit.Framework;
 
 namespace ProjectPilot.Tests.BuildScriptsTests
 {

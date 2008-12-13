@@ -73,27 +73,27 @@ namespace ProjectPilot.Tests.Framework.Runners
                 templateFile.CopyTo(Path.Combine(@"Storage\Templates", templateFile.Name), true);
         }
 
-        void Kernel_HandlerRegistered(Castle.MicroKernel.IHandler handler, ref bool stateChanged)
+        private void Kernel_HandlerRegistered(Castle.MicroKernel.IHandler handler, ref bool stateChanged)
         {
             System.Console.Out.WriteLine("HandlerRegistered: {0}", handler.ComponentModel.Name);
         }
 
-        void Kernel_DependencyResolving(ComponentModel client, DependencyModel model, object dependency)
+        private void Kernel_DependencyResolving(ComponentModel client, DependencyModel model, object dependency)
         {
             System.Console.Out.WriteLine("DependencyResolving: {0} -> {1}", client.Name, model.DependencyKey);
         }
 
-        void Kernel_ComponentRegistered(string key, Castle.MicroKernel.IHandler handler)
+        private void Kernel_ComponentRegistered(string key, Castle.MicroKernel.IHandler handler)
         {
             System.Console.Out.WriteLine("ComponentRegistered: {0}", key);
         }
 
-        void Kernel_ComponentModelCreated(ComponentModel model)
+        private void Kernel_ComponentModelCreated(ComponentModel model)
         {
             System.Console.Out.WriteLine("ComponentModelCreated: {0}", model.Name);
         }
 
-        void Kernel_ComponentCreated(ComponentModel model, object instance)
+        private void Kernel_ComponentCreated(ComponentModel model, object instance)
         {
             System.Console.Out.WriteLine("ComponentCreated: {0}", model.Name);
         }
