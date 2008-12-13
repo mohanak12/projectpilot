@@ -95,7 +95,7 @@ namespace ProjectPilot.Extras.CodeAnalysis
 
         private bool ShouldBeIncluded(Type type)
         {
-            return (type.FullName != null && type.FullName.StartsWith("ProjectPilot"));
+            return (type.FullName != null && type.FullName.StartsWith("ProjectPilot", StringComparison.OrdinalIgnoreCase));
         }
 
         private readonly Assembly assembly;

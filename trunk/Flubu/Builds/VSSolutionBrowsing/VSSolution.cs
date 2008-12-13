@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -12,9 +13,10 @@ namespace Flubu.Builds.VSSolutionBrowsing
     public class VSSolution
     {
         /// <summary>
-        /// Gets a read-only collection of all the projects in the solution.
+        /// Gets a read-only collection of <see cref="VSProjectInfo"/> objects for all of the projects in the solution.
         /// </summary>
-        /// <value>A read-only collection of all the projects in the solution.</value>
+        /// <value>A read-only collection of <see cref="VSProjectInfo"/> objects .</value>
+        [SuppressMessage ("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
         public ReadOnlyCollection<VSProjectInfo> Projects
         {
             get { return projects.AsReadOnly(); }
@@ -48,6 +50,12 @@ namespace Flubu.Builds.VSSolutionBrowsing
             get { return solutionVersion; }
         }
 
+        /// <summary>
+        /// Finds the project by its unique id.
+        /// </summary>
+        /// <param name="projectGuid">The project's GUID.</param>
+        /// <returns>The <see cref="VSProjectInfo"/> object representing the project.</returns>
+        /// <exception cref="ArgumentException">The project was not found.</exception>
         public VSProjectInfo FindProjectById (Guid projectGuid)
         {
             foreach (VSProjectInfo projectData in projects)
@@ -75,6 +83,11 @@ namespace Flubu.Builds.VSSolutionBrowsing
             projects.ForEach(action);
         }
 
+        /// <summary>
+        /// Loads the specified VisualStudio solution file and returns a <see cref="VSSolution"/> representing the solution.
+        /// </summary>
+        /// <param name="fileName">The name of the solution file.</param>
+        /// <returns>A <see cref="VSSolution"/> representing the solution.</returns>
         public static VSSolution Load (string fileName)
         {
             VSSolution solution = new VSSolution (fileName);
@@ -151,6 +164,20 @@ namespace Flubu.Builds.VSSolutionBrowsing
             }
 
             return solution;
+        }
+
+        /// <summary>
+        /// Loads the VisualStudio project files and fills the project data into <see cref="VSProjectInfo.Project"/> 
+        /// properties for each of the project in the solution.
+        /// </summary>
+        public void LoadProjects()
+        {
+            ForEachProject(
+                delegate (VSProjectInfo projectInfo)
+                {
+                    if (projectInfo.ProjectTypeGuid == VSProjectType.CSharpProjectType.ProjectTypeGuid)
+                        projectInfo.Project = VSProject.Load(projectInfo.ProjectFileNameFull);
+                });
         }
 
         protected VSSolution (string fileName)
