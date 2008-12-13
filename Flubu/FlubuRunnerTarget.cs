@@ -19,6 +19,25 @@ namespace Flubu
             get { return dependencies; }
         }
 
+        /// <summary>
+        /// Gets the description of the target.
+        /// </summary>
+        /// <value>The description of the target.</value>
+        public string Description
+        {
+            get { return description; }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this target is hidden. Hidden targets will not be
+        /// visible in the list of targets displayed to the user as help.
+        /// </summary>
+        /// <value><c>true</c> if this target is hidden; otherwise, <c>false</c>.</value>
+        public bool IsHidden
+        {
+            get { return isHidden; }
+        }
+
         public string TargetName
         {
             get { return targetName; }
@@ -69,7 +88,26 @@ namespace Flubu
             return this;
         }
 
+        public FlubuRunnerTarget<TRunner> SetDescription(string description)
+        {
+            this.description = description;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the target as hidden. Hidden targets will not be
+        /// visible in the list of targets displayed to the user as help.
+        /// </summary>
+        /// <returns>This same instance of <see cref="FlubuRunnerTarget{TRunner}"/>.</returns>
+        public FlubuRunnerTarget<TRunner> SetAsHidden()
+        {
+            this.isHidden = true;
+            return this;
+        }
+
         private readonly List<string> dependencies = new List<string>();
+        private string description;
+        private bool isHidden;
         private readonly TRunner runner;
         private readonly string targetName;
         private Action<TRunner> targetAction;

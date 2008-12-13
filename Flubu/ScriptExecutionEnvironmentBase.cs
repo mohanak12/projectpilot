@@ -117,6 +117,18 @@ namespace Flubu
 
         public abstract string GetConfigurationSettingValue (string settingName);
 
+        public void LogError(string message)
+        {
+            foreach (IFlubuLogger logger in loggers)
+                logger.LogError(message);
+        }
+
+        public void LogError(string format, params object[] args)
+        {
+            foreach (IFlubuLogger logger in loggers)
+                logger.LogError(format, args);
+        }
+
         public void LogMessage(string message)
         {
             foreach (IFlubuLogger logger in loggers)

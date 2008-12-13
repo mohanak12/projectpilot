@@ -1,4 +1,6 @@
-﻿- add CCNet listener logger
+﻿- log errors in red
+    - do not show exception for BuildRunnerExceptions
+- add CCNet listener logger
 - add NAnt-like logger (or something similar)
 - try with registration of NCover dll
 - log severity levels?

@@ -15,13 +15,22 @@ namespace ProjectPilot.BuildScripts
             {
                 try
                 {
-                    runner.AddTarget("load.solution").Do(TargetLoadSolution);
-                    runner.AddTarget("compile").Do(TargetCompile).DependsOn("load.solution");
-                    runner.AddTarget("stage.1").DependsOn("compile", "package");
-                    runner.AddTarget("unit.tests").Do(r => r.RunTests("ProjectPilot.Tests", false)).DependsOn("load.solution");
-                    runner.AddTarget("prepare.web").Do(r => runner.PrepareWebApplications()).DependsOn("load.solution");
-                    runner.AddTarget("rebuild").SetAsDefault().DependsOn("stage.1");
-                    runner.AddTarget("package").Do(TargetPackage).DependsOn("load.solution");
+                    runner.AddTarget("load.solution").SetAsHidden().Do(TargetLoadSolution);
+                    runner.AddTarget("compile")
+                        .SetDescription("Compiles the VS solution and runs FxCop analysis on it")
+                        .Do(TargetCompile).DependsOn("load.solution");
+                    runner.AddTarget("unit.tests")
+                        .SetDescription("Runs unit tests on the project")
+                        .Do(r => r.RunTests("ProjectPilot.Tests", true)).DependsOn("load.solution");
+                    runner.AddTarget("prepare.web")
+                        .SetDescription("Prepares Web applications for the project")
+                        .Do(r => runner.PrepareWebApplications()).DependsOn("load.solution");
+                    runner.AddTarget("package")
+                        .SetDescription("Packages all the build products into ZIP files")
+                        .Do(TargetPackage).DependsOn("load.solution");
+                    runner.AddTarget("rebuild")
+                        .SetDescription("Rebuilds the project, runs tests and packages the build products.")
+                        .SetAsDefault().DependsOn("compile", "unit.tests", "package");
 
                     // actual run
                     if (args.Length == 0)

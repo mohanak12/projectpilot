@@ -37,6 +37,11 @@ namespace Flubu
                 logFileName,
                 howManyOldLogsToKeep);
             hasFailed = true;
+
+            AddTarget("help")
+                .SetDescription("Displays the available targets in the build")
+                .Do(TargetHelp);
+
             buildTime.Start();
         }
 
@@ -362,7 +367,7 @@ namespace Flubu
                 format,
                 arguments);
 
-            Log("ERROR: {0}", message);
+            scriptExecutionEnvironment.LogError("ERROR: {0}", message);
 
             throw new RunnerFailedException(message);
         }
@@ -630,6 +635,22 @@ namespace Flubu
         {
             StopWindowsServiceIfExistsTask.Execute(scriptExecutionEnvironment, serviceName);
             return ReturnThisTRunner();
+        }
+
+        /// <summary>
+        /// The target for displaying help in the command line.
+        /// </summary>
+        /// <param name="runner">The runner.</param>
+        public void TargetHelp(TRunner runner)
+        {
+            Log("Targets:"); 
+
+            foreach (FlubuRunnerTarget<TRunner> target in targets.Values)
+                if (false == target.IsHidden)
+                    Log(
+                        "  {0} : {1}",
+                        target.TargetName,
+                        target.Description);
         }
 
         public TRunner TransformXmlFile(string xsltFile, string inputFile, string outputFile)
