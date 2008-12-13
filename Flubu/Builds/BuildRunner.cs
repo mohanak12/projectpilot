@@ -518,6 +518,8 @@ namespace Flubu.Builds
                 // if the CCNet emits the listener file path, we will produce the file
                 if (ccnetListenerFile != null)
                 {
+                    Log("CCNetListenerFile: '{0}'", ccnetListenerFile);
+
                     // delete the old contents of the listener file on the first use
                     if (false == isCcnetListenerFileInitialized
                         && File.Exists(ccnetListenerFile))
