@@ -20,7 +20,7 @@ namespace ProjectPilot.BuildScripts
                     runner.AddTarget("load.solution").Do(TargetLoadSolution);
                     runner.AddTarget("compile").Do(TargetCompile).DependsOn("load.solution");
                     runner.AddTarget("stage.1").DependsOn("compile", "package");
-                    runner.AddTarget("unit.tests").Do(r => r.RunTests("ProjectPilot.Tests", true)).DependsOn("load.solution");
+                    runner.AddTarget("unit.tests").Do(r => r.RunTests("ProjectPilot.Tests", false)).DependsOn("load.solution");
                     runner.AddTarget("prepare.web").Do(r => runner.PrepareWebApplications()).DependsOn("load.solution");
                     runner.AddTarget("rebuild").SetAsDefault().DependsOn("stage.1");
                     runner.AddTarget("package").Do(TargetPackage).DependsOn("load.solution");

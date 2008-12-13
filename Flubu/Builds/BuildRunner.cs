@@ -535,7 +535,7 @@ namespace Flubu.Builds
                         DateTime.Now.ToString("u", CultureInfo.InvariantCulture),
                         targetName);
 
-                    using (Stream stream = File.Open(ccnetListenerFile, FileMode.OpenOrCreate))
+                    using (Stream stream = File.Open(ccnetListenerFile, FileMode.Append))
                     {
                         using (StreamWriter writer = new StreamWriter(stream))
                         {
