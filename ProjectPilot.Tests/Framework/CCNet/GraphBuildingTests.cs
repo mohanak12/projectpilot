@@ -80,10 +80,10 @@ namespace ProjectPilot.Tests.Framework.CCNet
             projectPilotConfiguration.ProjectPilotWebAppRootUrl = "http://localhost/projectpilot/";
 
             ProjectRegistry projectRegistry = new ProjectRegistry();
-            Project project = new Project("CCNetStatistics", "");
+            Project project = new Project("CCNetStatistics", String.Empty);
             projectRegistry.AddProject(project);
 
-            IFileManager fileManager = new DefaultFileManager("", projectPilotConfiguration);
+            IFileManager fileManager = new DefaultFileManager(String.Empty, projectPilotConfiguration);
             projectRegistry.FileManager = fileManager;
 
             IFileManager templateFileManager = MockRepository.GenerateStub<IFileManager>();
@@ -128,10 +128,10 @@ namespace ProjectPilot.Tests.Framework.CCNet
             projectPilotConfiguration.ProjectPilotWebAppRootUrl = "http://localhost/projectpilot/";
 
             ProjectRegistry projectRegistry = new ProjectRegistry();
-            Project project = new Project("CCNetStatistics", "");
+            Project project = new Project("CCNetStatistics", String.Empty);
             projectRegistry.AddProject(project);
 
-            IFileManager fileManager = new DefaultFileManager("", projectPilotConfiguration);
+            IFileManager fileManager = new DefaultFileManager(String.Empty, projectPilotConfiguration);
             projectRegistry.FileManager = fileManager;
 
             IFileManager templateFileManager = MockRepository.GenerateStub<IFileManager>();
@@ -156,7 +156,7 @@ namespace ProjectPilot.Tests.Framework.CCNet
             module.FetchHtmlReport();
         }
 
-        [Test,Explicit("This test should not be run automatically"),]
+        [Test, Explicit("This test should not be run automatically"),]
         public void ReadCCNetStatisticsTest()
         {
             RemoteCruiseManagerFactory factory = new RemoteCruiseManagerFactory();

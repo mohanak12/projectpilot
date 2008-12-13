@@ -80,6 +80,7 @@ namespace ProjectPilot.Tests.Framework.Subversion
             {
                 data = SubversionHistoryFacility.LoadHistory(stream);
             }
+
             return data;
         }
     }

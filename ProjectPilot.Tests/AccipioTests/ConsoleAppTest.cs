@@ -35,8 +35,7 @@ namespace ProjectPilot.Tests.AccipioTests
 
         [Test]
         public void ConsoleCodeGeneratorCommandTest()
-        {
-            
+        {            
         }
     }
 }

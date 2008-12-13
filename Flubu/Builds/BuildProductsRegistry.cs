@@ -121,7 +121,12 @@ namespace Flubu.Builds
             }
 
             buildProducts.Add(
-                new SimpleBuildProduct<TRunner>(buildPartId, runner.GetProjectOutputPath(projectName), projectName, null, null));
+                new SimpleBuildProduct<TRunner>(
+                    buildPartId, 
+                    Path.Combine(projectInfo.ProjectDirectoryPath, runner.GetProjectOutputPath(projectName)), 
+                    projectName, 
+                    null, 
+                    null));
 
             return this;
         }

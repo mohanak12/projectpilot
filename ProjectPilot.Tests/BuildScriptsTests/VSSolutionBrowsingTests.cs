@@ -44,5 +44,22 @@ namespace ProjectPilot.Tests.BuildScriptsTests
 
             Assert.AreEqual(8, vsProjectObjectsFound);
         }
+
+        /// <summary>
+        /// Tests the <see cref="BuildRunner{TRunner}.GetProjectOutputPath"/> method.
+        /// </summary>
+        [Test]
+        public void ProjectOutputPaths()
+        {
+            using (ConcreteBuildRunner runner = new ConcreteBuildRunner ("Test"))
+            {
+                runner.LoadSolution(@"..\..\..\ProjectPilot.sln");
+                string outputPath = runner.GetProjectOutputPath("ProjectPilot.Framework");
+                Assert.AreEqual(@"bin\Release\", outputPath);
+
+                outputPath = runner.GetProjectOutputPath("ProjectPilot.Portal");
+                Assert.AreEqual (@"bin\", outputPath);
+            }
+        }
     }
 }

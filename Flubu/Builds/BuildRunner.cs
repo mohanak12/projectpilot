@@ -128,25 +128,26 @@ namespace Flubu.Builds
         {
             LogTarget("CleanOutput");
 
-            solution.ForEachProject(delegate (VSProjectInfo projectInfo)
-                                        {             
-                                            string projectBinPath = GetProjectOutputPath(projectInfo.ProjectName);
+            solution.ForEachProject(
+                delegate (VSProjectInfo projectInfo)
+                    {             
+                        string projectOutputPath = GetProjectOutputPath(projectInfo.ProjectName);
 
-                                            if (projectBinPath == null)
-                                                return;
+                        if (projectOutputPath == null)
+                            return;
 
-                                            projectBinPath = Path.Combine(productRootDir, projectBinPath);
+                        projectOutputPath = Path.Combine(projectInfo.ProjectDirectoryPath, projectOutputPath);
 
-                                            DeleteDirectory(projectBinPath, false);
+                        DeleteDirectory(projectOutputPath, false);
 
-                                            string projectObjPath = String.Format(
-                                                CultureInfo.InvariantCulture,
-                                                @"{0}\obj\{1}",
-                                                projectInfo.ProjectName,
-                                                buildConfiguration);
-                                            projectObjPath = Path.Combine(productRootDir, projectObjPath);
-                                            DeleteDirectory(projectObjPath, false);
-                                        });
+                        string projectObjPath = String.Format(
+                            CultureInfo.InvariantCulture,
+                            @"{0}\obj\{1}",
+                            projectInfo.ProjectName,
+                            buildConfiguration);
+                        projectObjPath = Path.Combine(productRootDir, projectObjPath);
+                        DeleteDirectory(projectObjPath, false);
+                    });
 
             return ReturnThisTRunner();
         }
@@ -452,10 +453,12 @@ namespace Flubu.Builds
         }
 
         /// <summary>
-        /// Gets the output path for a specified VisualStudio project.
+        /// Gets the output path for a specified VisualStudio project. The output path is relative
+        /// to the directory where the project file is located.
         /// </summary>
         /// <param name="projectName">Name of the project.</param>
         /// <returns>The output path or <c>null</c> if the project is not compatibile.</returns>
+        /// <exception cref="ArgumentException">The method could not extract the data from the project file.</exception>
         public string GetProjectOutputPath(string projectName)
         {
             VSProjectInfo projectInfo = solution.FindProjectByName(projectName);
@@ -464,26 +467,24 @@ namespace Flubu.Builds
             if (projectInfo.ProjectTypeGuid != VSProjectType.CSharpProjectType.ProjectTypeGuid)
                 return null;
 
-            bool isWebProject = false;
-            if (projectExtendedInfos.ContainsKey(projectInfo.ProjectName))
-            {
-                VSProjectExtendedInfo extendedInfo = projectExtendedInfos[projectInfo.ProjectName];
-                isWebProject = extendedInfo.IsWebProject;
-            }
+            // find the project configuration
+            string condition = FormatString(" '$(Configuration)|$(Platform)' == '{0}|AnyCPU' ", buildConfiguration);
+            VSProjectConfiguration projectConfiguration = projectInfo.Project.FindConfiguration(condition);
+            if (projectConfiguration == null)
+                throw new ArgumentException(
+                    FormatString(
+                        "Could not find '{0}' configuration for the project '{1}'.",
+                        condition,
+                        projectName));
 
-            string projectBinPath;
-            if (false == isWebProject)
-                projectBinPath = String.Format(
-                    CultureInfo.InvariantCulture,
-                    @"{0}\bin\{1}",
-                    projectInfo.ProjectName,
-                    buildConfiguration);
-            else
-                projectBinPath = String.Format(
-                    CultureInfo.InvariantCulture,
-                    @"{0}\bin",
-                    projectInfo.ProjectName);
-            return projectBinPath;
+            if (false == projectConfiguration.Properties.ContainsKey("OutputPath"))
+                throw new ArgumentException (
+                    FormatString (
+                        "Missing OutputPath for the '{0}' configuration of the project '{1}'.",
+                        buildConfiguration,
+                        projectName));
+
+            return projectConfiguration.Properties["OutputPath"];
         }
 
         public TRunner LoadSolution (string solutionFileName)
@@ -499,6 +500,9 @@ namespace Flubu.Builds
                                                 projectInfo.ProjectName, 
                                                 new VSProjectExtendedInfo(projectInfo));
                                         });
+
+            // also load project files
+            solution.LoadProjects();
 
             return ReturnThisTRunner();
         }

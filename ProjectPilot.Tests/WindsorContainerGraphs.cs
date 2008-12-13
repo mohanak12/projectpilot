@@ -23,7 +23,8 @@ namespace ProjectPilot.Tests
 
                     if (dependingNode.Adjacencies.Length > 0)
                     {
-                        int a = 0; a++;
+                        int a = 0; 
+                        a++;
                     }
 
                     string dependingNodeString = ContructNodeName(dependingNode);

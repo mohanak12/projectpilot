@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 
@@ -24,6 +25,24 @@ namespace Flubu.Builds.VSSolutionBrowsing
         public IList<VSProjectReference> References
         {
             get { return references; }
+        }
+
+        /// <summary>
+        /// Finds the VisualStudio project configuration specified by a condition.
+        /// </summary>
+        /// <param name="condition">The condition which identifies the configuration 
+        /// (example: " '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ").</param>
+        /// <returns><see cref="VSProjectConfiguration"/> object if found; <c>null</c> if no configuration was found that meets the
+        /// specified condition.</returns>
+        public VSProjectConfiguration FindConfiguration (string condition)
+        {
+            foreach (VSProjectConfiguration configuration in configurations)
+            {
+                if (0 == string.Compare (configuration.Condition, condition, StringComparison.Ordinal))
+                    return configuration;
+            }
+
+            return null;
         }
 
         public static VSProject Load(string projectFileName)

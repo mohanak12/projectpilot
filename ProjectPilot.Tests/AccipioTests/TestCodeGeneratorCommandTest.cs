@@ -25,7 +25,6 @@ namespace ProjectPilot.Tests.AccipioTests
             consoleCommand.ProcessCommand();
         }
 
-
         /// <summary>
         /// Checks that parser throws file not found if business action file was not found.
         /// </summary>

@@ -10,7 +10,7 @@ namespace Flubu
 
         void LogExternalProgramOutput(string output);
 
-        void ReportRunnerFinished(bool success);
+        void ReportRunnerFinished(bool success, TimeSpan buildDuration);
 
         void ReportTaskStarted(ITask task);
 

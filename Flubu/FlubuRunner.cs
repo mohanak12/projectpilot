@@ -23,6 +23,10 @@ using Microsoft.Win32;
 
 namespace Flubu
 {
+    /// <summary>
+    /// A base class for fluent building.
+    /// </summary>
+    /// <typeparam name="TRunner">The concrete type of the runner.</typeparam>
     public class FlubuRunner<TRunner> : IDisposable
         where TRunner : FlubuRunner<TRunner>
     {
@@ -33,6 +37,7 @@ namespace Flubu
                 logFileName,
                 howManyOldLogsToKeep);
             hasFailed = true;
+            buildTime.Start();
         }
 
         /// <summary>
@@ -665,7 +670,8 @@ namespace Flubu
             {
                 if (disposing)
                 {
-                    scriptExecutionEnvironment.Logger.ReportRunnerFinished(!hasFailed);
+                    if (scriptExecutionEnvironment.Logger != null)
+                        scriptExecutionEnvironment.Logger.ReportRunnerFinished(!hasFailed, buildTime.Elapsed);
                 }
 
                 disposed = true;
@@ -686,6 +692,7 @@ namespace Flubu
             scriptExecutionEnvironment.Logger.LogExternalProgramOutput(e.Data);
         }
 
+        private Stopwatch buildTime = new Stopwatch();
         private FlubuRunnerTarget<TRunner> defaultTarget;
         private bool disposed;
         private readonly Dictionary<string, string> executedTargets = new Dictionary<string, string>();

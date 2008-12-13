@@ -56,11 +56,11 @@ namespace ProjectPilot.Tests.Framework
         {
             fileManager = new DefaultFileManager("Storage", null);
             sessionStorage = new FileSessionStorage(fileManager);
-            sessionStorage.ClearSession(sessionHolderId);
+            sessionStorage.ClearSession(SessionHolderId);
         }
 
         private IFileManager fileManager;
-        private const string sessionHolderId = "testId";
+        private const string SessionHolderId = "testId";
         private FileSessionStorage sessionStorage;
     }
 }
