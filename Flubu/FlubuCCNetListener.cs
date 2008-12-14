@@ -32,22 +32,18 @@ namespace Flubu
 
         public void LogError(string message)
         {
-            throw new System.NotImplementedException();
         }
 
         public void LogError(string format, params object[] args)
         {
-            throw new System.NotImplementedException();
         }
 
         public void LogMessage(string message)
         {
-            throw new System.NotImplementedException();
         }
 
         public void LogMessage(string format, params object[] args)
         {
-            throw new System.NotImplementedException();
         }
 
         public void LogRunnerFinished(bool success, TimeSpan buildDuration)
