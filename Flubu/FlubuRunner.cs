@@ -506,40 +506,45 @@ namespace Flubu
 
         public TRunner RunProgram(string programExePath, bool ignoreExitCodes)
         {
-            using (Process process = new Process())
+            try
             {
-                StringBuilder argumentLineBuilder = new StringBuilder();
-                foreach (string programArg in programArgs)
-                    argumentLineBuilder.AppendFormat("\"{0}\" ", programArg);
+                using (Process process = new Process())
+                {
+                    StringBuilder argumentLineBuilder = new StringBuilder();
+                    foreach (string programArg in programArgs)
+                        argumentLineBuilder.AppendFormat("\"{0}\" ", programArg);
 
-                Log("Running program '{0}' ('{1}')", programExePath, argumentLineBuilder);
+                    Log("Running program '{0}' ('{1}')", programExePath, argumentLineBuilder);
 
-                ProcessStartInfo processStartInfo = new ProcessStartInfo(programExePath, argumentLineBuilder.ToString());
-                processStartInfo.CreateNoWindow = true;
-                processStartInfo.ErrorDialog = false;
-                processStartInfo.RedirectStandardError = true;
-                processStartInfo.RedirectStandardOutput = true;
-                processStartInfo.UseShellExecute = false;
+                    ProcessStartInfo processStartInfo = new ProcessStartInfo(programExePath, argumentLineBuilder.ToString());
+                    processStartInfo.CreateNoWindow = true;
+                    processStartInfo.ErrorDialog = false;
+                    processStartInfo.RedirectStandardError = true;
+                    processStartInfo.RedirectStandardOutput = true;
+                    processStartInfo.UseShellExecute = false;
 
-                process.StartInfo = processStartInfo;
-                process.ErrorDataReceived += new DataReceivedEventHandler(Process_ErrorDataReceived);
-                process.OutputDataReceived += new DataReceivedEventHandler(Process_OutputDataReceived);
-                process.Start();
+                    process.StartInfo = processStartInfo;
+                    process.ErrorDataReceived += new DataReceivedEventHandler(Process_ErrorDataReceived);
+                    process.OutputDataReceived += new DataReceivedEventHandler(Process_OutputDataReceived);
+                    process.Start();
 
-                process.BeginOutputReadLine();
-                process.BeginErrorReadLine();
+                    process.BeginOutputReadLine();
+                    process.BeginErrorReadLine();
 
-                process.WaitForExit();
+                    process.WaitForExit();
 
-                Log("Exit code: {0}", process.ExitCode);
+                    Log("Exit code: {0}", process.ExitCode);
 
-                lastExitCode = process.ExitCode;
+                    lastExitCode = process.ExitCode;
 
-                if (false == ignoreExitCodes && process.ExitCode != 0)
-                    Fail("Program '{0}' returned exit code {1}.", programExePath, process.ExitCode);
+                    if (false == ignoreExitCodes && process.ExitCode != 0)
+                        Fail("Program '{0}' returned exit code {1}.", programExePath, process.ExitCode);
+                }
             }
-
-            programArgs.Clear();
+            finally
+            {
+                programArgs.Clear ();                
+            }
 
             return ReturnThisTRunner();
         }
