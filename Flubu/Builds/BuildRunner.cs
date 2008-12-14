@@ -23,6 +23,13 @@ namespace Flubu.Builds
             this.productId = productId;
             this.productName = productId;
             this.buildProducts = new BuildProductsRegistry<TRunner>(ReturnThisTRunner());
+
+            // add CCNet listener
+            string ccnetListenerFilePath = Environment.GetEnvironmentVariable ("CCNetListenerFile");
+
+            if (false == String.IsNullOrEmpty(ccnetListenerFilePath))
+                ScriptExecutionEnvironment.AddLogger(new FlubuCCNetListener(
+                    ccnetListenerFilePath));
         }
 
         public string BuildConfiguration
@@ -512,37 +519,6 @@ namespace Flubu.Builds
 
             return ReturnThisTRunner();
         }
-
-        //public override TRunner LogTarget(string targetName)
-        //{
-        //    base.LogTarget(targetName);
-
-        //    if (IsRunningUnderCruiseControl)
-        //    {
-        //        string ccnetListenerFile = System.Environment.GetEnvironmentVariable("CCNetListenerFile");
-
-        //        // if the CCNet emits the listener file path, we will produce the file
-        //        if (ccnetListenerFile != null)
-        //        {
-        //            string logText = String.Format(
-        //                CultureInfo.InvariantCulture,
-        //                @"<Item Time='{0}' Data='{1}'/>",
-        //                //@"<data><Item Time='{0}' Data='{1}'/></data>",
-        //                DateTime.Now.ToString("u", CultureInfo.InvariantCulture),
-        //                targetName);
-
-        //            using (Stream stream = File.Open(ccnetListenerFile, FileMode.Append))
-        //            {
-        //                using (StreamWriter writer = new StreamWriter(stream))
-        //                {
-        //                    writer.WriteLine(logText);
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    return ReturnThisTRunner();
-        //}
 
         public TRunner MergeCoverageReports()
         {

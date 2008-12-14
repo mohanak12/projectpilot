@@ -64,6 +64,8 @@ namespace Flubu
         /// </summary>
         bool DryRun { get; set; }
 
+        void AddLogger(IFlubuLogger logger);
+
         string GetConfigurationSettingValue (string settingName);
 
         string ReceiveInput (string prompt);

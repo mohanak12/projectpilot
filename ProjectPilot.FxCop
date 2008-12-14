@@ -679,72 +679,48 @@
       <Namespaces>
        <Namespace Name="Flubu">
         <Types>
-         <Type Name="IFlubuLogger">
-          <Members>
-           <Member Name="#LogRunnerFinished(System.Boolean,System.TimeSpan)">
-            <Messages>
-             <Message Id="LogRunner" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2008-12-13 11:34:18Z">
-              <Issue Name="MemberShouldBeDiscreteTerm">
-               <Item>LogRunner</Item>
-               <Item>'IFlubuLogger.LogRunnerFinished(bool, TimeSpan)'</Item>
-               <Item>Logrunner</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="ScriptExecutionEnvironmentBase">
-          <Members>
-           <Member Name="#Dispose()">
-            <Messages>
-             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2008-12-13 11:34:18Z">
-              <Issue Name="NotCalled">
-               <Item>'ScriptExecutionEnvironmentBase.Dispose()'</Item>
-               <Item>'GC.SuppressFinalize(object)'</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Created="2008-12-13 11:34:18Z" FixCategory="Breaking">
-              <Issue Name="NoAllowedExceptions" Level="Error">
-               <Item>'ScriptExecutionEnvironmentBase.Dispose()'</Item>
-               <Item>'NotImplementedException'</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2008-12-13 11:34:18Z">
-              <Issue Name="DisposeImplementation">
-               <Item>'ScriptExecutionEnvironmentBase.Dispose()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="StandardFlubuLogger">
+         <Type Name="FlubuCCNetListener">
           <Messages>
-           <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2008-12-13 11:34:18Z">
+           <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2008-12-14 10:00:28Z">
             <Issue Name="ProvideDisposeBool">
-             <Item>'StandardFlubuLogger'</Item>
+             <Item>'FlubuCCNetListener'</Item>
             </Issue>
            </Message>
           </Messages>
           <Members>
            <Member Name="#Dispose()">
             <Messages>
-             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2008-12-13 11:34:18Z">
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2008-12-14 10:00:28Z">
               <Issue Name="NotCalled">
-               <Item>'StandardFlubuLogger.Dispose()'</Item>
+               <Item>'FlubuCCNetListener.Dispose()'</Item>
                <Item>'GC.SuppressFinalize(object)'</Item>
               </Issue>
              </Message>
-             <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Created="2008-12-13 11:34:18Z" FixCategory="Breaking">
-              <Issue Name="NoAllowedExceptions" Level="Error">
-               <Item>'StandardFlubuLogger.Dispose()'</Item>
-               <Item>'NotImplementedException'</Item>
+             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2008-12-14 10:00:28Z">
+              <Issue Name="DisposeImplementation">
+               <Item>'FlubuCCNetListener.Dispose()'</Item>
               </Issue>
              </Message>
-             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2008-12-13 11:34:18Z">
-              <Issue Name="DisposeImplementation">
-               <Item>'StandardFlubuLogger.Dispose()'</Item>
+            </Messages>
+           </Member>
+           <Member Name="#FormatMessage(System.String,System.Object[])">
+            <Messages>
+             <Message Id="System.String.Format(System.String,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2008-12-14 10:00:28Z">
+              <Issue>
+               <Item>'string.Format(string, object, object)'</Item>
+               <Item>'FlubuCCNetListener.FormatMessage(string, params object[])'</Item>
+               <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetTimeStamp()">
+            <Messages>
+             <Message Id="System.DateTime.ToString(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2008-12-14 10:00:28Z">
+              <Issue>
+               <Item>'DateTime.ToString(string)'</Item>
+               <Item>'FlubuCCNetListener.GetTimeStamp()'</Item>
+               <Item>'DateTime.ToString(string, IFormatProvider)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -937,13 +913,11 @@
    <Rule TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002">
     <Resolution Name="Default">Change {0} in {1} to use Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; or KeyedCollection&lt;K,V&gt;</Resolution>
    </Rule>
-   <Rule TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065">
-    <Resolution Name="NoAllowedExceptions">{0} creates an exception of type {1}. Exceptions should not be raised in this type of method. If this exception instance might be raised, change this method's logic so it no longer raises an exception.</Resolution>
-   </Rule>
    <Rule TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004">
     <Resolution Name="Default">Consider a design where {0} doesn't require explicit type parameter {1} in any call to it.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
+    <Resolution Name="Member">Correct the spelling of '{0}' in member name {1} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
     <Resolution Name="MemberParameterMoreMeaningfulName">In method {0}, consider providing a more meaningful name than parameter name {1}.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldHaveCorrectSuffix" Category="Microsoft.Naming" CheckId="CA1710">
@@ -953,6 +927,7 @@
     <Resolution Name="Type">Remove the underscores from type name {0}.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716">
+    <Resolution Name="Member">Rename virtual/interface member {0} so that it no longer conflicts with the reserved language keyword '{1}'. Using a reserved keyword as the name of a virtual/interface member makes it harder for consumers in other languages to override/implement the member.</Resolution>
     <Resolution Name="Namespace">Rename namespace {0} so that it no longer conflicts with the reserved language keyword '{1}'. Using a reserved keyword as the name of a namespace makes it harder for consumers in other languages to use the namespace.</Resolution>
     <Resolution Name="Type">Rename type {0} so that it no longer conflicts with the reserved language keyword '{1}'. Using a reserved keyword as the name of a type makes it harder for consumers in other languages to use the type.</Resolution>
    </Rule>
@@ -980,6 +955,7 @@
    </Rule>
    <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
     <Resolution Name="Default">The type name {0} conflicts in whole or in part with the namespace name '{1}'. Change either name to eliminate the conflict.</Resolution>
+    <Resolution Name="System">The type name {0} conflicts in whole or in part with the namespace name '{1}' defined in the .NET Framework. Rename the type to eliminate the conflict.</Resolution>
    </Rule>
    <Rule TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726">
     <Resolution Name="MemberParameterNoAlternate">In member {0}, replace the term '{1}' in parameter name {2} with an appropriate alternate or remove it entirely.</Resolution>

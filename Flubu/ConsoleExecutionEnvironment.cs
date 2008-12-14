@@ -36,7 +36,7 @@ namespace Flubu
 
             log4net.Config.BasicConfigurator.Configure (appender);
 
-            this.Loggers.Add(new MulticoloredConsoleLogger(System.Console.Out));
+            this.AddLogger(new MulticoloredConsoleLogger(System.Console.Out));
         }
 
         public override string GetConfigurationSettingValue (string settingName)

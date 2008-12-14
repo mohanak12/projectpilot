@@ -1,5 +1,4 @@
-﻿- log errors in red
-    - do not show exception for BuildRunnerExceptions
+﻿- add help target which displays target dependencies
 - add CCNet listener logger
 - add NAnt-like logger (or something similar)
 - try with registration of NCover dll

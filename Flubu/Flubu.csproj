@@ -97,7 +97,7 @@
     <Compile Include="Builds\BuildProduct.cs" />
     <Compile Include="Builds\BuildProductsRegistry.cs" />
     <Compile Include="Builds\BuildRunner.cs" />
-    <None Include="Builds\FlubuCCNetListener.cs" />
+    <Compile Include="FlubuCCNetListener.cs" />
     <Compile Include="Builds\ConcreteBuildRunner.cs" />
     <Compile Include="Builds\IBuildLogger.cs" />
     <Compile Include="Builds\SimpleBuildProduct.cs" />
