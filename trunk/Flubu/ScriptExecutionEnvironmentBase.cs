@@ -32,11 +32,6 @@ namespace Flubu
             }
         }
 
-        public IList<IFlubuLogger> Loggers
-        {
-            get { return loggers; }
-        }
-
         /// <summary>
         /// Gets the .NET version number for .NET 1.0.
         /// </summary>
@@ -93,16 +88,6 @@ namespace Flubu
         }
 
         /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or
-        /// resetting unmanaged resources.
-        /// </summary>
-        public void Dispose ()
-        {
-            Dispose (true);
-            GC.SuppressFinalize (this);
-        }
-
-        /// <summary>
         /// Gets the path to the .NET Framework directory.
         /// </summary>
         /// <param name="dotNetVersion">The version of the .NET (example: "v2.0.50727").</param>
@@ -113,6 +98,21 @@ namespace Flubu
         {
             string fwRootDir = Path.Combine (SystemRootDir, @"Microsoft.NET\Framework");
             return Path.Combine (fwRootDir, dotNetVersion);
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or
+        /// resetting unmanaged resources.
+        /// </summary>
+        public void Dispose ()
+        {
+            Dispose (true);
+            GC.SuppressFinalize (this);
+        }
+
+        public void AddLogger(IFlubuLogger logger)
+        {
+            loggers.Add(logger);
         }
 
         public abstract string GetConfigurationSettingValue (string settingName);
