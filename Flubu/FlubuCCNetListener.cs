@@ -49,12 +49,14 @@ namespace Flubu
         public void LogRunnerFinished(bool success, TimeSpan buildDuration)
         {
             AddMessageToQueue(success ? "BUILD SUCCESSFUL" : "BUILD FAILED");
-            this.projectTargetStack.Pop ();
+            if (this.projectTargetStack.Count > 0)
+                this.projectTargetStack.Pop ();
         }
 
         public void LogTargetFinished()
         {
-            this.projectTargetStack.Pop ();
+            if (this.projectTargetStack.Count > 0)
+                this.projectTargetStack.Pop ();
         }
 
         public void LogTargetStarted(string targetName)
