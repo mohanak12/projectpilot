@@ -22,5 +22,14 @@
 			<AssertOperationSuccessful/>
 		</steps>
 	</case>
+	<case id="TestSameStep">
+		<description>Test samo action in one test case.</description>
+		<tags>NoTag</tags>
+		<steps>
+			<FindButton name="Search"/>
+			<TypeText name="Search" searchText="EBSy"/>
+			<ClickButton name="Search"/>
+		</steps>
+	</case>
 </suite>
 

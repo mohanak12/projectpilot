@@ -1,0 +1,1 @@
+Accipio.Console.exe baschema %1
