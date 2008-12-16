@@ -91,6 +91,7 @@
     <Compile Include="AccipioTests\XmlValidationTest.cs" />
     <Compile Include="BuildScriptsTests\VSSolutionBrowsingTests.cs" />
     <Compile Include="BuildScriptsTests\VSProjectTests.cs" />
+    <Compile Include="DeploymentScriptsTests\DeploymentTests.cs" />
     <Compile Include="Extras\CodeAnalysisTests.cs" />
     <Compile Include="Framework\CCNet\ProjectStatsLoadingTests.cs" />
     <Compile Include="Framework\CCNet\GraphBuildingTests.cs" />
