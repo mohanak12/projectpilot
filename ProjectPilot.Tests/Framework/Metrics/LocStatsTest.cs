@@ -36,12 +36,8 @@ namespace ProjectPilot.Tests.Framework.Metrics
         [Test]
         public void SolutionLocMetrics()
         {
-            int a = 5;
-
             VSSolutionLocMetrics metrics = VSSolutionLocMetrics.CalculateLocForSolution(
                 @"..\..\..\ProjectPilot.sln");
-
-            a++;
 
             LocStatsData data = metrics.GetLocStatsData();
         }
