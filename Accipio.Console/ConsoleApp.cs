@@ -10,7 +10,7 @@ namespace Accipio.Console
         public ConsoleApp(string[] args)
         {
             this.args = args;
-            this.consoleCommandChain = new BusinessActionsSchemaGeneratorCommand(
+            this.consoleCommandChain = new TestSuiteSchemaGeneratorCommand(
                 new TestCodeGeneratorCommand(null));
         }
 

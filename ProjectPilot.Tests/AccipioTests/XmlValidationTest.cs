@@ -11,7 +11,7 @@ namespace ProjectPilot.Tests.AccipioTests
         public void XmlValidationWithSchemaTest()
         {
             const string XmlFileName = @"..\..\..\Data\Samples\BusinessActions.xml";
-            const string XsdFileName = @"..\..\..\Data\Samples\AccipioActions.xsd";
+            const string XsdFileName = @"..\..\..\Accipio.Console\AccipioActions.xsd";
 
             XmlValidationHelper xmlValidationHelper = new XmlValidationHelper();
             xmlValidationHelper.ValidateXmlDocument(XmlFileName, XsdFileName);
@@ -23,7 +23,7 @@ namespace ProjectPilot.Tests.AccipioTests
         public void XmlValidationFailedTest()
         {
             const string XmlFileName = @"..\..\AccipioTests\AccipioActionsIncorrectXml.xml";
-            const string XsdFileName = @"..\..\..\Data\Samples\AccipioActions.xsd";
+            const string XsdFileName = @"..\..\..\Accipio.Console\AccipioActions.xsd";
 
             XmlValidationHelper xmlValidationHelper = new XmlValidationHelper();
             xmlValidationHelper.ValidateXmlDocument(XmlFileName, XsdFileName);

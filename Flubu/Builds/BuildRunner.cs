@@ -391,7 +391,10 @@ namespace Flubu.Builds
             AddProgramArgument(@"/out:{0}", fxReportPath);
             AddProgramArgument(@"/dictionary:CustomDictionary.xml");
             AddProgramArgument(@"/ignoregeneratedcode");
-            RunProgram(MakePathFromRootDir(@".\lib\Microsoft FxCop 1.36\FxCopCmd.exe"), true);
+            
+            string fxCopCmdPath = MakePathFromRootDir(@".\lib\Microsoft FxCop 1.36\FxCopCmd.exe");
+            AssertFileExists("FxCopCmd.exe", fxCopCmdPath);
+            RunProgram(fxCopCmdPath, true);
 
             // check if the report file was generated
             bool isReportFileGenerated = File.Exists(fxReportPath);
@@ -500,9 +503,16 @@ namespace Flubu.Builds
             return projectConfiguration.Properties["OutputPath"];
         }
 
-        public TRunner LoadSolution (string solutionFileName)
+        /// <summary>
+        /// Loads the specified VisualStudio solution and all of its projects.
+        /// </summary>
+        /// <param name="solutionFileName">Name of the solution file.</param>
+        /// <returns>The same instance of this <see cref="TRunner"/>.</returns>
+        public TRunner LoadSolution(string solutionFileName)
         {
-            solution = VSSolution.Load(MakePathFromRootDir(solutionFileName));
+            solutionFileName = MakePathFromRootDir(solutionFileName);
+            AssertFileExists("VisualStudio solution file", solutionFileName);
+            solution = VSSolution.Load(solutionFileName);
 
             solution.ForEachProject(delegate (VSProjectInfo projectInfo)
                                         {

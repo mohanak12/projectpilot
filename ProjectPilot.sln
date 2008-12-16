@@ -5,7 +5,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{29C5C89F-9
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{FBCD0FCA-E178-493F-BF6B-D4004FEF975A}"
 	ProjectSection(SolutionItems) = preProject
-		Data\Samples\AccipioActions.xsd = Data\Samples\AccipioActions.xsd
 		Data\Samples\BusinessActions.xml = Data\Samples\BusinessActions.xml
 		Data\Samples\BusinessActions.xsd = Data\Samples\BusinessActions.xsd
 		Data\Samples\ccnet.stats.xml = Data\Samples\ccnet.stats.xml
@@ -19,7 +18,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{FBCD
 		Data\Samples\TestSpec.xml = Data\Samples\TestSpec.xml
 		Data\Samples\TestSpecs.xsd = Data\Samples\TestSpecs.xsd
 		Data\Samples\TestSuite.xml = Data\Samples\TestSuite.xml
-		Data\Samples\TestSuiteTemplate.xsd = Data\Samples\TestSuiteTemplate.xsd
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectPilot.Framework", "ProjectPilot.Framework\ProjectPilot.Framework.csproj", "{C87F10BF-4132-4B75-9C07-CB0B1FCE6440}"

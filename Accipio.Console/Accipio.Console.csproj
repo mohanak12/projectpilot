@@ -55,7 +55,7 @@
       <Link>Options.cs</Link>
       <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="BusinessActionsSchemaGeneratorCommand.cs" />
+    <Compile Include="TestSuiteSchemaGeneratorCommand.cs" />
     <Compile Include="XmlValidationHelper.cs" />
     <Compile Include="ConsoleApp.cs" />
     <Compile Include="IConsoleCommand.cs" />
@@ -64,10 +64,15 @@
     <Compile Include="TestCodeGeneratorCommand.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AccipioActions.xsd" />
+    <None Include="AccipioActions.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="CodeGenerator.bat" />
     <None Include="CreateBashShema.bat" />
     <None Include="ProjectPilot.snk" />
+    <None Include="TestSuiteTemplate.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Accipio\Accipio.csproj">
