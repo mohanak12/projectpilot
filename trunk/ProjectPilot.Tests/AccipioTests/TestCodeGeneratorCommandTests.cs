@@ -6,7 +6,7 @@ using MbUnit.Framework;
 namespace ProjectPilot.Tests.AccipioTests
 {
     [TestFixture]
-    public class TestCodeGeneratorCommandTest
+    public class TestCodeGeneratorCommandTests
     {
         [Test]
         public void ArgumentIsNullTest()

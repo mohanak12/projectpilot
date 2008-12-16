@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Xml;
@@ -12,26 +14,20 @@ namespace Accipio.Console
     public class XmlValidationHelper
     {
         /// <summary>
-        /// Gets report of validation
-        /// </summary>
-        public StringBuilder ValidationStatusReport
-        {
-            get { return validationStatus; }
-        }
-
-        /// <summary>
         /// Validate xml document with predefined xsd schema
         /// </summary>
         /// <param name="xmlFileName">File of the XML file to be validated.</param>
-        /// <param name="xsdFileName">Path to xsd schema file.</param>
-        public void ValidateXmlDocument(string xmlFileName, string xsdFileName)
+        /// <param name="schemaFileName">Path to xsd schema file.</param>
+        public void ValidateXmlDocument(string xmlFileName, string schemaFileName)
         {
+            validationExceptions.Clear();
+
             // create and set validation settings
             XmlReaderSettings xmlReaderSettings = new XmlReaderSettings();
             xmlReaderSettings.ValidationType = ValidationType.Schema;
             // add schema
             XmlSchemaSet xmlSchemaSet = new XmlSchemaSet();
-            xmlSchemaSet.Add(null, xsdFileName);
+            xmlSchemaSet.Add(null, schemaFileName);
             xmlReaderSettings.Schemas = xmlSchemaSet;
             xmlReaderSettings.ValidationEventHandler += new ValidationEventHandler(ValidationCallBack);
 
@@ -44,15 +40,11 @@ namespace Accipio.Console
                     while (xmlReader.Read())
                     {
                     }
+                }
 
-                    if (validationStatus.Length > 0)
-                    {
-                        throw new XmlException(
-                            string.Format(
-                                CultureInfo.InvariantCulture,
-                                "Xml file does not match to validation schema. Details: {0}",
-                                validationStatus));
-                    }
+                if (validationExceptions.Count > 0)
+                {
+                    throw validationExceptions[0];
                 }
             }
         }
@@ -64,9 +56,9 @@ namespace Accipio.Console
         /// <param name="args">Event arguments.</param>
         private void ValidationCallBack(object sender, ValidationEventArgs args)
         {
-            validationStatus.Append(string.Format(CultureInfo.InvariantCulture, "Validation Error: {0} \n", args.Message));
+            validationExceptions.Add(args.Exception);
         }
 
-        private readonly StringBuilder validationStatus = new StringBuilder();
+        private readonly List<XmlSchemaException> validationExceptions = new List<XmlSchemaException>();
     }
 }

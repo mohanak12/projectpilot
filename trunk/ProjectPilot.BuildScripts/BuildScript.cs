@@ -43,7 +43,7 @@ namespace ProjectPilot.BuildScripts
 
                     return 0;
                 }
-                catch (RunnerFailedException ex)
+                catch (RunnerFailedException)
                 {
                     return 1;
                 }

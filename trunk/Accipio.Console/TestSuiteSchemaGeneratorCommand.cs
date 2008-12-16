@@ -52,9 +52,12 @@ namespace Accipio.Console
 
             if (args.Length < 2)
                 throw new ArgumentException("Missing business actions XML file name.");
-
             // set xml file name
             businessActionsXmlFileName = args[1];
+
+            if (args.Length < 3)
+                throw new ArgumentException("Missing XML namespace for the new test suite schema.");
+            testSuiteSchemaNamespace = args[2];
 
             FileInfo fileInfo = new FileInfo(businessActionsXmlFileName);
 
@@ -90,7 +93,7 @@ namespace Accipio.Console
             XmlDocument xmlSchemaDocument = GenerateXsdSchema(businessActionData);
 
             // write xsd schema to file
-            using (Stream xsdSchemaDocument = File.OpenWrite(outputFileName))
+            using (Stream xsdSchemaDocument = File.Open(outputFileName, FileMode.Create))
             {
                 xmlSchemaDocument.Save(xsdSchemaDocument);
             }
@@ -106,22 +109,28 @@ namespace Accipio.Console
         /// </summary>
         /// <param name="testSuiteSchemaDocument"><see cref="XmlDocument"/> which contains the test suite template XSD.</param>
         /// <param name="xmlNode">Parent node</param>
-        /// <param name="nameSpace">Namespace of xsd document</param>
         /// <param name="parameters">Action parameters</param>
-        private static void AddBusinessActionParameters(
+        private void AddBusinessActionParameters(
             XmlDocument testSuiteSchemaDocument, 
             XmlNode xmlNode, 
-            string nameSpace, 
             IEnumerable<BusinessActionParameters> parameters)
         {
             // create element complextype
-            XmlNode complexTypeNode = testSuiteSchemaDocument.CreateNode(XmlNodeType.Element, "xs", "complexType", nameSpace);
+            XmlNode complexTypeNode = testSuiteSchemaDocument.CreateNode(
+                XmlNodeType.Element, 
+                "xs", 
+                "complexType", 
+                XmlNsXs);
 
             // go through all business action paramters and add elements to xsd schema
             foreach (BusinessActionParameters parameter in parameters)
             {
                 // create element attribute
-                XmlNode attributeNode = testSuiteSchemaDocument.CreateNode(XmlNodeType.Element, "xs", "attribute", nameSpace);
+                XmlNode attributeNode = testSuiteSchemaDocument.CreateNode(
+                    XmlNodeType.Element, 
+                    "xs", 
+                    "attribute", 
+                    XmlNsXs);
                 
                 // append attribute name
                 XmlAttribute xmlAttribute = testSuiteSchemaDocument.CreateAttribute("name");
@@ -143,36 +152,24 @@ namespace Accipio.Console
             xmlNode.AppendChild(complexTypeNode);
         }
 
-        private void ChangeSchemaAttributes(XmlNode xmlElement, XmlNamespaceManager nsman)
-        {
-            XmlNode node = xmlElement.SelectSingleNode("//xs:schema", nsman);
-
-            foreach (XmlAttribute attribute in node.Attributes)
-            {
-                if (attribute.Name == "xmlns")
-                    attribute.Value = attribute.Value.Replace("@test.suite.template@", outputFileName);
-
-                if (attribute.Name == "targetNamespace")
-                    attribute.Value = attribute.Value.Replace("@test.suite.template@", outputFileName);
-            }
-        }
-
         /// <summary>
         /// Fills the test suite template XSD with the required business actions nodes.
         /// </summary>
         /// <param name="testSuiteSchemaDocument"><see cref="XmlDocument"/> which contains the test suite template XSD.</param>
         /// <param name="testActionsParentNode">Parent node where the test actions should be filled.</param>
-        /// <param name="nameSpace">Namespace of xsd document</param>
         /// <param name="businessActionData">Business action data</param>
         private void FillTestSuiteSchemaTemplate(
             XmlDocument testSuiteSchemaDocument, 
             XmlNode testActionsParentNode, 
-            string nameSpace, 
             BusinessActionData businessActionData)
         {
             foreach (BusinessActionEntry entry in businessActionData.Actions)
             {
-                XmlNode newNode = testSuiteSchemaDocument.CreateNode(XmlNodeType.Element, "xs", "element", nameSpace);
+                XmlNode newNode = testSuiteSchemaDocument.CreateNode(
+                    XmlNodeType.Element, 
+                    "xs", 
+                    "element", 
+                    XmlNsXs);
 
                 // add attribute name
                 XmlAttribute xmlAttribute = testSuiteSchemaDocument.CreateAttribute("name");
@@ -186,14 +183,7 @@ namespace Accipio.Console
 
                 if (entry.ActionParameters.Count > 0)
                 {
-                    AddBusinessActionParameters(testSuiteSchemaDocument, newNode, nameSpace, entry.ActionParameters);
-                }
-                else
-                {
-                    // add attribute type
-                    xmlAttribute = testSuiteSchemaDocument.CreateAttribute("type");
-                    xmlAttribute.Value = "xs:string";
-                    newNode.Attributes.Append(xmlAttribute);
+                    AddBusinessActionParameters(testSuiteSchemaDocument, newNode, entry.ActionParameters);
                 }
 
                 // append child node
@@ -215,20 +205,17 @@ namespace Accipio.Console
 
                 XmlElement xmlElement = xmlDocument.DocumentElement;
 
-                if (xmlElement == null)
-                {
-                    throw new XmlException("Xsd file is invalid");
-                }
-
-                string nameSpace = xmlElement.GetAttribute("xmlns:xs");
-                XmlNamespaceManager nsman = new XmlNamespaceManager(xmlDocument.NameTable);
-                nsman.AddNamespace("xs", nameSpace);
+                //string nameSpace = xmlElement.GetAttribute("xmlns:xs");
+                XmlNamespaceManager namespaceManager = new XmlNamespaceManager(xmlDocument.NameTable);
+                namespaceManager.AddNamespace("xs", XmlNsXs);
 
                 // change xmlns name and targetNamespace
-                ChangeSchemaAttributes(xmlElement, nsman);
+                SetXmlDocumentNamespaces(xmlDocument);
 
-                XmlNode xmlNode = xmlElement.SelectSingleNode("//xs:element[@name='steps']/xs:complexType/xs:sequence/xs:choice", nsman);
-                FillTestSuiteSchemaTemplate(xmlDocument, xmlNode, nameSpace, businessActionData);
+                XmlNode xmlNode = xmlElement.SelectSingleNode(
+                    "//xs:element[@name='steps']/xs:complexType/xs:sequence/xs:choice",
+                    namespaceManager);
+                FillTestSuiteSchemaTemplate(xmlDocument, xmlNode, businessActionData);
 
                 return xmlDocument;
             }
@@ -252,10 +239,19 @@ namespace Accipio.Console
             return businessActionData;
         }
 
+        private void SetXmlDocumentNamespaces(XmlDocument xmlDocument)
+        {
+            XmlAttribute targetNamespaceAtt = xmlDocument.CreateAttribute("targetNamespace");
+            targetNamespaceAtt.Value = testSuiteSchemaNamespace;
+            xmlDocument.DocumentElement.Attributes.Append(targetNamespaceAtt);
+        }
+
+        private const string AccipioActionsXsdFileName = @"AccipioActions.xsd";
         private string businessActionsXmlFileName;
         private readonly IConsoleCommand nextCommandInChain;
         private string outputFileName;
-        private const string AccipioActionsXsdFileName = @"AccipioActions.xsd";
+        private string testSuiteSchemaNamespace;
         private const string XsdTemplateFileName = @"TestSuiteTemplate.xsd";
+        private const string XmlNsXs = "http://www.w3.org/2001/XMLSchema";
     }
 }

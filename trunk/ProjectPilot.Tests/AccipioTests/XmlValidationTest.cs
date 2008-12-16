@@ -1,4 +1,5 @@
 ﻿using System.Xml;
+using System.Xml.Schema;
 using Accipio.Console;
 using MbUnit.Framework;
 
@@ -15,11 +16,9 @@ namespace ProjectPilot.Tests.AccipioTests
 
             XmlValidationHelper xmlValidationHelper = new XmlValidationHelper();
             xmlValidationHelper.ValidateXmlDocument(XmlFileName, XsdFileName);
-
-            Assert.AreEqual(xmlValidationHelper.ValidationStatusReport.Length, 0);
         }
 
-        [Test, ExpectedException(typeof(XmlException))]
+        [Test, ExpectedException(typeof(XmlSchemaException))]
         public void XmlValidationFailedTest()
         {
             const string XmlFileName = @"..\..\AccipioTests\AccipioActionsIncorrectXml.xml";
