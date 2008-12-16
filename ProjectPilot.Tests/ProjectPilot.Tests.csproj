@@ -82,10 +82,11 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="AccipioTests\TestSuiteSchemaGeneratorTest.cs" />
+    <Compile Include="AccipioTests\ValidatingTestSuiteSchemaTests.cs" />
+    <Compile Include="AccipioTests\TestSuiteSchemaGeneratorTests.cs" />
     <Compile Include="AccipioTests\ConsoleAppTest.cs" />
     <Compile Include="AccipioTests\FileCodeWriterTest.cs" />
-    <Compile Include="AccipioTests\TestCodeGeneratorCommandTest.cs" />
+    <Compile Include="AccipioTests\TestCodeGeneratorCommandTests.cs" />
     <Compile Include="AccipioTests\TestCodeGeneratorTests.cs" />
     <Compile Include="AccipioTests\XmlValidationTest.cs" />
     <Compile Include="BuildScriptsTests\VSSolutionBrowsingTests.cs" />

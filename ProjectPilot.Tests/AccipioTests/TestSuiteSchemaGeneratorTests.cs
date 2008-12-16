@@ -9,13 +9,14 @@ using MbUnit.Framework;
 namespace ProjectPilot.Tests.AccipioTests
 {
     [TestFixture]
-    public class TestSuiteSchemaGeneratorTest
+    public class TestSuiteSchemaGeneratorTests
     {
         [Test]
         public void GenerateXsdValidationSchemaTest()
         {
             string fileName = @"..\..\..\Data\Samples\BusinessActions.xml";
-            IConsoleCommand consoleCommand = new TestSuiteSchemaGeneratorCommand(null).ParseArguments(new[] { "baschema", fileName });
+            IConsoleCommand consoleCommand = new TestSuiteSchemaGeneratorCommand(null)
+                .ParseArguments(new[] { "baschema", fileName, "http://GenerateXsdValidationSchemaTest" });
             // process command
             consoleCommand.ProcessCommand();
 
@@ -28,7 +29,8 @@ namespace ProjectPilot.Tests.AccipioTests
         public void GenerateXsdSchemaFileNotExistsTest()
         {
             string fileName = @"AccipioActions123.xml";
-            IConsoleCommand consoleCommand = new TestSuiteSchemaGeneratorCommand(null).ParseArguments(new[] { "baschema", fileName });
+            IConsoleCommand consoleCommand = new TestSuiteSchemaGeneratorCommand(null)
+                .ParseArguments(new[] { "baschema", fileName, "http://GenerateXsdSchemaFileNotExistsTest" });
         }
 
         [Test]
