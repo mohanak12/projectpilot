@@ -679,13 +679,13 @@
       <Namespaces>
        <Namespace Name="ProjectPilot.Framework.Metrics">
         <Types>
-         <Type Name="LocMetricsBase">
+         <Type Name="VSProjectLocMetrics">
           <Members>
-           <Member Name="#GetLocStatsData()">
+           <Member Name="#projectName">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2008-12-15 12:45:22Z">
-              <Issue Certainty="50">
-               <Item>'LocMetricsBase.GetLocStatsData()'</Item>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2008-12-16 09:30:14Z">
+              <Issue>
+               <Item>'VSProjectLocMetrics.projectName'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -861,6 +861,9 @@
    <Rule TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021">
     <Resolution Name="Default">Consider a design that does not require that {0} be an out parameter.</Resolution>
    </Rule>
+   <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
+    <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
+   </Rule>
    <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
     <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
    </Rule>
@@ -909,9 +912,6 @@
    </Rule>
    <Rule TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726">
     <Resolution Name="MemberParameterNoAlternate">In member {0}, replace the term '{1}' in parameter name {2} with an appropriate alternate or remove it entirely.</Resolution>
-   </Rule>
-   <Rule TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024">
-    <Resolution Name="Default">Change {0} to a property if appropriate.</Resolution>
    </Rule>
   </Rules>
  </FxCopReport>

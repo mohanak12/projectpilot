@@ -12,11 +12,17 @@ namespace ProjectPilot.Framework.Metrics
         public VSProjectLocMetrics(VSProjectInfo projectInfo)
         {
             this.projectPath = projectInfo.ProjectDirectoryPath + @"\";
+            this.projectName = projectInfo.ProjectName;
         }
 
         public string ProjectPath
         {
             get { return projectPath; }
+        }
+
+        public string ProjectName
+        {
+            get { return projectName; }
         }
 
         public static VSProjectLocMetrics CalculateLocForProject(VSProjectInfo projectInfo)
@@ -38,5 +44,6 @@ namespace ProjectPilot.Framework.Metrics
         }
 
         private string projectPath;
+        private string projectName;
     }
 }
