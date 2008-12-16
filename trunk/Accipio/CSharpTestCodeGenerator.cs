@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text;
 
 namespace Accipio
 {
@@ -44,26 +45,31 @@ namespace Accipio
                 foreach (TestAction testAction in testActions)
                 {
                     AddActionDescription(testAction, businessActionData);
-                    string line = string.Format(CultureInfo.InvariantCulture, "                .{0}(", testAction.ActionName);
+                    StringBuilder line = new StringBuilder();
+                    line.AppendFormat(CultureInfo.InvariantCulture, "                .{0}(", testAction.ActionName);
 
                     if (testAction.HasParameters)
                     {
+                        string commaSeparator = string.Empty;
+
                         foreach (TestActionParameter actionParameters in testAction.ActionParameters)
                         {
-                            line += string.Format(CultureInfo.InvariantCulture, "\"{0}\", ", actionParameters.ParameterValue);
-                        }
+                            line.AppendFormat(
+                                CultureInfo.InvariantCulture, 
+                                "{1}\"{0}\"", 
+                                actionParameters.ParameterValue,
+                                commaSeparator);
 
-                        line = line.Remove(line.LastIndexOf(','));
+                            commaSeparator = ", ";
+                        }
                     }
+
+                    line.Append(")");
 
                     if (counter == testActions.Count)
-                    {
-                        WriteLine(string.Format(CultureInfo.InvariantCulture, "{0});", line));   
-                    }
-                    else
-                    {
-                        WriteLine(string.Format(CultureInfo.InvariantCulture, "{0})", line));    
-                    }
+                        line.Append(";");
+
+                    WriteLine(line.ToString());
 
                     counter++;
                 }
