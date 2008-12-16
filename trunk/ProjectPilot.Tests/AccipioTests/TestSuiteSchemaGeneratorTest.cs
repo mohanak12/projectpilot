@@ -9,18 +9,18 @@ using MbUnit.Framework;
 namespace ProjectPilot.Tests.AccipioTests
 {
     [TestFixture]
-    public class BusinessActionGeneratorTest
+    public class TestSuiteSchemaGeneratorTest
     {
         [Test]
         public void GenerateXsdValidationSchemaTest()
         {
             string fileName = @"..\..\..\Data\Samples\BusinessActions.xml";
-            IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null).ParseArguments(new[] { "baschema", fileName });
+            IConsoleCommand consoleCommand = new TestSuiteSchemaGeneratorCommand(null).ParseArguments(new[] { "baschema", fileName });
             // process command
             consoleCommand.ProcessCommand();
 
             // get output file
-            string outputFile = ((BusinessActionsSchemaGeneratorCommand) consoleCommand).OutputFile;
+            string outputFile = ((TestSuiteSchemaGeneratorCommand) consoleCommand).OutputFile;
             Assert.IsTrue(File.Exists(outputFile));
         }
 
@@ -28,34 +28,34 @@ namespace ProjectPilot.Tests.AccipioTests
         public void GenerateXsdSchemaFileNotExistsTest()
         {
             string fileName = @"AccipioActions123.xml";
-            IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null).ParseArguments(new[] { "baschema", fileName });
+            IConsoleCommand consoleCommand = new TestSuiteSchemaGeneratorCommand(null).ParseArguments(new[] { "baschema", fileName });
         }
 
         [Test]
         public void ArgsIsNullTest()
         {
-            IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null);
+            IConsoleCommand consoleCommand = new TestSuiteSchemaGeneratorCommand(null);
             Assert.IsNull(consoleCommand.ParseArguments(null));
         }
 
         [Test]
         public void InvalidArgsLengthTest()
         {
-            IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null);
+            IConsoleCommand consoleCommand = new TestSuiteSchemaGeneratorCommand(null);
             Assert.IsNull(consoleCommand.ParseArguments(new string[0]));
         }
 
         [Test, ExpectedException(typeof(ArgumentException))]
         public void InvalidArgsLengthFirstArgOkTest()
         {
-            IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null);
+            IConsoleCommand consoleCommand = new TestSuiteSchemaGeneratorCommand(null);
             Assert.IsNull(consoleCommand.ParseArguments(new[] { "baschema" }));
         }
 
         [Test]
         public void InvalidStartArgument()
         {
-            IConsoleCommand consoleCommand = new BusinessActionsSchemaGeneratorCommand(null);
+            IConsoleCommand consoleCommand = new TestSuiteSchemaGeneratorCommand(null);
             Assert.IsNull(consoleCommand.ParseArguments(new[] { "test", string.Empty }));
         }
 

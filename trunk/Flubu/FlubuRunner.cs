@@ -111,6 +111,13 @@ namespace Flubu
             return ReturnThisTRunner();
         }
 
+        /// <summary>
+        /// Asserts that the specified file exists. If the file does not exist,
+        /// the runner will fail.
+        /// </summary>
+        /// <param name="fileDescription">The file description.</param>
+        /// <param name="fileName">Name of the file.</param>
+        /// <returns>The same instance of this <see cref="TRunner"/>.</returns>
         public TRunner AssertFileExists(string fileDescription, string fileName)
         {
             if (false == File.Exists(fileName))
