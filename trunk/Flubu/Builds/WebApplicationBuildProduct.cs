@@ -20,6 +20,8 @@ namespace Flubu.Builds
             TRunner buildRunner,
             string packageDirectory)
         {
+            ClearCopiedFilesList();
+
             buildRunner.CopyDirectoryStructure(
                 sourceDirectory,
                 Path.Combine(packageDirectory, productDirectoryName),
