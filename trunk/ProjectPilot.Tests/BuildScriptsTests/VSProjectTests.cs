@@ -8,7 +8,7 @@ namespace ProjectPilot.Tests.BuildScriptsTests
     public class VSProjectTests
     {
         [Test]
-        public void TestVSProject1()
+        public void TestParsingVSProjectFile1()
         {
             VSProject project = VSProject.Load (@"..\..\..\Data\Samples\ProjectPilot.Framework.csproj");
 
@@ -25,7 +25,7 @@ namespace ProjectPilot.Tests.BuildScriptsTests
         }
  
         [Test]
-        public void TestVSProject2()
+        public void TestParsingVSProjectFile2()
         {
             VSProject project = VSProject.Load (@"..\..\..\Data\Samples\ProjectPilot.Portal.csproj");
 

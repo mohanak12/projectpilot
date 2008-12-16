@@ -5,23 +5,42 @@ using System.Xml;
 
 namespace Flubu.Builds.VSSolutionBrowsing
 {
+    /// <summary>
+    /// Represents a VisualStudio project.
+    /// </summary>
     public class VSProject
     {
+        /// <summary>
+        /// Gets a read-only collection of all .cs files in the solution.
+        /// </summary>
+        /// <value>A read-only collection of all the .cs files in the solution.</value>
         public IList<VSProjectCompileItem> CompileItems
         {
             get { return compileItems; }
         }
 
+        /// <summary>
+        /// Gets a read-only collection of project configurations.
+        /// </summary>
+        /// <value>A read-only collection of project configurations.</value>
         public IList<VSProjectConfiguration> Configurations
         {
             get { return configurations; }
         }
 
+        /// <summary>
+        /// Gets a read-only collection of project properties.
+        /// </summary>
+        /// <value>A read-only collection of project properties.</value>
         public IDictionary<string, string> Properties
         {
             get { return properties; }
         }
 
+        /// <summary>
+        /// Gets a read-only collection of project references.
+        /// </summary>
+        /// <value>A read-only collection of project references.</value>
         public IList<VSProjectReference> References
         {
             get { return references; }
