@@ -673,54 +673,19 @@
      </Module>
     </Modules>
    </Target>
-   <Target Name="$(ProjectDir)/Flubu/bin/Release/Flubu.dll">
+   <Target Name="$(ProjectDir)/ProjectPilot.Framework/bin/Release/ProjectPilot.Framework.dll">
     <Modules>
-     <Module Name="flubu.dll">
+     <Module Name="projectpilot.framework.dll">
       <Namespaces>
-       <Namespace Name="Flubu">
+       <Namespace Name="ProjectPilot.Framework.Metrics">
         <Types>
-         <Type Name="FlubuCCNetListener">
-          <Messages>
-           <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2008-12-14 10:00:28Z">
-            <Issue Name="ProvideDisposeBool">
-             <Item>'FlubuCCNetListener'</Item>
-            </Issue>
-           </Message>
-          </Messages>
+         <Type Name="LocMetricsBase">
           <Members>
-           <Member Name="#Dispose()">
+           <Member Name="#GetLocStatsData()">
             <Messages>
-             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2008-12-14 10:00:28Z">
-              <Issue Name="NotCalled">
-               <Item>'FlubuCCNetListener.Dispose()'</Item>
-               <Item>'GC.SuppressFinalize(object)'</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2008-12-14 10:00:28Z">
-              <Issue Name="DisposeImplementation">
-               <Item>'FlubuCCNetListener.Dispose()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#FormatMessage(System.String,System.Object[])">
-            <Messages>
-             <Message Id="System.String.Format(System.String,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2008-12-14 10:00:28Z">
-              <Issue>
-               <Item>'string.Format(string, object, object)'</Item>
-               <Item>'FlubuCCNetListener.FormatMessage(string, params object[])'</Item>
-               <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetTimeStamp()">
-            <Messages>
-             <Message Id="System.DateTime.ToString(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2008-12-14 10:00:28Z">
-              <Issue>
-               <Item>'DateTime.ToString(string)'</Item>
-               <Item>'FlubuCCNetListener.GetTimeStamp()'</Item>
-               <Item>'DateTime.ToString(string, IFormatProvider)'</Item>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2008-12-15 12:45:22Z">
+              <Issue Certainty="50">
+               <Item>'LocMetricsBase.GetLocStatsData()'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -729,14 +694,6 @@
          </Type>
         </Types>
        </Namespace>
-      </Namespaces>
-     </Module>
-    </Modules>
-   </Target>
-   <Target Name="$(ProjectDir)/ProjectPilot.Framework/bin/Release/ProjectPilot.Framework.dll">
-    <Modules>
-     <Module Name="projectpilot.framework.dll">
-      <Namespaces>
        <Namespace Name="ProjectPilot.Framework.Runners">
         <Types>
          <Type Name="IRunner">
@@ -904,9 +861,6 @@
    <Rule TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021">
     <Resolution Name="Default">Consider a design that does not require that {0} be an out parameter.</Resolution>
    </Rule>
-   <Rule TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816">
-    <Resolution Name="NotCalled">Change {0} to call {1}. This will prevent unnecessary finalization of the object once it has been disposed and it has fallen out of scope.</Resolution>
-   </Rule>
    <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
     <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
    </Rule>
@@ -930,10 +884,6 @@
     <Resolution Name="Member">Rename virtual/interface member {0} so that it no longer conflicts with the reserved language keyword '{1}'. Using a reserved keyword as the name of a virtual/interface member makes it harder for consumers in other languages to override/implement the member.</Resolution>
     <Resolution Name="Namespace">Rename namespace {0} so that it no longer conflicts with the reserved language keyword '{1}'. Using a reserved keyword as the name of a namespace makes it harder for consumers in other languages to use the namespace.</Resolution>
     <Resolution Name="Type">Rename type {0} so that it no longer conflicts with the reserved language keyword '{1}'. Using a reserved keyword as the name of a type makes it harder for consumers in other languages to use the type.</Resolution>
-   </Rule>
-   <Rule TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063">
-    <Resolution Name="DisposeImplementation">Modify {0} so that it calls Dispose(true), then calls GC.SuppressFinalize on the current object instance ('this' or 'Me' in Visual Basic), and then returns.</Resolution>
-    <Resolution Name="ProvideDisposeBool">Provide an overridable implementation of Dispose(bool) on {0} or mark the type as sealed. A call to Dispose(false) should only clean up native resources. A call to Dispose(true) should clean up both managed and native resources.</Resolution>
    </Rule>
    <Rule TypeName="ImplementStandardExceptionConstructors" Category="Microsoft.Design" CheckId="CA1032">
     <Resolution Name="MissingConstructor">Add the following constructor to {0}: {1}.</Resolution>
@@ -959,6 +909,9 @@
    </Rule>
    <Rule TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726">
     <Resolution Name="MemberParameterNoAlternate">In member {0}, replace the term '{1}' in parameter name {2} with an appropriate alternate or remove it entirely.</Resolution>
+   </Rule>
+   <Rule TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024">
+    <Resolution Name="Default">Change {0} to a property if appropriate.</Resolution>
    </Rule>
   </Rules>
  </FxCopReport>

@@ -54,6 +54,13 @@ namespace ProjectPilot.Framework.Metrics
             set { sloc = value; }
         }
 
+        public void Add(LocStatsData locData)
+        {
+            this.Cloc += locData.Cloc;
+            this.Eloc += locData.Eloc;
+            this.Sloc += locData.Sloc;
+        }
+
         private int cloc;
         private int eloc;
         private int sloc;
