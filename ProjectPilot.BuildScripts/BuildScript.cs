@@ -30,7 +30,7 @@ namespace ProjectPilot.BuildScripts
                         .Do(TargetPackage).DependsOn("load.solution");
                     runner.AddTarget("rebuild")
                         .SetDescription("Rebuilds the project, runs tests and packages the build products.")
-                        .SetAsDefault().DependsOn("compile", "unit.tests", "package");
+                        .SetAsDefault().DependsOn("compile", "unit.tests", "package", "prepare.web");
 
                     // actual run
                     if (args.Length == 0)

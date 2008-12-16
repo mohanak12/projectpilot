@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{5E8B73D7-B9DC-4DCF-93B6-4BFB5E845575}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -97,6 +97,15 @@
     <Compile Include="Builds\BuildProduct.cs" />
     <Compile Include="Builds\BuildProductsRegistry.cs" />
     <Compile Include="Builds\BuildRunner.cs" />
+    <Compile Include="Deployment\ConcreteDeploymentRunner.cs" />
+    <Compile Include="Deployment\DeploymentModule.cs" />
+    <Compile Include="Deployment\DeploymentModulesRegistry.cs" />
+    <Compile Include="Deployment\DeploymentRunner.cs" />
+    <Compile Include="Deployment\MsmqDeploymentModule.cs" />
+    <Compile Include="Deployment\SqlServerDatabaseDeploymentModule.cs" />
+    <Compile Include="Deployment\WebApplicationDeploymentModule.cs" />
+    <Compile Include="Deployment\WebApplicationPoolDeploymentModule.cs" />
+    <Compile Include="Deployment\WindowsServiceDeploymentModule.cs" />
     <Compile Include="FlubuCCNetListener.cs" />
     <Compile Include="Builds\ConcreteBuildRunner.cs" />
     <Compile Include="Builds\IBuildLogger.cs" />
