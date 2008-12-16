@@ -66,15 +66,15 @@ namespace ProjectPilot.Tests.AccipioTests
             Assert.IsNotNull(testAction);
             Assert.AreEqual("EnterDestinationAccountNumber", testAction.ActionName);
             Assert.AreEqual(1, testAction.ActionParametersCount);
-            Assert.IsNotNull(testAction.GetParameterKeyValue("value"));
-            Assert.AreEqual("23677", testAction.GetParameterKeyValue("value"));
+            Assert.IsNotNull(testAction.GetParameterKeyValue("destAccountId"));
+            Assert.AreEqual("23677", testAction.GetParameterKeyValue("destAccountId"));
 
             testAction = testCase.GetTestAction("EnterTransferAmount");
             Assert.IsNotNull(testAction);
             Assert.AreEqual("EnterTransferAmount", testAction.ActionName);
             Assert.AreEqual(1, testAction.ActionParametersCount);
-            Assert.IsNotNull(testAction.GetParameterKeyValue("value"));
-            Assert.AreEqual("644.33", testAction.GetParameterKeyValue("value"));
+            Assert.IsNotNull(testAction.GetParameterKeyValue("transferAmount"));
+            Assert.AreEqual("644.33", testAction.GetParameterKeyValue("transferAmount"));
         }
 
         [Test]
@@ -113,15 +113,15 @@ namespace ProjectPilot.Tests.AccipioTests
             Assert.IsNotNull(testAction);
             Assert.AreEqual("EnterDestinationAccountNumber", testAction.ActionName);
             Assert.AreEqual(1, testAction.ActionParametersCount);
-            Assert.IsNotNull(testAction.GetParameterKeyValue("value"));
-            Assert.AreEqual("23677", testAction.GetParameterKeyValue("value"));
+            Assert.IsNotNull(testAction.GetParameterKeyValue("destAccountId"));
+            Assert.AreEqual("23677", testAction.GetParameterKeyValue("destAccountId"));
 
             testAction = testCase.GetTestAction("EnterTransferAmount");
             Assert.IsNotNull(testAction);
             Assert.AreEqual("EnterTransferAmount", testAction.ActionName);
             Assert.AreEqual(1, testAction.ActionParametersCount);
-            Assert.IsNotNull(testAction.GetParameterKeyValue("value"));
-            Assert.AreEqual("644.33", testAction.GetParameterKeyValue("value"));
+            Assert.IsNotNull(testAction.GetParameterKeyValue("transferAmount"));
+            Assert.AreEqual("644.33", testAction.GetParameterKeyValue("transferAmount"));
         }
 
         [Test, ExpectedException(typeof(XmlException))]

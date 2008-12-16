@@ -29,7 +29,7 @@ namespace ProjectPilot.Tests.AccipioTests
             string[] args = new string[4];
             args[0] = "codegen";
             args[1] = "..\\..\\..\\Data\\Samples\\BusinessActions.xml";
-            args[2] = "..\\..\\..\\Accipio.Console\\TestSuiteTemplate.xsd";
+            args[2] = TestSuiteSchemaGeneratorTests.GenerateXsdValidationSchemaOutputFile();
             args[3] = "..\\..\\..\\Data\\Samples\\TestSuite.xml";
             return args;
         }

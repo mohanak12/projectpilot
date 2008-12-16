@@ -1,4 +1,4 @@
-<suite id="ProjectPortalHome" runner="ProjectPortal" xmlns="http://projectpilot/ProjectPortalActions.xsd" >
+<suite id="ProjectPortalHome" runner="ProjectPortal" xmlns="http://GenerateXsdValidationSchemaTest" >
 	<description>Contains test cases which cover search and selection of portal projects.</description>
 	<case id="GoToPortal">
 		<description>Opens Project portal home page in browser.</description>
@@ -23,11 +23,13 @@
 		</steps>
 	</case>
 	<case id="TestSameStep">
-		<description>Test samo action in one test case.</description>
+		<description>Test same action in one test case.</description>
 		<tags>NoTag</tags>
 		<steps>
 			<FindButton name="Search"/>
 			<TypeText name="Search" searchText="EBSy"/>
+			<ClickButton name="Search"/>
+			<FindButton name="Search"/>
 			<ClickButton name="Search"/>
 		</steps>
 	</case>
