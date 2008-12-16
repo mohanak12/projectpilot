@@ -25,6 +25,8 @@ namespace Flubu.Builds
             TRunner buildRunner,
             string packageDirectory)
         {
+            ClearCopiedFilesList();
+
             string actualExcludePattern = @"\.svn";
 
             if (excludePattern != null)

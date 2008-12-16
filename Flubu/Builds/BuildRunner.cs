@@ -178,7 +178,7 @@ namespace Flubu.Builds
         /// <summary>
         /// Copies all of the build results to the CCNet artifact directory.
         /// </summary>
-        /// <returns>The same instance of this <see cref="BuildRunner"/>.</returns>
+        /// <returns>The same instance of this <see cref="TRunner"/>.</returns>
         public TRunner CopyBuildLogsToCCNet()
         {
             if (false == IsRunningUnderCruiseControl)
@@ -190,32 +190,6 @@ namespace Flubu.Builds
             string buildLogsDir = EnsureBuildLogsTestDirectoryExists();
 
             CopyDirectoryStructure(buildLogsDir, ccnetArtifactDirectory, true);
-
-            return ReturnThisTRunner();
-        }
-
-        /// <summary>
-        /// Copies build products' files to an extra location in order to be able to zip them into packages later.
-        /// </summary>
-        /// <returns>The same instance of this <see cref="BuildRunner"/>.</returns>
-        public TRunner CopyBuildProductFiles()
-        {
-            // skip this step if we don't have any products to package
-            if (false == buildProducts.HasAnyProducts)
-                return ReturnThisTRunner();
-
-            Log("Packaging build products");
-
-            // create root directory for the package
-            string packageName = FormatString("{0}-{1}", ProductId, BuildVersion);
-
-            string packagesDir = Path.GetFullPath(MakePathFromRootDir(BuildPackagesDir));
-            CreateDirectory(packagesDir, true);
-            packagesDir = Path.Combine(packagesDir, packageName);
-            CreateDirectory(packagesDir, true);
-
-            // copy all the necessary files to the package directory
-            buildProducts.CopyProducts(packagesDir);
 
             return ReturnThisTRunner();
         }
@@ -278,7 +252,7 @@ namespace Flubu.Builds
         /// <param name="scriptFileName">Name of the script file.</param>
         /// <param name="userName">Name of the database user.</param>
         /// <param name="password">The database user's password.</param>
-        /// <returns>The same instance of this <see cref="BuildRunner"/>.</returns>
+        /// <returns>The same instance of this <see cref="TRunner"/>.</returns>
         public TRunner ExecuteSqlScriptFile(
             string scriptFileName, 
             string userName,
@@ -566,13 +540,19 @@ namespace Flubu.Builds
         ///     </item>
         /// </list> 
         /// </param>
+        /// <param name="rootDirectoryForProductFormat">The format for the root directory of the product. This will
+        /// be the root directory inside the package ZIP file. 
+        /// The format is the same as for the <see cref="zipFileNameFormat"/> parameter.</param>
         /// <param name="productPartsIds">The list of product parts IDs which should be included in the package.
         /// If the list is empty, the method packages all available product part IDs.</param>
         /// <returns>The same instance of this <see cref="TRunner"/>.</returns>
         public TRunner PackageBuildProduct(
             string zipFileNameFormat,
+            string rootDirectoryForProductFormat,
             params string[] productPartsIds)
         {
+            CopyBuildProductFiles(rootDirectoryForProductFormat, productPartsIds);
+
             IEnumerable<string> filesToZip = buildProducts.ListFilesForProductParts(productPartsIds);
 
             string zipFileName = String.Format(
@@ -805,6 +785,43 @@ namespace Flubu.Builds
         public TRunner SetProductRootDir (string productRootDir)
         {
             this.productRootDir = productRootDir;
+            return ReturnThisTRunner();
+        }
+
+        /// <summary>
+        /// Copies build products' files to an extra location in order to be able to zip them into packages later.
+        /// </summary>
+        /// <param name="rootDirectoryForProductFormat">The format for the root directory of the product. This will
+        /// be the root directory inside the package ZIP file. 
+        /// The format is the same as for the <see cref="PackageBuildProduct"/> method parameters.</param>
+        /// <param name="productPartsIds">The list of product parts IDs which should be included in the package.
+        /// If the list is empty, the method packages all available product part IDs.</param>
+        /// <returns>The same instance of this <see cref="TRunner"/>.</returns>
+        protected virtual TRunner CopyBuildProductFiles(
+            string rootDirectoryForProductFormat,
+            params string[] productPartsIds)
+        {
+            // skip this step if we don't have any products to package
+            if (false == buildProducts.HasAnyProducts)
+                return ReturnThisTRunner();
+
+            Log("Packaging build products");
+
+            // create root directory for the package
+            string packageName = String.Format(
+                CultureInfo.InvariantCulture,
+                rootDirectoryForProductFormat,
+                ProductId,
+                BuildVersion);
+
+            string packagesDir = Path.GetFullPath(MakePathFromRootDir(BuildPackagesDir));
+            CreateDirectory(packagesDir, true);
+            packagesDir = Path.Combine(packagesDir, packageName);
+            CreateDirectory(packagesDir, true);
+
+            // copy all the necessary files to the package directory
+            buildProducts.CopyProducts(packagesDir);
+
             return ReturnThisTRunner();
         }
 

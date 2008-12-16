@@ -93,12 +93,11 @@ namespace ProjectPilot.BuildScripts
                     .AddProject("accipio", "Accipio.Console")
                     .AddProject("flubu", "Flubu");
             runner
-                .CopyBuildProductFiles()
-                .PackageBuildProduct("Accipio-{1}.zip", "accipio")
+                .PackageBuildProduct("Accipio-{1}.zip", "Accipio-{1}", "accipio")
                 .CopyBuildProductToCCNet(@"packages\Accipio\Accipio-latest.zip")
                 .CopyBuildProductToCCNet(@"packages\Accipio\{2}.{3}\{4}")
 
-                .PackageBuildProduct("Flubu-{1}.zip", "flubu")
+                .PackageBuildProduct("Flubu-{1}.zip", "Flubu-{1}", "flubu")
                 .CopyBuildProductToCCNet(@"packages\Flubu\Flubu-latest.zip")
                 .CopyBuildProductToCCNet(@"packages\Flubu\{2}.{3}\{4}");
         }

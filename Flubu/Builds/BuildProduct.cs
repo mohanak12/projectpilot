@@ -29,6 +29,11 @@ namespace Flubu.Builds
             copiedFiles.AddRange(fileNames);
         }
 
+        protected void ClearCopiedFilesList()
+        {
+            copiedFiles.Clear();
+        }
+
         private readonly string productPartId;
         private List<string> copiedFiles = new List<string>();
     }
