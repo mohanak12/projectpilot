@@ -25,10 +25,8 @@ namespace ProjectPilot.Framework.Metrics
 
             foreach (VSProjectCompileItem compileItem in projectInfo.Project.CompileItems)
             {
-                //SourceFileLocMetrics sourceFile = new SourceFileLocMetrics(compileItem.Compile.Substring(compileItem.Compile.LastIndexOf(@"\")));
-                SourceFileLocMetrics sourceFile = new SourceFileLocMetrics("bla bla");
-
                 string filePath = projectMetrics.ProjectPath + compileItem.Compile; 
+                SourceFileLocMetrics sourceFile = new SourceFileLocMetrics(filePath.Substring(filePath.LastIndexOf(Convert.ToChar(92)) + 1));
 
                 Stream streamOfFile = File.OpenRead(filePath);
                 
