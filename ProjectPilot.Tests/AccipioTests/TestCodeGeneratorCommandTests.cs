@@ -20,7 +20,6 @@ namespace ProjectPilot.Tests.AccipioTests
         public void CodeGeneratorTest()
         {
             string[] args = TestCodeGeneratorTests.GetArgs();
-
             IConsoleCommand consoleCommand = new TestCodeGeneratorCommand(null).ParseArguments(args);
             consoleCommand.ProcessCommand();
         }

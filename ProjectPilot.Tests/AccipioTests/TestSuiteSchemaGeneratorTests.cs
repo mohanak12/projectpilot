@@ -14,6 +14,16 @@ namespace ProjectPilot.Tests.AccipioTests
         [Test]
         public void GenerateXsdValidationSchemaTest()
         {
+            string outputFile = GenerateXsdValidationSchemaOutputFile();
+            Assert.IsTrue(File.Exists(outputFile));
+        }
+
+        /// <summary>
+        /// Generates businessaction schema file.
+        /// </summary>
+        /// <returns>generated filename.</returns>
+        public static string GenerateXsdValidationSchemaOutputFile()
+        {
             string fileName = @"..\..\..\Data\Samples\BusinessActions.xml";
             IConsoleCommand consoleCommand = new TestSuiteSchemaGeneratorCommand(null)
                 .ParseArguments(new[] { "baschema", fileName, "http://GenerateXsdValidationSchemaTest" });
@@ -21,8 +31,7 @@ namespace ProjectPilot.Tests.AccipioTests
             consoleCommand.ProcessCommand();
 
             // get output file
-            string outputFile = ((TestSuiteSchemaGeneratorCommand) consoleCommand).OutputFile;
-            Assert.IsTrue(File.Exists(outputFile));
+            return ((TestSuiteSchemaGeneratorCommand) consoleCommand).OutputFile;
         }
 
         [Test, ExpectedException(typeof(IOException))]

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xs:schema id="NewDataSet" xmlns="http://projectpilot/ProjectPortalActions.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" targetNamespace="http://projectpilot/ProjectPortalActions.xsd" elementFormDefault="qualified">
+<xs:schema id="NewDataSet" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" elementFormDefault="qualified" targetNamespace="http://GenerateXsdValidationSchemaTest">
   <xs:element name="suite">
     <xs:complexType>
       <xs:sequence>
@@ -19,44 +19,46 @@
               <xs:element name="steps" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element name="GoToPortal" minOccurs="0">
-                      <xs:complexType>
-                        <xs:attribute name="url" type="xs:string" />
-                      </xs:complexType>
-                    </xs:element>
-                    <xs:element name="FindButton" minOccurs="0">
-                      <xs:complexType>
-                        <xs:attribute name="name" type="xs:string" />
-                      </xs:complexType>
-                    </xs:element>
-                    <xs:element name="ClickButton" minOccurs="0">
-                      <xs:complexType>
-                        <xs:attribute name="name" type="xs:string" />
-                      </xs:complexType>
-                    </xs:element>
-                    <xs:element name="FindTextBox" minOccurs="0">
-                      <xs:complexType>
-                        <xs:attribute name="name" type="xs:string" />
-                      </xs:complexType>
-                    </xs:element>
-                    <xs:element name="TypeText" minOccurs="0">
-                      <xs:complexType>
-                        <xs:attribute name="searchText" type="xs:string" />
-                        <xs:attribute name="name" type="xs:string" />
-                      </xs:complexType>
-                    </xs:element>
-                    <xs:element name="ProjectExists" minOccurs="0">
-                      <xs:complexType>
-                        <xs:attribute name="href" type="xs:string" />
-                      </xs:complexType>
-                    </xs:element>
-                    <xs:element name="ProjectSelect" minOccurs="0">
-                      <xs:complexType>
-                        <xs:attribute name="href" type="xs:string" />
-                      </xs:complexType>
-                    </xs:element>
-                    <xs:element name="ConfirmSelection" minOccurs="0" type="xs:string" />
-                    <xs:element name="AssertOperationSuccessful" minOccurs="0" type="xs:string" />
+                    <xs:choice minOccurs="0" maxOccurs="unbounded">
+                      <xs:element name="GoToPortal" minOccurs="1">
+                        <xs:complexType>
+                          <xs:attribute name="url" type="xs:string" use="required" />
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="FindButton" minOccurs="1">
+                        <xs:complexType>
+                          <xs:attribute name="name" type="xs:string" use="required" />
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="ClickButton" minOccurs="1">
+                        <xs:complexType>
+                          <xs:attribute name="name" type="xs:string" use="required" />
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="FindTextBox" minOccurs="1">
+                        <xs:complexType>
+                          <xs:attribute name="name" type="xs:string" use="required" />
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="TypeText" minOccurs="1">
+                        <xs:complexType>
+                          <xs:attribute name="searchText" type="xs:string" use="required" />
+                          <xs:attribute name="name" type="xs:string" use="required" />
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="ProjectExists" minOccurs="1">
+                        <xs:complexType>
+                          <xs:attribute name="href" type="xs:string" use="required" />
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="ProjectSelect" minOccurs="1">
+                        <xs:complexType>
+                          <xs:attribute name="href" type="xs:string" use="required" />
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="ConfirmSelection" minOccurs="1" />
+                      <xs:element name="AssertOperationSuccessful" minOccurs="1" />
+                    </xs:choice>
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
@@ -65,8 +67,8 @@
           </xs:complexType>
         </xs:element>
       </xs:sequence>
-      <xs:attribute name="id" type="xs:string" />
-      <xs:attribute name="runner" type="xs:string" />
+      <xs:attribute name="id" type="xs:string" use="required" />
+      <xs:attribute name="runner" type="xs:string" use="required" />
     </xs:complexType>
   </xs:element>
 </xs:schema>
