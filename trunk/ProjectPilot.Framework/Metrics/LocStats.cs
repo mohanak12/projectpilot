@@ -26,7 +26,7 @@ namespace ProjectPilot.Framework.Metrics
         /// <param name="stream">The stream representing a single
         /// file from which we count the loc statistics.</param>
         /// <returns>LocStatsData object with the results.</returns>
-        public LocStatsData CountLocString(Stream stream)
+        public LocStatsData CountLocStream(Stream stream)
         {
             int sloc = 0;
             int cloc = 0;
