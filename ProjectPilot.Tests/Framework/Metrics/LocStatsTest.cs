@@ -15,22 +15,11 @@ namespace ProjectPilot.Tests.Framework.Metrics
 
             Stream stream = File.OpenRead(@"..\..\..\Data\Samples\LocSample.cs");
             
-            LocStatsData data = locStats.CountLocString(stream);
+            LocStatsData data = locStats.CountLocStream(stream);
 
             Assert.AreEqual(14, data.Cloc);
             Assert.AreEqual(9, data.Eloc);
             Assert.AreEqual(56, data.Sloc);
-        }
-
-        [Test]
-        public void SingleFileLocMetrics()
-        {
-            //LocMetricsBase sourceFile = new SourceFileLocMetrics(@"..\..\..\Data\Samples\", "LocSample.cs");
-            //LocStatsData data = sourceFile.GetLocStatsData();
-
-            //Assert.AreEqual(14, data.Cloc);
-            //Assert.AreEqual(9, data.Eloc);
-            //Assert.AreEqual(56, data.Sloc);
         }
 
         [Test]
@@ -41,21 +30,5 @@ namespace ProjectPilot.Tests.Framework.Metrics
 
             LocStatsData data = metrics.GetLocStatsData();
         }
-
-        //[Test]
-        //public void SolutionLocMetrics()
-        //{
-            //VSSolutionLocMetrics metrics = new VSSolutionLocMetrics.CalculateLocForSolution(
-            //    @"..\..\..\ProjectPilot.sln");
-
-            //LocStatsData data = metrics.GetLocStatsData();
-
-            //foreach (VSProjectInfo projectInfo in solution.Projects)
-            //{
-            //    VSProjectLocMetrics projectMetrics = new VSProjectLocMetrics(projectInfo);
-            //    if (projectInfo.ProjectTypeGuid == VSProjectType.CSharpProjectType.ProjectTypeGuid)
-            //        projectMetrics.CalculateLocForProject(projectInfo.Project);
-            //}
-        //}
     }
 }

@@ -34,7 +34,7 @@ namespace ProjectPilot.Framework.Metrics
         public void CalcLocStatData(Stream fileStream)
         {
             ILocStats locStats = new LocStats();
-            this.locStatsData = locStats.CountLocString(fileStream);
+            this.locStatsData = locStats.CountLocStream(fileStream);
         }
 
         /// <summary>
