@@ -13,7 +13,7 @@ namespace Accipio
     /// Tester class for testing Web application using Selenium. The class provides a fluent interface 
     /// for testing.
     /// </summary>
-    public class SeleniumTesterBase
+    public class SeleniumTesterBase : TestFramework.AccipioTestRunnerBase<SeleniumTesterBase>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SeleniumTesterBase"/> class.

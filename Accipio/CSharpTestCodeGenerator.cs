@@ -28,10 +28,10 @@ namespace Accipio
                 WriteLine("    {");
                 WriteLine("        using ({0}TestRunner runner = new {0}TestRunner())", testSuite.Runner);
                 WriteLine("        {");
-                WriteLine("            runner");
+                WriteLine("            runner", testSuite.Runner);
                 TestCase testCase = testSuite.GetTestCase(testCaseName);
                 // add test case description
-                WriteLine("                .AddDescription(\"{0}\")", testCase.TestCaseDescription);
+                WriteLine("                .SetDescription(\"{0}\")", testCase.TestCaseDescription);
                 // add test case tags
                 foreach (string tag in testCase.GetTestCaseTags)
                 {
