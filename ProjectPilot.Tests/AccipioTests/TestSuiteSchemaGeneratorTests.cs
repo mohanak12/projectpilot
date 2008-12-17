@@ -8,9 +8,16 @@ using MbUnit.Framework;
 
 namespace ProjectPilot.Tests.AccipioTests
 {
+    /// <summary>
+    /// This is set of tests that checks if data from business action xml file are properly serialized to object <see cref="BusinessActionData" />
+    /// Tests also checks if correct exception returns in case of invalid xml file.
+    /// </summary>
     [TestFixture]
     public class TestSuiteSchemaGeneratorTests
     {
+        /// <summary>
+        /// Test checks generation of xsd schema file context for business actions.
+        /// </summary>
         [Test]
         public void GenerateXsdValidationSchemaTest()
         {
@@ -34,6 +41,9 @@ namespace ProjectPilot.Tests.AccipioTests
             return ((TestSuiteSchemaGeneratorCommand) consoleCommand).OutputFile;
         }
 
+        /// <summary>
+        /// Test checks that parser throws file not exists if invalid xml file name is passed
+        /// </summary>
         [Test, ExpectedException(typeof(IOException))]
         public void GenerateXsdSchemaFileNotExistsTest()
         {
@@ -42,6 +52,9 @@ namespace ProjectPilot.Tests.AccipioTests
                 .ParseArguments(new[] { "baschema", fileName, "http://GenerateXsdSchemaFileNotExistsTest" });
         }
 
+        /// <summary>
+        /// Test checks that parser returns null value if no arguments is passed
+        /// </summary>
         [Test]
         public void ArgsIsNullTest()
         {
@@ -49,6 +62,9 @@ namespace ProjectPilot.Tests.AccipioTests
             Assert.IsNull(consoleCommand.ParseArguments(null));
         }
 
+        /// <summary>
+        /// Test checks that parser returns null value if no arguments is passed
+        /// </summary>
         [Test]
         public void InvalidArgsLengthTest()
         {
@@ -56,6 +72,9 @@ namespace ProjectPilot.Tests.AccipioTests
             Assert.IsNull(consoleCommand.ParseArguments(new string[0]));
         }
 
+        /// <summary>
+        /// Test checks that parser returns null value if some arguments are missing
+        /// </summary>
         [Test, ExpectedException(typeof(ArgumentException))]
         public void InvalidArgsLengthFirstArgOkTest()
         {
@@ -63,6 +82,9 @@ namespace ProjectPilot.Tests.AccipioTests
             Assert.IsNull(consoleCommand.ParseArguments(new[] { "baschema" }));
         }
 
+        /// <summary>
+        /// Test checks that parser returns null value if invalid argument is passed
+        /// </summary>
         [Test]
         public void InvalidStartArgument()
         {
@@ -70,6 +92,9 @@ namespace ProjectPilot.Tests.AccipioTests
             Assert.IsNull(consoleCommand.ParseArguments(new[] { "test", string.Empty }));
         }
 
+        /// <summary>
+        /// Test checks correctness of parsed xml document 
+        /// </summary>
         [Test]
         public void ParseBusinessActionsTest()
         {
@@ -104,6 +129,9 @@ namespace ProjectPilot.Tests.AccipioTests
             }
         }
 
+        /// <summary>
+        /// Test checks that <see cref="BusinessActionEntry"/> is null if invalid action id is passed
+        /// </summary>
         [Test]
         public void MissingBusinessActionDataEntryTest()
         {
@@ -112,6 +140,9 @@ namespace ProjectPilot.Tests.AccipioTests
             Assert.IsNull(entry);
         }
 
+        /// <summary>
+        /// Test checks that parser throws exception if xml document has invalid element
+        /// </summary>
         [Test, ExpectedException(typeof(NotSupportedException))]
         public void NotSupportedActionsElementTest()
         {
@@ -125,6 +156,9 @@ namespace ProjectPilot.Tests.AccipioTests
             }
         }
 
+        /// <summary>
+        /// Test checks that parser throws exception if xml document has invalid element
+        /// </summary>
         [Test, ExpectedException(typeof(NotSupportedException))]
         public void NotSupportedActionElementTest()
         {
@@ -138,6 +172,9 @@ namespace ProjectPilot.Tests.AccipioTests
             }
         }
 
+        /// <summary>
+        /// Test checks that parser throws exception if xml document has invalid element
+        /// </summary>
         [Test, ExpectedException(typeof(NotSupportedException))]
         public void NotSupportedFunctionElementTest()
         {
@@ -151,6 +188,9 @@ namespace ProjectPilot.Tests.AccipioTests
             }
         }
 
+        /// <summary>
+        /// Test checks that parser throws exception if xml document has invalid element
+        /// </summary>
         [Test, ExpectedException(typeof(NotSupportedException))]
         public void NotSupportedStepsElementTest()
         {
@@ -164,6 +204,9 @@ namespace ProjectPilot.Tests.AccipioTests
             }
         }
 
+        /// <summary>
+        /// Test checks that parser throws exception if xml document has invalid element
+        /// </summary>
         [Test, ExpectedException(typeof(XmlException))]
         public void ParseBusinessActionsInvalidXmlTest()
         {

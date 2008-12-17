@@ -5,7 +5,7 @@
     <div>
         <center>
             <br />
-            <img alt="ProjectPilot" src="/ProjectPilot/Content/Images/ProjectPilotLogo.png" />
+            <img alt="ProjectPilot" src="../../Content/Images/ProjectPilotLogo.png" />
             <br />
             <input type="text" tabindex="10" size="80" value="" class="input" id="SearchQuery"
                 name="SearchQuery" />

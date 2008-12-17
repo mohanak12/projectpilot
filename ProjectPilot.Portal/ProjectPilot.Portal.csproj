@@ -128,7 +128,6 @@
     <Content Include="Global.asax" />
     <Content Include="ProjectPilotLogo.png" />
     <Content Include="Views\Home\Home.aspx" />
-    <Content Include="Views\Home\ProjectPilotLogo.png" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-1.2.6.js" />
     <Content Include="Scripts\jquery-1.2.6.min.js" />
@@ -160,7 +159,7 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-<!--  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />-->
+  <!--  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />-->
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

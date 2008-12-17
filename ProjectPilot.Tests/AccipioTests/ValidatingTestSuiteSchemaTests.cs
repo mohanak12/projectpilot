@@ -111,7 +111,7 @@ namespace ProjectPilot.Tests.AccipioTests
         /// <summary>
         /// Makes sure the schema allows two different forms for actions with a single parameter.
         /// </summary>
-        [Test, Pending("The tests currently fails")]
+        [Test]
         public void StepWithSingleParameter()
         {
             PrepareTestSuiteXmlFile(
