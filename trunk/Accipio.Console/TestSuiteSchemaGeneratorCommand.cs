@@ -113,7 +113,7 @@ namespace Accipio.Console
         private void AddBusinessActionParameters(
             XmlDocument testSuiteSchemaDocument, 
             XmlNode xmlNode, 
-            IEnumerable<BusinessActionParameters> parameters)
+            IList<BusinessActionParameters> parameters)
         {
             // create element complextype
             XmlNode complexTypeNode = testSuiteSchemaDocument.CreateNode(
@@ -122,34 +122,94 @@ namespace Accipio.Console
                 "complexType", 
                 XmlNsXs);
 
-            // go through all business action paramters and add elements to xsd schema
-            foreach (BusinessActionParameters parameter in parameters)
+            if (parameters.Count == 1)
             {
-                // create element attribute
-                XmlNode attributeNode = testSuiteSchemaDocument.CreateNode(
-                    XmlNodeType.Element, 
-                    "xs", 
-                    "attribute", 
-                    XmlNsXs);
-                
-                // append attribute name
-                XmlAttribute xmlAttribute = testSuiteSchemaDocument.CreateAttribute("name");
-                xmlAttribute.Value = parameter.ParameterName;
-                attributeNode.Attributes.Append(xmlAttribute);
+                // two different forms are allowed for actions with one parameter
+                // add complextContent to allow this two forms
+                AddComplexContent(testSuiteSchemaDocument, complexTypeNode, parameters[0]);
+            }
+            else
+            {
+                // go through all business action paramters and add elements to xsd schema
+                foreach (BusinessActionParameters parameter in parameters)
+                {
+                    // create element attribute
+                    XmlNode attributeNode = testSuiteSchemaDocument.CreateNode(
+                        XmlNodeType.Element,
+                        "xs",
+                        "attribute",
+                        XmlNsXs);
 
-                // append attribute type
-                xmlAttribute = testSuiteSchemaDocument.CreateAttribute("type");
-                xmlAttribute.Value = string.Format(CultureInfo.InvariantCulture, "xs:{0}", parameter.ParameterType ?? "string");
-                attributeNode.Attributes.Append(xmlAttribute);
+                    // append attribute name
+                    XmlAttribute xmlAttribute = testSuiteSchemaDocument.CreateAttribute("name");
+                    xmlAttribute.Value = parameter.ParameterName;
+                    attributeNode.Attributes.Append(xmlAttribute);
 
-                xmlAttribute = testSuiteSchemaDocument.CreateAttribute("use");
-                xmlAttribute.Value = "required";
-                attributeNode.Attributes.Append(xmlAttribute);
+                    // append attribute type
+                    xmlAttribute = testSuiteSchemaDocument.CreateAttribute("type");
+                    xmlAttribute.Value = string.Format(CultureInfo.InvariantCulture, "xs:{0}", parameter.ParameterType ?? "string");
+                    attributeNode.Attributes.Append(xmlAttribute);
 
-                complexTypeNode.AppendChild(attributeNode);
+                    xmlAttribute = testSuiteSchemaDocument.CreateAttribute("use");
+                    xmlAttribute.Value = "required";
+                    attributeNode.Attributes.Append(xmlAttribute);
+
+                    complexTypeNode.AppendChild(attributeNode);
+                }
             }
 
             xmlNode.AppendChild(complexTypeNode);
+        }
+
+        /// <summary>
+        /// Generate Complext Content node
+        /// </summary>
+        /// <param name="testSuiteSchemaDocument"><see cref="XmlDocument"/> which contains the test suite template XSD.</param>
+        /// <param name="complexTypeNode">Parent of complex content</param>
+        /// <param name="parameter">Action parameter</param>
+        private void AddComplexContent(
+            XmlDocument testSuiteSchemaDocument,
+            XmlNode complexTypeNode,
+            BusinessActionParameters parameter)
+        {
+            // create element complexcontent
+            XmlNode complexContentNode = testSuiteSchemaDocument.CreateNode(
+                XmlNodeType.Element,
+                "xs",
+                "complexContent",
+                XmlNsXs);
+
+            // create element complexcontent
+            XmlNode extensionNode = testSuiteSchemaDocument.CreateNode(
+                XmlNodeType.Element,
+                "xs",
+                "extension",
+                XmlNsXs);
+
+            XmlAttribute xmlAttribute = testSuiteSchemaDocument.CreateAttribute("base");
+            xmlAttribute.Value = "xs:anyType";
+            extensionNode.Attributes.Append(xmlAttribute);
+
+            // create element attribute
+            XmlNode attributeNode = testSuiteSchemaDocument.CreateNode(
+                XmlNodeType.Element,
+                "xs",
+                "attribute",
+                XmlNsXs);
+
+            // append attribute name
+            xmlAttribute = testSuiteSchemaDocument.CreateAttribute("name");
+            xmlAttribute.Value = parameter.ParameterName;
+            attributeNode.Attributes.Append(xmlAttribute);
+
+            // append attribute type
+            xmlAttribute = testSuiteSchemaDocument.CreateAttribute("type");
+            xmlAttribute.Value = string.Format(CultureInfo.InvariantCulture, "xs:{0}", parameter.ParameterType ?? "string");
+            attributeNode.Attributes.Append(xmlAttribute);
+
+            extensionNode.AppendChild(attributeNode);
+            complexContentNode.AppendChild(extensionNode);
+            complexTypeNode.AppendChild(complexContentNode);
         }
 
         /// <summary>
@@ -190,7 +250,7 @@ namespace Accipio.Console
                 testActionsParentNode.AppendChild(newNode);
             }
         }
-        
+
         /// <summary>
         /// Generate xsd file
         /// </summary>
