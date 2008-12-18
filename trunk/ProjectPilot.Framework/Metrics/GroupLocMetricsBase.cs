@@ -8,6 +8,11 @@ namespace ProjectPilot.Framework.Metrics
     /// </summary>
     public abstract class GroupLocMetricsBase : LocMetricsBase
     {
+        public IList<LocMetricsBase> GroupLocStatsData
+        {
+            get { return groupLocStatsData; }
+        }
+        
         /// <summary>
         /// Gets the loc stats data.
         /// </summary>
