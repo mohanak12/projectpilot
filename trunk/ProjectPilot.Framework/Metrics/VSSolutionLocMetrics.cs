@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Flubu.Builds.VSSolutionBrowsing;
+﻿using Flubu.Builds.VSSolutionBrowsing;
 
 namespace ProjectPilot.Framework.Metrics
 {
