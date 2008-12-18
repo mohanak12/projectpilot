@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using Flubu.Builds.VSSolutionBrowsing;
 using MbUnit.Framework;
 using ProjectPilot.Framework.Metrics;
 
@@ -29,7 +28,7 @@ namespace ProjectPilot.Tests.Framework.Metrics
             
             // add known extensions
             metrics.LocStatsMap.AddToMap(".cs", new CSharpLocStats());
-            //metrics.LocStatsMap.AddToMap(".sspx", new AspxLocStats());
+            //metrics.LocStatsMap.AddToMap(".aspx", new AspxLocStats());
 
             metrics.CalculateLocForSolution(
                 @"..\..\..\ProjectPilot.sln");
