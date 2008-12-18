@@ -16,7 +16,7 @@ namespace Accipio
         /// <returns>
         /// The same <see cref="SeleniumTesterBase"/> object.
         /// </returns>
-        public SeleniumTesterBase FindButton(string controlName)
+        public ProjectPortalTestRunner FindButton(string controlName)
         {
             FindInputControl(controlName);
             return this;
@@ -29,7 +29,7 @@ namespace Accipio
         /// <returns>
         /// The same <see cref="SeleniumTesterBase"/> object.
         /// </returns>
-        public SeleniumTesterBase FindTextBox(string controlName)
+        public ProjectPortalTestRunner FindTextBox(string controlName)
         {
             FindInputControl(controlName);
             return this;
@@ -42,7 +42,7 @@ namespace Accipio
         /// <returns>
         /// The same <see cref="SeleniumTesterBase"/> object.
         /// </returns>
-        public new SeleniumTesterBase ClickOnButton(string controlName)
+        public new ProjectPortalTestRunner ClickOnButton(string controlName)
         {
             string locator =
                 String.Format(CultureInfo.InvariantCulture, "xpath=//input[contains(@name,'{0}')]", controlName);
@@ -59,7 +59,7 @@ namespace Accipio
         /// <returns>
         /// The same <see cref="SeleniumTesterBase"/> object.
         /// </returns>
-        public SeleniumTesterBase TypeText(string controlName, string searchText)
+        public ProjectPortalTestRunner TypeText(string controlName, string searchText)
         {
             string locator =
                 String.Format(CultureInfo.InvariantCulture, "xpath=//input[@name='{0}']", controlName);
@@ -75,7 +75,7 @@ namespace Accipio
         /// <returns>
         /// The same <see cref="SeleniumTesterBase"/> object.
         /// </returns>
-        public SeleniumTesterBase ProjectExists(string controlRef)
+        public ProjectPortalTestRunner ProjectExists(string controlRef)
         {
             string locator =
                 String.Format(CultureInfo.InvariantCulture, "xpath=//a[contains(@href,'{0}')]", controlRef);
@@ -90,7 +90,7 @@ namespace Accipio
         /// <returns>
         /// The same <see cref="SeleniumTesterBase"/> object.
         /// </returns>
-        public SeleniumTesterBase ProjectSelect(string controlRef)
+        public ProjectPortalTestRunner ProjectSelect(string controlRef)
         {
             string locator =
                 String.Format(CultureInfo.InvariantCulture, "xpath=//a[@href='{0}']", controlRef);

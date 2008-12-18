@@ -28,7 +28,7 @@ namespace Accipio
                 WriteLine("    {");
                 WriteLine("        using ({0}TestRunner runner = new {0}TestRunner())", testSuite.Runner);
                 WriteLine("        {");
-                WriteLine("            runner", testSuite.Runner);
+                WriteLine("            runner");
                 TestCase testCase = testSuite.GetTestCase(testCaseName);
                 // add test case description
                 WriteLine("                .SetDescription(\"{0}\")", testCase.TestCaseDescription);
