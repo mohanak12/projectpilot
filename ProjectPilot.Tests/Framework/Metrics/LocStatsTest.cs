@@ -11,7 +11,7 @@ namespace ProjectPilot.Tests.Framework.Metrics
         [Test]
         public void TestLocOnSampleFile()
         {
-            ILocStats locStats = new LocStats();
+            ILocStats locStats = new CSharpLocStats();
 
             Stream stream = File.OpenRead(@"..\..\..\Data\Samples\LocSample.cs");
             
@@ -25,7 +25,13 @@ namespace ProjectPilot.Tests.Framework.Metrics
         [Test]
         public void SolutionLocMetrics()
         {
-            VSSolutionLocMetrics metrics = VSSolutionLocMetrics.CalculateLocForSolution(
+            VSSolutionLocMetrics metrics = new VSSolutionLocMetrics();
+            
+            // add known extensions
+            metrics.LocStatsMap.AddToMap(".cs", new CSharpLocStats());
+            //metrics.LocStatsMap.AddToMap(".sspx", new AspxLocStats());
+
+            metrics.CalculateLocForSolution(
                 @"..\..\..\ProjectPilot.sln");
 
             LocStatsData data = metrics.GetLocStatsData();

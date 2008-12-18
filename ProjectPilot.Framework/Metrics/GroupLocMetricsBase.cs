@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Flubu.Builds.VSSolutionBrowsing;
+﻿using System.Collections.Generic;
 
 namespace ProjectPilot.Framework.Metrics
 {
@@ -41,6 +37,6 @@ namespace ProjectPilot.Framework.Metrics
         /// <summary>
         /// The list of loc metrics items.
         /// </summary>
-        private List<LocMetricsBase> groupLocStatsData = new List<LocMetricsBase>();
+        private readonly List<LocMetricsBase> groupLocStatsData = new List<LocMetricsBase>();
     }
 }

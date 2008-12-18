@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using Flubu.Builds.VSSolutionBrowsing;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace ProjectPilot.Framework.Metrics
 {

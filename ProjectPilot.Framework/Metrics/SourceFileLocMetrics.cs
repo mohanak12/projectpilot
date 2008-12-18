@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using Flubu.Builds.VSSolutionBrowsing;
+﻿using System.IO;
 
 namespace ProjectPilot.Framework.Metrics
 {
@@ -30,11 +25,18 @@ namespace ProjectPilot.Framework.Metrics
         /// <summary>
         /// Calculates the loc stat data of the file.
         /// </summary>
-        /// <param name="fileStream">The file stream.</param>
-        public void CalcLocStatData(Stream fileStream)
+        /// <param name="sourceFileName">The source file to analyze.</param>
+        /// <param name="map">The map of <see cref="ILocStats"/> objects which can calculate LoC metrics for different source file types.</param>
+        public void CalcLocStatData(string sourceFileName, LocStatsMap map)
         {
-            ILocStats locStats = new LocStats();
-            this.locStatsData = locStats.CountLocStream(fileStream);
+            using (Stream streamOfFile = File.OpenRead(sourceFileName))
+            {
+                string fileExtension = Path.GetExtension(sourceFileName);
+
+                ILocStats locStats = map.GetLocStatsForExtension(fileExtension);
+                if (locStats != null)
+                    this.locStatsData = locStats.CountLocStream(streamOfFile);
+            }
         }
 
         /// <summary>
