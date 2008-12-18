@@ -673,63 +673,30 @@
      </Module>
     </Modules>
    </Target>
-   <Target Name="$(ProjectDir)/Flubu/bin/Release/Flubu.dll">
+   <Target Name="$(ProjectDir)/ProjectPilot.Framework/bin/Release/ProjectPilot.Framework.dll">
     <Modules>
-     <Module Name="flubu.dll">
+     <Module Name="projectpilot.framework.dll">
       <Namespaces>
-       <Namespace Name="Flubu.Deployment">
+       <Namespace Name="ProjectPilot.Framework.Metrics">
         <Types>
-         <Type Name="DeploymentModulesRegistry`1">
+         <Type Name="LocStatsMap">
           <Members>
-           <Member Name="#AddModule(Flubu.Deployment.DeploymentModule`1&lt;!0&gt;)">
+           <Member Name="#AddToMap(System.String,ProjectPilot.Framework.Metrics.ILocStats)">
             <Messages>
-             <Message Id="deploymentModule" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-12-16 19:28:15Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'deploymentModule'</Item>
-               <Item>'DeploymentModulesRegistry&lt;TRunner&gt;.AddModule(DeploymentModule&lt;TRunner&gt;)'</Item>
+             <Message TypeName="NormalizeStringsToUppercase" Category="Microsoft.Globalization" CheckId="CA1308" Created="2008-12-18 09:56:49Z">
+              <Issue Name="ToUpperInvariant">
+               <Item>'LocStatsMap.AddToMap(string, ILocStats)'</Item>
+               <Item>'string.ToLowerInvariant()'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#AddWebApplication(System.String,System.String)">
+           <Member Name="#GetLocStatsForExtension(System.String)">
             <Messages>
-             <Message Id="1#" TypeName="UriParametersShouldNotBeStrings" Category="Microsoft.Design" CheckId="CA1054" Created="2008-12-16 19:28:15Z">
-              <Issue>
-               <Item>'webApplicationUrl'</Item>
-               <Item>'DeploymentModulesRegistry&lt;TRunner&gt;.AddWebApplication(string, string)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ForEachModule(System.Action`1&lt;Flubu.Deployment.DeploymentModule`1&lt;!0&gt;&gt;)">
-            <Messages>
-             <Message TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006" Created="2008-12-16 19:28:15Z">
-              <Issue>
-               <Item>'DeploymentModulesRegistry&lt;TRunner&gt;.ForEachModule(Action&lt;DeploymentModule&lt;TRunner&gt;&gt;)'</Item>
-               <Item>'Action&lt;DeploymentModule&lt;TRunner&gt;&gt;'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#runner">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2008-12-16 19:28:15Z">
-              <Issue>
-               <Item>'DeploymentModulesRegistry&lt;TRunner&gt;.runner'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="WebApplicationDeploymentModule`1">
-          <Members>
-           <Member Name="#.ctor(System.String,System.String,System.String)">
-            <Messages>
-             <Message Id="2#" TypeName="UriParametersShouldNotBeStrings" Category="Microsoft.Design" CheckId="CA1054" Created="2008-12-16 19:28:15Z">
-              <Issue>
-               <Item>'webApplicationUrl'</Item>
-               <Item>'WebApplicationDeploymentModule&lt;TRunner&gt;.WebApplicationDeploymentModule(string, string, string)'</Item>
+             <Message TypeName="NormalizeStringsToUppercase" Category="Microsoft.Globalization" CheckId="CA1308" Created="2008-12-18 09:56:49Z">
+              <Issue Name="ToUpperInvariant">
+               <Item>'LocStatsMap.GetLocStatsForExtension(string)'</Item>
+               <Item>'string.ToLowerInvariant()'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -738,14 +705,6 @@
          </Type>
         </Types>
        </Namespace>
-      </Namespaces>
-     </Module>
-    </Modules>
-   </Target>
-   <Target Name="$(ProjectDir)/ProjectPilot.Framework/bin/Release/ProjectPilot.Framework.dll">
-    <Modules>
-     <Module Name="projectpilot.framework.dll">
-      <Namespaces>
        <Namespace Name="ProjectPilot.Framework.Runners">
         <Types>
          <Type Name="IRunner">
@@ -785,25 +744,6 @@
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-11-03 07:17:41Z" FixCategory="DependsOnFix">
               <Issue>
                <Item>'MvcApplication.Application_Start()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
-       <Namespace Name="ProjectPilot.Portal.Views">
-        <Types>
-         <Type Name="Site">
-          <Members>
-           <Member Name="#ContentPlaceHolder1">
-            <Messages>
-             <Message Id="PlaceHolder" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-11-03 07:17:41Z">
-              <Issue Name="MemberShouldBeDiscreteTerm">
-               <Item>PlaceHolder</Item>
-               <Item>'Site.ContentPlaceHolder1'</Item>
-               <Item>Placeholder</Item>
               </Issue>
              </Message>
             </Messages>
@@ -913,17 +853,11 @@
    <Rule TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021">
     <Resolution Name="Default">Consider a design that does not require that {0} be an out parameter.</Resolution>
    </Rule>
-   <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
-    <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
-   </Rule>
    <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
     <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
    </Rule>
    <Rule TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002">
     <Resolution Name="Default">Change {0} in {1} to use Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; or KeyedCollection&lt;K,V&gt;</Resolution>
-   </Rule>
-   <Rule TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006">
-    <Resolution Name="Default">Consider a design where {0} doesn't nest generic type {1}.</Resolution>
    </Rule>
    <Rule TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004">
     <Resolution Name="Default">Consider a design where {0} doesn't require explicit type parameter {1} in any call to it.</Resolution>
@@ -955,8 +889,8 @@
    <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
     <Resolution Name="Default" />
    </Rule>
-   <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
-    <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
+   <Rule TypeName="NormalizeStringsToUppercase" Category="Microsoft.Globalization" CheckId="CA1308">
+    <Resolution Name="ToUpperInvariant">In method {0}, replace the call to {1} with String.ToUpperInvariant().</Resolution>
    </Rule>
    <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
     <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Resolution>
@@ -967,9 +901,6 @@
    <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
     <Resolution Name="Default">The type name {0} conflicts in whole or in part with the namespace name '{1}'. Change either name to eliminate the conflict.</Resolution>
     <Resolution Name="System">The type name {0} conflicts in whole or in part with the namespace name '{1}' defined in the .NET Framework. Rename the type to eliminate the conflict.</Resolution>
-   </Rule>
-   <Rule TypeName="UriParametersShouldNotBeStrings" Category="Microsoft.Design" CheckId="CA1054">
-    <Resolution Name="Default">Change the type of parameter {0} of method {1} from string to System.Uri, or provide an overload of {1}, that allows {0} to be passed as a System.Uri object.</Resolution>
    </Rule>
    <Rule TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726">
     <Resolution Name="MemberParameterNoAlternate">In member {0}, replace the term '{1}' in parameter name {2} with an appropriate alternate or remove it entirely.</Resolution>

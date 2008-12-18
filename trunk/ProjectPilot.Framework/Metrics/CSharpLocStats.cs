@@ -11,15 +11,8 @@ namespace ProjectPilot.Framework.Metrics
     /// The class is used to count lines of code and gather statistics
     /// about the no. of lines, no. of empty lines and no. of comments.
     /// </summary>
-    public class LocStats : ILocStats
+    public class CSharpLocStats : ILocStats
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LocStats"/> class.
-        /// </summary>
-        public LocStats()
-        {
-        }
-
         /// <summary>
         /// This method counts the loc statistics.
         /// </summary>
@@ -45,7 +38,7 @@ namespace ProjectPilot.Framework.Metrics
                     if (line == null) //End of file.
                         break;
 
-                    if (!regex.IsMatch(line)) //Empty line
+                    if (line.Trim().Length == 0) //Empty line
                         eloc++;
                     
                     sloc++; //Incrementig the sloc at each iteration.
@@ -108,8 +101,5 @@ namespace ProjectPilot.Framework.Metrics
 
             return returnData;
         }
-
-        //Regular expression for finding empty lines.
-        private static readonly Regex regex = new Regex(@"\S");
     }
 }

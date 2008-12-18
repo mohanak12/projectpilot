@@ -42,20 +42,22 @@ namespace ProjectPilot.Framework.Metrics
         /// Calculates the loc metrics for the whole project.
         /// </summary>
         /// <param name="projectInfo">The project info.</param>
-        /// <returns>Returnes the VSProjectLocMetrics instance.</returns>
-        public static VSProjectLocMetrics CalculateLocForProject(VSProjectInfo projectInfo)
+        /// <param name="map">The map of <see cref="ILocStats"/> objects which can calculate LoC metrics for different source file types.</param>
+        /// <returns>
+        /// Returns the VSProjectLocMetrics instance.
+        /// </returns>
+        public static VSProjectLocMetrics CalculateLocForProject(VSProjectInfo projectInfo, LocStatsMap map)
         {
             VSProjectLocMetrics projectMetrics = new VSProjectLocMetrics(projectInfo);
 
             //For each source file in project
             foreach (VSProjectCompileItem compileItem in projectInfo.Project.CompileItems)
             {
-                string filePath = projectMetrics.ProjectPath + compileItem.Compile; 
-                SourceFileLocMetrics sourceFile = new SourceFileLocMetrics(filePath.Substring(filePath.LastIndexOf(Convert.ToChar(92)) + 1));
+                string filePath = Path.Combine(projectMetrics.ProjectPath, compileItem.Compile);
+                SourceFileLocMetrics sourceFile = new SourceFileLocMetrics(filePath);
 
-                Stream streamOfFile = File.OpenRead(filePath);
-                
-                sourceFile.CalcLocStatData(streamOfFile);
+                sourceFile.CalcLocStatData(filePath, map);
+
                 projectMetrics.AddLocMetrics(sourceFile);
             }
 
