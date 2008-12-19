@@ -66,7 +66,7 @@ namespace Accipio.Console
                 throw new System.IO.IOException(
                     string.Format(
                     CultureInfo.InvariantCulture, 
-                    "File {0} does not exists.", 
+                    "File {0} does not exist.", 
                     businessActionsXmlFileName));
 
             // set output file name
@@ -100,7 +100,7 @@ namespace Accipio.Console
 
             System.Console.WriteLine(string.Format(
                 CultureInfo.InvariantCulture, 
-                "Xsd schema file was created. Full path to file {0}", 
+                "XSD schema file was created. Full path to file: '{0}'", 
                 new FileInfo(outputFileName).FullName));
         }
 
