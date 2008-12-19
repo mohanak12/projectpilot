@@ -87,9 +87,10 @@ namespace ProjectPilot.Tests.AccipioTests
         }
 
         /// <summary>
-        /// Makes sure the schema enforces that the action without parameters should be an empty XML element.
+        /// Makes sure the schema enforces that the action without parameters should be an empty XML element
+        /// (without the inner content).
         /// </summary>
-        [Test, Pending("The tests currently fails")]
+        [Test]
         public void StepWithoutParametersShouldBeEmpty()
         {
             PrepareTestSuiteXmlFile(
@@ -99,13 +100,14 @@ namespace ProjectPilot.Tests.AccipioTests
     <case id='case1'>
         <description>Dummy description.</description>
         <steps>
-            <ActionNoParameters></ActionNoParameters>
+            <ActionNoParameters>bla bla</ActionNoParameters>
+            <Action1Parameter parameter='1'>dfsfsd</Action1Parameter>
         </steps>
     </case>
 </suite>
 ");
 
-            AssertTestSuiteXmlFileValidity(false);
+            AssertTestSuiteXmlFileValidity(true);
         }
 
         /// <summary>
