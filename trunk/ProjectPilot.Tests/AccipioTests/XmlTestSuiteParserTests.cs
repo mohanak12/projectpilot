@@ -7,9 +7,15 @@ using MbUnit.Framework;
 
 namespace ProjectPilot.Tests.AccipioTests
 {
+    /// <summary>
+    /// Unit tests for class <see cref="XmlTestSuiteParser"/>.
+    /// </summary>
     [TestFixture]
     public class XmlTestSuiteParserTests
     {
+        /// <summary>
+        /// Test checks that test action does not have parameter with value key.
+        /// </summary>
         [Test]
         public void KeyParameterForActionIsNullTest()
         {
@@ -19,6 +25,9 @@ namespace ProjectPilot.Tests.AccipioTests
             Assert.IsNull(parameter);
         }
 
+        /// <summary>
+        /// Test checks that test case does not contain test action with name TestAction.
+        /// </summary>
         [Test]
         public void TestActionForTestCaseIsNullTest()
         {
@@ -28,6 +37,9 @@ namespace ProjectPilot.Tests.AccipioTests
             Assert.IsNull(testAction);
         }
 
+        /// <summary>
+        /// Test checks correctness of parsed xml document. Input to parser is memory stream.
+        /// </summary>
         [Test]
         public void ParseTestSuite()
         {
@@ -77,6 +89,9 @@ namespace ProjectPilot.Tests.AccipioTests
             Assert.AreEqual("644.33", testAction.GetParameterKeyValue("transferAmount"));
         }
 
+        /// <summary>
+        /// Test checks correctness of parsed xml document. Input to parser is file name.
+        /// </summary>
         [Test]
         public void ParseTestSuiteFromFileTest()
         {
@@ -124,6 +139,9 @@ namespace ProjectPilot.Tests.AccipioTests
             Assert.AreEqual("644.33", testAction.GetParameterKeyValue("transferAmount"));
         }
 
+        /// <summary>
+        /// Test checks that parser throws exception if xml document has invalid root element
+        /// </summary>
         [Test, ExpectedException(typeof(XmlException))]
         public void InvalidRootElementTest()
         {
@@ -139,6 +157,9 @@ namespace ProjectPilot.Tests.AccipioTests
             }
         }
 
+        /// <summary>
+        /// Test checks that parser throws exception if xml document has invalid suite element
+        /// </summary>
         [Test, ExpectedException(typeof(NotSupportedException))]
         public void InvalidSuiteElementTest()
         {
@@ -154,6 +175,9 @@ namespace ProjectPilot.Tests.AccipioTests
             }
         }
 
+        /// <summary>
+        /// Test checks that parser throws exception if xml document has invalid test case element
+        /// </summary>
         [Test, ExpectedException(typeof(NotSupportedException))]
         public void InvalidTestCaseElementTest()
         {
