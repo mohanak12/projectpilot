@@ -19,12 +19,17 @@ namespace Accipio
             WriteLine("using Accipio;");
             WriteLine("using MbUnit.Framework;");
             WriteLine(string.Empty);
-            WriteLine("/// <summary>{0}</summary>", testSuite.Description);
+            WriteLine("/// <summary>");
+            WriteLine("/// {0}", testSuite.Description);
+            WriteLine("/// </summary>");
+            WriteLine("[TestFixture]");
             WriteLine("public class {0}TestSuite", testSuite.Id);
             WriteLine("{");
             foreach (string testCaseName in testCasesKeys)
             {
-                WriteLine("    /// <summary>{0}</summary>", testCases[testCaseName].TestCaseDescription);
+                WriteLine("    /// <summary>");
+                WriteLine("    /// {0}", testCases[testCaseName].TestCaseDescription);
+                WriteLine("    /// </summary>");
                 WriteLine("    [Test]");
                 WriteLine("    [Category(\"{0}\")]", testCases[testCaseName].TestCaseCategory);
                 WriteLine("    public void {0}()", testCaseName);

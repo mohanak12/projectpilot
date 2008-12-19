@@ -66,10 +66,15 @@ namespace ProjectPilot.Tests.AccipioTests
             mockCodeWriter.Expect(writer => writer.WriteLine("using Accipio;"));
             mockCodeWriter.Expect(writer => writer.WriteLine("using MbUnit.Framework;"));
             mockCodeWriter.Expect(writer => writer.WriteLine(string.Empty));
-            mockCodeWriter.Expect(writer => writer.WriteLine("/// <summary>Class description.</summary>"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("/// <summary>"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("/// Class description."));
+            mockCodeWriter.Expect(writer => writer.WriteLine("/// </summary>"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("[TestFixture]"));
             mockCodeWriter.Expect(writer => writer.WriteLine("public class BankingTestSuite"));
             mockCodeWriter.Expect(writer => writer.WriteLine("{"));
-            mockCodeWriter.Expect(writer => writer.WriteLine("    /// <summary>Tests case description.</summary>"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("    /// <summary>"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("    /// Tests case description."));
+            mockCodeWriter.Expect(writer => writer.WriteLine("    /// </summary>"));
             mockCodeWriter.Expect(writer => writer.WriteLine("    [Test]"));
             mockCodeWriter.Expect(writer => writer.WriteLine("    [Category(\"Smoke\")]"));
             mockCodeWriter.Expect(writer => writer.WriteLine("    public void ViewAccountTestCase()"));
