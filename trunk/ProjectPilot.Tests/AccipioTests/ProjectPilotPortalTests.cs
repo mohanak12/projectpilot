@@ -3,11 +3,16 @@ using MbUnit.Framework;
 
 namespace ProjectPilot.Tests.AccipioTests
 {
-    /// <summary>Contains test cases which cover search and selection of portal projects.</summary>
+    /// <summary>
+    /// Contains test cases which cover search and selection of portal projects.
+    /// </summary>
+    [TestFixture]
     public class ProjectPortalHomeTestSuite
     {
-        /// <summary>Opens Project portal home page in browser.</summary>
-        [Test, Explicit]
+        /// <summary>
+        /// Opens Project portal home page in browser.
+        /// </summary>
+        [Test, Pending("Used as example")]
         [Category("")]
         public void GoToPortal()
         {
@@ -27,8 +32,10 @@ namespace ProjectPilot.Tests.AccipioTests
             }
         }
 
-        /// <summary>Finds and select a project on Project portal.</summary>
-        [Test, Explicit]
+        /// <summary>
+        /// Finds and select a project on Project portal.
+        /// </summary>
+        [Test, Pending("Used as example")]
         [Category("")]
         public void SelectProjectEbsy()
         {

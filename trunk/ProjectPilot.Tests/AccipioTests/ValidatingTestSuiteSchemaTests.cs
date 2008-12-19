@@ -21,7 +21,7 @@ namespace ProjectPilot.Tests.AccipioTests
         public void WrongAction()
         {
             PrepareTestSuiteXmlFile(@"
-<suite id='Banking' runner='OnlineBanking' xmlns='http://fikus'>
+<suite id='Banking' runner='OnlineBanking' namespace='OnlineBankingNamespace' xmlns='http://fikus'>
     <description>Dummy description.</description>
     <case id='case1'>
         <description>Dummy description.</description>
@@ -41,7 +41,7 @@ namespace ProjectPilot.Tests.AccipioTests
         public void NoSteps()
         {
             PrepareTestSuiteXmlFile(@"
-<suite id='Banking' runner='OnlineBanking' xmlns='http://fikus'>
+<suite id='Banking' runner='OnlineBanking' namespace='OnlineBankingNamespace' xmlns='http://fikus'>
     <description>Dummy description.</description>
     <case id='case1'>
         <description>Dummy description.</description>
@@ -59,7 +59,7 @@ namespace ProjectPilot.Tests.AccipioTests
         public void NoTags()
         {
             PrepareTestSuiteXmlFile(@"
-<suite id='Banking' runner='OnlineBanking' xmlns='http://fikus'>
+<suite id='Banking' runner='OnlineBanking' namespace='OnlineBankingNamespace' xmlns='http://fikus'>
     <description>Dummy description.</description>
     <case id='case1'>
         <description>Dummy description.</description>
@@ -76,7 +76,7 @@ namespace ProjectPilot.Tests.AccipioTests
         public void NoCaseDescription()
         {
             PrepareTestSuiteXmlFile(@"
-<suite id='Banking' runner='OnlineBanking' xmlns='http://fikus'>
+<suite id='Banking' runner='OnlineBanking' namespace='OnlineBankingNamespace' xmlns='http://fikus'>
     <description>Dummy description.</description>
     <case id='case1'>
         <steps/>
@@ -95,7 +95,7 @@ namespace ProjectPilot.Tests.AccipioTests
         {
             PrepareTestSuiteXmlFile(
                 @"
-<suite id='Banking' runner='OnlineBanking' xmlns='http://fikus'>
+<suite id='Banking' runner='OnlineBanking' namespace='OnlineBankingNamespace' xmlns='http://fikus'>
     <description>Dummy description.</description>
     <case id='case1'>
         <description>Dummy description.</description>
@@ -117,7 +117,7 @@ namespace ProjectPilot.Tests.AccipioTests
         {
             PrepareTestSuiteXmlFile(
                 @"
-<suite id='Banking' runner='OnlineBanking' xmlns='http://fikus'>
+<suite id='Banking' runner='OnlineBanking' namespace='OnlineBankingNamespace' xmlns='http://fikus'>
     <description>Dummy description.</description>
     <case id='case1'>
         <description>Dummy description.</description>
@@ -139,7 +139,7 @@ namespace ProjectPilot.Tests.AccipioTests
         {
             PrepareTestSuiteXmlFile(
                 @"
-<suite id='Banking' runner='OnlineBanking' xmlns='http://fikus'>
+<suite id='Banking' runner='OnlineBanking' namespace='OnlineBankingNamespace' xmlns='http://fikus'>
     <description>Dummy description.</description>
     <case id='case1'>
         <description>Dummy description.</description>

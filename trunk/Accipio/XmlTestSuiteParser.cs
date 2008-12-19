@@ -57,6 +57,7 @@ namespace Accipio
 
                                 testSuite.Id = ReadAttribute(xmlReader, "id");
                                 testSuite.Runner = ReadAttribute(xmlReader, "runner");
+                                testSuite.Namespace = ReadAttribute(xmlReader, "namespace");
                                 ReadTestSuite(testSuite, xmlReader);
 
                                 break;

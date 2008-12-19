@@ -1,25 +1,20 @@
-<suite id="ProjectPortalHome" runner="ProjectPortal" xmlns="http://GenerateXsdValidationSchemaTest" >
+<suite id="ProjectPortalHome" runner="ProjectPortal" namespace="ProjectPilot.Tests.AccipioTests" xmlns="http://GenerateXsdValidationSchemaTest" >
 	<description>Contains test cases which cover search and selection of portal projects.</description>
-	<case id="GoToPortal">
+	<case id="FindElements">
 		<description>Opens Project portal home page in browser.</description>
 		<tags>ProjectPortal.Home</tags>
 		<steps>
 			<GoToPortal url="http://localhost/ProjectPortal"/>
 			<FindButton name="Search"/>
 			<FindTextBox name="SearchQuery"/>
-			<AssertOperationSuccessful/>
 		</steps>
 	</case>
-	<case id="SelectProjectEbsy">
+	<case id="TypeTextEbsy">
 		<description>Finds and select a project on Project portal.</description>
 		<tags>ProjectPortal.Home</tags>
 		<steps>
 			<GoToPortal url="http://localhost/ProjectPortal"/>
 			<TypeText name="SearchQuery" searchText="Ebsy"/>
-			<ProjectExists href="/ProjectPilot.Portal/ProjectView/Overview/ebsy/"/>
-			<ProjectSelect href="/ProjectPilot.Portal/ProjectView/Overview/ebsy/"/>
-			<ConfirmSelection />
-			<AssertOperationSuccessful/>
 		</steps>
 	</case>
 	<case id="TestSameStep">

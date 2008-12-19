@@ -19,35 +19,37 @@ namespace Accipio
             WriteLine("using Accipio;");
             WriteLine("using MbUnit.Framework;");
             WriteLine(string.Empty);
-            WriteLine("/// <summary>");
-            WriteLine("/// {0}", testSuite.Description);
-            WriteLine("/// </summary>");
-            WriteLine("[TestFixture]");
-            WriteLine("public class {0}TestSuite", testSuite.Id);
+            WriteLine("namespace {0}", testSuite.Namespace);
             WriteLine("{");
+            WriteLine("    /// <summary>");
+            WriteLine("    /// {0}", testSuite.Description);
+            WriteLine("    /// </summary>");
+            WriteLine("    [TestFixture]");
+            WriteLine("    public class {0}TestSuite", testSuite.Id);
+            WriteLine("    {");
             foreach (string testCaseName in testCasesKeys)
             {
-                WriteLine("    /// <summary>");
-                WriteLine("    /// {0}", testCases[testCaseName].TestCaseDescription);
-                WriteLine("    /// </summary>");
-                WriteLine("    [Test]");
-                WriteLine("    [Category(\"{0}\")]", testCases[testCaseName].TestCaseCategory);
-                WriteLine("    public void {0}()", testCaseName);
-                WriteLine("    {");
-                WriteLine("        using ({0}TestRunner runner = new {0}TestRunner())", testSuite.Runner);
+                WriteLine("        /// <summary>");
+                WriteLine("        /// {0}", testCases[testCaseName].TestCaseDescription);
+                WriteLine("        /// </summary>");
+                WriteLine("        [Test]");
+                WriteLine("        [Category(\"{0}\")]", testCases[testCaseName].TestCaseCategory);
+                WriteLine("        public void {0}()", testCaseName);
                 WriteLine("        {");
-                WriteLine("            runner");
+                WriteLine("            using ({0}TestRunner runner = new {0}TestRunner())", testSuite.Runner);
+                WriteLine("            {");
+                WriteLine("                runner");
                 TestCase testCase = testSuite.GetTestCase(testCaseName);
                 // add test case description
-                WriteLine("                .SetDescription(\"{0}\")", testCase.TestCaseDescription);
+                WriteLine("                    .SetDescription(\"{0}\")", testCase.TestCaseDescription);
                 // add test case tags
                 foreach (string tag in testCase.GetTestCaseTags)
                 {
-                    WriteLine("                .AddTag(\"{0}\")", tag);
+                    WriteLine("                    .AddTag(\"{0}\")", tag);
                 }
 
                 WriteLine(string.Empty);
-                WriteLine("            runner");
+                WriteLine("                runner");
                 // add test case actions
                 IList<TestAction> testActions = testCase.TestActions;
                 int counter = 1;
@@ -55,7 +57,7 @@ namespace Accipio
                 {
                     AddActionDescription(testAction, businessActionData);
                     StringBuilder line = new StringBuilder();
-                    line.AppendFormat(CultureInfo.InvariantCulture, "                .{0}(", testAction.ActionName);
+                    line.AppendFormat(CultureInfo.InvariantCulture, "                    .{0}(", testAction.ActionName);
 
                     if (testAction.HasParameters)
                     {
@@ -83,11 +85,12 @@ namespace Accipio
                     counter++;
                 }
 
+                WriteLine("            }");
                 WriteLine("        }");
-                WriteLine("    }");
                 WriteLine(string.Empty);
             }
 
+            WriteLine("    }");
             WriteLine("}");
         }
 
@@ -98,7 +101,7 @@ namespace Accipio
         /// <param name="businessActionData">The business action data <see cref="businessActionData"/></param>
         private void AddActionDescription(TestAction testAction, BusinessActionData businessActionData)
         {
-            const string Line = "                // {0}";
+            const string Line = "                    // {0}";
             string description = businessActionData.GetAction(testAction.ActionName).Description;
             string lineFormat = string.Format(CultureInfo.InvariantCulture, Line, description);
             if (testAction.HasParameters)

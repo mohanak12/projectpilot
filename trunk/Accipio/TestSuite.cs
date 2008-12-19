@@ -65,6 +65,12 @@ namespace Accipio
         public string Description { get; set; }
 
         /// <summary>
+        /// Gets or sets the namespace of the Test suite.
+        /// </summary>
+        /// <value>The name of the namespace.</value>
+        public string Namespace { get; set; }
+
+        /// <summary>
         /// List of test cases.
         /// </summary>
         private readonly Dictionary<string, TestCase> testCases = new Dictionary<string, TestCase>();
