@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Xml;
 
 namespace ProjectPilot.Framework.Metrics
 {
@@ -8,18 +9,8 @@ namespace ProjectPilot.Framework.Metrics
     /// </summary>
     public class SourceFileLocMetrics : LocMetricsBase
     {
-        public SourceFileLocMetrics(string fileName)
+        public SourceFileLocMetrics(string fileName) : base(fileName)
         {
-            this.fileName = fileName;
-        }
-
-        /// <summary>
-        /// Gets the name of the file.
-        /// </summary>
-        /// <value>The name of the file.</value>
-        public string FileName
-        {
-            get { return fileName; }
         }
 
         /// <summary>
@@ -57,7 +48,11 @@ namespace ProjectPilot.Framework.Metrics
             return locStatsData;
         }
 
-        private string fileName;
+        protected override void WriteSubitemsXml(XmlWriter writer)
+        {
+            // no subitems here
+        }
+
         private LocStatsData locStatsData = new LocStatsData();
     }
 }
