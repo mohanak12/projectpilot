@@ -679,24 +679,18 @@
       <Namespaces>
        <Namespace Name="ProjectPilot.Framework.Metrics">
         <Types>
-         <Type Name="LocStatsMap">
+         <Type Name="VSProjectLocMetrics">
           <Members>
-           <Member Name="#AddToMap(System.String,ProjectPilot.Framework.Metrics.ILocStats)">
+           <Member Name="#GenerateXmlReport(Flubu.Builds.VSSolutionBrowsing.VSProjectInfo,System.Xml.XmlNode,System.Xml.XmlDocument)">
             <Messages>
-             <Message TypeName="NormalizeStringsToUppercase" Category="Microsoft.Globalization" CheckId="CA1308" Created="2008-12-18 09:56:49Z">
-              <Issue Name="ToUpperInvariant">
-               <Item>'LocStatsMap.AddToMap(string, ILocStats)'</Item>
-               <Item>'string.ToLowerInvariant()'</Item>
+             <Message Id="System.Xml.XmlNode" TypeName="MembersShouldNotExposeCertainConcreteTypes" Category="Microsoft.Design" CheckId="CA1059" Created="2008-12-19 08:44:01Z">
+              <Issue Name="Xml">
+               <Item>'VSProjectLocMetrics.GenerateXmlReport(VSProjectInfo, XmlNode, XmlDocument)'</Item>
+               <Item>'XmlDocument'</Item>
               </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetLocStatsForExtension(System.String)">
-            <Messages>
-             <Message TypeName="NormalizeStringsToUppercase" Category="Microsoft.Globalization" CheckId="CA1308" Created="2008-12-18 09:56:49Z">
-              <Issue Name="ToUpperInvariant">
-               <Item>'LocStatsMap.GetLocStatsForExtension(string)'</Item>
-               <Item>'string.ToLowerInvariant()'</Item>
+              <Issue Name="Xml">
+               <Item>'VSProjectLocMetrics.GenerateXmlReport(VSProjectInfo, XmlNode, XmlDocument)'</Item>
+               <Item>'XmlNode'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -889,8 +883,8 @@
    <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
     <Resolution Name="Default" />
    </Rule>
-   <Rule TypeName="NormalizeStringsToUppercase" Category="Microsoft.Globalization" CheckId="CA1308">
-    <Resolution Name="ToUpperInvariant">In method {0}, replace the call to {1} with String.ToUpperInvariant().</Resolution>
+   <Rule TypeName="MembersShouldNotExposeCertainConcreteTypes" Category="Microsoft.Design" CheckId="CA1059">
+    <Resolution Name="Xml">Modify member {0} so that it no longer exposes the concrete type {1}. Use IXPathNavigable to represent XML data sources.</Resolution>
    </Rule>
    <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
     <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Resolution>

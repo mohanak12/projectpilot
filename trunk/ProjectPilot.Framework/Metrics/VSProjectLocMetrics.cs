@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Xml;
 using Flubu.Builds.VSSolutionBrowsing;
 
 namespace ProjectPilot.Framework.Metrics
@@ -58,6 +60,22 @@ namespace ProjectPilot.Framework.Metrics
             }
 
             return projectMetrics;
+        }
+
+        [SuppressMessage("Microsoft.Design", "CA1059:MembersShouldNotExposeCertainConcreteTypes", MessageId = "System.Xml.XmlNode")]
+        public void GenerateXmlReport(VSProjectInfo projectInfo, XmlNode xmlNode, XmlDocument xmlDoc)
+        {
+            VSProjectLocMetrics projectMetrics = new VSProjectLocMetrics(projectInfo);
+
+            XmlNode csfile = this.InsertItem(xmlNode, xmlDoc);
+
+            foreach (VSProjectCompileItem compileItem in projectInfo.Project.CompileItems)
+            {
+                string filePath = Path.Combine(projectMetrics.ProjectPath, compileItem.Compile);
+                SourceFileLocMetrics sourceFile = new SourceFileLocMetrics(filePath);
+
+                csfile.AppendChild(sourceFile.InsertItem(csfile, xmlDoc));
+            }
         }
 
         private string projectPath;
