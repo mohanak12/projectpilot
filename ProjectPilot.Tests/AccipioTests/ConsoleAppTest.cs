@@ -3,6 +3,9 @@ using MbUnit.Framework;
 
 namespace ProjectPilot.Tests.AccipioTests
 {
+    /// <summary>
+    /// Unit tests for class <see cref="ConsoleApp"/>
+    /// </summary>
     [TestFixture]
     public class ConsoleAppTest
     {
