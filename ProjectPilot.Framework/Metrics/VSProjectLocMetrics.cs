@@ -13,8 +13,9 @@ namespace ProjectPilot.Framework.Metrics
     public class VSProjectLocMetrics : GroupLocMetricsBase
     {
         public VSProjectLocMetrics(VSProjectInfo projectInfo)
-            : base(projectInfo.ProjectName)
+            : base(projectInfo.ProjectFileNameFull)
         {
+            this.projectInfo = projectInfo;
         }
 
         public VSProjectInfo ProjectInfo
@@ -33,14 +34,14 @@ namespace ProjectPilot.Framework.Metrics
         public static VSProjectLocMetrics CalculateLocForProject(VSProjectInfo projectInfo, LocStatsMap map)
         {
             VSProjectLocMetrics projectMetrics = new VSProjectLocMetrics(projectInfo);
-            projectMetrics.projectInfo = projectInfo;
 
             //For each source file in project
             foreach (VSProjectCompileItem compileItem in projectInfo.Project.CompileItems)
             {
-                string filePath = Path.Combine(
-                    projectMetrics.ProjectInfo.ProjectDirectoryPath, 
-                    compileItem.Compile);
+                string filePath = Path.GetFullPath(
+                    Path.Combine(
+                        projectMetrics.ProjectInfo.ProjectDirectoryPath,
+                        compileItem.Compile));
                 SourceFileLocMetrics sourceFile = SourceFileLocMetrics.CalcLocStatData(filePath, map);
 
                 // make sure the file was not ignored (it wasn't a source file)
@@ -51,7 +52,11 @@ namespace ProjectPilot.Framework.Metrics
             //TODO Jure: refactor!!!
             foreach (VSProjectContentItem contentItem in projectInfo.Project.ContentItems)
             {
-                string filePath = Path.Combine(projectMetrics.ProjectInfo.ProjectDirectoryPath, contentItem.Content);
+                string filePath = Path.GetFullPath(
+                    Path.Combine(
+                        projectMetrics.ProjectInfo.ProjectDirectoryPath,
+                        contentItem.Content));
+
                 SourceFileLocMetrics sourceFile = SourceFileLocMetrics.CalcLocStatData(filePath, map);
 
                 if (sourceFile != null)
@@ -60,24 +65,6 @@ namespace ProjectPilot.Framework.Metrics
 
             return projectMetrics;
         }
-
-        //[SuppressMessage("Microsoft.Design", "CA1059:MembersShouldNotExposeCertainConcreteTypes", MessageId = "System.Xml.XmlNode")]
-        //public void GenerateXmlReport(VSProjectInfo projectInfo, XmlWriter xmlWriter)
-        //{
-        //    this.WriteXml(xmlWriter);
-
-        //    VSProjectLocMetrics projectMetrics = new VSProjectLocMetrics(projectInfo);
-
-        //    foreach (VSProjectCompileItem compileItem in projectInfo.Project.CompileItems)
-        //    {
-        //        string filePath = Path.Combine(
-        //            projectMetrics.ProjectInfo.ProjectDirectoryPath, 
-        //            compileItem.Compile);
-        //        SourceFileLocMetrics sourceFile = new SourceFileLocMetrics(filePath);
-
-        //        sourceFile.WriteXml(xmlWriter);
-        //    }
-        //}
 
         private VSProjectInfo projectInfo;
     }
