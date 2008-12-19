@@ -52,11 +52,21 @@ namespace ProjectPilot.Framework.Metrics
             foreach (VSProjectCompileItem compileItem in projectInfo.Project.CompileItems)
             {
                 string filePath = Path.Combine(projectMetrics.ProjectPath, compileItem.Compile);
-                SourceFileLocMetrics sourceFile = new SourceFileLocMetrics(filePath);
+                SourceFileLocMetrics sourceFile = SourceFileLocMetrics.CalcLocStatData(filePath, map);
 
-                sourceFile.CalcLocStatData(filePath, map);
+                // make sure the file was not ignored (it wasn't a source file)
+                if (sourceFile != null)
+                    projectMetrics.AddLocMetrics(sourceFile);
+            }
+            
+            //TODO: refactor!!!
+            foreach (VSProjectContentItem contentItem in projectInfo.Project.ContentItems)
+            {
+                string filePath = Path.Combine(projectMetrics.ProjectPath, contentItem.Content);
+                SourceFileLocMetrics sourceFile = SourceFileLocMetrics.CalcLocStatData(filePath, map);
 
-                projectMetrics.AddLocMetrics(sourceFile);
+                if (sourceFile != null)
+                    projectMetrics.AddLocMetrics(sourceFile);
             }
 
             return projectMetrics;

@@ -31,6 +31,7 @@ namespace ProjectPilot.Tests.Framework.Metrics
             //metrics.LocStatsMap.AddToMap(".aspx", new AspxLocStats());
 
             metrics.CalculateLocForSolution(
+            //    @"c:\Documents and Settings\jureh\My Documents\Visual Studio 2008\Projects\WebApplication1\WebApplication1.sln");
                 @"..\..\..\ProjectPilot.sln");
 
             LocStatsData data = metrics.GetLocStatsData();

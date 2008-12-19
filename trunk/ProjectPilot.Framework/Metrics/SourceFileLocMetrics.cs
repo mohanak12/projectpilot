@@ -27,16 +27,25 @@ namespace ProjectPilot.Framework.Metrics
         /// </summary>
         /// <param name="sourceFileName">The source file to analyze.</param>
         /// <param name="map">The map of <see cref="ILocStats"/> objects which can calculate LoC metrics for different source file types.</param>
-        public void CalcLocStatData(string sourceFileName, LocStatsMap map)
+        /// <returns>A newly created <see cref="SourceFileLocMetrics"/> object containing LoC data for the source file; 
+        /// <c>null</c> if the file was ignored by the <see cref="map"/></returns>
+        public static SourceFileLocMetrics CalcLocStatData(string sourceFileName, LocStatsMap map)
         {
+            SourceFileLocMetrics metrics = new SourceFileLocMetrics(sourceFileName);
+
             using (Stream streamOfFile = File.OpenRead(sourceFileName))
             {
                 string fileExtension = Path.GetExtension(sourceFileName);
 
                 ILocStats locStats = map.GetLocStatsForExtension(fileExtension);
                 if (locStats != null)
-                    this.locStatsData = locStats.CountLocStream(streamOfFile);
+                {
+                    metrics.locStatsData = locStats.CountLocStream(streamOfFile);
+                    return metrics;
+                }
             }
+
+            return null;
         }
 
         /// <summary>
@@ -49,6 +58,6 @@ namespace ProjectPilot.Framework.Metrics
         }
 
         private string fileName;
-        private LocStatsData locStatsData;
+        private LocStatsData locStatsData = new LocStatsData();
     }
 }

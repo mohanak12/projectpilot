@@ -11,8 +11,12 @@ namespace ProjectPilot.Framework.Metrics
 
         public ILocStats GetLocStatsForExtension(string fileExtension)
         {
-            // TODO: handle situation when the extension is not in the map
-            return map[fileExtension.ToUpperInvariant()];
+            if (map.ContainsKey(fileExtension.ToUpperInvariant()))
+                return map[fileExtension.ToUpperInvariant()];
+            else
+            {
+                return null;
+            }
         }
 
         private Dictionary<string, ILocStats> map = new Dictionary<string, ILocStats>();

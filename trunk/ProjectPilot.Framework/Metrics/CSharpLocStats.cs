@@ -23,8 +23,6 @@ namespace ProjectPilot.Framework.Metrics
 
             bool inCommentMode = false; //For indicating multiline comments.
 
-            LocStatsData returnData = new LocStatsData(sloc, cloc, eloc);
-
             using (StreamReader reader = new StreamReader(stream))
             {
                 //Looping through the file stream.
@@ -91,10 +89,7 @@ namespace ProjectPilot.Framework.Metrics
             }
 
             //Return data.
-            returnData.Cloc = cloc;
-            returnData.Eloc = eloc;
-            returnData.Sloc = sloc;
-
+            LocStatsData returnData = new LocStatsData(sloc, cloc, eloc);
             return returnData;
         }
     }
