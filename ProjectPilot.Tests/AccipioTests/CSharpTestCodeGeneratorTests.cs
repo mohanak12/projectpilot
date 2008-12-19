@@ -4,9 +4,15 @@ using Rhino.Mocks;
 
 namespace ProjectPilot.Tests.AccipioTests
 {
+    /// <summary>
+    /// Unit test for class <see cref="CSharpTestCodeGenerator"/>.
+    /// </summary>
     [TestFixture]
     public class CSharpTestCodeGeneratorTests
     {
+        /// <summary>
+        /// Test checks generation of cs file context for Test spec.
+        /// </summary>
         [Test]
         public void GenerateTest()
         {
