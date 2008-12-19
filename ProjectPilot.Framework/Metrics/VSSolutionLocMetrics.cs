@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using System;
+using System.Xml;
 using Flubu.Builds.VSSolutionBrowsing;
 
 namespace ProjectPilot.Framework.Metrics
@@ -10,6 +11,10 @@ namespace ProjectPilot.Framework.Metrics
     /// </summary>
     public class VSSolutionLocMetrics : GroupLocMetricsBase
     {
+        public VSSolutionLocMetrics(string fileName) : base(fileName)
+        {
+        }
+
         public LocStatsMap LocStatsMap 
         { 
             get { return locStatsMap; } 
@@ -38,41 +43,45 @@ namespace ProjectPilot.Framework.Metrics
                 this.AddLocMetrics(projectMetrics);
             }
 
-            //return metrics;
+            locCalculated = true;
         }
 
-        public void GenerateXmlReport(string solutionFileName, string filePath)
+        public void GenerateXmlReport(string filePath)
         {
-            XmlTextWriter xmlWriter = new XmlTextWriter(filePath, System.Text.Encoding.UTF8);
-            xmlWriter.Formatting = Formatting.Indented;
-            xmlWriter.WriteProcessingInstruction("xml", "version='1.0' encoding='UTF-8'");
-            xmlWriter.WriteStartElement("Root");
-            xmlWriter.Close();
+            if (false == locCalculated)
+                throw new InvalidOperationException("LoC was not calculated.");
 
-            XmlDocument xmlDoc = new XmlDocument();
+            XmlWriterSettings writerSettings = new XmlWriterSettings();
+            writerSettings.Encoding = System.Text.Encoding.UTF8;
+            writerSettings.Indent = true;
 
-            xmlDoc.Load(filePath);
-
-            XmlNode sln = xmlDoc.DocumentElement, csproj;
-
-            //Load the solution, appropriate projects and their compile items.
-            VSSolution solution = VSSolution.Load(solutionFileName);
-            solution.LoadProjects();
-
-            csproj = this.InsertItem(sln, xmlDoc);
-            foreach (VSProjectInfo projectInfo in solution.Projects)
+            using (XmlWriter xmlWriter = XmlWriter.Create(filePath, writerSettings))
             {
-                //just C# projects
-                if (projectInfo.ProjectTypeGuid != VSProjectType.CSharpProjectType.ProjectTypeGuid)
-                    continue;
+                xmlWriter.WriteProcessingInstruction("xml", "version='1.0' encoding='UTF-8'");
+                xmlWriter.WriteStartElement("Root");
 
-                VSProjectLocMetrics projectMetrics = new VSProjectLocMetrics(projectInfo);
-                projectMetrics.GenerateXmlReport(projectInfo, csproj, xmlDoc);
+                this.WriteXml(xmlWriter);
+
+                ////Load the solution, appropriate projects and their compile items.
+                //VSSolution solution = VSSolution.Load(solutionFileName);
+                //solution.LoadProjects();
+
+                //foreach (VSProjectInfo projectInfo in solution.Projects)
+                //{
+                //    //just C# projects
+                //    if (projectInfo.ProjectTypeGuid != VSProjectType.CSharpProjectType.ProjectTypeGuid)
+                //        continue;
+
+                //    VSProjectLocMetrics projectMetrics = new VSProjectLocMetrics(projectInfo);
+                //    projectMetrics.GenerateXmlReport(projectInfo, xmlWriter);
+                //    //projectMetrics.WriteXml(xmlWriter);
+                //}
+
+                xmlWriter.WriteEndElement();
             }
-
-            xmlDoc.Save(filePath);
         }
 
+        private bool locCalculated;
         private LocStatsMap locStatsMap = new LocStatsMap();
     }
 }

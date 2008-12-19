@@ -72,6 +72,11 @@ namespace ProjectPilot.Framework.Metrics
 //            return xmlNode;
 //        }
 
+        protected GroupLocMetricsBase(string fileName)
+            : base(fileName)
+        {
+        }
+
         /// <summary>
         /// Adds another loc metrics item to teh group.
         /// </summary>
@@ -79,6 +84,18 @@ namespace ProjectPilot.Framework.Metrics
         protected void AddLocMetrics(LocMetricsBase locMetrics)
         {
             groupLocStatsData.Add(locMetrics);
+        }
+
+        protected override void WriteSubitemsXml(XmlWriter writer)
+        {
+            writer.WriteStartElement("Subitem");
+
+            foreach (LocMetricsBase childLocMetrics in groupLocStatsData)
+            {
+                childLocMetrics.WriteXml(writer);
+            }
+
+            writer.WriteEndElement();
         }
 
         /// <summary>

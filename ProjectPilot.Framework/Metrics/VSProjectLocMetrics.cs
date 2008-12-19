@@ -13,27 +13,13 @@ namespace ProjectPilot.Framework.Metrics
     public class VSProjectLocMetrics : GroupLocMetricsBase
     {
         public VSProjectLocMetrics(VSProjectInfo projectInfo)
+            : base(projectInfo.ProjectName)
         {
-            this.projectPath = projectInfo.ProjectDirectoryPath + @"\";
-            this.projectName = projectInfo.ProjectName;
         }
 
-        /// <summary>
-        /// Gets the project full path.
-        /// </summary>
-        /// <value>The project full path.</value>
-        public string ProjectPath
+        public VSProjectInfo ProjectInfo
         {
-            get { return projectPath; }
-        }
-
-        /// <summary>
-        /// Gets the name of the project.
-        /// </summary>
-        /// <value>The name of the project.</value>
-        public string ProjectName
-        {
-            get { return projectName; }
+            get { return projectInfo; }
         }
 
         /// <summary>
@@ -47,11 +33,14 @@ namespace ProjectPilot.Framework.Metrics
         public static VSProjectLocMetrics CalculateLocForProject(VSProjectInfo projectInfo, LocStatsMap map)
         {
             VSProjectLocMetrics projectMetrics = new VSProjectLocMetrics(projectInfo);
+            projectMetrics.projectInfo = projectInfo;
 
             //For each source file in project
             foreach (VSProjectCompileItem compileItem in projectInfo.Project.CompileItems)
             {
-                string filePath = Path.Combine(projectMetrics.ProjectPath, compileItem.Compile);
+                string filePath = Path.Combine(
+                    projectMetrics.ProjectInfo.ProjectDirectoryPath, 
+                    compileItem.Compile);
                 SourceFileLocMetrics sourceFile = SourceFileLocMetrics.CalcLocStatData(filePath, map);
 
                 // make sure the file was not ignored (it wasn't a source file)
@@ -59,10 +48,10 @@ namespace ProjectPilot.Framework.Metrics
                     projectMetrics.AddLocMetrics(sourceFile);
             }
             
-            //TODO: refactor!!!
+            //TODO Jure: refactor!!!
             foreach (VSProjectContentItem contentItem in projectInfo.Project.ContentItems)
             {
-                string filePath = Path.Combine(projectMetrics.ProjectPath, contentItem.Content);
+                string filePath = Path.Combine(projectMetrics.ProjectInfo.ProjectDirectoryPath, contentItem.Content);
                 SourceFileLocMetrics sourceFile = SourceFileLocMetrics.CalcLocStatData(filePath, map);
 
                 if (sourceFile != null)
@@ -72,23 +61,24 @@ namespace ProjectPilot.Framework.Metrics
             return projectMetrics;
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1059:MembersShouldNotExposeCertainConcreteTypes", MessageId = "System.Xml.XmlNode")]
-        public void GenerateXmlReport(VSProjectInfo projectInfo, XmlNode xmlNode, XmlDocument xmlDoc)
-        {
-            VSProjectLocMetrics projectMetrics = new VSProjectLocMetrics(projectInfo);
+        //[SuppressMessage("Microsoft.Design", "CA1059:MembersShouldNotExposeCertainConcreteTypes", MessageId = "System.Xml.XmlNode")]
+        //public void GenerateXmlReport(VSProjectInfo projectInfo, XmlWriter xmlWriter)
+        //{
+        //    this.WriteXml(xmlWriter);
 
-            XmlNode csfile = this.InsertItem(xmlNode, xmlDoc);
+        //    VSProjectLocMetrics projectMetrics = new VSProjectLocMetrics(projectInfo);
 
-            foreach (VSProjectCompileItem compileItem in projectInfo.Project.CompileItems)
-            {
-                string filePath = Path.Combine(projectMetrics.ProjectPath, compileItem.Compile);
-                SourceFileLocMetrics sourceFile = new SourceFileLocMetrics(filePath);
+        //    foreach (VSProjectCompileItem compileItem in projectInfo.Project.CompileItems)
+        //    {
+        //        string filePath = Path.Combine(
+        //            projectMetrics.ProjectInfo.ProjectDirectoryPath, 
+        //            compileItem.Compile);
+        //        SourceFileLocMetrics sourceFile = new SourceFileLocMetrics(filePath);
 
-                csfile.AppendChild(sourceFile.InsertItem(csfile, xmlDoc));
-            }
-        }
+        //        sourceFile.WriteXml(xmlWriter);
+        //    }
+        //}
 
-        private string projectPath;
-        private string projectName;
+        private VSProjectInfo projectInfo;
     }
 }

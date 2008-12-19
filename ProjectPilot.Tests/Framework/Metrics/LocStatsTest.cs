@@ -24,7 +24,7 @@ namespace ProjectPilot.Tests.Framework.Metrics
         [Test]
         public void SolutionLocMetrics()
         {
-            VSSolutionLocMetrics metrics = new VSSolutionLocMetrics();
+            VSSolutionLocMetrics metrics = new VSSolutionLocMetrics("ProjectPilot.sln");
             
             // add known extensions
             metrics.LocStatsMap.AddToMap(".cs", new CSharpLocStats());
@@ -37,11 +37,12 @@ namespace ProjectPilot.Tests.Framework.Metrics
             LocStatsData data = metrics.GetLocStatsData();
         }
 
-        [Test]
+        [Test, Pending("Marko: todo")]
         public void TestGeneratingSolutionXmlReport()
         {
-            VSSolutionLocMetrics metrics = new VSSolutionLocMetrics();
-            metrics.GenerateXmlReport(@"..\..\..\ProjectPilot.sln", @"..\..\..\XML_report.xml");
+            VSSolutionLocMetrics metrics = new VSSolutionLocMetrics("ProjectPilot.sln");
+            metrics.CalculateLocForSolution(@"..\..\..\ProjectPilot.sln");
+            metrics.GenerateXmlReport(@"XML_report.xml");
         }
     }
 }

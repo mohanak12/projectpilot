@@ -679,18 +679,74 @@
       <Namespaces>
        <Namespace Name="ProjectPilot.Framework.Metrics">
         <Types>
-         <Type Name="VSProjectLocMetrics">
+         <Type Name="LocMetricsBase">
           <Members>
-           <Member Name="#GenerateXmlReport(Flubu.Builds.VSSolutionBrowsing.VSProjectInfo,System.Xml.XmlNode,System.Xml.XmlDocument)">
+           <Member Name="#WriteSubItemsXml(System.Xml.XmlWriter)">
             <Messages>
-             <Message Id="System.Xml.XmlNode" TypeName="MembersShouldNotExposeCertainConcreteTypes" Category="Microsoft.Design" CheckId="CA1059" Created="2008-12-19 08:44:01Z">
-              <Issue Name="Xml">
-               <Item>'VSProjectLocMetrics.GenerateXmlReport(VSProjectInfo, XmlNode, XmlDocument)'</Item>
-               <Item>'XmlDocument'</Item>
+             <Message Id="SubItems" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2008-12-19 12:42:44Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>SubItems</Item>
+               <Item>'LocMetricsBase.WriteSubItemsXml(XmlWriter)'</Item>
+               <Item>Subitems</Item>
               </Issue>
-              <Issue Name="Xml">
-               <Item>'VSProjectLocMetrics.GenerateXmlReport(VSProjectInfo, XmlNode, XmlDocument)'</Item>
-               <Item>'XmlNode'</Item>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#WriteXml(System.Xml.XmlWriter)">
+            <Messages>
+             <Message Id="System.Convert.ToString(System.Int32)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2008-12-19 12:42:44Z">
+              <Issue>
+               <Item>'Convert.ToString(int)'</Item>
+               <Item>'LocMetricsBase.WriteXml(XmlWriter)'</Item>
+               <Item>'Convert.ToString(int, IFormatProvider)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Convert.ToString(int)'</Item>
+               <Item>'LocMetricsBase.WriteXml(XmlWriter)'</Item>
+               <Item>'Convert.ToString(int, IFormatProvider)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Convert.ToString(int)'</Item>
+               <Item>'LocMetricsBase.WriteXml(XmlWriter)'</Item>
+               <Item>'Convert.ToString(int, IFormatProvider)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="LocStatsMap">
+          <Members>
+           <Member Name="#AddToMap(System.String,ProjectPilot.Framework.Metrics.ILocStats)">
+            <Messages>
+             <Message TypeName="NormalizeStringsToUppercase" Category="Microsoft.Globalization" CheckId="CA1308" Created="2008-12-19 12:42:44Z">
+              <Issue Name="ToUpperInvariant">
+               <Item>'LocStatsMap.AddToMap(string, ILocStats)'</Item>
+               <Item>'string.ToLowerInvariant()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetLocStatsForExtension(System.String)">
+            <Messages>
+             <Message TypeName="NormalizeStringsToUppercase" Category="Microsoft.Globalization" CheckId="CA1308" Created="2008-12-19 12:42:44Z">
+              <Issue Name="ToUpperInvariant">
+               <Item>'LocStatsMap.GetLocStatsForExtension(string)'</Item>
+               <Item>'string.ToLowerInvariant()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="VSSolutionLocMetrics">
+          <Members>
+           <Member Name="#GenerateXmlReport(System.String,System.String)">
+            <Messages>
+             <Message Id="solutionFileName" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2008-12-19 12:42:44Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'solutionFileName'</Item>
+               <Item>'VSSolutionLocMetrics.GenerateXmlReport(string, string)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -883,8 +939,11 @@
    <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
     <Resolution Name="Default" />
    </Rule>
-   <Rule TypeName="MembersShouldNotExposeCertainConcreteTypes" Category="Microsoft.Design" CheckId="CA1059">
-    <Resolution Name="Xml">Modify member {0} so that it no longer exposes the concrete type {1}. Use IXPathNavigable to represent XML data sources.</Resolution>
+   <Rule TypeName="NormalizeStringsToUppercase" Category="Microsoft.Globalization" CheckId="CA1308">
+    <Resolution Name="ToUpperInvariant">In method {0}, replace the call to {1} with String.ToUpperInvariant().</Resolution>
+   </Rule>
+   <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
+    <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
    </Rule>
    <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
     <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Resolution>
