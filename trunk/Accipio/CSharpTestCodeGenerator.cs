@@ -43,9 +43,19 @@ namespace Accipio
                 // add test case description
                 WriteLine("                    .SetDescription(\"{0}\")", testCase.TestCaseDescription);
                 // add test case tags
+                int tagCounter = 1;
                 foreach (string tag in testCase.GetTestCaseTags)
                 {
-                    WriteLine("                    .AddTag(\"{0}\")", tag);
+                    if (tagCounter == testCase.GetTestCaseTags.Count)
+                    {
+                        WriteLine("                    .AddTag(\"{0}\");", tag);
+                    }
+                    else
+                    {
+                        WriteLine("                    .AddTag(\"{0}\")", tag);
+                    }
+
+                    tagCounter++;
                 }
 
                 WriteLine(string.Empty);
