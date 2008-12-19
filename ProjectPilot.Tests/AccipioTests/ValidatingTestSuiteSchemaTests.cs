@@ -90,7 +90,7 @@ namespace ProjectPilot.Tests.AccipioTests
         /// Makes sure the schema enforces that the action without parameters should be an empty XML element
         /// (without the inner content).
         /// </summary>
-        [Test, Pending("Gregor: to do")]
+        [Test]
         public void StepWithoutParametersShouldBeEmpty()
         {
             PrepareTestSuiteXmlFile(
@@ -101,6 +101,27 @@ namespace ProjectPilot.Tests.AccipioTests
         <description>Dummy description.</description>
         <steps>
             <ActionNoParameters>bla bla</ActionNoParameters>
+        </steps>
+    </case>
+</suite>
+");
+
+            AssertTestSuiteXmlFileValidity(false);
+        }
+
+        /// <summary>
+        /// Makes sure the schema enforces that the action with parameters should not have text node.
+        /// </summary>
+        [Test]
+        public void StepWithParametersShouldNotHaveTextEmpty()
+        {
+            PrepareTestSuiteXmlFile(
+                @"
+<suite id='Banking' runner='OnlineBanking' xmlns='http://fikus'>
+    <description>Dummy description.</description>
+    <case id='case1'>
+        <description>Dummy description.</description>
+        <steps>
             <Action1Parameter parameter='1'>dfsfsd</Action1Parameter>
         </steps>
     </case>
@@ -124,7 +145,6 @@ namespace ProjectPilot.Tests.AccipioTests
         <description>Dummy description.</description>
         <steps>
             <Action1Parameter parameter='1'/>
-            <Action1Parameter>1</Action1Parameter>
         </steps>
     </case>
 </suite>

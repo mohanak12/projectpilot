@@ -122,11 +122,35 @@ namespace Accipio.Console
                 "complexType", 
                 XmlNsXs);
 
-            if (parameters.Count == 1)
+            if (parameters.Count == 0)
             {
-                // two different forms are allowed for actions with one parameter
-                // add complextContent to allow this two forms
-                AddComplexContent(testSuiteSchemaDocument, complexTypeNode, parameters[0]);
+                // add restriction to action withput parameters to disable text node
+
+                // add complextContent node
+                XmlNode complexContentNode = testSuiteSchemaDocument.CreateNode(
+                XmlNodeType.Element,
+                "xs",
+                "complexContent",
+                XmlNsXs);
+
+                // add restriction node
+                XmlNode restrictionNode = testSuiteSchemaDocument.CreateNode(
+                XmlNodeType.Element,
+                "xs",
+                "restriction",
+                XmlNsXs);
+
+                // add base attribute to restriction node
+                // append attribute name
+                XmlAttribute xmlAttribute = testSuiteSchemaDocument.CreateAttribute("base");
+                xmlAttribute.Value = "xs:anyType";
+                restrictionNode.Attributes.Append(xmlAttribute);
+
+                // append restrictionNode to complexContentNode
+                complexContentNode.AppendChild(restrictionNode);
+
+                // append complexContentNode to complexTypeNode
+                complexTypeNode.AppendChild(complexContentNode);
             }
             else
             {
@@ -162,57 +186,6 @@ namespace Accipio.Console
         }
 
         /// <summary>
-        /// Generate Complext Content node
-        /// </summary>
-        /// <param name="testSuiteSchemaDocument"><see cref="XmlDocument"/> which contains the test suite template XSD.</param>
-        /// <param name="complexTypeNode">Parent of complex content</param>
-        /// <param name="parameter">Action parameter</param>
-        private void AddComplexContent(
-            XmlDocument testSuiteSchemaDocument,
-            XmlNode complexTypeNode,
-            BusinessActionParameters parameter)
-        {
-            // create element complexcontent
-            XmlNode complexContentNode = testSuiteSchemaDocument.CreateNode(
-                XmlNodeType.Element,
-                "xs",
-                "complexContent",
-                XmlNsXs);
-
-            // create element complexcontent
-            XmlNode extensionNode = testSuiteSchemaDocument.CreateNode(
-                XmlNodeType.Element,
-                "xs",
-                "extension",
-                XmlNsXs);
-
-            XmlAttribute xmlAttribute = testSuiteSchemaDocument.CreateAttribute("base");
-            xmlAttribute.Value = "xs:anyType";
-            extensionNode.Attributes.Append(xmlAttribute);
-
-            // create element attribute
-            XmlNode attributeNode = testSuiteSchemaDocument.CreateNode(
-                XmlNodeType.Element,
-                "xs",
-                "attribute",
-                XmlNsXs);
-
-            // append attribute name
-            xmlAttribute = testSuiteSchemaDocument.CreateAttribute("name");
-            xmlAttribute.Value = parameter.ParameterName;
-            attributeNode.Attributes.Append(xmlAttribute);
-
-            // append attribute type
-            xmlAttribute = testSuiteSchemaDocument.CreateAttribute("type");
-            xmlAttribute.Value = string.Format(CultureInfo.InvariantCulture, "xs:{0}", parameter.ParameterType ?? "string");
-            attributeNode.Attributes.Append(xmlAttribute);
-
-            extensionNode.AppendChild(attributeNode);
-            complexContentNode.AppendChild(extensionNode);
-            complexTypeNode.AppendChild(complexContentNode);
-        }
-
-        /// <summary>
         /// Fills the test suite template XSD with the required business actions nodes.
         /// </summary>
         /// <param name="testSuiteSchemaDocument"><see cref="XmlDocument"/> which contains the test suite template XSD.</param>
@@ -241,10 +214,14 @@ namespace Accipio.Console
                 xmlAttribute.Value = "1";
                 newNode.Attributes.Append(xmlAttribute);
 
-                if (entry.ActionParameters.Count > 0)
-                {
+                //if (entry.ActionParameters.Count == 0)
+                //{
+                    // add complex node with restriction
+                //}
+                //else if (entry.ActionParameters.Count > 0)
+                //{
                     AddBusinessActionParameters(testSuiteSchemaDocument, newNode, entry.ActionParameters);
-                }
+                //}
 
                 // append child node
                 testActionsParentNode.AppendChild(newNode);
