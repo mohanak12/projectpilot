@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Xml;
 
 namespace ProjectPilot.Framework.Metrics
 {
@@ -12,7 +14,7 @@ namespace ProjectPilot.Framework.Metrics
         {
             get { return groupLocStatsData; }
         }
-        
+
         /// <summary>
         /// Gets the loc stats data.
         /// </summary>
@@ -29,6 +31,46 @@ namespace ProjectPilot.Framework.Metrics
 
             return groupData;
         }
+
+//        public override XmlNode InsertItem(XmlNode xmlNode, XmlDocument xmlDocument)
+//        {
+//            XmlNode item;
+//            LocStatsData locStatsDataXML;
+//            
+//            foreach(LocStatsData locStatsData in this.groupLocStatsData)
+//            {
+//                locStatsDataXML.Cloc += locStatsData.Cloc;
+//                locStatsDataXML.Sloc += locStatsData.Sloc;
+//                locStatsDataXML.Eloc += locStatsData.Eloc;
+//            }
+//            
+//            XmlElement element = xmlDocument.CreateElement("Item");
+//            element.SetAttribute("FileName", this.filePath);
+//            element.SetAttribute("FileType", "fileType");     //?
+//
+//            item = xmlNode = xmlNode.AppendChild(element);
+//
+//            element = xmlDocument.CreateElement("LoC");
+//            xmlNode = xmlNode.AppendChild(element);
+//            
+//
+//            element = xmlDocument.CreateElement("EmptyLinesOfCode");
+//            element.InnerText = Convert.ToString(locStatsDataXML.Eloc);
+//            xmlNode.AppendChild(element);
+//
+//            element = xmlDocument.CreateElement("SingleLinesOfCode");
+//            element.InnerText = Convert.ToString(locStatsDataXML.Sloc);
+//            xmlNode.AppendChild(element);
+//
+//            element = xmlDocument.CreateElement("CommentLinesOfCode");
+//            element.InnerText = Convert.ToString(locStatsDataXML.Cloc);
+//            xmlNode.AppendChild(element);
+//
+//            element = xmlDocument.CreateElement("SubItems");
+//            xmlNode = item.AppendChild(element);
+//
+//            return xmlNode;
+//        }
 
         /// <summary>
         /// Adds another loc metrics item to teh group.

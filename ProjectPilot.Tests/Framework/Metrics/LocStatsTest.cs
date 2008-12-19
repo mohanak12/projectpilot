@@ -35,5 +35,12 @@ namespace ProjectPilot.Tests.Framework.Metrics
 
             LocStatsData data = metrics.GetLocStatsData();
         }
+
+        [Test]
+        public void TestGeneratingSolutionXmlReport()
+        {
+            VSSolutionLocMetrics metrics = new VSSolutionLocMetrics();
+            metrics.GenerateXmlReport(@"..\..\..\ProjectPilot.sln", @"..\..\..\XML_report.xml");
+        }
     }
 }
