@@ -90,7 +90,7 @@ namespace ProjectPilot.Tests.AccipioTests
         /// Makes sure the schema enforces that the action without parameters should be an empty XML element
         /// (without the inner content).
         /// </summary>
-        [Test]
+        [Test, Pending("Gregor: to do")]
         public void StepWithoutParametersShouldBeEmpty()
         {
             PrepareTestSuiteXmlFile(
@@ -107,7 +107,7 @@ namespace ProjectPilot.Tests.AccipioTests
 </suite>
 ");
 
-            AssertTestSuiteXmlFileValidity(true);
+            AssertTestSuiteXmlFileValidity(false);
         }
 
         /// <summary>
