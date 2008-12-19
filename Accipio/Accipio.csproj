@@ -95,6 +95,7 @@
     <Compile Include="XmlTestSuiteParser.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="ProjectPilot.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
