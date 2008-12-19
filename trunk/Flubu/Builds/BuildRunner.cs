@@ -661,6 +661,10 @@ namespace Flubu.Builds
                         CreateVirtualDirectoryMode.UpdateIfExists);
 
                     task.Execute(this.ScriptExecutionEnvironment);
+
+                    this.RegisterAspNet(
+                        virtualDirectoryName,
+                        this.ScriptExecutionEnvironment.Net20VersionNumber);
                 }
             }
 
