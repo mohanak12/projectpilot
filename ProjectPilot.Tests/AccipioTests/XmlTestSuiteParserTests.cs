@@ -52,6 +52,10 @@ namespace ProjectPilot.Tests.AccipioTests
                 }
             }
 
+            Assert.AreEqual(testSuite.Id, "Banking");
+            Assert.AreEqual(testSuite.Runner, "OnlineBanking");
+            Assert.AreEqual(testSuite.Namespace, "OnlineBankingNamespace");
+
             Assert.AreEqual(1, testSuite.TestCasesCount);
 
             TestCase testCase = testSuite.GetTestCase("MoneyTransfer");
@@ -101,7 +105,11 @@ namespace ProjectPilot.Tests.AccipioTests
             {
                 testSuite = parser.Parse();
             }
-            
+
+            Assert.AreEqual(testSuite.Id, "Banking");
+            Assert.AreEqual(testSuite.Runner, "OnlineBanking");
+            Assert.AreEqual(testSuite.Namespace, "OnlineBankingNamespace");
+
             Assert.AreEqual(1, testSuite.TestCasesCount);
 
             TestCase testCase = testSuite.GetTestCase("MoneyTransfer");

@@ -24,7 +24,8 @@ namespace ProjectPilot.Tests.AccipioTests
             {
                 Description = "Class description.",
                 Id = "Banking",
-                Runner = "OnlineBanking"
+                Runner = "OnlineBanking",
+                Namespace = "OnlineBankingNamespace",
             };
 
             TestCase testCase = new TestCase("ViewAccountTestCase")
@@ -66,36 +67,39 @@ namespace ProjectPilot.Tests.AccipioTests
             mockCodeWriter.Expect(writer => writer.WriteLine("using Accipio;"));
             mockCodeWriter.Expect(writer => writer.WriteLine("using MbUnit.Framework;"));
             mockCodeWriter.Expect(writer => writer.WriteLine(string.Empty));
-            mockCodeWriter.Expect(writer => writer.WriteLine("/// <summary>"));
-            mockCodeWriter.Expect(writer => writer.WriteLine("/// Class description."));
-            mockCodeWriter.Expect(writer => writer.WriteLine("/// </summary>"));
-            mockCodeWriter.Expect(writer => writer.WriteLine("[TestFixture]"));
-            mockCodeWriter.Expect(writer => writer.WriteLine("public class BankingTestSuite"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("namespace OnlineBankingNamespace"));
             mockCodeWriter.Expect(writer => writer.WriteLine("{"));
             mockCodeWriter.Expect(writer => writer.WriteLine("    /// <summary>"));
-            mockCodeWriter.Expect(writer => writer.WriteLine("    /// Tests case description."));
+            mockCodeWriter.Expect(writer => writer.WriteLine("    /// Class description."));
             mockCodeWriter.Expect(writer => writer.WriteLine("    /// </summary>"));
-            mockCodeWriter.Expect(writer => writer.WriteLine("    [Test]"));
-            mockCodeWriter.Expect(writer => writer.WriteLine("    [Category(\"Smoke\")]"));
-            mockCodeWriter.Expect(writer => writer.WriteLine("    public void ViewAccountTestCase()"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("    [TestFixture]"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("    public class BankingTestSuite"));
             mockCodeWriter.Expect(writer => writer.WriteLine("    {"));
-            mockCodeWriter.Expect(writer => writer.WriteLine("        using (OnlineBankingTestRunner runner = new OnlineBankingTestRunner())"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("        /// <summary>"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("        /// Tests case description."));
+            mockCodeWriter.Expect(writer => writer.WriteLine("        /// </summary>"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("        [Test]"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("        [Category(\"Smoke\")]"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("        public void ViewAccountTestCase()"));
             mockCodeWriter.Expect(writer => writer.WriteLine("        {"));
-            mockCodeWriter.Expect(writer => writer.WriteLine("            runner"));
-            mockCodeWriter.Expect(writer => writer.WriteLine("                .SetDescription(\"Tests case description.\")"));
-            mockCodeWriter.Expect(writer => writer.WriteLine("                .AddTag(\"R15\")"));
-            mockCodeWriter.Expect(writer => writer.WriteLine("                .AddTag(\"R21.1\")"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("            using (OnlineBankingTestRunner runner = new OnlineBankingTestRunner())"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("            {"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("                runner"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("                    .SetDescription(\"Tests case description.\")"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("                    .AddTag(\"R15\")"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("                    .AddTag(\"R21.1\")"));
             mockCodeWriter.Expect(writer => writer.WriteLine(string.Empty));
-            mockCodeWriter.Expect(writer => writer.WriteLine("            runner"));
-            mockCodeWriter.Expect(writer => writer.WriteLine("                // Open the online banking portal web site in the browser."));
-            mockCodeWriter.Expect(writer => writer.WriteLine("                .GoToPortal()"));
-            mockCodeWriter.Expect(writer => writer.WriteLine("                // Sign in user 'john'."));
-            mockCodeWriter.Expect(writer => writer.WriteLine("                .SignIn(\"john\", \"doe\")"));
-            mockCodeWriter.Expect(writer => writer.WriteLine("                // Assert the operation was successful."));
-            mockCodeWriter.Expect(writer => writer.WriteLine("                .AssertOperationSuccessful();"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("                runner"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("                    // Open the online banking portal web site in the browser."));
+            mockCodeWriter.Expect(writer => writer.WriteLine("                    .GoToPortal()"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("                    // Sign in user 'john'."));
+            mockCodeWriter.Expect(writer => writer.WriteLine("                    .SignIn(\"john\", \"doe\")"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("                    // Assert the operation was successful."));
+            mockCodeWriter.Expect(writer => writer.WriteLine("                    .AssertOperationSuccessful();"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("            }"));
             mockCodeWriter.Expect(writer => writer.WriteLine("        }"));
-            mockCodeWriter.Expect(writer => writer.WriteLine("    }"));
             mockCodeWriter.Expect(writer => writer.WriteLine(string.Empty));
+            mockCodeWriter.Expect(writer => writer.WriteLine("    }"));
             mockCodeWriter.Expect(writer => writer.WriteLine("}"));
 
             // execution

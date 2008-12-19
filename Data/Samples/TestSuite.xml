@@ -1,4 +1,4 @@
-<suite id="Banking" runner="OnlineBanking" xmlns="http://GenerateXsdValidationSchemaTest" >
+<suite id="Banking" runner="OnlineBanking" namespace="OnlineBankingNamespace" xmlns="http://GenerateXsdValidationSchemaTest" >
     <description>Contains test cases which cover online banking functionality.</description>
     <case id="MoneyTransfer">
         <description>Tests money transfers from one account to another using the online banking portal.</description>
