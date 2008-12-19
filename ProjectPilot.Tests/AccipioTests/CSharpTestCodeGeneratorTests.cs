@@ -87,7 +87,7 @@ namespace ProjectPilot.Tests.AccipioTests
             mockCodeWriter.Expect(writer => writer.WriteLine("                runner"));
             mockCodeWriter.Expect(writer => writer.WriteLine("                    .SetDescription(\"Tests case description.\")"));
             mockCodeWriter.Expect(writer => writer.WriteLine("                    .AddTag(\"R15\")"));
-            mockCodeWriter.Expect(writer => writer.WriteLine("                    .AddTag(\"R21.1\")"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("                    .AddTag(\"R21.1\");"));
             mockCodeWriter.Expect(writer => writer.WriteLine(string.Empty));
             mockCodeWriter.Expect(writer => writer.WriteLine("                runner"));
             mockCodeWriter.Expect(writer => writer.WriteLine("                    // Open the online banking portal web site in the browser."));
