@@ -665,7 +665,6 @@ namespace Accipio
             seleniumSpeed = testerBase.seleniumSpeed;
             targetUrl = testerBase.targetUrl;
             testMachine = testerBase.testMachine;
-            projectPortal = testerBase.projectPortal;
         }
 
         private readonly ISelenium selenium;
@@ -681,7 +680,5 @@ namespace Accipio
         private readonly string browserUrl;
 
         private readonly Uri targetUrl;
-
-        private readonly ProjectPortalTestRunner projectPortal;
     }
 }
