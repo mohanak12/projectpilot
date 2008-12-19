@@ -97,7 +97,7 @@
     <Compile Include="Builds\BuildProduct.cs" />
     <Compile Include="Builds\BuildProductsRegistry.cs" />
     <Compile Include="Builds\BuildRunner.cs" />
-    <Compile Include="Builds\VSSolutionBrowsing\VSProjectContentItem.cs" />
+    <Compile Include="Builds\VSSolutionBrowsing\VSProjectItem.cs" />
     <Compile Include="Deployment\ConcreteDeploymentRunner.cs" />
     <Compile Include="Deployment\DeploymentModule.cs" />
     <Compile Include="Deployment\DeploymentModulesRegistry.cs" />
@@ -114,10 +114,8 @@
     <Compile Include="Builds\VSProjectExtendedInfo.cs" />
     <Compile Include="Builds\VSSolutionBrowsing\ParserContext.cs" />
     <Compile Include="Builds\VSSolutionBrowsing\VSProject.cs" />
-    <Compile Include="Builds\VSSolutionBrowsing\VSProjectCompileItem.cs" />
     <Compile Include="Builds\VSSolutionBrowsing\VSProjectConfiguration.cs" />
     <Compile Include="Builds\VSSolutionBrowsing\VSProjectInfo.cs" />
-    <Compile Include="Builds\VSSolutionBrowsing\VSProjectReference.cs" />
     <Compile Include="Builds\VSSolutionBrowsing\VSProjectType.cs" />
     <Compile Include="Builds\VSSolutionBrowsing\VSProjectTypesDictionary.cs" />
     <Compile Include="Builds\VSSolutionBrowsing\VSSolution.cs" />

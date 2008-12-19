@@ -14,18 +14,9 @@ namespace Flubu.Builds.VSSolutionBrowsing
         /// Gets a read-only collection of all .cs files in the solution.
         /// </summary>
         /// <value>A read-only collection of all the .cs files in the solution.</value>
-        public IList<VSProjectCompileItem> CompileItems
+        public IList<VSProjectItem> Items
         {
-            get { return compileItems; }
-        }
-
-        /// <summary>
-        /// Gets a read-only collection of all content items.
-        /// </summary>
-        /// <value>A read-only collection of all content items in the solution.</value>
-        public IList<VSProjectContentItem> ContentItems
-        {
-            get { return contentItems; }
+            get { return items; }
         }
 
         /// <summary>
@@ -44,15 +35,6 @@ namespace Flubu.Builds.VSSolutionBrowsing
         public IDictionary<string, string> Properties
         {
             get { return properties; }
-        }
-
-        /// <summary>
-        /// Gets a read-only collection of project references.
-        /// </summary>
-        /// <value>A read-only collection of project references.</value>
-        public IList<VSProjectReference> References
-        {
-            get { return references; }
         }
 
         /// <summary>
@@ -182,8 +164,8 @@ namespace Flubu.Builds.VSSolutionBrowsing
                 switch (xmlReader.Name)
                 {
                     case "Reference":
-                        VSProjectReference reference = ReadReference(xmlReader);
-                        references.Add(reference);
+                        VSProjectItem reference = ReadItem(xmlReader, VSProjectItem.Reference);
+                        items.Add(reference);
                         if (xmlReader.NodeType == XmlNodeType.EndElement)
                         {
                             xmlReader.Read();
@@ -191,8 +173,8 @@ namespace Flubu.Builds.VSSolutionBrowsing
 
                         break;
                     case "Compile":
-                        VSProjectCompileItem compileitems = ReadCompile(xmlReader);
-                        compileItems.Add(compileitems);
+                        VSProjectItem compileItems = ReadItem(xmlReader, VSProjectItem.CompileItem);
+                        items.Add(compileItems);
 
                         if (xmlReader.NodeType == XmlNodeType.EndElement)
                         {
@@ -201,8 +183,8 @@ namespace Flubu.Builds.VSSolutionBrowsing
 
                         break;
                     case "Content":
-                        VSProjectContentItem contentItem = ReadContent(xmlReader);
-                        contentItems.Add(contentItem);
+                        VSProjectItem contentItem = ReadItem(xmlReader, VSProjectItem.Content);
+                        items.Add(contentItem);
 
                         if (xmlReader.NodeType == XmlNodeType.EndElement)
                         {
@@ -217,87 +199,35 @@ namespace Flubu.Builds.VSSolutionBrowsing
             }
         }
 
-        private static VSProjectReference ReadReference(XmlReader xmlReader)
+        private static VSProjectItem ReadItem(XmlReader xmlReader, string itemType)
         {
-            VSProjectReference reference = new VSProjectReference();
+            VSProjectItem item = new VSProjectItem(itemType);
 
             while (xmlReader.NodeType != XmlNodeType.EndElement)
             {
                 if (xmlReader.HasAttributes && xmlReader.NodeType != XmlNodeType.EndElement)
                 {
-                    reference.Include = xmlReader[0];
+                    item.Item = xmlReader[0];
                     xmlReader.Read();
                 }
 
                 if (xmlReader.HasAttributes == false && xmlReader.NodeType != XmlNodeType.EndElement)
                 {
-                    reference.ReferenceAttributes.Add(xmlReader.Name, xmlReader.ReadElementContentAsString());
+                    item.ItemAttributes.Add(xmlReader.Name, xmlReader.ReadElementContentAsString());
                 }
                 else
                 {
-                    return reference;
+                    return item;
                 }
             }
 
-            return reference;
+            return item;
         }
 
-        private static VSProjectCompileItem ReadCompile(XmlReader xmlReader)
-        {
-            VSProjectCompileItem compile = new VSProjectCompileItem();
-
-            while (xmlReader.NodeType != XmlNodeType.EndElement)
-            {
-                if (xmlReader.HasAttributes && xmlReader.NodeType != XmlNodeType.EndElement)
-                {
-                    compile.Compile = xmlReader[0];
-                    xmlReader.Read();
-                }
-
-                if (xmlReader.HasAttributes == false && xmlReader.NodeType != XmlNodeType.EndElement)
-                {
-                    compile.CompileAttributes.Add(xmlReader.Name, xmlReader.ReadElementContentAsString());
-                }
-                else
-                {
-                    return compile;
-                }
-            }
-
-            return compile;
-        }
-
-        private static VSProjectContentItem ReadContent(XmlReader xmlReader)
-        {
-            VSProjectContentItem content = new VSProjectContentItem();
-
-            while (xmlReader.NodeType != XmlNodeType.EndElement)
-            {
-                if (xmlReader.HasAttributes && xmlReader.NodeType != XmlNodeType.EndElement)
-                {
-                    content.Content = xmlReader[0];
-                    xmlReader.Read();
-                }
-
-                if (xmlReader.HasAttributes == false && xmlReader.NodeType != XmlNodeType.EndElement)
-                {
-                    content.CompileAttributes.Add(xmlReader.Name, xmlReader.ReadElementContentAsString());
-                }
-                else
-                {
-                    return content;
-                }
-            }
-
-            return content;
-        }
-
-        private readonly List<VSProjectCompileItem> compileItems = new List<VSProjectCompileItem>();
-        private readonly List<VSProjectContentItem> contentItems = new List<VSProjectContentItem>();
+        private readonly List<VSProjectItem> items = new List<VSProjectItem>();
         private readonly List<VSProjectConfiguration> configurations = new List<VSProjectConfiguration>();
         private readonly Dictionary<string, string> properties = new Dictionary<string, string>();
         private bool propertiesDictionary;
-        private readonly List<VSProjectReference> references = new List<VSProjectReference>();
     }
 }
 
