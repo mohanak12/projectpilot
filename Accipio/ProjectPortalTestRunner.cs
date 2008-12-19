@@ -10,11 +10,24 @@ namespace Accipio
     public class ProjectPortalTestRunner : SeleniumTesterBase
     {
         /// <summary>
+        /// Open the url specified.
+        /// </summary>
+        /// <param name="destination">The destination URL.</param>
+        /// <returns>
+        /// The same <see cref="ProjectPortalTestRunner"/> object.
+        /// </returns>
+        public ProjectPortalTestRunner GoToPortal(string destination)
+        {
+            Selenium.Open(destination);
+            return this;
+        }
+
+        /// <summary>
         /// Finds the button with specified Name.
         /// </summary>
         /// <param name="controlName">Name of the control.</param>
         /// <returns>
-        /// The same <see cref="SeleniumTesterBase"/> object.
+        /// The same <see cref="ProjectPortalTestRunner"/> object.
         /// </returns>
         public ProjectPortalTestRunner FindButton(string controlName)
         {
@@ -27,7 +40,7 @@ namespace Accipio
         /// </summary>
         /// <param name="controlName">Name of the control.</param>
         /// <returns>
-        /// The same <see cref="SeleniumTesterBase"/> object.
+        /// The same <see cref="ProjectPortalTestRunner"/> object.
         /// </returns>
         public ProjectPortalTestRunner FindTextBox(string controlName)
         {
@@ -40,7 +53,7 @@ namespace Accipio
         /// </summary>
         /// <param name="controlName">The Name of the control which is contained in the input field.</param>
         /// <returns>
-        /// The same <see cref="SeleniumTesterBase"/> object.
+        /// The same <see cref="ProjectPortalTestRunner"/> object.
         /// </returns>
         public new ProjectPortalTestRunner ClickOnButton(string controlName)
         {
@@ -57,7 +70,7 @@ namespace Accipio
         /// <param name="controlName">Name of the control.</param>
         /// <param name="searchText">The specified text.</param>
         /// <returns>
-        /// The same <see cref="SeleniumTesterBase"/> object.
+        /// The same <see cref="ProjectPortalTestRunner"/> object.
         /// </returns>
         public ProjectPortalTestRunner TypeText(string controlName, string searchText)
         {
@@ -73,7 +86,7 @@ namespace Accipio
         /// </summary>
         /// <param name="controlRef">The control ref.</param>
         /// <returns>
-        /// The same <see cref="SeleniumTesterBase"/> object.
+        /// The same <see cref="ProjectPortalTestRunner"/> object.
         /// </returns>
         public ProjectPortalTestRunner ProjectExists(string controlRef)
         {
@@ -88,7 +101,7 @@ namespace Accipio
         /// </summary>
         /// <param name="controlRef">The control ref.</param>
         /// <returns>
-        /// The same <see cref="SeleniumTesterBase"/> object.
+        /// The same <see cref="ProjectPortalTestRunner"/> object.
         /// </returns>
         public ProjectPortalTestRunner ProjectSelect(string controlRef)
         {

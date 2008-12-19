@@ -16,6 +16,9 @@ namespace Accipio
             BusinessActionData businessActionData = testSuite.BusinessActionData;
             Dictionary<string, TestCase> testCases = testSuite.TestCases;
             ICollection<string> testCasesKeys = testCases.Keys;
+            WriteLine("using Accipio;");
+            WriteLine("using MbUnit.Framework;");
+            WriteLine(string.Empty);
             WriteLine("/// <summary>{0}</summary>", testSuite.Description);
             WriteLine("public class {0}TestSuite", testSuite.Id);
             WriteLine("{");
@@ -40,6 +43,7 @@ namespace Accipio
 
                 WriteLine(string.Empty);
                 // add test case actions
+                WriteLine("                .{0}", testSuite.Runner);
                 IList<TestAction> testActions = testCase.TestActions;
                 int counter = 1;
                 foreach (TestAction testAction in testActions)

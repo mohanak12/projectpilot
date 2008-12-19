@@ -57,6 +57,9 @@ namespace ProjectPilot.Tests.AccipioTests
             businessActionData.Actions.Add(businessActionEntry);
             testSuite.BusinessActionData = businessActionData;
 
+            mockCodeWriter.Expect(writer => writer.WriteLine("using Accipio;"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("using MbUnit.Framework;"));
+            mockCodeWriter.Expect(writer => writer.WriteLine(string.Empty));
             mockCodeWriter.Expect(writer => writer.WriteLine("/// <summary>Class description.</summary>"));
             mockCodeWriter.Expect(writer => writer.WriteLine("public class BankingTestSuite"));
             mockCodeWriter.Expect(writer => writer.WriteLine("{"));
@@ -72,6 +75,7 @@ namespace ProjectPilot.Tests.AccipioTests
             mockCodeWriter.Expect(writer => writer.WriteLine("                .AddTag(\"R15\")"));
             mockCodeWriter.Expect(writer => writer.WriteLine("                .AddTag(\"R21.1\")"));
             mockCodeWriter.Expect(writer => writer.WriteLine(string.Empty));
+            mockCodeWriter.Expect(writer => writer.WriteLine("                .OnlineBanking"));
             mockCodeWriter.Expect(writer => writer.WriteLine("                // Open the online banking portal web site in the browser."));
             mockCodeWriter.Expect(writer => writer.WriteLine("                .GoToPortal()"));
             mockCodeWriter.Expect(writer => writer.WriteLine("                // Sign in user 'john'."));
