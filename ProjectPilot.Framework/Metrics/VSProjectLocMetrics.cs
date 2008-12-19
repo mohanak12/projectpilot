@@ -35,34 +35,23 @@ namespace ProjectPilot.Framework.Metrics
         {
             VSProjectLocMetrics projectMetrics = new VSProjectLocMetrics(projectInfo);
 
-            //For each source file in project
-            foreach (VSProjectCompileItem compileItem in projectInfo.Project.CompileItems)
+            //For each Item file in project
+            foreach (VSProjectItem item in projectInfo.Project.Items)
             {
-                string filePath = Path.GetFullPath(
-                    Path.Combine(
+                if (item.ItemType == VSProjectItem.CompileItem ||
+                    item.ItemType == VSProjectItem.Content)
+                {
+                    string filePath = Path.Combine(
                         projectMetrics.ProjectInfo.ProjectDirectoryPath,
-                        compileItem.Compile));
-                SourceFileLocMetrics sourceFile = SourceFileLocMetrics.CalcLocStatData(filePath, map);
+                        item.Item);
+                    SourceFileLocMetrics sourceFile = SourceFileLocMetrics.CalcLocStatData(filePath, map);
 
-                // make sure the file was not ignored (it wasn't a source file)
-                if (sourceFile != null)
-                    projectMetrics.AddLocMetrics(sourceFile);
+                    // make sure the file was not ignored (it wasn't a source file)
+                    if (sourceFile != null)
+                        projectMetrics.AddLocMetrics(sourceFile);
+                }
             }
             
-            //TODO Jure: refactor!!!
-            foreach (VSProjectContentItem contentItem in projectInfo.Project.ContentItems)
-            {
-                string filePath = Path.GetFullPath(
-                    Path.Combine(
-                        projectMetrics.ProjectInfo.ProjectDirectoryPath,
-                        contentItem.Content));
-
-                SourceFileLocMetrics sourceFile = SourceFileLocMetrics.CalcLocStatData(filePath, map);
-
-                if (sourceFile != null)
-                    projectMetrics.AddLocMetrics(sourceFile);
-            }
-
             return projectMetrics;
         }
 
