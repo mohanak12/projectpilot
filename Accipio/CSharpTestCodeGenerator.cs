@@ -42,8 +42,8 @@ namespace Accipio
                 }
 
                 WriteLine(string.Empty);
+                WriteLine("            runner");
                 // add test case actions
-                WriteLine("                .{0}", testSuite.Runner);
                 IList<TestAction> testActions = testCase.TestActions;
                 int counter = 1;
                 foreach (TestAction testAction in testActions)

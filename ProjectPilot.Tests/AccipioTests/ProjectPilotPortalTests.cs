@@ -3,33 +3,50 @@ using MbUnit.Framework;
 
 namespace ProjectPilot.Tests.AccipioTests
 {
-    [TestFixture]
-    public class ProjectPilotPortalTests
+    /// <summary>Contains test cases which cover search and selection of portal projects.</summary>
+    public class ProjectPortalHomeTestSuite
     {
-        /// <summary>
-        /// Test to check fluent interface with projectportal test runner.
-        /// </summary>
-        /// <remarks>It is used as example for csharp code generator.</remarks>
-        [Test, Explicit("Used as example how generated code should look like")]
-        public void ClickSearchButton()
+        /// <summary>Opens Project portal home page in browser.</summary>
+        [Test, Explicit]
+        [Category("")]
+        public void GoToPortal()
         {
             using (ProjectPortalTestRunner runner = new ProjectPortalTestRunner())
             {
                 runner
-                    .SetDescription("descr")
-                    .AddTag("tag1");
+                    .SetDescription("Opens Project portal home page in browser.")
+                    .AddTag("ProjectPortal.Home");
 
                 runner
-                    //description of action GoToPortal
-                    .GoToPortal("/projectpilot")
-                    //description of action FindButton
+                    // Open the ProjectPilot web site 'http://localhost/ProjectPortal' in the browser.
+                    .GoToPortal("http://localhost/ProjectPortal")
+                    // Find button with id 'Search'.
                     .FindButton("Search")
-                    //description of action ClickOnButton
-                    .ClickOnButton("Search")
-                    //find search text box
-                    .FindTextBox("SearchQuery")
-                    //type text
-                    .TypeText("SearchQuery", "some text...");
+                    // Find textbox with id 'SearchQuery'.
+                    .FindTextBox("SearchQuery");
+            }
+        }
+
+        /// <summary>Finds and select a project on Project portal.</summary>
+        [Test, Explicit]
+        [Category("")]
+        public void SelectProjectEbsy()
+        {
+            using (ProjectPortalTestRunner runner = new ProjectPortalTestRunner())
+            {
+                runner
+                    .SetDescription("Finds and select a project on Project portal.")
+                    .AddTag("ProjectPortal.Home");
+
+                runner
+                    // Open the ProjectPilot web site 'http://localhost/ProjectPortal' in the browser.
+                    .GoToPortal("http://localhost/ProjectPortal")
+                    // Type 'Ebsy' into textbox with id 'SearchQuery'.
+                    .TypeText("SearchQuery", "Ebsy")
+                    // Confirm that project '/ProjectPilot.Portal/ProjectView/Overview/ebsy/' is listed on page.
+                    .ProjectExists("/ProjectPilot.Portal/ProjectView/Overview/ebsy/")
+                    // Select project '/ProjectPilot.Portal/ProjectView/Overview/ebsy/'.
+                    .ProjectSelect("/ProjectPilot.Portal/ProjectView/Overview/ebsy/");
             }
         }
     }
