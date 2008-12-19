@@ -71,7 +71,8 @@ namespace Flubu.Builds.VSSolutionBrowsing
         {
             get
             {
-                return Path.Combine(ownerSolution.SolutionDirectoryPath, ProjectFileName);
+                return Path.GetFullPath(
+                    Path.Combine(ownerSolution.SolutionDirectoryPath, ProjectFileName));
             }
         }
 

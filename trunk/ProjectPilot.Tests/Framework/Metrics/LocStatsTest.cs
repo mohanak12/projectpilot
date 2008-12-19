@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Xml;
 using MbUnit.Framework;
 using ProjectPilot.Framework.Metrics;
 
@@ -41,8 +42,21 @@ namespace ProjectPilot.Tests.Framework.Metrics
         public void TestGeneratingSolutionXmlReport()
         {
             VSSolutionLocMetrics metrics = new VSSolutionLocMetrics("ProjectPilot.sln");
+            metrics.LocStatsMap.AddToMap(".cs", new CSharpLocStats());
             metrics.CalculateLocForSolution(@"..\..\..\ProjectPilot.sln");
-            metrics.GenerateXmlReport(@"XML_report.xml");
+
+            const string ReportFileName = @"XML_report.xml";
+
+            metrics.GenerateXmlReport(ReportFileName);
+
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load(ReportFileName);
+
+            XmlNode xmlNode = xmlDocument.SelectSingleNode(
+                "Root/Item/Subitem/Item[contains(@FileName,'ProjectPilot.Framework.csproj')]");
+            Assert.IsNotNull(xmlNode);
+
+            Assert.AreEqual(".csproj", xmlNode.Attributes["FileType"].Value);
         }
     }
 }
