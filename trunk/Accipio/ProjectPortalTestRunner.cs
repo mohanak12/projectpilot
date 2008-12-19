@@ -60,7 +60,7 @@ namespace Accipio
             string locator =
                 String.Format(CultureInfo.InvariantCulture, "xpath=//input[contains(@name,'{0}')]", controlName);
             Selenium.Click(locator);
-            Selenium.WaitForPageToLoad("10000");
+            //Selenium.WaitForPageToLoad("10000");
             return this;
         }
 
@@ -77,7 +77,7 @@ namespace Accipio
             string locator =
                 String.Format(CultureInfo.InvariantCulture, "xpath=//input[@name='{0}']", controlName);
             Selenium.Type(locator, searchText);
-            Selenium.WaitForPageToLoad("10000");
+            //Selenium.WaitForPageToLoad("10000");
             return this;
         }
 
@@ -108,7 +108,7 @@ namespace Accipio
             string locator =
                 String.Format(CultureInfo.InvariantCulture, "xpath=//a[@href='{0}']", controlRef);
             Selenium.Click(locator);
-            Selenium.WaitForPageToLoad("10000");
+            //Selenium.WaitForPageToLoad("10000");
             return this;
         }
 
