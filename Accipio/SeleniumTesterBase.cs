@@ -22,7 +22,7 @@ namespace Accipio
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
-
+            
             browserType = (BrowserType) Enum.Parse(
                                             typeof(BrowserType),
                                             ConfigurationManager.AppSettings["BrowserType"],
@@ -665,12 +665,7 @@ namespace Accipio
             seleniumSpeed = testerBase.seleniumSpeed;
             targetUrl = testerBase.targetUrl;
             testMachine = testerBase.testMachine;
-            projectPortal = new ProjectPortalTestRunner();
-        }
-
-        public ProjectPortalTestRunner ProjectPortal
-        {
-            get { return projectPortal; }
+            projectPortal = testerBase.projectPortal;
         }
 
         private readonly ISelenium selenium;

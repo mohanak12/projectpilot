@@ -145,6 +145,7 @@
     <None Include="AccipioTests\TestSuite.xss">
       <DependentUpon>TestSuite.xsd</DependentUpon>
     </None>
+    <None Include="App.config" />
     <None Include="ProjectPilot.snk" />
   </ItemGroup>
   <ItemGroup>
