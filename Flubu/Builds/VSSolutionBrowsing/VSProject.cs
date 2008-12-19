@@ -20,6 +20,15 @@ namespace Flubu.Builds.VSSolutionBrowsing
         }
 
         /// <summary>
+        /// Gets a read-only collection of all content items.
+        /// </summary>
+        /// <value>A read-only collection of all content items in the solution.</value>
+        public IList<VSProjectContentItem> ContentItems
+        {
+            get { return contentItems; }
+        }
+
+        /// <summary>
         /// Gets a read-only collection of project configurations.
         /// </summary>
         /// <value>A read-only collection of project configurations.</value>
@@ -190,7 +199,17 @@ namespace Flubu.Builds.VSSolutionBrowsing
                             xmlReader.Read();
                         }
 
-                        break;                
+                        break;
+                    case "Content":
+                        VSProjectContentItem contentItem = ReadContent(xmlReader);
+                        contentItems.Add(contentItem);
+
+                        if (xmlReader.NodeType == XmlNodeType.EndElement)
+                        {
+                            xmlReader.Read();
+                        }
+
+                        break;
                     default:
                         xmlReader.Read();
                         continue;
@@ -248,7 +267,33 @@ namespace Flubu.Builds.VSSolutionBrowsing
             return compile;
         }
 
+        private static VSProjectContentItem ReadContent(XmlReader xmlReader)
+        {
+            VSProjectContentItem content = new VSProjectContentItem();
+
+            while (xmlReader.NodeType != XmlNodeType.EndElement)
+            {
+                if (xmlReader.HasAttributes && xmlReader.NodeType != XmlNodeType.EndElement)
+                {
+                    content.Content = xmlReader[0];
+                    xmlReader.Read();
+                }
+
+                if (xmlReader.HasAttributes == false && xmlReader.NodeType != XmlNodeType.EndElement)
+                {
+                    content.CompileAttributes.Add(xmlReader.Name, xmlReader.ReadElementContentAsString());
+                }
+                else
+                {
+                    return content;
+                }
+            }
+
+            return content;
+        }
+
         private readonly List<VSProjectCompileItem> compileItems = new List<VSProjectCompileItem>();
+        private readonly List<VSProjectContentItem> contentItems = new List<VSProjectContentItem>();
         private readonly List<VSProjectConfiguration> configurations = new List<VSProjectConfiguration>();
         private readonly Dictionary<string, string> properties = new Dictionary<string, string>();
         private bool propertiesDictionary;

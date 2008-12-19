@@ -21,7 +21,7 @@ namespace ProjectPilot.Framework.Metrics
         /// <returns>Returns the combined loc stats of the group</returns>
         public override LocStatsData GetLocStatsData()
         {
-            LocStatsData groupData = new LocStatsData();
+            LocStatsData groupData = new LocStatsData(0, 0, 0);
 
             foreach (LocMetricsBase childLocMetrics in groupLocStatsData)
             {
