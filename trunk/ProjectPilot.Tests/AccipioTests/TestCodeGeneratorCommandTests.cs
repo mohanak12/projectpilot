@@ -8,6 +8,9 @@ namespace ProjectPilot.Tests.AccipioTests
     [TestFixture]
     public class TestCodeGeneratorCommandTests
     {
+        /// <summary>
+        /// Test checks that parser returns null if no arguments is passed
+        /// </summary>
         [Test]
         public void ArgumentIsNullTest()
         {

@@ -1,13 +1,18 @@
-﻿using System.Xml;
-using System.Xml.Schema;
+﻿using System.Xml.Schema;
 using Accipio.Console;
 using MbUnit.Framework;
 
 namespace ProjectPilot.Tests.AccipioTests
 {
+    /// <summary>
+    /// Unit tests for class <see cref="XmlValidationHelper" />
+    /// </summary>
     [TestFixture]
     public class XmlValidationTest
     {
+        /// <summary>
+        /// Test checks if xml document is valid against xsd schema.
+        /// </summary>
         [Test]
         public void XmlValidationWithSchemaTest()
         {
@@ -18,6 +23,9 @@ namespace ProjectPilot.Tests.AccipioTests
             xmlValidationHelper.ValidateXmlDocument(XmlFileName, XsdFileName);
         }
 
+        /// <summary>
+        /// Test checks if validator returns exception because of invalid xml document.
+        /// </summary>
         [Test, ExpectedException(typeof(XmlSchemaException))]
         public void XmlValidationFailedTest()
         {
