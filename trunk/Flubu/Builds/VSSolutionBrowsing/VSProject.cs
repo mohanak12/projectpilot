@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
+using log4net;
 
 namespace Flubu.Builds.VSSolutionBrowsing
 {
@@ -62,6 +63,8 @@ namespace Flubu.Builds.VSSolutionBrowsing
         /// <returns>VSProject class containing project information.</returns>
         public static VSProject Load(string projectFileName)
         {
+            log.DebugFormat("Load ('{0}')", projectFileName);
+
             using (Stream stream = File.OpenRead (projectFileName))
             {
                 VSProject data = new VSProject();
@@ -123,7 +126,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
         {
             xmlReader.Read();
 
-            while (xmlReader.NodeType != XmlNodeType.EndElement)
+            while (false == xmlReader.EOF && xmlReader.NodeType != XmlNodeType.EndElement)
             {
                 switch (xmlReader.Name)
                 {
@@ -246,8 +249,9 @@ namespace Flubu.Builds.VSSolutionBrowsing
             return item;
         }
 
-        private readonly List<VSProjectItem> items = new List<VSProjectItem>();
         private readonly List<VSProjectConfiguration> configurations = new List<VSProjectConfiguration>();
+        private readonly List<VSProjectItem> items = new List<VSProjectItem>();
+        private static readonly ILog log = LogManager.GetLogger(typeof(VSProject));
         private readonly Dictionary<string, string> properties = new Dictionary<string, string>();
         private bool propertiesDictionary;
     }
