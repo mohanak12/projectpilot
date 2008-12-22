@@ -35,7 +35,7 @@ namespace ProjectPilot.Framework.Metrics
                     int commentInIndex = line.IndexOf(@"<%--", StringComparison.Ordinal);
                     int commentOutIndex = line.IndexOf(@"--%>", StringComparison.Ordinal);
 
-                    if (commentInIndex > 0 &&
+                    if (commentInIndex >= 0 &&
                         inCommentMode == false)
                     {
                         cloc++;
@@ -43,7 +43,7 @@ namespace ProjectPilot.Framework.Metrics
                             inCommentMode = true;
                     }
 
-                    if (commentOutIndex > 0 &&
+                    if (commentOutIndex >= 0 &&
                         inCommentMode == true)
                         inCommentMode = false;
                 }
