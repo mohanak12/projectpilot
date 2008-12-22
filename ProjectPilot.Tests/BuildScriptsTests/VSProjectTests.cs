@@ -38,7 +38,7 @@ namespace ProjectPilot.Tests.BuildScriptsTests
  
         [Test]
         public void TestParsingVSProjectFile2()
-        {
+        { 
             VSProject project = VSProject.Load (@"..\..\..\Data\Samples\ProjectPilot.Portal.csproj");
 
             IList<VSProjectItem> compileItems = project.GetSingleTypeItems(VSProjectItem.CompileItem);
@@ -58,6 +58,23 @@ namespace ProjectPilot.Tests.BuildScriptsTests
             Assert.AreEqual("True", project.Items[6].ItemAttributes.ElementAt(3).Value);//ref
             Assert.AreEqual("ProjectGuid", project.Properties.ElementAt(4).Key);
             Assert.AreEqual("{603c0e0b-db56-11dc-be95-000d561079b0};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}", project.Properties.ElementAt(5).Value);
+        }
+
+        [Test]
+        public void TestParsingVSProjectFile3()
+        {
+            VSProject project = VSProject.Load(@"..\..\..\Data\Samples\Hsl.Ganesha.DBAccess.csproj");
+
+            IList<VSProjectItem> compileItems = project.GetSingleTypeItems(VSProjectItem.CompileItem);
+            IList<VSProjectItem> referenceItems = project.GetSingleTypeItems(VSProjectItem.Reference);
+
+            Assert.AreEqual(3, compileItems.Count);
+            Assert.AreEqual(2, project.Configurations.Count);
+            Assert.AreEqual(3, referenceItems.Count);
+            Assert.AreEqual(15, project.Properties.Count);
+
+            Assert.AreEqual(@"Properties\AssemblyInfo.cs", compileItems.ElementAt(2).Item);
+            Assert.AreEqual("System.Data", project.Items[1].Item);//ref
         }
     }
 }
