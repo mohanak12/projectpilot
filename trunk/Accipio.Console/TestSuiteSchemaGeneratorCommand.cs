@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Reflection;
 using System.Xml;
 
 namespace Accipio.Console
@@ -84,7 +85,10 @@ namespace Accipio.Console
             XmlValidationHelper helper = new XmlValidationHelper();
             // validating XML with schema file
             // xml document must have at least one action element
-            helper.ValidateXmlDocument(businessActionsXmlFileName, AccipioActionsXsdFileName);
+
+            helper.ValidateXmlDocument(
+                businessActionsXmlFileName, 
+                Path.Combine(AccipioDirectory, AccipioActionsXsdFileName));
 
             // parse XML file
             BusinessActionData businessActionData = ParseXmlToObject(businessActionsXmlFileName);
@@ -102,6 +106,18 @@ namespace Accipio.Console
                 CultureInfo.InvariantCulture, 
                 "XSD schema file was created. Full path to file: '{0}'", 
                 new FileInfo(outputFileName).FullName));
+        }
+
+        private string AccipioDirectory
+        {
+            get
+            {
+                Uri uri = new Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase);
+                string localPath = uri.LocalPath;
+                string accipioDirectory = Path.GetDirectoryName(localPath);
+
+                return accipioDirectory;
+            }
         }
 
         /// <summary>
@@ -235,7 +251,9 @@ namespace Accipio.Console
         /// <returns>Return xsd schema</returns>
         private XmlDocument GenerateXsdSchema(BusinessActionData businessActionData)
         {
-            using (Stream stream = File.Open(XsdTemplateFileName, FileMode.Open))
+            using (Stream stream = File.Open(
+                Path.Combine(AccipioDirectory, XsdTemplateFileName), 
+                FileMode.Open))
             {
                 XmlDocument xmlDocument = new XmlDocument();
                 xmlDocument.Load(stream);
