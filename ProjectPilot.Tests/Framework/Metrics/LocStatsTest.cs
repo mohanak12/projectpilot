@@ -9,7 +9,7 @@ namespace ProjectPilot.Tests.Framework.Metrics
     public class LocStatsTest
     {
         [Test]
-        public void TestLocOnSampleFile()
+        public void TestLocOnSampleCSharpFile()
         {
             ILocStats locStats = new CSharpLocStats();
 
@@ -22,6 +22,19 @@ namespace ProjectPilot.Tests.Framework.Metrics
             Assert.AreEqual(56, data.Sloc);
         }
 
+        public void TestLocOnSampleAspxFile()
+        {
+            ILocStats locStats = new AspxLocStats();
+
+            Stream stream = File.OpenRead(@"..\..\..\Data\Samples\AspxSample.aspx");
+
+            LocStatsData data = locStats.CountLocStream(stream);
+
+            Assert.AreEqual(8, data.Cloc);
+            Assert.AreEqual(4, data.Eloc);
+            Assert.AreEqual(48, data.Sloc);
+        }
+        
         [Test]
         public void SolutionLocMetrics()
         {
@@ -29,10 +42,9 @@ namespace ProjectPilot.Tests.Framework.Metrics
             
             // add known extensions
             metrics.LocStatsMap.AddToMap(".cs", new CSharpLocStats());
-            //metrics.LocStatsMap.AddToMap(".aspx", new AspxLocStats());
+            metrics.LocStatsMap.AddToMap(".aspx", new AspxLocStats());
 
             metrics.CalculateLocForSolution(
-            //    @"c:\Documents and Settings\jureh\My Documents\Visual Studio 2008\Projects\WebApplication1\WebApplication1.sln");
                 @"..\..\..\ProjectPilot.sln");
 
             LocStatsData data = metrics.GetLocStatsData();

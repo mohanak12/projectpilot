@@ -55,6 +55,11 @@ namespace Flubu.Builds.VSSolutionBrowsing
             return null;
         }
 
+        /// <summary>
+        /// Loads the specified project file name.
+        /// </summary>
+        /// <param name="projectFileName">Name of the project file.</param>
+        /// <returns>VSProject class containing project information.</returns>
         public static VSProject Load(string projectFileName)
         {
             using (Stream stream = File.OpenRead (projectFileName))
