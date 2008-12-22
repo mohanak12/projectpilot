@@ -97,6 +97,18 @@ namespace Flubu.Builds.VSSolutionBrowsing
             }
         }
 
+        public IList<VSProjectItem> GetSingleTypeItems(string getItemType)
+        {
+            List<VSProjectItem> returnList = new List<VSProjectItem>();
+            foreach (VSProjectItem item in this.Items)
+            {
+                if (item.ItemType == getItemType)
+                    returnList.Add(item);
+            }
+
+            return returnList;
+        }
+
         private void ReadProject(XmlReader xmlReader)
         {
             xmlReader.Read();

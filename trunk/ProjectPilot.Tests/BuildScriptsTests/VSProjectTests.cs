@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Flubu.Builds.VSSolutionBrowsing;
 using MbUnit.Framework;
 
@@ -12,16 +13,19 @@ namespace ProjectPilot.Tests.BuildScriptsTests
         {
             VSProject project = VSProject.Load (@"..\..\..\Data\Samples\ProjectPilot.Framework.csproj");
 
-            Assert.AreEqual(48, project.Items.Count);//compile
+            IList<VSProjectItem> compileItems = project.GetSingleTypeItems(VSProjectItem.CompileItem);
+            IList<VSProjectItem> referenceItems = project.GetSingleTypeItems(VSProjectItem.Reference);
+            
+            Assert.AreEqual(48, compileItems.Count);
             Assert.AreEqual(2, project.Configurations.Count);
-            Assert.AreEqual(9, project.Items.Count);//ref
+            Assert.AreEqual(9, referenceItems.Count);
             Assert.AreEqual(14, project.Properties.Count);
 
-            Assert.AreEqual(@"Subversion\SubversionHistoryFacility.cs", project.Items[47].Item);//comp
+            /*Assert.AreEqual(@"Subversion\SubversionHistoryFacility.cs", project.Items[47].Item);//comp
             Assert.AreEqual(" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ", project.Configurations[0].Condition);
             Assert.AreEqual("System.Data", project.Items[3].Item);//ref
             Assert.AreEqual("OutputType", project.Properties.ElementAt(5).Key);
-            Assert.AreEqual("Properties", project.Properties.ElementAt(6).Value);
+            Assert.AreEqual("Properties", project.Properties.ElementAt(6).Value);*/
         }
  
         [Test, Pending]
