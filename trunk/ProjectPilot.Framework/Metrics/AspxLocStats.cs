@@ -19,7 +19,7 @@ namespace ProjectPilot.Framework.Metrics
                 while (true)
                 {
                     string line = reader.ReadLine();
-                    
+
                     if (line == null) //End of file.
                         break;
 
@@ -31,6 +31,21 @@ namespace ProjectPilot.Framework.Metrics
                     //if we are in a multi line comment
                     if (inCommentMode == true)
                         cloc++;
+
+                    int commentInIndex = line.IndexOf(@"<%--", StringComparison.Ordinal);
+                    int commentOutIndex = line.IndexOf(@"--%>", StringComparison.Ordinal);
+
+                    if (commentInIndex > 0 &&
+                        inCommentMode == false)
+                    {
+                        cloc++;
+                        if (commentOutIndex < commentInIndex)
+                            inCommentMode = true;
+                    }
+
+                    if (commentOutIndex > 0 &&
+                        inCommentMode == true)
+                        inCommentMode = false;
                 }
             }
             
