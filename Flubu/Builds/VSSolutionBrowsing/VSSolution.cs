@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.RegularExpressions;
+using log4net;
 
 namespace Flubu.Builds.VSSolutionBrowsing
 {
@@ -90,6 +91,8 @@ namespace Flubu.Builds.VSSolutionBrowsing
         /// <returns>A <see cref="VSSolution"/> representing the solution.</returns>
         public static VSSolution Load (string fileName)
         {
+            log.DebugFormat("Load ('{0}')", fileName);
+
             VSSolution solution = new VSSolution (fileName);
             ParserContext parserContext = new ParserContext ();
 
@@ -214,6 +217,6 @@ namespace Flubu.Builds.VSSolutionBrowsing
         private string solutionFileName;
         private decimal solutionVersion;
 
-        //static readonly private ILog log = LogManager.GetLogger (typeof (VSSolution));
+        private static readonly ILog log = LogManager.GetLogger(typeof(VSSolution));
     }
 }
