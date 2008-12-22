@@ -32,46 +32,6 @@ namespace ProjectPilot.Framework.Metrics
             return groupData;
         }
 
-//        public override XmlNode InsertItem(XmlNode xmlNode, XmlDocument xmlDocument)
-//        {
-//            XmlNode item;
-//            LocStatsData locStatsDataXML;
-//            
-//            foreach(LocStatsData locStatsData in this.groupLocStatsData)
-//            {
-//                locStatsDataXML.Cloc += locStatsData.Cloc;
-//                locStatsDataXML.Sloc += locStatsData.Sloc;
-//                locStatsDataXML.Eloc += locStatsData.Eloc;
-//            }
-//            
-//            XmlElement element = xmlDocument.CreateElement("Item");
-//            element.SetAttribute("FileName", this.filePath);
-//            element.SetAttribute("FileType", "fileType");     //?
-//
-//            item = xmlNode = xmlNode.AppendChild(element);
-//
-//            element = xmlDocument.CreateElement("LoC");
-//            xmlNode = xmlNode.AppendChild(element);
-//            
-//
-//            element = xmlDocument.CreateElement("EmptyLinesOfCode");
-//            element.InnerText = Convert.ToString(locStatsDataXML.Eloc);
-//            xmlNode.AppendChild(element);
-//
-//            element = xmlDocument.CreateElement("SingleLinesOfCode");
-//            element.InnerText = Convert.ToString(locStatsDataXML.Sloc);
-//            xmlNode.AppendChild(element);
-//
-//            element = xmlDocument.CreateElement("CommentLinesOfCode");
-//            element.InnerText = Convert.ToString(locStatsDataXML.Cloc);
-//            xmlNode.AppendChild(element);
-//
-//            element = xmlDocument.CreateElement("SubItems");
-//            xmlNode = item.AppendChild(element);
-//
-//            return xmlNode;
-//        }
-
         protected GroupLocMetricsBase(string fileName)
             : base(fileName)
         {
@@ -86,6 +46,10 @@ namespace ProjectPilot.Framework.Metrics
             groupLocStatsData.Add(locMetrics);
         }
 
+        /// <summary>
+        /// Creates XML for all child items.
+        /// </summary>
+        /// <param name="writer">The parent (current) XML writer.</param>
         protected override void WriteSubitemsXml(XmlWriter writer)
         {
             writer.WriteStartElement("Subitem");

@@ -46,6 +46,10 @@ namespace ProjectPilot.Framework.Metrics
             locCalculated = true;
         }
 
+        /// <summary>
+        /// Generates the XML report of the entire solution.
+        /// </summary>
+        /// <param name="filePath">The path of .sln file.</param>
         public void GenerateXmlReport(string filePath)
         {
             if (false == locCalculated)
@@ -61,21 +65,6 @@ namespace ProjectPilot.Framework.Metrics
                 xmlWriter.WriteStartElement("Root");
 
                 this.WriteXml(xmlWriter);
-
-                ////Load the solution, appropriate projects and their compile items.
-                //VSSolution solution = VSSolution.Load(solutionFileName);
-                //solution.LoadProjects();
-
-                //foreach (VSProjectInfo projectInfo in solution.Projects)
-                //{
-                //    //just C# projects
-                //    if (projectInfo.ProjectTypeGuid != VSProjectType.CSharpProjectType.ProjectTypeGuid)
-                //        continue;
-
-                //    VSProjectLocMetrics projectMetrics = new VSProjectLocMetrics(projectInfo);
-                //    projectMetrics.GenerateXmlReport(projectInfo, xmlWriter);
-                //    //projectMetrics.WriteXml(xmlWriter);
-                //}
 
                 xmlWriter.WriteEndElement();
             }
