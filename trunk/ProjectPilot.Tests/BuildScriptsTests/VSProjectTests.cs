@@ -8,7 +8,7 @@ namespace ProjectPilot.Tests.BuildScriptsTests
     [TestFixture]
     public class VSProjectTests
     {
-        [Test, Pending]
+        [Test]
         public void TestParsingVSProjectFile1()
         {
             VSProject project = VSProject.Load (@"..\..\..\Data\Samples\ProjectPilot.Framework.csproj");
@@ -21,26 +21,39 @@ namespace ProjectPilot.Tests.BuildScriptsTests
             Assert.AreEqual(9, referenceItems.Count);
             Assert.AreEqual(14, project.Properties.Count);
 
-            /*Assert.AreEqual(@"Subversion\SubversionHistoryFacility.cs", project.Items[47].Item);//comp
-            Assert.AreEqual(" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ", project.Configurations[0].Condition);
+            Assert.AreEqual(
+                            @"Subversion\SubversionHistoryFacility.cs",
+                            project.GetSingleTypeItems("CompileItem").ElementAt(47).Item);//comp
+            
+            Assert.AreEqual(
+                            " '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ",
+                            project.Configurations[0].Condition);
+            
             Assert.AreEqual("System.Data", project.Items[3].Item);//ref
+            Assert.AreEqual("System.Xml", project.GetSingleTypeItems("Reference").ElementAt(6).Item);//ref
+
             Assert.AreEqual("OutputType", project.Properties.ElementAt(5).Key);
-            Assert.AreEqual("Properties", project.Properties.ElementAt(6).Value);*/
+            Assert.AreEqual("Properties", project.Properties.ElementAt(6).Value);
         }
  
-        [Test, Pending]
+        [Test]
         public void TestParsingVSProjectFile2()
         {
             VSProject project = VSProject.Load (@"..\..\..\Data\Samples\ProjectPilot.Portal.csproj");
 
-            Assert.AreEqual(24, project.Items.Count);//compile
+            IList<VSProjectItem> compileItems = project.GetSingleTypeItems(VSProjectItem.CompileItem);
+            IList<VSProjectItem> referenceItems = project.GetSingleTypeItems(VSProjectItem.Reference);
+
+            Assert.AreEqual(24, compileItems.Count);//compile
             Assert.AreEqual(2, project.Configurations.Count);
-            Assert.AreEqual(16, project.Items.Count);//ref
+            Assert.AreEqual(16, referenceItems.Count);//ref
             Assert.AreEqual(13, project.Properties.Count);
 
-            Assert.AreEqual(@"Views\Shared\Site.Master.designer.cs", project.Items[23].Item);//comp
+            Assert.AreEqual(@"Views\Shared\Site.Master.designer.cs", compileItems.ElementAt(23).Item);//comp
+
             Assert.AreEqual(" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ", project.Configurations[1].Condition);
             Assert.AreEqual("System.Web.Routing, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL", project.Items[6].Item);//ref
+            Assert.AreEqual("HintPath", referenceItems.ElementAt(6).ItemAttributes.ElementAt(1).Key);//ref
             Assert.AreEqual("HintPath", project.Items[6].ItemAttributes.ElementAt(1).Key);//ref
             Assert.AreEqual("True", project.Items[6].ItemAttributes.ElementAt(3).Value);//ref
             Assert.AreEqual("ProjectGuid", project.Properties.ElementAt(4).Key);
