@@ -38,7 +38,7 @@ namespace ProjectPilot.Tests.Framework.Metrics
             LocStatsData data = metrics.GetLocStatsData();
         }
 
-        [Test, Pending("Marko: todo")]
+        [Test]
         public void TestGeneratingSolutionXmlReport()
         {
             VSSolutionLocMetrics metrics = new VSSolutionLocMetrics("ProjectPilot.sln");
@@ -57,6 +57,11 @@ namespace ProjectPilot.Tests.Framework.Metrics
             Assert.IsNotNull(xmlNode);
 
             Assert.AreEqual(".csproj", xmlNode.Attributes["FileType"].Value);
+
+            xmlNode = xmlDocument.SelectSingleNode(
+                "Root/Item/Subitem/Item/Subitem/Item");
+
+            Assert.AreEqual(".cs", xmlNode.Attributes["FileType"].Value);
         }
     }
 }
