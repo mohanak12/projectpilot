@@ -97,6 +97,11 @@ namespace Flubu.Builds.VSSolutionBrowsing
             }
         }
 
+        /// <summary>
+        /// Gets the List of VSProjectItem single type items.
+        /// </summary>
+        /// <param name="getItemType">Type of the item.</param>
+        /// <returns>List of items of specific itemType.</returns>
         public IList<VSProjectItem> GetSingleTypeItems(string getItemType)
         {
             List<VSProjectItem> returnList = new List<VSProjectItem>();
