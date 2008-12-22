@@ -126,7 +126,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
         {
             xmlReader.Read();
 
-            while (false == xmlReader.EOF && xmlReader.NodeType != XmlNodeType.EndElement)
+            while (xmlReader.NodeType != XmlNodeType.EndElement && false == xmlReader.EOF)
             {
                 switch (xmlReader.Name)
                 {
@@ -184,7 +184,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
         {
             xmlReader.Read();
 
-            while (xmlReader.NodeType != XmlNodeType.EndElement)
+            while (xmlReader.NodeType != XmlNodeType.EndElement && false == xmlReader.EOF)
             {
                 switch (xmlReader.Name)
                 {
@@ -228,7 +228,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
         {
             VSProjectItem item = new VSProjectItem(itemType);
 
-            while (xmlReader.NodeType != XmlNodeType.EndElement)
+            while (xmlReader.NodeType != XmlNodeType.EndElement && false == xmlReader.EOF)
             {
                 if (xmlReader.HasAttributes && xmlReader.NodeType != XmlNodeType.EndElement)
                 {
