@@ -22,6 +22,7 @@ namespace ProjectPilot.Tests.Framework.Metrics
             Assert.AreEqual(56, data.Sloc);
         }
 
+        [Test]
         public void TestLocOnSampleAspxFile()
         {
             ILocStats locStats = new AspxLocStats();
