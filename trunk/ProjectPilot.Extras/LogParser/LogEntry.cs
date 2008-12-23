@@ -9,41 +9,16 @@ namespace ProjectPilot.Extras.LogParser
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     public class LogEntry
     {
-        public string Date
+        public void ParseEntry(string[] patternArray, string line)
         {
-            get { return date; }
-            set { date = value; }
+            string[] parseArray = line.Split(' ');
+            for (int i = 0; i < patternArray.Count(); i++)
+            {
+                logItems.Add(patternArray[i],parseArray[i]);
+            }
         }
 
-        public string Time
-        {
-            get { return time; }
-            set { time = value; }
-        }
-
-        public string ThreadId
-        {
-            get { return threadId; }
-            set { threadId = value; }
-        }
-
-        public string Level
-        {
-            get { return level; }
-            set { level = value; }
-        }
-
-        public string Undefined
-        {
-            get { return undefined; }
-            set { undefined = value; }
-        }
-
-        private string date;
-        private string time;
-        private string threadId;
-        private string level;
-        private string undefined;
+        private Dictionary<string, string> logItems = new Dictionary<string, string>();
 
 //        public IDictionary<string, string> LogItems
 //        {
