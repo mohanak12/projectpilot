@@ -11,6 +11,11 @@ namespace ProjectPilot.Extras.LogParser
     [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
     public class LogCollection
     {
+        public LogCollection(string patternString)
+        {
+            this.patternArray = patternString.Split(' ');
+        }
+
         public void ParseLogFile(Stream fileStream)
         {
             using (StreamReader reader = new StreamReader(fileStream))
@@ -20,17 +25,16 @@ namespace ProjectPilot.Extras.LogParser
                     string line = reader.ReadLine();
                     if (line == null) //End of file.
                         break;
-//
-//                    LogEntry newEntry = new LogEntry();
-//                    
-//                    string [] entryArray = line.Split(' ');
-//                   // newEntry.LogItems.Add(logPattern.ElementAt(1), entryArray[1]);
-//                    newEntry.LogItems.Add("test", entryArray[1]);
-//
-//                    //newEntry.Date = line.Substring(0, line.IndexOf(@" ");
-                  }
+
+                    LogEntry newEntry = new LogEntry();
+                    newEntry.ParseEntry(patternArray, line);
+
+                    logGroup.Add(newEntry);
+                }
             }
          }
-//          public List<string> logPattern = new List<string>();
+
+        private List<LogEntry> logGroup = new List<LogEntry>();
+        private string [] patternArray;
     }
  }
