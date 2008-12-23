@@ -22,12 +22,12 @@ namespace ProjectPilot.Tests.BuildScriptsTests
             Assert.AreEqual(14, project.Properties.Count);
 
             Assert.AreEqual(
-                            @"Subversion\SubversionHistoryFacility.cs",
-                            project.GetSingleTypeItems("CompileItem").ElementAt(47).Item);//comp
+            @"Subversion\SubversionHistoryFacility.cs",
+            project.GetSingleTypeItems("CompileItem").ElementAt(47).Item);//comp
             
             Assert.AreEqual(
-                            " '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ",
-                            project.Configurations[0].Condition);
+            " '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ",
+            project.Configurations[0].Condition);
             
             Assert.AreEqual("System.Data", project.Items[3].Item);//ref
             Assert.AreEqual("System.Xml", project.GetSingleTypeItems("Reference").ElementAt(6).Item);//ref
@@ -74,7 +74,7 @@ namespace ProjectPilot.Tests.BuildScriptsTests
             Assert.AreEqual(15, project.Properties.Count);
 
             Assert.AreEqual(@"Properties\AssemblyInfo.cs", compileItems.ElementAt(2).Item);
-            Assert.AreEqual("System.Data", project.Items[1].Item);//ref
+            Assert.AreEqual("System.Data", project.Items[1].Item);
         }
     }
 }

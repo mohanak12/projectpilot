@@ -28,11 +28,11 @@ namespace ProjectPilot.Tests.BuildScriptsTests
         /// <summary>
         /// Tests loading of VS solution and projects.
         /// </summary>
-        [Test, Pending("Marko: The test fails")]
+        [Test]
         public void LoadProjects ()
         {
-            //VSSolution solution = VSSolution.Load(@"..\..\..\ProjectPilot.sln");
-            VSSolution solution = VSSolution.Load(@"D:\svn\Mimi\trunk\source\Hsl.Ganesha.sln");
+            VSSolution solution = VSSolution.Load(@"..\..\..\ProjectPilot.sln"); 
+
             solution.LoadProjects();
 
             int vsProjectObjectsFound = 0;
