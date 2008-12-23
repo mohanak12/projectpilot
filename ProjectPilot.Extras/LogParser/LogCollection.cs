@@ -20,14 +20,17 @@ namespace ProjectPilot.Extras.LogParser
                     string line = reader.ReadLine();
                     if (line == null) //End of file.
                         break;
-
-                    //LogEntry newEntry = new LogEntry();
-
-                    //string [] entryArray = line.Split(' ');
-
-                    //newEntry.Date = line.Substring(0, line.IndexOf(@" ");
-                }
+//
+//                    LogEntry newEntry = new LogEntry();
+//                    
+//                    string [] entryArray = line.Split(' ');
+//                   // newEntry.LogItems.Add(logPattern.ElementAt(1), entryArray[1]);
+//                    newEntry.LogItems.Add("test", entryArray[1]);
+//
+//                    //newEntry.Date = line.Substring(0, line.IndexOf(@" ");
+                  }
             }
-        }
+         }
+//          public List<string> logPattern = new List<string>();
     }
-}
+ }

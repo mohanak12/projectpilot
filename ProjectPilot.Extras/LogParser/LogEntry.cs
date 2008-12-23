@@ -44,5 +44,13 @@ namespace ProjectPilot.Extras.LogParser
         private string threadId;
         private string level;
         private string undefined;
+
+//        public IDictionary<string, string> LogItems
+//        {
+//            get { return logItems; }
+//        }
+
+//        //<LogPattern, value>
+//        private Dictionary<string, string> logItems = new Dictionary<string, string>();
     }
 }
