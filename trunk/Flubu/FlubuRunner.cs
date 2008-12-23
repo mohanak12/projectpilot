@@ -159,7 +159,14 @@ namespace Flubu
             return ReturnThisTRunner();
         }
 
-        public TRunner CopyDirectoryStructure(string sourcePath, string destinationPath, bool overwriteExisting)
+        /// <summary>
+        /// Copies the directory structure (and the files) to the destination directory.
+        /// </summary>
+        /// <param name="sourcePath">The source path.</param>
+        /// <param name="destinationPath">The destination path.</param>
+        /// <param name="overwriteExisting">if set to <c>true</c>, existing files will be overwriten.</param>
+        /// <returns>The same instance of this <see cref="TRunner"/>.</returns>
+        public virtual TRunner CopyDirectoryStructure(string sourcePath, string destinationPath, bool overwriteExisting)
         {
             CopyDirectoryStructureTask task = new CopyDirectoryStructureTask(sourcePath, destinationPath, overwriteExisting);
             RunTask(task);
@@ -167,16 +174,29 @@ namespace Flubu
             return ReturnThisTRunner();
         }
 
-        public TRunner CopyDirectoryStructure(
+        /// <summary>
+        /// Copies the directory structure (and the files) to the destination directory.
+        /// </summary>
+        /// <param name="sourcePath">The source path.</param>
+        /// <param name="destinationPath">The destination path.</param>
+        /// <param name="overwriteExisting">if set to <c>true</c>, existing files will be overwriten.</param>
+        /// <param name="inclusionRegexPattern">The inclusion Regular expression pattern. 
+        /// All files whose paths match this regular expression
+        /// will be copied. If the <see cref="inclusionRegexPattern"/> is <c>null</c>, it will be ignored.</param>
+        /// <param name="exclusionRegexPattern">The exclusion Regular expression pattern. 
+        /// All files whose paths match this regular expression
+        /// will not be copied. If the <see cref="exclusionRegexPattern"/> is <c>null</c>, it will be ignored.</param>
+        /// <returns>The same instance of this <see cref="TRunner"/>.</returns>
+        public virtual TRunner CopyDirectoryStructure(
             string sourcePath, 
             string destinationPath, 
             bool overwriteExisting,
-            string inclusionPattern,
-            string exclusionPattern)
+            string inclusionRegexPattern,
+            string exclusionRegexPattern)
         {
             CopyDirectoryStructureTask task = new CopyDirectoryStructureTask(sourcePath, destinationPath, overwriteExisting);
-            task.InclusionPattern = inclusionPattern;
-            task.ExclusionPattern = exclusionPattern;
+            task.InclusionPattern = inclusionRegexPattern;
+            task.ExclusionPattern = exclusionRegexPattern;
             
             RunTask(task);
 
@@ -240,10 +260,18 @@ namespace Flubu
             return ReturnThisTRunner();
         }
 
-        public TRunner DeleteFiles(string directoryPath, string filePattern)
+        /// <summary>
+        /// Deletes files which match the file pattern.
+        /// </summary>
+        /// <param name="directoryPath">The directory path from which to start searching for files.</param>
+        /// <param name="filePattern">The file pattern.</param>
+        /// <param name="recursive">if set to <c>true</c>, the method will delete matching files in subdirectories too;
+        /// otherwise it will just delete files in the top directory.</param>
+        /// <returns>The same instance of this <see cref="TRunner"/>.</returns>
+        public TRunner DeleteFiles(string directoryPath, string filePattern, bool recursive)
         {
-            DeleteFilesTask.Execute(scriptExecutionEnvironment, directoryPath, filePattern);
-            return ReturnThisTRunner();
+            DeleteFilesTask task = new DeleteFilesTask(directoryPath, filePattern, recursive);
+            return RunTask(task);
         }
 
         public TRunner DeleteUserAccount(string userName)
