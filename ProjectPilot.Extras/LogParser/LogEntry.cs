@@ -18,14 +18,12 @@ namespace ProjectPilot.Extras.LogParser
             }
         }
 
+        public IDictionary<string, string> LogItems
+        {
+            get { return logItems; }
+        }
+
+        //<LogPattern, value>
         private Dictionary<string, string> logItems = new Dictionary<string, string>();
-
-//        public IDictionary<string, string> LogItems
-//        {
-//            get { return logItems; }
-//        }
-
-//        //<LogPattern, value>
-//        private Dictionary<string, string> logItems = new Dictionary<string, string>();
     }
 }
