@@ -98,7 +98,6 @@ namespace ProjectPilot.Tests.AccipioTests
             mockCodeWriter.Expect(writer => writer.WriteLine("                    .AssertOperationSuccessful();"));
             mockCodeWriter.Expect(writer => writer.WriteLine("            }"));
             mockCodeWriter.Expect(writer => writer.WriteLine("        }"));
-            mockCodeWriter.Expect(writer => writer.WriteLine(string.Empty));
             mockCodeWriter.Expect(writer => writer.WriteLine("    }"));
             mockCodeWriter.Expect(writer => writer.WriteLine("}"));
 
