@@ -27,6 +27,7 @@ namespace Accipio
             WriteLine("    [TestFixture]");
             WriteLine("    public class {0}TestSuite", testSuite.Id);
             WriteLine("    {");
+            int testCaseCount = 1;
             foreach (string testCaseName in testCasesKeys)
             {
                 WriteLine("        /// <summary>");
@@ -97,7 +98,12 @@ namespace Accipio
 
                 WriteLine("            }");
                 WriteLine("        }");
-                WriteLine(string.Empty);
+                if (testSuite.TestCasesCount != testCaseCount)
+                {
+                    WriteLine(string.Empty);
+                }
+
+                testCaseCount++;
             }
 
             WriteLine("    }");
