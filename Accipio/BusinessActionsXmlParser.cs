@@ -57,6 +57,10 @@ namespace Accipio
                                 break;
                             }
 
+                        case XmlNodeType.XmlDeclaration:
+                            xmlReader.Read();
+                            continue;
+
                         default:
                             {
                                 throw new System.NotSupportedException();

@@ -50,6 +50,10 @@ namespace ProjectPilot.Framework.CCNet
                             ReadStatistics(data, xmlReader);
 
                             break;
+                            
+                        case XmlNodeType.XmlDeclaration:
+                            xmlReader.Read();
+                            continue;
 
                         default:
                             throw new XmlException();
