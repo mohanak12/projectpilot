@@ -13,6 +13,7 @@ namespace ProjectPilot.Tests.Extras
         {
             Stream stream = File.OpenRead(@"..\..\..\Data\Samples\TestServer.log");
             LogCollection parseCollection = new LogCollection(@"date time threadId level other");
+
             parseCollection.ParseLogFile(stream);
         }
     }
