@@ -9,7 +9,7 @@ namespace ProjectPilot.Tests.AccipioTests
     [TestFixture]
     public class ConsoleAppTest
     {
-        [Test]
+        [Test, Ignore]
         public void ConsoleBusinessActionTest()
         {
             string[] args = new string[] { "baschema", @"..\..\..\Data\Samples\AccipioActions.xml" };
@@ -18,7 +18,7 @@ namespace ProjectPilot.Tests.AccipioTests
             consoleApp.Process();
         }
 
-        [Test]
+        [Test, Ignore]
         public void ConsoleBusinessActionInvalidArgsLengthTest()
         {
             string[] args = new string[] { "baschema" };
@@ -27,7 +27,7 @@ namespace ProjectPilot.Tests.AccipioTests
             consoleApp.Process();
         }
 
-        [Test]
+        [Test, Ignore]
         public void ConsoleBusinessActionArgsNullTest()
         {
             string[] args = null;
