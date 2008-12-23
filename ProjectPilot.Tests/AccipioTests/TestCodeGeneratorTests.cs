@@ -21,13 +21,23 @@ namespace ProjectPilot.Tests.AccipioTests
             testCodeGeneratorCommand.ProcessCommand();
         }
 
+        //public static string[] GetArgs()
+        //{
+        //    string[] args = new string[4];
+        //    args[0] = "codegen";
+        //    args[1] = "..\\..\\..\\Data\\Samples\\BusinessActions.xml";
+        //    args[2] = TestSuiteSchemaGeneratorTests.GenerateXsdValidationSchemaOutputFile();
+        //    args[3] = "..\\..\\..\\Data\\Samples\\TestSuite.xml";
+        //    return args;
+        //}
+
         public static string[] GetArgs()
         {
             string[] args = new string[4];
             args[0] = "codegen";
-            args[1] = "..\\..\\..\\Data\\Samples\\BusinessActions.xml";
-            args[2] = TestSuiteSchemaGeneratorTests.GenerateXsdValidationSchemaOutputFile();
-            args[3] = "..\\..\\..\\Data\\Samples\\TestSuite.xml";
+            args[1] = @"D:\Projects\MiMi\source\Hsl.Ganesha.AcceptanceTests\MimiActions.xml";
+            args[2] = @"D:\Projects\MiMi\source\Hsl.Ganesha.AcceptanceTests\MimiActions.xsd";
+            args[3] = @"D:\Projects\MiMi\source\Hsl.Ganesha.AcceptanceTests\SmsUiTestSuite.xml";
             return args;
         }
     }
