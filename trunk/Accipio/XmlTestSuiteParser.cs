@@ -1,6 +1,7 @@
 #region
 
 using System;
+using System.Globalization;
 using System.IO;
 using System.Xml;
 
@@ -62,10 +63,18 @@ namespace Accipio
 
                                 break;
                             }
+                        
+                        case XmlNodeType.XmlDeclaration:
+                            xmlReader.Read();
+                            continue;
 
                         default:
                             {
-                                throw new XmlException();
+                                throw new NotSupportedException(
+                                    string.Format(
+                                    CultureInfo.InvariantCulture,
+                                    "Not supported xml node type. Node type = {0}",
+                                    xmlReader.NodeType));
                             }
                     }
                 }
