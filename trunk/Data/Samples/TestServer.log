@@ -1,0 +1,777 @@
+﻿2008-12-22 09:16:02,734 [4904] INFO  Hsl.UniversalHost.Core.ComponentManager [ComponentManager.Start] - Starting all components.
+2008-12-22 09:16:02,843 [5580] INFO  Hsl.Sms.Emi.ConnectionGenerator [ConnectQueue] - Queue processing initiated.
+2008-12-22 09:16:02,843 [4904] INFO  Hsl.UniversalHost.Core.ActiveComponent [ComponentManager.Start] - Starting component 'SmsCenter'.
+2008-12-22 09:16:04,640 [3152] INFO  Hsl.SsmTest.TestServer.SmsCenter [Start Component SmsCenter] - Resolved remoting configuration file to C:\SsmEnv\test\SsmTestServer\SmsCenterRemoting.config
+2008-12-22 09:16:05,140 [3152] INFO  Hsl.SsmTest.TestServer.SmsCenter [Start Component SmsCenter] - Registered remoting object Hsl.SsmTest.TestServer.SmsCenterRemotingServer at SmsCenter.rem
+2008-12-22 09:16:05,468 [3152] INFO  Hsl.SsmTest.TestServer.SmsCenter [Start Component SmsCenter] - Sms center configuration changed to SmsCenterSettings: [SmsCenterClientSettings: WindowAcquisitionTimeout=00:00:30, NMAddress='1270000000018888', Listeners=[ListenerSettingsCollection: IdleTimeout=01:00:00, listeners=[[ListenerSettings: Address=, Port=1967, Linger=0]]], Connections=[ConnectionSettingsCollection: ConnectTimeout=00:00:00, ReconnectInitialDelay=00:00:05, ReconnectIncreaseDelay=00:00:10, ReconnectMaximumDelay=00:00:20, connections=[[ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]]].
+2008-12-22 09:16:05,484 [3152] INFO  Hsl.Sms.Emi.SmsCenterBase [Start Component SmsCenter] - Changing configuration to [SmsCenterClientSettings: WindowAcquisitionTimeout=00:00:30, NMAddress='1270000000018888', Listeners=[ListenerSettingsCollection: IdleTimeout=01:00:00, listeners=[[ListenerSettings: Address=, Port=1967, Linger=0]]], Connections=[ConnectionSettingsCollection: ConnectTimeout=00:00:00, ReconnectInitialDelay=00:00:05, ReconnectIncreaseDelay=00:00:10, ReconnectMaximumDelay=00:00:20, connections=[[ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]]].
+2008-12-22 09:16:05,515 [3152] INFO  Hsl.Sms.Emi.ConnectionGenerator [Start Component SmsCenter] - Enqueueing connection request: [retries=0, nextAttempt=12/22/2008 08:16:05 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 09:16:05,562 [3152] INFO  Hsl.Sms.Emi.SmsCenterBase [Start Component SmsCenter] - Configuration changed.
+2008-12-22 09:16:05,562 [3152] INFO  Hsl.SsmTest.TestServer.SmsCenter [Start Component SmsCenter] - Sms center started!
+2008-12-22 09:16:05,562 [3120] INFO  Hsl.SsmTest.TestServer.AsynchronousProcessor [ProcessingQueueWorker] - SMS sending thread started.
+2008-12-22 09:16:05,577 [3152] INFO  Hsl.UniversalHost.Core.ActiveComponent [Start Component SmsCenter] - Component 'SmsCenter' started.
+2008-12-22 09:16:05,577 [4904] INFO  Hsl.UniversalHost.Core.ComponentManager [ComponentManager.Start] - All components started successfully.
+2008-12-22 09:16:45,483 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:2615, remote: 192.168.0.20:1972, window: 99
+2008-12-22 09:16:45,514 [3368] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 09:17:47,762 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - SUBSCRIBED new remoting client RClientId:757dd1b1-1f16-4c46-b252-f61cd7b810c7,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count 1
+2008-12-22 09:17:54,496 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - SEND sms SmsMessage:[From:088137915,To:9975,BodyEncoding:GSM7Bit,Body:[#abcdedfgihj123 Xhtml2SSM MMS Response#*@!ATQJy/YAAQAAAP////8BAAAAAAAAAAwCAAAAWEhzbC5Tc21UZXN0Lk9wZXJhdGlvbiwgVmVyc2lvbj05LjMuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWViYmExZDY1M2Y1MjNjZTAMAwAAAElTeXN0ZW0sIFZlcnNpb249Mi4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5BQEAAAAtSHNsLlNzbVRlc3QuT3BlcmF0aW9uLlhodG1sMlNzbS5YaHRtbFJlc3BvbnNlDAAAAAhtQ2hhbm5lbAhtQ29udGVudAttQXV0b2RldGVjdA1tSGlkZGVuRmllbGRzCG1Db29raWVzEG1NbXNJbWFnZUNvb2tpZXMiPFJlbGV2YW50RmllbGROYW1lPmtfX0JhY2tpbmdGaWVsZBs8Rm9ybUFjdGlvbj5rX19CYWNraW5nRmllbGQdPFN0YXJ0U2Vzc2lvbj5rX19CYWNraW5nRmllbGQbPEVuZFNlc3Npb24+a19fQmFja2luZ0ZpZWxkIjxNbXNJbWFnZVJlZGlyZWN0cz5rX19CYWNraW5nRmllbGQkPE1tc0ltYWdlQ29udGVudFR5cGU+a19fQmFja2luZ0ZpZWxkBAEABAQEAQEAAAABK0hzbC5Tc21UZXN0Lk9wZXJhdGlvbi5YaHRtbDJTc20uQ2hhbm5lbFR5cGUCAAAAATJTeXN0ZW0uQ29sbGVjdGlvbnMuU3BlY2lhbGl6ZWQuTmFtZVZhbHVlQ29sbGVjdGlvbgMAAAAzSHNsLlNzbVRlc3QuT3BlcmF0aW9uLlhodG1sMlNzbS5Tc21Db29raWVDb2xsZWN0aW9uAgAAADNIc2wuU3NtVGVzdC5PcGVyYXRpb24uWGh0bWwyU3NtLlNzbUNvb2tpZUNvbGxlY3Rpb24CAAAAAQEIAgAAAAX8////K0hzbC5Tc21UZXN0Lk9wZXJhdGlvbi5YaHRtbDJTc20uQ2hhbm5lbFR5cGUBAAAAB3ZhbHVlX18ACAIAAAABAAAABgUAAAAFeDIzNGQACQYAAAAJBwAAAAkIAAAACgoAAAAAAAAKBQYAAAAyU3lzdGVtLkNvbGxlY3Rpb25zLlNwZWNpYWxpemVkLk5hbWVWYWx1ZUNvbGxlY3Rpb24HAAAACFJlYWRPbmx5DEhhc2hQcm92aWRlcghDb21wYXJlcgVDb3VudARLZXlzBlZhbHVlcwdWZXJzaW9uAAMDAAYFAAEyU3lzdGVtLkNvbGxlY3Rpb25zLkNhc2VJbnNlbnNpdGl2ZUhhc2hDb2RlUHJvdmlkZXIqU3lzdGVtLkNvbGxlY3Rpb25zLkNhc2VJbnNlbnNpdGl2ZUNvbXBhcmVyCAgDAAAAAAkJAAAACQoAAAAAAAAACQsAAAAJDAAAAAEAAAAFBwAAADNIc2wuU3NtVGVzdC5PcGVyYXRpb24uWGh0bWwyU3NtLlNzbUNvb2tpZUNvbGxlY3Rpb24DAAAADUxpc3RgMStfaXRlbXMMTGlzdGAxK19zaXplD0xpc3RgMStfdmVyc2lvbgQAACtIc2wuU3NtVGVzdC5PcGVyYXRpb24uWGh0bWwyU3NtLlNzbUNvb2tpZVtdAgAAAAgIAgAAAAkNAAAABwAAAAcAAAABCAAAAAcAAAAJDgAAAAAAAAAAAAAABAkAAAAyU3lzdGVtLkNvbGxlY3Rpb25zLkNhc2VJbnNlbnNpdGl2ZUhhc2hDb2RlUHJvdmlkZXIBAAAABm1fdGV4dAMdU3lzdGVtLkdsb2JhbGl6YXRpb24uVGV4dEluZm8JDwAAAAQKAAAAKlN5c3RlbS5Db2xsZWN0aW9ucy5DYXNlSW5zZW5zaXRpdmVDb21wYXJlcgEAAAANbV9jb21wYXJlSW5mbwMgU3lzdGVtLkdsb2JhbGl6YXRpb24uQ29tcGFyZUluZm8JEAAAABELAAAAAAAAABAMAAAAAAAAAAcNAAAAAAEAAAAIAAAABClIc2wuU3NtVGVzdC5PcGVyYXRpb24uWGh0bWwyU3NtLlNzbUNvb2tpZQIAAAAJEQAAAAkSAAAACRMAAAAJFAAAAAkVAAAACRYAAAAJFwAAAAoHDgAAAAABAAAAAAAAAAQpSHNsLlNzbVRlc3QuT3BlcmF0aW9uLlhodG1sMlNzbS5Tc21Db29raWUCAAAABA8AAAAdU3lzdGVtLkdsb2JhbGl6YXRpb24uVGV4dEluZm8GAAAAD21fbGlzdFNlcGFyYXRvcgxtX2lzUmVhZE9ubHkRY3VzdG9tQ3VsdHVyZU5hbWULbV9uRGF0YUl0ZW0RbV91c2VVc2VyT3ZlcnJpZGUNbV93aW4zMkxhbmdJRAEAAQAAAAEIAQgKAQrKAAAAAH8AAAAEEAAAACBTeXN0ZW0uR2xvYmFsaXphdGlvbi5Db21wYXJlSW5mbwMAAAAJd2luMzJMQ0lEB2N1bHR1cmUGbV9uYW1lAAABCAh/AAAAfwAAAAYYAAAAAAURAAAAKUhzbC5Tc21UZXN0Lk9wZXJhdGlvbi5YaHRtbDJTc20uU3NtQ29va2llBAAAAAVtTmFtZQZtVmFsdWUFbVBhdGgHbURvbWFpbgEBAQECAAAABhkAAAADbmljBhoAAAADYXNkBhsAAAAdL1NzbVdlYlNlcnZpY2VzL01tc0ltYWdlLmFzcHgKARIAAAARAAAABhwAAAADZW5hCRoAAAAGHgAAACEvU3NtV2ViU2VydmljZXMvWGh0bWxTZXJ2aWNlLmFzcHgKARMAAAARAAAABh8AAAADZHZhBiAAAAACc3MGIQAAAAEvCgEUAAAAEQAAAAYiAAAAA3RyaQkaAAAABiQAAAAiL1NzbVdlYlNlcnZpY2VzL1hodG1sU2VydmljZTIuYXNweAoBFQAAABEAAAAGJQAAAAVzdGlyaQkaAAAABicAAAAJL2ZkYXNmcXdlCgEWAAAAEQAAAAYoAAAAA3BldAkaAAAACSEAAAAGKwAAAAsxOTIuMTY4LjAuMgEXAAAAEQAAAAYsAAAABHNlc3QJIAAAAAkhAAAABi8AAAALMTkyLjE2OC4wLjEL#*@!],Pid:,Dcs:,Udh:,RequestDeliveryNotification:False,ValidityPeriod:,Metadata:]
+2008-12-22 09:18:45,870 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - UNSUBSCRIBED client RClientId:757dd1b1-1f16-4c46-b252-f61cd7b810c7,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count:0
+2008-12-22 09:22:47,101 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - SUBSCRIBED new remoting client RClientId:d7546365-c78a-49a3-9923-b69cc2683a0d,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count 1
+2008-12-22 09:26:01,506 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - SUBSCRIBED new remoting client RClientId:a2128157-55af-4291-81dd-1469cd3a0217,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count 2
+2008-12-22 09:37:59,977 [3368] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 09:37:59,977 [3368] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 09:37:59,992 [3368] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 08:38:04 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 09:37:59,992 [3368] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 09:38:44,346 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:2720, remote: 192.168.0.20:1972, window: 99
+2008-12-22 09:38:44,346 [5448] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 09:58:45,480 [5448] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 09:58:45,480 [5448] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 09:58:45,480 [5448] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 08:58:50 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 09:58:45,496 [5448] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 09:59:30,210 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:2778, remote: 192.168.0.20:1972, window: 99
+2008-12-22 09:59:30,210 [908] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 10:04:37,895 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - SUBSCRIBED new remoting client RClientId:86a8e47b-d00e-4a60-9b84-2e431aafa55d,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count 3
+2008-12-22 10:07:47,359 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - SUBSCRIBED new remoting client RClientId:d844f110-bb1c-4f70-be38-d8c9f55d1b48,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count 4
+2008-12-22 10:07:49,202 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - SEND sms SmsMessage:[From:036368072,To:9975,BodyEncoding:GSM7Bit,Body:[#abcdedfgihj123 Xhtml2SSM MMS Response#*@!ATQJy/YAAQAAAP////8BAAAAAAAAAAwCAAAAWEhzbC5Tc21UZXN0Lk9wZXJhdGlvbiwgVmVyc2lvbj05LjMuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWViYmExZDY1M2Y1MjNjZTAMAwAAAElTeXN0ZW0sIFZlcnNpb249Mi4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5BQEAAAAtSHNsLlNzbVRlc3QuT3BlcmF0aW9uLlhodG1sMlNzbS5YaHRtbFJlc3BvbnNlDAAAAAhtQ2hhbm5lbAhtQ29udGVudAttQXV0b2RldGVjdA1tSGlkZGVuRmllbGRzCG1Db29raWVzEG1NbXNJbWFnZUNvb2tpZXMiPFJlbGV2YW50RmllbGROYW1lPmtfX0JhY2tpbmdGaWVsZBs8Rm9ybUFjdGlvbj5rX19CYWNraW5nRmllbGQdPFN0YXJ0U2Vzc2lvbj5rX19CYWNraW5nRmllbGQbPEVuZFNlc3Npb24+a19fQmFja2luZ0ZpZWxkIjxNbXNJbWFnZVJlZGlyZWN0cz5rX19CYWNraW5nRmllbGQkPE1tc0ltYWdlQ29udGVudFR5cGU+a19fQmFja2luZ0ZpZWxkBAEABAQEAQEAAAABK0hzbC5Tc21UZXN0Lk9wZXJhdGlvbi5YaHRtbDJTc20uQ2hhbm5lbFR5cGUCAAAAATJTeXN0ZW0uQ29sbGVjdGlvbnMuU3BlY2lhbGl6ZWQuTmFtZVZhbHVlQ29sbGVjdGlvbgMAAAAzSHNsLlNzbVRlc3QuT3BlcmF0aW9uLlhodG1sMlNzbS5Tc21Db29raWVDb2xsZWN0aW9uAgAAADNIc2wuU3NtVGVzdC5PcGVyYXRpb24uWGh0bWwyU3NtLlNzbUNvb2tpZUNvbGxlY3Rpb24CAAAAAQEIAgAAAAX8////K0hzbC5Tc21UZXN0Lk9wZXJhdGlvbi5YaHRtbDJTc20uQ2hhbm5lbFR5cGUBAAAAB3ZhbHVlX18ACAIAAAABAAAABgUAAAAFeDIzNGQACQYAAAAJBwAAAAkIAAAACgoAAAAAAAAKBQYAAAAyU3lzdGVtLkNvbGxlY3Rpb25zLlNwZWNpYWxpemVkLk5hbWVWYWx1ZUNvbGxlY3Rpb24HAAAACFJlYWRPbmx5DEhhc2hQcm92aWRlcghDb21wYXJlcgVDb3VudARLZXlzBlZhbHVlcwdWZXJzaW9uAAMDAAYFAAEyU3lzdGVtLkNvbGxlY3Rpb25zLkNhc2VJbnNlbnNpdGl2ZUhhc2hDb2RlUHJvdmlkZXIqU3lzdGVtLkNvbGxlY3Rpb25zLkNhc2VJbnNlbnNpdGl2ZUNvbXBhcmVyCAgDAAAAAAkJAAAACQoAAAAAAAAACQsAAAAJDAAAAAEAAAAFBwAAADNIc2wuU3NtVGVzdC5PcGVyYXRpb24uWGh0bWwyU3NtLlNzbUNvb2tpZUNvbGxlY3Rpb24DAAAADUxpc3RgMStfaXRlbXMMTGlzdGAxK19zaXplD0xpc3RgMStfdmVyc2lvbgQAACtIc2wuU3NtVGVzdC5PcGVyYXRpb24uWGh0bWwyU3NtLlNzbUNvb2tpZVtdAgAAAAgIAgAAAAkNAAAABwAAAAcAAAABCAAAAAcAAAAJDgAAAAAAAAAAAAAABAkAAAAyU3lzdGVtLkNvbGxlY3Rpb25zLkNhc2VJbnNlbnNpdGl2ZUhhc2hDb2RlUHJvdmlkZXIBAAAABm1fdGV4dAMdU3lzdGVtLkdsb2JhbGl6YXRpb24uVGV4dEluZm8JDwAAAAQKAAAAKlN5c3RlbS5Db2xsZWN0aW9ucy5DYXNlSW5zZW5zaXRpdmVDb21wYXJlcgEAAAANbV9jb21wYXJlSW5mbwMgU3lzdGVtLkdsb2JhbGl6YXRpb24uQ29tcGFyZUluZm8JEAAAABELAAAAAAAAABAMAAAAAAAAAAcNAAAAAAEAAAAIAAAABClIc2wuU3NtVGVzdC5PcGVyYXRpb24uWGh0bWwyU3NtLlNzbUNvb2tpZQIAAAAJEQAAAAkSAAAACRMAAAAJFAAAAAkVAAAACRYAAAAJFwAAAAoHDgAAAAABAAAAAAAAAAQpSHNsLlNzbVRlc3QuT3BlcmF0aW9uLlhodG1sMlNzbS5Tc21Db29raWUCAAAABA8AAAAdU3lzdGVtLkdsb2JhbGl6YXRpb24uVGV4dEluZm8GAAAAD21fbGlzdFNlcGFyYXRvcgxtX2lzUmVhZE9ubHkRY3VzdG9tQ3VsdHVyZU5hbWULbV9uRGF0YUl0ZW0RbV91c2VVc2VyT3ZlcnJpZGUNbV93aW4zMkxhbmdJRAEAAQAAAAEIAQgKAQrKAAAAAH8AAAAEEAAAACBTeXN0ZW0uR2xvYmFsaXphdGlvbi5Db21wYXJlSW5mbwMAAAAJd2luMzJMQ0lEB2N1bHR1cmUGbV9uYW1lAAABCAh/AAAAfwAAAAYYAAAAAAURAAAAKUhzbC5Tc21UZXN0Lk9wZXJhdGlvbi5YaHRtbDJTc20uU3NtQ29va2llBAAAAAVtTmFtZQZtVmFsdWUFbVBhdGgHbURvbWFpbgEBAQECAAAABhkAAAADbmljBhoAAAADYXNkBhsAAAAdL1NzbVdlYlNlcnZpY2VzL01tc0ltYWdlLmFzcHgKARIAAAARAAAABhwAAAADZW5hCRoAAAAGHgAAACEvU3NtV2ViU2VydmljZXMvWGh0bWxTZXJ2aWNlLmFzcHgKARMAAAARAAAABh8AAAADZHZhBiAAAAACc3MGIQAAAAEvCgEUAAAAEQAAAAYiAAAAA3RyaQkaAAAABiQAAAAiL1NzbVdlYlNlcnZpY2VzL1hodG1sU2VydmljZTIuYXNweAoBFQAAABEAAAAGJQAAAAVzdGlyaQkaAAAABicAAAAJL2ZkYXNmcXdlCgEWAAAAEQAAAAYoAAAAA3BldAkaAAAACSEAAAAGKwAAAAsxOTIuMTY4LjAuMgEXAAAAEQAAAAYsAAAABHNlc3QJIAAAAAkhAAAABi8AAAALMTkyLjE2OC4wLjEL#*@!],Pid:,Dcs:,Udh:,RequestDeliveryNotification:False,ValidityPeriod:,Metadata:]
+2008-12-22 10:07:52,233 [2572] WARN  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - Error sending event to client RClientId:a2128157-55af-4291-81dd-1469cd3a0217,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:. Error:System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 192.168.0.1:2645
+
+Server stack trace: 
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket(EndPoint ipEndPoint)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket()
+   at System.Runtime.Remoting.Channels.RemoteConnection.GetSocket()
+   at System.Runtime.Remoting.Channels.SocketCache.GetSocket(String machinePortAndSid, Boolean openNew)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.SendRequestWithRetry(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.ProcessMessage(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream, ITransportHeaders& responseHeaders, Stream& responseStream)
+   at System.Runtime.Remoting.Channels.BinaryClientFormatterSink.SyncProcessMessage(IMessage msg)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Hsl.SsmTest.EventReceiver.MessageDelivered(Object sender, IAsynchronousEvent newEvent)
+   at Hsl.SsmTest.RemotingClient.SendEvent(Object sender, IAsynchronousEvent newEvent) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest\RemotingClient.cs:line 73
+   at Hsl.SsmTest.TestServer.SmsCenterRemotingServer.SendEventToClient(Object data) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest.TestServer\SmsCenterRemotingServer.cs:line 123
+2008-12-22 10:07:52,233 [4832] WARN  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - Error sending event to client RClientId:d7546365-c78a-49a3-9923-b69cc2683a0d,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:. Error:System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 192.168.0.1:2640
+
+Server stack trace: 
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket(EndPoint ipEndPoint)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket()
+   at System.Runtime.Remoting.Channels.RemoteConnection.GetSocket()
+   at System.Runtime.Remoting.Channels.SocketCache.GetSocket(String machinePortAndSid, Boolean openNew)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.SendRequestWithRetry(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.ProcessMessage(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream, ITransportHeaders& responseHeaders, Stream& responseStream)
+   at System.Runtime.Remoting.Channels.BinaryClientFormatterSink.SyncProcessMessage(IMessage msg)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Hsl.SsmTest.EventReceiver.MessageDelivered(Object sender, IAsynchronousEvent newEvent)
+   at Hsl.SsmTest.RemotingClient.SendEvent(Object sender, IAsynchronousEvent newEvent) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest\RemotingClient.cs:line 73
+   at Hsl.SsmTest.TestServer.SmsCenterRemotingServer.SendEventToClient(Object data) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest.TestServer\SmsCenterRemotingServer.cs:line 123
+2008-12-22 10:07:52,233 [5992] WARN  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - Error sending event to client RClientId:86a8e47b-d00e-4a60-9b84-2e431aafa55d,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:. Error:System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 192.168.0.1:2803
+
+Server stack trace: 
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket(EndPoint ipEndPoint)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket()
+   at System.Runtime.Remoting.Channels.RemoteConnection.GetSocket()
+   at System.Runtime.Remoting.Channels.SocketCache.GetSocket(String machinePortAndSid, Boolean openNew)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.SendRequestWithRetry(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.ProcessMessage(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream, ITransportHeaders& responseHeaders, Stream& responseStream)
+   at System.Runtime.Remoting.Channels.BinaryClientFormatterSink.SyncProcessMessage(IMessage msg)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Hsl.SsmTest.EventReceiver.MessageDelivered(Object sender, IAsynchronousEvent newEvent)
+   at Hsl.SsmTest.RemotingClient.SendEvent(Object sender, IAsynchronousEvent newEvent) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest\RemotingClient.cs:line 73
+   at Hsl.SsmTest.TestServer.SmsCenterRemotingServer.SendEventToClient(Object data) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest.TestServer\SmsCenterRemotingServer.cs:line 123
+2008-12-22 10:07:52,796 [4532] WARN  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - Error sending event to client RClientId:a2128157-55af-4291-81dd-1469cd3a0217,FailCount:1,AllEvt:True,NoEvt:False,MSISDNFilter:. Error:System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 192.168.0.1:2645
+
+Server stack trace: 
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket(EndPoint ipEndPoint)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket()
+   at System.Runtime.Remoting.Channels.RemoteConnection.GetSocket()
+   at System.Runtime.Remoting.Channels.SocketCache.GetSocket(String machinePortAndSid, Boolean openNew)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.SendRequestWithRetry(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.ProcessMessage(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream, ITransportHeaders& responseHeaders, Stream& responseStream)
+   at System.Runtime.Remoting.Channels.BinaryClientFormatterSink.SyncProcessMessage(IMessage msg)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Hsl.SsmTest.EventReceiver.MessageDelivered(Object sender, IAsynchronousEvent newEvent)
+   at Hsl.SsmTest.RemotingClient.SendEvent(Object sender, IAsynchronousEvent newEvent) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest\RemotingClient.cs:line 73
+   at Hsl.SsmTest.TestServer.SmsCenterRemotingServer.SendEventToClient(Object data) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest.TestServer\SmsCenterRemotingServer.cs:line 123
+2008-12-22 10:07:52,889 [4248] WARN  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - Error sending event to client RClientId:a2128157-55af-4291-81dd-1469cd3a0217,FailCount:2,AllEvt:True,NoEvt:False,MSISDNFilter:. Error:System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 192.168.0.1:2645
+
+Server stack trace: 
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket(EndPoint ipEndPoint)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket()
+   at System.Runtime.Remoting.Channels.RemoteConnection.GetSocket()
+   at System.Runtime.Remoting.Channels.SocketCache.GetSocket(String machinePortAndSid, Boolean openNew)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.SendRequestWithRetry(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.ProcessMessage(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream, ITransportHeaders& responseHeaders, Stream& responseStream)
+   at System.Runtime.Remoting.Channels.BinaryClientFormatterSink.SyncProcessMessage(IMessage msg)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Hsl.SsmTest.EventReceiver.MessageDelivered(Object sender, IAsynchronousEvent newEvent)
+   at Hsl.SsmTest.RemotingClient.SendEvent(Object sender, IAsynchronousEvent newEvent) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest\RemotingClient.cs:line 73
+   at Hsl.SsmTest.TestServer.SmsCenterRemotingServer.SendEventToClient(Object data) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest.TestServer\SmsCenterRemotingServer.cs:line 123
+2008-12-22 10:07:52,889 [5216] WARN  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - Error sending event to client RClientId:d7546365-c78a-49a3-9923-b69cc2683a0d,FailCount:1,AllEvt:True,NoEvt:False,MSISDNFilter:. Error:System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 192.168.0.1:2640
+
+Server stack trace: 
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket(EndPoint ipEndPoint)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket()
+   at System.Runtime.Remoting.Channels.RemoteConnection.GetSocket()
+   at System.Runtime.Remoting.Channels.SocketCache.GetSocket(String machinePortAndSid, Boolean openNew)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.SendRequestWithRetry(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.ProcessMessage(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream, ITransportHeaders& responseHeaders, Stream& responseStream)
+   at System.Runtime.Remoting.Channels.BinaryClientFormatterSink.SyncProcessMessage(IMessage msg)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Hsl.SsmTest.EventReceiver.MessageDelivered(Object sender, IAsynchronousEvent newEvent)
+   at Hsl.SsmTest.RemotingClient.SendEvent(Object sender, IAsynchronousEvent newEvent) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest\RemotingClient.cs:line 73
+   at Hsl.SsmTest.TestServer.SmsCenterRemotingServer.SendEventToClient(Object data) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest.TestServer\SmsCenterRemotingServer.cs:line 123
+2008-12-22 10:07:52,889 [5224] WARN  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - Error sending event to client RClientId:86a8e47b-d00e-4a60-9b84-2e431aafa55d,FailCount:1,AllEvt:True,NoEvt:False,MSISDNFilter:. Error:System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 192.168.0.1:2803
+
+Server stack trace: 
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket(EndPoint ipEndPoint)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket()
+   at System.Runtime.Remoting.Channels.RemoteConnection.GetSocket()
+   at System.Runtime.Remoting.Channels.SocketCache.GetSocket(String machinePortAndSid, Boolean openNew)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.SendRequestWithRetry(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.ProcessMessage(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream, ITransportHeaders& responseHeaders, Stream& responseStream)
+   at System.Runtime.Remoting.Channels.BinaryClientFormatterSink.SyncProcessMessage(IMessage msg)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Hsl.SsmTest.EventReceiver.MessageDelivered(Object sender, IAsynchronousEvent newEvent)
+   at Hsl.SsmTest.RemotingClient.SendEvent(Object sender, IAsynchronousEvent newEvent) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest\RemotingClient.cs:line 73
+   at Hsl.SsmTest.TestServer.SmsCenterRemotingServer.SendEventToClient(Object data) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest.TestServer\SmsCenterRemotingServer.cs:line 123
+2008-12-22 10:07:52,889 [5928] WARN  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - Error sending event to client RClientId:86a8e47b-d00e-4a60-9b84-2e431aafa55d,FailCount:2,AllEvt:True,NoEvt:False,MSISDNFilter:. Error:System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 192.168.0.1:2803
+
+Server stack trace: 
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket(EndPoint ipEndPoint)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket()
+   at System.Runtime.Remoting.Channels.RemoteConnection.GetSocket()
+   at System.Runtime.Remoting.Channels.SocketCache.GetSocket(String machinePortAndSid, Boolean openNew)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.SendRequestWithRetry(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.ProcessMessage(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream, ITransportHeaders& responseHeaders, Stream& responseStream)
+   at System.Runtime.Remoting.Channels.BinaryClientFormatterSink.SyncProcessMessage(IMessage msg)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Hsl.SsmTest.EventReceiver.MessageDelivered(Object sender, IAsynchronousEvent newEvent)
+   at Hsl.SsmTest.RemotingClient.SendEvent(Object sender, IAsynchronousEvent newEvent) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest\RemotingClient.cs:line 73
+   at Hsl.SsmTest.TestServer.SmsCenterRemotingServer.SendEventToClient(Object data) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest.TestServer\SmsCenterRemotingServer.cs:line 123
+2008-12-22 10:07:52,889 [3784] WARN  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - Error sending event to client RClientId:d7546365-c78a-49a3-9923-b69cc2683a0d,FailCount:2,AllEvt:True,NoEvt:False,MSISDNFilter:. Error:System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 192.168.0.1:2640
+
+Server stack trace: 
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket(EndPoint ipEndPoint)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket()
+   at System.Runtime.Remoting.Channels.RemoteConnection.GetSocket()
+   at System.Runtime.Remoting.Channels.SocketCache.GetSocket(String machinePortAndSid, Boolean openNew)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.SendRequestWithRetry(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.ProcessMessage(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream, ITransportHeaders& responseHeaders, Stream& responseStream)
+   at System.Runtime.Remoting.Channels.BinaryClientFormatterSink.SyncProcessMessage(IMessage msg)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Hsl.SsmTest.EventReceiver.MessageDelivered(Object sender, IAsynchronousEvent newEvent)
+   at Hsl.SsmTest.RemotingClient.SendEvent(Object sender, IAsynchronousEvent newEvent) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest\RemotingClient.cs:line 73
+   at Hsl.SsmTest.TestServer.SmsCenterRemotingServer.SendEventToClient(Object data) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest.TestServer\SmsCenterRemotingServer.cs:line 123
+2008-12-22 10:08:26,792 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - UNSUBSCRIBED client RClientId:d844f110-bb1c-4f70-be38-d8c9f55d1b48,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count:3
+2008-12-22 10:12:16,267 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - SUBSCRIBED new remoting client RClientId:21fcdfd4-b245-4cc7-80c5-6b4fb052bae1,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count 4
+2008-12-22 10:12:18,220 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - UNSUBSCRIBED client RClientId:21fcdfd4-b245-4cc7-80c5-6b4fb052bae1,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count:3
+2008-12-22 10:13:16,745 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - SUBSCRIBED new remoting client RClientId:dfbeaa2b-46d8-4c91-8e38-82f339b7dba9,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count 4
+2008-12-22 10:13:18,666 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - UNSUBSCRIBED client RClientId:dfbeaa2b-46d8-4c91-8e38-82f339b7dba9,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count:3
+2008-12-22 10:14:10,348 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - SUBSCRIBED new remoting client RClientId:ed802347-1e07-47d9-acce-7bb710540c48,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count 4
+2008-12-22 10:15:48,213 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - SUBSCRIBED new remoting client RClientId:a73b5570-c2c3-4b2a-bc70-d5b2fa3c20a0,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count 5
+2008-12-22 10:15:50,150 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - UNSUBSCRIBED client RClientId:a73b5570-c2c3-4b2a-bc70-d5b2fa3c20a0,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count:4
+2008-12-22 10:16:14,257 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - SUBSCRIBED new remoting client RClientId:a0f283df-940d-43c6-8be1-903fbe5976f7,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count 5
+2008-12-22 10:16:16,178 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - UNSUBSCRIBED client RClientId:a0f283df-940d-43c6-8be1-903fbe5976f7,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count:4
+2008-12-22 10:16:42,738 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - SUBSCRIBED new remoting client RClientId:19f2338f-43c0-416c-b414-4041b38d46bb,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count 5
+2008-12-22 10:18:13,556 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - SUBSCRIBED new remoting client RClientId:032b7559-ebf3-4f25-89fe-b99cbfb8dee5,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count 6
+2008-12-22 10:18:16,056 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - UNSUBSCRIBED client RClientId:032b7559-ebf3-4f25-89fe-b99cbfb8dee5,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count:5
+2008-12-22 10:18:45,521 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - SUBSCRIBED new remoting client RClientId:0b810b9b-1ddc-4952-af00-4b98a49bdac9,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count 6
+2008-12-22 10:18:47,396 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - UNSUBSCRIBED client RClientId:0b810b9b-1ddc-4952-af00-4b98a49bdac9,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count:5
+2008-12-22 10:19:21,783 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - SUBSCRIBED new remoting client RClientId:854b5793-3bf0-4add-9048-5498f9dac51d,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count 6
+2008-12-22 10:24:44,654 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - SUBSCRIBED new remoting client RClientId:1a41d1ae-1408-4284-ab86-56a88033c3e6,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count 7
+2008-12-22 10:24:46,451 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - SEND sms SmsMessage:[From:054432545,To:9975,BodyEncoding:GSM7Bit,Body:[#abcdedfgihj123 Xhtml2SSM MMS Response#*@!ATQJy/YAAQAAAP////8BAAAAAAAAAAwCAAAAWEhzbC5Tc21UZXN0Lk9wZXJhdGlvbiwgVmVyc2lvbj05LjMuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWViYmExZDY1M2Y1MjNjZTAMAwAAAElTeXN0ZW0sIFZlcnNpb249Mi4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5BQEAAAAtSHNsLlNzbVRlc3QuT3BlcmF0aW9uLlhodG1sMlNzbS5YaHRtbFJlc3BvbnNlDAAAAAhtQ2hhbm5lbAhtQ29udGVudAttQXV0b2RldGVjdA1tSGlkZGVuRmllbGRzCG1Db29raWVzEG1NbXNJbWFnZUNvb2tpZXMiPFJlbGV2YW50RmllbGROYW1lPmtfX0JhY2tpbmdGaWVsZBs8Rm9ybUFjdGlvbj5rX19CYWNraW5nRmllbGQdPFN0YXJ0U2Vzc2lvbj5rX19CYWNraW5nRmllbGQbPEVuZFNlc3Npb24+a19fQmFja2luZ0ZpZWxkIjxNbXNJbWFnZVJlZGlyZWN0cz5rX19CYWNraW5nRmllbGQkPE1tc0ltYWdlQ29udGVudFR5cGU+a19fQmFja2luZ0ZpZWxkBAEABAQEAQEAAAABK0hzbC5Tc21UZXN0Lk9wZXJhdGlvbi5YaHRtbDJTc20uQ2hhbm5lbFR5cGUCAAAAATJTeXN0ZW0uQ29sbGVjdGlvbnMuU3BlY2lhbGl6ZWQuTmFtZVZhbHVlQ29sbGVjdGlvbgMAAAAzSHNsLlNzbVRlc3QuT3BlcmF0aW9uLlhodG1sMlNzbS5Tc21Db29raWVDb2xsZWN0aW9uAgAAADNIc2wuU3NtVGVzdC5PcGVyYXRpb24uWGh0bWwyU3NtLlNzbUNvb2tpZUNvbGxlY3Rpb24CAAAAAQEIAgAAAAX8////K0hzbC5Tc21UZXN0Lk9wZXJhdGlvbi5YaHRtbDJTc20uQ2hhbm5lbFR5cGUBAAAAB3ZhbHVlX18ACAIAAAABAAAABgUAAAAFeDIzNGQACQYAAAAJBwAAAAkIAAAACgoAAAAAAAAKBQYAAAAyU3lzdGVtLkNvbGxlY3Rpb25zLlNwZWNpYWxpemVkLk5hbWVWYWx1ZUNvbGxlY3Rpb24HAAAACFJlYWRPbmx5DEhhc2hQcm92aWRlcghDb21wYXJlcgVDb3VudARLZXlzBlZhbHVlcwdWZXJzaW9uAAMDAAYFAAEyU3lzdGVtLkNvbGxlY3Rpb25zLkNhc2VJbnNlbnNpdGl2ZUhhc2hDb2RlUHJvdmlkZXIqU3lzdGVtLkNvbGxlY3Rpb25zLkNhc2VJbnNlbnNpdGl2ZUNvbXBhcmVyCAgDAAAAAAkJAAAACQoAAAAAAAAACQsAAAAJDAAAAAEAAAAFBwAAADNIc2wuU3NtVGVzdC5PcGVyYXRpb24uWGh0bWwyU3NtLlNzbUNvb2tpZUNvbGxlY3Rpb24DAAAADUxpc3RgMStfaXRlbXMMTGlzdGAxK19zaXplD0xpc3RgMStfdmVyc2lvbgQAACtIc2wuU3NtVGVzdC5PcGVyYXRpb24uWGh0bWwyU3NtLlNzbUNvb2tpZVtdAgAAAAgIAgAAAAkNAAAABwAAAAcAAAABCAAAAAcAAAAJDgAAAAAAAAAAAAAABAkAAAAyU3lzdGVtLkNvbGxlY3Rpb25zLkNhc2VJbnNlbnNpdGl2ZUhhc2hDb2RlUHJvdmlkZXIBAAAABm1fdGV4dAMdU3lzdGVtLkdsb2JhbGl6YXRpb24uVGV4dEluZm8JDwAAAAQKAAAAKlN5c3RlbS5Db2xsZWN0aW9ucy5DYXNlSW5zZW5zaXRpdmVDb21wYXJlcgEAAAANbV9jb21wYXJlSW5mbwMgU3lzdGVtLkdsb2JhbGl6YXRpb24uQ29tcGFyZUluZm8JEAAAABELAAAAAAAAABAMAAAAAAAAAAcNAAAAAAEAAAAIAAAABClIc2wuU3NtVGVzdC5PcGVyYXRpb24uWGh0bWwyU3NtLlNzbUNvb2tpZQIAAAAJEQAAAAkSAAAACRMAAAAJFAAAAAkVAAAACRYAAAAJFwAAAAoHDgAAAAABAAAAAAAAAAQpSHNsLlNzbVRlc3QuT3BlcmF0aW9uLlhodG1sMlNzbS5Tc21Db29raWUCAAAABA8AAAAdU3lzdGVtLkdsb2JhbGl6YXRpb24uVGV4dEluZm8GAAAAD21fbGlzdFNlcGFyYXRvcgxtX2lzUmVhZE9ubHkRY3VzdG9tQ3VsdHVyZU5hbWULbV9uRGF0YUl0ZW0RbV91c2VVc2VyT3ZlcnJpZGUNbV93aW4zMkxhbmdJRAEAAQAAAAEIAQgKAQrKAAAAAH8AAAAEEAAAACBTeXN0ZW0uR2xvYmFsaXphdGlvbi5Db21wYXJlSW5mbwMAAAAJd2luMzJMQ0lEB2N1bHR1cmUGbV9uYW1lAAABCAh/AAAAfwAAAAYYAAAAAAURAAAAKUhzbC5Tc21UZXN0Lk9wZXJhdGlvbi5YaHRtbDJTc20uU3NtQ29va2llBAAAAAVtTmFtZQZtVmFsdWUFbVBhdGgHbURvbWFpbgEBAQECAAAABhkAAAADbmljBhoAAAADYXNkBhsAAAAdL1NzbVdlYlNlcnZpY2VzL01tc0ltYWdlLmFzcHgKARIAAAARAAAABhwAAAADZW5hCRoAAAAGHgAAACEvU3NtV2ViU2VydmljZXMvWGh0bWxTZXJ2aWNlLmFzcHgKARMAAAARAAAABh8AAAADZHZhBiAAAAACc3MGIQAAAAEvCgEUAAAAEQAAAAYiAAAAA3RyaQkaAAAABiQAAAAiL1NzbVdlYlNlcnZpY2VzL1hodG1sU2VydmljZTIuYXNweAoBFQAAABEAAAAGJQAAAAVzdGlyaQkaAAAABicAAAAJL2ZkYXNmcXdlCgEWAAAAEQAAAAYoAAAAA3BldAkaAAAACSEAAAAGKwAAAAsxOTIuMTY4LjAuMgEXAAAAEQAAAAYsAAAABHNlc3QJIAAAAAkhAAAABi8AAAALMTkyLjE2OC4wLjEL#*@!],Pid:,Dcs:,Udh:,RequestDeliveryNotification:False,ValidityPeriod:,Metadata:]
+2008-12-22 10:24:47,498 [3688] WARN  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - Removed client RClientId:d7546365-c78a-49a3-9923-b69cc2683a0d,FailCount:3,AllEvt:True,NoEvt:False,MSISDNFilter: because of max failed count.
+2008-12-22 10:24:47,498 [3688] WARN  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - Removed client RClientId:a2128157-55af-4291-81dd-1469cd3a0217,FailCount:3,AllEvt:True,NoEvt:False,MSISDNFilter: because of max failed count.
+2008-12-22 10:24:47,529 [3688] WARN  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - Removed client RClientId:86a8e47b-d00e-4a60-9b84-2e431aafa55d,FailCount:3,AllEvt:True,NoEvt:False,MSISDNFilter: because of max failed count.
+2008-12-22 10:24:49,497 [5572] WARN  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - Error sending event to client RClientId:ed802347-1e07-47d9-acce-7bb710540c48,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:. Error:System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 192.168.0.1:2871
+
+Server stack trace: 
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket(EndPoint ipEndPoint)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket()
+   at System.Runtime.Remoting.Channels.RemoteConnection.GetSocket()
+   at System.Runtime.Remoting.Channels.SocketCache.GetSocket(String machinePortAndSid, Boolean openNew)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.SendRequestWithRetry(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.ProcessMessage(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream, ITransportHeaders& responseHeaders, Stream& responseStream)
+   at System.Runtime.Remoting.Channels.BinaryClientFormatterSink.SyncProcessMessage(IMessage msg)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Hsl.SsmTest.EventReceiver.MessageDelivered(Object sender, IAsynchronousEvent newEvent)
+   at Hsl.SsmTest.RemotingClient.SendEvent(Object sender, IAsynchronousEvent newEvent) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest\RemotingClient.cs:line 73
+   at Hsl.SsmTest.TestServer.SmsCenterRemotingServer.SendEventToClient(Object data) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest.TestServer\SmsCenterRemotingServer.cs:line 123
+2008-12-22 10:24:49,497 [1788] WARN  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - Error sending event to client RClientId:19f2338f-43c0-416c-b414-4041b38d46bb,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:. Error:System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 192.168.0.1:2892
+
+Server stack trace: 
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket(EndPoint ipEndPoint)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket()
+   at System.Runtime.Remoting.Channels.RemoteConnection.GetSocket()
+   at System.Runtime.Remoting.Channels.SocketCache.GetSocket(String machinePortAndSid, Boolean openNew)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.SendRequestWithRetry(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.ProcessMessage(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream, ITransportHeaders& responseHeaders, Stream& responseStream)
+   at System.Runtime.Remoting.Channels.BinaryClientFormatterSink.SyncProcessMessage(IMessage msg)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Hsl.SsmTest.EventReceiver.MessageDelivered(Object sender, IAsynchronousEvent newEvent)
+   at Hsl.SsmTest.RemotingClient.SendEvent(Object sender, IAsynchronousEvent newEvent) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest\RemotingClient.cs:line 73
+   at Hsl.SsmTest.TestServer.SmsCenterRemotingServer.SendEventToClient(Object data) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest.TestServer\SmsCenterRemotingServer.cs:line 123
+2008-12-22 10:24:49,607 [5132] WARN  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - Error sending event to client RClientId:854b5793-3bf0-4add-9048-5498f9dac51d,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:. Error:System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 192.168.0.1:2909
+
+Server stack trace: 
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket(EndPoint ipEndPoint)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket()
+   at System.Runtime.Remoting.Channels.RemoteConnection.GetSocket()
+   at System.Runtime.Remoting.Channels.SocketCache.GetSocket(String machinePortAndSid, Boolean openNew)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.SendRequestWithRetry(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.ProcessMessage(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream, ITransportHeaders& responseHeaders, Stream& responseStream)
+   at System.Runtime.Remoting.Channels.BinaryClientFormatterSink.SyncProcessMessage(IMessage msg)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Hsl.SsmTest.EventReceiver.MessageDelivered(Object sender, IAsynchronousEvent newEvent)
+   at Hsl.SsmTest.RemotingClient.SendEvent(Object sender, IAsynchronousEvent newEvent) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest\RemotingClient.cs:line 73
+   at Hsl.SsmTest.TestServer.SmsCenterRemotingServer.SendEventToClient(Object data) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest.TestServer\SmsCenterRemotingServer.cs:line 123
+2008-12-22 10:24:49,904 [5212] WARN  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - Error sending event to client RClientId:19f2338f-43c0-416c-b414-4041b38d46bb,FailCount:1,AllEvt:True,NoEvt:False,MSISDNFilter:. Error:System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 192.168.0.1:2892
+
+Server stack trace: 
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket(EndPoint ipEndPoint)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket()
+   at System.Runtime.Remoting.Channels.RemoteConnection.GetSocket()
+   at System.Runtime.Remoting.Channels.SocketCache.GetSocket(String machinePortAndSid, Boolean openNew)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.SendRequestWithRetry(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.ProcessMessage(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream, ITransportHeaders& responseHeaders, Stream& responseStream)
+   at System.Runtime.Remoting.Channels.BinaryClientFormatterSink.SyncProcessMessage(IMessage msg)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Hsl.SsmTest.EventReceiver.MessageDelivered(Object sender, IAsynchronousEvent newEvent)
+   at Hsl.SsmTest.RemotingClient.SendEvent(Object sender, IAsynchronousEvent newEvent) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest\RemotingClient.cs:line 73
+   at Hsl.SsmTest.TestServer.SmsCenterRemotingServer.SendEventToClient(Object data) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest.TestServer\SmsCenterRemotingServer.cs:line 123
+2008-12-22 10:24:49,904 [3952] WARN  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - Error sending event to client RClientId:854b5793-3bf0-4add-9048-5498f9dac51d,FailCount:1,AllEvt:True,NoEvt:False,MSISDNFilter:. Error:System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 192.168.0.1:2909
+
+Server stack trace: 
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket(EndPoint ipEndPoint)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket()
+   at System.Runtime.Remoting.Channels.RemoteConnection.GetSocket()
+   at System.Runtime.Remoting.Channels.SocketCache.GetSocket(String machinePortAndSid, Boolean openNew)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.SendRequestWithRetry(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.ProcessMessage(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream, ITransportHeaders& responseHeaders, Stream& responseStream)
+   at System.Runtime.Remoting.Channels.BinaryClientFormatterSink.SyncProcessMessage(IMessage msg)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Hsl.SsmTest.EventReceiver.MessageDelivered(Object sender, IAsynchronousEvent newEvent)
+   at Hsl.SsmTest.RemotingClient.SendEvent(Object sender, IAsynchronousEvent newEvent) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest\RemotingClient.cs:line 73
+   at Hsl.SsmTest.TestServer.SmsCenterRemotingServer.SendEventToClient(Object data) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest.TestServer\SmsCenterRemotingServer.cs:line 123
+2008-12-22 10:24:50,013 [5788] WARN  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - Error sending event to client RClientId:ed802347-1e07-47d9-acce-7bb710540c48,FailCount:1,AllEvt:True,NoEvt:False,MSISDNFilter:. Error:System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 192.168.0.1:2871
+
+Server stack trace: 
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket(EndPoint ipEndPoint)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket()
+   at System.Runtime.Remoting.Channels.RemoteConnection.GetSocket()
+   at System.Runtime.Remoting.Channels.SocketCache.GetSocket(String machinePortAndSid, Boolean openNew)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.SendRequestWithRetry(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.ProcessMessage(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream, ITransportHeaders& responseHeaders, Stream& responseStream)
+   at System.Runtime.Remoting.Channels.BinaryClientFormatterSink.SyncProcessMessage(IMessage msg)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Hsl.SsmTest.EventReceiver.MessageDelivered(Object sender, IAsynchronousEvent newEvent)
+   at Hsl.SsmTest.RemotingClient.SendEvent(Object sender, IAsynchronousEvent newEvent) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest\RemotingClient.cs:line 73
+   at Hsl.SsmTest.TestServer.SmsCenterRemotingServer.SendEventToClient(Object data) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest.TestServer\SmsCenterRemotingServer.cs:line 123
+2008-12-22 10:24:50,107 [1460] WARN  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - Error sending event to client RClientId:854b5793-3bf0-4add-9048-5498f9dac51d,FailCount:2,AllEvt:True,NoEvt:False,MSISDNFilter:. Error:System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 192.168.0.1:2909
+
+Server stack trace: 
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket(EndPoint ipEndPoint)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket()
+   at System.Runtime.Remoting.Channels.RemoteConnection.GetSocket()
+   at System.Runtime.Remoting.Channels.SocketCache.GetSocket(String machinePortAndSid, Boolean openNew)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.SendRequestWithRetry(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.ProcessMessage(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream, ITransportHeaders& responseHeaders, Stream& responseStream)
+   at System.Runtime.Remoting.Channels.BinaryClientFormatterSink.SyncProcessMessage(IMessage msg)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Hsl.SsmTest.EventReceiver.MessageDelivered(Object sender, IAsynchronousEvent newEvent)
+   at Hsl.SsmTest.RemotingClient.SendEvent(Object sender, IAsynchronousEvent newEvent) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest\RemotingClient.cs:line 73
+   at Hsl.SsmTest.TestServer.SmsCenterRemotingServer.SendEventToClient(Object data) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest.TestServer\SmsCenterRemotingServer.cs:line 123
+2008-12-22 10:24:50,107 [4224] WARN  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - Error sending event to client RClientId:19f2338f-43c0-416c-b414-4041b38d46bb,FailCount:2,AllEvt:True,NoEvt:False,MSISDNFilter:. Error:System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 192.168.0.1:2892
+
+Server stack trace: 
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket(EndPoint ipEndPoint)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket()
+   at System.Runtime.Remoting.Channels.RemoteConnection.GetSocket()
+   at System.Runtime.Remoting.Channels.SocketCache.GetSocket(String machinePortAndSid, Boolean openNew)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.SendRequestWithRetry(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.ProcessMessage(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream, ITransportHeaders& responseHeaders, Stream& responseStream)
+   at System.Runtime.Remoting.Channels.BinaryClientFormatterSink.SyncProcessMessage(IMessage msg)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Hsl.SsmTest.EventReceiver.MessageDelivered(Object sender, IAsynchronousEvent newEvent)
+   at Hsl.SsmTest.RemotingClient.SendEvent(Object sender, IAsynchronousEvent newEvent) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest\RemotingClient.cs:line 73
+   at Hsl.SsmTest.TestServer.SmsCenterRemotingServer.SendEventToClient(Object data) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest.TestServer\SmsCenterRemotingServer.cs:line 123
+2008-12-22 10:24:50,404 [5500] WARN  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - Error sending event to client RClientId:ed802347-1e07-47d9-acce-7bb710540c48,FailCount:2,AllEvt:True,NoEvt:False,MSISDNFilter:. Error:System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 192.168.0.1:2871
+
+Server stack trace: 
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket(EndPoint ipEndPoint)
+   at System.Runtime.Remoting.Channels.RemoteConnection.CreateNewSocket()
+   at System.Runtime.Remoting.Channels.RemoteConnection.GetSocket()
+   at System.Runtime.Remoting.Channels.SocketCache.GetSocket(String machinePortAndSid, Boolean openNew)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.SendRequestWithRetry(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream)
+   at System.Runtime.Remoting.Channels.Tcp.TcpClientTransportSink.ProcessMessage(IMessage msg, ITransportHeaders requestHeaders, Stream requestStream, ITransportHeaders& responseHeaders, Stream& responseStream)
+   at System.Runtime.Remoting.Channels.BinaryClientFormatterSink.SyncProcessMessage(IMessage msg)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Hsl.SsmTest.EventReceiver.MessageDelivered(Object sender, IAsynchronousEvent newEvent)
+   at Hsl.SsmTest.RemotingClient.SendEvent(Object sender, IAsynchronousEvent newEvent) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest\RemotingClient.cs:line 73
+   at Hsl.SsmTest.TestServer.SmsCenterRemotingServer.SendEventToClient(Object data) in c:\cc_view\ajeznik_xhtmlcookies\octopus3\Projects\SsmSystemTest\Hsl.SsmTest.TestServer\SmsCenterRemotingServer.cs:line 123
+2008-12-22 10:25:23,775 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - UNSUBSCRIBED client RClientId:1a41d1ae-1408-4284-ab86-56a88033c3e6,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count:3
+2008-12-22 10:44:53,944 [908] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 10:44:53,944 [908] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 10:44:53,944 [908] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 09:44:58 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 10:44:53,944 [908] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 10:45:38,908 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:3091, remote: 192.168.0.20:1972, window: 99
+2008-12-22 10:45:38,908 [3832] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 10:55:40,937 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - SUBSCRIBED new remoting client RClientId:008e78e9-a8ff-4a3a-bd03-8d72995e0c18,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count 4
+2008-12-22 10:56:44,570 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - SEND sms SmsMessage:[From:019195137,To:9975,BodyEncoding:GSM7Bit,Body:[#abcdedfgihj123 Xhtml2SSM MMS Response#*@!ATQJy/YAAQAAAP////8BAAAAAAAAAAwCAAAAWEhzbC5Tc21UZXN0Lk9wZXJhdGlvbiwgVmVyc2lvbj05LjMuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWViYmExZDY1M2Y1MjNjZTAMAwAAAElTeXN0ZW0sIFZlcnNpb249Mi4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5BQEAAAAtSHNsLlNzbVRlc3QuT3BlcmF0aW9uLlhodG1sMlNzbS5YaHRtbFJlc3BvbnNlDAAAAAhtQ2hhbm5lbAhtQ29udGVudAttQXV0b2RldGVjdA1tSGlkZGVuRmllbGRzCG1Db29raWVzEG1NbXNJbWFnZUNvb2tpZXMiPFJlbGV2YW50RmllbGROYW1lPmtfX0JhY2tpbmdGaWVsZBs8Rm9ybUFjdGlvbj5rX19CYWNraW5nRmllbGQdPFN0YXJ0U2Vzc2lvbj5rX19CYWNraW5nRmllbGQbPEVuZFNlc3Npb24+a19fQmFja2luZ0ZpZWxkIjxNbXNJbWFnZVJlZGlyZWN0cz5rX19CYWNraW5nRmllbGQkPE1tc0ltYWdlQ29udGVudFR5cGU+a19fQmFja2luZ0ZpZWxkBAEABAQEAQEAAAABK0hzbC5Tc21UZXN0Lk9wZXJhdGlvbi5YaHRtbDJTc20uQ2hhbm5lbFR5cGUCAAAAATJTeXN0ZW0uQ29sbGVjdGlvbnMuU3BlY2lhbGl6ZWQuTmFtZVZhbHVlQ29sbGVjdGlvbgMAAAAzSHNsLlNzbVRlc3QuT3BlcmF0aW9uLlhodG1sMlNzbS5Tc21Db29raWVDb2xsZWN0aW9uAgAAADNIc2wuU3NtVGVzdC5PcGVyYXRpb24uWGh0bWwyU3NtLlNzbUNvb2tpZUNvbGxlY3Rpb24CAAAAAQEIAgAAAAX8////K0hzbC5Tc21UZXN0Lk9wZXJhdGlvbi5YaHRtbDJTc20uQ2hhbm5lbFR5cGUBAAAAB3ZhbHVlX18ACAIAAAABAAAABgUAAAAFeDIzNGQACQYAAAAJBwAAAAkIAAAACgoAAAAAAAAKBQYAAAAyU3lzdGVtLkNvbGxlY3Rpb25zLlNwZWNpYWxpemVkLk5hbWVWYWx1ZUNvbGxlY3Rpb24HAAAACFJlYWRPbmx5DEhhc2hQcm92aWRlcghDb21wYXJlcgVDb3VudARLZXlzBlZhbHVlcwdWZXJzaW9uAAMDAAYFAAEyU3lzdGVtLkNvbGxlY3Rpb25zLkNhc2VJbnNlbnNpdGl2ZUhhc2hDb2RlUHJvdmlkZXIqU3lzdGVtLkNvbGxlY3Rpb25zLkNhc2VJbnNlbnNpdGl2ZUNvbXBhcmVyCAgDAAAAAAkJAAAACQoAAAAAAAAACQsAAAAJDAAAAAEAAAAFBwAAADNIc2wuU3NtVGVzdC5PcGVyYXRpb24uWGh0bWwyU3NtLlNzbUNvb2tpZUNvbGxlY3Rpb24DAAAADUxpc3RgMStfaXRlbXMMTGlzdGAxK19zaXplD0xpc3RgMStfdmVyc2lvbgQAACtIc2wuU3NtVGVzdC5PcGVyYXRpb24uWGh0bWwyU3NtLlNzbUNvb2tpZVtdAgAAAAgIAgAAAAkNAAAABwAAAAcAAAABCAAAAAcAAAAJDgAAAAAAAAAAAAAABAkAAAAyU3lzdGVtLkNvbGxlY3Rpb25zLkNhc2VJbnNlbnNpdGl2ZUhhc2hDb2RlUHJvdmlkZXIBAAAABm1fdGV4dAMdU3lzdGVtLkdsb2JhbGl6YXRpb24uVGV4dEluZm8JDwAAAAQKAAAAKlN5c3RlbS5Db2xsZWN0aW9ucy5DYXNlSW5zZW5zaXRpdmVDb21wYXJlcgEAAAANbV9jb21wYXJlSW5mbwMgU3lzdGVtLkdsb2JhbGl6YXRpb24uQ29tcGFyZUluZm8JEAAAABELAAAAAAAAABAMAAAAAAAAAAcNAAAAAAEAAAAIAAAABClIc2wuU3NtVGVzdC5PcGVyYXRpb24uWGh0bWwyU3NtLlNzbUNvb2tpZQIAAAAJEQAAAAkSAAAACRMAAAAJFAAAAAkVAAAACRYAAAAJFwAAAAoHDgAAAAABAAAAAAAAAAQpSHNsLlNzbVRlc3QuT3BlcmF0aW9uLlhodG1sMlNzbS5Tc21Db29raWUCAAAABA8AAAAdU3lzdGVtLkdsb2JhbGl6YXRpb24uVGV4dEluZm8GAAAAD21fbGlzdFNlcGFyYXRvcgxtX2lzUmVhZE9ubHkRY3VzdG9tQ3VsdHVyZU5hbWULbV9uRGF0YUl0ZW0RbV91c2VVc2VyT3ZlcnJpZGUNbV93aW4zMkxhbmdJRAEAAQAAAAEIAQgKAQrKAAAAAH8AAAAEEAAAACBTeXN0ZW0uR2xvYmFsaXphdGlvbi5Db21wYXJlSW5mbwMAAAAJd2luMzJMQ0lEB2N1bHR1cmUGbV9uYW1lAAABCAh/AAAAfwAAAAYYAAAAAAURAAAAKUhzbC5Tc21UZXN0Lk9wZXJhdGlvbi5YaHRtbDJTc20uU3NtQ29va2llBAAAAAVtTmFtZQZtVmFsdWUFbVBhdGgHbURvbWFpbgEBAQECAAAABhkAAAADbmljBhoAAAADYXNkBhsAAAAdL1NzbVdlYlNlcnZpY2VzL01tc0ltYWdlLmFzcHgKARIAAAARAAAABhwAAAADZW5hCRoAAAAGHgAAACEvU3NtV2ViU2VydmljZXMvWGh0bWxTZXJ2aWNlLmFzcHgKARMAAAARAAAABh8AAAADZHZhBiAAAAACc3MGIQAAAAEvCgEUAAAAEQAAAAYiAAAAA3RyaQkaAAAABiQAAAAiL1NzbVdlYlNlcnZpY2VzL1hodG1sU2VydmljZTIuYXNweAoBFQAAABEAAAAGJQAAAAVzdGlyaQkaAAAABicAAAAJL2ZkYXNmcXdlCgEWAAAAEQAAAAYoAAAAA3BldAkaAAAACSEAAAAGKwAAAAsxOTIuMTY4LjAuMgEXAAAAEQAAAAYsAAAABHNlc3QJIAAAAAkhAAAABi8AAAALMTkyLjE2OC4wLjEL#*@!],Pid:,Dcs:,Udh:,RequestDeliveryNotification:False,ValidityPeriod:,Metadata:]
+2008-12-22 10:56:45,351 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - UNSUBSCRIBED client RClientId:008e78e9-a8ff-4a3a-bd03-8d72995e0c18,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count:3
+2008-12-22 10:56:45,648 [3688] WARN  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - Removed client RClientId:ed802347-1e07-47d9-acce-7bb710540c48,FailCount:3,AllEvt:True,NoEvt:False,MSISDNFilter: because of max failed count.
+2008-12-22 10:56:45,648 [3688] WARN  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - Removed client RClientId:19f2338f-43c0-416c-b414-4041b38d46bb,FailCount:3,AllEvt:True,NoEvt:False,MSISDNFilter: because of max failed count.
+2008-12-22 10:56:45,648 [3688] WARN  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - Removed client RClientId:854b5793-3bf0-4add-9048-5498f9dac51d,FailCount:3,AllEvt:True,NoEvt:False,MSISDNFilter: because of max failed count.
+2008-12-22 10:57:40,220 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - SUBSCRIBED new remoting client RClientId:dffc38b9-b65f-48a5-97a5-85e3c5f54234,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count 1
+2008-12-22 10:57:42,189 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - SEND sms SmsMessage:[From:056380258,To:9975,BodyEncoding:GSM7Bit,Body:[#abcdedfgihj123 Xhtml2SSM MMS Response#*@!ATQJy/YAAQAAAP////8BAAAAAAAAAAwCAAAAWEhzbC5Tc21UZXN0Lk9wZXJhdGlvbiwgVmVyc2lvbj05LjMuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWViYmExZDY1M2Y1MjNjZTAMAwAAAElTeXN0ZW0sIFZlcnNpb249Mi4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5BQEAAAAtSHNsLlNzbVRlc3QuT3BlcmF0aW9uLlhodG1sMlNzbS5YaHRtbFJlc3BvbnNlDAAAAAhtQ2hhbm5lbAhtQ29udGVudAttQXV0b2RldGVjdA1tSGlkZGVuRmllbGRzCG1Db29raWVzEG1NbXNJbWFnZUNvb2tpZXMiPFJlbGV2YW50RmllbGROYW1lPmtfX0JhY2tpbmdGaWVsZBs8Rm9ybUFjdGlvbj5rX19CYWNraW5nRmllbGQdPFN0YXJ0U2Vzc2lvbj5rX19CYWNraW5nRmllbGQbPEVuZFNlc3Npb24+a19fQmFja2luZ0ZpZWxkIjxNbXNJbWFnZVJlZGlyZWN0cz5rX19CYWNraW5nRmllbGQkPE1tc0ltYWdlQ29udGVudFR5cGU+a19fQmFja2luZ0ZpZWxkBAEABAQEAQEAAAABK0hzbC5Tc21UZXN0Lk9wZXJhdGlvbi5YaHRtbDJTc20uQ2hhbm5lbFR5cGUCAAAAATJTeXN0ZW0uQ29sbGVjdGlvbnMuU3BlY2lhbGl6ZWQuTmFtZVZhbHVlQ29sbGVjdGlvbgMAAAAzSHNsLlNzbVRlc3QuT3BlcmF0aW9uLlhodG1sMlNzbS5Tc21Db29raWVDb2xsZWN0aW9uAgAAADNIc2wuU3NtVGVzdC5PcGVyYXRpb24uWGh0bWwyU3NtLlNzbUNvb2tpZUNvbGxlY3Rpb24CAAAAAQEIAgAAAAX8////K0hzbC5Tc21UZXN0Lk9wZXJhdGlvbi5YaHRtbDJTc20uQ2hhbm5lbFR5cGUBAAAAB3ZhbHVlX18ACAIAAAABAAAABgUAAAAFeDIzNGQACQYAAAAJBwAAAAkIAAAACgoAAAAAAAAKBQYAAAAyU3lzdGVtLkNvbGxlY3Rpb25zLlNwZWNpYWxpemVkLk5hbWVWYWx1ZUNvbGxlY3Rpb24HAAAACFJlYWRPbmx5DEhhc2hQcm92aWRlcghDb21wYXJlcgVDb3VudARLZXlzBlZhbHVlcwdWZXJzaW9uAAMDAAYFAAEyU3lzdGVtLkNvbGxlY3Rpb25zLkNhc2VJbnNlbnNpdGl2ZUhhc2hDb2RlUHJvdmlkZXIqU3lzdGVtLkNvbGxlY3Rpb25zLkNhc2VJbnNlbnNpdGl2ZUNvbXBhcmVyCAgDAAAAAAkJAAAACQoAAAAAAAAACQsAAAAJDAAAAAEAAAAFBwAAADNIc2wuU3NtVGVzdC5PcGVyYXRpb24uWGh0bWwyU3NtLlNzbUNvb2tpZUNvbGxlY3Rpb24DAAAADUxpc3RgMStfaXRlbXMMTGlzdGAxK19zaXplD0xpc3RgMStfdmVyc2lvbgQAACtIc2wuU3NtVGVzdC5PcGVyYXRpb24uWGh0bWwyU3NtLlNzbUNvb2tpZVtdAgAAAAgIAgAAAAkNAAAABwAAAAcAAAABCAAAAAcAAAAJDgAAAAAAAAAAAAAABAkAAAAyU3lzdGVtLkNvbGxlY3Rpb25zLkNhc2VJbnNlbnNpdGl2ZUhhc2hDb2RlUHJvdmlkZXIBAAAABm1fdGV4dAMdU3lzdGVtLkdsb2JhbGl6YXRpb24uVGV4dEluZm8JDwAAAAQKAAAAKlN5c3RlbS5Db2xsZWN0aW9ucy5DYXNlSW5zZW5zaXRpdmVDb21wYXJlcgEAAAANbV9jb21wYXJlSW5mbwMgU3lzdGVtLkdsb2JhbGl6YXRpb24uQ29tcGFyZUluZm8JEAAAABELAAAAAAAAABAMAAAAAAAAAAcNAAAAAAEAAAAIAAAABClIc2wuU3NtVGVzdC5PcGVyYXRpb24uWGh0bWwyU3NtLlNzbUNvb2tpZQIAAAAJEQAAAAkSAAAACRMAAAAJFAAAAAkVAAAACRYAAAAJFwAAAAoHDgAAAAABAAAAAAAAAAQpSHNsLlNzbVRlc3QuT3BlcmF0aW9uLlhodG1sMlNzbS5Tc21Db29raWUCAAAABA8AAAAdU3lzdGVtLkdsb2JhbGl6YXRpb24uVGV4dEluZm8GAAAAD21fbGlzdFNlcGFyYXRvcgxtX2lzUmVhZE9ubHkRY3VzdG9tQ3VsdHVyZU5hbWULbV9uRGF0YUl0ZW0RbV91c2VVc2VyT3ZlcnJpZGUNbV93aW4zMkxhbmdJRAEAAQAAAAEIAQgKAQrKAAAAAH8AAAAEEAAAACBTeXN0ZW0uR2xvYmFsaXphdGlvbi5Db21wYXJlSW5mbwMAAAAJd2luMzJMQ0lEB2N1bHR1cmUGbV9uYW1lAAABCAh/AAAAfwAAAAYYAAAAAAURAAAAKUhzbC5Tc21UZXN0Lk9wZXJhdGlvbi5YaHRtbDJTc20uU3NtQ29va2llBAAAAAVtTmFtZQZtVmFsdWUFbVBhdGgHbURvbWFpbgEBAQECAAAABhkAAAADbmljBhoAAAADYXNkBhsAAAAdL1NzbVdlYlNlcnZpY2VzL01tc0ltYWdlLmFzcHgKARIAAAARAAAABhwAAAADZW5hCRoAAAAGHgAAACEvU3NtV2ViU2VydmljZXMvWGh0bWxTZXJ2aWNlLmFzcHgKARMAAAARAAAABh8AAAADZHZhBiAAAAACc3MGIQAAAAEvCgEUAAAAEQAAAAYiAAAAA3RyaQkaAAAABiQAAAAiL1NzbVdlYlNlcnZpY2VzL1hodG1sU2VydmljZTIuYXNweAoBFQAAABEAAAAGJQAAAAVzdGlyaQkaAAAABicAAAAJL2ZkYXNmcXdlCgEWAAAAEQAAAAYoAAAAA3BldAkaAAAACSEAAAAGKwAAAAsxOTIuMTY4LjAuMgEXAAAAEQAAAAYsAAAABHNlc3QJIAAAAAkhAAAABi8AAAALMTkyLjE2OC4wLjEL#*@!],Pid:,Dcs:,Udh:,RequestDeliveryNotification:False,ValidityPeriod:,Metadata:]
+2008-12-22 10:58:19,622 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - UNSUBSCRIBED client RClientId:dffc38b9-b65f-48a5-97a5-85e3c5f54234,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count:0
+2008-12-22 11:17:44,488 [3832] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 11:17:44,488 [3832] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 11:17:44,488 [3832] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 10:17:49 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 11:17:44,503 [3832] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 11:18:29,257 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:3270, remote: 192.168.0.20:1972, window: 99
+2008-12-22 11:18:29,257 [5980] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 11:38:29,725 [5980] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 11:38:29,725 [5980] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 11:38:29,725 [5980] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 10:38:34 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 11:38:29,725 [5980] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 11:39:14,236 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:3329, remote: 192.168.0.20:1972, window: 99
+2008-12-22 11:39:14,251 [2364] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 11:59:14,497 [2364] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 11:59:14,497 [2364] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 11:59:14,512 [2364] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 10:59:19 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 11:59:14,512 [2364] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 11:59:59,500 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:3366, remote: 192.168.0.20:1972, window: 99
+2008-12-22 11:59:59,500 [4500] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 12:19:59,557 [4500] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 12:19:59,557 [4500] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 12:19:59,557 [4500] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 11:20:04 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 12:19:59,557 [4500] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 12:20:44,520 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:3394, remote: 192.168.0.20:1972, window: 99
+2008-12-22 12:20:44,536 [5800] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 12:40:44,507 [5800] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 12:40:44,507 [5800] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 12:40:44,507 [5800] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 11:40:49 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 12:40:44,507 [5800] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 12:41:29,507 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:3440, remote: 192.168.0.20:1972, window: 99
+2008-12-22 12:41:29,507 [3684] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 13:34:31,005 [3684] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 13:34:31,021 [3684] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 13:34:31,021 [3684] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 12:34:36 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 13:34:31,021 [3684] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 13:35:15,473 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:3889, remote: 192.168.0.20:1972, window: 99
+2008-12-22 13:35:15,489 [5820] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 13:55:17,437 [5820] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 13:55:17,437 [5820] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 13:55:17,437 [5820] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 12:55:22 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 13:55:17,437 [5820] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 13:56:01,468 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:3992, remote: 192.168.0.20:1972, window: 99
+2008-12-22 13:56:01,484 [4868] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 14:16:01,484 [4868] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 14:16:01,484 [4868] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 14:16:01,484 [4868] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 13:16:06 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 14:16:01,484 [4868] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 14:16:46,468 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4006, remote: 192.168.0.20:1972, window: 99
+2008-12-22 14:16:46,484 [4616] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 14:36:46,565 [4616] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 14:36:46,565 [4616] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 14:36:46,581 [4616] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 13:36:51 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 14:36:46,581 [4616] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 14:37:31,510 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4026, remote: 192.168.0.20:1972, window: 99
+2008-12-22 14:37:31,510 [660] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 14:57:31,792 [660] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 14:57:31,792 [660] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 14:57:31,792 [660] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 13:57:36 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 14:57:31,807 [660] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 14:58:16,575 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4114, remote: 192.168.0.20:1972, window: 99
+2008-12-22 14:58:16,590 [5784] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 15:18:16,528 [5784] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 15:18:16,528 [5784] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 15:18:16,528 [5784] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 14:18:21 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 15:18:16,543 [5784] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 15:19:01,542 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4132, remote: 192.168.0.20:1972, window: 99
+2008-12-22 15:19:01,542 [3936] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 15:39:01,572 [3936] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 15:39:01,572 [3936] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 15:39:01,572 [3936] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 14:39:06 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 15:39:01,572 [3936] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 15:39:46,526 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4163, remote: 192.168.0.20:1972, window: 99
+2008-12-22 15:39:46,541 [5340] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 15:59:46,566 [5340] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 15:59:46,566 [5340] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 15:59:46,566 [5340] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 14:59:51 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 15:59:46,566 [5340] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 16:00:31,551 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4183, remote: 192.168.0.20:1972, window: 99
+2008-12-22 16:00:31,551 [5688] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 16:20:31,593 [5688] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 16:20:31,593 [5688] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 16:20:31,593 [5688] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 15:20:36 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 16:20:31,593 [5688] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 16:21:16,563 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4213, remote: 192.168.0.20:1972, window: 99
+2008-12-22 16:21:16,563 [4600] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 16:41:16,604 [4600] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 16:41:16,604 [4600] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 16:41:16,604 [4600] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 15:41:21 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 16:41:16,604 [4600] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 16:42:01,557 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4248, remote: 192.168.0.20:1972, window: 99
+2008-12-22 16:42:01,573 [5444] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 17:02:01,531 [5444] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 17:02:01,531 [5444] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 17:02:01,531 [5444] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 16:02:06 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 17:02:01,531 [5444] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 17:02:45,563 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4265, remote: 192.168.0.20:1972, window: 99
+2008-12-22 17:02:45,563 [532] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 17:22:45,632 [532] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 17:22:45,632 [532] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 17:22:45,632 [532] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 16:22:50 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 17:22:45,632 [532] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 17:23:30,554 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4286, remote: 192.168.0.20:1972, window: 99
+2008-12-22 17:23:30,570 [4788] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 17:43:30,595 [4788] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 17:43:30,595 [4788] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 17:43:30,595 [4788] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 16:43:35 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 17:43:30,595 [4788] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 17:44:15,564 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4325, remote: 192.168.0.20:1972, window: 99
+2008-12-22 17:44:15,579 [4376] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 18:04:15,608 [4376] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 18:04:15,608 [4376] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 18:04:15,608 [4376] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 17:04:20 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 18:04:15,608 [4376] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 18:05:00,593 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4341, remote: 192.168.0.20:1972, window: 99
+2008-12-22 18:05:00,593 [264] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 18:25:00,650 [264] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 18:25:00,650 [264] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 18:25:00,650 [264] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 17:25:05 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 18:25:00,650 [264] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 18:25:45,587 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4373, remote: 192.168.0.20:1972, window: 99
+2008-12-22 18:25:45,603 [5936] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 18:45:45,689 [5936] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 18:45:45,689 [5936] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 18:45:45,689 [5936] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 17:45:50 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 18:45:45,689 [5936] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 18:46:30,595 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4399, remote: 192.168.0.20:1972, window: 99
+2008-12-22 18:46:30,611 [5548] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 19:06:30,681 [5548] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 19:06:30,681 [5548] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 19:06:30,681 [5548] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 18:06:35 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 19:06:30,681 [5548] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 19:07:15,603 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4415, remote: 192.168.0.20:1972, window: 99
+2008-12-22 19:07:15,619 [3824] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 19:27:15,584 [3824] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 19:27:15,584 [3824] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 19:27:15,584 [3824] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 18:27:20 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 19:27:15,584 [3824] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 19:28:00,600 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4442, remote: 192.168.0.20:1972, window: 99
+2008-12-22 19:28:00,600 [6096] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 19:48:00,639 [6096] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 19:48:00,654 [6096] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 19:48:00,654 [6096] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 18:48:05 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 19:48:00,654 [6096] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 19:48:45,592 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4462, remote: 192.168.0.20:1972, window: 99
+2008-12-22 19:48:45,592 [2668] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 20:08:45,646 [2668] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 20:08:45,646 [2668] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 20:08:45,646 [2668] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 19:08:50 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 20:08:45,646 [2668] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 20:09:30,568 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4493, remote: 192.168.0.20:1972, window: 99
+2008-12-22 20:09:30,584 [5492] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 20:29:30,623 [5492] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 20:29:30,623 [5492] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 20:29:30,623 [5492] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 19:29:35 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 20:29:30,623 [5492] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 20:30:15,560 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4508, remote: 192.168.0.20:1972, window: 99
+2008-12-22 20:30:15,576 [5960] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 20:50:15,589 [5960] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 20:50:15,589 [5960] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 20:50:15,589 [5960] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 19:50:20 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 20:50:15,589 [5960] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 20:51:00,565 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4532, remote: 192.168.0.20:1972, window: 99
+2008-12-22 20:51:00,581 [4604] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 21:11:00,708 [4604] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 21:11:00,708 [4604] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 21:11:00,708 [4604] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 20:11:05 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 21:11:00,708 [4604] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 21:11:45,646 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4554, remote: 192.168.0.20:1972, window: 99
+2008-12-22 21:11:45,662 [3576] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 21:31:46,478 [3576] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 21:31:46,478 [3576] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 21:31:46,478 [3576] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 20:31:51 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 21:31:46,478 [3576] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 21:32:30,650 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4579, remote: 192.168.0.20:1972, window: 99
+2008-12-22 21:32:30,665 [3124] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 21:52:30,725 [3124] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 21:52:30,725 [3124] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 21:52:30,725 [3124] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 20:52:35 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 21:52:30,725 [3124] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 21:53:15,678 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4612, remote: 192.168.0.20:1972, window: 99
+2008-12-22 21:53:15,678 [4160] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 22:13:15,725 [4160] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 22:13:15,725 [4160] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 22:13:15,725 [4160] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 21:13:20 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 22:13:15,725 [4160] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 22:14:00,694 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4630, remote: 192.168.0.20:1972, window: 99
+2008-12-22 22:14:00,694 [3256] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 22:34:00,710 [3256] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 22:34:00,725 [3256] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 22:34:00,741 [3256] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 21:34:05 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 22:34:00,741 [3256] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 22:34:45,710 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4651, remote: 192.168.0.20:1972, window: 99
+2008-12-22 22:34:45,710 [5468] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 22:54:46,241 [5468] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 22:54:46,241 [5468] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 22:54:46,257 [5468] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 21:54:51 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 22:54:46,257 [5468] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 22:55:30,726 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4690, remote: 192.168.0.20:1972, window: 99
+2008-12-22 22:55:30,726 [2664] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 23:15:30,757 [2664] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 23:15:30,757 [2664] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 23:15:30,757 [2664] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 22:15:35 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 23:15:30,772 [2664] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 23:16:15,692 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4708, remote: 192.168.0.20:1972, window: 99
+2008-12-22 23:16:15,692 [196] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 23:36:15,749 [196] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 23:36:15,749 [196] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 23:36:15,749 [196] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 22:36:20 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 23:36:15,749 [196] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 23:37:00,671 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4736, remote: 192.168.0.20:1972, window: 99
+2008-12-22 23:37:00,686 [5332] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-22 23:57:00,769 [5332] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-22 23:57:00,769 [5332] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 23:57:00,769 [5332] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 22:57:05 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-22 23:57:00,769 [5332] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-22 23:57:45,659 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4752, remote: 192.168.0.20:1972, window: 99
+2008-12-22 23:57:45,675 [4756] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-23 00:17:45,706 [4756] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-23 00:17:45,706 [4756] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-23 00:17:45,706 [4756] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 23:17:50 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-23 00:17:45,706 [4756] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-23 00:18:30,659 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4768, remote: 192.168.0.20:1972, window: 99
+2008-12-23 00:18:30,675 [5512] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-23 00:38:30,706 [5512] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-23 00:38:30,706 [5512] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-23 00:38:30,722 [5512] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 23:38:35 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-23 00:38:30,722 [5512] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-23 00:39:15,659 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4805, remote: 192.168.0.20:1972, window: 99
+2008-12-23 00:39:15,675 [5732] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-23 00:59:15,737 [5732] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-23 00:59:15,737 [5732] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-23 00:59:15,737 [5732] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 23:59:20 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-23 00:59:15,737 [5732] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-23 01:00:00,659 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4826, remote: 192.168.0.20:1972, window: 99
+2008-12-23 01:00:00,675 [5612] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-23 01:20:00,628 [5612] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-23 01:20:00,628 [5612] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-23 01:20:00,628 [5612] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/23/2008 00:20:05 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-23 01:20:00,628 [5612] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-23 01:20:44,675 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4849, remote: 192.168.0.20:1972, window: 99
+2008-12-23 01:20:44,675 [5448] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-23 01:40:44,731 [5448] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-23 01:40:44,731 [5448] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-23 01:40:44,731 [5448] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/23/2008 00:40:49 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-23 01:40:44,731 [5448] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-23 01:41:29,716 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4880, remote: 192.168.0.20:1972, window: 99
+2008-12-23 01:41:29,731 [3132] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-23 02:01:29,757 [3132] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-23 02:01:29,757 [3132] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-23 02:01:29,757 [3132] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/23/2008 01:01:34 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-23 02:01:29,757 [3132] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-23 02:02:14,726 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4898, remote: 192.168.0.20:1972, window: 99
+2008-12-23 02:02:14,757 [2448] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-23 02:22:14,816 [2448] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-23 02:22:14,816 [2448] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-23 02:22:14,816 [2448] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/23/2008 01:22:19 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-23 02:22:14,816 [2448] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-23 02:22:59,738 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4927, remote: 192.168.0.20:1972, window: 99
+2008-12-23 02:22:59,754 [4284] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-23 02:42:59,800 [4284] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-23 02:42:59,800 [4284] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-23 02:42:59,800 [4284] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/23/2008 01:43:04 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-23 02:42:59,800 [4284] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-23 02:43:44,770 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4946, remote: 192.168.0.20:1972, window: 99
+2008-12-23 02:43:44,817 [6108] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-23 03:03:44,816 [6108] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-23 03:03:44,816 [6108] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-23 03:03:44,816 [6108] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/23/2008 02:03:49 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-23 03:03:44,816 [6108] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-23 03:04:29,786 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4971, remote: 192.168.0.20:1972, window: 99
+2008-12-23 03:04:29,786 [4424] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-23 03:24:29,832 [4424] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-23 03:24:29,832 [4424] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-23 03:24:29,832 [4424] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/23/2008 02:24:34 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-23 03:24:29,832 [4424] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-23 03:25:14,786 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:4992, remote: 192.168.0.20:1972, window: 99
+2008-12-23 03:25:14,802 [2476] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-23 03:45:14,849 [2476] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-23 03:45:14,849 [2476] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-23 03:45:14,849 [2476] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/23/2008 02:45:19 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-23 03:45:14,849 [2476] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-23 03:45:59,769 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:5008, remote: 192.168.0.20:1972, window: 99
+2008-12-23 03:45:59,769 [4520] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-23 04:05:59,723 [4520] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-23 04:05:59,723 [4520] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-23 04:05:59,723 [4520] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/23/2008 03:06:04 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-23 04:05:59,723 [4520] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-23 04:06:44,722 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:5042, remote: 192.168.0.20:1972, window: 99
+2008-12-23 04:06:44,738 [4444] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-23 04:26:44,722 [4444] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-23 04:26:44,722 [4444] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-23 04:26:44,722 [4444] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/23/2008 03:26:49 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-23 04:26:44,722 [4444] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-23 04:27:29,706 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:5062, remote: 192.168.0.20:1972, window: 99
+2008-12-23 04:27:29,722 [5332] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-23 04:47:29,769 [5332] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-23 04:47:29,769 [5332] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-23 04:47:29,769 [5332] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/23/2008 03:47:34 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-23 04:47:29,769 [5332] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-23 04:48:14,690 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:5103, remote: 192.168.0.20:1972, window: 99
+2008-12-23 04:48:14,706 [2964] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-23 05:08:14,753 [2964] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-23 05:08:14,753 [2964] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-23 05:08:14,753 [2964] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/23/2008 04:08:19 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-23 05:08:14,753 [2964] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-23 05:08:59,674 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:5122, remote: 192.168.0.20:1972, window: 99
+2008-12-23 05:08:59,690 [2172] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-23 05:29:01,831 [2172] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-23 05:29:01,831 [2172] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-23 05:29:01,831 [2172] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/23/2008 04:29:06 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-23 05:29:01,831 [2172] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-23 05:29:46,658 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:5142, remote: 192.168.0.20:1972, window: 99
+2008-12-23 05:29:46,674 [1832] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-23 05:49:46,627 [1832] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-23 05:49:46,643 [1832] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-23 05:49:46,643 [1832] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/23/2008 04:49:51 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-23 05:49:46,643 [1832] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-23 05:50:31,642 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:5175, remote: 192.168.0.20:1972, window: 99
+2008-12-23 05:50:31,658 [3100] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-23 06:10:31,627 [3100] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-23 06:10:31,627 [3100] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-23 06:10:31,627 [3100] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/23/2008 05:10:36 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-23 06:10:31,627 [3100] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-23 06:11:16,626 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:5190, remote: 192.168.0.20:1972, window: 99
+2008-12-23 06:11:16,642 [4728] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-23 06:31:16,627 [4728] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-23 06:31:16,627 [4728] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-23 06:31:16,627 [4728] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/23/2008 05:31:21 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-23 06:31:16,627 [4728] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-23 06:32:01,610 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:5207, remote: 192.168.0.20:1972, window: 99
+2008-12-23 06:32:01,626 [1236] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-23 06:52:01,595 [1236] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-23 06:52:01,595 [1236] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-23 06:52:01,595 [1236] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/23/2008 05:52:06 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-23 06:52:01,595 [1236] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-23 06:52:46,595 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:5252, remote: 192.168.0.20:1972, window: 99
+2008-12-23 06:52:46,610 [248] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-23 07:12:51,767 [248] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-23 07:12:51,767 [248] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-23 07:12:51,767 [248] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/23/2008 06:12:56 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-23 07:12:51,782 [248] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-23 07:13:36,594 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:5496, remote: 192.168.0.20:1972, window: 99
+2008-12-23 07:13:36,594 [1760] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-23 07:33:39,110 [1760] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-23 07:33:39,126 [1760] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-23 07:33:39,126 [1760] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/23/2008 06:33:44 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-23 07:33:39,126 [1760] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-23 07:34:23,563 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:5883, remote: 192.168.0.20:1972, window: 99
+2008-12-23 07:34:23,578 [2968] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-23 07:54:24,032 [2968] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-23 07:54:24,032 [2968] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-23 07:54:24,032 [2968] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/23/2008 06:54:29 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-23 07:54:24,032 [2968] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-23 07:55:08,547 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:5958, remote: 192.168.0.20:1972, window: 99
+2008-12-23 07:55:08,562 [4064] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-23 09:16:30,297 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - SUBSCRIBED new remoting client RClientId:d60f2baa-e35f-4c06-896e-192d93ccbfea,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count 1
+2008-12-23 09:28:39,615 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - SUBSCRIBED new remoting client RClientId:9718b2ff-15ed-4324-93f2-fa73412b7bc3,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count 2
+2008-12-23 09:28:47,287 [4064] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Connection closed by remote server.
+2008-12-23 09:28:47,287 [4064] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-23 09:28:47,287 [4064] INFO  Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/23/2008 08:28:52 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
+2008-12-23 09:28:47,303 [4064] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
+2008-12-23 09:29:31,474 [5580] INFO  Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:6483, remote: 192.168.0.20:1972, window: 99
+2008-12-23 09:29:31,474 [4892] INFO  Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread started.
+2008-12-23 09:30:00,958 [3688] INFO  Hsl.SsmTest.TestServer.SmsCenterRemotingServer [(null)] - SUBSCRIBED new remoting client RClientId:82270310-a0d7-4255-8273-630aed7eabb3,FailCount:0,AllEvt:True,NoEvt:False,MSISDNFilter:! New client count 3
