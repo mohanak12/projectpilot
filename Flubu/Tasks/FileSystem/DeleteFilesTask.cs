@@ -21,24 +21,30 @@ namespace Flubu.Tasks.FileSystem
             }
         }
 
-        public DeleteFilesTask (string directoryPath, string filePattern)
+        public DeleteFilesTask (string directoryPath, string filePattern, bool recursive)
         {
             this.directoryPath = directoryPath;
             this.filePattern = filePattern;
+            this.recursive = recursive;
         }
 
         public static void Execute(
             IScriptExecutionEnvironment environment,
             string directoryPath,
-            string filePattern)
+            string filePattern,
+            bool recursive)
         {
-            DeleteFilesTask task = new DeleteFilesTask (directoryPath, filePattern);
+            DeleteFilesTask task = new DeleteFilesTask (directoryPath, filePattern, recursive);
             task.Execute (environment);
         }
 
         protected override void DoExecute (IScriptExecutionEnvironment environment)
         {
-            foreach (string file in Directory.GetFiles (directoryPath, filePattern))
+            SearchOption searchOption = SearchOption.TopDirectoryOnly;
+            if (recursive)
+                searchOption = SearchOption.AllDirectories;
+
+            foreach (string file in Directory.GetFiles (directoryPath, filePattern, searchOption))
             {
                 File.Delete (file);
                 environment.LogMessage("Deleted file '{0}'", file);
@@ -47,5 +53,6 @@ namespace Flubu.Tasks.FileSystem
 
         private string directoryPath;
         private string filePattern;
+        private bool recursive;
     }
 }
