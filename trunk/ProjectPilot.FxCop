@@ -679,18 +679,158 @@
       <Namespaces>
        <Namespace Name="ProjectPilot.Extras.LogParser">
         <Types>
-         <Type Name="ParsedPatternLayout">
-          <Members>
-           <Member Name="#elements">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2008-12-24 09:38:07Z">
-              <Issue>
-               <Item>'ParsedPatternLayout.elements'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
+         <Type Name="ExceptionPatternLayoutElement">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2008-12-24 12:13:41Z">
+            <Issue>
+             <Item>'ExceptionPatternLayoutElement'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="FilePatternLayoutElement">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2008-12-24 12:13:41Z">
+            <Issue>
+             <Item>'FilePatternLayoutElement'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="IdentityPatternLayoutElement">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2008-12-24 12:13:41Z">
+            <Issue>
+             <Item>'IdentityPatternLayoutElement'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="LevelPatternLayoutElement">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2008-12-24 12:13:41Z">
+            <Issue>
+             <Item>'LevelPatternLayoutElement'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="LinePatternLayoutElement">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2008-12-24 12:13:41Z">
+            <Issue>
+             <Item>'LinePatternLayoutElement'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="LocationPatternLayoutElement">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2008-12-24 12:13:41Z">
+            <Issue>
+             <Item>'LocationPatternLayoutElement'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="LoggerPatternLayoutElement">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2008-12-24 12:13:41Z">
+            <Issue>
+             <Item>'LoggerPatternLayoutElement'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="MdcPatternLayoutElement">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2008-12-24 12:13:41Z">
+            <Issue>
+             <Item>'MdcPatternLayoutElement'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="MessagePatternLayoutElement">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2008-12-24 12:13:41Z">
+            <Issue>
+             <Item>'MessagePatternLayoutElement'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="MethodPatternLayoutElement">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2008-12-24 12:13:41Z">
+            <Issue>
+             <Item>'MethodPatternLayoutElement'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="NdcPatternLayoutElement">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2008-12-24 12:13:41Z">
+            <Issue>
+             <Item>'NdcPatternLayoutElement'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="NewLinePatternLayoutElement">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2008-12-24 12:13:41Z">
+            <Issue>
+             <Item>'NewLinePatternLayoutElement'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="PropertyPatternLayoutElement">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2008-12-24 12:13:41Z">
+            <Issue>
+             <Item>'PropertyPatternLayoutElement'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="ThreadPatternLayoutElement">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2008-12-24 12:13:41Z">
+            <Issue>
+             <Item>'ThreadPatternLayoutElement'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="TypePatternLayoutElement">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2008-12-24 12:13:41Z">
+            <Issue>
+             <Item>'TypePatternLayoutElement'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="UsernamePatternLayoutElement">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2008-12-24 12:13:41Z">
+            <Issue>
+             <Item>'UsernamePatternLayoutElement'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="UtcDatePatternLayoutElement">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2008-12-24 12:13:41Z">
+            <Issue>
+             <Item>'UtcDatePatternLayoutElement'</Item>
+            </Issue>
+           </Message>
+          </Messages>
          </Type>
         </Types>
        </Namespace>
@@ -801,24 +941,6 @@
     <Modules>
      <Module Name="projectpilot.tests.dll">
       <Namespaces>
-       <Namespace Name="ProjectPilot.Tests.Extras">
-        <Types>
-         <Type Name="LogParserTest">
-          <Members>
-           <Member Name="#TestLogParser()">
-            <Messages>
-             <Message Id="System.Text.RegularExpressions.Regex" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2008-12-24 09:38:07Z">
-              <Issue Name="ObjectCreation">
-               <Item>'LogParserTest.TestLogParser()'</Item>
-               <Item>'Regex'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
        <Namespace Name="ProjectPilot.Tests.Framework">
         <Types>
          <Type Name="ChartsTests">
@@ -868,17 +990,14 @@
    <Rule TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021">
     <Resolution Name="Default">Consider a design that does not require that {0} be an out parameter.</Resolution>
    </Rule>
-   <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
-    <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
+   <Rule TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812">
+    <Resolution Name="Default">{0} is an internal class that is apparently never instantiated. If so, remove the code from the assembly. If this class is intended to contain only static methods, consider adding a private constructor to prevent the compiler from generating a default constructor.</Resolution>
    </Rule>
    <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
     <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
    </Rule>
    <Rule TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002">
     <Resolution Name="Default">Change {0} in {1} to use Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; or KeyedCollection&lt;K,V&gt;</Resolution>
-   </Rule>
-   <Rule TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806">
-    <Resolution Name="ObjectCreation">{0} creates a new instance of {1} which is never used. Pass the instance as an argument to another method, assign the instance to a variable, or remove the object creation if it is unnecessary.</Resolution>
    </Rule>
    <Rule TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004">
     <Resolution Name="Default">Consider a design where {0} doesn't require explicit type parameter {1} in any call to it.</Resolution>

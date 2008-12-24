@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{59083E4A-3659-4D8E-805F-52321D1B84DE}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -58,12 +58,31 @@
     <Compile Include="CodeAnalysis\ICodeEntity.cs" />
     <Compile Include="CodeAnalysis\InterfaceEntity.cs" />
     <Compile Include="CodeAnalysis\UmlClassDiagramGenerator.cs" />
+    <Compile Include="LogParser\AppDomainPatternLayoutElement.cs" />
+    <Compile Include="LogParser\DatePatternLayoutElement.cs" />
+    <Compile Include="LogParser\ExceptionPatternLayoutElement.cs" />
+    <Compile Include="LogParser\FilePatternLayoutElement.cs" />
+    <Compile Include="LogParser\IdentityPatternLayoutElement.cs" />
     <Compile Include="LogParser\ILog4NetPatternLayoutElement.cs" />
+    <Compile Include="LogParser\LevelPatternLayoutElement.cs" />
+    <Compile Include="LogParser\LinePatternLayoutElement.cs" />
     <Compile Include="LogParser\LiteralPatternLayoutElement.cs" />
+    <Compile Include="LogParser\LocationPatternLayoutElement.cs" />
     <Compile Include="LogParser\LogCollection.cs" />
     <Compile Include="LogParser\LogEntry.cs" />
+    <Compile Include="LogParser\LoggerPatternLayoutElement.cs" />
+    <Compile Include="LogParser\MdcPatternLayoutElement.cs" />
+    <Compile Include="LogParser\MessagePatternLayoutElement.cs" />
+    <Compile Include="LogParser\MethodPatternLayoutElement.cs" />
+    <Compile Include="LogParser\NdcPatternLayoutElement.cs" />
+    <Compile Include="LogParser\NewLinePatternLayoutElement.cs" />
     <Compile Include="LogParser\ParsedPatternLayout.cs" />
+    <Compile Include="LogParser\PropertyPatternLayoutElement.cs" />
+    <Compile Include="LogParser\ThreadPatternLayoutElement.cs" />
     <Compile Include="LogParser\TimestampPatternLayoutElement.cs" />
+    <Compile Include="LogParser\TypePatternLayoutElement.cs" />
+    <Compile Include="LogParser\UsernamePatternLayoutElement.cs" />
+    <Compile Include="LogParser\UtcDatePatternLayoutElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
