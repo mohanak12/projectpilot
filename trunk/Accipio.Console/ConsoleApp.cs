@@ -15,7 +15,7 @@ namespace Accipio.Console
         }
 
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        public void Process()
+        public int Process()
         {
             try
             {
@@ -27,17 +27,22 @@ namespace Accipio.Console
                     throw new ArgumentException("Unknown command.");
 
                 commandToExecute.ProcessCommand();
+
+                return 0;
             }
             catch (Exception ex)
             {
                 System.Console.WriteLine("Parsing error... Details: {0}", ex);
                 ShowHelp();
-                Environment.Exit(-1);
+
+                // exit with error code
+                return -1;
             }
         }
 
         private static void ShowHelp()
         {
+            System.Console.WriteLine(string.Empty);
             System.Console.WriteLine("Usage: Accipio.Console.exe [baschema | codegen] [Arguments [...]]");
             System.Console.WriteLine(string.Empty);
             System.Console.WriteLine("         To create acceptance test suite schema use command baschema.");

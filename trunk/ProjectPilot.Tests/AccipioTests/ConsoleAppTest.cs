@@ -9,36 +9,44 @@ namespace ProjectPilot.Tests.AccipioTests
     [TestFixture]
     public class ConsoleAppTest
     {
-        [Test, Ignore]
+        [Test]
         public void ConsoleBusinessActionTest()
+        {
+            string[] args = new string[] { "baschema", @"..\..\..\Data\Samples\BusinessActions.xml", "http://projectpilot/AccipioActions.xsd" };
+
+            ConsoleApp consoleApp = new ConsoleApp(args);
+            int exitCode = consoleApp.Process();
+            Assert.AreEqual(0, exitCode);
+        }
+
+        [Test]
+        public void ConsoleBusinessActionMissingSchemaNamespaceTest()
         {
             string[] args = new string[] { "baschema", @"..\..\..\Data\Samples\AccipioActions.xml" };
 
             ConsoleApp consoleApp = new ConsoleApp(args);
-            consoleApp.Process();
+            int exitCode = consoleApp.Process();
+            Assert.AreEqual(-1, exitCode);
         }
 
-        [Test, Ignore]
+        [Test]
         public void ConsoleBusinessActionInvalidArgsLengthTest()
         {
             string[] args = new string[] { "baschema" };
 
             ConsoleApp consoleApp = new ConsoleApp(args);
-            consoleApp.Process();
+            int exitCode = consoleApp.Process();
+            Assert.AreEqual(-1, exitCode);
         }
 
-        [Test, Ignore]
+        [Test]
         public void ConsoleBusinessActionArgsNullTest()
         {
             string[] args = null;
 
             ConsoleApp consoleApp = new ConsoleApp(args);
-            consoleApp.Process();
-        }
-
-        [Test]
-        public void ConsoleCodeGeneratorCommandTest()
-        {            
+            int exitCode = consoleApp.Process();
+            Assert.AreEqual(-1, exitCode);
         }
     }
 }
