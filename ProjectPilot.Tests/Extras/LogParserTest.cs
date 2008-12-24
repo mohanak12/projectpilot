@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using MbUnit.Framework;
 using ProjectPilot.Extras.LogParser;
 
@@ -11,10 +13,20 @@ namespace ProjectPilot.Tests.Extras
         [Test, Pending]
         public void TestLogParser()
         {
-            Stream stream = File.OpenRead(@"..\..\..\Data\Samples\TestServer.log");
-            LogCollection parseCollection = new LogCollection(@"date time threadId level other");
+            Regex regexDate = new Regex(@"^\d{4}-\d{2}-\d{2}$");
+            Regex regexThreadId = new Regex(@"\[\d+\]");
+            //PatternPatternLayoutElementTypeRegex regexLevel = new Regex(@"\[\d+\]");
+            Regex regexTime = new Regex(@"^\d{2}:\d{2}:\d{2},\d{3}$");
 
-            parseCollection.ParseLogFile(stream);
+            Dictionary<string, Regex> pattern = new Dictionary<string, Regex>();
+            pattern.Add("Date", regexDate);
+            pattern.Add("Time", regexTime);
+            pattern.Add("ThreadId", regexThreadId);
+            
+            Stream stream = File.OpenRead(@"..\..\..\Data\Samples\TestServer.log");
+            LogCollection parseCollection = new LogCollection();
+
+            parseCollection.ParseLogFile(stream, pattern);
         }
     }
 }
