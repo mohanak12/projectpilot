@@ -55,17 +55,21 @@ namespace Flubu.Builds
         /// Adds the specified directory to the list of build products.
         /// </summary>
         /// <param name="buildPartId">The ID of the build part this directory belongs to.</param>
-        /// <param name="directoryPath">The directory path.</param>
+        /// <param name="sourceDirectoryPath">The source directory path from where the files will be copied.</param>
+        /// <param name="productDirectoryPath">The path relative to the package directory where this product's files will be copied.</param>
         /// <returns>
         /// This same instance of the <see cref="BuildProductsRegistry{TRunner}"/>.
         /// </returns>
-        public BuildProductsRegistry<TRunner> AddDirectory(string buildPartId, string directoryPath)
+        public BuildProductsRegistry<TRunner> AddDirectory(
+            string buildPartId, 
+            string sourceDirectoryPath,
+            string productDirectoryPath)
         {
             buildProducts.Add(
                 new SimpleBuildProduct<TRunner>(
                     buildPartId, 
-                    directoryPath, 
-                    Path.GetFileName(directoryPath), 
+                    sourceDirectoryPath, 
+                    productDirectoryPath, 
                     null, 
                     null));
             return this;
@@ -75,7 +79,8 @@ namespace Flubu.Builds
         /// Adds the specified directory to the list of build products.
         /// </summary>
         /// <param name="buildPartId">The ID of the build part this directory belongs to.</param>
-        /// <param name="directoryPath">The directory path.</param>
+        /// <param name="sourceDirectoryPath">The source directory path from where the files will be copied.</param>
+        /// <param name="productDirectoryPath">The path relative to the package directory where this product's files will be copied.</param>
         /// <param name="inclusionPattern">The inclusion regular expression pattern for files.</param>
         /// <param name="exclusionPattern">The exclusion regular expression pattern for files.</param>
         /// <returns>
@@ -83,15 +88,16 @@ namespace Flubu.Builds
         /// </returns>
         public BuildProductsRegistry<TRunner> AddDirectory(
             string buildPartId,
-            string directoryPath,
+            string sourceDirectoryPath,
+            string productDirectoryPath,
             string inclusionPattern,
             string exclusionPattern)
         {
             buildProducts.Add(
                 new SimpleBuildProduct<TRunner>(
                     buildPartId, 
-                    directoryPath, 
-                    Path.GetFileName(directoryPath), 
+                    sourceDirectoryPath, 
+                    productDirectoryPath, 
                     inclusionPattern, 
                     exclusionPattern));
             return this;
@@ -101,34 +107,51 @@ namespace Flubu.Builds
         /// Adds the specified VisualStudio project to the list of build products.
         /// </summary>
         /// <param name="buildPartId">The ID of the build part this project belongs to.</param>
-        /// <param name="projectName">Name of the project.</param>
+        /// <param name="projectName">Name of the project. This name will be used as a directory name where all the product's
+        /// files will be copied.</param>
         /// <returns>
         /// This same instance of the <see cref="BuildProductsRegistry{TRunner}"/>.
         /// </returns>
         public BuildProductsRegistry<TRunner> AddProject(string buildPartId, string projectName)
         {
-            VSProjectInfo projectInfo = runner.Solution.FindProjectByName(projectName);
+            string productDirectoryName = projectName;
+            return this.AddProject(buildPartId, projectName, productDirectoryName);
+        }
 
-            if (runner.ProjectExtendedInfos.ContainsKey(projectName))
+        /// <summary>
+        /// Adds the specified VisualStudio project to the list of build products.
+        /// </summary>
+        /// <param name="buildPartId">The ID of the build part this project belongs to.</param>
+        /// <param name="projectName">Name of the project.</param>
+        /// <param name="productDirectoryPath">The path relative to the package directory where this product's files will be copied.
+        /// If set to <see cref="string.Empty"/>, the files will be copied directly on the top-level directory.</param>
+        /// <returns>
+        /// This same instance of the <see cref="BuildProductsRegistry{TRunner}"/>.
+        /// </returns>
+        public BuildProductsRegistry<TRunner> AddProject (string buildPartId, string projectName, string productDirectoryPath)
+        {
+            VSProjectInfo projectInfo = runner.Solution.FindProjectByName (projectName);
+
+            if (runner.ProjectExtendedInfos.ContainsKey (projectName))
             {
                 VSProjectExtendedInfo extendedInfo = runner.ProjectExtendedInfos[projectName];
                 if (extendedInfo.IsWebProject)
                 {
-                    buildProducts.Add(
-                        new WebApplicationBuildProduct<TRunner>(buildPartId, projectInfo.ProjectDirectoryPath, projectName));
+                    buildProducts.Add (
+                        new WebApplicationBuildProduct<TRunner> (buildPartId, projectInfo.ProjectDirectoryPath, productDirectoryPath));
                     return this;
                 }
             }
 
-            buildProducts.Add(
-                new SimpleBuildProduct<TRunner>(
-                    buildPartId, 
-                    Path.Combine(projectInfo.ProjectDirectoryPath, runner.GetProjectOutputPath(projectName)), 
-                    projectName, 
-                    null, 
+            buildProducts.Add (
+                new SimpleBuildProduct<TRunner> (
+                    buildPartId,
+                    Path.Combine (projectInfo.ProjectDirectoryPath, runner.GetProjectOutputPath (projectName)),
+                    productDirectoryPath,
+                    null,
                     null));
 
-            return this;
+            return this;            
         }
 
         public void CopyProducts(string packageDirectory)
