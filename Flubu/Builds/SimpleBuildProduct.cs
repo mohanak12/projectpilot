@@ -7,11 +7,11 @@ namespace Flubu.Builds
         where TRunner : FlubuRunner<TRunner>
     {
         public SimpleBuildProduct(
-            string buildPartId,
+            string productPartId,
             string sourceDirectory, 
             string productDirectoryPath,
             string includePattern,
-            string excludePattern) : base(buildPartId)
+            string excludePattern) : base(productPartId)
         {
             this.sourceDirectory = sourceDirectory;
             this.productDirectoryPath = productDirectoryPath;
