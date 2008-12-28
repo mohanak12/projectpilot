@@ -20,6 +20,7 @@ namespace Flubu.Builds
 
             string destinationPath = Path.Combine(packageDirectory, destinationFileName);
             AddFileToCopiedList(destinationPath);
+            buildRunner.EnsureDirectoryPathExists(destinationPath, true);
             buildRunner.CopyFile(sourceFileName, destinationPath, true);
         }
 
