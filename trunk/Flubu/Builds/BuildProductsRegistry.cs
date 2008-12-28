@@ -36,16 +36,16 @@ namespace Flubu.Builds
         /// <summary>
         /// Adds all VisualStudio Web projects registered in the solution to the list of build products.
         /// </summary>
-        /// <param name="buildPartId">The ID of the build part Web projects will belong to.</param>
+        /// <param name="productPartId">The ID of the product part Web projects will belong to.</param>
         /// <returns>
         /// This same instance of the <see cref="BuildProductsRegistry{TRunner}"/>.
         /// </returns>
-        public BuildProductsRegistry<TRunner> AddAllWebProjects(string buildPartId)
+        public BuildProductsRegistry<TRunner> AddAllWebProjects(string productPartId)
         {
             foreach (VSProjectExtendedInfo projectExtendedInfo in runner.ProjectExtendedInfos.Values)
             {
                 if (projectExtendedInfo.IsWebProject)
-                    AddProject(buildPartId, projectExtendedInfo.ProjectInfo.ProjectName);
+                    AddProject(productPartId, projectExtendedInfo.ProjectInfo.ProjectName);
             }
 
             return this;
@@ -54,20 +54,20 @@ namespace Flubu.Builds
         /// <summary>
         /// Adds the specified directory to the list of build products.
         /// </summary>
-        /// <param name="buildPartId">The ID of the build part this directory belongs to.</param>
+        /// <param name="productPartId">The ID of the product part this directory belongs to.</param>
         /// <param name="sourceDirectoryPath">The source directory path from where the files will be copied.</param>
         /// <param name="productDirectoryPath">The path relative to the package directory where this product's files will be copied.</param>
         /// <returns>
         /// This same instance of the <see cref="BuildProductsRegistry{TRunner}"/>.
         /// </returns>
         public BuildProductsRegistry<TRunner> AddDirectory(
-            string buildPartId, 
+            string productPartId, 
             string sourceDirectoryPath,
             string productDirectoryPath)
         {
             buildProducts.Add(
                 new SimpleBuildProduct<TRunner>(
-                    buildPartId, 
+                    productPartId, 
                     sourceDirectoryPath, 
                     productDirectoryPath, 
                     null, 
@@ -78,7 +78,7 @@ namespace Flubu.Builds
         /// <summary>
         /// Adds the specified directory to the list of build products.
         /// </summary>
-        /// <param name="buildPartId">The ID of the build part this directory belongs to.</param>
+        /// <param name="productPartId">The ID of the product part this directory belongs to.</param>
         /// <param name="sourceDirectoryPath">The source directory path from where the files will be copied.</param>
         /// <param name="productDirectoryPath">The path relative to the package directory where this product's files will be copied.</param>
         /// <param name="inclusionPattern">The inclusion regular expression pattern for files.</param>
@@ -87,7 +87,7 @@ namespace Flubu.Builds
         /// This same instance of the <see cref="BuildProductsRegistry{TRunner}"/>.
         /// </returns>
         public BuildProductsRegistry<TRunner> AddDirectory(
-            string buildPartId,
+            string productPartId,
             string sourceDirectoryPath,
             string productDirectoryPath,
             string inclusionPattern,
@@ -95,7 +95,7 @@ namespace Flubu.Builds
         {
             buildProducts.Add(
                 new SimpleBuildProduct<TRunner>(
-                    buildPartId, 
+                    productPartId, 
                     sourceDirectoryPath, 
                     productDirectoryPath, 
                     inclusionPattern, 
@@ -104,31 +104,47 @@ namespace Flubu.Builds
         }
 
         /// <summary>
-        /// Adds the specified VisualStudio project to the list of build products.
+        /// Adds the specified file to the list of build products.
         /// </summary>
-        /// <param name="buildPartId">The ID of the build part this project belongs to.</param>
-        /// <param name="projectName">Name of the project. This name will be used as a directory name where all the product's
-        /// files will be copied.</param>
+        /// <param name="productPartId">The ID of the product part this directory belongs to.</param>
+        /// <param name="sourceFileName">Name of the file to be added.</param>
+        /// <param name="destinationFileName">The path relative to the package directory where this file will be copied.</param>
         /// <returns>
         /// This same instance of the <see cref="BuildProductsRegistry{TRunner}"/>.
         /// </returns>
-        public BuildProductsRegistry<TRunner> AddProject(string buildPartId, string projectName)
+        public BuildProductsRegistry<TRunner> AddFile (string productPartId, string sourceFileName, string destinationFileName)
         {
-            string productDirectoryName = projectName;
-            return this.AddProject(buildPartId, projectName, productDirectoryName);
+            buildProducts.Add(
+                new FileBuildProduct<TRunner>(productPartId, sourceFileName, destinationFileName));
+            return this;
         }
 
         /// <summary>
         /// Adds the specified VisualStudio project to the list of build products.
         /// </summary>
-        /// <param name="buildPartId">The ID of the build part this project belongs to.</param>
+        /// <param name="productPartId">The ID of the product part this project belongs to.</param>
+        /// <param name="projectName">Name of the project. This name will be used as a directory name where all the product's
+        /// files will be copied.</param>
+        /// <returns>
+        /// This same instance of the <see cref="BuildProductsRegistry{TRunner}"/>.
+        /// </returns>
+        public BuildProductsRegistry<TRunner> AddProject(string productPartId, string projectName)
+        {
+            string productDirectoryName = projectName;
+            return this.AddProject(productPartId, projectName, productDirectoryName);
+        }
+
+        /// <summary>
+        /// Adds the specified VisualStudio project to the list of build products.
+        /// </summary>
+        /// <param name="productPartId">The ID of the product part this project belongs to.</param>
         /// <param name="projectName">Name of the project.</param>
         /// <param name="productDirectoryPath">The path relative to the package directory where this product's files will be copied.
         /// If set to <see cref="string.Empty"/>, the files will be copied directly on the top-level directory.</param>
         /// <returns>
         /// This same instance of the <see cref="BuildProductsRegistry{TRunner}"/>.
         /// </returns>
-        public BuildProductsRegistry<TRunner> AddProject (string buildPartId, string projectName, string productDirectoryPath)
+        public BuildProductsRegistry<TRunner> AddProject (string productPartId, string projectName, string productDirectoryPath)
         {
             VSProjectInfo projectInfo = runner.Solution.FindProjectByName (projectName);
 
@@ -138,14 +154,14 @@ namespace Flubu.Builds
                 if (extendedInfo.IsWebProject)
                 {
                     buildProducts.Add (
-                        new WebApplicationBuildProduct<TRunner> (buildPartId, projectInfo.ProjectDirectoryPath, productDirectoryPath));
+                        new WebApplicationBuildProduct<TRunner> (productPartId, projectInfo.ProjectDirectoryPath, productDirectoryPath));
                     return this;
                 }
             }
 
             buildProducts.Add (
                 new SimpleBuildProduct<TRunner> (
-                    buildPartId,
+                    productPartId,
                     Path.Combine (projectInfo.ProjectDirectoryPath, runner.GetProjectOutputPath (projectName)),
                     productDirectoryPath,
                     null,

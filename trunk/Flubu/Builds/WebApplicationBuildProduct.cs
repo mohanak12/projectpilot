@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.IO;
-using Flubu.Builds;
 
 namespace Flubu.Builds
 {
@@ -8,9 +6,9 @@ namespace Flubu.Builds
         where TRunner : FlubuRunner<TRunner>
     {
         public WebApplicationBuildProduct(
-            string buildPartId,
+            string productPartId,
             string sourceDirectory, 
-            string productDirectoryName) : base (buildPartId)
+            string productDirectoryName) : base (productPartId)
         {
             this.productDirectoryName = productDirectoryName;
             this.sourceDirectory = sourceDirectory;

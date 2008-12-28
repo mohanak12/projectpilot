@@ -24,6 +24,11 @@ namespace Flubu.Builds
             this.productPartId = productPartId;
         }
 
+        protected void AddFileToCopiedList (string fileName)
+        {
+            copiedFiles.Add (fileName);
+        }
+
         protected void AddFilesToCopiedList (IEnumerable<string> fileNames)
         {
             copiedFiles.AddRange(fileNames);
@@ -35,6 +40,6 @@ namespace Flubu.Builds
         }
 
         private readonly string productPartId;
-        private List<string> copiedFiles = new List<string>();
+        private readonly List<string> copiedFiles = new List<string>();
     }
 }
