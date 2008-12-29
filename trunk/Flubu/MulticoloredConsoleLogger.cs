@@ -69,7 +69,14 @@ namespace Flubu
             else
                 WriteLine(ConsoleColor.Red, "BUILD FAILED");
 
-            WriteLine(ConsoleColor.White, "Build duration: {0} ({1} seconds)", buildDuration, (int)buildDuration.TotalSeconds);
+            WriteLine(ConsoleColor.White, "Build finish time: {0:g}", DateTime.Now);
+            WriteLine(
+                ConsoleColor.White, 
+                "Build duration: {0:D2}:{1:D2}:{2:D2} ({3:d} seconds)", 
+                buildDuration.Hours, 
+                buildDuration.Minutes, 
+                buildDuration.Seconds,
+                (int)buildDuration.TotalSeconds);
         }
 
         public void LogTargetFinished()
