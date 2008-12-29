@@ -2,10 +2,10 @@
 
 namespace ProjectPilot.Extras.LogParser
 {
-    [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    class UsernamePatternLayoutElement : ILog4NetPatternLayoutElement
+    [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Username")]
+    public class UsernamePatternLayoutElement : ConversionPatternBase
     {
-        public int Parse(string line, int startingIndex)
+        public override int Parse(string line, int startingIndex)
         {
             throw new System.NotImplementedException();
         }

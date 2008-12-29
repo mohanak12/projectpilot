@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using log4net;
 using MbUnit.Framework;
 using ProjectPilot.Extras.LogParser;
 
@@ -10,27 +11,82 @@ namespace ProjectPilot.Tests.Extras
     [TestFixture]
     public class LogParserTest
     {
-        [Test, Pending]
-        public void TestLogParser()
+        [Test]
+        public void SimpleTimestampPattern()
         {
-//            Regex regexDate = new Regex(@"^\d{4}-\d{2}-\d{2}$");
-//            Regex regexThreadId = new Regex(@"\[\d+\]");
-//            //PatternPatternLayoutElementTypeRegex regexLevel = new Regex(@"\[\d+\]");
-//            Regex regexTime = new Regex(@"^\d{2}:\d{2}:\d{2},\d{3}$");
-//
-//            Dictionary<string, Regex> pattern = new Dictionary<string, Regex>();
-//            pattern.Add("Date", regexDate);
-//            pattern.Add("Time", regexTime);
-//            pattern.Add("ThreadId", regexThreadId);
-//            
-//            Stream stream = File.OpenRead(@"..\..\..\Data\Samples\TestServer.log");
-//            LogCollection parseCollection = new LogCollection();
-//
-//            parseCollection.ParseLogFile(stream, pattern);
-
             ParsedPatternLayout patternParse = new ParsedPatternLayout();
-              patternParse.ParsePattern("%timestamp [%thread] %level %logger %ndc - %message%newline");
-           // patternParse.ParsePattern("%-6timestamp");
+
+            patternParse.ParsePattern("%timestamp");
+            Assert.AreEqual(1, patternParse.Elements.Count);
+
+            //patternParse.Elements
+
+            Assert.IsInstanceOfType(typeof(TimestampPatternLayoutElement), patternParse.Elements[0]);
+        }
+
+        [Test]
+        public void SimpleTimestampPatternWithLiteral()
+        {
+            ParsedPatternLayout patternParse = new ParsedPatternLayout();
+
+            patternParse.ParsePattern("[%timestamp");
+            Assert.AreEqual(2, patternParse.Elements.Count);
+
+            LiteralPatternLayoutElement element = (LiteralPatternLayoutElement) patternParse.Elements[0];
+            Assert.AreEqual("[", element.LiteralText);
+
+            Assert.IsInstanceOfType(typeof(LiteralPatternLayoutElement), patternParse.Elements[0]);
+            Assert.IsInstanceOfType(typeof(TimestampPatternLayoutElement), patternParse.Elements[1]);
+        }
+
+        [Test]
+        public void ComplexPatternWithSpaces()
+        {
+            ParsedPatternLayout patternParse = new ParsedPatternLayout();
+
+            patternParse.ParsePattern("%timestamp [%thread]%level%logger%ndc - %message%newline");
+
+            int i = 0;
+            Assert.IsInstanceOfType(typeof(TimestampPatternLayoutElement), patternParse.Elements[i++]);
+            Assert.IsInstanceOfType(typeof(LiteralPatternLayoutElement), patternParse.Elements[i++]);
+            Assert.IsInstanceOfType(typeof(ThreadPatternLayoutElement), patternParse.Elements[i++]);
+            Assert.IsInstanceOfType(typeof(LiteralPatternLayoutElement), patternParse.Elements[i++]);
+            Assert.IsInstanceOfType(typeof(LevelPatternLayoutElement), patternParse.Elements[i++]);
+            Assert.IsInstanceOfType(typeof(LoggerPatternLayoutElement), patternParse.Elements[i++]);
+            Assert.IsInstanceOfType(typeof(NdcPatternLayoutElement), patternParse.Elements[i++]);
+            Assert.IsInstanceOfType(typeof(LiteralPatternLayoutElement), patternParse.Elements[i++]);
+            Assert.IsInstanceOfType(typeof(MessagePatternLayoutElement), patternParse.Elements[i++]);
+            Assert.IsInstanceOfType(typeof(NewLinePatternLayoutElement), patternParse.Elements[i++]);
+
+            Assert.AreEqual(10, patternParse.Elements.Count);
+        }
+
+        [Test]
+        public void ComplexPatternWithoutSpaces()
+        {
+            ParsedPatternLayout patternParse = new ParsedPatternLayout();
+
+            patternParse.ParsePattern("%timestamp[%thread]%level%logger%ndc-%message%newline");
+
+            int i = 0;
+            Assert.IsInstanceOfType(typeof(TimestampPatternLayoutElement), patternParse.Elements[i++]);
+            Assert.IsInstanceOfType(typeof(LiteralPatternLayoutElement), patternParse.Elements[i++]);
+            Assert.IsInstanceOfType(typeof(ThreadPatternLayoutElement), patternParse.Elements[i++]);
+            Assert.IsInstanceOfType(typeof(LiteralPatternLayoutElement), patternParse.Elements[i++]);
+            Assert.IsInstanceOfType(typeof(LevelPatternLayoutElement), patternParse.Elements[i++]);
+            Assert.IsInstanceOfType(typeof(LoggerPatternLayoutElement), patternParse.Elements[i++]);
+            Assert.IsInstanceOfType(typeof(NdcPatternLayoutElement), patternParse.Elements[i++]);
+            Assert.IsInstanceOfType(typeof(LiteralPatternLayoutElement), patternParse.Elements[i++]);
+            Assert.IsInstanceOfType(typeof(MessagePatternLayoutElement), patternParse.Elements[i++]);
+            Assert.IsInstanceOfType(typeof(NewLinePatternLayoutElement), patternParse.Elements[i++]);
+
+            Assert.AreEqual(10, patternParse.Elements.Count);
+        }
+        //MoreTest's  - 
+        [FixtureSetUp]
+        public void FixtureSetup()
+        {
+            log4net.Config.XmlConfigurator.Configure();
         }
     }
 }

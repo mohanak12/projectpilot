@@ -3,9 +3,13 @@
 namespace ProjectPilot.Extras.LogParser
 {
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    class UtcDatePatternLayoutElement : ILog4NetPatternLayoutElement
+    public class UtcDatePatternLayoutElement : ConversionPatternBase
     {
-        public int Parse(string line, int startingIndex)
+        public UtcDatePatternLayoutElement()
+        {
+        }
+
+        public override int Parse(string line, int startingIndex)
         {
             throw new System.NotImplementedException();
         }

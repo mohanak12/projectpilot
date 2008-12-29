@@ -36,9 +36,7 @@ namespace ProjectPilot.Extras.LogParser
                        newEntry.LogItems.Add(pattern.ElementAt(n).Key, lineArray.ElementAt(n));
 
                     if (line == null) //End of file.
-                        break;
-
-                       
+                        break;                       
                 }
             }
          }

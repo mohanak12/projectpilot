@@ -23,7 +23,8 @@ namespace ProjectPilot.Extras.CodeAnalysis
                     if (entity is ClassEntity)
                     {
                         ClassEntity classEntity = (ClassEntity)entity;
-                        writer.WriteLine("node{0} [label = \"{1}\" fontname=\"{2}\"]", 
+                        writer.WriteLine(
+                            "node{0} [label = \"{1}\" fontname=\"{2}\"]", 
                             classEntity.UniqueId, 
                             classEntity.EntityShortName,
                             fontName);
@@ -41,7 +42,8 @@ namespace ProjectPilot.Extras.CodeAnalysis
                     else if (entity is InterfaceEntity)
                     {
                         InterfaceEntity classEntity = (InterfaceEntity)entity;
-                        writer.WriteLine("node{0} [label = \"{1}\" fontname=\"{2} Italic\"]", 
+                        writer.WriteLine(
+                            "node{0} [label = \"{1}\" fontname=\"{2} Italic\"]", 
                             classEntity.UniqueId, 
                             classEntity.EntityShortName,
                             fontName);                        

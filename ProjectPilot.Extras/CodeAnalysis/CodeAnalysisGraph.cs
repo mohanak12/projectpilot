@@ -24,6 +24,6 @@ namespace ProjectPilot.Extras.CodeAnalysis
         }
 
         private int entitiesUniqueIdCounter = 0;
-        private Dictionary<string,ICodeEntity> entities = new Dictionary<string, ICodeEntity>();
+        private Dictionary<string, ICodeEntity> entities = new Dictionary<string, ICodeEntity>();
     }
 }
