@@ -164,12 +164,12 @@ namespace Flubu.Builds
         {
             ScriptExecutionEnvironment.LogTaskStarted ("Compiling the solution");
 
-            AddProgramArgument(MakePathFromRootDir(productId) + ".sln");
-            AddProgramArgument("/p:Configuration={0}", buildConfiguration);
-            AddProgramArgument("/p:Platform=Any CPU");
-            AddProgramArgument("/consoleloggerparameters:NoSummary");
-
-            RunProgram(@"C:\Windows\Microsoft.NET\Framework\v3.5\msbuild.exe");
+            ProgramRunner
+                .AddArgument(MakePathFromRootDir(productId) + ".sln")
+                .AddArgument("/p:Configuration={0}", buildConfiguration)
+                .AddArgument("/p:Platform=Any CPU")
+                .AddArgument("/consoleloggerparameters:NoSummary")
+                .Run(@"C:\Windows\Microsoft.NET\Framework\v3.5\msbuild.exe");
 
             ScriptExecutionEnvironment.LogTaskFinished ();
             return ReturnThisTRunner ();
@@ -276,27 +276,24 @@ namespace Flubu.Builds
             string password,
             string useDatabase)
         {
-            AddProgramArgument("-U");
-            AddProgramArgument(userName);
-            AddProgramArgument("-P");
-            AddProgramArgument(password);
-            AddProgramArgument("-i");
-            AddProgramArgument(scriptFileName);
-            //AddProgramArgument("-b");
-            AddProgramArgument("-r1");
-            AddProgramArgument("-m-1");
-            //AddProgramArgument("-V");
-            //AddProgramArgument("0");
-            //AddProgramArgument("-o");
-            //AddProgramArgument("test.txt");
+            ProgramRunner
+                .AddArgument("-U")
+                .AddArgument(userName)
+                .AddArgument("-P")
+                .AddArgument(password)
+                .AddArgument("-i")
+                .AddArgument(scriptFileName)
+                .AddArgument("-r1")
+                .AddArgument("-m-1");
 
             if (useDatabase != null)
             {
-                AddProgramArgument("-d");
-                AddProgramArgument(useDatabase);
+                ProgramRunner
+                    .AddArgument("-d")
+                    .AddArgument(useDatabase);
             }
 
-            RunProgram(@"C:\Program Files\Microsoft SQL Server\90\Tools\Binn\osql.exe", false);
+            ProgramRunner.Run(@"C:\Program Files\Microsoft SQL Server\90\Tools\Binn\osql.exe", false);
 
             return ReturnThisTRunner();
         }
@@ -361,14 +358,15 @@ namespace Flubu.Builds
             fxReportPath = Path.Combine(fxReportPath, productId);
             fxReportPath = String.Format(CultureInfo.InvariantCulture, "{0}.FxCopReport.xml", fxReportPath);
 
-            AddProgramArgument(@"/project:{0}", fxProjectPath);
-            AddProgramArgument(@"/out:{0}", fxReportPath);
-            AddProgramArgument(@"/dictionary:CustomDictionary.xml");
-            AddProgramArgument(@"/ignoregeneratedcode");
+            ProgramRunner
+                .AddArgument(@"/project:{0}", fxProjectPath)
+                .AddArgument(@"/out:{0}", fxReportPath)
+                .AddArgument(@"/dictionary:CustomDictionary.xml")
+                .AddArgument(@"/ignoregeneratedcode");
             
             string fxCopCmdPath = MakePathFromRootDir(@".\lib\Microsoft FxCop 1.36\FxCopCmd.exe");
             AssertFileExists("FxCopCmd.exe", fxCopCmdPath);
-            RunProgram(fxCopCmdPath, true);
+            ProgramRunner.Run(fxCopCmdPath, true);
 
             // check if the report file was generated
             bool isReportFileGenerated = File.Exists(fxReportPath);
@@ -377,13 +375,14 @@ namespace Flubu.Builds
             // see http://msdn.microsoft.com/en-us/library/bb164705(VS.80).aspx for the list of exit codes
             // exit code 4 means "Project load error" but it occurs when the old FxCop violations exist
             // which are then removed from the code
-            if ((LastExitCode != 0 && LastExitCode != 4) || isReportFileGenerated)
+            if ((ProgramRunner.LastExitCode != 0 && ProgramRunner.LastExitCode != 4) || isReportFileGenerated)
             {
                 if (false == IsRunningUnderCruiseControl)
                 {
                     // run FxCop GUI
-                    AddProgramArgument(fxProjectPath);
-                    RunProgram(MakePathFromRootDir(@".\lib\Microsoft FxCop 1.36\FxCop.exe"));
+                    ProgramRunner
+                        .AddArgument(fxProjectPath)
+                        .Run(MakePathFromRootDir(@".\lib\Microsoft FxCop 1.36\FxCop.exe"));
                 }
                 else if (File.Exists(fxReportPath))
                     File.Copy(fxReportPath, ccnetDir);
@@ -512,13 +511,16 @@ namespace Flubu.Builds
                 string buildLogsDir = EnsureBuildLogsTestDirectoryExists();
                 string ncoverExplorerConfigFileName = MakePathFromRootDir(ProductId) + ".NCoverExplorer.config";
 
-                AddProgramArgument(Path.Combine(buildLogsDir, "Coverage*.xml"));
+                ProgramRunner
+                    .AddArgument(Path.Combine(buildLogsDir, "Coverage*.xml"));
                 if (File.Exists(ncoverExplorerConfigFileName))
-                    AddProgramArgument("/c:{0}", ncoverExplorerConfigFileName);
-                AddProgramArgument("/x:{0}", Path.Combine(buildLogsDir, "MergedCoverageReport.xml"));
-                AddProgramArgument("/r:5");
-                AddProgramArgument("/p:{0}", ProductName);
-                RunProgram(@"lib\NCoverExplorer-1.3.6.36\NCoverExplorer.Console.exe");
+                    ProgramRunner
+                        .AddArgument("/c:{0}", ncoverExplorerConfigFileName);
+                ProgramRunner
+                    .AddArgument("/x:{0}", Path.Combine(buildLogsDir, "MergedCoverageReport.xml"))
+                    .AddArgument("/r:5")
+                    .AddArgument("/p:{0}", ProductName)
+                    .Run(@"lib\NCoverExplorer-1.3.6.36\NCoverExplorer.Console.exe");
             }
 
             return ReturnThisTRunner();
@@ -711,46 +713,38 @@ namespace Flubu.Builds
             {
                 if (collectCoverageData)
                 {
-                    AddProgramArgument(@"lib\NCover v1.5.8\CoverLib.dll");
-                    AddProgramArgument("/s");
-                    RunProgram("regsvr32");
+                    ProgramRunner
+                        .AddArgument(@"lib\NCover v1.5.8\CoverLib.dll")
+                        .AddArgument("/s")
+                        .Run("regsvr32");
 
-                    AddProgramArgument(gallioEchoExePath);
+                    ProgramRunner
+                        .AddArgument(gallioEchoExePath);
                 }
 
-                AddProgramArgument(testedAssemblyFileName);
-                AddProgramArgument("/report-directory:{0}", buildLogsDir);
-                AddProgramArgument("/report-name-format:TestResults-{0}", TestRuns);
-                AddProgramArgument("/report-type:xml");
-                AddProgramArgument("/verbosity:verbose");
-                //AddProgramArgument("/runner:IsolatedAppDomain");
-
-                //// create a list of our assemblies which we want to measure coverage of
-                //StringBuilder assembliesList = new StringBuilder();
-                //this.Solution.ForEachProject(delegate(VSProjectInfo projectInfo)
-                //{
-                // if (projectInfo.ProjectTypeGuid == VSProjectType.CSharpProjectType.ProjectTypeGuid)
-                //     assembliesList.AppendFormat("{0};", projectInfo.ProjectName);
-                //});
+                ProgramRunner
+                    .AddArgument(testedAssemblyFileName)
+                    .AddArgument("/report-directory:{0}", buildLogsDir)
+                    .AddArgument("/report-name-format:TestResults-{0}", TestRuns)
+                    .AddArgument("/report-type:xml")
+                    .AddArgument("/verbosity:verbose");
 
                 if (collectCoverageData)
                 {
-                    //AddProgramArgument("//reg");
-                    //AddProgramArgument("//a");
-                    //AddProgramArgument(assembliesList.ToString());
-                    AddProgramArgument("//x");
-                    AddProgramArgument(@"{0}\Coverage-{1}.xml", buildLogsDir, TestRuns);
-                    AddProgramArgument("//ea");
-                    AddProgramArgument("MbUnit.Framework.TestFixtureAttribute");
-                    AddProgramArgument("//w");
-                    AddProgramArgument(Path.GetDirectoryName(testedAssemblyFileName));
-                    AddProgramArgument("//v");
-                    RunProgram(MakePathFromRootDir(@"lib\NCover v1.5.8\NCover.Console.exe"));
+                    ProgramRunner
+                        .AddArgument("//x")
+                        .AddArgument(@"{0}\Coverage-{1}.xml", buildLogsDir, TestRuns)
+                        .AddArgument("//ea")
+                        .AddArgument("MbUnit.Framework.TestFixtureAttribute")
+                        .AddArgument("//w")
+                        .AddArgument(Path.GetDirectoryName(testedAssemblyFileName))
+                        .AddArgument("//v")
+                        .Run(MakePathFromRootDir(@"lib\NCover v1.5.8\NCover.Console.exe"));
 
                     coverageResultsExist = true;
                 }
                 else
-                    RunProgram(gallioEchoExePath);
+                    ProgramRunner.Run(gallioEchoExePath);
 
                 IncrementTestRunsCounter();
             }
@@ -758,10 +752,11 @@ namespace Flubu.Builds
             {
                 if (collectCoverageData)
                 {
-                    AddProgramArgument(@"lib\NCover v1.5.8\CoverLib.dll");
-                    AddProgramArgument("/s");
-                    AddProgramArgument("/u");
-                    RunProgram("regsvr32");
+                    ProgramRunner
+                        .AddArgument(@"lib\NCover v1.5.8\CoverLib.dll")
+                        .AddArgument("/s")
+                        .AddArgument("/u")
+                        .Run("regsvr32");
                 }                
             }
 
