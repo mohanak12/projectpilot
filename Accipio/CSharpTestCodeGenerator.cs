@@ -16,7 +16,6 @@ namespace Accipio
             BusinessActionData businessActionData = testSuite.BusinessActionData;
             Dictionary<string, TestCase> testCases = testSuite.TestCases;
             ICollection<string> testCasesKeys = testCases.Keys;
-            WriteLine("using Accipio;");
             WriteLine("using MbUnit.Framework;");
             WriteLine(string.Empty);
             WriteLine("namespace {0}", testSuite.Namespace);

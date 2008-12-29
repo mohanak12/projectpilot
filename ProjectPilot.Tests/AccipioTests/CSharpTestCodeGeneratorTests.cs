@@ -63,8 +63,6 @@ namespace ProjectPilot.Tests.AccipioTests
                 };
             businessActionData.Actions.Add(businessActionEntry);
             testSuite.BusinessActionData = businessActionData;
-
-            mockCodeWriter.Expect(writer => writer.WriteLine("using Accipio;"));
             mockCodeWriter.Expect(writer => writer.WriteLine("using MbUnit.Framework;"));
             mockCodeWriter.Expect(writer => writer.WriteLine(string.Empty));
             mockCodeWriter.Expect(writer => writer.WriteLine("namespace OnlineBankingNamespace"));
