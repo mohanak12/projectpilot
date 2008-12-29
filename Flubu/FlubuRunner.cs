@@ -38,6 +38,8 @@ namespace Flubu
                 howManyOldLogsToKeep);
             hasFailed = true;
 
+            programRunner = new ExternalProgramRunner<TRunner>((TRunner)this);
+
             AddTarget("help")
                 .SetDescription("Displays the available targets in the build")
                 .Do(TargetHelp);
@@ -56,6 +58,11 @@ namespace Flubu
             get { return defaultTarget; }
         }
 
+        public ExternalProgramRunner<TRunner> ProgramRunner
+        {
+            get { return programRunner; }
+        }
+
         /// <summary>
         /// Gets the list of all copied destination files that were copied during the last execution of the <see cref="CopyDirectoryStructure(string,string,bool)"/>
         /// or <see cref="CopyDirectoryStructure(string,string,bool,string,string)"/> call.
@@ -66,15 +73,6 @@ namespace Flubu
             get { return lastCopiedFilesList; }
         }
 
-        /// <summary>
-        /// Gets the exit code of the last external program that was run by the runner.
-        /// </summary>
-        /// <value>The exit code of the last external program.</value>
-        public int LastExitCode
-        {
-            get { return lastExitCode; }
-        }
-
         public IScriptExecutionEnvironment ScriptExecutionEnvironment
         {
             get { return scriptExecutionEnvironment; }
@@ -83,18 +81,6 @@ namespace Flubu
         public TRunner AddUserToGroup (string userName, string group)
         {
             AddUserToGroupTask.Execute(scriptExecutionEnvironment,  userName, group);
-            return ReturnThisTRunner();
-        }
-
-        public TRunner AddProgramArgument(string argument)
-        {
-            programArgs.Add(argument);
-            return ReturnThisTRunner();
-        }
-
-        public TRunner AddProgramArgument(string format, params object[] args)
-        {
-            programArgs.Add(string.Format(CultureInfo.InvariantCulture, format, args));
             return ReturnThisTRunner();
         }
 
@@ -534,56 +520,6 @@ namespace Flubu
             return ReturnThisTRunner();
         }
 
-        public TRunner RunProgram(string programExePath)
-        {
-            return RunProgram(programExePath, false);
-        }
-
-        public TRunner RunProgram(string programExePath, bool ignoreExitCodes)
-        {
-            try
-            {
-                using (Process process = new Process())
-                {
-                    StringBuilder argumentLineBuilder = new StringBuilder();
-                    foreach (string programArg in programArgs)
-                        argumentLineBuilder.AppendFormat("\"{0}\" ", programArg);
-
-                    Log("Running program '{0}' ('{1}')", programExePath, argumentLineBuilder);
-
-                    ProcessStartInfo processStartInfo = new ProcessStartInfo(programExePath, argumentLineBuilder.ToString());
-                    processStartInfo.CreateNoWindow = true;
-                    processStartInfo.ErrorDialog = false;
-                    processStartInfo.RedirectStandardError = true;
-                    processStartInfo.RedirectStandardOutput = true;
-                    processStartInfo.UseShellExecute = false;
-
-                    process.StartInfo = processStartInfo;
-                    process.ErrorDataReceived += new DataReceivedEventHandler(Process_ErrorDataReceived);
-                    process.OutputDataReceived += new DataReceivedEventHandler(Process_OutputDataReceived);
-                    process.Start();
-
-                    process.BeginOutputReadLine();
-                    process.BeginErrorReadLine();
-
-                    process.WaitForExit();
-
-                    Log("Exit code: {0}", process.ExitCode);
-
-                    lastExitCode = process.ExitCode;
-
-                    if (false == ignoreExitCodes && process.ExitCode != 0)
-                        Fail("Program '{0}' returned exit code {1}.", programExePath, process.ExitCode);
-                }
-            }
-            finally
-            {
-                programArgs.Clear ();                
-            }
-
-            return ReturnThisTRunner();
-        }
-
         /// <summary>
         /// Runs the specified target.
         /// </summary>
@@ -735,23 +671,13 @@ namespace Flubu
             return (TRunner) this;
         }
 
-        private void Process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
-        {
-        }
-
-        private void Process_OutputDataReceived(object sender, DataReceivedEventArgs e)
-        {
-            scriptExecutionEnvironment.LogMessage(e.Data);
-        }
-
         private Stopwatch buildTime = new Stopwatch();
         private FlubuRunnerTarget<TRunner> defaultTarget;
         private bool disposed;
+        private ExternalProgramRunner<TRunner> programRunner;
         private readonly Dictionary<string, string> executedTargets = new Dictionary<string, string>();
         private bool hasFailed;
         private IList<string> lastCopiedFilesList;
-        private int lastExitCode;
-        private List<string> programArgs = new List<string>();
         private IScriptExecutionEnvironment scriptExecutionEnvironment;
         private readonly Dictionary<string, FlubuRunnerTarget<TRunner>> targets = new Dictionary<string, FlubuRunnerTarget<TRunner>>();
     }
