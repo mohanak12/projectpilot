@@ -15,7 +15,7 @@ namespace ProjectPilot.Extras.CodeAnalysis
             CodeAnalysisGraph graph = new CodeAnalysisGraph();
 
             // first examine all types that belong to the assembly
-            foreach(Type type in assembly.GetTypes())
+            foreach (Type type in assembly.GetTypes())
                 AnalyzeType(type, graph);
 
             return graph;
@@ -54,8 +54,7 @@ namespace ProjectPilot.Extras.CodeAnalysis
                         analyzedClass.AddAncestor(ancestor);
                 }
 
-                foreach (FieldInfo field in type.GetFields(BindingFlags.Instance|BindingFlags.NonPublic
-                    ))
+                foreach (FieldInfo field in type.GetFields(BindingFlags.Instance|BindingFlags.NonPublic))
                 {
                     ICodeEntity association = AnalyzeType(field.FieldType, graph);
                     if (association != null)
@@ -95,7 +94,8 @@ namespace ProjectPilot.Extras.CodeAnalysis
 
         private bool ShouldBeIncluded(Type type)
         {
-            return (type.FullName != null && type.FullName.StartsWith("ProjectPilot", StringComparison.OrdinalIgnoreCase));
+            bool return_value = (type.FullName != null && type.FullName.StartsWith("ProjectPilot", StringComparison.OrdinalIgnoreCase));
+            return return_value;
         }
 
         private readonly Assembly assembly;

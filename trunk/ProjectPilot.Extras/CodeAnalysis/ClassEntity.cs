@@ -15,7 +15,7 @@ namespace ProjectPilot.Extras.CodeAnalysis
 
         public ICollection<ICodeEntity> Associations
         {
-            get {return associations;}
+            get { return associations; }
         }
 
         public bool IsAbstract

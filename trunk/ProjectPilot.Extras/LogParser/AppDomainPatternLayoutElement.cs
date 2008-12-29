@@ -3,9 +3,9 @@
 namespace ProjectPilot.Extras.LogParser
 {
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    class AppDomainPatternLayoutElement : ILog4NetPatternLayoutElement
+    public class AppDomainPatternLayoutElement : ConversionPatternBase
     {
-        public int Parse(string line, int startingIndex)
+        public override int Parse(string line, int startingIndex)
         {
             throw new System.NotImplementedException();
         }

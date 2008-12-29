@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,6 +11,7 @@ namespace ProjectPilot.Portal.Views
 {
     public partial class ProjectView : ViewPage<ProjectViewModel>
     {
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "viewableModule")]
         protected void Page_Load(object sender, EventArgs e)
         {
             // display a list of modules for the project
