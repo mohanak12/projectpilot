@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace ProjectPilot.Extras.LogParser
+namespace ProjectPilot.Extras.LogParser.Log4NetPatterns
 {
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    public class MethodPatternLayoutElement : ConversionPatternBase
+    public class MessagePatternLayoutElement : ConversionPatternBase
     {
         public override int Parse(string line, int startingIndex)
         {

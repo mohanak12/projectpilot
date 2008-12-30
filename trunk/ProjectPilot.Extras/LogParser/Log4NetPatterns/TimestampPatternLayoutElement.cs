@@ -1,6 +1,6 @@
 using System;
 
-namespace ProjectPilot.Extras.LogParser
+namespace ProjectPilot.Extras.LogParser.Log4NetPatterns
 {
     public class TimestampPatternLayoutElement : ConversionPatternBase
     {

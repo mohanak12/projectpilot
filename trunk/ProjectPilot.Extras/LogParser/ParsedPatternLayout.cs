@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using log4net;
+using ProjectPilot.Extras.LogParser.Log4NetPatterns;
 
 namespace ProjectPilot.Extras.LogParser
 {
@@ -21,6 +22,7 @@ namespace ProjectPilot.Extras.LogParser
             conversionPatternsMap.Add("class", typeof(TypePatternLayoutElement).FullName);
             conversionPatternsMap.Add("type", typeof(TypePatternLayoutElement).FullName);
             conversionPatternsMap.Add("d", typeof(DatePatternLayoutElement).FullName);
+            conversionPatternsMap.Add("date", typeof(DatePatternLayoutElement).FullName);
             conversionPatternsMap.Add("exception", typeof(ExceptionPatternLayoutElement).FullName);
             conversionPatternsMap.Add("F", typeof(FilePatternLayoutElement).FullName);
             conversionPatternsMap.Add("file", typeof(FilePatternLayoutElement).FullName);
@@ -101,37 +103,6 @@ namespace ProjectPilot.Extras.LogParser
 
                 match = match.NextMatch();
             }
-          
-            //foreach (string patternInLine in parseLine)
-            //{
-            //    string[] parseElement = patternInLine.Split('%');
-            //    foreach (string patternInElement in parseElement)
-            //    {
-            //        if (patternInElement == string.Empty)
-            //            continue;
-
-            //        string pattern = patternInElement;
-            //        pattern = "%" + pattern;
-
-            //        //PatternElement
-            //        if (regex.IsMatch(pattern))
-            //        {
-            //            Match match = regex.Match(pattern);
-            //            tempLayout.Add(match.Value);
-            //            pattern = pattern.Remove(0, match.Length);
-            //        }
-            //        else
-            //        {
-            //            pattern = pattern.Remove(0, 1);
-            //        }
-
-            //        //Literal
-            //        if (pattern.Length > 0)
-            //        {
-            //            tempLayout.Add(pattern); 
-            //        }
-            //    }
-            //}
         }
 
         private ConversionPatternBase FindLayoutElement (string patternName)

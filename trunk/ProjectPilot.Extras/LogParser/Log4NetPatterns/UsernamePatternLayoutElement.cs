@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace ProjectPilot.Extras.LogParser
+namespace ProjectPilot.Extras.LogParser.Log4NetPatterns
 {
     [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Username")]
     public class UsernamePatternLayoutElement : ConversionPatternBase
