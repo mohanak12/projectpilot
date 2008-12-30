@@ -16,5 +16,6 @@ namespace ProjectPilot.Extras.LogParser
 
         //<LogPattern, value>
         private Dictionary<string, string> logItems = new Dictionary<string, string>();
+        //private DateTime sdf
     }
 }

@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using log4net;
 using MbUnit.Framework;
 using ProjectPilot.Extras.LogParser;
+using ProjectPilot.Extras.LogParser.Log4NetPatterns;
 
 namespace ProjectPilot.Tests.Extras
 {
@@ -57,8 +58,17 @@ namespace ProjectPilot.Tests.Extras
             Assert.IsInstanceOfType(typeof(LiteralPatternLayoutElement), patternParse.Elements[i++]);
             Assert.IsInstanceOfType(typeof(MessagePatternLayoutElement), patternParse.Elements[i++]);
             Assert.IsInstanceOfType(typeof(NewLinePatternLayoutElement), patternParse.Elements[i++]);
-
+            
             Assert.AreEqual(10, patternParse.Elements.Count);
+
+            LiteralPatternLayoutElement element = (LiteralPatternLayoutElement)patternParse.Elements[1];
+            Assert.AreEqual(" [", element.LiteralText);
+
+            element = (LiteralPatternLayoutElement)patternParse.Elements[3];
+            Assert.AreEqual("]", element.LiteralText);
+
+            element = (LiteralPatternLayoutElement)patternParse.Elements[7];
+            Assert.AreEqual(" - ", element.LiteralText);
         }
 
         [Test]
@@ -81,6 +91,15 @@ namespace ProjectPilot.Tests.Extras
             Assert.IsInstanceOfType(typeof(NewLinePatternLayoutElement), patternParse.Elements[i++]);
 
             Assert.AreEqual(10, patternParse.Elements.Count);
+
+            LiteralPatternLayoutElement element = (LiteralPatternLayoutElement)patternParse.Elements[1];
+            Assert.AreEqual("[", element.LiteralText);
+
+            element = (LiteralPatternLayoutElement)patternParse.Elements[3];
+            Assert.AreEqual("]", element.LiteralText);
+
+            element = (LiteralPatternLayoutElement)patternParse.Elements[7];
+            Assert.AreEqual("-", element.LiteralText);
         }
         //MoreTest's  - 
         [FixtureSetUp]

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace ProjectPilot.Extras.LogParser
+namespace ProjectPilot.Extras.LogParser.Log4NetPatterns
 {
     [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ndc")]
     public class NdcPatternLayoutElement : ConversionPatternBase

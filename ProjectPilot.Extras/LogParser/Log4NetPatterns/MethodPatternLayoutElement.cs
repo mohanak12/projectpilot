@@ -1,14 +1,10 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace ProjectPilot.Extras.LogParser
+namespace ProjectPilot.Extras.LogParser.Log4NetPatterns
 {
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    public class UtcDatePatternLayoutElement : ConversionPatternBase
+    public class MethodPatternLayoutElement : ConversionPatternBase
     {
-        public UtcDatePatternLayoutElement()
-        {
-        }
-
         public override int Parse(string line, int startingIndex)
         {
             throw new System.NotImplementedException();
