@@ -17,6 +17,7 @@ namespace ProjectPilot.Tests.AccipioTests
         {
             string[] args = GetArgs();
             TestCodeGeneratorCommand testCodeGeneratorCommand = new TestCodeGeneratorCommand(null);
+            testCodeGeneratorCommand.AccipioDirectory = "..\\..\\..\\Data\\Samples";
             testCodeGeneratorCommand.ParseArguments(args);
             testCodeGeneratorCommand.ProcessCommand();
         }
@@ -28,6 +29,17 @@ namespace ProjectPilot.Tests.AccipioTests
             args[1] = "..\\..\\..\\Data\\Samples\\BusinessActions.xml";
             args[2] = TestSuiteSchemaGeneratorTests.GenerateXsdValidationSchemaOutputFile();
             args[3] = "..\\..\\..\\Data\\Samples\\TestSuite.xml";
+            return args;
+        }
+
+        public static string[] GetArgsWithOption()
+        {
+            string[] args = new string[5];
+            args[0] = "-o=..\\..\\..\\Data\\Samples";
+            args[1] = "codegen";
+            args[2] = "..\\..\\..\\Data\\Samples\\BusinessActions.xml";
+            args[3] = TestSuiteSchemaGeneratorTests.GenerateXsdValidationSchemaOutputFile();
+            args[4] = "..\\..\\..\\Data\\Samples\\TestSuite.xml";
             return args;
         }
     }

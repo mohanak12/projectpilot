@@ -318,17 +318,17 @@ namespace NDesk.Options
             this.count = maxValueCount;
             this.type = ParsePrototype();
 
-            if (this.count == 0 && type != OptionValueType.None)
+            if (this.count == 0 && type != Options.OptionValueType.None)
                 throw new ArgumentException(
                         "Cannot provide maxValueCount of 0 for OptionValueType.Required or " +
                             "OptionValueType.Optional.",
                         "maxValueCount");
-            if (this.type == OptionValueType.None && maxValueCount > 1)
+            if (this.type == Options.OptionValueType.None && maxValueCount > 1)
                 throw new ArgumentException(
                         string.Format("Cannot provide maxValueCount of {0} for OptionValueType.None.", maxValueCount),
                         "maxValueCount");
             if (Array.IndexOf(names, "<>") >= 0 &&
-                    ((names.Length == 1 && this.type != OptionValueType.None) ||
+                    ((names.Length == 1 && this.type != Options.OptionValueType.None) ||
                      (names.Length > 1 && this.MaxValueCount > 1)))
                 throw new ArgumentException(
                         "The default option handler '<>' cannot require values.",
@@ -401,7 +401,7 @@ namespace NDesk.Options
             }
 
             if (type == '\0')
-                return OptionValueType.None;
+                return Options.OptionValueType.None;
 
             if (count <= 1 && seps.Count != 0)
                 throw new ArgumentException(
@@ -417,7 +417,7 @@ namespace NDesk.Options
                     this.separators = seps.ToArray();
             }
 
-            return type == '=' ? OptionValueType.Required : OptionValueType.Optional;
+            return type == '=' ? Options.OptionValueType.Required : Options.OptionValueType.Optional;
         }
 
         private static void AddSeparators(string name, int end, ICollection<string> seps)

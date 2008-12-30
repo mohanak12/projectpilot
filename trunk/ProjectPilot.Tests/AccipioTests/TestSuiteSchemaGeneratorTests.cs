@@ -34,6 +34,7 @@ namespace ProjectPilot.Tests.AccipioTests
             string fileName = @"..\..\..\Data\Samples\BusinessActions.xml";
             IConsoleCommand consoleCommand = new TestSuiteSchemaGeneratorCommand(null)
                 .ParseArguments(new[] { "baschema", fileName, "http://GenerateXsdValidationSchemaTest" });
+            consoleCommand.AccipioDirectory = string.Empty;
             // process command
             consoleCommand.ProcessCommand();
 

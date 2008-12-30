@@ -29,6 +29,8 @@ namespace Accipio.Console
             get { return outputFileName; }
         }
 
+        public string AccipioDirectory { get; set; }
+
         /// <summary>
         /// Returns the first <see cref="IConsoleCommand"/> in the command chain
         /// which can understand the provided command-line arguments.
@@ -106,18 +108,6 @@ namespace Accipio.Console
                 CultureInfo.InvariantCulture, 
                 "XSD schema file was created. Full path to file: '{0}'", 
                 new FileInfo(outputFileName).FullName));
-        }
-
-        private string AccipioDirectory
-        {
-            get
-            {
-                Uri uri = new Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase);
-                string localPath = uri.LocalPath;
-                string accipioDirectory = Path.GetDirectoryName(localPath);
-
-                return accipioDirectory;
-            }
         }
 
         /// <summary>

@@ -19,6 +19,8 @@ namespace Accipio.Console
             this.nextCommandInChain = nextCommandInChain;
         }
 
+        public string AccipioDirectory { get; set; }
+
         /// <summary>
         /// Returns the first <see cref="IConsoleCommand"/> in the command chain
         /// which can understand the provided command-line arguments.

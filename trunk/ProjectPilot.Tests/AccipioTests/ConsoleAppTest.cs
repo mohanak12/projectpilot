@@ -10,6 +10,16 @@ namespace ProjectPilot.Tests.AccipioTests
     public class ConsoleAppTest
     {
         [Test]
+        public void ConsoleAppWithOption()
+        {
+            string[] args = new string[] { @"-o=", "baschema", @"..\..\..\Data\Samples\BusinessActions.xml", "http://projectpilot/AccipioActions.xsd" };
+
+            ConsoleApp consoleApp = new ConsoleApp(args);
+            int exitCode = consoleApp.Process();
+            Assert.AreEqual(0, exitCode);
+        }
+
+        [Test]
         public void ConsoleBusinessActionTest()
         {
             string[] args = new string[] { "baschema", @"..\..\..\Data\Samples\BusinessActions.xml", "http://projectpilot/AccipioActions.xsd" };

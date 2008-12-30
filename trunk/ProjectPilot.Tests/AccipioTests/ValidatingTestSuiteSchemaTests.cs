@@ -165,6 +165,7 @@ namespace ProjectPilot.Tests.AccipioTests
             {
                 // first generate the schema
                 TestSuiteSchemaGeneratorCommand cmd = new TestSuiteSchemaGeneratorCommand(null);
+                cmd.AccipioDirectory = string.Empty;
                 string[] arguments = new string[] { "baschema", BusinessActionsXmlFile, "http://fikus" };
                 Assert.AreSame(cmd, cmd.ParseArguments(arguments));
             
