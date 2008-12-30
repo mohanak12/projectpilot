@@ -23,7 +23,9 @@ namespace ProjectPilot.Tests.AccipioTests
         public void CodeGeneratorTest()
         {
             string[] args = TestCodeGeneratorTests.GetArgs();
-            IConsoleCommand consoleCommand = new TestCodeGeneratorCommand(null).ParseArguments(args);
+            IConsoleCommand consoleCommand = new TestCodeGeneratorCommand(null);
+            consoleCommand.AccipioDirectory = "..\\..\\..\\Data\\Samples";
+            consoleCommand.ParseArguments(args);
             consoleCommand.ProcessCommand();
         }
 
@@ -60,6 +62,7 @@ namespace ProjectPilot.Tests.AccipioTests
             string[] args = TestCodeGeneratorTests.GetArgs();
             args[0] = "beeeeeeee";
             TestCodeGeneratorCommand testCodeGeneratorCommand = new TestCodeGeneratorCommand(null);
+            testCodeGeneratorCommand.AccipioDirectory = "..\\..\\..\\Data\\Samples";
             Assert.IsNull(testCodeGeneratorCommand.ParseArguments(args));
         }
 

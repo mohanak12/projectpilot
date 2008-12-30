@@ -18,5 +18,11 @@ namespace Accipio.Console
         /// Processes the command.
         /// </summary>
         void ProcessCommand();
+
+        /// <summary>
+        /// Gets or sets the accipio output directory.
+        /// </summary>
+        /// <value>The accipio output directory.</value>
+        string AccipioDirectory { get; set; }
     }
 }
