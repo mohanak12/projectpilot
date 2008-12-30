@@ -112,6 +112,17 @@ namespace Flubu
             return ReturnThisTRunner();
         }
 
+        /// <summary>
+        /// Sounds a beep.
+        /// </summary>
+        /// <param name="messageBeepType">Type of the message beep.</param>
+        /// <returns>The same instance of this <see cref="TRunner"/>.</returns>
+        public TRunner Beep(MessageBeepType messageBeepType)
+        {
+            Beeper.MessageBeep(messageBeepType);
+            return ReturnThisTRunner();
+        }
+
         public TRunner CheckIfServiceExists(string serviceName, string configurationSetting)
         {
             CheckIfServiceExistsTask.Execute(scriptExecutionEnvironment, serviceName, configurationSetting);
@@ -659,6 +670,9 @@ namespace Flubu
                 if (disposing)
                 {
                     scriptExecutionEnvironment.LogRunnerFinished(!hasFailed, buildTime.Elapsed);
+
+                    Beep(hasFailed ? MessageBeepType.Error : MessageBeepType.Ok);
+
                     scriptExecutionEnvironment.Dispose();
                 }
 

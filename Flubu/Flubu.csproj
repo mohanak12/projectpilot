@@ -93,6 +93,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Beeper.cs" />
     <Compile Include="Builds\BuildLogger.cs" />
     <Compile Include="Builds\BuildProduct.cs" />
     <Compile Include="Builds\BuildProductsRegistry.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Builds\VSSolutionBrowsing\VSSolution.cs" />
     <Compile Include="Builds\WebApplicationBuildProduct.cs" />
     <Compile Include="IFlubuLogger.cs" />
+    <Compile Include="MessageBeepType.cs" />
     <Compile Include="MulticoloredConsoleLogger.cs" />
     <Compile Include="OperatingSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
