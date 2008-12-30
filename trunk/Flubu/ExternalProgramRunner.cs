@@ -104,7 +104,7 @@ namespace Flubu
 
         private void Process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
         {
-            runner.ScriptExecutionEnvironment.LogMessage(e.Data);
+            runner.ScriptExecutionEnvironment.LogError(e.Data);
         }
 
         private void Process_OutputDataReceived(object sender, DataReceivedEventArgs e)
