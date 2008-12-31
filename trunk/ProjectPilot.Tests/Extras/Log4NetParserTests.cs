@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text.RegularExpressions;
-using log4net;
+using System.Linq;
+using System.Text;
+using Gallio.Framework;
 using MbUnit.Framework;
 using ProjectPilot.Extras.LogParser;
 using ProjectPilot.Extras.LogParser.Log4NetPatterns;
@@ -10,7 +10,7 @@ using ProjectPilot.Extras.LogParser.Log4NetPatterns;
 namespace ProjectPilot.Tests.Extras
 {
     [TestFixture]
-    public class LogParserTest
+    public class Log4NetParserTests
     {
         [Test]
         public void SimpleTimestampPattern()
@@ -100,48 +100,6 @@ namespace ProjectPilot.Tests.Extras
 
             element = (LiteralPatternLayoutElement)patternParse.Elements[7];
             Assert.AreEqual("-", element.LiteralText);
-        }
-
-        [Test, Pending]
-        public void SimpleLineParsing()
-        {
-            //ParsedLayout lineParse = new ParsedLayout(Time ThreadId);
-            //lineParse.Parse(@"2008-12-22 09:16:02,734|[4904]);
-            //Assert(2, LineParse.element.count);
-            //Assert(2, LineParse.elementValue.count);
-            //Assert.AreEqual("Time", lineParse.element[0].value);
-            //Assert.AreEqual("ThreadId", lineParse.element[1].value);
-            //Assert.AreEqual("[4904]", lineParse.elementValue[1].value);
-        }
-
-        [Test, Pending]
-        public void ComplexLineParsing()
-        {
-            //ParsedLayout lineParse = new ParsedLayout(Time ThreadId Level Unsorted);
-            //lineParse.Parse(@"2008-12-22 09:16:02,734|[4904]|INFO|Hsl.UniversalHost.Core.ComponentManager [ComponentManager.Start] - Starting all components.");
-            //Assert(4, LineParse.element.count);
-            //Assert(4, LineParse.elementValue.count);
-            //Assert.AreEqual("Time", lineParse.element[0].value);
-            //Assert.AreEqual("ThreadId", lineParse.element[1].value);
-            //Assert.AreEqual("[4904]", LineParse.elementValue[1].value);
-            //Assert.AreEqual("INFO", LineParse.elementValue[2].value);
-            //Assert.AreEqual("Level", lineParse.element[3].value);
-            //Assert.AreEqual("Unsorted", lineParse.element[4].value);
-        }
-
-        [Test, Pending]
-        public void DoubleLineParsing()
-        {
-            //ParsedLayout lineParse = new ParsedLayout(Time ThreadId Level Unsorted);
-            //lineParse.Parse(
-            //@"2008-12-22 09:16:02,734|[4904]|INFO|Hsl.UniversalHost.Core.ComponentManager [ComponentManager.Start] - Starting all components.\n Exception rethrown at [0]: at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)");
-            //...
-        }
-
-        [FixtureSetUp]
-        public void FixtureSetup()
-        {
-            log4net.Config.XmlConfigurator.Configure();
         }
     }
 }
