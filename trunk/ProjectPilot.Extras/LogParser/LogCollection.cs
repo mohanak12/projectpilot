@@ -20,6 +20,12 @@ namespace ProjectPilot.Extras.LogParser
             {
                 elementsPattern.Add(elementInPattern);
             }
+
+            conversionMap.Add("Time", new TimestampElement());
+            conversionMap.Add("ThreadId", new ThreadIdElement());
+            conversionMap.Add("Level", new LevelElement());
+            conversionMap.Add("Message", new MessageElement());
+            conversionMap.Add("Ndc", new NdcElement());
         }
 
         public CultureInfo CultureToUse
@@ -55,6 +61,8 @@ namespace ProjectPilot.Extras.LogParser
                 //Add's pattern values
                 for (n = 0; n < elementsPattern.Count; n++)
                 {
+                    //object element = conversionMap.TryGetValue(elementsPattern[n, ); !!
+                    //newEntry.Elements.Add(element);
                     newEntry.Elements.Add(lineElements[n]);  
                 }
 
@@ -77,16 +85,8 @@ namespace ProjectPilot.Extras.LogParser
                     StringBuilder stringTemp = new StringBuilder();
                     stringTemp.Append(lastEntry.Elements.ElementAt(lastEntry.Elements.Count - 1));
 
-//                    while (n < lineElements.Length)
-//                    {
-//                        //New pattern value
-//                        stringTemp.Append(lineElements[n]);
-//                        n++;
-//                    }
-
                     //Replace last element in last LogElement
                     lastEntry.Elements.RemoveAt(lastEntry.Elements.Count-1);
-//                    lastEntry.Elements.Add(stringTemp.ToString());
                     lastEntry.Elements.Add(line.Substring(count));
 
                     //Replace last LogElement
@@ -103,14 +103,6 @@ namespace ProjectPilot.Extras.LogParser
                 StringBuilder stringTemp = new StringBuilder();
                 stringTemp.Append(lastEntry.Elements.ElementAt(lastEntry.Elements.Count - 1));
                 stringTemp.Append(line);
-
-//                int n = 0;
-//                while (n < lineElements.Length)
-//                {
-//                    //New pattern value
-//                    stringTemp.Append(lineElements[n]);
-//                    n++;
-//                }
 
                 //Replace last element in last LogElement
                 lastEntry.Elements.RemoveAt(lastEntry.Elements.Count - 1);
@@ -137,31 +129,8 @@ namespace ProjectPilot.Extras.LogParser
             }
         }
 
-//        public void ParseLogFile(Stream fileStream, Dictionary<string, Regex> pattern)
-//        {
-//            int n = 1;
-//            string line;
-//            string[] lineArray;
-//            LogEntry newEntry = new LogEntry();
-//
-//            using (StreamReader reader = new StreamReader(fileStream))
-//            {
-//                while (true)
-//                {
-//                   line = reader.ReadLine();
-//                   lineArray = line.Split(' ');
-//
-//                   if (pattern.ElementAt(n).Value.IsMatch(lineArray.ElementAt(n)))
-//                       newEntry.LogItems.Add(pattern.ElementAt(n).Key, lineArray.ElementAt(n));
-//
-//                    if (line == null) //End of file.
-//                        break;                       
-//                }
-//            }
-//         }
-
         private CultureInfo cultureToUse = CultureInfo.InvariantCulture;
-
+        private Dictionary<string, object> conversionMap = new Dictionary<string, object>();
         private List<string> elementsPattern = new List<string>();
         private List<LogEntry> elementsLog = new List<LogEntry>();
         private char separator = '|';
