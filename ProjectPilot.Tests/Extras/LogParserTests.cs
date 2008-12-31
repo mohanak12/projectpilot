@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using log4net;
@@ -12,7 +13,7 @@ namespace ProjectPilot.Tests.Extras
     [TestFixture]
     public class LogParserTests
     {
-        [Test]
+        [Test, Pending]
         public void SimpleLineParsing()
         {
             LogCollection lineParse = new LogCollection('|', "Time|ThreadId");
@@ -24,7 +25,10 @@ namespace ProjectPilot.Tests.Extras
 
             Assert.AreEqual(1, lineParse.ElementsLog.Count);
             Assert.AreEqual(2, lineParse.ElementsLog[0].Elements.Count);
-            Assert.AreEqual("2008-12-22 09:16:02,734", lineParse.ElementsLog[0].Elements[0]);
+            DateTime expectedTime = DateTime.ParseExact("2008-12-22 09:16:02,734", "yyyy-MM-dd HH:mm:ss,fff", CultureInfo.CurrentCulture);
+            Assert.AreEqual(
+                expectedTime, 
+                (DateTime)lineParse.ElementsLog[0].Elements[0]);
             Assert.AreEqual("[4904]", lineParse.ElementsLog[0].Elements[1]);
         }
 
@@ -46,8 +50,8 @@ namespace ProjectPilot.Tests.Extras
             Assert.AreEqual("[4904]", lineParse.ElementsLog[0].Elements[1]);
             Assert.AreEqual("INFO", lineParse.ElementsLog[0].Elements[2]);
             Assert.AreEqual(
-                "Hsl.UniversalHost.|Core.Component|Manager [ComponentManager.Start] - Starting all components.",
-                lineParse.ElementsLog[0].Elements[3]);
+            "Hsl.UniversalHost.|Core.Component|Manager [ComponentManager.Start] - Starting all components.",
+            lineParse.ElementsLog[0].Elements[3]);
 
             lineParse.ParseLogLine(@"1234567890");
             lineParse.ParseLogLine(@"2008-12-22 09:16:02,734|[4904]|FAIL|Hsl3");
@@ -93,13 +97,14 @@ namespace ProjectPilot.Tests.Extras
         [Test]
         public void ParsingFromLogFile()
         {
-            Stream fileStream = File.OpenRead(@"..\..\..\Data\Samples\TestLogParser.log");
+            using (Stream fileStream = File.OpenRead(@"..\..\..\Data\Samples\TestLogParser.log"))
+            {
+                LogCollection lineParse = new LogCollection('|', "Time|ThreadId|Level|Unsorted");
 
-            LogCollection lineParse = new LogCollection('|', "Time|ThreadId|Level|Unsorted");
+                lineParse.ParseLogFile(fileStream);
 
-            lineParse.ParseLogFile(fileStream);
-
-            Assert.AreEqual(15, lineParse.ElementsLog.Count);
+                Assert.AreEqual(15, lineParse.ElementsLog.Count);
+            }
         }
 
         [FixtureSetUp]
