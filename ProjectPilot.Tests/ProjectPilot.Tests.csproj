@@ -98,7 +98,8 @@
     <Compile Include="BuildScriptsTests\VSProjectTests.cs" />
     <Compile Include="DeploymentScriptsTests\DeploymentTests.cs" />
     <Compile Include="Extras\CodeAnalysisTests.cs" />
-    <Compile Include="Extras\LogParserTest.cs" />
+    <Compile Include="Extras\Log4NetParserTests.cs" />
+    <Compile Include="Extras\LogParserTests.cs" />
     <Compile Include="Framework\CCNet\ProjectStatsLoadingTests.cs" />
     <Compile Include="Framework\CCNet\GraphBuildingTests.cs" />
     <Compile Include="Framework\ChartsTests.cs" />

@@ -14,8 +14,13 @@ namespace ProjectPilot.Extras.LogParser
             get { return logItems; }
         }
 
-        //<LogPattern, value>
+        public IList<string> Elements
+        {
+            get { return elements; }
+        }
+
+        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        private List<string> elements = new List<string>();
         private Dictionary<string, string> logItems = new Dictionary<string, string>();
-        //private DateTime sdf
     }
 }
