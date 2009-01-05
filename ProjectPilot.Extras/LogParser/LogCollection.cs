@@ -30,6 +30,25 @@ namespace ProjectPilot.Extras.LogParser
             conversionMap.Add("Ndc", typeof(NdcElement).FullName);
         }
 
+        public LogCollection(char separator, string pattern, string timePattern)
+        {
+            this.separator = separator;
+            this.timePattern = timePattern;
+
+            string[] elementsTemp = pattern.Split(separator);
+
+            foreach (string elementInPattern in elementsTemp)
+            {
+                elementsPattern.Add(elementInPattern);
+            }
+
+            conversionMap.Add("Time", typeof(TimestampElement).FullName);
+            conversionMap.Add("ThreadId", typeof(ThreadIdElement).FullName);
+            conversionMap.Add("Level", typeof(LevelElement).FullName);
+            conversionMap.Add("Message", typeof(MessageElement).FullName);
+            conversionMap.Add("Ndc", typeof(NdcElement).FullName);
+        }
+
         public CultureInfo CultureToUse
         {
             get { return cultureToUse; }
@@ -74,6 +93,9 @@ namespace ProjectPilot.Extras.LogParser
 
                     ParsedElementBase element =
                         (ParsedElementBase)Assembly.GetExecutingAssembly().CreateInstance(className);
+
+                    if (elementsPattern[n] == "Time")
+                        ((TimestampElement)element).TimePattern = timePattern;
 
                     element.Parse(lineElements[n]);
                     newEntry.Elements.Add(element);   
@@ -133,5 +155,6 @@ namespace ProjectPilot.Extras.LogParser
         private List<string> elementsPattern = new List<string>();
         private List<LogEntry> elementsLog = new List<LogEntry>();
         private char separator = '|';
+        private string timePattern = "yyyy-MM-dd HH:mm:ss,fff";
     }
 }

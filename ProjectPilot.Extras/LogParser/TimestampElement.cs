@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 namespace ProjectPilot.Extras.LogParser
@@ -8,10 +9,15 @@ namespace ProjectPilot.Extras.LogParser
         public override void Parse(string line)
         {
             DateTime dateTime = DateTime.ParseExact(line, timePattern, CultureInfo.CurrentCulture);
-           // DateTime dateTime = new DateTime();
             Element = dateTime;
         }
+        
+        [SuppressMessage("Microsoft.Design", "CA1044:PropertiesShouldNotBeWriteOnly")]
+        public string TimePattern
+        {
+            set { timePattern = value; }
+        }
 
-        private string timePattern = "yyyy-MM-dd HH:mm:ss,fff";
+        private string timePattern;
     }
 }
