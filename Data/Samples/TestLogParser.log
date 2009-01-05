@@ -1,5 +1,5 @@
 
-2008-12-22|09:58:45,480|[5448]|INFO|Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
+2008-12-22 09:58:45,480|[5448]|INFO|Hsl.Sms.Emi.Connection [Listen(1)] - Closing connection '1'.
 2008-12-22 09:58:45,480|[5448]|INFO|Hsl.Sms.Emi.ConnectionGenerator [Listen(1)] - Enqueueing connection request: [retries=1, nextAttempt=12/22/2008 08:58:50 UTC, [ConnectionSettings: Id=1, LocalPort=0, LocalAddress=, RemotePort=1972, RemoteAddress=virtualhapi, Linger=0, Throughput=0, WindowSize=99, ResponseTimeout=00:00:30, IdleTimeout=365.00:00:00]]
 2008-12-22 09:58:45,496|[5448]|INFO|Hsl.Sms.Emi.Connection [Listen(1)] - Listening thread ended.
 2008-12-22 09:59:30,210|[5580]|INFO|Hsl.Sms.Emi.Connection [ConnectQueue] - UCP/EMI connection created '1', local: 192.168.0.1:2778, remote: 192.168.0.20:1972, window: 99

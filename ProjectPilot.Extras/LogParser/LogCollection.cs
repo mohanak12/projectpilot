@@ -93,17 +93,9 @@ namespace ProjectPilot.Extras.LogParser
 
                     //Last LogElement
                     LogEntry lastEntry = elementsLog.ElementAt(elementsLog.Count - 1);
-                    
-                    StringBuilder stringTemp = new StringBuilder();
-
-                    //Last pattern value in last LogElement
-                    stringTemp.Append(
-                        ((ParsedElementBase) lastEntry.Elements.ElementAt(lastEntry.Elements.Count - 1)).Element);
-                    //Current log value
-                    stringTemp.Append(line.Substring(count));
 
                     //New log value
-                    ((ParsedElementBase)lastEntry.Elements.ElementAt(lastEntry.Elements.Count - 1)).Parse(stringTemp.ToString());
+                    ((ParsedElementBase)lastEntry.Elements.ElementAt(lastEntry.Elements.Count - 1)).Parse(line.Substring(count));
                 }
             }
             else
