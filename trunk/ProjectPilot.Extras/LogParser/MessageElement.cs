@@ -4,10 +4,9 @@ namespace ProjectPilot.Extras.LogParser
 {
     public class MessageElement : ParsedElementBase
     {
-        public override object Parse(string line)
+        public override void Parse(string line)
         {
-            string message = line;
-            return message;
+            Element = line;
         }
     }
 }

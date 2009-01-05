@@ -2,10 +2,9 @@
 {
     public class LevelElement : ParsedElementBase
     {
-        public override object Parse(string line)
+        public override void Parse(string line)
         {
-            string level = line;
-            return level;
+            Element = line;
         }
     }
 }

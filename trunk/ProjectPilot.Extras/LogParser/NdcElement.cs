@@ -5,10 +5,9 @@ namespace ProjectPilot.Extras.LogParser
     [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ndc")]
     public class NdcElement : ParsedElementBase
     {
-        public override object Parse(string line)
+        public override void Parse(string line)
         {
-            string ndc = line;
-            return ndc;
+            Element = line;
         }
     }
 }

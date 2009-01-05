@@ -2,14 +2,14 @@
 {
     public abstract class ParsedElementBase
     {
-//        public object Element
-//        {
-//            get { return element; }
-//            set { element = value; }
-//        }
+        public object Element
+        {
+            get { return element; }
+            set { element = value; }
+        }
 
-        public abstract object Parse(string line);
+        public abstract void Parse(string line);
 
-//        private object element;
+        private object element;
     }
 }
