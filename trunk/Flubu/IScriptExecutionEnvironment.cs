@@ -11,6 +11,15 @@ namespace Flubu
         string ScriptName { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the execution environment runs in an interactive mode.
+        /// </summary>
+        /// <remarks>When the execution environment is running in the interactive mode, the user has
+        /// the ability to influence certain aspects of the environment. One example is entering values
+        /// for missing configuration settings.</remarks>
+        /// <value><c>true</c> if the execution environment runs in an interactive mode; otherwise, <c>false</c>.</value>
+        bool InteractiveMode { get; set; }
+
+        /// <summary>
         /// Gets a value indicating whether the script is running on Windows Server 2003.
         /// </summary>
         /// <value>

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using log4net.Appender;
 using log4net.Layout;
@@ -25,9 +26,7 @@ namespace Flubu
             PatternLayout layout = new PatternLayout ("%date %message%newline");
             layout.ActivateOptions ();
             appender.Layout = layout;
-            appender.File = Path.Combine (
-                Environment.CurrentDirectory, 
-                logFileName);
+            appender.File = Path.Combine (Environment.CurrentDirectory, logFileName);
             appender.AppendToFile = false;
             appender.MaxSizeRollBackups = howManyOldLogsToKeep;
             appender.RollingStyle = RollingFileAppender.RollingMode.Once;
@@ -46,10 +45,21 @@ namespace Flubu
             
             if (false == configurationSettings.ContainsKey (settingName))
             {
-                System.Console.Out.Write ("Enter value for setting '{0}': ", settingName);
-                System.Console.Out.Flush ();
-                string val = System.Console.In.ReadLine ();
-                configurationSettings.Add (settingName, val);
+                if (InteractiveMode)
+                {
+                    System.Console.Out.Write("Enter value for setting '{0}': ", settingName);
+                    System.Console.Out.Flush();
+                    string val = System.Console.In.ReadLine();
+                    configurationSettings.Add(settingName, val);
+                }
+                else
+                {
+                    throw new ArgumentException(
+                        String.Format(
+                            CultureInfo.InvariantCulture,
+                            "Configuration setting '{0}' has no value defined.",
+                            settingName));
+                }
             }
 
             return configurationSettings[settingName];
