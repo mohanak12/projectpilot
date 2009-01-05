@@ -2,10 +2,9 @@
 {
     public class ThreadIdElement : ParsedElementBase
     {
-        public override object Parse(string line)
+        public override void Parse(string line)
         {
-            string threadId = line;
-            return threadId;
+            Element = line;
         }
     }
 }
