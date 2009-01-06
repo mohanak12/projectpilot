@@ -6,9 +6,15 @@ namespace ProjectPilot.Extras.LogParser
 {
     public class TimestampElement : ParsedElementBase
     {
+        [SuppressMessage("Microsoft.Design", "CA1044:PropertiesShouldNotBeWriteOnly")]
+        public CultureInfo CultureToUse
+        {
+            set { cultureToUse = value; }
+        }
+
         public override void Parse(string line)
         {
-            DateTime dateTime = DateTime.ParseExact(line, timePattern, CultureInfo.CurrentCulture);
+            DateTime dateTime = DateTime.ParseExact(line, timePattern, cultureToUse);
             Element = dateTime;
         }
         
@@ -19,5 +25,6 @@ namespace ProjectPilot.Extras.LogParser
         }
 
         private string timePattern;
+        private CultureInfo cultureToUse;
     }
 }

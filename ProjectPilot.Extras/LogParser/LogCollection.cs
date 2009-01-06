@@ -13,6 +13,11 @@ namespace ProjectPilot.Extras.LogParser
     [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
     public class LogCollection
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LogCollection"/> class.
+        /// </summary>
+        /// <param name="separator">The separator between log items.</param>
+        /// <param name="pattern">The pattern used for parsing log file.</param>
         public LogCollection(char separator, string pattern)
         {
             this.separator = separator;
@@ -30,10 +35,18 @@ namespace ProjectPilot.Extras.LogParser
             conversionMap.Add("Ndc", typeof(NdcElement).FullName);
         }
 
-        public LogCollection(char separator, string pattern, string timePattern)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LogCollection"/> class.
+        /// </summary>
+        /// <param name="separator">The separator between log items.</param>
+        /// <param name="pattern">The pattern used for parsing log file.</param>
+        /// <param name="timePattern">The time pattern used for parsing time in log file.</param>
+        /// <param name="cultureToUse">The culture used for parsing time in log file.</param>
+        public LogCollection(char separator, string pattern, string timePattern, CultureInfo cultureToUse)
         {
             this.separator = separator;
             this.timePattern = timePattern;
+            this.cultureToUse = cultureToUse;
 
             string[] elementsTemp = pattern.Split(separator);
 
@@ -49,12 +62,6 @@ namespace ProjectPilot.Extras.LogParser
             conversionMap.Add("Ndc", typeof(NdcElement).FullName);
         }
 
-        public CultureInfo CultureToUse
-        {
-            get { return cultureToUse; }
-            set { cultureToUse = value; }
-        }
-
         public IList<LogEntry> ElementsLog
         {
             get { return elementsLog; }
@@ -65,6 +72,10 @@ namespace ProjectPilot.Extras.LogParser
             get { return elementsPattern; }
         }
 
+        /// <summary>
+        /// Parses the log line.
+        /// </summary>
+        /// <param name="line">The line of log file.</param>
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "LogLine")]
         public void ParseLogLine(string line)
         {
@@ -95,7 +106,10 @@ namespace ProjectPilot.Extras.LogParser
                         (ParsedElementBase)Assembly.GetExecutingAssembly().CreateInstance(className);
 
                     if (elementsPattern[n] == "Time")
+                    {
                         ((TimestampElement)element).TimePattern = timePattern;
+                        ((TimestampElement)element).CultureToUse = cultureToUse;
+                    }
 
                     element.Parse(lineElements[n]);
                     newEntry.Elements.Add(element);   
@@ -135,6 +149,10 @@ namespace ProjectPilot.Extras.LogParser
             }
         }
 
+        /// <summary>
+        /// Parses the log file.
+        /// </summary>
+        /// <param name="fileStream">The stream of the file.</param>
         public void ParseLogFile(Stream fileStream)
         {
             string line;
