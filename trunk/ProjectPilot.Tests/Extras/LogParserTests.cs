@@ -121,8 +121,9 @@ namespace ProjectPilot.Tests.Extras
         [Test]
         public void ParsingDifferentTimePatterns()
         {
+            CultureInfo cultureToUse = CultureInfo.InvariantCulture;
             string timePattern = "yyyy-MM-dd HH:mm:ss.fff";
-            LogCollection lineParse = new LogCollection('|', "Time|ThreadId", timePattern);
+            LogCollection lineParse = new LogCollection('|', "Time|ThreadId", timePattern, cultureToUse);
 
             lineParse.ParseLogLine(@"2008-12-22 09:16:02.734|[4904]");
 
@@ -132,7 +133,7 @@ namespace ProjectPilot.Tests.Extras
                 ((ParsedElementBase)lineParse.ElementsLog[0].Elements[0]).Element);
 
             timePattern = "MM+dd+yy HH:mm:ss,fff";
-            LogCollection lineParse2 = new LogCollection('|', "Time|ThreadId", timePattern);
+            LogCollection lineParse2 = new LogCollection('|', "Time|ThreadId", timePattern, cultureToUse);
 
             lineParse2.ParseLogLine(@"12+22+08 09:16:02,734|[4904]");
 
@@ -142,7 +143,7 @@ namespace ProjectPilot.Tests.Extras
                 ((ParsedElementBase)lineParse2.ElementsLog[0].Elements[0]).Element);
 
             timePattern = "MMddyy";
-            LogCollection lineParse3 = new LogCollection('|', "Time|ThreadId", timePattern);
+            LogCollection lineParse3 = new LogCollection('|', "Time|ThreadId", timePattern, cultureToUse);
 
             lineParse3.ParseLogLine(@"122208|[4904]");
 
