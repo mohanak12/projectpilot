@@ -1,7 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
+using Commons.Collections;
+using NVelocity;
+using NVelocity.App;
 
 namespace Flubu.Tasks.Text
 {
@@ -42,29 +47,25 @@ namespace Flubu.Tasks.Text
 
         protected override void DoExecute (IScriptExecutionEnvironment environment)
         {
-            string fileContents = null;
+            VelocityEngine velocity = new VelocityEngine();
+            ExtendedProperties props = new ExtendedProperties();
+            velocity.Init(props);
 
-            using (FileStream stream = File.Open (sourceFileName, FileMode.Open, FileAccess.Read))
+            Template template = velocity.GetTemplate(sourceFileName, this.sourceFileEncoding.ToString());
+
+            using (Stream stream = File.Open(expandedFileName, FileMode.Create))
             {
-                using (StreamReader reader = new StreamReader (stream, sourceFileEncoding))
+                using (TextWriter writer = new StreamWriter(stream, this.expandedFileEncoding))
                 {
-                    fileContents = reader.ReadToEnd ();
+                    VelocityContext velocityContext = new VelocityContext(properties);
+                    template.Merge(velocityContext, writer);
                 }
-            }
-
-            foreach (string property in properties.Keys)
-                fileContents = fileContents.Replace (property, properties[property]);
-
-            using (FileStream stream = File.Open (expandedFileName, FileMode.Create, FileAccess.Write))
-            {
-                using (StreamWriter writer = new StreamWriter (stream, expandedFileEncoding))
-                    writer.Write (fileContents);
             }
         }
 
         private Encoding expandedFileEncoding;
         private string expandedFileName;
-        private IDictionary<string, string> properties = new Dictionary<string, string> ();
+        private Hashtable properties = new Hashtable();
         private Encoding sourceFileEncoding;
         private string sourceFileName;
     }
