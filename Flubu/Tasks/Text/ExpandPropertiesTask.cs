@@ -51,7 +51,7 @@ namespace Flubu.Tasks.Text
             ExtendedProperties props = new ExtendedProperties();
             velocity.Init(props);
 
-            Template template = velocity.GetTemplate(sourceFileName, this.sourceFileEncoding.ToString());
+            Template template = velocity.GetTemplate(sourceFileName, this.sourceFileEncoding.WebName);
 
             using (Stream stream = File.Open(expandedFileName, FileMode.Create))
             {
