@@ -5,6 +5,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{29C5C89F-9
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{FBCD0FCA-E178-493F-BF6B-D4004FEF975A}"
 	ProjectSection(SolutionItems) = preProject
+		Data\Samples\AccipioTestReportSample.xml = Data\Samples\AccipioTestReportSample.xml
 		Data\Samples\AspxSample.aspx = Data\Samples\AspxSample.aspx
 		Data\Samples\BusinessActions.xml = Data\Samples\BusinessActions.xml
 		Data\Samples\ccnet.stats.xml = Data\Samples\ccnet.stats.xml

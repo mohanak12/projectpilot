@@ -31,10 +31,10 @@ namespace Accipio
             {
                 TestCase testCase = testSuite.GetTestCase(testCaseName);
                 WriteLine("        /// <summary>");
-                WriteLine("        /// {0}", testCases[testCaseName].TestCaseDescription);
+                WriteLine("        /// {0}", testCase.TestCaseDescription);
                 WriteLine("        /// </summary>");
                 WriteLine("        [Test]");
-                WriteLine("        [Category(\"{0}\")]", testCases[testCaseName].TestCaseCategory);
+                WriteLine("        [Category(\"{0}\")]", testCase.TestCaseCategory);
                 AddHeaderTags(testCase);
                 WriteLine("        public void {0}()", testCaseName);
                 WriteLine("        {");
