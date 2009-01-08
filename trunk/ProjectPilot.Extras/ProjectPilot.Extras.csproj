@@ -77,6 +77,7 @@
     <Compile Include="LogParser\Log4NetPatterns\LinePatternLayoutElement.cs" />
     <Compile Include="LogParser\LiteralPatternLayoutElement.cs" />
     <Compile Include="LogParser\Log4NetPatterns\LocationPatternLayoutElement.cs" />
+    <Compile Include="LogParser\LogParserFilter.cs" />
     <Compile Include="LogParser\MessageElement.cs" />
     <Compile Include="LogParser\NdcElement.cs" />
     <Compile Include="LogParser\ParsedElementBase.cs" />

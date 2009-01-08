@@ -153,6 +153,36 @@ namespace ProjectPilot.Tests.Extras
                 ((ParsedElementBase)lineParse3.ElementsLog[0].Elements[0]).Element);
         }
 
+        [Test]
+        [Row(null, null, null, null, 15)]
+        [Row(null, null, null, "WARN", 4)]
+        [Row(null, null, "[5448]", null, 3)]
+        [Row(null, null, "[2572]", "WARN", 2)]
+        [Row(null, null, "[3688]", "INFO", 6)]
+        [Row("2008-12-22 09:58:45,480", "2008-12-22 10:07:49,202", null, null, 9)]
+        [Row("2008-12-22 09:59:33,210", "2008-12-22 10:07:49,202", "[908]", "INFO", 1)]
+        public void ParsingFromLogFileWithFilter(string dateTimeStart, string dateTimeEnd, string threadId, string filterLevel, int expectedElementsLogCount)
+        {
+            using (Stream fileStream = File.OpenRead(@"..\..\..\Data\Samples\TestLogParser.log"))
+            {
+                LogParserFilter filter = new LogParserFilter();
+                if (!string.IsNullOrEmpty(dateTimeStart) && !string.IsNullOrEmpty(dateTimeEnd))
+                {
+                    filter.FilterTimestampStart = DateTime.ParseExact(dateTimeStart, "yyyy-MM-dd HH:mm:ss,fff", CultureInfo.CurrentCulture);
+                    filter.FilterTimestampEnd = DateTime.ParseExact(dateTimeEnd, "yyyy-MM-dd HH:mm:ss,fff", CultureInfo.CurrentCulture);
+                }
+
+                filter.FilterThreadId = threadId;
+                filter.FilterLevel = filterLevel;
+
+                LogCollection lineParse = new LogCollection('|', "Time|ThreadId|Level|Ndc");
+                lineParse.ParseFilter = filter;
+                lineParse.ParseLogFile(fileStream);
+
+                Assert.AreEqual(expectedElementsLogCount, lineParse.ElementsLog.Count);
+            }
+        }
+
         [FixtureSetUp]
         public void FixtureSetup()
         {
