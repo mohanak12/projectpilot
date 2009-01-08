@@ -72,6 +72,12 @@ namespace ProjectPilot.Extras.LogParser
             get { return elementsPattern; }
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1044:PropertiesShouldNotBeWriteOnly")]
+        public LogParserFilter ParseFilter
+        {
+            set { parseFilter = value; }
+        }
+
         /// <summary>
         /// Parses the log line.
         /// </summary>
@@ -95,28 +101,59 @@ namespace ProjectPilot.Extras.LogParser
                 {
                     if (false == conversionMap.ContainsKey(elementsPattern[n]))
                         throw new KeyNotFoundException(
-                                    String.Format(
-                                        CultureInfo.InvariantCulture,
-                                        "The pattern '{0}' is not supported.",
-                                        elementsPattern[n]));
+                            String.Format(
+                                CultureInfo.InvariantCulture,
+                                "The pattern '{0}' is not supported.",
+                                elementsPattern[n]));
 
                     string className = conversionMap[elementsPattern[n]];
 
                     ParsedElementBase element =
-                        (ParsedElementBase)Assembly.GetExecutingAssembly().CreateInstance(className);
+                        (ParsedElementBase) Assembly.GetExecutingAssembly().CreateInstance(className);
 
                     if (elementsPattern[n] == "Time")
                     {
-                        ((TimestampElement)element).TimePattern = timePattern;
-                        ((TimestampElement)element).CultureToUse = cultureToUse;
+                        ((TimestampElement) element).TimePattern = timePattern;
+                        ((TimestampElement) element).CultureToUse = cultureToUse;
                     }
 
                     element.Parse(lineElements[n]);
-                    newEntry.Elements.Add(element);   
+                    newEntry.Elements.Add(element);
                 }
 
-                elementsLog.Add(newEntry);
+                DateTime? timestamp = null;
+                string level = string.Empty;
+                string threadId = string.Empty;
 
+                if (elementsPattern.IndexOf("Time") >= 0)
+                {
+                    TimestampElement timestampElement =
+                        (TimestampElement) newEntry.Elements.ElementAt(elementsPattern.IndexOf("Time"));
+                    timestamp = (DateTime) timestampElement.Element;
+                }
+
+                if (elementsPattern.IndexOf("Level") >= 0)
+                {
+                    LevelElement levelElement =
+                        (LevelElement) newEntry.Elements.ElementAt(elementsPattern.IndexOf("Level"));
+                    level = (string) levelElement.Element;
+                }
+
+                if (elementsPattern.IndexOf("ThreadId") >= 0)
+                {
+                    ThreadIdElement threadIdElement =
+                        (ThreadIdElement) newEntry.Elements.ElementAt(elementsPattern.IndexOf("ThreadId"));
+                    threadId = (string) threadIdElement.Element;
+                }
+
+                if (!Filter(timestamp, threadId, level))
+                {
+                    addTolastPattern = false;
+                    return;
+                }
+
+                addTolastPattern = true;
+                elementsLog.Add(newEntry);
                 //Add's last pattern
                 if (n < lineElements.Length)
                 {
@@ -137,6 +174,7 @@ namespace ProjectPilot.Extras.LogParser
             else
             {   //No pattern in line  - value it's added to previus LogElement (to last pattern element of previus LogElement)
                 //Last LogElement
+                if (addTolastPattern == false) return;
                 LogEntry lastEntry = elementsLog.ElementAt(elementsLog.Count - 1);
 
                 //Last pattern value in last LogElement
@@ -168,11 +206,46 @@ namespace ProjectPilot.Extras.LogParser
             }
         }
 
+        private bool Filter(DateTime? timethread, string threadId, string level)
+        {
+            bool filterFlag = true;
+
+            if (parseFilter.FilterTimestampStart.HasValue && parseFilter.FilterTimestampEnd.HasValue)
+            {
+                if (DateTime.Compare((DateTime)timethread, (DateTime)parseFilter.FilterTimestampStart) > 0 &&
+                    DateTime.Compare((DateTime)timethread, (DateTime)parseFilter.FilterTimestampEnd) < 0)
+                    filterFlag = false;
+            }
+
+            if (!String.IsNullOrEmpty(parseFilter.FilterThreadId))
+            {
+                if (parseFilter.FilterThreadId != threadId)
+                    filterFlag = false;
+            }
+
+            if (!String.IsNullOrEmpty(parseFilter.FilterLevel))
+            {
+                if (parseFilter.FilterLevel != level)
+                    filterFlag = false;
+            }
+
+            if (filterFlag)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool addTolastPattern = false;
         private CultureInfo cultureToUse = CultureInfo.InvariantCulture;
         private Dictionary<string, string> conversionMap = new Dictionary<string, string>();
         private List<string> elementsPattern = new List<string>();
         private List<LogEntry> elementsLog = new List<LogEntry>();
         private char separator = '|';
         private string timePattern = "yyyy-MM-dd HH:mm:ss,fff";
+        private LogParserFilter parseFilter = new LogParserFilter();
     }
 }
