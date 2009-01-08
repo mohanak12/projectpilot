@@ -78,6 +78,8 @@ namespace ProjectPilot.Tests.AccipioTests
             mockCodeWriter.Expect(writer => writer.WriteLine("        /// </summary>"));
             mockCodeWriter.Expect(writer => writer.WriteLine("        [Test]"));
             mockCodeWriter.Expect(writer => writer.WriteLine("        [Category(\"Smoke\")]"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("        [Metadata(\"UserStory\", \"R15\")]"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("        [Metadata(\"UserStory\", \"R21.1\")]"));
             mockCodeWriter.Expect(writer => writer.WriteLine("        public void ViewAccountTestCase()"));
             mockCodeWriter.Expect(writer => writer.WriteLine("        {"));
             mockCodeWriter.Expect(writer => writer.WriteLine("            using (OnlineBankingTestRunner runner = new OnlineBankingTestRunner())"));

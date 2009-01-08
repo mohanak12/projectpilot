@@ -29,34 +29,22 @@ namespace Accipio
             int testCaseCount = 1;
             foreach (string testCaseName in testCasesKeys)
             {
+                TestCase testCase = testSuite.GetTestCase(testCaseName);
                 WriteLine("        /// <summary>");
                 WriteLine("        /// {0}", testCases[testCaseName].TestCaseDescription);
                 WriteLine("        /// </summary>");
                 WriteLine("        [Test]");
                 WriteLine("        [Category(\"{0}\")]", testCases[testCaseName].TestCaseCategory);
+                AddHeaderTags(testCase);
                 WriteLine("        public void {0}()", testCaseName);
                 WriteLine("        {");
                 WriteLine("            using ({0}TestRunner runner = new {0}TestRunner())", testSuite.Runner);
                 WriteLine("            {");
                 WriteLine("                runner");
-                TestCase testCase = testSuite.GetTestCase(testCaseName);
                 // add test case description
                 WriteLine("                    .SetDescription(\"{0}\")", testCase.TestCaseDescription);
                 // add test case tags
-                int tagCounter = 1;
-                foreach (string tag in testCase.GetTestCaseTags)
-                {
-                    if (tagCounter == testCase.GetTestCaseTags.Count)
-                    {
-                        WriteLine("                    .AddTag(\"{0}\");", tag);
-                    }
-                    else
-                    {
-                        WriteLine("                    .AddTag(\"{0}\")", tag);
-                    }
-
-                    tagCounter++;
-                }
+                AddTags(testCase);
 
                 WriteLine(string.Empty);
                 WriteLine("                runner");
@@ -107,6 +95,32 @@ namespace Accipio
 
             WriteLine("    }");
             WriteLine("}");
+        }
+
+        private void AddTags(TestCase testCase)
+        {
+            int tagCounter = 1;
+            foreach (string tag in testCase.GetTestCaseTags)
+            {
+                if (tagCounter == testCase.GetTestCaseTags.Count)
+                {
+                    WriteLine("                    .AddTag(\"{0}\");", tag);
+                }
+                else
+                {
+                    WriteLine("                    .AddTag(\"{0}\")", tag);
+                }
+
+                tagCounter++;
+            }
+        }
+
+        private void AddHeaderTags(TestCase testCase)
+        {
+            foreach (string tag in testCase.GetTestCaseTags)
+            {
+                WriteLine("        [Metadata(\"UserStory\", \"{0}\")]", tag);
+            }
         }
 
         /// <summary>
