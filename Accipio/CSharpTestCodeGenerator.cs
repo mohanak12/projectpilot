@@ -97,6 +97,10 @@ namespace Accipio
             WriteLine("}");
         }
 
+        /// <summary>
+        /// Adds TAGs to each test case.
+        /// </summary>
+        /// <param name="testCase">Test Case <see cref="testCase"/></param>
         private void AddTags(TestCase testCase)
         {
             int tagCounter = 1;
@@ -115,6 +119,10 @@ namespace Accipio
             }
         }
 
+        /// <summary>
+        /// Adds Unit test attribute <c>Metadata</c> with userstory.
+        /// </summary>
+        /// <param name="testCase">Test Case <see cref="testCase"/></param>
         private void AddHeaderTags(TestCase testCase)
         {
             foreach (string tag in testCase.GetTestCaseTags)
