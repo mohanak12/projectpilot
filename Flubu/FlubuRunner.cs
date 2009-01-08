@@ -119,6 +119,7 @@ namespace Flubu
         /// <returns>The same instance of this <see cref="TRunner"/>.</returns>
         public TRunner Beep(MessageBeepType messageBeepType)
         {
+            Console.Out.Flush();
             Beeper.MessageBeep(messageBeepType);
             return ReturnThisTRunner();
         }

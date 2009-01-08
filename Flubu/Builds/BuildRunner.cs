@@ -598,9 +598,9 @@ namespace Flubu.Builds
             string dbUserPassword)
         {
             Dictionary<string, string> properties = new Dictionary<string, string>();
-            properties.Add("${ScriptDBName}", dbName);
-            properties.Add("${ScriptDBUserName}", dbUserName);
-            properties.Add("${ScriptDBUserPassword}", dbUserPassword);
+            properties.Add("ScriptDBName", dbName);
+            properties.Add("ScriptDBUserName", dbUserName);
+            properties.Add("ScriptDBUserPassword", dbUserPassword);
 
             string fileFilter = FormatString("{0}.*.sql", dbName);
             string expandedFilesDirectory = MakePathFromRootDir(Path.Combine(dbScriptsDirectory, "expanded"));
