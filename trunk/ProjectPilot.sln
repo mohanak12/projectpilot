@@ -16,6 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{FBCD
 		Data\Samples\ProjectPortalActions.xml = Data\Samples\ProjectPortalActions.xml
 		Data\Samples\ProjectPortalTestSuite.xml = Data\Samples\ProjectPortalTestSuite.xml
 		Data\Samples\svn-log.xml = Data\Samples\svn-log.xml
+		Data\Samples\TestResults-0.xml = Data\Samples\TestResults-0.xml
 		Data\Samples\TestServer.log = Data\Samples\TestServer.log
 		Data\Samples\TestSpec.xml = Data\Samples\TestSpec.xml
 		Data\Samples\TestSpecs.xsd = Data\Samples\TestSpecs.xsd
