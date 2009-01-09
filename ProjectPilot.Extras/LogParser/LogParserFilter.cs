@@ -5,6 +5,10 @@ using System.Text;
 
 namespace ProjectPilot.Extras.LogParser
 {
+    /// <summary>
+    /// Contains filter information for LogParser
+    /// Default: No filter
+    /// </summary>
     public class LogParserFilter
     {
         public LogParserFilter()
@@ -16,12 +20,14 @@ namespace ProjectPilot.Extras.LogParser
             DateTime filterTimestampStart,
             DateTime filterTimestampEnd,
             string filterThreadId,
-            string filterLevel)
+            string filterLevel,
+            int filterNumberOfLogItems)
         {
             this.filterTimestampStart = filterTimestampStart;
             this.filterTimestampEnd = filterTimestampEnd;
             this.filterThreadId = filterThreadId;
             this.filterLevel = filterLevel;
+            this.filterNumberOfLogItems = filterNumberOfLogItems;
         }
 
         public string FilterLevel
@@ -48,9 +54,16 @@ namespace ProjectPilot.Extras.LogParser
             set { filterThreadId = value; }
         }
 
+        public int? FilterNumberOfLogItems
+        {
+            get { return filterNumberOfLogItems; }
+            set { filterNumberOfLogItems = value; }
+        }
+
         private DateTime? filterTimestampStart;
         private DateTime? filterTimestampEnd;
         private string filterThreadId;
         private string filterLevel;
+        private int? filterNumberOfLogItems;
     }
 }

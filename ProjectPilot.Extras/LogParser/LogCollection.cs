@@ -146,7 +146,7 @@ namespace ProjectPilot.Extras.LogParser
                     threadId = (string) threadIdElement.Element;
                 }
 
-                if (!Filter(timestamp, threadId, level))
+                if (!Filter(timestamp, threadId, level, ElementsLog.Count))
                 {
                     addTolastPattern = false;
                     return;
@@ -206,7 +206,7 @@ namespace ProjectPilot.Extras.LogParser
             }
         }
 
-        private bool Filter(DateTime? timethread, string threadId, string level)
+        private bool Filter(DateTime? timethread, string threadId, string level, int? count)
         {
             bool filterFlag = true;
 
@@ -226,6 +226,12 @@ namespace ProjectPilot.Extras.LogParser
             if (!String.IsNullOrEmpty(parseFilter.FilterLevel))
             {
                 if (parseFilter.FilterLevel != level)
+                    filterFlag = false;
+            }
+
+            if (parseFilter.FilterNumberOfLogItems > 0)
+            {
+                if (count >= parseFilter.FilterNumberOfLogItems)
                     filterFlag = false;
             }
 

@@ -154,14 +154,15 @@ namespace ProjectPilot.Tests.Extras
         }
 
         [Test]
-        [Row(null, null, null, null, 15)]
-        [Row(null, null, null, "WARN", 4)]
-        [Row(null, null, "[5448]", null, 3)]
-        [Row(null, null, "[2572]", "WARN", 2)]
-        [Row(null, null, "[3688]", "INFO", 6)]
-        [Row("2008-12-22 09:58:45,480", "2008-12-22 10:07:49,202", null, null, 9)]
-        [Row("2008-12-22 09:59:33,210", "2008-12-22 10:07:49,202", "[908]", "INFO", 1)]
-        public void ParsingFromLogFileWithFilter(string dateTimeStart, string dateTimeEnd, string threadId, string filterLevel, int expectedElementsLogCount)
+        [Row(null, null, null, null, 0, 15)]
+        [Row(null, null, null, null, 10, 10)]
+        [Row(null, null, null, "WARN", 0, 4)]
+        [Row(null, null, "[5448]", null, 0, 3)]
+        [Row(null, null, "[2572]", "WARN", 0, 2)]
+        [Row(null, null, "[3688]", "INFO", 0, 6)]
+        [Row("2008-12-22 09:58:45,480", "2008-12-22 10:07:49,202", null, null, 0, 9)]
+        [Row("2008-12-22 09:59:33,210", "2008-12-22 10:07:49,202", "[908]", "INFO", 1, 1)]
+        public void ParsingFromLogFileWithFilter(string dateTimeStart, string dateTimeEnd, string threadId, string filterLevel, int filterNumberOfLogItems, int expectedElementsLogCount)
         {
             using (Stream fileStream = File.OpenRead(@"..\..\..\Data\Samples\TestLogParser.log"))
             {
@@ -174,6 +175,7 @@ namespace ProjectPilot.Tests.Extras
 
                 filter.FilterThreadId = threadId;
                 filter.FilterLevel = filterLevel;
+                filter.FilterNumberOfLogItems = filterNumberOfLogItems;
 
                 LogCollection lineParse = new LogCollection('|', "Time|ThreadId|Level|Ndc");
                 lineParse.ParseFilter = filter;
