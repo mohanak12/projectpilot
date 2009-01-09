@@ -1,8 +1,8 @@
 <report xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://projectpilot/AccipioTestReport.xsd">
-  <testRun startTime="time" duration="1232.2" version="1.0.2.22">
+  <testRun startTime="9.1.2009 10:35:25" duration="1232,2" version="1.0.2.22">
     <suites>
       <suite id="bla bla">
-        <case id="dffdf" startTime="time" duration="4.2" status="failed">
+        <case id="dffdf" startTime="time" duration="4,2" status="failed">
           <userStories>
             <userStory>F.SmsUI.RequestInfo</userStory>
             <userStory>F.SmsUI.ListSubsForTopic</userStory>

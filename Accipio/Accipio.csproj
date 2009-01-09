@@ -79,6 +79,11 @@
     <Compile Include="Inservio\Server\ServicePlugInRegistration.cs" />
     <Compile Include="Inservio\Server\ServicesRepository.cs" />
     <Compile Include="ProjectPortalTestRunner.cs" />
+    <Compile Include="ReportCase.cs" />
+    <Compile Include="ReportCaseStatus.cs" />
+    <Compile Include="ReportData.cs" />
+    <Compile Include="ReportDataParser.cs" />
+    <Compile Include="ReportSuite.cs" />
     <Compile Include="SeleniumTesterBase.cs" />
     <Compile Include="TestActionParameter.cs" />
     <Compile Include="CSharpTestCodeGenerator.cs" />

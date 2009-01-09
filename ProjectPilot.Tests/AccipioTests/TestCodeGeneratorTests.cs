@@ -17,20 +17,30 @@ namespace ProjectPilot.Tests.AccipioTests
         {
             string[] args = GetArgs();
             TestCodeGeneratorCommand testCodeGeneratorCommand = new TestCodeGeneratorCommand(null);
-            testCodeGeneratorCommand.AccipioDirectory = "..\\..\\..\\Data\\Samples";
+            testCodeGeneratorCommand.AccipioDirectory = @"D:\Projects\MiMi\source\Hsl.Ganesha.AcceptanceTests";
             testCodeGeneratorCommand.ParseArguments(args);
-            testCodeGeneratorCommand.ProcessCommand();
+             testCodeGeneratorCommand.ProcessCommand();
         }
 
         public static string[] GetArgs()
         {
             string[] args = new string[4];
             args[0] = "codegen";
-            args[1] = "..\\..\\..\\Data\\Samples\\BusinessActions.xml";
-            args[2] = TestSuiteSchemaGeneratorTests.GenerateXsdValidationSchemaOutputFile();
-            args[3] = "..\\..\\..\\Data\\Samples\\TestSuite.xml";
+            args[1] = @"D:\Projects\MiMi\source\Hsl.Ganesha.AcceptanceTests\MiMiActions.xml";
+            args[2] = @"D:\Projects\MiMi\source\Hsl.Ganesha.AcceptanceTests\MiMiActions.xsd";
+            args[3] = @"D:\Projects\MiMi\source\Hsl.Ganesha.AcceptanceTests\Iteration1.xml";
             return args;
         }
+
+        //public static string[] GetArgs()
+        //{
+        //    string[] args = new string[4];
+        //    args[0] = "codegen";
+        //    args[1] = "..\\..\\..\\Data\\Samples\\BusinessActions.xml";
+        //    args[2] = TestSuiteSchemaGeneratorTests.GenerateXsdValidationSchemaOutputFile();
+        //    args[3] = "..\\..\\..\\Data\\Samples\\TestSuite.xml";
+        //    return args;
+        //}
 
         public static string[] GetArgsWithOption()
         {
