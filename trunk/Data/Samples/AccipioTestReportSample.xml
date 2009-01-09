@@ -1,5 +1,5 @@
 <report xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://projectpilot/AccipioTestReport.xsd">
-  <testRun startTime="time" duration="1232.2" buildLabel="1.0.2.22">
+  <testRun startTime="time" duration="1232.2" version="1.0.2.22">
     <suites>
       <suite id="bla bla">
         <case id="dffdf" startTime="time" duration="4.2" status="failed">
@@ -10,10 +10,5 @@
         </case>
       </suite>
     </suites>
-
-    <userStories>
-      <userStory id="F.SmsUI.RequestInfo" status="failed"/>
-      <userStory id="F.SmsUI.ListSubsForTopic" status="successful"/>
-    </userStories>
   </testRun>
 </report>
