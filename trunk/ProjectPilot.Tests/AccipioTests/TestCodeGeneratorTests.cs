@@ -26,21 +26,11 @@ namespace ProjectPilot.Tests.AccipioTests
         {
             string[] args = new string[4];
             args[0] = "codegen";
-            args[1] = @"D:\Projects\MiMi\source\Hsl.Ganesha.AcceptanceTests\MiMiActions.xml";
-            args[2] = @"D:\Projects\MiMi\source\Hsl.Ganesha.AcceptanceTests\MiMiActions.xsd";
-            args[3] = @"D:\Projects\MiMi\source\Hsl.Ganesha.AcceptanceTests\Iteration1.xml";
+            args[1] = "..\\..\\..\\Data\\Samples\\BusinessActions.xml";
+            args[2] = TestSuiteSchemaGeneratorTests.GenerateXsdValidationSchemaOutputFile();
+            args[3] = "..\\..\\..\\Data\\Samples\\TestSuite.xml";
             return args;
         }
-
-        //public static string[] GetArgs()
-        //{
-        //    string[] args = new string[4];
-        //    args[0] = "codegen";
-        //    args[1] = "..\\..\\..\\Data\\Samples\\BusinessActions.xml";
-        //    args[2] = TestSuiteSchemaGeneratorTests.GenerateXsdValidationSchemaOutputFile();
-        //    args[3] = "..\\..\\..\\Data\\Samples\\TestSuite.xml";
-        //    return args;
-        //}
 
         public static string[] GetArgsWithOption()
         {
