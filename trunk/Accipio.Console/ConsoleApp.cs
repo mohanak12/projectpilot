@@ -22,7 +22,8 @@ namespace Accipio.Console
 
             options = new OptionSet
                           {
-                              { "o=", "Specify the output directory", v => OutputDirectory = v },
+                              { "o=", "Specifies the output {directory} where all generated files will be stored", 
+                                  v => OutputDirectory = v },
                           };
         }
 

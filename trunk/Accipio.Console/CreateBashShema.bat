@@ -1,1 +1,0 @@
-Accipio.Console.exe baschema %1 "http://GenerateXsdValidationSchemaTest"

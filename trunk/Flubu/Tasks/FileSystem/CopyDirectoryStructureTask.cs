@@ -116,9 +116,6 @@ namespace Flubu.Tasks.FileSystem
             Regex inclusionRegex,
             Regex exclusionRegex)
         {
-            if (inclusionRegex != null && false == inclusionRegex.IsMatch(sourcePathRecursive))
-                return;
-
             if (exclusionRegex != null && exclusionRegex.IsMatch (sourcePathRecursive))
                 return;
 
@@ -128,7 +125,9 @@ namespace Flubu.Tasks.FileSystem
             {
                 if (fileSystemInfo is FileInfo)
                 {
-                    if (exclusionRegex != null && exclusionRegex.IsMatch (fileSystemInfo.FullName))
+                    if (inclusionRegex != null && false == inclusionRegex.IsMatch(fileSystemInfo.FullName))
+                        continue;
+                    if (exclusionRegex != null && exclusionRegex.IsMatch(fileSystemInfo.FullName))
                         continue;
 
                     FileInfo fileInfo = fileSystemInfo as FileInfo;

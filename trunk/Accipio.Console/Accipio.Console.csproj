@@ -69,8 +69,6 @@
     <None Include="AccipioActions.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="CodeGenerator.bat" />
-    <None Include="CreateBashShema.bat" />
     <None Include="ProjectPilot.snk" />
     <None Include="TestSuiteTemplate.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -95,7 +93,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy $(ProjectDir)CreateBashShema.bat $(TargetDir) /Y
-copy $(ProjectDir)CodeGenerator.bat $(TargetDir) /Y</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>
