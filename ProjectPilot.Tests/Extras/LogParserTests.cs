@@ -185,6 +185,22 @@ namespace ProjectPilot.Tests.Extras
             }
         }
 
+//        [Test]
+//        public void Parsing10MBLogFile()
+//        {
+//            using (Stream fileStream = File.OpenRead(@"C:\SSM+2009-01-08.log.28"))
+//            {
+//                LogCollection lineParse = new LogCollection('|', "Time|Level|Ndc");
+//                
+//                LogParserFilter filter = new LogParserFilter();
+//                filter.FilterLevel = "WARN";
+//                lineParse.ParseFilter = filter;
+//                lineParse.ParseLogFile(fileStream);
+//                
+//                Assert.AreEqual(272, lineParse.ElementsLog.Count);
+//            }
+//        }
+
         [FixtureSetUp]
         public void FixtureSetup()
         {
