@@ -86,15 +86,32 @@ namespace ProjectPilot.Extras.LogParser
         public void ParseLogLine(string line)
         {
             string []lineElements = line.Split(separator);
+            int n;
 
-            if (string.IsNullOrEmpty(line))
-                return;
+            //Pattern head in log line
+            bool patternHeadInLine = true;
+           
+            for (n = 0; n < elementsPattern.Count; n++)
+            {
+                if (elementsPattern[n] == "Time")
+                {
+                    string a = lineElements[n];
+                    
+                    try
+                    {
+                        DateTime test = DateTime.ParseExact(lineElements[n], timePattern, cultureToUse);
+                    }
+                    catch (FormatException)
+                    {
+                        patternHeadInLine = false;
+                    } 
+                }
+            }
 
             //Pattern in line
-            if (lineElements.Length >= elementsPattern.Count)
+            if (lineElements.Length >= elementsPattern.Count && patternHeadInLine == true)
             {
                 LogEntry newEntry = new LogEntry();
-                int n;
 
                 //Add's values to pattern
                 for (n = 0; n < elementsPattern.Count; n++)
