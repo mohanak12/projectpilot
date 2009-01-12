@@ -1,1 +1,0 @@
-Accipio.Console.exe codegen %*
