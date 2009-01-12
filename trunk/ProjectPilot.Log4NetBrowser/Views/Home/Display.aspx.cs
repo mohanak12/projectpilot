@@ -33,6 +33,34 @@ namespace ProjectPilot.Log4NetBrowser.Views.Home
             return lineOutput;
         }
 
+        public List<int> CalculateTableWidth(List<int> widths, List<string> pattern)
+        {
+            widths = new List<int>();
+
+            for(int i=0; i<pattern.Count();i++)
+            {
+                switch(pattern[i])
+                {
+                    case "Time":
+                        widths.Add(100);
+                        break;
+                    case "ThreadID":
+                        widths.Add(100);
+                        break;
+                    case "Level":
+                        widths.Add(100);
+                        break;
+                    case "Message":
+                        widths.Add(100);
+                        break;
+                    case "Ndc":
+                        widths.Add(100);
+                        break;
+                }
+            }
+            return widths;
+        }
+
         private LogDisplay parserContent = new LogDisplay();
     }
 }
