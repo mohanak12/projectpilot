@@ -22,6 +22,15 @@ namespace ProjectPilot.Log4NetBrowser.Views.Home
             parserContent.Parsing10MBLogFile();
         }
 
+        public string DisplayString(string line, int length)
+        {
+            if (line.Length <= length)
+                return line;
+            
+            line = line.Substring(0, length - 3) + "...";
+            return line;
+        }
+
         public string LogEntryToString(LogEntry logEntry, List<string> pattern)
         {
             string lineOutput = String.Empty;
@@ -32,7 +41,7 @@ namespace ProjectPilot.Log4NetBrowser.Views.Home
 
 
 
-                lineOutput += "<td>" + ((ParsedElementBase) logEntry.Elements[i]).Element.ToString() + "</td>";
+                lineOutput += "<td>" + DisplayString(((ParsedElementBase) logEntry.Elements[i]).Element.ToString(), 15) + "</td>";
             }
             return lineOutput;
         }

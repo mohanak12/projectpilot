@@ -16,13 +16,13 @@ namespace ProjectPilot.Log4NetBrowser.Models
 
         public void Parsing10MBLogFile()
         {
-            using (Stream fileStream = File.OpenRead(@"C:\share\Marko\SSM+2009-01-08.log.28"))
+            using (Stream fileStream = File.OpenRead(@"C:\SSM+2009-01-08.log.28"))
             {
                 lineParse = new LogCollection('|', "Time|Level|Ndc");
 
                 LogParserFilter filter = new LogParserFilter();
-                //filter.FilterLevel = "WARN";
-                //lineParse.ParseFilter = filter;
+                filter.FilterLevel = "WARN";
+                lineParse.ParseFilter = filter;
                 lineParse.ParseLogFile(fileStream);
             }
         }
