@@ -12,23 +12,34 @@ namespace ProjectPilot.Log4NetBrowser.Views.Home
 {
     public partial class Display : ViewPage
     {
+        public Display()
+        {
+            /*this.levelToColor = new Dictionary<string, string>();
+            this.levelToColor.Add("","");
+            this.levelToColor.Add("", "");
+            this.levelToColor.Add("", "");
+            this.levelToColor.Add("", "");
+            this.levelToColor.Add("", "");*/
+        }
+
         public LogDisplay ParserContent
         {
             get { return parserContent; }
         }
 
+        public List<int> TableWidths
+        {
+            get { return tableWidths; }
+        }
+        
+        public Dictionary<string, string> LevelToColor
+        {
+            get { return levelToColor; }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             parserContent.Parsing10MBLogFile();
-        }
-
-        public string DisplayString(string line, int length)
-        {
-            if (line.Length <= length)
-                return line;
-            
-            line = line.Substring(0, length - 3) + "...";
-            return line;
         }
 
         public string LogEntryToString(LogEntry logEntry, List<string> pattern)
@@ -37,43 +48,54 @@ namespace ProjectPilot.Log4NetBrowser.Views.Home
             
             for(int i = 0;i<logEntry.Elements.Count();i++)
             {
-                
+                lineOutput += "<td> <font color=\"red\">";
 
-
-
-                lineOutput += "<td>" + DisplayString(((ParsedElementBase) logEntry.Elements[i]).Element.ToString(), 15) + "</td>";
+                if (((ParsedElementBase)logEntry.Elements[i]).Element.ToString().Length > (TableWidths[i] / pixelVsChar))
+                {
+                    lineOutput += ((ParsedElementBase)logEntry.Elements[i]).Element.ToString().Substring(0, (TableWidths[i] / pixelVsChar));
+                    lineOutput += "...</font></td>";
+                }
+                else
+                {
+                    lineOutput += ((ParsedElementBase)logEntry.Elements[i]).Element.ToString() + "</td>";
+                }
             }
             return lineOutput;
         }
 
-        public List<int> CalculateTableWidth(IList<string> pattern)
+        public void CalculateTableWidth(IList<string> pattern)
         {
-            List<int> widths = new List<int>();
+            tableWidths = new List<int>();
 
             for(int i=0; i<pattern.Count();i++)
             {
                 switch(pattern[i])
                 {
                     case "Time":
-                        widths.Add(100);
+                        tableWidths.Add(140);
                         break;
                     case "ThreadID":
-                        widths.Add(100);
+                        tableWidths.Add(100);
                         break;
                     case "Level":
-                        widths.Add(100);
+                        tableWidths.Add(60);
                         break;
                     case "Message":
-                        widths.Add(100);
+                        tableWidths.Add(100);
                         break;
                     case "Ndc":
-                        widths.Add(100);
+                        tableWidths.Add(600);
+                        break;
+                    default:
+                        tableWidths.Add(100);
                         break;
                 }
             }
-            return widths;
         }
 
         private LogDisplay parserContent = new LogDisplay();
+        private List<int> tableWidths;
+        private const int pixelVsChar = 8;
+        private Dictionary<string, string> levelToColor;
     }
 }

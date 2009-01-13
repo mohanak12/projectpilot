@@ -15,10 +15,9 @@
             <br /> Please input filter parameters! TODO
             
         </div>
-        
         <div id="main">
             <asp:ContentPlaceHolder ID="MainContent" runat="server" />
-
+            <br />
             <div id="footer">
                 ProjecPilot Log4Net Browser
             </div>

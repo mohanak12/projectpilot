@@ -15,7 +15,8 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             ViewData["Title"] = "ProjectPilot";
             ViewData["Message"] = "Project Pilot Log4Net browser!";
 
-            return View();
+            //return View();
+            return RedirectToAction("Display"); 
         }
 
         public ActionResult Display()
