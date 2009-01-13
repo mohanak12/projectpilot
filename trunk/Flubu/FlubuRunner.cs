@@ -633,7 +633,14 @@ namespace Flubu
         {
             Log("Targets:"); 
 
+            // first sort the targets
+            SortedList<string, FlubuRunnerTarget<TRunner>> sortedTargets = new SortedList<string, FlubuRunnerTarget<TRunner>>();
+
             foreach (FlubuRunnerTarget<TRunner> target in targets.Values)
+                sortedTargets.Add(target.TargetName, target);
+
+            // now display them in sorted order
+            foreach (FlubuRunnerTarget<TRunner> target in sortedTargets.Values)
                 if (false == target.IsHidden)
                     Log(
                         "  {0} : {1}",
