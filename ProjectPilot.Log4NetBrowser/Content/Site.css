@@ -16,7 +16,7 @@ body
 a:link
 {
     color: #034af3;
-    text-decoration: underline;
+    text-decoration: none;
 }
 a:visited
 {
@@ -25,7 +25,7 @@ a:visited
 a:hover
 {
     color: #1d60ff;
-    text-decoration: none;
+    text-decoration: underline;
 }
 a:active
 {
@@ -122,6 +122,11 @@ page width. Or, you can specify an exact pixel width. */
     background-color: #fff;
     margin-bottom: 30px;
     _height: 1px; /* only IE6 applies CSS properties starting with an underscrore */
+}
+
+a:link#main
+{
+	text-decoration: none;
 }
 
 #footer

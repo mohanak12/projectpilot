@@ -5,17 +5,28 @@
     <%
         CalculateTableWidth(ParserContent.LineParse.ElementsPattern);
     %>
-    <table border="0" cellpadding="0" cellspacing="0">
-    <tr>
-        <%for (int i = 0; i < TableWidths.Count(); i++)
-          {%>
-            <td width="<%Response.Write(TableWidths[i].ToString());%>px">&nbsp</td>
-        <%}%>
-    </tr>
-       <%foreach (LogEntry logEntry in ParserContent.LineParse.ElementsLog) {%>
-            <tr>
-             <%Response.Write(LogEntryToString(logEntry, (List<string>)ParserContent.LineParse.ElementsPattern));%>
-            </tr>
-        <%}%>
-    </table>
+    <div>
+        <style type="text/css">
+            a:link {text-decoration: none}
+            a:visited {text-decoration: none}
+            a:active {text-decoration: none}
+            a:hover {text-decoration: underline; color: black;}
+        </style>
+        <table border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <%for (int i = 0; i < TableWidths.Count(); i++)
+              {%>
+                <td width="<%Response.Write(TableWidths[i].ToString());%>px">&nbsp</td>
+            <%}%>
+        </tr>
+           <%
+              int idx = 0;
+               foreach (LogEntry logEntry in ParserContent.LineParse.ElementsLog) {%>
+                <tr>
+                 <%Response.Write(LogEntryToString(logEntry, idx, (int)ViewData["Index"]));
+                   idx++;%>
+                </tr>
+            <%}%>
+        </table>
+    </div>
 </asp:Content>

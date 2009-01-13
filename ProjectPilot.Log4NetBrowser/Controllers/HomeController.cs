@@ -19,8 +19,18 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             return RedirectToAction("Display"); 
         }
 
-        public ActionResult Display()
+        public ActionResult Display(int? Id)
         {
+            if (Id != null)
+                ViewData["Index"] = Id;
+            else 
+                ViewData["Index"] = -1;
+            return View();
+        }
+
+        public ActionResult Ndc(string Id)
+        {
+            ViewData["Data"] = Id;
             return View();
         }
     }
