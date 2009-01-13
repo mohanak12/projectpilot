@@ -3,18 +3,18 @@
 
 <asp:Content ID="displayContent" ContentPlaceHolderID="MainContent" runat="server">
     <%
-        List<int> widths = CalculateTableWidth(ParserContent.LineParse.ElementsPattern);
+        CalculateTableWidth(ParserContent.LineParse.ElementsPattern);
     %>
-    <table border="0" align="left" cellpadding="0" cellspacing="0">
+    <table border="0" cellpadding="0" cellspacing="0">
     <tr>
-        <%for (int i = 0; i < widths.Count(); i++)
+        <%for (int i = 0; i < TableWidths.Count(); i++)
           {%>
-            <td width="<%Response.Write(widths[i].ToString());%>px">&nbsp</td>
+            <td width="<%Response.Write(TableWidths[i].ToString());%>px">&nbsp</td>
         <%}%>
     </tr>
-        <%foreach (LogEntry logEntry in this.ParserContent.LineParse.ElementsLog) {%>
+       <%foreach (LogEntry logEntry in ParserContent.LineParse.ElementsLog) {%>
             <tr>
-             <%Response.Write(this.LogEntryToString(logEntry, (List<string>)this.ParserContent.LineParse.ElementsPattern));%>
+             <%Response.Write(LogEntryToString(logEntry, (List<string>)ParserContent.LineParse.ElementsPattern));%>
             </tr>
         <%}%>
     </table>
