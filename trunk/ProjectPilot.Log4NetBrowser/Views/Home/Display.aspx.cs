@@ -26,16 +26,20 @@ namespace ProjectPilot.Log4NetBrowser.Views.Home
         {
             string lineOutput = String.Empty;
             
-            for(int i = 0;i<logEntry.Elements.Count()-1;i++)
+            for(int i = 0;i<logEntry.Elements.Count();i++)
             {
-                lineOutput += ((ParsedElementBase) logEntry.Elements[i]).Element.ToString() + " ";
+                
+
+
+
+                lineOutput += "<td>" + ((ParsedElementBase) logEntry.Elements[i]).Element.ToString() + "</td>";
             }
             return lineOutput;
         }
 
-        public List<int> CalculateTableWidth(List<int> widths, List<string> pattern)
+        public List<int> CalculateTableWidth(IList<string> pattern)
         {
-            widths = new List<int>();
+            List<int> widths = new List<int>();
 
             for(int i=0; i<pattern.Count();i++)
             {
