@@ -51,7 +51,13 @@ namespace ProjectPilot.Log4NetBrowser.Views.Home
             
             for(int i = 0; i < logEntry.Elements.Count(); i++)
             {
-                lineOutput += "<td><a href=\"/Home/Display/";
+                lineOutput += "<td>";
+                lineOutput += "<a name=\"";
+                lineOutput += index.ToString();
+                lineOutput += "\"></a>";
+                lineOutput += "<a href=\"/Home/Display/";
+                lineOutput += index.ToString();
+                lineOutput += "#";
                 lineOutput += index.ToString();
                 lineOutput += "\"><font color=\"";
                 lineOutput += levelToColor[((ParsedElementBase) logEntry.Elements[levelIndex]).Element.ToString()];
