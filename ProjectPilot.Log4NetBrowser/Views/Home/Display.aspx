@@ -2,30 +2,20 @@
 <%@ Import Namespace="ProjectPilot.Extras.LogParser"%>
 
 <asp:Content ID="displayContent" ContentPlaceHolderID="MainContent" runat="server">
-    
-    
     <%
-        {
-            List<int> widths;
-        }
-%>
+        List<int> widths = CalculateTableWidth(ParserContent.LineParse.ElementsPattern);
+    %>
     <table border="0" align="left" cellpadding="0" cellspacing="0">
     <tr>
-        <td width="130px">row 1, cell 1</td>
-        <td width="50px">row 1, cell 2</td>
+        <%for (int i = 0; i < widths.Count(); i++)
+          {%>
+            <td width="<%Response.Write(widths[i].ToString());%>px">&nbsp</td>
+        <%}%>
     </tr>
-    <tr>
-        <td>row 2, cell 1</td>
-        <td>row 2, cell 2</td>
-    </tr>
+        <%foreach (LogEntry logEntry in this.ParserContent.LineParse.ElementsLog) {%>
+            <tr>
+             <%Response.Write(this.LogEntryToString(logEntry, (List<string>)this.ParserContent.LineParse.ElementsPattern));%>
+            </tr>
+        <%}%>
     </table>
-    <br /><br />
-    <%
-    foreach (LogEntry logEntry in this.ParserContent.LineParse.ElementsLog)
-    {
-        //Response.Write(((ParsedElementBase)logEntry.Elements[0]).Element.ToString());
-        Response.Write(this.LogEntryToString(logEntry, (List<string>)this.ParserContent.LineParse.ElementsPattern));
-            %><br /> <%
-    }
-     %>
 </asp:Content>
