@@ -457,6 +457,18 @@ namespace Flubu
             return ReturnThisTRunner();
         }
 
+        /// <summary>
+        /// Determines whether the specified target exists.
+        /// </summary>
+        /// <param name="targetName">Name of the target.</param>
+        /// <returns>
+        ///     <c>true</c> if the specified target exists; otherwise, <c>false</c>.
+        /// </returns>
+        public bool HasTarget(string targetName)
+        {
+            return targets.ContainsKey(targetName);
+        }
+
         public TRunner InstallAssembly(string assemblyFileName)
         {
             InstallAssemblyTask.Execute(scriptExecutionEnvironment, assemblyFileName);
