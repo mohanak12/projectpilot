@@ -28,6 +28,7 @@ namespace ProjectPilot.Log4NetBrowser.Views.Home
         public LogDisplay ParserContent
         {
             get { return parserContent; }
+            set { parserContent = value; }
         }
 
         public List<int> TableWidths
@@ -42,7 +43,7 @@ namespace ProjectPilot.Log4NetBrowser.Views.Home
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            parserContent.Parsing10MBLogFile();
+            //parserContent.Parsing10MBLogFile();
         }
 
         public string LogEntryToString(LogEntry logEntry, int index, int? expandIndex)
@@ -69,6 +70,7 @@ namespace ProjectPilot.Log4NetBrowser.Views.Home
                 if ((((ParsedElementBase)logEntry.Elements[i]).Element.ToString().Length > (TableWidths[i] / pixelVsChar)) &&
                     index != expandIndex)
                 {
+                    //string tmpString = ((ParsedElementBase)logEntry.Elements[i]).Element.ToString().
                     lineOutput += ((ParsedElementBase)logEntry.Elements[i]).Element.ToString().Substring(0, (TableWidths[i] / pixelVsChar));
                     lineOutput += "...";
                 }
@@ -112,7 +114,7 @@ namespace ProjectPilot.Log4NetBrowser.Views.Home
             }
         }
 
-        private LogDisplay parserContent = new LogDisplay();
+        private LogDisplay parserContent;
         private List<int> tableWidths;
         private const int pixelVsChar = 8;
         private Dictionary<string, string> levelToColor;
