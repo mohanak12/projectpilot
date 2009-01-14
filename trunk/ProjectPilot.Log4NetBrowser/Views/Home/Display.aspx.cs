@@ -48,13 +48,16 @@ namespace ProjectPilot.Log4NetBrowser.Views.Home
         public string LogEntryToString(LogEntry logEntry, int index, int? expandIndex)
         {
             string lineOutput = String.Empty;
-            
+
             for(int i = 0; i < logEntry.Elements.Count(); i++)
             {
                 lineOutput += "<td>";
-                lineOutput += "<a name=\"";
-                lineOutput += index.ToString();
-                lineOutput += "\"></a>";
+                if(i==0)
+                {
+                    lineOutput += "<a name=\"";
+                    lineOutput += index.ToString();
+                    lineOutput += "\"></a>";
+                }
                 lineOutput += "<a href=\"/Home/Display/";
                 lineOutput += index.ToString();
                 lineOutput += "#";
