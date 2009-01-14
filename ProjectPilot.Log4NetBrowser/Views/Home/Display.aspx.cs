@@ -67,12 +67,21 @@ namespace ProjectPilot.Log4NetBrowser.Views.Home
                 lineOutput += levelToColor[((ParsedElementBase) logEntry.Elements[levelIndex]).Element.ToString()];
                 lineOutput += "\">";
 
-                if ((((ParsedElementBase)logEntry.Elements[i]).Element.ToString().Length > (TableWidths[i] / pixelVsChar)) &&
-                    index != expandIndex)
+                if (((ParsedElementBase)logEntry.Elements[i]).Element.ToString().Length > (TableWidths[i] / pixelVsChar))
                 {
-                    //string tmpString = ((ParsedElementBase)logEntry.Elements[i]).Element.ToString().
-                    lineOutput += ((ParsedElementBase)logEntry.Elements[i]).Element.ToString().Substring(0, (TableWidths[i] / pixelVsChar));
-                    lineOutput += "...";
+                    if (index != expandIndex)
+                    {
+                        lineOutput += ((ParsedElementBase)logEntry.Elements[i]).Element.ToString().Substring(0, (TableWidths[i] / pixelVsChar));
+                        lineOutput += "...";
+                    }
+                    else
+                    {
+                        List<string> tmpString = SplitString(((ParsedElementBase) logEntry.Elements[i]).Element.ToString(), i);
+                        for (int j = 0; j < tmpString.Count; j++)
+                        {
+                            lineOutput += tmpString[j] + "<br />";
+                        }
+                    }
                 }
                 else
                 {
@@ -112,6 +121,22 @@ namespace ProjectPilot.Log4NetBrowser.Views.Home
                         break;
                 }
             }
+        }
+
+        private List<string> SplitString(string inputString, int idx)
+        {
+            List<string> stringList = new List<string>();
+            int wide = TableWidths[idx]/pixelVsChar;
+            if (inputString.Length > wide)
+            {
+                int i;
+                for (i = 0; (i+wide) < inputString.Length; i += wide)
+                {
+                    stringList.Add(inputString.Substring(i,wide));
+                }
+                stringList.Add(inputString.Substring(i));
+            }
+            return stringList;
         }
 
         private LogDisplay parserContent;
