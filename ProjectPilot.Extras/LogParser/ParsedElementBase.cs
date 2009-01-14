@@ -10,6 +10,11 @@
 
         public abstract void Parse(string line);
 
+        public override string ToString()
+        {
+            return Element.ToString();
+        }
+
         private object element;
     }
 }

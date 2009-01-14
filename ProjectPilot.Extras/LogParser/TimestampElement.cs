@@ -24,6 +24,12 @@ namespace ProjectPilot.Extras.LogParser
             set { timePattern = value; }
         }
 
+        public override string ToString()
+        {
+            DateTime dateTime = (DateTime) Element;
+            return base.ToString() + "," + dateTime.Millisecond;
+        }
+
         private string timePattern;
         private CultureInfo cultureToUse;
     }
