@@ -124,6 +124,27 @@ page width. Or, you can specify an exact pixel width. */
     _height: 1px; /* only IE6 applies CSS properties starting with an underscrore */
 }
 
+#logEntries a:link
+{
+	text-decoration: none
+}
+
+#logEntries a:visited
+{
+	text-decoration: none
+}
+
+#logEntries a:active
+{
+	text-decoration: none
+}
+
+#logEntries a:hover
+{
+	text-decoration: underline;
+	color: black;
+}
+
 a:link#main
 {
 	text-decoration: none;

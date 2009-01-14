@@ -7,13 +7,7 @@
         ParserContent = ViewData["Content"] as LogDisplay;
         CalculateTableWidth(ParserContent.LineParse.ElementsPattern);
     %>
-    <div>
-        <style type="text/css">
-            a:link {text-decoration: none}
-            a:visited {text-decoration: none}
-            a:active {text-decoration: none}
-            a:hover {text-decoration: underline; color: black;}
-        </style>
+    <div id="logEntries">
         <table border="0" cellpadding="0" cellspacing="0">
         <tr valign="top">
             <%for (int i = 0; i < TableWidths.Count(); i++)
