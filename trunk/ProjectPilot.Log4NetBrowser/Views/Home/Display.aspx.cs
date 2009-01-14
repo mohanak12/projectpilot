@@ -64,19 +64,19 @@ namespace ProjectPilot.Log4NetBrowser.Views.Home
                 lineOutput += "#";
                 lineOutput += index.ToString();
                 lineOutput += "\"><font color=\"";
-                lineOutput += levelToColor[((ParsedElementBase) logEntry.Elements[levelIndex]).Element.ToString()];
+                lineOutput += levelToColor[logEntry.Elements[levelIndex].ToString()];
                 lineOutput += "\">";
 
-                if (((ParsedElementBase)logEntry.Elements[i]).Element.ToString().Length > (TableWidths[i] / pixelVsChar))
+                if ((logEntry.Elements[i]).ToString().Length > (TableWidths[i] / pixelVsChar))
                 {
                     if (index != expandIndex)
                     {
-                        lineOutput += ((ParsedElementBase)logEntry.Elements[i]).Element.ToString().Substring(0, (TableWidths[i] / pixelVsChar));
+                        lineOutput += logEntry.Elements[i].ToString().Substring(0, (TableWidths[i] / pixelVsChar));
                         lineOutput += "...";
                     }
                     else
                     {
-                        List<string> tmpString = SplitString(((ParsedElementBase) logEntry.Elements[i]).Element.ToString(), i);
+                        List<string> tmpString = SplitString(logEntry.Elements[i].ToString(), i);
                         for (int j = 0; j < tmpString.Count; j++)
                         {
                             lineOutput += tmpString[j] + "<br />";
@@ -85,7 +85,7 @@ namespace ProjectPilot.Log4NetBrowser.Views.Home
                 }
                 else
                 {
-                    lineOutput += ((ParsedElementBase)logEntry.Elements[i]).Element.ToString();
+                    lineOutput += logEntry.Elements[i].ToString();
                 }
                 lineOutput += "</font></a></td>";
             }
@@ -101,7 +101,7 @@ namespace ProjectPilot.Log4NetBrowser.Views.Home
                 switch(pattern[i])
                 {
                     case "Time":
-                        tableWidths.Add(140);
+                        tableWidths.Add(200);
                         break;
                     case "ThreadID":
                         tableWidths.Add(100);
