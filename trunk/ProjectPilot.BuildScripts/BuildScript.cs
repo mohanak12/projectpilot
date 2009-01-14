@@ -36,7 +36,17 @@ namespace ProjectPilot.BuildScripts
                     if (args.Length == 0)
                         runner.RunTarget(runner.DefaultTarget.TargetName);
                     else
+                    {
+                        string targetName = args[0];
+                        if (false == runner.HasTarget (targetName))
+                        {
+                            runner.ScriptExecutionEnvironment.LogError("ERROR: The target '{0}' does not exist", targetName);
+                            runner.RunTarget("help");
+                            return 2;
+                        }
+
                         runner.RunTarget(args[0]);
+                    }
 
                     runner
                         .Complete();
