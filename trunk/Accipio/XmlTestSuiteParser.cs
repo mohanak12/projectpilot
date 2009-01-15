@@ -56,8 +56,8 @@ namespace Accipio
                                 if (xmlReader.Name != "suite")
                                     throw new XmlException("<suite> (root) element expected.");
 
-                                testSuite.Id = ReadAttribute(xmlReader, "id");
-                                testSuite.Runner = ReadAttribute(xmlReader, "runner");
+                                testSuite.TestSuiteName = ReadAttribute(xmlReader, "id");
+                                testSuite.TestRunnerName = ReadAttribute(xmlReader, "runner");
                                 testSuite.Namespace = ReadAttribute(xmlReader, "namespace");
                                 ReadTestSuite(testSuite, xmlReader);
 
@@ -113,8 +113,7 @@ namespace Accipio
                         {
                             //TODO: check for white spaces in Id
                             string testCaseName = ReadAttribute(xmlReader, "id");
-                            string testCaseCategory = ReadAttribute(xmlReader, "category");
-                            TestCase testCase = new TestCase(testCaseName, testCaseCategory);
+                            TestCase testCase = new TestCase(testCaseName);
                             testSuite.AddTestCase(testCase);
                             ReadTestCase(testCase, xmlReader);
                             break;

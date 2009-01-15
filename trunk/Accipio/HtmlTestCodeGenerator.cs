@@ -23,18 +23,16 @@ namespace Accipio
             WriteLine("    <title>Test plan</title>");
             WriteLine("</head>");
             WriteLine("<body>");
-            WriteLine("    <h1>{0}</h1>", testSuite.Id);
+            WriteLine("    <h1>{0}</h1>", testSuite.TestSuiteName);
             WriteLine("    <p>Description : <i>{0}</i></p>", testSuite.Description);
-            Dictionary<string, TestCase> testCases = testSuite.TestCases;
-            foreach (KeyValuePair<string, TestCase> keyValuePair in testCases)
+
+            foreach (TestCase testCase in testSuite.ListTestCases())
             {
-                TestCase testCase = keyValuePair.Value;
                 WriteLine("    <h2>{0}</h2>", testCase.TestCaseName);
-                WriteLine("    <p>Category : <i>{0}</i></p>", testCase.TestCaseCategory);
                 WriteLine("    <p>Description : <i>{0}</i></p>", testCase.TestCaseDescription);
                 AddTestCaseTags(testCase);
                 WriteLine("    <ol>");
-                foreach (TestAction testAction in testCase.TestActions)
+                foreach (TestAction testAction in testCase.TestSteps)
                 {
                     AddTestStep(testAction, testSuite.BusinessActionData);
                 }
@@ -52,9 +50,9 @@ namespace Accipio
         /// <param name="testCase">See TestCase <see cref="testCase"/></param>
         private void AddTestCaseTags(TestCase testCase)
         {
-            if (testCase.GetTestCaseTags.Count > 0)
+            if (testCase.Tags.Count > 0)
             {
-                foreach (string testCaseTag in testCase.GetTestCaseTags)
+                foreach (string testCaseTag in testCase.Tags)
                 {
                     WriteLine("    <p>Tag : {0}</p>", testCaseTag);
                 }

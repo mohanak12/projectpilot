@@ -14,8 +14,7 @@ namespace Accipio
         public void Generate(TestSuite testSuite)
         {
             BusinessActionData businessActionData = testSuite.BusinessActionData;
-            Dictionary<string, TestCase> testCases = testSuite.TestCases;
-            ICollection<string> testCasesKeys = testCases.Keys;
+
             WriteLine("using MbUnit.Framework;");
             WriteLine(string.Empty);
             WriteLine("namespace {0}", testSuite.Namespace);
@@ -24,21 +23,22 @@ namespace Accipio
             WriteLine("    /// {0}", testSuite.Description);
             WriteLine("    /// </summary>");
             WriteLine("    [TestFixture]");
-            WriteLine("    public class {0}TestSuite", testSuite.Id);
+            WriteLine("    public class {0}TestSuite", testSuite.TestSuiteName);
             WriteLine("    {");
+
             int testCaseCount = 1;
-            foreach (string testCaseName in testCasesKeys)
+            foreach (TestCase testCase in testSuite.ListTestCases())
             {
-                TestCase testCase = testSuite.GetTestCase(testCaseName);
                 WriteLine("        /// <summary>");
                 WriteLine("        /// {0}", testCase.TestCaseDescription);
                 WriteLine("        /// </summary>");
                 WriteLine("        [Test]");
-                WriteLine("        [Category(\"{0}\")]", testCase.TestCaseCategory);
                 AddHeaderTags(testCase);
-                WriteLine("        public void {0}()", testCaseName);
+                if (testSuite.IsParallelizable)
+                    WriteLine("        [Parallelizable]");
+                WriteLine("        public void {0}()", testCase.TestCaseName);
                 WriteLine("        {");
-                WriteLine("            using ({0}TestRunner runner = new {0}TestRunner())", testSuite.Runner);
+                WriteLine("            using ({0}TestRunner runner = new {0}TestRunner())", testSuite.TestRunnerName);
                 WriteLine("            {");
                 WriteLine("                runner");
                 // add test case description
@@ -49,7 +49,7 @@ namespace Accipio
                 WriteLine(string.Empty);
                 WriteLine("                runner");
                 // add test case actions
-                IList<TestAction> testActions = testCase.TestActions;
+                IList<TestAction> testActions = testCase.TestSteps;
                 int counter = 1;
                 foreach (TestAction testAction in testActions)
                 {
@@ -104,9 +104,9 @@ namespace Accipio
         private void AddTags(TestCase testCase)
         {
             int tagCounter = 1;
-            foreach (string tag in testCase.GetTestCaseTags)
+            foreach (string tag in testCase.Tags)
             {
-                if (tagCounter == testCase.GetTestCaseTags.Count)
+                if (tagCounter == testCase.Tags.Count)
                 {
                     WriteLine("                    .AddTag(\"{0}\");", tag);
                 }
@@ -125,7 +125,7 @@ namespace Accipio
         /// <param name="testCase">Test Case <see cref="testCase"/></param>
         private void AddHeaderTags(TestCase testCase)
         {
-            foreach (string tag in testCase.GetTestCaseTags)
+            foreach (string tag in testCase.Tags)
             {
                 WriteLine("        [Metadata(\"UserStory\", \"{0}\")]", tag);
             }

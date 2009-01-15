@@ -5,34 +5,6 @@ namespace Accipio
     public class TestCase
     {
         /// <summary>
-        /// Initializes a new instance of the TestCase class with specified category.
-        /// </summary>
-        /// <param name="testCaseName">Name of the test case.</param>
-        /// <param name="testCaseCategory">Test category (Smoke, Regression, Functional, ...)</param>
-        public TestCase(string testCaseName, string testCaseCategory)
-        {
-            this.testCaseName = testCaseName;
-            this.testCaseCategory = testCaseCategory;
-        }
-
-        /// <summary>
-        /// Adds test case tag to list of tags
-        /// </summary>
-        /// <param name="tag">Test case tag name</param>
-        public void AddTestCaseTag(string tag)
-        {
-            tags.Add(tag);
-        }
-
-        /// <summary>
-        /// Gets test case tags
-        /// </summary>
-        public IList<string> GetTestCaseTags
-        {
-            get { return tags; }
-        }
-
-        /// <summary>
         /// Initializes a new instance of the TestCase class.
         /// </summary>
         /// <param name="testCaseName">Test case name</param>
@@ -42,27 +14,11 @@ namespace Accipio
         }
 
         /// <summary>
-        /// Gets list of collected test actions. <see cref="TestAction"/>
+        /// Gets test case tags
         /// </summary>
-        public IList<TestAction> TestActions
+        public IList<string> Tags
         {
-            get { return testActions; }
-        }
-
-        /// <summary>
-        /// Gets the total number of collected test actions.
-        /// </summary>
-        public int TestActionsCount
-        {
-            get { return testActions.Count; }
-        }
-
-        /// <summary>
-        /// Gets testcase category.
-        /// </summary>
-        public string TestCaseCategory
-        {
-            get { return testCaseCategory; }
+            get { return tags; }
         }
 
         /// <summary>
@@ -77,12 +33,35 @@ namespace Accipio
         }
 
         /// <summary>
+        /// Gets or sets the test case description.
+        /// </summary>
+        /// <value>The test case description.</value>
+        public string TestCaseDescription { get; set; }
+
+        /// <summary>
+        /// Gets a list of test case's steps.
+        /// </summary>
+        public IList<TestAction> TestSteps
+        {
+            get { return testSteps; }
+        }
+
+        /// <summary>
         /// Adds test action to Test case.
         /// </summary>
         /// <param name="testAction">See <see cref="testAction"/></param>
         public void AddTestAction(TestAction testAction)
         {
-            testActions.Add(testAction);
+            testSteps.Add(testAction);
+        }
+
+        /// <summary>
+        /// Adds test case tag to list of tags
+        /// </summary>
+        /// <param name="tag">Test case tag name</param>
+        public void AddTestCaseTag(string tag)
+        {
+            tags.Add(tag);
         }
 
         /// <summary>
@@ -92,7 +71,7 @@ namespace Accipio
         /// <returns>See <see cref="TestAction"/></returns>
         public TestAction GetTestAction(string testActionName)
         {
-            foreach (TestAction testAction in testActions)
+            foreach (TestAction testAction in testSteps)
             {
                 string actionName = testAction.ActionName;
                 if (actionName.Equals(testActionName))
@@ -105,17 +84,10 @@ namespace Accipio
         }
 
         /// <summary>
-        /// Gets or sets the test case description.
-        /// </summary>
-        /// <value>The test case description.</value>
-        public string TestCaseDescription { get; set; }
-
-        /// <summary>
         /// Collection of Test actions.
         /// </summary>
-        private readonly List<TestAction> testActions = new List<TestAction>();
+        private readonly List<TestAction> testSteps = new List<TestAction>();
         private readonly List<string> tags = new List<string>();
         private readonly string testCaseName;
-        private readonly string testCaseCategory = "Smoke";
     }
 }

@@ -15,7 +15,7 @@ namespace ProjectPilot.Tests.AccipioTests
         {
             TestSuite testSuite = new TestSuite
             {
-                Id = "TestSuiteId",
+                TestSuiteName = "TestSuiteId",
                 Description = "Test Sute Description."
             };
             
@@ -65,7 +65,6 @@ namespace ProjectPilot.Tests.AccipioTests
             mockWriter.Expect(writer => writer.WriteLine("    <h1>TestSuiteId</h1>"));
             mockWriter.Expect(writer => writer.WriteLine("    <p>Description : <i>Test Sute Description.</i></p>"));
             mockWriter.Expect(writer => writer.WriteLine("    <h2>Open Page</h2>"));
-            mockWriter.Expect(writer => writer.WriteLine("    <p>Category : <i>Smoke</i></p>"));
             mockWriter.Expect(writer => writer.WriteLine("    <p>Description : <i>Open page in web browser</i></p>"));
             mockWriter.Expect(writer => writer.WriteLine("    <ol>"));
             mockWriter.Expect(writer => writer.WriteLine("        <li>Navigate to url 'http://test.aspx'</li>"));
