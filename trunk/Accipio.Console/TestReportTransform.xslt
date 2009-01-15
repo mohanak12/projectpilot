@@ -25,11 +25,13 @@
                     <xsl:value-of select="testStepRun/testStep/@name"/>
                   </xsl:attribute>
                   <xsl:attribute name="startTime">
+                    <xsl:value-of select="testStepRun/@startTime"/>
                   </xsl:attribute>
                   <xsl:attribute name="duration">
                     <xsl:value-of select="testStepRun/result/@duration"/>
                   </xsl:attribute>
                   <xsl:attribute name="status">
+                    <xsl:value-of select="testStepRun/result/outcome/@status"/>
                   </xsl:attribute>
                   <userStories>
                     <userStory><xsl:text>F.SmsUI.RequestInfo</xsl:text></userStory>
