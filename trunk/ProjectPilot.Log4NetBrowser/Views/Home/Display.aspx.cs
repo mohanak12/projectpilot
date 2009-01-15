@@ -46,30 +46,48 @@ namespace ProjectPilot.Log4NetBrowser.Views.Home
             //parserContent.Parsing10MBLogFile();
         }
 
-        public string LogEntryToString(LogEntry logEntry, int index, int? expandIndex)
+        public string LogEntryToString(LogEntry logEntry, int index, List<int> expandIndex, int currentIndex)
         {
             string lineOutput = String.Empty;
 
+            //for each element in table row
             for(int i = 0; i < logEntry.Elements.Count(); i++)
             {
+                //table cell HTML tag
                 lineOutput += "<td>";
+                
+                //On the first cell of the table row, we write an HTML anchor element.
                 if(i==0)
                 {
                     lineOutput += "<a name=\"";
                     lineOutput += index.ToString();
                     lineOutput += "\"></a>";
                 }
+                
+                //Each element is a link to its expanded view.
                 lineOutput += "<a href=\"/Home/Display/";
-                lineOutput += index.ToString();
+                
+                //Workaround for opening and closing current element, otherwise the HTML page wont refresh.
+                if (currentIndex  == index &&
+                    expandIndex.Contains(index))
+                    lineOutput += "-1";
+                else
+                    lineOutput += index.ToString();
+                
+                //Continue with the link - link to anchor of the selected row.
                 lineOutput += "#";
                 lineOutput += index.ToString();
+                
+                //Color of the row according to LEVEL settings.
                 lineOutput += "\"><font color=\"";
                 lineOutput += levelToColor[logEntry.Elements[levelIndex].ToString()];
                 lineOutput += "\">";
 
+                /*Longer elements of the line will be split. "..." is added at the end,
+                 *unless the line is in the expandList - the list of elements we want to se complete.*/
                 if ((logEntry.Elements[i]).ToString().Length > (TableWidths[i] / pixelVsChar))
                 {
-                    if (index != expandIndex)
+                    if (!expandIndex.Contains(index))
                     {
                         lineOutput += logEntry.Elements[i].ToString().Substring(0, (TableWidths[i] / pixelVsChar));
                         lineOutput += "...";
@@ -87,6 +105,8 @@ namespace ProjectPilot.Log4NetBrowser.Views.Home
                 {
                     lineOutput += logEntry.Elements[i].ToString();
                 }
+
+                //End of the link and cell HTML elements
                 lineOutput += "</font></a></td>";
             }
             return lineOutput;
