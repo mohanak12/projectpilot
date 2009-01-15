@@ -44,6 +44,9 @@
     <member name="P:Gallio.PowerShellCommands.RunGallioCommand.ReportTypes">
       <summary>A list of the types of reports to generate, separated by semicolons.</summary>
     </member>
+    <member name="P:Gallio.PowerShellCommands.RunGallioCommand.RunTimeLimit">
+      <summary>Sets the maximum amount of time (in seconds) the tests can run before they are canceled. The default is an infinite time to run.</summary>
+    </member>
     <member name="P:Gallio.PowerShellCommands.RunGallioCommand.RunnerExtensions">
       <summary>
         <para> Specifies the type, assembly, and parameters of custom test runner extensions to use during the test run in the form: '[Namespace.]Type,Assembly[;Parameters]'. </para>

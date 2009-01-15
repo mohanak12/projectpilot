@@ -16,18 +16,22 @@ namespace Accipio
         }
 
         /// <summary>
-        /// Gets total count of test cases in collection.
-        /// </summary>
-        public int TestCasesCount
-        {
-            get { return testCases.Count; }
-        }
-
-        /// <summary>
         /// Gets or sets the business action data.
         /// </summary>
         /// <value>The <see cref="BusinessActionData"/></value>
         public BusinessActionData BusinessActionData { get; set; }
+
+        /// <summary>
+        /// Gets or sets the value which indicates how many concurrent test cases can run in this test suite.
+        /// </summary>
+        /// <remarks>In order for this setting to take effect, 
+        /// you have to set the <see cref="IsParallelizable"/> to <c>true</c>.</remarks>
+        /// <value>The degree of parallelism.</value>
+        public int DegreeOfParallelism
+        {
+            get { return degreeOfParallelism; }
+            set { degreeOfParallelism = value; }
+        }
 
         /// <summary>
         /// Gets or sets the test suite description.
@@ -42,6 +46,7 @@ namespace Accipio
         /// <value>
         ///     <c>true</c> if the test cases can run in parallel; otherwise, <c>false</c>.
         /// </value>
+        /// <seealso cref="DegreeOfParallelism"/>
         public bool IsParallelizable
         {
             get { return isParallelizable; }
@@ -53,6 +58,14 @@ namespace Accipio
         /// </summary>
         /// <value>The name of the namespace.</value>
         public string Namespace { get; set; }
+
+        /// <summary>
+        /// Gets total count of test cases in collection.
+        /// </summary>
+        public int TestCasesCount
+        {
+            get { return testCases.Count; }
+        }
 
         /// <summary>
         /// Gets or sets the name of the TestRunner.
@@ -112,6 +125,7 @@ namespace Accipio
             return testCases.Values;
         }
 
+        private int degreeOfParallelism = 10;
         private bool isParallelizable;
         private readonly SortedList<string, TestCase> testCases = new SortedList<string, TestCase>();
     }

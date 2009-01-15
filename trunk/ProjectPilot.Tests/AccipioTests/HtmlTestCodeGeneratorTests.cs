@@ -1,6 +1,8 @@
 using Accipio;
 using MbUnit.Framework;
 using Rhino.Mocks;
+using TestCase=Accipio.TestCase;
+using TestSuite=Accipio.TestSuite;
 
 namespace ProjectPilot.Tests.AccipioTests
 {

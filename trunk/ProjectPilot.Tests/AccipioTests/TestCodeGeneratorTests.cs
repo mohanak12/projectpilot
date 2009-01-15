@@ -19,7 +19,7 @@ namespace ProjectPilot.Tests.AccipioTests
             TestCodeGeneratorCommand testCodeGeneratorCommand = new TestCodeGeneratorCommand(null);
             testCodeGeneratorCommand.AccipioDirectory = @"D:\Projects\MiMi\source\Hsl.Ganesha.AcceptanceTests";
             testCodeGeneratorCommand.ParseArguments(args);
-             testCodeGeneratorCommand.ProcessCommand();
+            testCodeGeneratorCommand.ProcessCommand();
         }
 
         public static string[] GetArgs()
