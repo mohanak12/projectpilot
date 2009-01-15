@@ -9,11 +9,18 @@
     %>
     <div>
     <form method="post" action="/Home/Reload">
-            <label for="level">Level:</label>
-            <input type="text" name="level" />
-            <br />
-            <input type="submit" value="Submit filter" />
-        </form>
+        <label>Level:</label>
+        <select id="levelSelect" name="levelSelect">
+            <option value=""></option>
+            <option value="TRACE">TRACE</option>
+            <option value="DEBUG">DEBUG</option>
+            <option value="INFO">INFO</option>
+            <option value="WARN">WARN</option>
+            <option value="ERROR">ERROR</option>
+            <option value="FATAL">FATAL</option>
+        </select>
+        <input type="submit" value="Submit filter" />
+    </form>
     </div>
     <div id="logEntries">
         <table border="0" cellpadding="0" cellspacing="0">
