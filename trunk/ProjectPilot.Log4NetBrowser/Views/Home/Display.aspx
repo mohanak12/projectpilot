@@ -9,6 +9,7 @@
     %>
     <div>
     <form method="post" action="/Home/Reload">
+        <input name="fileSelect" type="file" />
         <label>Level:</label>
         <select id="levelSelect" name="levelSelect">
             <option value=""></option>
