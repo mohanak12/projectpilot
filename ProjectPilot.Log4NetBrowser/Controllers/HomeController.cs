@@ -20,13 +20,13 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             return View();
         }
 
-        public ActionResult Reload(string level)
+        public ActionResult Reload(string level, string levelSelect)
         {
 
             parserContent = new LogDisplay();
 
             LogParserFilter filter = new LogParserFilter();
-            filter.FilterLevel = level;
+            filter.FilterLevel = levelSelect;
             parserContent.Parsing10MBLogFile(filter);
 
             return RedirectToAction("Display"); 
