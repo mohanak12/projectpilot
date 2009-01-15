@@ -52,8 +52,8 @@ namespace ProjectPilot.Tests.AccipioTests
                 }
             }
 
-            Assert.AreEqual(testSuite.Id, "Banking");
-            Assert.AreEqual(testSuite.Runner, "OnlineBanking");
+            Assert.AreEqual(testSuite.TestSuiteName, "Banking");
+            Assert.AreEqual(testSuite.TestRunnerName, "OnlineBanking");
             Assert.AreEqual(testSuite.Namespace, "OnlineBankingNamespace");
 
             Assert.AreEqual(1, testSuite.TestCasesCount);
@@ -61,7 +61,7 @@ namespace ProjectPilot.Tests.AccipioTests
             TestCase testCase = testSuite.GetTestCase("MoneyTransfer");
             Assert.IsNotNull(testCase);
             Assert.AreEqual("MoneyTransfer", testCase.TestCaseName);
-            Assert.AreEqual(8, testCase.TestActionsCount);
+            Assert.AreEqual(8, testCase.TestSteps.Count);
 
             TestAction testAction = testCase.GetTestAction("GoToPortal");
             Assert.IsNotNull(testAction);
@@ -106,8 +106,8 @@ namespace ProjectPilot.Tests.AccipioTests
                 testSuite = parser.Parse();
             }
 
-            Assert.AreEqual(testSuite.Id, "Banking");
-            Assert.AreEqual(testSuite.Runner, "OnlineBanking");
+            Assert.AreEqual(testSuite.TestSuiteName, "Banking");
+            Assert.AreEqual(testSuite.TestRunnerName, "OnlineBanking");
             Assert.AreEqual(testSuite.Namespace, "OnlineBankingNamespace");
 
             Assert.AreEqual(1, testSuite.TestCasesCount);
@@ -115,7 +115,7 @@ namespace ProjectPilot.Tests.AccipioTests
             TestCase testCase = testSuite.GetTestCase("MoneyTransfer");
             Assert.IsNotNull(testCase);
             Assert.AreEqual("MoneyTransfer", testCase.TestCaseName);
-            Assert.AreEqual(8, testCase.TestActionsCount);
+            Assert.AreEqual(8, testCase.TestSteps.Count);
 
             TestAction testAction = testCase.GetTestAction("GoToPortal");
             Assert.IsNotNull(testAction);

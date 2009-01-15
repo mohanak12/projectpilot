@@ -23,9 +23,10 @@ namespace ProjectPilot.Tests.AccipioTests
             TestSuite testSuite = new TestSuite
             {
                 Description = "Class description.",
-                Id = "Banking",
-                Runner = "OnlineBanking",
+                TestSuiteName = "Banking",
+                TestRunnerName = "OnlineBanking",
                 Namespace = "OnlineBankingNamespace",
+                IsParallelizable = true,
             };
 
             TestCase testCase = new TestCase("ViewAccountTestCase")
@@ -62,7 +63,9 @@ namespace ProjectPilot.Tests.AccipioTests
                     Description = "Assert the operation was successful."
                 };
             businessActionData.Actions.Add(businessActionEntry);
+
             testSuite.BusinessActionData = businessActionData;
+            
             mockCodeWriter.Expect(writer => writer.WriteLine("using MbUnit.Framework;"));
             mockCodeWriter.Expect(writer => writer.WriteLine(string.Empty));
             mockCodeWriter.Expect(writer => writer.WriteLine("namespace OnlineBankingNamespace"));
@@ -77,9 +80,9 @@ namespace ProjectPilot.Tests.AccipioTests
             mockCodeWriter.Expect(writer => writer.WriteLine("        /// Tests case description."));
             mockCodeWriter.Expect(writer => writer.WriteLine("        /// </summary>"));
             mockCodeWriter.Expect(writer => writer.WriteLine("        [Test]"));
-            mockCodeWriter.Expect(writer => writer.WriteLine("        [Category(\"Smoke\")]"));
             mockCodeWriter.Expect(writer => writer.WriteLine("        [Metadata(\"UserStory\", \"R15\")]"));
             mockCodeWriter.Expect(writer => writer.WriteLine("        [Metadata(\"UserStory\", \"R21.1\")]"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("        [Parallelizable]"));
             mockCodeWriter.Expect(writer => writer.WriteLine("        public void ViewAccountTestCase()"));
             mockCodeWriter.Expect(writer => writer.WriteLine("        {"));
             mockCodeWriter.Expect(writer => writer.WriteLine("            using (OnlineBankingTestRunner runner = new OnlineBankingTestRunner())"));
