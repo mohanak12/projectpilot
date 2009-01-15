@@ -3,6 +3,6 @@
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
     <h2><%= Html.Encode(ViewData["Message"]) %></h2>
     <p>
-    <%= Html.ActionLink("TestView","Display","Home")%>
+    <%= Html.ActionLink("TestView","Reload","Home")%>
     </p>
 </asp:Content>
