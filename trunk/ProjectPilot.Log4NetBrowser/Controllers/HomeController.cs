@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
+using ProjectPilot.Extras.LogParser;
 using ProjectPilot.Log4NetBrowser.Models;
 
 namespace ProjectPilot.Log4NetBrowser.Controllers
@@ -16,11 +17,19 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             ViewData["Title"] = "ProjectPilot";
             ViewData["Message"] = "Project Pilot Log4Net browser!";
 
-            parserContent = new LogDisplay();
-            parserContent.Parsing10MBLogFile();
-
             return View();
-            //return RedirectToAction("Display"); 
+        }
+
+        public ActionResult Reload(string level)
+        {
+
+            parserContent = new LogDisplay();
+
+            LogParserFilter filter = new LogParserFilter();
+            filter.FilterLevel = level;
+            parserContent.Parsing10MBLogFile(filter);
+
+            return RedirectToAction("Display"); 
         }
 
         public ActionResult Display(int? Id)

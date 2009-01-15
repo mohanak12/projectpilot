@@ -7,6 +7,14 @@
         ParserContent = ViewData["Content"] as LogDisplay;
         CalculateTableWidth(ParserContent.LineParse.ElementsPattern);
     %>
+    <div>
+    <form method="post" action="/Home/Reload">
+            <label for="level">Level:</label>
+            <input type="text" name="level" />
+            <br />
+            <input type="submit" value="Submit filter" />
+        </form>
+    </div>
     <div id="logEntries">
         <table border="0" cellpadding="0" cellspacing="0">
         <tr valign="top">

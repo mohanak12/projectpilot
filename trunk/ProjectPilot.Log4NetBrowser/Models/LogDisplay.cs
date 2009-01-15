@@ -20,16 +20,14 @@ namespace ProjectPilot.Log4NetBrowser.Models
             set { indexList = value; }
         }
 
-        public void Parsing10MBLogFile()
+        public void Parsing10MBLogFile(LogParserFilter filter)
         {
             //using (Stream fileStream = File.OpenRead(@"C:\share\Marko\SSM+2009-01-08.log.28"))
-            using (Stream fileStream = File.OpenRead(@"SSM+2009-01-08.log.28"))
+            using (Stream fileStream = File.OpenRead(@"SSM+2009-01-08.log.28.small"))
             {
                 lineParse = new LogCollection('|', "Time|Level|Ndc");
-
-                /*LogParserFilter filter = new LogParserFilter();
-                filter.FilterLevel = "WARN";
-                lineParse.ParseFilter = filter;*/
+                if(filter != null)
+                    lineParse.ParseFilter = filter;
                 lineParse.ParseLogFile(fileStream);
             }
         }
