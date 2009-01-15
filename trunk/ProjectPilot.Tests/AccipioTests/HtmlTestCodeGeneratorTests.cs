@@ -13,9 +13,8 @@ namespace ProjectPilot.Tests.AccipioTests
         [Test]
         public void GenerateTestSpec()
         {
-            TestSuite testSuite = new TestSuite
+            TestSuite testSuite = new TestSuite("TestSuiteId")
             {
-                TestSuiteName = "TestSuiteId",
                 Description = "Test Sute Description."
             };
             

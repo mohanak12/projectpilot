@@ -91,7 +91,7 @@
     <Compile Include="HtmlTestCodeGenerator.cs" />
     <Compile Include="ICodeWriter.cs" />
     <Compile Include="ITestCodeGenerator.cs" />
-    <Compile Include="ITestSpecsParser.cs" />
+    <Compile Include="ITestSuiteParser.cs" />
     <Compile Include="TestAction.cs" />
     <Compile Include="TestCase.cs" />
     <Compile Include="TestFramework\AccipioTestRunnerBase.cs" />

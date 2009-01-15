@@ -1,6 +1,6 @@
 ﻿namespace Accipio
 {
-    public interface ITestSpecsParser
+    public interface ITestSuiteParser
     {
         TestSuite Parse();
     }

@@ -9,7 +9,7 @@ using System.Xml;
 
 namespace Accipio
 {
-    public class XmlTestSuiteParser : ITestSpecsParser, IDisposable
+    public class XmlTestSuiteParser : ITestSuiteParser, IDisposable
     {
         public XmlTestSuiteParser(Stream xmlSpecs)
         {
@@ -41,8 +41,6 @@ namespace Accipio
                         IgnoreWhitespace = true
                     };
 
-            TestSuite testSuite = new TestSuite();
-
             using (XmlReader xmlReader = XmlReader.Create(xmlSpecsStream, xmlReaderSettings))
             {
                 xmlReader.Read();
@@ -56,12 +54,17 @@ namespace Accipio
                                 if (xmlReader.Name != "suite")
                                     throw new XmlException("<suite> (root) element expected.");
 
-                                testSuite.TestSuiteName = ReadAttribute(xmlReader, "id");
-                                testSuite.TestRunnerName = ReadAttribute(xmlReader, "runner");
-                                testSuite.Namespace = ReadAttribute(xmlReader, "namespace");
+                                TestSuite testSuite = new TestSuite(xmlReader.GetAttribute("id"));
+                                testSuite.TestRunnerName = xmlReader.GetAttribute("runner");
+                                testSuite.Namespace = xmlReader.GetAttribute("namespace");
+
+                                string isParallelizableValue = xmlReader.GetAttribute("isParallelizable");
+                                if (false == String.IsNullOrEmpty(isParallelizableValue))
+                                    testSuite.IsParallelizable = bool.Parse(isParallelizableValue);
+
                                 ReadTestSuite(testSuite, xmlReader);
 
-                                break;
+                                return testSuite;
                             }
                         
                         case XmlNodeType.XmlDeclaration:
@@ -80,7 +83,7 @@ namespace Accipio
                 }
             }
 
-            return testSuite;
+            return null;
         }
 
         /// <summary>
@@ -99,68 +102,6 @@ namespace Accipio
 
                 disposed = true;
             }
-        }
-
-        private static void ReadTestSuite(TestSuite testSuite, XmlReader xmlReader)
-        {
-            xmlReader.Read();
-
-            while (xmlReader.NodeType != XmlNodeType.EndElement)
-            {
-                switch (xmlReader.Name)
-                {
-                    case "case":
-                        {
-                            //TODO: check for white spaces in Id
-                            string testCaseName = ReadAttribute(xmlReader, "id");
-                            TestCase testCase = new TestCase(testCaseName);
-                            testSuite.AddTestCase(testCase);
-                            ReadTestCase(testCase, xmlReader);
-                            break;
-                        }
-
-                    case "description":
-                        {
-                            testSuite.Description = xmlReader.ReadElementContentAsString();
-                            break;
-                        }
-
-                    default:
-                        {
-                            throw new NotSupportedException("ReadTestSuite -> " + xmlReader.Name);
-                        }
-                }
-            }
-
-            xmlReader.Read();
-        }
-
-        private static void ReadTestCase(TestCase testCase, XmlReader xmlReader)
-        {
-            xmlReader.Read();
-
-            while (xmlReader.NodeType != XmlNodeType.EndElement)
-            {
-                switch (xmlReader.Name)
-                {
-                    case "description":
-                        testCase.TestCaseDescription = xmlReader.ReadElementContentAsString();
-                        break;
-                        
-                    case "tags":
-                        testCase.AddTestCaseTag(xmlReader.ReadElementContentAsString());
-                        break;
-
-                    case "steps":
-                        ReadAction(testCase, xmlReader);
-                        break;
-                
-                    default:
-                        throw new NotSupportedException("ReadTestCase -> " + xmlReader.Name);
-                }
-            }
-
-            xmlReader.Read();
         }
 
         private static void ReadAction(TestCase testCase, XmlReader xmlReader)
@@ -206,9 +147,66 @@ namespace Accipio
             xmlReader.Read();
         }
 
-        private static string ReadAttribute(XmlReader xmlReader, string attributeName)
+        private static void ReadTestCase(TestCase testCase, XmlReader xmlReader)
         {
-            return xmlReader.GetAttribute(attributeName);
+            xmlReader.Read();
+
+            while (xmlReader.NodeType != XmlNodeType.EndElement)
+            {
+                switch (xmlReader.Name)
+                {
+                    case "description":
+                        testCase.TestCaseDescription = xmlReader.ReadElementContentAsString();
+                        break;
+                        
+                    case "tags":
+                        testCase.AddTestCaseTag(xmlReader.ReadElementContentAsString());
+                        break;
+
+                    case "steps":
+                        ReadAction(testCase, xmlReader);
+                        break;
+                
+                    default:
+                        throw new NotSupportedException("ReadTestCase -> " + xmlReader.Name);
+                }
+            }
+
+            xmlReader.Read();
+        }
+
+        private static void ReadTestSuite(TestSuite testSuite, XmlReader xmlReader)
+        {
+            xmlReader.Read();
+
+            while (xmlReader.NodeType != XmlNodeType.EndElement)
+            {
+                switch (xmlReader.Name)
+                {
+                    case "case":
+                        {
+                            //TODO: check for white spaces in Id
+                            string testCaseName = xmlReader.GetAttribute("id");
+                            TestCase testCase = new TestCase(testCaseName);
+                            testSuite.AddTestCase(testCase);
+                            ReadTestCase(testCase, xmlReader);
+                            break;
+                        }
+
+                    case "description":
+                        {
+                            testSuite.Description = xmlReader.ReadElementContentAsString();
+                            break;
+                        }
+
+                    default:
+                        {
+                            throw new NotSupportedException("ReadTestSuite -> " + xmlReader.Name);
+                        }
+                }
+            }
+
+            xmlReader.Read();
         }
 
         private bool disposed;
