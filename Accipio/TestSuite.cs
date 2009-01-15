@@ -1,12 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Globalization;
 
 namespace Accipio
 {
     public class TestSuite
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TestSuite"/> class.
+        /// </summary>
+        /// <param name="testSuiteName">Name of the test suite.</param>
+        public TestSuite(string testSuiteName)
+        {
+            TestSuiteName = testSuiteName;
+        }
+
         /// <summary>
         /// Gets total count of test cases in collection.
         /// </summary>

@@ -20,10 +20,9 @@ namespace ProjectPilot.Tests.AccipioTests
 
             ITestCodeGenerator testCodeGenerator = new CSharpTestCodeGenerator(mockCodeWriter);
 
-            TestSuite testSuite = new TestSuite
+            TestSuite testSuite = new TestSuite("Banking")
             {
                 Description = "Class description.",
-                TestSuiteName = "Banking",
                 TestRunnerName = "OnlineBanking",
                 Namespace = "OnlineBankingNamespace",
                 IsParallelizable = true,
