@@ -62,6 +62,12 @@ namespace Accipio
                                 if (false == String.IsNullOrEmpty(isParallelizableValue))
                                     testSuite.IsParallelizable = bool.Parse(isParallelizableValue);
 
+                                string degreeOfParallelismValue = xmlReader.GetAttribute("degreeOfParallelism");
+                                if (false == String.IsNullOrEmpty(degreeOfParallelismValue))
+                                    testSuite.DegreeOfParallelism = int.Parse(
+                                        degreeOfParallelismValue,
+                                        CultureInfo.InvariantCulture);
+
                                 ReadTestSuite(testSuite, xmlReader);
 
                                 return testSuite;

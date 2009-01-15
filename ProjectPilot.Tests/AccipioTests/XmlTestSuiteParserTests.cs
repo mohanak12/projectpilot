@@ -4,6 +4,8 @@ using System.Text;
 using System.Xml;
 using Accipio;
 using MbUnit.Framework;
+using TestCase=Accipio.TestCase;
+using TestSuite=Accipio.TestSuite;
 
 namespace ProjectPilot.Tests.AccipioTests
 {
@@ -52,9 +54,11 @@ namespace ProjectPilot.Tests.AccipioTests
                 }
             }
 
-            Assert.AreEqual(testSuite.TestSuiteName, "Banking");
-            Assert.AreEqual(testSuite.TestRunnerName, "OnlineBanking");
-            Assert.AreEqual(testSuite.Namespace, "OnlineBankingNamespace");
+            Assert.AreEqual("Banking", testSuite.TestSuiteName);
+            Assert.AreEqual("OnlineBanking", testSuite.TestRunnerName);
+            Assert.AreEqual("OnlineBankingNamespace", testSuite.Namespace);
+            Assert.AreEqual(true, testSuite.IsParallelizable);
+            Assert.AreEqual(20, testSuite.DegreeOfParallelism);
 
             Assert.AreEqual(1, testSuite.TestCasesCount);
 

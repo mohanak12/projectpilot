@@ -561,10 +561,10 @@
       <summary>Verifies that <paramref name="left" /> is strictly greater than <paramref name="right" />.</summary>
     </member>
     <member name="M:MbUnit.Framework.OldAssert.In(System.Object,System.Collections.IDictionary)">
-      <summary>Asserts that <paramref name="test" /> is in the dic <paramref name="list" />.</summary>
+      <summary>Asserts that <paramref name="test" /> is in the dic <paramref name="dic" />.</summary>
     </member>
     <member name="M:MbUnit.Framework.OldAssert.In(System.Object,System.Collections.IDictionary,System.String)">
-      <summary>Asserts that <paramref name="test" /> is in the dic <paramref name="list" />.</summary>
+      <summary>Asserts that <paramref name="test" /> is in the dic <paramref name="dic" />.</summary>
     </member>
     <member name="M:MbUnit.Framework.OldAssert.In(System.Object,System.Collections.IList)">
       <summary>Asserts that <paramref name="test" /> is in the list <paramref name="list" />.</summary>
@@ -1049,10 +1049,10 @@
       <summary>Asserts that <paramref name="test" /> is <strong>not</strong> between <paramref name="left" /> and <paramref name="right" />.</summary>
     </member>
     <member name="M:MbUnit.Framework.OldAssert.NotIn(System.Object,System.Collections.IDictionary,System.String)">
-      <summary>Asserts that <paramref name="test" /> is <strong>not</strong> in the dic <paramref name="list" />.</summary>
+      <summary>Asserts that <paramref name="test" /> is <strong>not</strong> in the dic <paramref name="dic" />.</summary>
     </member>
     <member name="M:MbUnit.Framework.OldAssert.NotIn(System.Object,System.Collections.IDictionary)">
-      <summary>Asserts that <paramref name="test" /> is <strong>not</strong> in the dic <paramref name="list" />.</summary>
+      <summary>Asserts that <paramref name="test" /> is <strong>not</strong> in the dic <paramref name="dic" />.</summary>
     </member>
     <member name="M:MbUnit.Framework.OldAssert.NotIn(System.Object,System.Collections.IList,System.String)">
       <summary>Asserts that <paramref name="test" /> is <strong>not</strong> in the list <paramref name="list" />.</summary>

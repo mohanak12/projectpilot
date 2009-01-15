@@ -69,6 +69,23 @@
     <member name="M:Gallio.ActionChain`2.Clear">
       <summary>Clears the chain and sets it action to <see cref="F:Gallio.ActionChain`2.NoOp" />.</summary>
     </member>
+    <member name="T:Gallio.FuncChain`2">
+      <summary>A function chain captures a sequence of actions to be performed as part of a complex multi-part process.</summary>
+      <typeparam name="T">The function argument type</typeparam>
+      <typeparam name="TResult">The function result type</typeparam>
+    </member>
+    <member name="P:Gallio.FuncChain`2.Func">
+      <summary>
+        <para> Gets or sets a representation of the chain as a single function. </para>
+        <para> The function is progressively augmented as new contributions are registered <see cref="M:Gallio.FuncChain`2.Around(Gallio.FuncDecorator{`0,`1})" />. By default the action is whatever was passed into the constructor. </para>
+      </summary>
+      <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="value" /> is null</exception>
+    </member>
+    <member name="M:Gallio.FuncChain`2.Around(Gallio.FuncDecorator{`0,`1})">
+      <summary>Registers a function decorator to perform around all other actions currently in the chain. The contained part of the chain is passed in as a function to the decorator that the decorator can choose to run (or not) as needed.</summary>
+      <param name="decorator">The decorator to register</param>
+      <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="decorator" /> is null</exception>
+    </member>
     <member name="T:Gallio.Pair`2">
       <summary>An immutable record that holds two values.</summary>
       <typeparam name="TFirst">The type of the first value</typeparam>
@@ -134,13 +151,13 @@
       <param name="arg4">The fourth argument</param>
     </member>
     <member name="T:Gallio.ActionDecorator`1">
-      <summary>Represents a method that decorates another action.</summary>
+      <summary>Represents a delegate that decorates an action.</summary>
       <typeparam name="T">The type of object the action is performed upon</typeparam>
       <param name="obj">The object to act upon</param>
       <param name="action">The action to decorate which should be called in the middle of applying the decoration</param>
     </member>
     <member name="T:Gallio.ActionDecorator`2">
-      <summary>Represents a method that decorates another action.</summary>
+      <summary>Represents a delegate that decorates an action.</summary>
       <typeparam name="T1">The first argument type</typeparam>
       <typeparam name="T2">The second argument type</typeparam>
       <param name="arg1">The first argument</param>
@@ -186,6 +203,13 @@
       <param name="arg2">The second argument</param>
       <param name="arg3">The third argument</param>
       <param name="arg4">The fourth argument</param>
+    </member>
+    <member name="T:Gallio.FuncDecorator`2">
+      <summary>Represents a delegate that decorates a function.</summary>
+      <typeparam name="T">The type of object the function is performed upon</typeparam>
+      <typeparam name="TResult">The type of the function result</typeparam>
+      <param name="obj">The object to act upon</param>
+      <param name="func">The function to decorate which should be called in the middle of applying the decoration</param>
     </member>
     <member name="T:Gallio.Collections.ArrayEqualityComparer`1">
       <summary>Compares arrays for equality by element.</summary>
@@ -677,6 +701,9 @@
     <member name="P:Gallio.Concurrency.ProcessTask.ExitCode">
       <summary>Gets the exit code of the process, or -1 if the process did not run or has not exited.</summary>
     </member>
+    <member name="P:Gallio.Concurrency.ProcessTask.ExitCodeDescription">
+      <summary>Gets a description of the exit code, if available, or null otherwise.</summary>
+    </member>
     <member name="P:Gallio.Concurrency.ProcessTask.Process">
       <summary>Gets the <see cref="P:Gallio.Concurrency.ProcessTask.Process" /> that was started or null if the process has not been started yet.</summary>
     </member>
@@ -806,6 +833,10 @@
     <member name="M:Gallio.Concurrency.TaskContainer.AbortAll">
       <summary>Asynchronously aborts all of the tasks currently running within the container.</summary>
     </member>
+    <member name="M:Gallio.Concurrency.TaskContainer.GetActiveTasks">
+      <summary>Gets the list of all tasks that are currently running.</summary>
+      <returns>The list of running tasks</returns>
+    </member>
     <member name="M:Gallio.Concurrency.TaskContainer.JoinAll(System.Nullable{System.TimeSpan})">
       <summary>Waits for all of currently running tasks to terminate.</summary>
       <param name="timeout">The maximum amount of time to wait for completion, or null to wait indefinitely</param>
@@ -862,6 +893,11 @@
     </member>
     <member name="M:Gallio.Concurrency.ThreadAbortScope.Abort">
       <summary>Aborts the currently running action and prevents any further actions from running inside of this scope.</summary>
+    </member>
+    <member name="M:Gallio.Concurrency.ThreadAbortScope.Protect(Gallio.Action)">
+      <summary>Runs an action inside of a protected context wherein it cannot receive a thread abort from this <see cref="T:Gallio.Concurrency.ThreadAbortScope" />.</summary>
+      <param name="action">The action to run</param>
+      <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="action" /> is null</exception>
     </member>
     <member name="M:Gallio.Concurrency.ThreadAbortScope.Run(Gallio.Action)">
       <summary>Runs an action inside of the scope.</summary>
@@ -925,11 +961,17 @@
         <para> Describes the semantics of how objects should be compared. </para>
         <para> This class encapsulates a default set of rules for comparing objects. These rules may be used as the foundation of a suite of standard assertion functions for comparing identity, equality and relations. </para>This is a <see langword="static class" /> and so cannot be inherited or instantiated.</summary>
     </member>
+    <member name="M:Gallio.Framework.ComparisonSemantics.ApproximatelyEqual``2(``0,``0,``1)">
+      <summary>Returns true if two values are equal to within a specified delta.</summary>
+      <typeparam name="TValue">The type of values to be compared</typeparam>
+      <typeparam name="TDifference">The type of the difference produced when the values are subtracted, for numeric types this is the same as <typeparamref name="TValue" /> but it may differ for other types</typeparam>
+      <param name="left">The expected value</param>
+      <param name="right">The actual value</param>
+      <param name="delta">The inclusive delta between the values</param>
+      <returns>True if the values are approximately equal</returns>
+    </member>
     <member name="M:Gallio.Framework.ComparisonSemantics.Compare``1(``0,``0)">
-      <summary>
-        <para> Compares two objects. </para>
-        <para> Rules applied: <list type="bullet"><item>If both objects are null, returns 0.</item><item>If both objects are referentially equal, returns true.</item><item>If the objects are both instances of the same simple enumerable type (<seealso cref="M:Gallio.Framework.ComparisonSemantics.IsSimpleEnumerableType(System.Type)" />), then compares each pair of values until a non-equal pair is found at which point the result of that comparison is returned. If one enumeration runs out of values than the other, then it is considered to be less than the other.</item><item>If the objects implement <see cref="T:System.IComparable`1" />, uses it to determine order.</item><item>If the objects implement <see cref="T:System.IComparable" />, uses it to determine order.</item><item>Otherwise no deterministic comparison is possible so throws an exception.</item></list></para>
-      </summary>
+      <summary>Compares two objects.</summary>
       <typeparam name="T">The object type</typeparam>
       <param name="left">The left object, may be null</param>
       <param name="right">The right object, may be null</param>
@@ -937,36 +979,25 @@
       <exception cref="T:System.InvalidOperationException">Thrown if the values cannot be ordered.</exception>
     </member>
     <member name="M:Gallio.Framework.ComparisonSemantics.Equals(System.Object,System.Object)">
-      <summary>
-        <para> Returns true if two objects are equal. </para>
-        <seealso cref="M:Gallio.Framework.ComparisonSemantics.Equals``1(``0,``0)" /> for details.</summary>
+      <summary>Returns true if two objects are equal.</summary>
       <param name="left">The left object, may be null</param>
       <param name="right">The right object, may be null</param>
       <returns>True if the objects are equal</returns>
     </member>
     <member name="M:Gallio.Framework.ComparisonSemantics.Equals``1(``0,``0)">
-      <summary>
-        <para> Returns true if two objects are equal. </para>
-        <para> Rules applied: <list type="bullet"><item>If both objects are null, returns true.</item><item>If one object is null but not the other, returns false.</item><item>If both objects are referentially equal, returns true.</item><item>If the objects are both instances of the same simple enumerable type (<seealso cref="M:Gallio.Framework.ComparisonSemantics.IsSimpleEnumerableType(System.Type)" />), returns true if the collections have equal length and contents.</item><item>Otherwise uses <see cref="M:System.Object.Equals(System.Object)" /> to determine equality.</item></list></para>
-      </summary>
+      <summary>Returns true if two objects are equal.</summary>
       <typeparam name="T">The object type</typeparam>
       <param name="left">The left object, may be null</param>
       <param name="right">The right object, may be null</param>
       <returns>True if the objects are equal</returns>
     </member>
     <member name="M:Gallio.Framework.ComparisonSemantics.IsSimpleEnumerableType(System.Type)">
-      <summary>
-        <para> Returns true if the specified type is a simple enumerable type. A simple enumerable type is one that that does not override <see cref="M:System.Object.Equals(System.Object)" />. </para>
-        <para> The set of simple enumerable types includes arrays, lists, dictionaries and other standard collection types in the .Net framework. </para>
-      </summary>
+      <summary>Returns true if the specified type is a simple enumerable type. A simple enumerable type is one that that does not override <see cref="M:System.Object.Equals(System.Object)" />.</summary>
       <param name="type">The object type</param>
       <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="type" /> is null</exception>
     </member>
     <member name="M:Gallio.Framework.ComparisonSemantics.Same``1(``0,``0)">
-      <summary>
-        <para> Returns true if two objects are the same. </para>
-        <para> Rules applied: <list type="bullet"><item>Objects are the same if they are referentially equal according to <see cref="M:System.Object.ReferenceEquals(System.Object,System.Object)" />.</item></list></para>
-      </summary>
+      <summary>Returns true if two objects are the same.</summary>
       <typeparam name="T">The object type, which must be a reference type (class) since a value type (struct) has no concept of referential identity.</typeparam>
       <param name="left">The left object, may be null</param>
       <param name="right">The right object, may be null</param>
@@ -979,12 +1010,15 @@
     </member>
     <member name="P:Gallio.Framework.Sandbox.AbortMessage">
       <summary>Gets a message that will be logged when the sandbox is aborted, or null if none.</summary>
+      <exception cref="T:System.ObjectDisposedException">Thrown if the sandbox was disposed</exception>
     </member>
     <member name="P:Gallio.Framework.Sandbox.AbortOutcome">
-      <summary>Returns the <see cref="T:Gallio.Model.TestOutcome" /> passed to the <see cref="M:Gallio.Framework.Sandbox.Abort(Gallio.Model.TestOutcome,System.String)" />, or null if <see cref="M:Gallio.Framework.Sandbox.Abort(Gallio.Model.TestOutcome,System.String)" nolink="true" /> has not been called.</summary>
+      <summary>Returns the <see cref="T:Gallio.Model.TestOutcome" /> passed to <see cref="M:Gallio.Framework.Sandbox.Abort(Gallio.Model.TestOutcome,System.String)" />, or null if <see cref="M:Gallio.Framework.Sandbox.Abort(Gallio.Model.TestOutcome,System.String)" nolink="true" /> has not been called.</summary>
+      <exception cref="T:System.ObjectDisposedException">Thrown if the sandbox was disposed</exception>
     </member>
     <member name="P:Gallio.Framework.Sandbox.WasAborted">
       <summary>Returns true if <see cref="M:Gallio.Framework.Sandbox.Abort(Gallio.Model.TestOutcome,System.String)" /> was called.</summary>
+      <exception cref="T:System.ObjectDisposedException">Thrown if the sandbox was disposed</exception>
     </member>
     <member name="M:Gallio.Framework.Sandbox.Abort(Gallio.Model.TestOutcome,System.String)">
       <summary>
@@ -993,6 +1027,7 @@
       </summary>
       <param name="outcome">The outcome to be returned from aborted actions</param>
       <param name="message">A message to be logged when the action is aborted, or null if none</param>
+      <exception cref="T:System.ObjectDisposedException">Thrown if the sandbox was disposed</exception>
     </member>
     <member name="M:Gallio.Framework.Sandbox.CreateChild">
       <summary>
@@ -1000,6 +1035,7 @@
         <para> When the parent sandbox is aborted, the child will likewise be aborted. This policy offers a mechanism to scope actions recursively. </para>
       </summary>
       <returns>The child sandbox</returns>
+      <exception cref="T:System.ObjectDisposedException">Thrown if the sandbox was disposed</exception>
     </member>
     <member name="M:Gallio.Framework.Sandbox.Dispose">
       <summary>
@@ -1007,22 +1043,32 @@
         <para> All currently executing actions are aborted with <see cref="P:Gallio.Model.TestOutcome.Error" /> if <see cref="M:Gallio.Framework.Sandbox.Abort(Gallio.Model.TestOutcome,System.String)" /> has not already been called. </para>
       </summary>
     </member>
-    <member name="M:Gallio.Framework.Sandbox.Run(Gallio.Action,System.String)">
-      <summary>
-        <para> Runs a test action. </para>
-        <para> If the <see cref="M:Gallio.Framework.Sandbox.Abort(Gallio.Model.TestOutcome,System.String)" /> method is called or has already been called, the action is aborted and the appropriate outcome is returned. The abort is manifested as an asynchronous <see cref="T:System.Threading.ThreadAbortException" /> which should cause the action to terminate. It may not terminate immediately, however. </para>
-        <para> Produces an outcome in the following manner: <list type="bullet"><item>If the action completed without throwing an exception returns <see cref="P:Gallio.Model.TestOutcome.Passed" />.</item><item>If the action threw a <see cref="T:Gallio.Framework.TestException" />, returns the value of the <see cref="P:Gallio.Framework.TestException.Outcome" /> property.</item><item>If the action threw an different kind of exception, logs the exception and returns <see cref="P:Gallio.Model.TestOutcome.Failed" />.</item><item>If the action was aborted, returns <see cref="P:Gallio.Framework.Sandbox.AbortOutcome" />.</item></list></para>
-      </summary>
+    <member name="M:Gallio.Framework.Sandbox.Protect(Gallio.Action)">
+      <summary>Runs an action inside of a protected context wherein it cannot receive a thread abort from this <see cref="T:Gallio.Framework.Sandbox" />.</summary>
+      <param name="action">The action to run</param>
+      <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="action" /> is null</exception>
+    </member>
+    <member name="M:Gallio.Framework.Sandbox.Run(Gallio.Model.Logging.TestLogWriter,Gallio.Action,System.String)">
+      <summary>Runs a test action.</summary>
+      <param name="testLogWriter">The log writer for reporting failures</param>
       <param name="action">The action to run</param>
       <param name="description">A description of the action being performed, to be used as a log section name when reporting failures, or null if none</param>
       <returns>The outcome of the action</returns>
-      <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="action" /> is null</exception>
+      <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="testLogWriter" /> or <paramref name="action" /> is null</exception>
+      <exception cref="T:System.ObjectDisposedException">Thrown if the sandbox was disposed</exception>
+    </member>
+    <member name="M:Gallio.Framework.Sandbox.UseTimeout(System.Nullable{System.TimeSpan},Gallio.Action)">
+      <summary>Uses a specified timeout for all actions run within a block of code.</summary>
+      <param name="timeout">The execution timeout or null if none</param>
+      <param name="action">The action to perform, protected by the timeout</param>
+      <exception cref="T:System.ObjectDisposedException">Thrown if the sandbox was disposed</exception>
     </member>
     <member name="E:Gallio.Framework.Sandbox.Aborted">
       <summary>
         <para> An event that is dispatched when <see cref="M:Gallio.Framework.Sandbox.Abort(Gallio.Model.TestOutcome,System.String)" /> is called. </para>
         <para> If the sandbox has already been aborted then the event handler is immediately invoked. </para>
       </summary>
+      <exception cref="T:System.ObjectDisposedException">Thrown if the sandbox was disposed</exception>
     </member>
     <member name="T:Gallio.Framework.SilentTestException">
       <summary>This exception type is used to signal a test outcome silently without logging the exception.</summary>
@@ -1176,26 +1222,16 @@
     <member name="M:Gallio.Framework.TestContext.IncrementAssertCount">
       <summary>Increments the assert count atomically.</summary>
     </member>
-    <member name="M:Gallio.Framework.TestContext.RunStep(System.String,Gallio.Action)">
-      <summary>
-        <para> Performs an action as a new step within the current context and associates it with the calling function. </para>
-        <para> This method creates a new child context with a new nested <see cref="T:Gallio.Model.ITestStep" />, enters the child context, performs the action, then exits the child context. </para>
-      </summary>
-      <param name="name">The name of the step</param>
-      <param name="action">The action to perform</param>
-      <returns>The context of the step that ran</returns>
-      <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="name" /> or <paramref name="action" /> is null</exception>
-      <exception cref="T:System.ArgumentException">Thrown if <paramref name="name" /> is the empty string</exception>
-      <exception cref="T:System.Exception">Any exception thrown by the action</exception>
-    </member>
-    <member name="M:Gallio.Framework.TestContext.RunStep(System.String,Gallio.Reflection.ICodeElementInfo,Gallio.Action)">
+    <member name="M:Gallio.Framework.TestContext.RunStep(System.String,Gallio.Action,System.Nullable{System.TimeSpan},System.Boolean,Gallio.Reflection.ICodeElementInfo)">
       <summary>
         <para> Performs an action as a new step within the current context and associates it with the specified code reference. </para>
         <para> This method creates a new child context with a new nested <see cref="T:Gallio.Model.ITestStep" />, enters the child context, performs the action, then exits the child context. </para>
       </summary>
       <param name="name">The name of the step</param>
-      <param name="codeElement">The associated code element, or null if none</param>
       <param name="action">The action to perform</param>
+      <param name="timeout">The step execution timeout, or null if none</param>
+      <param name="isTestCase">True if the step represents an independent test case</param>
+      <param name="codeElement">The associated code element, or null if none</param>
       <returns>The context of the step that ran</returns>
       <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="name" /> or <paramref name="action" /> is null</exception>
       <exception cref="T:System.ArgumentException">Thrown if <paramref name="name" /> is the empty string</exception>
@@ -1583,14 +1619,29 @@
       <exception cref="T:System.ArgumentException">Thrown if <paramref name="name" /> is the empty string</exception>
       <exception cref="T:System.Exception">Any exception thrown by the action</exception>
     </member>
-    <member name="M:Gallio.Framework.TestStep.RunStep(System.String,Gallio.Reflection.ICodeElementInfo,Gallio.Action)">
+    <member name="M:Gallio.Framework.TestStep.RunStep(System.String,Gallio.Action,System.Nullable{System.TimeSpan})">
+      <summary>
+        <para> Performs an action as a new step within the current context and associates it with the calling function. </para>
+        <para> This method creates a new child context with a new nested <see cref="T:Gallio.Model.ITestStep" />, enters the child context, performs the action, then exits the child context. </para>
+      </summary>
+      <param name="name">The name of the step</param>
+      <param name="action">The action to perform</param>
+      <param name="timeout">The step execution timeout, or null if none</param>
+      <returns>The context of the step that ran</returns>
+      <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="name" /> or <paramref name="action" /> is null</exception>
+      <exception cref="T:System.ArgumentException">Thrown if <paramref name="name" /> is the empty string</exception>
+      <exception cref="T:System.Exception">Any exception thrown by the action</exception>
+    </member>
+    <member name="M:Gallio.Framework.TestStep.RunStep(System.String,Gallio.Action,System.Nullable{System.TimeSpan},System.Boolean,Gallio.Reflection.ICodeElementInfo)">
       <summary>
         <para> Performs an action as a new step within the current context and associates it with the specified code reference. </para>
         <para> This method creates a new child context with a new nested <see cref="T:Gallio.Model.ITestStep" />, enters the child context, performs the action, then exits the child context. </para>
       </summary>
       <param name="name">The name of the step</param>
-      <param name="codeElement">The associated code element, or null if none</param>
       <param name="action">The action to perform</param>
+      <param name="timeout">The step execution timeout, or null if none</param>
+      <param name="isTestCase">True if the step represents an independent test case</param>
+      <param name="codeElement">The associated code element, or null if none</param>
       <returns>The context of the step that ran</returns>
       <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="name" /> or <paramref name="action" /> is null</exception>
       <exception cref="T:System.ArgumentException">Thrown if <paramref name="name" /> is the empty string</exception>
@@ -3245,6 +3296,12 @@
     <member name="F:Gallio.Framework.Formatting.FormattingRulePriority.Default">
       <summary>The default formatting rule priority. A rule with this priority will be overridden by all other matching rules. This field is constant and read-only.</summary>
     </member>
+    <member name="F:Gallio.Framework.Formatting.FormattingRulePriority.Fallback">
+      <summary>Fallback rule priority. Represents a rule to be applied if the typical case fails. This field is constant and read-only.</summary>
+    </member>
+    <member name="F:Gallio.Framework.Formatting.FormattingRulePriority.Generic">
+      <summary>Generic rule priority. Represents a generic rule that can represent objects of any type structurally. This field is constant and read-only.</summary>
+    </member>
     <member name="F:Gallio.Framework.Formatting.FormattingRulePriority.Typical">
       <summary>Typical rule priority. This is a good starting point for rule priorities. This field is constant and read-only.</summary>
     </member>
@@ -3335,6 +3392,23 @@
       <summary>Gets the formatting rule's priority for object of the specified type. Rules with higher priority values take precedence over rules with lower priority values.</summary>
       <param name="type">The type of object, never null</param>
       <returns>The priority of this rule, or null if the rule does not support formatting the specified object type</returns>
+    </member>
+    <member name="T:Gallio.Framework.Formatting.StructuralFormattingRule">
+      <summary>A formatting rule that describes the structure of objects in terms of their constituent properties and fields.</summary>
+    </member>
+    <member name="M:Gallio.Framework.Formatting.StructuralFormattingRule.Format(System.Object,Gallio.Framework.Formatting.IFormatter)">
+      <summary>Formats the specified object.</summary>
+      <param name="obj">The object to format, never null</param>
+      <param name="formatter">The formatter to use for recursive formatting, never null</param>
+      <returns>The formatted string representation of the object or null if the object could not be formatted to produce a non-empty string</returns>
+    </member>
+    <member name="M:Gallio.Framework.Formatting.StructuralFormattingRule.GetPriority(System.Type)">
+      <summary>Gets the formatting rule's priority for object of the specified type. Rules with higher priority values take precedence over rules with lower priority values.</summary>
+      <param name="type">The type of object, never null</param>
+      <returns>The priority of this rule, or null if the rule does not support formatting the specified object type</returns>
+    </member>
+    <member name="T:Gallio.Framework.Formatting.StubFormatter">
+      <summary>A formatter that is used when the runtime is not initialized.</summary>
     </member>
     <member name="T:Gallio.Framework.Formatting.TypeFormattingRule">
       <summary>
@@ -3773,7 +3847,7 @@
     </member>
     <member name="M:Gallio.Framework.Pattern.PatternEvaluator.AddFinishModelAction(Gallio.Reflection.ICodeElementInfo,Gallio.Action)">
       <summary>Registers a deferred action to be performed when <see cref="M:Gallio.Framework.Pattern.PatternEvaluator.FinishModel" /> is called.</summary>
-      <param name="codeElement">The associated code element, use to report errors if the action throws an exception</param>
+      <param name="codeElement">The associated code element, used to report errors if the action throws an exception</param>
       <param name="action">The action to perform</param>
       <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="codeElement" /> or <paramref name="action" /> is null</exception>
     </member>
@@ -3793,6 +3867,12 @@
     </member>
     <member name="M:Gallio.Framework.Pattern.PatternEvaluator.FinishModel">
       <summary>Applies all pending decorators and clears the list of pending decorators.</summary>
+    </member>
+    <member name="M:Gallio.Framework.Pattern.PatternEvaluator.GetDeclaredTests(Gallio.Reflection.ICodeElementInfo)">
+      <summary>Finds tests that are declared by the specified <see cref="T:Gallio.Reflection.ICodeElementInfo" />.</summary>
+      <param name="codeElement">The code element</param>
+      <returns>The enumeration of scopes</returns>
+      <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="codeElement" /> is null</exception>
     </member>
     <member name="M:Gallio.Framework.Pattern.PatternEvaluator.GetPatterns(Gallio.Reflection.ICodeElementInfo)">
       <summary>Gets all patterns associated with a code element.</summary>
@@ -3845,15 +3925,15 @@
       <summary>A test case that has been defined by the <see cref="T:Gallio.Framework.Pattern.PatternTestFramework" />.</summary>
     </member>
     <member name="P:Gallio.Framework.Pattern.PatternTest.ApartmentState">
-      <summary>
-        <para> Gets or sets the apartment state to be used to run the test. </para>
-        <para> If the apartment state is <see cref="F:System.Threading.ApartmentState.Unknown" /> the test will inherit the apartment state of its parent. Otherwise it will run in a thread with the specified apartment state. </para>
-        <para> The test runner guarantees that the root test runs with the <see cref="F:System.Threading.ApartmentState.STA" /> apartment state. Consequently the apartment state only needs to be overridden to run a test in some mode that may differ from that which it would ordinarily inherit. </para>
-      </summary>
+      <summary>Gets or sets the apartment state to be used to run the test.</summary>
       <value>The default value of this property is <see cref="F:System.Threading.ApartmentState.Unknown" />.</value>
     </member>
     <member name="P:Gallio.Framework.Pattern.PatternTest.DataContext">
       <summary>Gets the data context of the component.</summary>
+    </member>
+    <member name="P:Gallio.Framework.Pattern.PatternTest.IsParallelizable">
+      <summary>Gets or sets whether the test is parallelizable.</summary>
+      <value>True if the test is parallelizable. The default value of this property is <c>false</c>.</value>
     </member>
     <member name="P:Gallio.Framework.Pattern.PatternTest.TestActions">
       <summary>Gets the set of actions that describe the behavior of the test.</summary>
@@ -4043,6 +4123,17 @@
       <param name="testModel">The test model to populate incrementally as tests are discovered</param>
       <returns>The test explorer</returns>
     </member>
+    <member name="T:Gallio.Framework.Pattern.PatternTestGlobals">
+      <summary>Provides global runtime configuration values for the pattern test framework during execution. This is a <see langword="static class" /> and so cannot be inherited or instantiated.</summary>
+    </member>
+    <member name="P:Gallio.Framework.Pattern.PatternTestGlobals.DegreeOfParallelism">
+      <summary>Specifies the number of concurrent threads to spin up when tests are run in parallel.</summary>
+      <value>The degree of parallelism. Defaults to <see cref="P:System.Environment.ProcessorCount" /> or 2, whichever is greater.</value>
+      <exception cref="T:System.ArgumentOutOfRangeException">Thrown if <paramref name="value" /> is less than 1</exception>
+    </member>
+    <member name="M:Gallio.Framework.Pattern.PatternTestGlobals.Reset">
+      <summary>Resets the globals to default values.</summary>
+    </member>
     <member name="T:Gallio.Framework.Pattern.PatternTestInstanceActions">
       <summary>An implementation of <see cref="T:Gallio.Framework.Pattern.IPatternTestInstanceHandler" /> based on actions that can be sequenced and composed as chains.</summary>
     </member>
@@ -4063,6 +4154,9 @@
     </member>
     <member name="P:Gallio.Framework.Pattern.PatternTestInstanceActions.InitializeTestInstanceChain">
       <summary>Gets the chain of <see cref="M:Gallio.Framework.Pattern.IPatternTestInstanceHandler.InitializeTestInstance(Gallio.Framework.Pattern.PatternTestInstanceState)" /> actions.</summary>
+    </member>
+    <member name="P:Gallio.Framework.Pattern.PatternTestInstanceActions.RunTestInstanceBodyChain">
+      <summary>Gets the chain of <see cref="M:Gallio.Framework.Pattern.IPatternTestInstanceHandler.RunTestInstanceBody(Gallio.Framework.Pattern.PatternTestInstanceState)" /> functions.</summary>
     </member>
     <member name="P:Gallio.Framework.Pattern.PatternTestInstanceActions.SetUpTestInstanceChain">
       <summary>Gets the chain of <see cref="M:Gallio.Framework.Pattern.IPatternTestInstanceHandler.SetUpTestInstance(Gallio.Framework.Pattern.PatternTestInstanceState)" /> actions.</summary>
@@ -4137,6 +4231,11 @@
         <para> The following actions are forbidden during this phase because they would either go unnoticed or have undesirable side-effects upon test execution: <list type="bullet"><item>Modifying the <see cref="T:Gallio.Framework.Pattern.PatternTest" /> object in any way.</item><item>Modifying the <see cref="T:Gallio.Framework.Pattern.PatternTestState" /> object in any way.</item><item>Modifying the <see cref="T:Gallio.Framework.Pattern.PatternTestStep" /> object in any way.</item></list></para>
       </summary>
       <param name="testInstanceState">The test instance state, never null</param>
+    </member>
+    <member name="M:Gallio.Framework.Pattern.PatternTestInstanceActions.RunTestInstanceBody(Gallio.Framework.Pattern.PatternTestInstanceState)">
+      <summary>Runs the body of the test from the Initialize phase through the Dispose phase.</summary>
+      <param name="testInstanceState">The test instance state, never null</param>
+      <returns>The test outcome</returns>
     </member>
     <member name="M:Gallio.Framework.Pattern.PatternTestInstanceActions.SetUpTestInstance(Gallio.Framework.Pattern.PatternTestInstanceState)">
       <summary>
@@ -4245,6 +4344,10 @@
       <returns>The method return value, or null if there was none</returns>
       <exception cref="T:System.Exception">Any exception thrown by the invoked method</exception>
     </member>
+    <member name="M:Gallio.Framework.Pattern.PatternTestInstanceState.RunBody">
+      <summary>Runs the body of the test.</summary>
+      <returns>The test outcome</returns>
+    </member>
     <member name="T:Gallio.Framework.Pattern.PatternTestParameter">
       <summary>Represents an parameter of a <see cref="T:Gallio.Framework.Pattern.PatternTest" /> derived from a field, property or method parameter.</summary>
     </member>
@@ -4321,6 +4424,14 @@
         <para> The exception effectively halts the processing of the pattern. The message text is then manifested as an error annotation that may be displayed to the user. </para>
         <para> When you see this error, check to make sure that the syntax of the test is correct, all required parameters have been provided and they contain valid values. </para>
       </summary>
+    </member>
+    <member name="T:Gallio.Framework.Pattern.ProcessIsolation">
+      <summary>
+        <para> The process isolation object saves global process-level context information when it is created and restores it when it is disposed. </para>
+        <para> The following context information is saved and restored: <list type="bullet"><item>The current working directory</item></list></para>This class cannot be inherited.</summary>
+    </member>
+    <member name="M:Gallio.Framework.Pattern.ProcessIsolation.Dispose">
+      <summary>Restores the saved process state.</summary>
     </member>
     <member name="T:Gallio.Framework.Pattern.TestAssemblyDecoratorPatternAttribute">
       <summary>A test assembly decorator pattern attribute applies decorations to an existing assembly-level test. This class is <see langword="abstract" /> and so cannot be instantiated.</summary>
@@ -4580,6 +4691,11 @@
       <param name="containingScope">The containing scope</param>
       <param name="method">The method</param>
       <returns>The test</returns>
+    </member>
+    <member name="M:Gallio.Framework.Pattern.TestMethodPatternAttribute.Execute(Gallio.Framework.Pattern.PatternTestInstanceState)">
+      <summary>Executes the test method.</summary>
+      <param name="state">The test instance state, not null</param>
+      <returns>The test method result</returns>
     </member>
     <member name="M:Gallio.Framework.Pattern.TestMethodPatternAttribute.InitializeTest(Gallio.Framework.Pattern.PatternEvaluationScope,Gallio.Reflection.IMethodInfo)">
       <summary>Initializes a test for a method after it has been added to the test model.</summary>
@@ -4898,11 +5014,7 @@
       <returns>The tool information</returns>
     </member>
     <member name="T:Gallio.Framework.Pattern.IPatternTestHandler">
-      <summary>
-        <para> A pattern test handler provides the logic that implements the various phases of the test execution lifecycle. Each method represents the behavior to be performed during a particular phase. </para>
-        <para> Different actions are permitted during each phase. Consult the documentation the appropriate method if this interface for restrictions. </para>
-        <para> The phases generally run in the following order. Some phases may be skipped due to exceptions or if there is no work to be done. <list type="bullet"><item><see cref="M:Gallio.Framework.Pattern.IPatternTestHandler.BeforeTest(Gallio.Framework.Pattern.PatternTestState)" /></item><item><see cref="M:Gallio.Framework.Pattern.IPatternTestHandler.InitializeTest(Gallio.Framework.Pattern.PatternTestState)" /></item><item>-- for each test instance --</item><item><see cref="M:Gallio.Framework.Pattern.IPatternTestHandler.DecorateTestInstance(Gallio.Framework.Pattern.PatternTestState,Gallio.Framework.Pattern.PatternTestInstanceActions)" /></item><item>Run the actions in the decorated <see cref="T:Gallio.Framework.Pattern.IPatternTestInstanceHandler" /></item><item>-- end --</item><item><see cref="M:Gallio.Framework.Pattern.IPatternTestHandler.DisposeTest(Gallio.Framework.Pattern.PatternTestState)" /></item><item><see cref="M:Gallio.Framework.Pattern.IPatternTestHandler.AfterTest(Gallio.Framework.Pattern.PatternTestState)" /></item></list></para>
-      </summary>
+      <summary>A pattern test handler provides the logic that implements the various phases of the test execution lifecycle.</summary>
     </member>
     <member name="P:Gallio.Framework.Pattern.IPatternTestHandler.TestInstanceHandler">
       <summary>Gets the test instance handler that describes the lifecycle of a test instance.</summary>
@@ -4955,11 +5067,7 @@
       <param name="testState">The test state, never null</param>
     </member>
     <member name="T:Gallio.Framework.Pattern.IPatternTestInstanceHandler">
-      <summary>
-        <para> A pattern test instance handler provides the logic that implements the various phases of the test instance execution lifecycle. Each method represents the behavior to be performed during a particular phase. </para>
-        <para> Different actions are permitted during each phase. Consult the documentation the appropriate method if this interface for restrictions. </para>
-        <para> The phases generally run in the following order. Some phases may be skipped due to exceptions or if there is no work to be done. <list type="bullet"><item><see cref="M:Gallio.Framework.Pattern.IPatternTestInstanceHandler.BeforeTestInstance(Gallio.Framework.Pattern.PatternTestInstanceState)" /></item><item><see cref="M:Gallio.Framework.Pattern.IPatternTestInstanceHandler.InitializeTestInstance(Gallio.Framework.Pattern.PatternTestInstanceState)" /></item><item><see cref="M:Gallio.Framework.Pattern.IPatternTestInstanceHandler.SetUpTestInstance(Gallio.Framework.Pattern.PatternTestInstanceState)" /></item><item><see cref="M:Gallio.Framework.Pattern.IPatternTestInstanceHandler.ExecuteTestInstance(Gallio.Framework.Pattern.PatternTestInstanceState)" /></item><item><see cref="M:Gallio.Framework.Pattern.IPatternTestInstanceHandler.DecorateChildTest(Gallio.Framework.Pattern.PatternTestInstanceState,Gallio.Framework.Pattern.PatternTestActions)" /> before each child test</item><item><see cref="M:Gallio.Framework.Pattern.IPatternTestInstanceHandler.TearDownTestInstance(Gallio.Framework.Pattern.PatternTestInstanceState)" /></item><item><see cref="M:Gallio.Framework.Pattern.IPatternTestInstanceHandler.DisposeTestInstance(Gallio.Framework.Pattern.PatternTestInstanceState)" /></item><item><see cref="M:Gallio.Framework.Pattern.IPatternTestInstanceHandler.AfterTestInstance(Gallio.Framework.Pattern.PatternTestInstanceState)" /></item></list></para>
-      </summary>
+      <summary>A pattern test instance handler provides the logic that implements the various phases of the test instance execution lifecycle.</summary>
     </member>
     <member name="M:Gallio.Framework.Pattern.IPatternTestInstanceHandler.AfterTestInstance(Gallio.Framework.Pattern.PatternTestInstanceState)">
       <summary>
@@ -5020,6 +5128,11 @@
       </summary>
       <param name="testInstanceState">The test instance state, never null</param>
     </member>
+    <member name="M:Gallio.Framework.Pattern.IPatternTestInstanceHandler.RunTestInstanceBody(Gallio.Framework.Pattern.PatternTestInstanceState)">
+      <summary>Runs the body of the test from the Initialize phase through the Dispose phase.</summary>
+      <param name="testInstanceState">The test instance state, never null</param>
+      <returns>The test outcome</returns>
+    </member>
     <member name="M:Gallio.Framework.Pattern.IPatternTestInstanceHandler.SetUpTestInstance(Gallio.Framework.Pattern.PatternTestInstanceState)">
       <summary>
         <para> Sets up a test instance prior to execution. </para>
@@ -5041,6 +5154,9 @@
     <member name="T:Gallio.Framework.Pattern.PatternTestPopulator">
       <summary>A delegate used to lazily populate the children of an <see cref="T:Gallio.Framework.Pattern.PatternTest" />.</summary>
       <param name="recurse">If true, the populator should recursively populate all of its newly populated test elements in addition to itself</param>
+    </member>
+    <member name="T:Gallio.Framework.Pattern.TestAction">
+      <summary>Performs one primitive action of a test and returns its outcome.</summary>
     </member>
     <member name="T:Gallio.Framework.Text.DiffSet">
       <summary>
@@ -5282,6 +5398,10 @@
     <member name="P:Gallio.Framework.Utilities.SampleRunner.Result">
       <summary>Gets the result of the test run.</summary>
     </member>
+    <member name="P:Gallio.Framework.Utilities.SampleRunner.TestRunnerFactoryName">
+      <summary>Gets or sets the name of the test runner factory to use.</summary>
+      <value>The test runner factory name, defaults to <see cref="F:Gallio.Runner.StandardTestRunnerFactoryNames.Local" /></value>
+    </member>
     <member name="M:Gallio.Framework.Utilities.SampleRunner.AddAssembly(System.Reflection.Assembly)">
       <summary>Adds a test assembly to the package configuration, if not already added.</summary>
       <param name="assembly">The assembly to add</param>
@@ -5461,10 +5581,6 @@
     <member name="P:Gallio.Model.BaseTest.IsTestCase">
       <summary>Gets whether this test represents an individual test case as opposed to a test container such as a fixture or suite. The value of this property can be used by the test harness to avoid processing containers that have no test cases. It can also be used by the reporting infrastructure to constrain output statistics to test cases only.</summary>
     </member>
-    <member name="P:Gallio.Model.BaseTest.Kind">
-      <summary>Gets or sets the value of the <see cref="F:Gallio.Model.MetadataKeys.TestKind" /> metadata entry. (This is a convenience method.)</summary>
-      <value>One of the <see cref="T:Gallio.Model.TestKinds" /> constants.</value>
-    </member>
     <member name="P:Gallio.Model.BaseTest.LocalId">
       <summary>
         <para> Gets a locally unique identifier for this test that satisfies the following conditions: </para>
@@ -5511,6 +5627,10 @@
     </member>
     <member name="P:Gallio.Model.BaseTestComponent.CodeElement">
       <summary>Gets a reference to the point of definition of this test component in the code, or null if unknown.</summary>
+    </member>
+    <member name="P:Gallio.Model.BaseTestComponent.Kind">
+      <summary>Gets or sets the value of the <see cref="F:Gallio.Model.MetadataKeys.TestKind" /> metadata entry. (This is a convenience method.)</summary>
+      <value>One of the <see cref="T:Gallio.Model.TestKinds" /> constants.</value>
     </member>
     <member name="P:Gallio.Model.BaseTestComponent.Metadata">
       <summary>Gets the metadata of the component.</summary>
@@ -6499,7 +6619,7 @@
     <member name="M:Gallio.Model.Execution.ManagedTestCommand.StartPrimaryChildStep(Gallio.Model.ITestStep)">
       <summary>
         <para> Starts the primary step of the test associated with this command as a child of the specified test step and returns its test context. </para>
-        <para> This method is equivalent to calling <see cref="M:Gallio.Model.Execution.ITestCommand.StartStep(Gallio.Model.ITestStep)" /> using a default implementation of <see cref="T:Gallio.Model.ITestStep" /> that is initialized using <paramref name="parentTestStep" />. </para>
+        <para> This method is equivalent to calling <see cref="M:Gallio.Model.Execution.ITestCommand.StartStep(Gallio.Model.ITestStep)" /> using a default implementation of <see cref="T:Gallio.Model.ITestStep" /> that is initialized using <paramref name="parentTestStep" /> and the metadata from the </para>
       </summary>
       <param name="parentTestStep">The parent test step, or null if none</param>
       <returns>The test context for the new primary test step</returns>
@@ -6696,15 +6816,6 @@
       <param name="childStep">The step to start</param>
       <returns>The context of the child step</returns>
     </member>
-    <member name="M:Gallio.Model.Execution.StubTestContext.StartChildStep(System.String,Gallio.Reflection.ICodeElementInfo)">
-      <summary>
-        <para> Starts a child step of a test and returns its context. </para>
-        <para> This method is equivalent to calling <see cref="M:Gallio.Model.Execution.ITestContext.StartChildStep(Gallio.Model.ITestStep)" /> using a default implementation of <see cref="T:Gallio.Model.ITestStep" /> that is initialized with <paramref name="name" /> and <paramref name="codeElement" />. </para>
-      </summary>
-      <param name="name">The name of the step</param>
-      <param name="codeElement">The code element, or null if none</param>
-      <returns>The context of the child step</returns>
-    </member>
     <member name="E:Gallio.Model.Execution.StubTestContext.Finishing">
       <summary>
         <para> The <see cref="E:Gallio.Model.Execution.ITestContext.Finishing" /> event is raised when the test step is finishing to perform resource reclamation or other updates. </para>
@@ -6730,10 +6841,10 @@
       <exception cref="T:Gallio.Model.ModelException">Thrown if an invalid test dependency is found</exception>
     </member>
     <member name="T:Gallio.Model.Execution.TestContextTrackerAccessor">
-      <summary>Static service locator class for <see cref="T:Gallio.Model.Execution.ITestContextTracker" />. Handles the case where no <see cref="T:Gallio.Model.Execution.ITestContextTracker" nolink="true" /> is registered with the <see cref="T:Gallio.Runtime.RuntimeAccessor" /> by returning a <see cref="T:Gallio.Model.Execution.StubTestContextTracker" />. This is a <see langword="static class" /> and so cannot be inherited or instantiated.</summary>
+      <summary>Static service locator for <see cref="T:Gallio.Model.Execution.ITestContextTracker" />. This is a <see langword="static class" /> and so cannot be inherited or instantiated.</summary>
     </member>
-    <member name="M:Gallio.Model.Execution.TestContextTrackerAccessor.GetInstance">
-      <summary>Gets the context tracker instance.</summary>
+    <member name="P:Gallio.Model.Execution.TestContextTrackerAccessor.Instance">
+      <summary>Gets the global test context tracker singleton.</summary>
     </member>
     <member name="T:Gallio.Model.Execution.TestExecutionOptions">
       <summary>Provides options that control how test execution occurs.</summary>
@@ -6807,7 +6918,7 @@
     <member name="M:Gallio.Model.Execution.ITestCommand.StartPrimaryChildStep(Gallio.Model.ITestStep)">
       <summary>
         <para> Starts the primary step of the test associated with this command as a child of the specified test step and returns its test context. </para>
-        <para> This method is equivalent to calling <see cref="M:Gallio.Model.Execution.ITestCommand.StartStep(Gallio.Model.ITestStep)" /> using a default implementation of <see cref="T:Gallio.Model.ITestStep" /> that is initialized using <paramref name="parentTestStep" />. </para>
+        <para> This method is equivalent to calling <see cref="M:Gallio.Model.Execution.ITestCommand.StartStep(Gallio.Model.ITestStep)" /> using a default implementation of <see cref="T:Gallio.Model.ITestStep" /> that is initialized using <paramref name="parentTestStep" /> and the metadata from the </para>
       </summary>
       <param name="parentTestStep">The parent test step, or null if none</param>
       <returns>The test context for the new primary test step</returns>
@@ -6890,17 +7001,6 @@
       <exception cref="T:System.InvalidOperationException">Thrown if the step has finished</exception>
       <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="childStep" /> is null</exception>
       <exception cref="T:System.ArgumentException">Thrown if <paramref name="childStep" /> is not a child of the this step</exception>
-    </member>
-    <member name="M:Gallio.Model.Execution.ITestContext.StartChildStep(System.String,Gallio.Reflection.ICodeElementInfo)">
-      <summary>
-        <para> Starts a child step of a test and returns its context. </para>
-        <para> This method is equivalent to calling <see cref="M:Gallio.Model.Execution.ITestContext.StartChildStep(Gallio.Model.ITestStep)" /> using a default implementation of <see cref="T:Gallio.Model.ITestStep" /> that is initialized with <paramref name="name" /> and <paramref name="codeElement" />. </para>
-      </summary>
-      <param name="name">The name of the step</param>
-      <param name="codeElement">The code element, or null if none</param>
-      <returns>The context of the child step</returns>
-      <exception cref="T:System.InvalidOperationException">Thrown if the step has finished</exception>
-      <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="name" /> is null</exception>
     </member>
     <member name="E:Gallio.Model.Execution.ITestContext.Finishing">
       <summary>
@@ -7264,6 +7364,12 @@
       <returns>The attachment</returns>
       <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="xml" /> is null</exception>
     </member>
+    <member name="M:Gallio.Model.Logging.Attachment.FromAttachmentData(Gallio.Model.Logging.AttachmentData)">
+      <summary>Recovers the attachment information from serializable attachment data.</summary>
+      <param name="data">The attachment data</param>
+      <returns>The attachment</returns>
+      <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="data" /> is null</exception>
+    </member>
     <member name="M:Gallio.Model.Logging.Attachment.ToAttachmentData">
       <summary>Generates serializable attachment data from an attachment.</summary>
       <returns>The attachment data</returns>
@@ -7275,6 +7381,7 @@
     </member>
     <member name="P:Gallio.Model.Logging.AttachmentData.ContentDisposition">
       <summary>Gets or sets the content disposition of the attachment which indicates how the attachment has been stored.</summary>
+      <value>The content disposition, initially <see cref="F:Gallio.Model.Logging.AttachmentContentDisposition.Inline" /></value>
     </member>
     <member name="P:Gallio.Model.Logging.AttachmentData.ContentPath">
       <summary>Gets or sets the path of the attachment contents relative to the directory that contains the Xml serialized report, or null if the content is embedded.</summary>
@@ -7343,6 +7450,37 @@
       <summary>Generates serializable attachment data from an attachment.</summary>
       <returns>The attachment data</returns>
     </member>
+    <member name="T:Gallio.Model.Logging.FallbackTestLogWriter">
+      <summary>A test log writer that falls back to a different test log writer for certain operations when its primary test log writer is closed.</summary>
+    </member>
+    <member name="M:Gallio.Model.Logging.FallbackTestLogWriter.AttachImpl(Gallio.Model.Logging.Attachment)">
+      <summary>Adds an attachment to the log.</summary>
+      <param name="attachment">The attachment to write, never null</param>
+    </member>
+    <member name="M:Gallio.Model.Logging.FallbackTestLogWriter.StreamBeginMarkerImpl(System.String,Gallio.Model.Logging.Marker)">
+      <summary>Begins a marked region in a log stream.</summary>
+      <param name="streamName">The log stream name</param>
+      <param name="marker">The marker</param>
+    </member>
+    <member name="M:Gallio.Model.Logging.FallbackTestLogWriter.StreamBeginSectionImpl(System.String,System.String)">
+      <summary>Begins a section in a log stream.</summary>
+      <param name="streamName">The log stream name</param>
+      <param name="sectionName">The name of the section to begin, never null</param>
+    </member>
+    <member name="M:Gallio.Model.Logging.FallbackTestLogWriter.StreamEmbedImpl(System.String,System.String)">
+      <summary>Embeds an attachment into a log stream.</summary>
+      <param name="streamName">The log stream name</param>
+      <param name="attachmentName">The name of the attachment to write, never null</param>
+    </member>
+    <member name="M:Gallio.Model.Logging.FallbackTestLogWriter.StreamEndImpl(System.String)">
+      <summary>Ends the current region started with one of the Begin* methods in a log stream.</summary>
+      <param name="streamName">The log stream name</param>
+    </member>
+    <member name="M:Gallio.Model.Logging.FallbackTestLogWriter.StreamWriteImpl(System.String,System.String)">
+      <summary>Writes a text string to a log stream.</summary>
+      <param name="streamName">The log stream name</param>
+      <param name="text">The text to write, never null</param>
+    </member>
     <member name="T:Gallio.Model.Logging.MimeTypes">
       <summary>Defines constants for commonly used mime types. This is a <see langword="static class" /> and so cannot be inherited or instantiated.</summary>
     </member>
@@ -7382,6 +7520,37 @@
       <returns>The mime type, or null if not known</returns>
       <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="extension" /> is null</exception>
     </member>
+    <member name="T:Gallio.Model.Logging.NullTestLogWriter">
+      <summary>A test log writer that does nothing.</summary>
+    </member>
+    <member name="M:Gallio.Model.Logging.NullTestLogWriter.AttachImpl(Gallio.Model.Logging.Attachment)">
+      <summary>Adds an attachment to the log.</summary>
+      <param name="attachment">The attachment to write, never null</param>
+    </member>
+    <member name="M:Gallio.Model.Logging.NullTestLogWriter.StreamBeginMarkerImpl(System.String,Gallio.Model.Logging.Marker)">
+      <summary>Begins a marked region in a log stream.</summary>
+      <param name="streamName">The log stream name</param>
+      <param name="marker">The marker</param>
+    </member>
+    <member name="M:Gallio.Model.Logging.NullTestLogWriter.StreamBeginSectionImpl(System.String,System.String)">
+      <summary>Begins a section in a log stream.</summary>
+      <param name="streamName">The log stream name</param>
+      <param name="sectionName">The name of the section to begin, never null</param>
+    </member>
+    <member name="M:Gallio.Model.Logging.NullTestLogWriter.StreamEmbedImpl(System.String,System.String)">
+      <summary>Embeds an attachment into a log stream.</summary>
+      <param name="streamName">The log stream name</param>
+      <param name="attachmentName">The name of the attachment to write, never null</param>
+    </member>
+    <member name="M:Gallio.Model.Logging.NullTestLogWriter.StreamEndImpl(System.String)">
+      <summary>Ends the current region started with one of the Begin* methods in a log stream.</summary>
+      <param name="streamName">The log stream name</param>
+    </member>
+    <member name="M:Gallio.Model.Logging.NullTestLogWriter.StreamWriteImpl(System.String,System.String)">
+      <summary>Writes a text string to a log stream.</summary>
+      <param name="streamName">The log stream name</param>
+      <param name="text">The text to write, never null</param>
+    </member>
     <member name="T:Gallio.Model.Logging.StringTestLogWriter">
       <summary>An implementation of <see cref="T:Gallio.Model.Logging.TestLogStreamWriter" /> that writes its output to a string.</summary>
     </member>
@@ -7402,11 +7571,22 @@
       <summary>Gets an attachment by name.</summary>
       <param name="name">The attachment name</param>
       <returns>The attachment or null if not found</returns>
+      <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="name" /> is null</exception>
     </member>
     <member name="M:Gallio.Model.Logging.StructuredTestLog.GetStream(System.String)">
       <summary>Gets a stream by name.</summary>
       <param name="name">The stream name</param>
       <returns>The stream or null if not found</returns>
+      <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="name" /> is null</exception>
+    </member>
+    <member name="M:Gallio.Model.Logging.StructuredTestLog.ToString">
+      <summary>Formats the log to a string by concatenating all formatted streams and displaying a "*** Stream Name ***" header for each stream name.</summary>
+      <returns>The formatted text</returns>
+    </member>
+    <member name="M:Gallio.Model.Logging.StructuredTestLog.WriteTo(Gallio.Model.Logging.TestLogWriter)">
+      <summary>Writes the contents of the log to a test log writer.</summary>
+      <param name="writer">The writer</param>
+      <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="writer" /> is null</exception>
     </member>
     <member name="T:Gallio.Model.Logging.StructuredTestLogStream">
       <summary>
@@ -7426,7 +7606,7 @@
       <returns>The formatted text</returns>
     </member>
     <member name="M:Gallio.Model.Logging.StructuredTestLogStream.WriteTo(Gallio.Model.Logging.TestLogStreamWriter)">
-      <summary>Writes the structured text to a test log stream writer.</summary>
+      <summary>Writes the contents of the stream to a test log stream writer.</summary>
       <param name="writer">The writer</param>
       <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="writer" /> is null</exception>
     </member>
@@ -12086,6 +12266,79 @@
       <returns>The XML documentation for the member, or null if none available</returns>
       <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="assemblyPath" /> or <paramref name="memberId" /> is null</exception>
     </member>
+    <member name="T:Gallio.Runner.DefaultTestRunner">
+      <summary>An implementation of <see cref="T:Gallio.Runner.ITestRunner" /> that runs tests using a <see cref="T:Gallio.Runner.Drivers.ITestDriver" />. The driver is created when the first package is loaded and is disposed when the runner is disposed. Consequently the test driver may be reused for multiple test runs.</summary>
+    </member>
+    <member name="P:Gallio.Runner.DefaultTestRunner.Events">
+      <summary>Gets the event dispatcher for the test runner.</summary>
+    </member>
+    <member name="P:Gallio.Runner.DefaultTestRunner.Logger">
+      <summary>Gets the logger, or null if the test runner has not been initialized.</summary>
+    </member>
+    <member name="P:Gallio.Runner.DefaultTestRunner.Options">
+      <summary>Gets the test runner options, or null if the test runner has not been initialized.</summary>
+    </member>
+    <member name="P:Gallio.Runner.DefaultTestRunner.Report">
+      <summary>Gets the most recent report contents. The report may be only partially populated depending on the current state of the test runner. When no test package has been loaded, the report will be empty but not null.</summary>
+    </member>
+    <member name="M:Gallio.Runner.DefaultTestRunner.Dispose(Gallio.Runtime.ProgressMonitoring.IProgressMonitor)">
+      <summary>Disposes the test runner. Does nothing if already disposed or if not initialized.</summary>
+      <param name="progressMonitor">The progress monitor</param>
+    </member>
+    <member name="M:Gallio.Runner.DefaultTestRunner.Explore(Gallio.Model.TestExplorationOptions,Gallio.Runtime.ProgressMonitoring.IProgressMonitor)">
+      <summary>
+        <para> Explores tests within the currently loaded test package. </para>
+        <para> When this operation completes, the <see cref="P:Gallio.Runner.Reports.Report.TestModel" /> property of <see cref="P:Gallio.Runner.ITestRunner.Report" /> will contain information about the test package. </para>
+      </summary>
+      <param name="options">The test exploration options</param>
+      <param name="progressMonitor">The progress monitor</param>
+    </member>
+    <member name="M:Gallio.Runner.DefaultTestRunner.Initialize(Gallio.Runner.TestRunnerOptions,Gallio.Runtime.Logging.ILogger,Gallio.Runtime.ProgressMonitoring.IProgressMonitor)">
+      <summary>Initializes the test runner.</summary>
+      <param name="options">The test runner options</param>
+      <param name="logger">The logger</param>
+      <param name="progressMonitor">The progress monitor</param>
+    </member>
+    <member name="M:Gallio.Runner.DefaultTestRunner.Load(Gallio.Model.TestPackageConfig,Gallio.Runtime.ProgressMonitoring.IProgressMonitor)">
+      <summary>
+        <para> Loads a test package. </para>
+        <para> When this operation completes, the <see cref="P:Gallio.Runner.Reports.Report.TestPackageConfig" /> property of <see cref="P:Gallio.Runner.ITestRunner.Report" /> will contain information about the test package. </para>
+      </summary>
+      <param name="testPackageConfig">The test package configuration</param>
+      <param name="progressMonitor">The progress monitor</param>
+    </member>
+    <member name="M:Gallio.Runner.DefaultTestRunner.RegisterExtension(Gallio.Runner.Extensions.ITestRunnerExtension)">
+      <summary>Registers a test runner extension.</summary>
+      <param name="extension">The test runner extension to register</param>
+    </member>
+    <member name="M:Gallio.Runner.DefaultTestRunner.Run(Gallio.Model.Execution.TestExecutionOptions,Gallio.Runtime.ProgressMonitoring.IProgressMonitor)">
+      <summary>
+        <para> Runs the tests. </para>
+        <para> When this operation completes, the <see cref="P:Gallio.Runner.Reports.Report.TestPackageRun" /> property of <see cref="P:Gallio.Runner.ITestRunner.Report" /> will contain test results. </para>
+      </summary>
+      <param name="options">The test execution options</param>
+      <param name="progressMonitor">The progress monitor</param>
+    </member>
+    <member name="M:Gallio.Runner.DefaultTestRunner.Unload(Gallio.Runtime.ProgressMonitoring.IProgressMonitor)">
+      <summary>
+        <para> Unloads the current test package. Does nothing if none is currently loaded. </para>
+        <para> When this operation completes, the <see cref="P:Gallio.Runner.ITestRunner.Report" /> will be empty once again. </para>
+      </summary>
+      <param name="progressMonitor">The progress monitor</param>
+    </member>
+    <member name="T:Gallio.Runner.DefaultTestRunnerFactory">
+      <summary>A <see cref="T:Gallio.Runner.ITestRunnerFactory" /> for <see cref="T:Gallio.Runner.DefaultTestRunner" /> using different implementations of <see cref="T:Gallio.Runner.Drivers.ITestDriver" />.</summary>
+    </member>
+    <member name="P:Gallio.Runner.DefaultTestRunnerFactory.Description">
+      <summary>Gets the human-readable description of the component.</summary>
+    </member>
+    <member name="P:Gallio.Runner.DefaultTestRunnerFactory.Name">
+      <summary>Gets the unique name of the component.</summary>
+    </member>
+    <member name="M:Gallio.Runner.DefaultTestRunnerFactory.CreateTestRunner">
+      <summary>Creates a test runner.</summary>
+      <returns>The test runner</returns>
+    </member>
     <member name="T:Gallio.Runner.DefaultTestRunnerManager">
       <summary>The default implementation of <see cref="T:Gallio.Runner.ITestRunnerManager" />.</summary>
     </member>
@@ -12097,89 +12350,14 @@
       <param name="factoryName">The name of the test runner factory, matched case-insensitively</param>
       <returns>The test runner</returns>
     </member>
-    <member name="T:Gallio.Runner.HostedTestRunner">
-      <summary>An implementation of <see cref="T:Gallio.Runner.ITestRunner" /> that runs tests within the context of particular <see cref="T:Gallio.Runtime.Hosting.IHost" />. The host is created when the package is loaded and is disposed when the package is unloaded. Consequently each new package runs in a new host.</summary>
-    </member>
-    <member name="P:Gallio.Runner.HostedTestRunner.Events">
-      <summary>Gets the event dispatcher for the test runner.</summary>
-    </member>
-    <member name="P:Gallio.Runner.HostedTestRunner.Host">
-      <summary>Gets the host, or null if no package has been loaded.</summary>
-    </member>
-    <member name="P:Gallio.Runner.HostedTestRunner.Logger">
-      <summary>Gets the logger, or null if the test runner has not been initialized.</summary>
-    </member>
-    <member name="P:Gallio.Runner.HostedTestRunner.Options">
-      <summary>Gets the test runner options, or null if the test runner has not been initialized.</summary>
-    </member>
-    <member name="P:Gallio.Runner.HostedTestRunner.Report">
-      <summary>Gets the most recent report contents. The report may be only partially populated depending on the current state of the test runner. When no test package has been loaded, the report will be empty but not null.</summary>
-    </member>
-    <member name="M:Gallio.Runner.HostedTestRunner.ConfigureHost(Gallio.Runtime.Hosting.HostSetup)">
-      <summary>Provides an opportunity for subclasses to configure the host.</summary>
-      <param name="hostSetup">The host setup, not null</param>
-    </member>
-    <member name="M:Gallio.Runner.HostedTestRunner.Dispose(Gallio.Runtime.ProgressMonitoring.IProgressMonitor)">
-      <summary>Disposes the test runner. Does nothing if already disposed or if not initialized.</summary>
-      <param name="progressMonitor">The progress monitor</param>
-    </member>
-    <member name="M:Gallio.Runner.HostedTestRunner.Explore(Gallio.Model.TestExplorationOptions,Gallio.Runtime.ProgressMonitoring.IProgressMonitor)">
-      <summary>
-        <para> Explores tests within the currently loaded test package. </para>
-        <para> When this operation completes, the <see cref="P:Gallio.Runner.Reports.Report.TestModel" /> property of <see cref="P:Gallio.Runner.ITestRunner.Report" /> will contain information about the test package. </para>
-      </summary>
-      <param name="options">The test exploration options</param>
-      <param name="progressMonitor">The progress monitor</param>
-    </member>
-    <member name="M:Gallio.Runner.HostedTestRunner.Initialize(Gallio.Runner.TestRunnerOptions,Gallio.Runtime.Logging.ILogger,Gallio.Runtime.ProgressMonitoring.IProgressMonitor)">
-      <summary>Initializes the test runner.</summary>
-      <param name="options">The test runner options</param>
-      <param name="logger">The logger</param>
-      <param name="progressMonitor">The progress monitor</param>
-    </member>
-    <member name="M:Gallio.Runner.HostedTestRunner.InitializeHost(Gallio.Runtime.Hosting.IHost)">
-      <summary>Provides an opportunity for subclasses to initialize the host once created.</summary>
-      <param name="host">The host, not null</param>
-    </member>
-    <member name="M:Gallio.Runner.HostedTestRunner.Load(Gallio.Model.TestPackageConfig,Gallio.Runtime.ProgressMonitoring.IProgressMonitor)">
-      <summary>
-        <para> Loads a test package. </para>
-        <para> When this operation completes, the <see cref="P:Gallio.Runner.Reports.Report.TestPackageConfig" /> property of <see cref="P:Gallio.Runner.ITestRunner.Report" /> will contain information about the test package. </para>
-      </summary>
-      <param name="testPackageConfig">The test package configuration</param>
-      <param name="progressMonitor">The progress monitor</param>
-    </member>
-    <member name="M:Gallio.Runner.HostedTestRunner.RegisterExtension(Gallio.Runner.Extensions.ITestRunnerExtension)">
-      <summary>Registers a test runner extension.</summary>
-      <param name="extension">The test runner extension to register</param>
-    </member>
-    <member name="M:Gallio.Runner.HostedTestRunner.Run(Gallio.Model.Execution.TestExecutionOptions,Gallio.Runtime.ProgressMonitoring.IProgressMonitor)">
-      <summary>
-        <para> Runs the tests. </para>
-        <para> When this operation completes, the <see cref="P:Gallio.Runner.Reports.Report.TestPackageRun" /> property of <see cref="P:Gallio.Runner.ITestRunner.Report" /> will contain test results. </para>
-      </summary>
-      <param name="options">The test execution options</param>
-      <param name="progressMonitor">The progress monitor</param>
-    </member>
-    <member name="M:Gallio.Runner.HostedTestRunner.Unload(Gallio.Runtime.ProgressMonitoring.IProgressMonitor)">
-      <summary>
-        <para> Unloads the current test package. Does nothing if none is currently loaded. </para>
-        <para> When this operation completes, the <see cref="P:Gallio.Runner.ITestRunner.Report" /> will be empty once again. </para>
-      </summary>
-      <param name="progressMonitor">The progress monitor</param>
-    </member>
-    <member name="T:Gallio.Runner.HostedTestRunnerFactory">
-      <summary>A <see cref="T:Gallio.Runner.ITestRunnerFactory" /> for <see cref="T:Gallio.Runner.HostedTestRunner" /> using different implementations of <see cref="T:Gallio.Runtime.Hosting.IHostFactory" />.</summary>
-    </member>
-    <member name="P:Gallio.Runner.HostedTestRunnerFactory.Description">
-      <summary>Gets the human-readable description of the component.</summary>
-    </member>
-    <member name="P:Gallio.Runner.HostedTestRunnerFactory.Name">
-      <summary>Gets the unique name of the component.</summary>
-    </member>
-    <member name="M:Gallio.Runner.HostedTestRunnerFactory.CreateTestRunner">
-      <summary>Creates a test runner.</summary>
+    <member name="M:Gallio.Runner.DefaultTestRunnerManager.GetFactory(System.String)">
+      <summary>Gets the factory by name, or null if none.</summary>
+      <param name="factoryName">The name of the test runner factory, matched case-insensitively</param>
       <returns>The test runner</returns>
+    </member>
+    <member name="M:Gallio.Runner.DefaultTestRunnerManager.GetFactoryNames">
+      <summary>Gets the names of all supported test runner factories.</summary>
+      <returns>The names of all runner factories</returns>
     </member>
     <member name="T:Gallio.Runner.OperationFinishedEventArgs">
       <summary>Base arguments for events raised to indicate the completion of an operation. This class is <see langword="abstract" /> and so cannot be instantiated.</summary>
@@ -12284,12 +12462,14 @@
         <para /> Gets or sets a format string used to construct the name of report files (without the extension). Within the format string, <c>{0}</c> is replaced by the date and <c>{1}</c> by the time. <para> The default value is <c>"test-report-{0}-{1}"</c>. </para></summary>
       <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="value" /> is null</exception>
     </member>
-    <member name="P:Gallio.Runner.TestLauncher.RuntimeSetup">
+    <member name="P:Gallio.Runner.TestLauncher.RunTimeLimit">
       <summary>
-        <para> Gets or sets the <see cref="P:Gallio.Runner.TestLauncher.RuntimeSetup" /> to use for automatically initializing the runtime during test execution or <c>null</c> if the runtime is already initialized. </para>
-        <para> If this value if not <c>null</c> then the launcher will initialize the runtime using this <see cref="P:Gallio.Runner.TestLauncher.RuntimeSetup" nolink="true" /> just prior to test execution and will automatically shut down the runtime just afterwards. </para>
-        <para> The default value is <c>null</c> which assumes that the runtime is already initialized. </para>
+        <para> Gets or sets the maximum amount of time the tests can run before they are canceled. </para>
+        <para>The default value is <c>null</c>, meaning an infinite time.</para>
       </summary>
+    </member>
+    <member name="P:Gallio.Runner.TestLauncher.RuntimeSetup">
+      <summary>Gets or sets the <see cref="P:Gallio.Runner.TestLauncher.RuntimeSetup" /> to use for automatically initializing the runtime during test execution or <c>null</c> if the runtime is already initialized.</summary>
     </member>
     <member name="P:Gallio.Runner.TestLauncher.ShowReports">
       <summary>
@@ -12318,7 +12498,7 @@
     <member name="P:Gallio.Runner.TestLauncher.TestRunnerFactoryName">
       <summary>
         <para> Specifies the name of a <see cref="T:Gallio.Runner.ITestRunnerFactory" /> to use for constructing the <see cref="T:Gallio.Runner.ITestRunner" /> at test execution time. </para>
-        <para> The default value is <see cref="F:Gallio.Runner.StandardTestRunnerFactoryNames.Local" />. </para>
+        <para> The default value is <see cref="F:Gallio.Runner.StandardTestRunnerFactoryNames.IsolatedProcess" />. </para>
       </summary>
       <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="value" /> is null</exception>
     </member>
@@ -12330,10 +12510,7 @@
       <summary>Cancels the test run and prevents a new one from starting.</summary>
     </member>
     <member name="M:Gallio.Runner.TestLauncher.Run">
-      <summary>
-        <para> Runs the test package as configured. </para>
-        <para> If <see cref="P:Gallio.Runner.TestLauncher.RuntimeSetup" /> is non-<c>null</c>, initializes the runtime for the duration of this method then shuts it down automatically before returning. Otherwise assumes the runtime has already been initialized and accesses it using <see cref="T:Gallio.Runtime.RuntimeAccessor" />. </para>
-      </summary>
+      <summary>Runs the test package as configured.</summary>
       <returns>A result object</returns>
     </member>
     <member name="T:Gallio.Runner.TestLauncherResult">
@@ -12662,6 +12839,16 @@
       <returns>The test runner</returns>
       <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="factoryName" /> is null</exception>
     </member>
+    <member name="M:Gallio.Runner.ITestRunnerManager.GetFactory(System.String)">
+      <summary>Gets the factory by name, or null if none.</summary>
+      <param name="factoryName">The name of the test runner factory, matched case-insensitively</param>
+      <returns>The test runner</returns>
+      <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="factoryName" /> is null</exception>
+    </member>
+    <member name="M:Gallio.Runner.ITestRunnerManager.GetFactoryNames">
+      <summary>Gets the names of all supported test runner factories.</summary>
+      <returns>The names of all runner factories</returns>
+    </member>
     <member name="T:Gallio.Runner.Caching.DiskCacheException">
       <summary>The type of exception thrown when an error occurs while manipulating the disk cache.</summary>
     </member>
@@ -12830,6 +13017,9 @@
     <member name="M:Gallio.Runner.Drivers.AggregateTestDriver.LoadImpl(Gallio.Model.TestPackageConfig,Gallio.Runtime.ProgressMonitoring.IProgressMonitor)">
       <summary>Internal implementation of <see cref="M:Gallio.Runner.Drivers.BaseTestDriver.Load(Gallio.Model.TestPackageConfig,Gallio.Runtime.ProgressMonitoring.IProgressMonitor)" />. Called after argument validation takes place.</summary>
     </member>
+    <member name="M:Gallio.Runner.Drivers.AggregateTestDriver.Reset">
+      <summary>Resets the test driver between and after test loads.</summary>
+    </member>
     <member name="M:Gallio.Runner.Drivers.AggregateTestDriver.RunImpl(Gallio.Model.Execution.TestExecutionOptions,Gallio.Model.Execution.ITestListener,Gallio.Runtime.ProgressMonitoring.IProgressMonitor)">
       <summary>Internal implementation of <see cref="M:Gallio.Runner.Drivers.BaseTestDriver.Run(Gallio.Model.Execution.TestExecutionOptions,Gallio.Model.Execution.ITestListener,Gallio.Runtime.ProgressMonitoring.IProgressMonitor)" />. Called after argument validation takes place.</summary>
     </member>
@@ -12846,8 +13036,7 @@
       <summary>Gets the runtime setup, or null if not initialized.</summary>
     </member>
     <member name="M:Gallio.Runner.Drivers.BaseTestDriver.Dispose">
-      <summary>Creates an object that contains all the relevant information required to generate a proxy used to communicate with a remote object.</summary>
-      <returns>Information required to generate a proxy.</returns>
+      <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
     </member>
     <member name="M:Gallio.Runner.Drivers.BaseTestDriver.Dispose(System.Boolean)">
       <summary>Disposes the test driver.</summary>
@@ -12894,6 +13083,39 @@
     <member name="M:Gallio.Runner.Drivers.BaseTestDriver.UnloadImpl(Gallio.Runtime.ProgressMonitoring.IProgressMonitor)">
       <summary>Internal implementation of <see cref="M:Gallio.Runner.Drivers.BaseTestDriver.Unload(Gallio.Runtime.ProgressMonitoring.IProgressMonitor)" />. Called after argument validation takes place.</summary>
     </member>
+    <member name="T:Gallio.Runner.Drivers.HostedTestDriver">
+      <summary>A test driver that runs tests remotely within a remote host. The driver further partitions assemblies into test domains based on their configuration requirements.</summary>
+    </member>
+    <member name="M:Gallio.Runner.Drivers.HostedTestDriver.ConfigureHost(Gallio.Runtime.Hosting.HostSetup)">
+      <summary>Provides an opportunity for subclasses to configure the host.</summary>
+      <param name="hostSetup">The host setup, not null</param>
+    </member>
+    <member name="M:Gallio.Runner.Drivers.HostedTestDriver.CreatePartitions(Gallio.Model.TestPackageConfig)">
+      <summary>Creates the partitions of the aggregate test driver.</summary>
+      <param name="testPackageConfig">The test package configuration, not null</param>
+      <returns>The partitions</returns>
+    </member>
+    <member name="M:Gallio.Runner.Drivers.HostedTestDriver.DisposeHost(Gallio.Runtime.Hosting.IHost)">
+      <summary>Provides an opportunity for subclasses to clean up the host as part of its disposal.</summary>
+      <param name="host">The host, not null</param>
+    </member>
+    <member name="M:Gallio.Runner.Drivers.HostedTestDriver.InitializeHost(Gallio.Runtime.Hosting.IHost)">
+      <summary>Provides an opportunity for subclasses to initialize the host once created.</summary>
+      <param name="host">The host, not null</param>
+    </member>
+    <member name="M:Gallio.Runner.Drivers.HostedTestDriver.Reset">
+      <summary>Resets the test driver between and after test loads.</summary>
+    </member>
+    <member name="T:Gallio.Runner.Drivers.HostedTestDriverFactory">
+      <summary>Creates hosted test driver instances.</summary>
+    </member>
+    <member name="P:Gallio.Runner.Drivers.HostedTestDriverFactory.ShareAppDomain">
+      <summary>Specifies whether to share the app-domain among all test domains.</summary>
+    </member>
+    <member name="M:Gallio.Runner.Drivers.HostedTestDriverFactory.CreateTestDriver">
+      <summary>Creates a test driver.</summary>
+      <returns>The new test driver</returns>
+    </member>
     <member name="T:Gallio.Runner.Drivers.LocalTestDriver">
       <summary>A simple test driver implementation that runs tests locally within the current domain without any additional consultation of the test frameworks.</summary>
     </member>
@@ -12911,18 +13133,6 @@
     </member>
     <member name="M:Gallio.Runner.Drivers.LocalTestDriver.UnloadImpl(Gallio.Runtime.ProgressMonitoring.IProgressMonitor)">
       <summary>Internal implementation of <see cref="M:Gallio.Runner.Drivers.BaseTestDriver.Unload(Gallio.Runtime.ProgressMonitoring.IProgressMonitor)" />. Called after argument validation takes place.</summary>
-    </member>
-    <member name="T:Gallio.Runner.Drivers.MultiDomainTestDriver">
-      <summary>A test driver that configures one test domain per test assembly.</summary>
-    </member>
-    <member name="M:Gallio.Runner.Drivers.MultiDomainTestDriver.CreatePartitions(Gallio.Model.TestPackageConfig)">
-      <summary>Creates the partitions of the aggregate test driver.</summary>
-      <param name="testPackageConfig">The test package configuration, not null</param>
-      <returns>The partitions</returns>
-    </member>
-    <member name="M:Gallio.Runner.Drivers.MultiDomainTestDriver.Dispose(System.Boolean)">
-      <summary>Disposes the test driver.</summary>
-      <param name="disposing">True if <see cref="M:Gallio.Runner.Drivers.BaseTestDriver.Dispose" /> was called</param>
     </member>
     <member name="T:Gallio.Runner.Drivers.ProxyTestDriver">
       <summary>A proxy for a remote test driver. Wraps a test driver and forwards all messages to it.</summary>
@@ -12991,6 +13201,13 @@
       <summary>Unloads the tests.</summary>
       <param name="progressMonitor">The progress monitor</param>
       <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="progressMonitor" /> is null</exception>
+    </member>
+    <member name="T:Gallio.Runner.Drivers.ITestDriverFactory">
+      <summary>Creates test drivers.</summary>
+    </member>
+    <member name="M:Gallio.Runner.Drivers.ITestDriverFactory.CreateTestDriver">
+      <summary>Creates a test driver.</summary>
+      <returns>The new test driver</returns>
     </member>
     <member name="T:Gallio.Runner.Events.DisposeFinishedEventArgs">
       <summary>Arguments for an event raised to indicate that the test runner disposal has finished. This class cannot be inherited.</summary>
@@ -13628,6 +13845,10 @@
     <member name="P:Gallio.Runner.Reports.Statistics.TestCount">
       <summary>Gets or sets the total number of test cases.</summary>
     </member>
+    <member name="M:Gallio.Runner.Reports.Statistics.AddOutcome(Gallio.Model.TestOutcome)">
+      <summary>Updates the test outcome statistics counters with an the outcome of a test.</summary>
+      <param name="outcome">The test outcome</param>
+    </member>
     <member name="M:Gallio.Runner.Reports.Statistics.FormatTestCaseResultSummary">
       <summary>Formats a single line of text summarizing test case results.</summary>
     </member>
@@ -14242,6 +14463,13 @@
       <returns>The process start info</returns>
       <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="executablePath" /> or <paramref name="arguments" /> is null</exception>
     </member>
+    <member name="M:Gallio.Runtime.RuntimeDetection.GetRuntimeVersion">
+      <summary>Gets the .Net runtime version installed and currently running.</summary>
+      <returns>The runtime version</returns>
+    </member>
+    <member name="T:Gallio.Runtime.RuntimeException">
+      <summary>An exception that expresses a problem performing a runtime service.</summary>
+    </member>
     <member name="T:Gallio.Runtime.RuntimeRegisteredComponentResolver`1">
       <summary>A default implementation of <see cref="T:Gallio.Runtime.IRegisteredComponentResolver`1" /> based on <see cref="T:Gallio.Runtime.IRuntime" />.</summary>
     </member>
@@ -14348,6 +14576,7 @@
       <summary>Initializes the runtime.</summary>
       <param name="logger">The runtime logging service</param>
       <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="logger" /> is null</exception>
+      <exception cref="T:Gallio.Runtime.RuntimeException">Thrown if the runtime could not be initialized</exception>
     </member>
     <member name="M:Gallio.Runtime.IRuntime.MapUriToLocalPath(System.Uri)">
       <summary>Maps a Uri to a local path.</summary>
@@ -14359,17 +14588,19 @@
       <summary>Resolves a reference to a component that implements the specified service.</summary>
       <param name="service">The service type</param>
       <returns>A component that implements the service</returns>
-      <exception cref="T:System.Exception">Thrown if the service could not be resolved</exception>
+      <exception cref="T:Gallio.Runtime.RuntimeException">Thrown if the service could not be resolved</exception>
     </member>
     <member name="M:Gallio.Runtime.IRuntime.Resolve``1">
       <summary>Resolves a reference to a component that implements the specified service.</summary>
       <typeparam name="T">The service type</typeparam>
       <returns>A component that implements the service</returns>
+      <exception cref="T:Gallio.Runtime.RuntimeException">Thrown if the service could not be resolved</exception>
     </member>
     <member name="M:Gallio.Runtime.IRuntime.ResolveAll``1">
       <summary>Resolves references to all components that implement the specified service.</summary>
       <typeparam name="T">The service type</typeparam>
       <returns>An array of components that implement the service</returns>
+      <exception cref="T:Gallio.Runtime.RuntimeException">Thrown if the service could not be resolved</exception>
     </member>
     <member name="T:Gallio.Runtime.ProcessType">
       <summary>Describes the kind of process that is executing.</summary>
@@ -14382,6 +14613,18 @@
     </member>
     <member name="F:Gallio.Runtime.ProcessType.Service">
       <summary>The process is running as a Windows service.</summary>
+    </member>
+    <member name="T:Gallio.Runtime.RuntimeVersion">
+      <summary>Specifies the version of the runtime.</summary>
+    </member>
+    <member name="F:Gallio.Runtime.RuntimeVersion.DotNet20">
+      <summary>.Net Framework 2.0.</summary>
+    </member>
+    <member name="F:Gallio.Runtime.RuntimeVersion.DotNet35">
+      <summary>.Net Framework 3.5.</summary>
+    </member>
+    <member name="F:Gallio.Runtime.RuntimeVersion.DotNet40">
+      <summary>.Net Framework 4.0.</summary>
     </member>
     <member name="T:Gallio.Runtime.ConsoleSupport.CommandLineArgumentAttribute">
       <summary>Allows control of command line parsing. Attach this attribute to instance fields of types used as the destination of command line argument parsing.</summary>
@@ -14973,9 +15216,16 @@
       <returns>The combined Xml configuration</returns>
     </member>
     <member name="M:Gallio.Runtime.Hosting.HostConfiguration.WriteTo(System.IO.TextWriter)">
-      <summary>Overlays the <see cref="P:Gallio.Runtime.Hosting.HostConfiguration.ConfigurationXml" /> with the additional configuration entries necessary to enable the features described by this instance and writes the combined Xml configuration.</summary>
+      <summary>Overlays the <see cref="P:Gallio.Runtime.Hosting.HostConfiguration.ConfigurationXml" /> with the additional configuration entries necessary to enable the features described by this instance and writes the combined Xml configuration to a <see cref="T:System.IO.TextWriter" />.</summary>
       <param name="textWriter">The TextWriter where the Xml configuration will be written to.</param>
       <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="textWriter" /> is null.</exception>
+      <exception cref="T:System.IO.IOException">Thrown if the configuration could not be written</exception>
+    </member>
+    <member name="M:Gallio.Runtime.Hosting.HostConfiguration.WriteToFile(System.String)">
+      <summary>Overlays the <see cref="P:Gallio.Runtime.Hosting.HostConfiguration.ConfigurationXml" /> with the additional configuration entries necessary to enable the features described by this instance and writes the combined Xml configuration to a file with the given path.</summary>
+      <param name="path">The file path</param>
+      <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="path" /> is null</exception>
+      <exception cref="T:System.IO.IOException">Thrown if the configuration could not be written</exception>
     </member>
     <member name="T:Gallio.Runtime.Hosting.HostConfiguration.AssemblyBindingRedirect">
       <summary>Describes an assembly binding redirection from an old version range to a new version. This class cannot be inherited.</summary>
@@ -15152,8 +15402,17 @@
       <summary>Gets or sets the host configuration information.</summary>
       <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="value" /> is null</exception>
     </member>
+    <member name="P:Gallio.Runtime.Hosting.HostSetup.ConfigurationFileLocation">
+      <summary>Gets or sets where the host should write out the configuration file for the hosted components.</summary>
+      <value>The configuration file location. Default is <see cref="F:Gallio.Runtime.Hosting.ConfigurationFileLocation.Temp" />.</value>
+    </member>
+    <member name="P:Gallio.Runtime.Hosting.HostSetup.ProcessorArchitecture">
+      <summary>Gets or sets the processor architecture that the host should target, when supported.</summary>
+      <value>The processor architecture. Default is <see cref="F:System.Reflection.ProcessorArchitecture.MSIL" /></value>
+    </member>
     <member name="P:Gallio.Runtime.Hosting.HostSetup.ShadowCopy">
       <summary>Gets or sets whether assembly shadow copying is enabled.</summary>
+      <value>True if shadow copying is enabled. Default is <c>false</c>.</value>
     </member>
     <member name="P:Gallio.Runtime.Hosting.HostSetup.WorkingDirectory">
       <summary>
@@ -15182,6 +15441,15 @@
     <member name="M:Gallio.Runtime.Hosting.HostSetup.GetHashCode">
       <summary>Serves as a hash function for a particular type. <see cref="M:System.Object.GetHashCode" /> is suitable for use in hashing algorithms and data structures like a hash table.</summary>
       <returns>A hash code for the current <see cref="T:System.Object" />.</returns>
+    </member>
+    <member name="M:Gallio.Runtime.Hosting.HostSetup.WriteTemporaryConfigurationFile">
+      <summary>
+        <para> Writes a temporary configuration file for the application to disk and returns its path based on <see cref="P:Gallio.Runtime.Hosting.HostSetup.ConfigurationFileLocation" />. The file is created with a unique name each time. </para>
+        <para> The file should be deleted by the caller when no longer required. </para>
+      </summary>
+      <returns>The full path of the configuration file that was written, or null if no file was written</returns>
+      <exception cref="T:System.InvalidOperationException">Thrown if <see cref="P:Gallio.Runtime.Hosting.HostSetup.ApplicationBaseDirectory" /> is <c>null</c> but <see cref="P:Gallio.Runtime.Hosting.HostSetup.ConfigurationFileLocation" /> is <see cref="F:Gallio.Runtime.Hosting.ConfigurationFileLocation.AppBase" />.</exception>
+      <exception cref="T:System.IO.IOException">Thrown if the configuration file could not be written</exception>
     </member>
     <member name="T:Gallio.Runtime.Hosting.HostUtils">
       <summary>Provides utilities for working with hosts. This is a <see langword="static class" /> and so cannot be inherited or instantiated.</summary>
@@ -15407,6 +15675,18 @@
     </member>
     <member name="M:Gallio.Runtime.Hosting.IRemoteHostService.Shutdown">
       <summary>Remotely shuts down the host service.</summary>
+    </member>
+    <member name="T:Gallio.Runtime.Hosting.ConfigurationFileLocation">
+      <summary>Specifies where a <see cref="T:Gallio.Runtime.Hosting.IHost" /> should store the temporary configuration file it generates when it is being initialized.</summary>
+    </member>
+    <member name="F:Gallio.Runtime.Hosting.ConfigurationFileLocation.None">
+      <summary>Do not create a configuration file.</summary>
+    </member>
+    <member name="F:Gallio.Runtime.Hosting.ConfigurationFileLocation.Temp">
+      <summary>Stores the configuration file in the user's temporary directory.</summary>
+    </member>
+    <member name="F:Gallio.Runtime.Hosting.ConfigurationFileLocation.AppBase">
+      <summary>Stores the configuration file in the application base directory of the hosted components.</summary>
     </member>
     <member name="T:Gallio.Runtime.Loader.AssemblyResolverBootstrap">
       <summary>Bootstraps a globally reachable assembly resolver manager within the Gallio installation path. May be used by clients to ensure that Gallio assemblies can be resolved assuming we were able to load the main assembly and access the bootstrap. This is a <see langword="static class" /> and so cannot be inherited or instantiated.</summary>

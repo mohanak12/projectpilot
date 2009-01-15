@@ -85,6 +85,7 @@ namespace Accipio
 
                 WriteLine("            }");
                 WriteLine("        }");
+
                 if (testSuite.TestCasesCount != testCaseCount)
                 {
                     WriteLine(string.Empty);
@@ -93,42 +94,25 @@ namespace Accipio
                 testCaseCount++;
             }
 
+            // if the test suite support parallelization, add fixture setup code
+            // with some parallalism settings
+            if (testSuite.IsParallelizable)
+            {
+                WriteLine(string.Empty);
+                WriteLine("        /// <summary>");
+                WriteLine("        /// Test fixture setup code.");
+                WriteLine("        /// </summary>");
+                WriteLine("        [FixtureSetUp]");
+                WriteLine("        public void FixtureSetup()");
+                WriteLine("        {");
+                WriteLine(
+                    "            Gallio.Framework.Pattern.PatternTestGlobals.DegreeOfParallelism = {0};",
+                    testSuite.DegreeOfParallelism);
+                WriteLine("        }");
+            }
+
             WriteLine("    }");
             WriteLine("}");
-        }
-
-        /// <summary>
-        /// Adds TAGs to each test case.
-        /// </summary>
-        /// <param name="testCase">Test Case <see cref="testCase"/></param>
-        private void AddTags(TestCase testCase)
-        {
-            int tagCounter = 1;
-            foreach (string tag in testCase.Tags)
-            {
-                if (tagCounter == testCase.Tags.Count)
-                {
-                    WriteLine("                    .AddTag(\"{0}\");", tag);
-                }
-                else
-                {
-                    WriteLine("                    .AddTag(\"{0}\")", tag);
-                }
-
-                tagCounter++;
-            }
-        }
-
-        /// <summary>
-        /// Adds Unit test attribute <c>Metadata</c> with userstory.
-        /// </summary>
-        /// <param name="testCase">Test Case <see cref="testCase"/></param>
-        private void AddHeaderTags(TestCase testCase)
-        {
-            foreach (string tag in testCase.Tags)
-            {
-                WriteLine("        [Metadata(\"UserStory\", \"{0}\")]", tag);
-            }
         }
 
         /// <summary>
@@ -156,6 +140,40 @@ namespace Accipio
             else
             {
                 WriteLine(lineFormat);
+            }
+        }
+
+        /// <summary>
+        /// Adds Unit test attribute <c>Metadata</c> with userstory.
+        /// </summary>
+        /// <param name="testCase">Test Case <see cref="testCase"/></param>
+        private void AddHeaderTags(TestCase testCase)
+        {
+            foreach (string tag in testCase.Tags)
+            {
+                WriteLine("        [Metadata(\"UserStory\", \"{0}\")]", tag);
+            }
+        }
+
+        /// <summary>
+        /// Adds tags to each test case.
+        /// </summary>
+        /// <param name="testCase">Test Case <see cref="testCase"/></param>
+        private void AddTags(TestCase testCase)
+        {
+            int tagCounter = 1;
+            foreach (string tag in testCase.Tags)
+            {
+                if (tagCounter == testCase.Tags.Count)
+                {
+                    WriteLine("                    .AddTag(\"{0}\");", tag);
+                }
+                else
+                {
+                    WriteLine("                    .AddTag(\"{0}\")", tag);
+                }
+
+                tagCounter++;
             }
         }
 
