@@ -19,7 +19,7 @@
               int idx = 0;
                foreach (LogEntry logEntry in ParserContent.LineParse.ElementsLog) {%>
                 <tr valign="top">
-                 <%Response.Write(LogEntryToString(logEntry, idx, (int)ViewData["Index"]));
+                 <%Response.Write(LogEntryToString(logEntry, idx, ParserContent.IndexList,(int)ViewData["Id"]));
                    idx++;%>
                 </tr>
             <%}%>

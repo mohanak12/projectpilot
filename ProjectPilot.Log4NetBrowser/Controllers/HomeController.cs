@@ -26,11 +26,24 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
         public ActionResult Display(int? Id)
         {
             if (Id != null)
-                ViewData["Index"] = Id;
-            else 
-                ViewData["Index"] = -1;
-            
+            {
+                if(Id ==-1)
+                {
+                    parserContent.IndexList.Remove(parserContent.IndexList.Last());
+                }
+                else
+                {
+                    if (parserContent.IndexList.Contains((int)Id))
+                        parserContent.IndexList.Remove((int)Id);
+                    else
+                        parserContent.IndexList.Add((int)Id);
+                }
+            }
+            else
+                Id = 0;
+
             ViewData["Content"] = parserContent;
+            ViewData["Id"] = (int)Id;
             
             return View();
         }

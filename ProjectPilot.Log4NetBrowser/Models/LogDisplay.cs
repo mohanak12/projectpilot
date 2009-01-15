@@ -14,6 +14,12 @@ namespace ProjectPilot.Log4NetBrowser.Models
             get { return lineParse; }
         }
 
+        public List<int> IndexList
+        {
+            get { return indexList; }
+            set { indexList = value; }
+        }
+
         public void Parsing10MBLogFile()
         {
             //using (Stream fileStream = File.OpenRead(@"C:\share\Marko\SSM+2009-01-08.log.28"))
@@ -29,5 +35,6 @@ namespace ProjectPilot.Log4NetBrowser.Models
         }
 
         private LogCollection lineParse;
+        private List<int> indexList = new List<int>();
     }
 }
