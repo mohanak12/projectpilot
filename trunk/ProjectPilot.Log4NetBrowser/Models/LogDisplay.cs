@@ -24,7 +24,7 @@ namespace ProjectPilot.Log4NetBrowser.Models
         {
             //using (Stream fileStream = File.OpenRead(@"C:\share\Marko\SSM+2009-01-08.log.28"))
             if (string.IsNullOrEmpty(file))
-                file = @"SSM+2009-01-08.log.28.small";
+                file = @"\pilotProject\Data\Samples\Log4Net_sample.log ";
             using (Stream fileStream = File.OpenRead(file))
             {
                 lineParse = new LogCollection('|', "Time|Level|Ndc");
