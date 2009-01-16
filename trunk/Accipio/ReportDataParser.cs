@@ -7,6 +7,10 @@ namespace Accipio
 {
     public class ReportDataParser : IDisposable
     {
+        /// <summary>
+        /// Initializes a new instance of the ReportDataParser class.
+        /// </summary>
+        /// <param name="testSuiteFileName">File name of report.</param>
         public ReportDataParser(string testSuiteFileName)
         {
             xmlReportStream = File.OpenRead(testSuiteFileName);
@@ -22,6 +26,10 @@ namespace Accipio
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Parse xml data which contains build report data.
+        /// </summary>
+        /// <returns>Parsed data</returns>
         public ReportData Parse()
         {
             XmlReaderSettings xmlReaderSettings =
@@ -89,66 +97,6 @@ namespace Accipio
             }
         }
 
-        private void ReadTestRunParameters(ReportData reportData, XmlReader xmlReader)
-        {
-            xmlReader.Read();
-
-            while (xmlReader.NodeType != XmlNodeType.EndElement)
-            {
-                switch (xmlReader.Name)
-                {
-                    case "testRun":
-
-                        reportData.Duration = ReadAttribute(xmlReader, "startTime");
-                        reportData.StartTime = ReadAttribute(xmlReader, "duration");
-                        reportData.Version = ReadAttribute(xmlReader, "version");
-
-                        ReadSuites(reportData, xmlReader);
-
-                        break;
-                        
-                    default:
-                        {
-                            throw new NotSupportedException(
-                                string.Format(
-                                CultureInfo.InvariantCulture,
-                                "Not supported xml node type. Node type = {0}",
-                                xmlReader.NodeType));
-                        }
-                }
-            }
-
-            xmlReader.Read();
-        }
-
-        private void ReadSuites(ReportData reportData, XmlReader xmlReader)
-        {
-            xmlReader.Read();
-
-            while (xmlReader.NodeType != XmlNodeType.EndElement)
-            {
-                switch (xmlReader.Name)
-                {
-                    case "suites":
-
-                        ReadReportSuite(reportData, xmlReader);
-
-                        break;
-
-                    default:
-                        {
-                            throw new NotSupportedException(
-                                string.Format(
-                                CultureInfo.InvariantCulture,
-                                "Not supported xml node type. Node type = {0}",
-                                xmlReader.NodeType));
-                        }
-                }
-            }
-
-            xmlReader.Read();
-        }
-
         private void ReadReportSuite(ReportData reportData, XmlReader xmlReader)
         {
             xmlReader.Read();
@@ -193,15 +141,85 @@ namespace Accipio
                 {
                     case "case":
 
+                        ReportCaseStatus caseStatus =
+                            (ReportCaseStatus)Enum.Parse(typeof(ReportCaseStatus), ReadAttribute(xmlReader, "status"), true);
+
                         ReportCase reportCase = new ReportCase(
                             ReadAttribute(xmlReader, "id"),
-                            ReadAttribute(xmlReader, "startTime"),
+                            Convert.ToDateTime(ReadAttribute(xmlReader, "startTime"), CultureInfo.InvariantCulture),
                             ReadAttribute(xmlReader, "duration"),
-                            (ReportCaseStatus)Enum.Parse(typeof(ReportCaseStatus), ReadAttribute(xmlReader, "status"), true));
+                            caseStatus);
+
+                        if (caseStatus == ReportCaseStatus.Failed)
+                            reportSuite.FailedTests++;
+                        else if (caseStatus == ReportCaseStatus.Passed)
+                            reportSuite.PassedTests++;
+                        else if (caseStatus == ReportCaseStatus.Skipped)
+                            reportSuite.SkippedTests++;
 
                         ReadUserStories(reportCase, xmlReader);
 
                         reportSuite.TestCases.Add(reportCase);
+
+                        break;
+
+                    default:
+                        {
+                            throw new NotSupportedException(
+                                string.Format(
+                                CultureInfo.InvariantCulture,
+                                "Not supported xml node type. Node type = {0}",
+                                xmlReader.NodeType));
+                        }
+                }
+            }
+
+            xmlReader.Read();
+        }
+
+        private void ReadTestRunParameters(ReportData reportData, XmlReader xmlReader)
+        {
+            xmlReader.Read();
+
+            while (xmlReader.NodeType != XmlNodeType.EndElement)
+            {
+                switch (xmlReader.Name)
+                {
+                    case "testRun":
+
+                        reportData.Duration = ReadAttribute(xmlReader, "duration");
+                        reportData.StartTime = Convert.ToDateTime(ReadAttribute(xmlReader, "startTime"), CultureInfo.InvariantCulture);
+                        reportData.Version = ReadAttribute(xmlReader, "version");
+
+                        ReadSuites(reportData, xmlReader);
+
+                        break;
+                        
+                    default:
+                        {
+                            throw new NotSupportedException(
+                                string.Format(
+                                CultureInfo.InvariantCulture,
+                                "Not supported xml node type. Node type = {0}",
+                                xmlReader.NodeType));
+                        }
+                }
+            }
+
+            xmlReader.Read();
+        }
+
+        private void ReadSuites(ReportData reportData, XmlReader xmlReader)
+        {
+            xmlReader.Read();
+
+            while (xmlReader.NodeType != XmlNodeType.EndElement)
+            {
+                switch (xmlReader.Name)
+                {
+                    case "suites":
+
+                        ReadReportSuite(reportData, xmlReader);
 
                         break;
 
@@ -258,6 +276,12 @@ namespace Accipio
                     case "userStory":
 
                         reportCase.UserStories.Add(xmlReader.ReadElementContentAsString());
+
+                        break;
+
+                    case "exception":
+
+                        reportCase.ReportDetails = xmlReader.ReadElementContentAsString();
 
                         break;
 

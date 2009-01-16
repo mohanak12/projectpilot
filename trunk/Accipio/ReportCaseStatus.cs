@@ -14,11 +14,6 @@ namespace Accipio
         Passed,
 
         /// <summary>
-        /// Test status inconclusive.
-        /// </summary>
-        Inconclusive,
-
-        /// <summary>
         /// Test status skipped.
         /// </summary>
         Skipped,
