@@ -61,13 +61,33 @@ namespace Accipio
                     {
                         string commaSeparator = string.Empty;
 
+                        // get business action parameters
+                        List<BusinessActionParameters> businessActionParameters =
+                            (List<BusinessActionParameters>)businessActionData.GetAction(testAction.ActionName).ActionParameters;
+
                         foreach (TestActionParameter actionParameters in testAction.ActionParameters)
                         {
-                            line.AppendFormat(
-                                CultureInfo.InvariantCulture, 
-                                "{1}\"{0}\"", 
+                            TestActionParameter tempParameter = actionParameters;
+
+                            BusinessActionParameters parameterType =
+                                businessActionParameters.Find(parameters => parameters.ParameterName ==
+                                                                            tempParameter.ParameterKey);
+                            if (parameterType.ParameterType == "int" || parameterType.ParameterType == "decimal")
+                            {
+                                line.AppendFormat(
+                                CultureInfo.InvariantCulture,
+                                "{1}{0}",
                                 actionParameters.ParameterValue,
                                 commaSeparator);
+                            }
+                            else
+                            {
+                                line.AppendFormat(
+                                CultureInfo.InvariantCulture,
+                                "{1}\"{0}\"",
+                                actionParameters.ParameterValue,
+                                commaSeparator);
+                            }
 
                             commaSeparator = ", ";
                         }

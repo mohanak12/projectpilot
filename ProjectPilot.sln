@@ -2,6 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{29C5C89F-901C-4804-8A0D-B085445B48E3}"
+	ProjectSection(SolutionItems) = preProject
+		Data\Samples\TestResults.xml = Data\Samples\TestResults.xml
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{FBCD0FCA-E178-493F-BF6B-D4004FEF975A}"
 	ProjectSection(SolutionItems) = preProject
@@ -19,6 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{FBCD
 		Data\Samples\ProjectPortalTestSuite.xml = Data\Samples\ProjectPortalTestSuite.xml
 		Data\Samples\svn-log.xml = Data\Samples\svn-log.xml
 		Data\Samples\TestResults-0.xml = Data\Samples\TestResults-0.xml
+		Data\Samples\TestResults.xml = Data\Samples\TestResults.xml
 		Data\Samples\TestServer.log = Data\Samples\TestServer.log
 		Data\Samples\TestSpec.xml = Data\Samples\TestSpec.xml
 		Data\Samples\TestSpecs.xsd = Data\Samples\TestSpecs.xsd

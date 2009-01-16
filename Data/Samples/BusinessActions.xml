@@ -5,8 +5,8 @@
 
     <action id="SignIn">
        <description>Sign in user '{0}'</description>
-       <parameter name="username"/>
-       <parameter name="password"/>
+       <parameter name="username" type="string" />
+       <parameter name="password" type="string" />
     </action>
 
     <action id="ViewAccount">

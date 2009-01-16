@@ -41,6 +41,9 @@ namespace ProjectPilot.Tests.AccipioTests
             testAction.AddActionParameter(new TestActionParameter("username", "john"));
             testAction.AddActionParameter(new TestActionParameter("password", "doe"));
             testCase.AddTestAction(testAction);
+            testAction = new TestAction("AssertIsUserIdCorrect");
+            testAction.AddActionParameter(new TestActionParameter("userId", "1"));
+            testCase.AddTestAction(testAction);
             testCase.AddTestAction(new TestAction("AssertOperationSuccessful"));
             testSuite.AddTestCase(testCase);
 
@@ -57,6 +60,15 @@ namespace ProjectPilot.Tests.AccipioTests
                     {
                         Description = "Sign in user 'john'."
                     };
+            businessActionEntry.ActionParameters.Add(new BusinessActionParameters("username", "string"));
+            businessActionEntry.ActionParameters.Add(new BusinessActionParameters("password", "string"));
+            businessActionData.Actions.Add(businessActionEntry);
+            businessActionEntry =
+                new BusinessActionEntry("AssertIsUserIdCorrect")
+                {
+                    Description = "Assert if user id is correct."
+                };
+            businessActionEntry.ActionParameters.Add(new BusinessActionParameters("userId", "int"));
             businessActionData.Actions.Add(businessActionEntry);
             businessActionEntry =
                 new BusinessActionEntry("AssertOperationSuccessful")
@@ -103,6 +115,9 @@ namespace ProjectPilot.Tests.AccipioTests
             mockCodeWriter.Expect(writer => writer.WriteLine("                    .GoToPortal()"));
             mockCodeWriter.Expect(writer => writer.WriteLine("                    // Sign in user 'john'."));
             mockCodeWriter.Expect(writer => writer.WriteLine("                    .SignIn(\"john\", \"doe\")"));
+            mockCodeWriter.Expect(
+                writer => writer.WriteLine("                    // Assert if user id is correct."));
+            mockCodeWriter.Expect(writer => writer.WriteLine("                    .AssertIsUserIdCorrect(1)"));
             mockCodeWriter.Expect(
                 writer => writer.WriteLine("                    // Assert the operation was successful."));
             mockCodeWriter.Expect(writer => writer.WriteLine("                    .AssertOperationSuccessful();"));

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Accipio
 {
@@ -15,7 +16,7 @@ namespace Accipio
         /// <summary>
         /// Gets or sets start time when tests are started up.
         /// </summary>
-        public string StartTime
+        public DateTime StartTime
         {
             get; set;
         }

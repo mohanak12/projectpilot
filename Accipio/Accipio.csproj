@@ -71,6 +71,7 @@
     <Compile Include="BusinessActionsXmlParser.cs" />
     <Compile Include="BrowserType.cs" />
     <Compile Include="BusinessFunctionSteps.cs" />
+    <Compile Include="CreateHtmlTestReport.cs" />
     <Compile Include="IBusinessActionXmlParser.cs" />
     <Compile Include="Inservio\Framework\IInservioServicePlugIn.cs" />
     <Compile Include="Inservio\Framework\IInservioRemoteControl.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Inservio\Server\ServiceRegistration.cs" />
     <Compile Include="Inservio\Server\ServicePlugInRegistration.cs" />
     <Compile Include="Inservio\Server\ServicesRepository.cs" />
+    <Compile Include="ITestReportGenerator.cs" />
     <Compile Include="ProjectPortalTestRunner.cs" />
     <Compile Include="ReportCase.cs" />
     <Compile Include="ReportCaseStatus.cs" />
