@@ -35,7 +35,7 @@ namespace Accipio.Console
 
             if (argsLength < 3)
                 throw new ArgumentException("Missing test report output file name.");
-            htmlReportFileName = args[2];
+            outputFileName = args[2];
 
             return this;
         }
@@ -55,7 +55,7 @@ namespace Accipio.Console
                 XmlReader reader = XmlReader.Create(inputStream);
                 XmlWriterSettings writerSettings = new XmlWriterSettings();
                 writerSettings.ConformanceLevel = ConformanceLevel.Auto;
-                using (XmlWriter writer = XmlWriter.Create(htmlReportFileName, writerSettings))
+                using (XmlWriter writer = XmlWriter.Create(outputFileName, writerSettings))
                 {
                     if (writer != null)
                     {
@@ -76,6 +76,6 @@ namespace Accipio.Console
         private readonly IConsoleCommand nextCommandInChain;
         private string xmlReportFileName;
         private const string XsltTransformationFileName = @"TestReportTransform.xslt";
-        private string htmlReportFileName;
+        private string outputFileName;
     }
 }
