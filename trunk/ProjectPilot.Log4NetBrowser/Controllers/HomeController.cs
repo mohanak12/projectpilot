@@ -21,7 +21,9 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             return View();
         }
 
-        public ActionResult Reload(string level, string levelSelect, string StartTime, string EndTime, string ThreadId, string fileSelect)
+        public ActionResult Reload(
+                            string level, string levelSelect, string StartTime, string EndTime, 
+                            string ThreadId, string fileSelect, string numberOfItems)
         {
             LogParserFilter filter = new LogParserFilter();
             parserContent = new LogDisplay();
@@ -66,6 +68,15 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             filter.FilterLevel = levelSelect;
 
             filter.FilterThreadId = ThreadId;
+
+            if (!string.IsNullOrEmpty(numberOfItems))
+            {
+                filter.FilterNumberOfLogItems = int.Parse(numberOfItems);
+            }
+            else
+            {
+                filter.FilterNumberOfLogItems = 255;
+            }
 
             parserContent.Parsing10MBLogFile(filter, fileSelect);
 
