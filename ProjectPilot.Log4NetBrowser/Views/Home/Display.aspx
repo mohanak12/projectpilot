@@ -14,7 +14,9 @@
         <label>End time:</label>
         <input type="text" name="EndTime" />
         <label>ThreadId:</label>
-        <input type="text" name="ThreadId" />&nbsp;
+        <input type="text" name="ThreadId" />
+        <label>Number of items:</label>
+        <input type="text"name="numberOfItems" />&nbsp;
         <label>Level:</label>
         <select id="levelSelect" name="levelSelect">
             <option value=""></option>
