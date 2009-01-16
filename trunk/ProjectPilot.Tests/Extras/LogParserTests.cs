@@ -160,8 +160,11 @@ namespace ProjectPilot.Tests.Extras
         [Row(null, null, "[5448]", null, 0, 3)]
         [Row(null, null, "[2572]", "WARN", 0, 2)]
         [Row(null, null, "[3688]", "INFO", 0, 6)]
-        [Row("2008-12-22 09:58:45,480", "2008-12-22 10:07:49,202", null, null, 0, 9)]
+        [Row("2008-12-22 09:58:45,481", "2008-12-22 09:58:47,495", null, null, 0, 1)]
+        [Row("2008-12-22 09:58:45,480", "2008-12-22 10:07:49,202", null, null, 0, 8)]
+        [Row("2008-12-22 10:04:37,895", "2008-12-22 10:04:37,895", null, null, 0, 1)]
         [Row("2008-12-22 09:59:33,210", "2008-12-22 10:07:49,202", "[908]", "INFO", 1, 1)]
+        [Row("2008-12-22 10:07:46,359", "2008-12-22 10:07:47,359", null, null, 0, 1)]
         public void ParsingFromLogFileWithFilter(string dateTimeStart, string dateTimeEnd, string threadId, string filterLevel, int filterNumberOfLogItems, int expectedElementsLogCount)
         {
             using (Stream fileStream = File.OpenRead(@"..\..\..\Data\Samples\TestLogParser.log"))

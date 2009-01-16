@@ -9,7 +9,12 @@
     %>
     <div>
     <form method="post" action="/Home/Reload">
-        <input name="fileSelect" type="file" />
+        <label>Start time:</label>
+        <input type="text" name="StartTime" />
+        <label>End time:</label>
+        <input type="text" name="EndTime" />
+        <label>ThreadId:</label>
+        <input type="text" name="ThreadId" />&nbsp;
         <label>Level:</label>
         <select id="levelSelect" name="levelSelect">
             <option value=""></option>
@@ -20,8 +25,8 @@
             <option value="ERROR">ERROR</option>
             <option value="FATAL">FATAL</option>
         </select>
-        <input type="submit" value="Submit filter" />
-    </form>
+        <input type="submit" value="Submit filter" />&nbsp;
+        <input name="fileSelect" type="file" /></form>
     </div>
     <div id="logEntries">
         <table border="0" cellpadding="0" cellspacing="0">
