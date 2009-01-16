@@ -12,11 +12,14 @@ namespace ProjectPilot.Tests.AccipioTests
             string[] args = new string[]
                                 {
                                     "transform",
-                                    "..\\..\\..\\Data\\Samples\\TestResults-0.xml",
+                                    "..\\..\\..\\Data\\Samples\\AccipioTestReportSample.xml",
                                     "TestResults.xml"
                                 };
-            TestReportGeneratorCommand testReportGeneratorCommand = new TestReportGeneratorCommand(null);
-            testReportGeneratorCommand.AccipioDirectory = "..\\..\\..\\Accipio.Console";
+            TestReportGeneratorCommand testReportGeneratorCommand = 
+                new TestReportGeneratorCommand(null)
+                    {
+                        AccipioDirectory = "..\\..\\..\\Accipio.Console"
+                    };
             testReportGeneratorCommand.ParseArguments(args);
             testReportGeneratorCommand.ProcessCommand();
         }

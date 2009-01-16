@@ -14,7 +14,7 @@ namespace Accipio.Console
         {
             this.args = args;
             consoleCommandChain = new TestSuiteSchemaGeneratorCommand(
-                new TestCodeGeneratorCommand(null));
+                new TestCodeGeneratorCommand(new TestReportGeneratorCommand(null)));
 
             Uri uri = new Uri(Assembly.GetExecutingAssembly().CodeBase);
             string localPath = uri.LocalPath;
