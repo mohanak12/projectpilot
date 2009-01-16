@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -20,13 +21,52 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             return View();
         }
 
-        public ActionResult Reload(string level, string levelSelect, string fileSelect)
+        public ActionResult Reload(string level, string levelSelect, string StartTime, string EndTime, string ThreadId, string fileSelect)
         {
-
-            parserContent = new LogDisplay();
-
             LogParserFilter filter = new LogParserFilter();
+            parserContent = new LogDisplay();
+            bool time = true;
+//            StartTime = "";
+//            EndTime = "";
+            DateTime startTime = new DateTime();
+            DateTime endTime = new DateTime();
+            CultureInfo cultureToUse = CultureInfo.InvariantCulture;
+
+            if (string.IsNullOrEmpty(StartTime) && string.IsNullOrEmpty(EndTime))
+            {
+                StartTime = "";
+                EndTime = "";
+            }
+
+            try
+            {
+                startTime = DateTime.ParseExact(StartTime, "dd.MM.yyyy HH:mm:ss,fff", cultureToUse);
+            }
+            catch (FormatException)
+            {
+                time = false;
+            }
+
+            try
+            {
+                endTime = DateTime.ParseExact(EndTime, "dd.MM.yyyy HH:mm:ss,fff", cultureToUse);
+            }
+            catch (FormatException)
+            {
+                time = false;
+            } 
+
+            if(time)
+            {
+                filter.FilterTimestampStart = startTime;
+                filter.FilterTimestampEnd = endTime;
+            }
+
+            
             filter.FilterLevel = levelSelect;
+
+            filter.FilterThreadId = ThreadId;
+
             parserContent.Parsing10MBLogFile(filter, fileSelect);
 
             return RedirectToAction("Display"); 

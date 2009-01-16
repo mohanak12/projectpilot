@@ -22,14 +22,18 @@ namespace ProjectPilot.Log4NetBrowser.Models
 
         public void Parsing10MBLogFile(LogParserFilter filter, string file)
         {
-            //using (Stream fileStream = File.OpenRead(@"C:\share\Marko\SSM+2009-01-08.log.28"))
             if (string.IsNullOrEmpty(file))
-                file = @"\pilotProject\Data\Samples\Log4Net_sample.log ";
+
+                //file = @"\pilotProject\Data\Samples\Log4Net_sample.log";
+                //file = @"..\..\..\Data\Samples\Log4Net_sample.log";
+                file = @"C:\SSM+2009-01-08.log.28.small";
+
             using (Stream fileStream = File.OpenRead(file))
             {
                 lineParse = new LogCollection('|', "Time|Level|Ndc");
                 if(filter != null)
                     lineParse.ParseFilter = filter;
+                
                 lineParse.ParseLogFile(fileStream);
             }
         }

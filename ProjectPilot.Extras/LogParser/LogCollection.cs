@@ -229,9 +229,11 @@ namespace ProjectPilot.Extras.LogParser
 
             if (parseFilter.FilterTimestampStart.HasValue && parseFilter.FilterTimestampEnd.HasValue)
             {
-                if (DateTime.Compare((DateTime)timethread, (DateTime)parseFilter.FilterTimestampStart) > 0 &&
-                    DateTime.Compare((DateTime)timethread, (DateTime)parseFilter.FilterTimestampEnd) < 0)
+                if (DateTime.Compare((DateTime)timethread, (DateTime)parseFilter.FilterTimestampStart) < 0 ||
+                    DateTime.Compare((DateTime)timethread, (DateTime)parseFilter.FilterTimestampEnd) > 0)
+                {
                     filterFlag = false;
+                }
             }
 
             if (!String.IsNullOrEmpty(parseFilter.FilterThreadId))
