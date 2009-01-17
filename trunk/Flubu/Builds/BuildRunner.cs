@@ -557,6 +557,15 @@ namespace Flubu.Builds
 
             IEnumerable<string> filesToZip = buildProducts.ListFilesForProductParts(productPartsIds);
 
+            // remove duplicate files to avoid problems with the ZIP file
+            Dictionary<string, string> filesNoDuplicates = new Dictionary<string, string>();
+
+            foreach (string fileName in filesToZip)
+            {
+                if (false == filesNoDuplicates.ContainsKey(fileName))
+                    filesNoDuplicates.Add(fileName, null);
+            }
+
             string zipFileName = String.Format(
                 CultureInfo.InvariantCulture,
                 zipFileNameFormat,
@@ -569,7 +578,7 @@ namespace Flubu.Builds
             ZipFilesTask task = new ZipFilesTask(
                 zipFileName, 
                 Path.GetFullPath(MakePathFromRootDir(BuildPackagesDir)), 
-                filesToZip);
+                filesNoDuplicates.Keys);
             RunTask(task);
 
             lastZipPackageFileName = zipFileName;
