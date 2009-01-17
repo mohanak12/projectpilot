@@ -303,7 +303,7 @@ namespace Flubu.Builds
         /// (if the build is running under CCNet).
         /// </summary>
         /// <returns>
-        /// The same instance of this <see cref="GaneshaBuildRunner"/>.
+        /// The same instance of this <see cref="TRunner"/>.
         /// </returns>
         public TRunner FetchBuildVersion()
         {
@@ -364,7 +364,7 @@ namespace Flubu.Builds
                 .AddArgument(@"/dictionary:CustomDictionary.xml")
                 .AddArgument(@"/ignoregeneratedcode");
             
-            string fxCopCmdPath = MakePathFromRootDir(@".\lib\Microsoft FxCop 1.36\FxCopCmd.exe");
+            string fxCopCmdPath = MakePathFromRootDir(Path.Combine(libDir, @"Microsoft FxCop 1.36\FxCopCmd.exe"));
             AssertFileExists("FxCopCmd.exe", fxCopCmdPath);
             ProgramRunner.Run(fxCopCmdPath, true);
 
@@ -382,7 +382,7 @@ namespace Flubu.Builds
                     // run FxCop GUI
                     ProgramRunner
                         .AddArgument(fxProjectPath)
-                        .Run(MakePathFromRootDir(@".\lib\Microsoft FxCop 1.36\FxCop.exe"));
+                        .Run(MakePathFromRootDir(Path.Combine(libDir, @"Microsoft FxCop 1.36\FxCop.exe")));
                 }
                 else if (File.Exists(fxReportPath))
                     File.Copy(fxReportPath, ccnetDir);
@@ -520,7 +520,7 @@ namespace Flubu.Builds
                     .AddArgument("/x:{0}", Path.Combine(buildLogsDir, "MergedCoverageReport.xml"))
                     .AddArgument("/r:5")
                     .AddArgument("/p:{0}", ProductName)
-                    .Run(@"lib\NCoverExplorer-1.3.6.36\NCoverExplorer.Console.exe");
+                    .Run(Path.Combine(libDir, @"NCoverExplorer-1.3.6.36\NCoverExplorer.Console.exe"));
             }
 
             return ReturnThisTRunner();
@@ -707,14 +707,14 @@ namespace Flubu.Builds
 
             testedAssemblyFileName = Path.GetFullPath(MakePathFromRootDir(testedAssemblyFileName));
 
-            string gallioEchoExePath = MakePathFromRootDir(@"lib\Gallio\bin\Gallio.Echo.exe");
+            string gallioEchoExePath = MakePathFromRootDir(Path.Combine(libDir, @"Gallio\bin\Gallio.Echo.exe"));
 
             try
             {
                 if (collectCoverageData)
                 {
                     ProgramRunner
-                        .AddArgument(@"lib\NCover v1.5.8\CoverLib.dll")
+                        .AddArgument(Path.Combine(libDir, @"NCover v1.5.8\CoverLib.dll"))
                         .AddArgument("/s")
                         .Run("regsvr32");
 
@@ -739,7 +739,7 @@ namespace Flubu.Builds
                         .AddArgument("//w")
                         .AddArgument(Path.GetDirectoryName(testedAssemblyFileName))
                         .AddArgument("//v")
-                        .Run(MakePathFromRootDir(@"lib\NCover v1.5.8\NCover.Console.exe"));
+                        .Run(MakePathFromRootDir(Path.Combine(libDir, @"NCover v1.5.8\NCover.Console.exe")));
 
                     coverageResultsExist = true;
                 }
@@ -753,7 +753,7 @@ namespace Flubu.Builds
                 if (collectCoverageData)
                 {
                     ProgramRunner
-                        .AddArgument(@"lib\NCover v1.5.8\CoverLib.dll")
+                        .AddArgument(Path.Combine(libDir, @"NCover v1.5.8\CoverLib.dll"))
                         .AddArgument("/s")
                         .AddArgument("/u")
                         .Run("regsvr32");
@@ -772,6 +772,17 @@ namespace Flubu.Builds
             this.companyCopyright = companyCopyright;
             this.companyTrademark = companyTrademark;
 
+            return ReturnThisTRunner();
+        }
+
+        /// <summary>
+        /// Sets the root path to the 3rd party libraries directory.
+        /// </summary>
+        /// <param name="libDir">The root path to the 3rd party libraries directory..</param>
+        /// <returns>The same instance of this <see cref="TRunner"/>.</returns>
+        public TRunner SetLibrariesDirectory (string libDir)
+        {
+            this.libDir = libDir;
             return ReturnThisTRunner();
         }
 
@@ -858,6 +869,7 @@ namespace Flubu.Builds
         private string companyTrademark;
         private bool coverageResultsExist;
         private string lastZipPackageFileName;
+        private string libDir = "lib";
         private readonly string productId;
         private string productName;
         private string productRootDir = String.Empty;
