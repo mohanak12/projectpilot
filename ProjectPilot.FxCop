@@ -673,23 +673,66 @@
      </Module>
     </Modules>
    </Target>
-   <Target Name="$(ProjectDir)/ProjectPilot.Extras/bin/Release/ProjectPilot.Extras.dll">
+   <Target Name="$(ProjectDir)/Flubu/bin/Release/Flubu.dll">
     <Modules>
-     <Module Name="projectpilot.extras.dll">
+     <Module Name="flubu.dll">
       <Namespaces>
-       <Namespace Name="ProjectPilot.Extras.LogParser">
+       <Namespace Name="Flubu.Tasks.UserAccounts">
         <Types>
-         <Type Name="LogCollection">
+         <Type Name="ImpersonateUserTask">
           <Members>
-           <Member Name="#ParseLogLine(System.String)">
+           <Member Name="#CloseHandle(System.IntPtr)">
             <Messages>
-             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Created="2009-01-12 07:24:08Z">
+             <Message TypeName="MarkBooleanPInvokeArgumentsWithMarshalAs" Category="Microsoft.Interoperability" CheckId="CA1414" Created="2009-01-18 16:43:48Z">
+              <Issue Name="Return">
+               <Item>'ImpersonateUserTask.CloseHandle(IntPtr)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Created="2009-01-18 16:43:48Z">
               <Issue>
-               <Item>'LogCollection.ParseLogLine(string)'</Item>
-               <Item>'Exception'</Item>
+               <Item>'ImpersonateUserTask.CloseHandle(IntPtr)'</Item>
               </Issue>
              </Message>
             </Messages>
+           </Member>
+           <Member Name="#LogonUser(System.String,System.String,System.String,System.Int32,System.Int32,System.IntPtr&amp;)">
+            <Messages>
+             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Created="2009-01-18 16:43:48Z">
+              <Issue>
+               <Item>'ImpersonateUserTask.LogonUser(string, string, string, int, int, ref IntPtr)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="0" TypeName="SpecifyMarshalingForPInvokeStringArguments" Category="Microsoft.Globalization" CheckId="CA2101" Created="2009-01-18 16:43:48Z">
+              <Issue Name="ParameterImplicitAnsi">
+               <Item>'lpszUsername'</Item>
+              </Issue>
+             </Message>
+             <Message Id="1" TypeName="SpecifyMarshalingForPInvokeStringArguments" Category="Microsoft.Globalization" CheckId="CA2101" Created="2009-01-18 16:43:48Z">
+              <Issue Name="ParameterImplicitAnsi">
+               <Item>'lpszDomain'</Item>
+              </Issue>
+             </Message>
+             <Message Id="2" TypeName="SpecifyMarshalingForPInvokeStringArguments" Category="Microsoft.Globalization" CheckId="CA2101" Created="2009-01-18 16:43:48Z">
+              <Issue Name="ParameterImplicitAnsi">
+               <Item>'lpszPassword'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#TaskDescription">
+            <Accessors>
+             <Accessor Name="#get_TaskDescription()">
+              <Messages>
+               <Message Id="System.String.Format(System.String,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2009-01-18 16:43:48Z">
+                <Issue>
+                 <Item>'string.Format(string, object, object)'</Item>
+                 <Item>'ImpersonateUserTask.TaskDescription.get()'</Item>
+                 <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -855,9 +898,6 @@
     <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
     <Resolution Name="TypeShouldBeCompoundWord">The discrete term '{0}' in type name {1} should be expressed as a compound word, '{2}'.</Resolution>
    </Rule>
-   <Rule TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031">
-    <Resolution Name="Default">Modify {0} to catch a more specific exception than {1} or rethrow the exception.</Resolution>
-   </Rule>
    <Rule TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002">
     <Resolution Name="Default">Change {0} in {1} to use Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; or KeyedCollection&lt;K,V&gt;</Resolution>
    </Rule>
@@ -889,11 +929,20 @@
    <Rule TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033">
     <Resolution Name="Default">Make {0} sealed (a breaking change if this class has previously shipped), implement the method non-explicitly, or implement a new method that exposes the functionality of {1} and is visible to derived classes.</Resolution>
    </Rule>
+   <Rule TypeName="MarkBooleanPInvokeArgumentsWithMarshalAs" Category="Microsoft.Interoperability" CheckId="CA1414">
+    <Resolution Name="Return">Add the MarshalAsAttribute to the return type of P/Invoke {0}. If the corresponding unmanaged return type is a 4-byte Win32 'BOOL', use MarshalAs(UnmanagedType.Bool). For a 1-byte C++ 'bool', use MarshalAs(UnmanagedType.U1).</Resolution>
+   </Rule>
    <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
     <Resolution Name="Default" />
    </Rule>
+   <Rule TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060">
+    <Resolution Name="Default">Because it is a P/Invoke method, {0} should be defined in a class named NativeMethods, SafeNativeMethods, or UnsafeNativeMethods.</Resolution>
+   </Rule>
    <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
     <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Resolution>
+   </Rule>
+   <Rule TypeName="SpecifyMarshalingForPInvokeStringArguments" Category="Microsoft.Globalization" CheckId="CA2101">
+    <Resolution Name="ParameterImplicitAnsi">To reduce security risk, marshal parameter {0} as Unicode, by setting DllImport.CharSet to CharSet.Unicode, or by explicitly marshaling the parameter as UnmanagedType.LPWStr. If you need to marshal this string as ANSI or system-dependent, specify MarshalAs explicitly, and set BestFitMapping=false; for added security, also set ThrowOnUnmappableChar=true.</Resolution>
    </Rule>
    <Rule TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307">
     <Resolution Name="Default">{0} makes a call to {1} that does not explicitly provide a StringComparison. This should be replaced with a call to {2}.</Resolution>
