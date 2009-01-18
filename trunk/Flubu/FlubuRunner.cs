@@ -6,6 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.Security.AccessControl;
 using System.Text;
+using Flubu.Tasks;
 using Flubu.Tasks.Configuration;
 using Flubu.Tasks.EnterpriseServices;
 using Flubu.Tasks.FileSystem;
@@ -19,6 +20,7 @@ using Flubu.Tasks.Text;
 using Flubu.Tasks.UserAccounts;
 using Flubu.Tasks.UserInterface;
 using Flubu.Tasks.WindowsServices;
+using ICSharpCode.SharpZipLib.Zip;
 using Microsoft.Win32;
 
 namespace Flubu
@@ -469,6 +471,21 @@ namespace Flubu
             return targets.ContainsKey(targetName);
         }
 
+        /// <summary>
+        /// Impersonates a specified user.
+        /// </summary>
+        /// <remarks>The impersonation will be automatically revoked at the end of the runner execution.</remarks>
+        /// <param name="userName">The user name.</param>
+        /// <param name="domain">The user domain.</param>
+        /// <param name="password">The user password.</param>
+        /// <returns>The same instance of this <see cref="FlubuRunner{TRunner}"/>.</returns>
+        public virtual TRunner ImpersonateUser(string userName, string domain, string password)
+        {
+            ImpersonateUserTask impersonateUserTask = new ImpersonateUserTask("administrator", "localhost-vm1", "jungle");
+            RegisterDisposableObject(impersonateUserTask);
+            return RunTask(impersonateUserTask);
+        }
+
         public TRunner InstallAssembly(string assemblyFileName)
         {
             InstallAssemblyTask.Execute(scriptExecutionEnvironment, assemblyFileName);
@@ -679,6 +696,36 @@ namespace Flubu
         }
 
         /// <summary>
+        /// Unzips the specified zip file to a destination directory.
+        /// </summary>
+        /// <param name="zipFileName">Name of the zip file.</param>
+        /// <param name="destinationDirectory">The destination directory where files should be unzipped to.</param>
+        /// <returns>The same instance of this <see cref="TRunner"/>.</returns>
+        public TRunner Unzip(string zipFileName, string destinationDirectory)
+        {
+            this.RunTask(new CustomRunnerTask<TRunner>(
+                             (TRunner)this,
+                             (runner) =>
+                             {
+                                 FastZip fastZip = new FastZip();
+                                 fastZip.CreateEmptyDirectories = true;
+                                 fastZip.ExtractZip(
+                                     zipFileName,
+                                     destinationDirectory,
+                                     FastZip.Overwrite.Always,
+                                     null,
+                                     null,
+                                     null,
+                                     true);
+                             },
+                             "Unzipping '{0}' to '{1}'",
+                             zipFileName,
+                             destinationDirectory));
+
+            return ReturnThisTRunner();
+        }
+
+        /// <summary>
         /// Disposes the object.
         /// </summary>
         /// <param name="disposing">If <code>false</code>, cleans up native resources. 
@@ -693,11 +740,23 @@ namespace Flubu
 
                     Beep(hasFailed ? MessageBeepType.Error : MessageBeepType.Ok);
 
+                    foreach (IDisposable disposable in stuffToDisposeOf)
+                        disposable.Dispose();
+
                     scriptExecutionEnvironment.Dispose();
                 }
 
                 disposed = true;
             }
+        }
+
+        /// <summary>
+        /// Registers a disposable object which should be disposed right before the runner itself is disposed.
+        /// </summary>
+        /// <param name="disposable">The disposable object.</param>
+        protected void RegisterDisposableObject(IDisposable disposable)
+        {
+            stuffToDisposeOf.Add(disposable);
         }
 
         protected TRunner ReturnThisTRunner()
@@ -713,6 +772,7 @@ namespace Flubu
         private bool hasFailed;
         private IList<string> lastCopiedFilesList;
         private IScriptExecutionEnvironment scriptExecutionEnvironment;
+        private List<IDisposable> stuffToDisposeOf = new List<IDisposable>();
         private readonly Dictionary<string, FlubuRunnerTarget<TRunner>> targets = new Dictionary<string, FlubuRunnerTarget<TRunner>>();
     }
 }
