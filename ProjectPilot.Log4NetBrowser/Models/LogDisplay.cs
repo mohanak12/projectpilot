@@ -20,17 +20,24 @@ namespace ProjectPilot.Log4NetBrowser.Models
             set { indexList = value; }
         }
 
-        public void Parsing10MBLogFile(LogParserFilter filter, string file)
+        public void Parsing10MBLogFile(LogParserFilter filter, string file, string logPattern, string separator)
         {
             if (string.IsNullOrEmpty(file))
 
                 //file = @"\pilotProject\Data\Samples\Log4Net_sample.log";
                 //file = @"..\..\..\Data\Samples\Log4Net_sample.log";
                 file = @"C:\SSM+2009-01-08.log.28.small";
+            
+            if (string.IsNullOrEmpty(logPattern))
+                logPattern = "Time|Level|Ndc";
+
+            if (string.IsNullOrEmpty(separator))
+                separator = "|";
 
             using (Stream fileStream = File.OpenRead(file))
             {
-                lineParse = new LogCollection('|', "Time|Level|Ndc");
+                lineParse = new LogCollection(char.Parse(separator), logPattern);
+                
                 if(filter != null)
                     lineParse.ParseFilter = filter;
                 

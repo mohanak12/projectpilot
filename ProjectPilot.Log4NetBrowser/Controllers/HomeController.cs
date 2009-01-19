@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
+using System.Web.SessionState;
 using ProjectPilot.Extras.LogParser;
 using ProjectPilot.Log4NetBrowser.Models;
 
@@ -23,7 +24,8 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
 
         public ActionResult Reload(
                             string level, string levelSelect, string StartTime, string EndTime, 
-                            string ThreadId, string fileSelect, string numberOfItems)
+                            string ThreadId, string fileSelect, string numberOfItems, 
+                            string logPattern, string separator)
         {
             LogParserFilter filter = new LogParserFilter();
             parserContent = new LogDisplay();
@@ -77,8 +79,8 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             {
                 filter.FilterNumberOfLogItems = 255;
             }
-
-            parserContent.Parsing10MBLogFile(filter, fileSelect);
+            
+            parserContent.Parsing10MBLogFile(filter, fileSelect, logPattern, separator);
 
             return RedirectToAction("Display"); 
         }
@@ -111,6 +113,15 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
         public ActionResult Ndc(string Id)
         {
             ViewData["Data"] = Id;
+
+            SessionStateItemCollection items = new SessionStateItemCollection();
+
+            items["LastName"] = "Wilson";
+            items["FirstName"] = "Dan";
+
+            foreach (string s in items.Keys)
+                Response.Write("items[\"" + s + "\"] = " + items[s].ToString() + "<br />");
+
             return View();
         }
 

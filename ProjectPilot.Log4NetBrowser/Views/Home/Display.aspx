@@ -15,8 +15,6 @@
         <input type="text" name="EndTime" />
         <label>ThreadId:</label>
         <input type="text" name="ThreadId" />
-        <label>Number of items:</label>
-        <input type="text"name="numberOfItems" />&nbsp;
         <label>Level:</label>
         <select id="levelSelect" name="levelSelect">
             <option value=""></option>
@@ -27,8 +25,18 @@
             <option value="ERROR">ERROR</option>
             <option value="FATAL">FATAL</option>
         </select>
+        <label>
+        <br />
+        Number of items:</label>
+        <input type="text"name="numberOfItems" />&nbsp;
+        <label>Log pattern:</label>
+        <input type="text" name="logPattern" />&nbsp;
+        <label>Separator:</label>
+        <input type="text" name="separator" />&nbsp;
+        <br />
+        <input name="fileSelect" type="file" />
         <input type="submit" value="Submit filter" />&nbsp;
-        <input name="fileSelect" type="file" /></form>
+    </form>
     </div>
     <div id="logEntries">
         <table border="0" cellpadding="0" cellspacing="0">

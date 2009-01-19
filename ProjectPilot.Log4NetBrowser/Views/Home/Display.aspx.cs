@@ -77,11 +77,17 @@ namespace ProjectPilot.Log4NetBrowser.Views.Home
                 //Continue with the link - link to anchor of the selected row.
                 lineOutput += "#";
                 lineOutput += index.ToString();
-                
-                //Color of the row according to LEVEL settings.
-                lineOutput += "\"><font color=\"";
-                lineOutput += levelToColor[logEntry.Elements[levelIndex].ToString()];
                 lineOutput += "\">";
+
+                //Color of the row according to LEVEL settings.
+                if (levelIndex != -1 &&
+                    levelToColor.ContainsKey(logEntry.Elements[levelIndex].ToString()))
+                {
+                    lineOutput += "<font color=\"";
+                    lineOutput += levelToColor[logEntry.Elements[levelIndex].ToString()];
+                    
+                    lineOutput += "\">";
+                }
 
                 /*Longer elements of the line will be split. "..." is added at the end,
                  *unless the line is in the expandList - the list of elements we want to se complete.*/
@@ -107,7 +113,10 @@ namespace ProjectPilot.Log4NetBrowser.Views.Home
                 }
 
                 //End of the link and cell HTML elements
-                lineOutput += "</font></a></td>";
+                if (levelIndex != -1 &&
+                    levelToColor.ContainsKey(logEntry.Elements[levelIndex].ToString()))
+                    lineOutput += "</font>";
+                lineOutput += "</a></td>";
             }
             return lineOutput;
         }
@@ -163,6 +172,6 @@ namespace ProjectPilot.Log4NetBrowser.Views.Home
         private List<int> tableWidths;
         private const int pixelVsChar = 8;
         private Dictionary<string, string> levelToColor;
-        private int levelIndex;
+        private int levelIndex=-1;
     }
 }

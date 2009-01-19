@@ -211,6 +211,9 @@ namespace ProjectPilot.Extras.LogParser
         public void ParseLogFile(Stream fileStream)
         {
             string line;
+            
+          //  if (elementsPattern.Count <= 1) return;
+
             using (StreamReader reader = new StreamReader(fileStream))
             {
                 while (!reader.EndOfStream)
