@@ -36,6 +36,7 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             DateTime endTime = new DateTime();
             CultureInfo cultureToUse = CultureInfo.InvariantCulture;
 
+            
             if (string.IsNullOrEmpty(StartTime) && string.IsNullOrEmpty(EndTime))
             {
                 StartTime = "";
