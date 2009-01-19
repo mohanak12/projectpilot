@@ -11,6 +11,6 @@
 namespace ProjectPilot.Log4NetBrowser.Views.Home {
     
     
-    public partial class Index {
+    public partial class FileSelect {
     }
 }

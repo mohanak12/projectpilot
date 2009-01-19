@@ -16,25 +16,25 @@
             if (ParserContent.LineParse.ElementsPattern.Contains("Time"))
             {
                 Response.Write(
-                    "<label>Start time:</label>" + 
-                    "<input type=\"text\" name=\"StartTime\" />");
+                    "<label>Start time:</label>&nbsp;" +
+                    "<input type=\"text\" name=\"StartTime\" />&nbsp;");
                 
                 Response.Write(
-                    "<label>End time:</label>" +
-                    "<input type=\"text\" name=\"EndTime\" />");
+                    "<label>End time:</label>&nbsp;" +
+                    "<input type=\"text\" name=\"EndTime\" />&nbsp;");
             }
         
             if (ParserContent.LineParse.ElementsPattern.Contains("ThreadId"))
             {
                 Response.Write(
-                    "<label>ThreadId:</label>" +
-                    "<input type=\"text\" name=\"ThreadId\" />");
+                    "<label>ThreadId:</label>&nbsp;" +
+                    "<input type=\"text\" name=\"ThreadId\" />&nbsp;");
             }
                         
             if (ParserContent.LineParse.ElementsPattern.Contains("Level"))
             {
                 Response.Write(
-                    "<label>Level:</label>" +
+                    "<label>Level:</label>&nbsp;" +
                     "<select id=\"levelSelect\" name=\"levelSelect\"\">" +
                     "<option value=\"\"></option>" + 
                     "<option value=\"TRACE\">TRACE</option>" + 
@@ -43,26 +43,18 @@
                     "<option value=\"WARN\">WARN</option>" + 
                     "<option value=\"ERROR\">ERROR</option>" +
                     "<option value=\"FATAL\">FATAL</option>" +
-                    "</select>");
+                    "</select>&nbsp;");
             }
             
         %>
-        <label>
-        <br />
-        Number of items:</label>
-        <input type="text"name="numberOfItems" />&nbsp;
-        <label>Log pattern:</label>
-        <input type="text" name="logPattern" />&nbsp;
-        <label>Separator:</label>
-        <input type="text" name="separator" />&nbsp;
-        <br />
-        <input name="fileSelect" type="file" />
+  
+        <label>Number of items:</label>&nbsp;
+        <input type="text"name="numberOfItems" size=3 />&nbsp;
+
         <input type="submit" value="Submit filter" />&nbsp;
-   
-       <%
-            
-    %>
-   
+        
+        <%= Html.ActionLink("Select File","FileSelect","Home")%>
+           
     </form>
     </div>
     <div id="logEntries">
