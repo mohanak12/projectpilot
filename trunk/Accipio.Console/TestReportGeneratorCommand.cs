@@ -54,6 +54,8 @@ namespace Accipio.Console
             {
                 XmlReader reader = XmlReader.Create(inputStream);
                 XmlWriterSettings writerSettings = new XmlWriterSettings();
+                writerSettings.Indent = true;
+                writerSettings.NewLineOnAttributes = false;
                 writerSettings.ConformanceLevel = ConformanceLevel.Auto;
                 using (XmlWriter writer = XmlWriter.Create(outputFileName, writerSettings))
                 {
