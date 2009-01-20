@@ -33,10 +33,10 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
                             string logPattern, string separator)
         {
             //file is not selected
-            if (string.IsNullOrEmpty(fileSelect))
-                return RedirectToAction("Index"); 
+            if (string.IsNullOrEmpty(fileSelect) || string.IsNullOrEmpty(logPattern) || string.IsNullOrEmpty(separator))
+                return RedirectToAction("Index");
 
-
+            //save values !!!  Session not supported yet
             fileSelected = fileSelect;
             pattern = logPattern;
             logSeparator = separator;
@@ -79,7 +79,6 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
                 filter.FilterTimestampStart = startTime;
                 filter.FilterTimestampEnd = endTime;
             }
-
 
             filter.FilterLevel = levelSelect;
 
@@ -199,6 +198,7 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             return View();
         }
 
+        //Filter!!
         private static LogDisplay parserContent;
         private static string fileSelected;
         private static string pattern;

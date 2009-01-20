@@ -21,13 +21,21 @@ namespace ProjectPilot.Extras.LogParser
             DateTime filterTimestampEnd,
             string filterThreadId,
             string filterLevel,
-            int filterNumberOfLogItems)
+            int? filterNumberOfLogItems,
+            int? startLogIndex,
+            int? endLogIndex,
+            string matchWholeWordOnly,
+            string matchCase)
         {
             this.filterTimestampStart = filterTimestampStart;
             this.filterTimestampEnd = filterTimestampEnd;
             this.filterThreadId = filterThreadId;
             this.filterLevel = filterLevel;
+            this.startLogIndex = startLogIndex;
+            this.endLogIndex = endLogIndex;
             this.filterNumberOfLogItems = filterNumberOfLogItems;
+            this.matchWholeWordOnly = matchWholeWordOnly;
+            this.matchCase = matchCase;
         }
 
         public string FilterLevel
@@ -60,10 +68,38 @@ namespace ProjectPilot.Extras.LogParser
             set { filterNumberOfLogItems = value; }
         }
 
+        public int? EndLogIndex
+        {
+            get { return endLogIndex; }
+            set { endLogIndex = value; }
+        }
+
+        public int? StartLogIndex
+        {
+            get { return startLogIndex; }
+            set { startLogIndex = value; }
+        }
+
+        public string MatchCase
+        {
+            get { return matchCase; }
+            set { matchCase = value; }
+        }
+
+        public string MatchWholeWordOnly
+        {
+            get { return matchWholeWordOnly; }
+            set { matchWholeWordOnly = value; }
+        }
+
+        private int? endLogIndex;
         private DateTime? filterTimestampStart;
         private DateTime? filterTimestampEnd;
         private string filterThreadId;
         private string filterLevel;
         private int? filterNumberOfLogItems;
+        private string matchCase;
+        private string matchWholeWordOnly;
+        private int? startLogIndex;
     }
 }
