@@ -95,6 +95,9 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
 
             parserContent.Parsing10MBLogFile(filter, fileSelected, pattern, separator);
 
+            Session["parserContent"] = parserContent;
+            Session["fileSelected"] = fileSelected;
+
             return RedirectToAction("Display"); 
         }
 
@@ -112,7 +115,8 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             DateTime endTime = new DateTime();
             CultureInfo cultureToUse = CultureInfo.InvariantCulture;
 
-            
+            fileSelected = (string)Session["fileSelected"];
+
             if (string.IsNullOrEmpty(StartTime) && string.IsNullOrEmpty(EndTime))
             {
                 StartTime = "";
@@ -159,11 +163,15 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
 
             parserContent.Parsing10MBLogFile(filter, fileSelected, pattern, logSeparator);
 
+            Session["parserContent"] = parserContent;
+
             return RedirectToAction("Display"); 
         }
 
         public ActionResult Display(int? Id)
         {
+            parserContent = (LogDisplay)Session["parserContent"];
+
             if (Id != null)
             {
                 if (Id < 0)
@@ -198,9 +206,8 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             return View();
         }
 
-        //Filter!!
-        private static LogDisplay parserContent;
-        private static string fileSelected;
+        private LogDisplay parserContent;
+        private string fileSelected;
         private static string pattern;
         private static string logSeparator;
     }
