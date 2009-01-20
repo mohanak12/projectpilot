@@ -28,7 +28,7 @@ namespace Accipio
                         if (reportCase.Status == ReportCaseStatus.Passed)
                             story.SuccessfullyAccomplished++;
 
-                        story.PresenceInTestCase++;
+                        story.PresentInTestCase++;
                     }
                 }
             }

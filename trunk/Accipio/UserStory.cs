@@ -1,6 +1,4 @@
-﻿
-using System.Collections;
-using System.Globalization;
+﻿using System.Globalization;
 
 namespace Accipio
 {
@@ -11,7 +9,7 @@ namespace Accipio
             this.userStoryName = userStoryName;
         }
 
-        public int PresenceInTestCase { get; set; }
+        public int PresentInTestCase { get; set; }
 
         public int SuccessfullyAccomplished { get; set; }
 
@@ -27,7 +25,7 @@ namespace Accipio
                 "{0} ({1}/{2})", 
                 userStoryName, 
                 SuccessfullyAccomplished,
-                PresenceInTestCase);
+                PresentInTestCase);
         }
 
         private readonly string userStoryName;
