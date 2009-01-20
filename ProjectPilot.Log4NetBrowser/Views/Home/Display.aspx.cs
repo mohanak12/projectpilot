@@ -60,7 +60,7 @@ namespace ProjectPilot.Log4NetBrowser.Views.Home
                 if(i==0)
                 {
                     lineOutput += "<a name=\"";
-                    lineOutput += index.ToString();
+                    lineOutput += (index + 1).ToString();
                     lineOutput += "\"></a>";
                 }
                 
@@ -68,15 +68,14 @@ namespace ProjectPilot.Log4NetBrowser.Views.Home
                 lineOutput += "<a href=\"/Home/Display/";
                 
                 //Workaround for opening and closing current element, otherwise the HTML page wont refresh.
-                if (currentIndex  == index &&
-                    expandIndex.Contains(index))
-                    lineOutput += "-1";
-                else
-                    lineOutput += index.ToString();
+                if (expandIndex.Contains(index))
+                    lineOutput += "-";
+
+                lineOutput += (index + 1).ToString();
                 
                 //Continue with the link - link to anchor of the selected row.
                 lineOutput += "#";
-                lineOutput += index.ToString();
+                lineOutput += (index + 1).ToString();
                 lineOutput += "\">";
 
                 //Color of the row according to LEVEL settings.
@@ -85,7 +84,6 @@ namespace ProjectPilot.Log4NetBrowser.Views.Home
                 {
                     lineOutput += "<font color=\"";
                     lineOutput += levelToColor[logEntry.Elements[levelIndex].ToString()];
-                    
                     lineOutput += "\">";
                 }
 
