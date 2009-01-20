@@ -16,7 +16,7 @@ namespace ProjectPilot.Tests.AccipioTests
                 ReportData reportData = parser.Parse();
 
                 ICodeWriter writer = new FileCodeWriter("TestReport.html");
-                CreateHtmlTestReport report = new CreateHtmlTestReport(writer);
+                HtmlTestReportGenerator report = new HtmlTestReportGenerator(writer);
                 report.Generate(reportData);
             }
         }

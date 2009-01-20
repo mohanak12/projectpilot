@@ -3,13 +3,13 @@ using System.Globalization;
 
 namespace Accipio
 {
-    public class CreateHtmlTestReport : ITestReportGenerator
+    public class HtmlTestReportGenerator : IHtmlTestReportGenerator
     {
         /// <summary>
-        /// Initializes a new instance of the CreateHtmlTestReport class.
+        /// Initializes a new instance of the HtmlTestReportGenerator class.
         /// </summary>
         /// <param name="writer">Interface of <see cref="ICodeWriter" />.</param>
-        public CreateHtmlTestReport(ICodeWriter writer)
+        public HtmlTestReportGenerator(ICodeWriter writer)
         {
             this.writer = writer;
         }
@@ -29,13 +29,17 @@ namespace Accipio
             WriteLine("<body>");
             WriteLine("     <h1>Test report details</h1>");
             WriteLine("     <b>Version:</b> {0}  <b>StartTime:</b> {1:s}  <b>Duration:</b> {2} seconds", reportData.Version, reportData.StartTime, reportData.Duration);
+            WriteLine("     <h2>User stories</h2>");
+
+            WriteUserStoriesDetails(reportData);
+
             WriteLine("     <h2>Suites</h2>");
 
             foreach (ReportSuite reportSuite in reportData.TestSuites)
             {
                 string report = string.Format(
                     CultureInfo.InvariantCulture, 
-                    "(Passed: {0}, Failed {1}, Skipped {2})", 
+                    "Summary: Passed {0}, Failed {1}, Skipped {2}", 
                     reportSuite.PassedTests, 
                     reportSuite.FailedTests, 
                     reportSuite.SkippedTests);
@@ -51,7 +55,31 @@ namespace Accipio
             writer.Close();
         }
 
-        private void WriteTestCases(IList<ReportCase> reportCases)
+        /// <summary>
+        /// Write all user stories that are presented in test cases.
+        /// </summary>
+        /// <param name="reportData">Test report data.</param>
+        private void WriteUserStoriesDetails(ReportData reportData)
+        {
+            IList<UserStory> userStories = UserStoryDataMiner.GetUserStoryDetails(reportData);
+
+            string details = "<ul>";
+
+            foreach (UserStory userStory in userStories)
+            {
+                details += string.Format(CultureInfo.InvariantCulture, "<li>{0}</li>", userStory);
+            }
+
+            details += "</ul>";
+
+            WriteLine(details);
+        }
+
+        /// <summary>
+        /// Write all test cases, its status and details.
+        /// </summary>
+        /// <param name="reportCases">Test cases.</param>
+        private void WriteTestCases(IEnumerable<ReportCase> reportCases)
         {
             // write html table start element
             WriteLine(HtmlTableStartElement);
@@ -59,40 +87,33 @@ namespace Accipio
             // write cases and case details
             foreach (ReportCase reportCase in reportCases)
             {
-                if (reportCase.Status == ReportCaseStatus.Failed)
-                {
-                    WriteLine(
-                        HtmlTableRow, 
-                        reportCase.CaseId, 
-                        reportCase.Status,
-                        AddUserStoriesToReport(reportCase.UserStories),
-                        reportCase.ReportDetails);
-                }
-                else
-                {
-                    WriteLine(
-                        HtmlTableRow, 
-                        reportCase.CaseId, 
-                        reportCase.Status, 
-                        AddUserStoriesToReport(reportCase.UserStories), 
-                        HtmlSpaceElement);
-                }
+                WriteLine(
+                    HtmlTableRow, 
+                    reportCase.CaseId, 
+                    reportCase.Status,
+                    AddUserStoriesInTestCaseToReport(reportCase.UserStories),
+                    reportCase.ReportDetails ?? HtmlSpaceElement);
             }
 
             // write html table end element
             WriteLine(HtmlTableEndElement);
         }
 
-        private static string AddUserStoriesToReport(IEnumerable<string> stories)
+        /// <summary>
+        /// Add all user stories for each test case to unordered list (html).
+        /// </summary>
+        /// <param name="stories">List of user stories.</param>
+        /// <returns>Unordered list of user stories.</returns>
+        private static string AddUserStoriesInTestCaseToReport(IEnumerable<string> stories)
         {
-            string userStories = "<ul>";
+            string details = "<ul>";
 
             foreach (string userStory in stories)
             {
-                userStories += string.Format(CultureInfo.InvariantCulture, "<li>{0}</li>", userStory);
+                details += string.Format(CultureInfo.InvariantCulture, "<li>{0}</li>", userStory);
             }
 
-            return string.Format(CultureInfo.InvariantCulture, "{0}</ul>", userStories);
+            return string.Format(CultureInfo.InvariantCulture, "{0}</ul>", details);
         }
 
         private void WriteLine(string line)

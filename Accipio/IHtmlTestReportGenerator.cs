@@ -1,7 +1,7 @@
 ﻿
 namespace Accipio
 {
-    public interface ITestReportGenerator
+    public interface IHtmlTestReportGenerator
     {
         void Generate(ReportData reportData);
     }
