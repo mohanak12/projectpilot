@@ -15,14 +15,6 @@ namespace Accipio.Console
             this.nextCommandInChain = nextCommandInChain;
         }
 
-        /// <summary>
-        /// Gets output file name
-        /// </summary>
-        public string OutputFile
-        {
-            get { return outputFileName; }
-        }
-
         public string AccipioDirectory { get; set; }
 
         /// <summary>
@@ -56,7 +48,7 @@ namespace Accipio.Console
 
             // check if file exists
             if (!fileInfo.Exists)
-                throw new System.IO.IOException(
+                throw new IOException(
                     string.Format(
                     CultureInfo.InvariantCulture,
                     "File {0} does not exist.",
@@ -74,7 +66,6 @@ namespace Accipio.Console
         }
 
         private readonly IConsoleCommand nextCommandInChain;
-        private string outputFileName;
         private string testReportFileName;
     }
 }
