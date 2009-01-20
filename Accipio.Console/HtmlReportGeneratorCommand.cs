@@ -15,6 +15,14 @@ namespace Accipio.Console
             this.nextCommandInChain = nextCommandInChain;
         }
 
+        /// <summary>
+        /// Gets output file name
+        /// </summary>
+        public string OutputFile
+        {
+            get { return AcceptanceTestResultsFileName; }
+        }
+
         public string AccipioDirectory { get; set; }
 
         /// <summary>
@@ -62,10 +70,25 @@ namespace Accipio.Console
         /// </summary>
         public void ProcessCommand()
         {
-            // parse test statistics to object
+            ReportData reportData;
+            using (ReportDataParser parser = new ReportDataParser(testReportFileName))
+            {
+                // parse report data from xml file
+                reportData = parser.Parse();
+            }
+
+            System.Console.WriteLine("Creating report '{0}'", AcceptanceTestResultsFileName);
+
+            // generate html report data
+            using (ICodeWriter writer = new FileCodeWriter(AcceptanceTestResultsFileName))
+            {
+                IHtmlTestReportGenerator htmlTestReportGenerator = new HtmlTestReportGenerator(writer);
+                htmlTestReportGenerator.Generate(reportData);
+            }
         }
 
         private readonly IConsoleCommand nextCommandInChain;
         private string testReportFileName;
+        private const string AcceptanceTestResultsFileName = "AcceptanceTestResults.html";
     }
 }
