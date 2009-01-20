@@ -167,17 +167,13 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
         {
             if (Id != null)
             {
-                if(Id ==-1)
+                if (Id < 0)
                 {
-                    parserContent.IndexList.Remove(parserContent.IndexList.Last());
+                    Id *= -1;
+                    parserContent.IndexList.Remove((int)Id-1);
                 }
                 else
-                {
-                    if (parserContent.IndexList.Contains((int)Id))
-                        parserContent.IndexList.Remove((int)Id);
-                    else
-                        parserContent.IndexList.Add((int)Id);
-                }
+                    parserContent.IndexList.Add((int)Id-1);
             }
             else
                 Id = 0;
