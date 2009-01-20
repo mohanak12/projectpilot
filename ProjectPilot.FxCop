@@ -674,101 +674,6 @@
      </Module>
     </Modules>
    </Target>
-   <Target Name="$(ProjectDir)/Headless/bin/Release/Headless.dll">
-    <Modules>
-     <Module Name="headless.dll">
-      <Messages>
-       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Created="2009-01-20 08:45:59Z">
-        <Issue>
-         <Item>'Headless.dll'</Item>
-        </Issue>
-       </Message>
-      </Messages>
-      <Namespaces>
-       <Namespace Name="Headless.Configuration">
-        <Types>
-         <Type Name="BuildStage">
-          <Members>
-           <Member Name="#buildComputer">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2009-01-20 08:45:59Z">
-              <Issue>
-               <Item>'BuildStage.buildComputer'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#task">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2009-01-20 08:45:59Z">
-              <Issue>
-               <Item>'BuildStage.task'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="IBuildTask">
-          <Messages>
-           <Message TypeName="AvoidEmptyInterfaces" Category="Microsoft.Design" CheckId="CA1040" Created="2009-01-20 08:45:59Z">
-            <Issue>
-             <Item>'IBuildTask'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="IVersionControlSystem">
-          <Messages>
-           <Message TypeName="AvoidEmptyInterfaces" Category="Microsoft.Design" CheckId="CA1040" Created="2009-01-20 08:45:59Z">
-            <Issue>
-             <Item>'IVersionControlSystem'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="Project">
-          <Members>
-           <Member Name="#projectId">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2009-01-20 08:45:59Z">
-              <Issue>
-               <Item>'Project.projectId'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#versionControlSystem">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2009-01-20 08:45:59Z">
-              <Issue>
-               <Item>'Project.versionControlSystem'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
-       <Namespace Name="Headless.Subversion">
-        <Types>
-         <Type Name="SubversionVcs">
-          <Messages>
-           <Message Id="Vcs" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-01-20 08:45:59Z">
-            <Issue Name="Type">
-             <Item>Vcs</Item>
-             <Item>'SubversionVcs'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-        </Types>
-       </Namespace>
-      </Namespaces>
-     </Module>
-    </Modules>
-   </Target>
    <Target Name="$(ProjectDir)/ProjectPilot.Framework/bin/Release/ProjectPilot.Framework.dll">
     <Modules>
      <Module Name="projectpilot.framework.dll">
@@ -872,6 +777,29 @@
     <Modules>
      <Module Name="projectpilot.tests.dll">
       <Namespaces>
+       <Namespace Name="ProjectPilot.Tests.AccipioTests">
+        <Types>
+         <Type Name="TestReportGeneratorCommandTests">
+          <Members>
+           <Member Name="#TransformGallioTestResults()">
+            <Messages>
+             <Message Id="Gallio" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-01-20 10:18:38Z">
+              <Issue Name="Member">
+               <Item>Gallio</Item>
+               <Item>'TestReportGeneratorCommandTests.TransformGallioTestResults()'</Item>
+              </Issue>
+              <Notes>
+               <User Name="ajeznik">
+                <Note Id="0" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
        <Namespace Name="ProjectPilot.Tests.Framework">
         <Types>
          <Type Name="ChartsTests">
@@ -911,6 +839,11 @@
     </Modules>
    </Target>
   </Targets>
+  <Notes>
+   <User Name="ajeznik">
+    <Note Id="0" Modified="2009-01-20 10:20:04Z">Gallio is the name of the bundle with unit test tools.</Note>
+   </User>
+  </Notes>
   <Rules>
    <Rule TypeName="AvoidEmptyInterfaces" Category="Microsoft.Design" CheckId="CA1040">
     <Resolution Name="Default">Define a custom attribute to replace {0}.</Resolution>
@@ -920,9 +853,6 @@
    </Rule>
    <Rule TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021">
     <Resolution Name="Default">Consider a design that does not require that {0} be an out parameter.</Resolution>
-   </Rule>
-   <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
-    <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
    </Rule>
    <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
     <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
@@ -958,9 +888,6 @@
    </Rule>
    <Rule TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033">
     <Resolution Name="Default">Make {0} sealed (a breaking change if this class has previously shipped), implement the method non-explicitly, or implement a new method that exposes the functionality of {1} and is visible to derived classes.</Resolution>
-   </Rule>
-   <Rule TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014">
-    <Resolution Name="Default">Mark {0} with CLSCompliant(true) because it exposes externally visible types.</Resolution>
    </Rule>
    <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
     <Resolution Name="Default" />

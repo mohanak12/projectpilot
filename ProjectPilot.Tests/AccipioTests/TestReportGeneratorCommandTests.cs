@@ -6,19 +6,19 @@ namespace ProjectPilot.Tests.AccipioTests
     [TestFixture]
     public class TestReportGeneratorCommandTests
     {
-        [Test, Pending("Not finished yet")]
-        public void Transform()
+        [Test]
+        public void TransformGallioTestResults()
         {
             string[] args = new string[]
                                 {
                                     "transform",
-                                    "..\\..\\..\\Data\\Samples\\AccipioTestReportSample.xml",
+                                    "..\\..\\..\\Data\\Samples\\AcceptanceTestResults.xml",
                                     "TestResults.xml"
                                 };
-            TestReportGeneratorCommand testReportGeneratorCommand = 
+            TestReportGeneratorCommand testReportGeneratorCommand =
                 new TestReportGeneratorCommand(null)
                     {
-                        AccipioDirectory = "..\\..\\..\\Accipio.Console"
+                        AccipioDirectory = string.Empty
                     };
             testReportGeneratorCommand.ParseArguments(args);
             testReportGeneratorCommand.ProcessCommand();

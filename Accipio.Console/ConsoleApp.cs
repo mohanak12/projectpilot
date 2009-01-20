@@ -73,6 +73,7 @@ namespace Accipio.Console
             System.Console.WriteLine("Target:");
             System.Console.WriteLine("  baschema                   Create acceptance test suite schema");
             System.Console.WriteLine("  codegen                    Create acceptance test code");
+            System.Console.WriteLine("  transform                  Run XSLTransform on Gallio test report file");
             System.Console.WriteLine(string.Empty);
             System.Console.WriteLine("Arguments:");
             System.Console.WriteLine("  [baschema]");
@@ -81,13 +82,17 @@ namespace Accipio.Console
             System.Console.WriteLine("  [codegen]");
             System.Console.WriteLine("  <instance>.xml             Name of a xml file to infer xsd schema from");
             System.Console.WriteLine("  <schema>.xsd               Name of a schema to be used for validating <test_suite_file>.xml");
-            System.Console.WriteLine("  <test_suite_file>.xml      Name of a test suite file.");
-            System.Console.WriteLine("                             Multipile file arguments of type <test_suite_file>.xml may be provided.");
+            System.Console.WriteLine("  <test_suite_file>.xml      Name of a test suite file");
+            System.Console.WriteLine("                             Multipile file arguments of type <test_suite_file>.xml may be provided");
+            System.Console.WriteLine("  [transform]");
+            System.Console.WriteLine("  <test_results_file>.xml    Xml file with Gallio test results");
+            System.Console.WriteLine("  <transformed_file>.xml     Output file with transofrmed Gallio test results");
             System.Console.WriteLine(string.Empty);
             System.Console.WriteLine("Example:");
             System.Console.WriteLine("  Accipio.Console.exe baschema <instance>.xml <schema_namespace>");
             System.Console.WriteLine("  Accipio.Console.exe codegen <instance>.xml <schema>.xsd <test_suite_file>.xml [...]");
             System.Console.WriteLine("  Accipio.Console.exe -o=C:\\temp\\ codegen <instance>.xml <schema>.xsd <test_suite_file>.xml [...]");
+            System.Console.WriteLine("  Accipio.Console.exe transform <test_results_file>.xml <transformed_file>.xml");
             System.Console.WriteLine(string.Empty);
         }
 
