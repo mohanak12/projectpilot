@@ -49,6 +49,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Scripts\NAntCommon.build = Scripts\NAntCommon.build
 		PrepareBuildScript.bat = PrepareBuildScript.bat
 		ProjectPilot.build = ProjectPilot.build
+		ProjectPilot.FxCop = ProjectPilot.FxCop
 		ProjectPilot.NCoverExplorer.config = ProjectPilot.NCoverExplorer.config
 		ProjectPilot.ProjectVersion.txt = ProjectPilot.ProjectVersion.txt
 		Todo.txt = Todo.txt
@@ -65,6 +66,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accipio.Console", "Accipio.Console\Accipio.Console.csproj", "{2A84FEA1-0FC3-4885-B25A-F25C14978C7E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectPilot.Log4NetBrowser", "ProjectPilot.Log4NetBrowser\ProjectPilot.Log4NetBrowser.csproj", "{696D13ED-BA42-423B-B179-ED1EB3034F62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Headless", "Headless\Headless.csproj", "{6917FFA0-9179-45D3-A24E-C639E24B6CF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -108,6 +111,10 @@ Global
 		{696D13ED-BA42-423B-B179-ED1EB3034F62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{696D13ED-BA42-423B-B179-ED1EB3034F62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{696D13ED-BA42-423B-B179-ED1EB3034F62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6917FFA0-9179-45D3-A24E-C639E24B6CF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6917FFA0-9179-45D3-A24E-C639E24B6CF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6917FFA0-9179-45D3-A24E-C639E24B6CF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6917FFA0-9179-45D3-A24E-C639E24B6CF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
