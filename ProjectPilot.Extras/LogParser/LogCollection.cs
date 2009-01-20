@@ -85,6 +85,21 @@ namespace ProjectPilot.Extras.LogParser
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "LogLine")]
         public void ParseLogLine(string line)
         {
+            //Log Index Filter (log entries from X to Y)
+            if (parseFilter.StartLogIndex != null)
+                if (currentIndex < parseFilter.StartLogIndex)
+                {
+                    currentIndex++;
+                    return;
+                }
+
+            if (parseFilter.EndLogIndex != null)
+                if (currentIndex > parseFilter.EndLogIndex)
+                {
+                    stopFlag = true;
+                    return;
+                }
+
             string []lineElements = line.Split(separator);
             int n;
 
@@ -171,6 +186,7 @@ namespace ProjectPilot.Extras.LogParser
 
                 addTolastPattern = true;
                 elementsLog.Add(newEntry);
+                currentIndex++;
                 //Add's last pattern
                 if (n < lineElements.Length)
                 {
@@ -216,7 +232,10 @@ namespace ProjectPilot.Extras.LogParser
 
             using (StreamReader reader = new StreamReader(fileStream))
             {
-                while (!reader.EndOfStream)
+                if (parseFilter.StartLogIndex > parseFilter.EndLogIndex)
+                    stopFlag = true;
+
+                while (!reader.EndOfStream && stopFlag == false)
                 {
                     line = reader.ReadLine();
                     if (true == string.IsNullOrEmpty(line))
@@ -251,10 +270,13 @@ namespace ProjectPilot.Extras.LogParser
                     filterFlag = false;
             }
 
-            if (parseFilter.FilterNumberOfLogItems > 0)
+            if (parseFilter.FilterNumberOfLogItems != null)
             {
                 if (count >= parseFilter.FilterNumberOfLogItems)
+                {
                     filterFlag = false;
+                    stopFlag = true;
+                }
             }
 
             if (filterFlag)
@@ -269,10 +291,12 @@ namespace ProjectPilot.Extras.LogParser
 
         private bool addTolastPattern = false;
         private CultureInfo cultureToUse = CultureInfo.InvariantCulture;
+        private int currentIndex;
         private Dictionary<string, string> conversionMap = new Dictionary<string, string>();
         private List<string> elementsPattern = new List<string>();
         private List<LogEntry> elementsLog = new List<LogEntry>();
         private char separator = '|';
+        private bool stopFlag;
         private string timePattern = "yyyy-MM-dd HH:mm:ss,fff";
         private LogParserFilter parseFilter = new LogParserFilter();
     }
