@@ -55,7 +55,7 @@ namespace ProjectPilot.Tests.AccipioTests
             mockWriter.Expect(writer => writer.WriteLine("<ul><li><h3><u>TestSuiteId</u></h3></li></ul>"));
             mockWriter.Expect(writer => writer.WriteLine("Summary: Passed 1, Failed 0, Skipped 0"));
             mockWriter.Expect(writer => writer.WriteLine("<table border=\"1\" width=\"80%\"><tr><td width=\"20%\"><b>CaseId</b></td><td width=\"30%\"><b>User stories</b></td><td><b>Details</b></td></tr>"));
-            mockWriter.Expect(writer => writer.WriteLine("<tr style=\"background-color: White;\"><td style=\"vertical-align: top;\">CaseId<br />[<b><i>Passed</i></b>]</td><td style=\"vertical-align: top;\"><ul><li>UserStory1</li><li>UserStory2</li></ul></td><td style=\"vertical-align: top;\">&nbsp;</td></tr>"));
+            mockWriter.Expect(writer => writer.WriteLine("<tr style=\"background-color: White;\"><td style=\"vertical-align: top; background-color: Green;\">CaseId<br />[<b><i>Passed</i></b>]</td><td style=\"vertical-align: top;\"><ul><li>UserStory1</li><li>UserStory2</li></ul></td><td style=\"vertical-align: top;\">&nbsp;</td></tr>"));
             mockWriter.Expect(writer => writer.WriteLine("</table>"));
             mockWriter.Expect(writer => writer.WriteLine("</body>"));
             mockWriter.Expect(writer => writer.WriteLine("</html>"));
