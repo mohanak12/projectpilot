@@ -223,13 +223,34 @@ namespace ProjectPilot.Tests.Extras
         [Row(null, 15)]
         [Row("[Listen(1)]", 4)]
         [Row("[(null)]", 10)]
+        [Row("null", 0)]
         [Row("Test", 0)]
-        public void TestingSearchFilter(string matchWholeWordOnly, int expectedElementsLogCount)
+        public void TestingSearchWholeWordOnlyFilter(string matchWholeWordOnly, int expectedElementsLogCount)
         {
             using (Stream fileStream = File.OpenRead(@"..\..\..\Data\Samples\TestLogParser.log"))
             {
                 LogParserFilter filter = new LogParserFilter();
                 filter.MatchWholeWordOnly = matchWholeWordOnly;
+
+                LogCollection lineParse = new LogCollection('|', "Time|ThreadId|Level|Ndc");
+                lineParse.ParseFilter = filter;
+                lineParse.ParseLogFile(fileStream);
+
+                Assert.AreEqual(expectedElementsLogCount, lineParse.ElementsLog.Count);
+            }
+        }
+
+        [Test]
+        [Row(null, 15)]
+        [Row("End", 2)]
+        [Row("null", 10)]
+        [Row("TeSt", 0)]
+        public void TestingSearchMatchCaseFilter(string matchCase, int expectedElementsLogCount)
+        {
+            using (Stream fileStream = File.OpenRead(@"..\..\..\Data\Samples\TestLogParser.log"))
+            {
+                LogParserFilter filter = new LogParserFilter();
+                filter.MatchCase = matchCase;
 
                 LogCollection lineParse = new LogCollection('|', "Time|ThreadId|Level|Ndc");
                 lineParse.ParseFilter = filter;
