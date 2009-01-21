@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Web;
 using ProjectPilot.Extras.LogParser;
 
@@ -27,13 +29,16 @@ namespace ProjectPilot.Log4NetBrowser.Models
                 //file = @"\pilotProject\Data\Samples\Log4Net_sample.log";
                 //file = @"..\..\..\Data\Samples\Log4Net_sample.log";
                 file = @"C:\SSM+2009-01-08.log.28.small";
-            
+                //file = @"http://code.google.com/p/projectpilot/source/browse/trunk/Data/Samples/TestLogParser.log";
+
+           // NetworkStream fileOnNetwork;
+                         
             if (string.IsNullOrEmpty(logPattern))
                 logPattern = "Time|Level|Ndc";
 
             if (string.IsNullOrEmpty(separator))
                 separator = "|";
-
+            
             using (Stream fileStream = File.OpenRead(file))
             {
                 lineParse = new LogCollection(char.Parse(separator), logPattern);
