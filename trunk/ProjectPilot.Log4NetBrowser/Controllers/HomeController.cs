@@ -121,7 +121,8 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
 
         public ActionResult Reload(
                             string levelSelect, string StartTime, string EndTime, 
-                            string ThreadId, string numberOfItems)
+                            string ThreadId, string numberOfItems,
+                            string searchType, string Search)
         {
             LogParserFilter filter = new LogParserFilter();
             parserContent = new LogDisplay();
@@ -181,6 +182,65 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             }
 
             parserContent.Parsing10MBLogFile(filter, fileSelected, pattern, logSeparator);
+            
+            //(Log4NetBrowser - Display) Search Filter /
+            bool deleteFlag = false;
+            
+            if (!string.IsNullOrEmpty(Search))
+            {
+                for(int i = 0; i < parserContent.LineParse.ElementsLog.Count; i++)
+                {
+                    if (searchType == "MatchCase")
+                    {
+                        if (parserContent.LineParse.ElementsPattern.Contains("Ndc"))
+                        {
+                            string stringTemp = (string)((NdcElement)parserContent.LineParse.ElementsLog[i].Elements[parserContent.LineParse.ElementsPattern.IndexOf("Ndc")]).Element;
+
+                            if (!stringTemp.Contains(Search))
+                                deleteFlag = true;
+                        }
+
+                        if (parserContent.LineParse.ElementsPattern.Contains("Message"))
+                        {
+                            string stringTemp = (string)((NdcElement)parserContent.LineParse.ElementsLog[i].Elements[parserContent.LineParse.ElementsPattern.IndexOf("Message")]).Element;
+
+                            if (!stringTemp.Contains(Search))
+                                deleteFlag = true;
+                        }
+
+                        if (searchType == "MatchWholeWord")
+                        {
+                            if (parserContent.LineParse.ElementsPattern.Contains("Ndc"))
+                            {
+                                string[] elementsTemp = ((string)((NdcElement)parserContent.LineParse.ElementsLog[i].Elements[parserContent.LineParse.ElementsPattern.IndexOf("Ndc")]).Element).Split(' ');
+
+                                foreach (string element in elementsTemp)
+                                {
+                                    if (element == Search)
+                                        deleteFlag = true;
+                                }
+                            }
+
+                            if (parserContent.LineParse.ElementsPattern.Contains("Message"))
+                            {
+                                string[] elementsTemp = ((string)((NdcElement)parserContent.LineParse.ElementsLog[i].Elements[parserContent.LineParse.ElementsPattern.IndexOf("Message")]).Element).Split(' ');
+
+                                foreach (string element in elementsTemp)
+                                {
+                                    if (element == Search)
+                                        deleteFlag = true;
+                                }
+                            }
+                        }
+                    }
+
+                    if (deleteFlag == true)
+                        parserContent.LineParse.ElementsLog.RemoveAt(i);
+
+                    deleteFlag = false;
+                }
+            }
+            //(Log4NetBrowser - Display) Search Filter /
 
             Session["parserContent"] = parserContent;
 
@@ -212,15 +272,7 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
 
         public ActionResult Ndc(string Id)
         {
-            ViewData["Data"] = Id;
-
-            SessionStateItemCollection items = new SessionStateItemCollection();
-
-            items["LastName"] = "Wilson";
-            items["FirstName"] = "Dan";
-
-            foreach (string s in items.Keys)
-                Response.Write("items[\"" + s + "\"] = " + items[s].ToString() + "<br />");
+                      
 
             return View();
         }
