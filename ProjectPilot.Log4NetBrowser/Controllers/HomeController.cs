@@ -97,6 +97,8 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
 
             Session["parserContent"] = parserContent;
             Session["fileSelected"] = fileSelected;
+            Session["logSeparator"] = logSeparator;
+            Session["pattern"] = pattern;
 
             return RedirectToAction("Display"); 
         }
@@ -116,6 +118,8 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             CultureInfo cultureToUse = CultureInfo.InvariantCulture;
 
             fileSelected = (string)Session["fileSelected"];
+            logSeparator =(string)Session["logSeparator"];
+            pattern = (string)Session["pattern"];
 
             if (string.IsNullOrEmpty(StartTime) && string.IsNullOrEmpty(EndTime))
             {
@@ -208,7 +212,7 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
 
         private LogDisplay parserContent;
         private string fileSelected;
-        private static string pattern;
-        private static string logSeparator;
+        private string pattern;
+        private string logSeparator;
     }
 }
