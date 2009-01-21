@@ -13,8 +13,11 @@ namespace Accipio.Console
         public ConsoleApp(string[] args)
         {
             this.args = args;
-            consoleCommandChain = new TestSuiteSchemaGeneratorCommand(
-                new TestCodeGeneratorCommand(new TestReportGeneratorCommand(null)));
+            consoleCommandChain =
+                new TestSuiteSchemaGeneratorCommand(
+                    new TestCodeGeneratorCommand(
+                        new TestReportGeneratorCommand(
+                            new HtmlReportGeneratorCommand(null))));
 
             Uri uri = new Uri(Assembly.GetExecutingAssembly().CodeBase);
             string localPath = uri.LocalPath;
@@ -22,8 +25,10 @@ namespace Accipio.Console
 
             options = new OptionSet
                           {
-                              { "o=", "Specifies the output {directory} where all generated files will be stored", 
-                                  v => OutputDirectory = v },
+                              {
+                                  "o=", "Specifies the output {directory} where all generated files will be stored",
+                                  v => OutputDirectory = v
+                                  },
                           };
         }
 
@@ -74,6 +79,7 @@ namespace Accipio.Console
             System.Console.WriteLine("  baschema                   Create acceptance test suite schema");
             System.Console.WriteLine("  codegen                    Create acceptance test code");
             System.Console.WriteLine("  transform                  Run XSLTransform on Gallio test report file");
+            System.Console.WriteLine("  report                     Creates html file with test results");
             System.Console.WriteLine(string.Empty);
             System.Console.WriteLine("Arguments:");
             System.Console.WriteLine("  [baschema]");
@@ -87,12 +93,15 @@ namespace Accipio.Console
             System.Console.WriteLine("  [transform]");
             System.Console.WriteLine("  <test_results_file>.xml    Xml file with Gallio test results");
             System.Console.WriteLine("  <transformed_file>.xml     Output file with transofrmed Gallio test results");
+            System.Console.WriteLine("  [report]");
+            System.Console.WriteLine("  <transformed_file>.xml     Xml file with transformed Gallio test results");
             System.Console.WriteLine(string.Empty);
             System.Console.WriteLine("Example:");
             System.Console.WriteLine("  Accipio.Console.exe baschema <instance>.xml <schema_namespace>");
             System.Console.WriteLine("  Accipio.Console.exe codegen <instance>.xml <schema>.xsd <test_suite_file>.xml [...]");
             System.Console.WriteLine("  Accipio.Console.exe -o=C:\\temp\\ codegen <instance>.xml <schema>.xsd <test_suite_file>.xml [...]");
             System.Console.WriteLine("  Accipio.Console.exe transform <test_results_file>.xml <transformed_file>.xml");
+            System.Console.WriteLine("  Accipio.Console.exe report <transformed_file>.xml");
             System.Console.WriteLine(string.Empty);
         }
 
