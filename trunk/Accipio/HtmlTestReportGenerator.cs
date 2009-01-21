@@ -25,6 +25,7 @@ namespace Accipio
             WriteLine(@"<html xmlns=""http://www.w3.org/1999/xhtml"" >");
             WriteLine("<head>");
             WriteLine("    <title>Acceptance test report</title>");
+            WriteLine(CssStyle);
             WriteLine("</head>");
             WriteLine("<body>");
             WriteLine("     <h1>Test report details</h1>");
@@ -111,7 +112,7 @@ namespace Accipio
         /// </returns>
         private static string AddColor(ReportCase reportCase)
         {
-            return reportCase.Status == ReportCaseStatus.Passed ? "Green" : reportCase.Status == ReportCaseStatus.Failed ? "Red" : "Yellow";
+            return reportCase.Status == ReportCaseStatus.Passed ? "tdColorGreen" : reportCase.Status == ReportCaseStatus.Failed ? "tdColorRed" : "tdColorYellow";
         }
 
         /// <summary>
@@ -144,14 +145,22 @@ namespace Accipio
         }
 
         private const string HtmlTableRow =
-            "<tr style=\"background-color: White;\"><td style=\"vertical-align: top; background-color: {4};\">{0}<br />[<b><i>{1}</i></b>]</td><td style=\"vertical-align: top;\">{2}</td><td style=\"vertical-align: top;\">{3}</td></tr>";
+            @"<tr class=""trColorWhite""><td class=""{4}"">{0}<br />[<b><i>{1}</i></b>]</td><td class=""tdTextAlign"">{2}</td><td class=""tdTextAlign"">{3}</td></tr>";
 
         private const string HtmlTableStartElement =
-            "<table border=\"1\" width=\"80%\"><tr><td width=\"20%\"><b>CaseId</b></td><td width=\"30%\"><b>User stories</b></td><td><b>Details</b></td></tr>";
+            @"<table border=""1"" width=""80%""><tr><td width=""20%""><b>CaseId</b></td><td width=""30%""><b>User stories</b></td><td><b>Details</b></td></tr>";
 
         private const string HtmlTableEndElement = "</table>";
         private const string HtmlListElement = "<ul><li><h3><u>{0}</u></h3></li></ul>";
-        private const string HtmlSpaceElement = "&nbsp;"; 
+        private const string HtmlSpaceElement = "&nbsp;";
+        private const string CssStyle = @"<style type=""text/css"">
+                                            .tdTextAlign { vertical-align: top; }
+                                            .tdColorGreen { vertical-align: top; background-color: Green; }
+                                            .tdColorRed { vertical-align: top; background-color: Red; }
+                                            .tdColorYellow { vertical-align: top; background-color: Yellow; }
+                                            .trColorWhite { background-color: White; }
+                                        </style>";
+
         private readonly ICodeWriter writer;
     }
 }

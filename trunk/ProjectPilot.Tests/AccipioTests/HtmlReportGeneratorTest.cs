@@ -45,6 +45,7 @@ namespace ProjectPilot.Tests.AccipioTests
             mockWriter.Expect(writer => writer.WriteLine(@"<html xmlns=""http://www.w3.org/1999/xhtml"" >"));
             mockWriter.Expect(writer => writer.WriteLine("<head>"));
             mockWriter.Expect(writer => writer.WriteLine("    <title>Acceptance test report</title>"));
+            mockWriter.Expect(writer => writer.WriteLine(CssStyle));
             mockWriter.Expect(writer => writer.WriteLine("</head>"));
             mockWriter.Expect(writer => writer.WriteLine("<body>"));
             mockWriter.Expect(writer => writer.WriteLine("     <h1>Test report details</h1>"));
@@ -55,7 +56,7 @@ namespace ProjectPilot.Tests.AccipioTests
             mockWriter.Expect(writer => writer.WriteLine("<ul><li><h3><u>TestSuiteId</u></h3></li></ul>"));
             mockWriter.Expect(writer => writer.WriteLine("Summary: Passed 1, Failed 0, Skipped 0"));
             mockWriter.Expect(writer => writer.WriteLine("<table border=\"1\" width=\"80%\"><tr><td width=\"20%\"><b>CaseId</b></td><td width=\"30%\"><b>User stories</b></td><td><b>Details</b></td></tr>"));
-            mockWriter.Expect(writer => writer.WriteLine("<tr style=\"background-color: White;\"><td style=\"vertical-align: top; background-color: Green;\">CaseId<br />[<b><i>Passed</i></b>]</td><td style=\"vertical-align: top;\"><ul><li>UserStory1</li><li>UserStory2</li></ul></td><td style=\"vertical-align: top;\">&nbsp;</td></tr>"));
+            mockWriter.Expect(writer => writer.WriteLine("<tr class=\"trColorWhite\"><td class=\"tdColorGreen\">CaseId<br />[<b><i>Passed</i></b>]</td><td class=\"tdTextAlign\"><ul><li>UserStory1</li><li>UserStory2</li></ul></td><td class=\"tdTextAlign\">&nbsp;</td></tr>"));
             mockWriter.Expect(writer => writer.WriteLine("</table>"));
             mockWriter.Expect(writer => writer.WriteLine("</body>"));
             mockWriter.Expect(writer => writer.WriteLine("</html>"));
@@ -81,5 +82,13 @@ namespace ProjectPilot.Tests.AccipioTests
             // get output file
             return ((HtmlReportGeneratorCommand)consoleCommand).OutputFile;
         }
+
+        private const string CssStyle = @"<style type=""text/css"">
+                                            .tdTextAlign { vertical-align: top; }
+                                            .tdColorGreen { vertical-align: top; background-color: Green; }
+                                            .tdColorRed { vertical-align: top; background-color: Red; }
+                                            .tdColorYellow { vertical-align: top; background-color: Yellow; }
+                                            .trColorWhite { background-color: White; }
+                                        </style>";
     }
 }
