@@ -232,8 +232,8 @@ namespace ProjectPilot.Extras.LogParser
 
             using (StreamReader reader = new StreamReader(fileStream))
             {
-                if (parseFilter.StartLogIndex > parseFilter.EndLogIndex)
-                    stopFlag = true;
+                    if (parseFilter.StartLogIndex > parseFilter.EndLogIndex)
+                        stopFlag = true;
 
                 while (!reader.EndOfStream && stopFlag == false)
                 {
@@ -242,6 +242,11 @@ namespace ProjectPilot.Extras.LogParser
                         continue;
                     ParseLogLine(line);
                 }
+
+                if (elementsLog.Count > 0)
+                    
+                    //Filter (MatchWholeWord) for last element
+                    Filter(null, null, null, ElementsLog.Count);
             }
         }
 
@@ -249,7 +254,7 @@ namespace ProjectPilot.Extras.LogParser
         {
             bool filterFlag = true;
 
-            if (parseFilter.FilterTimestampStart.HasValue && parseFilter.FilterTimestampEnd.HasValue)
+            if (parseFilter.FilterTimestampStart.HasValue && parseFilter.FilterTimestampEnd.HasValue && timethread.HasValue)
             {
                 if (DateTime.Compare((DateTime)timethread, (DateTime)parseFilter.FilterTimestampStart) < 0 ||
                     DateTime.Compare((DateTime)timethread, (DateTime)parseFilter.FilterTimestampEnd) > 0)
@@ -258,13 +263,13 @@ namespace ProjectPilot.Extras.LogParser
                 }
             }
 
-            if (!String.IsNullOrEmpty(parseFilter.FilterThreadId))
+            if (!String.IsNullOrEmpty(parseFilter.FilterThreadId) && !String.IsNullOrEmpty(threadId))
             {
                 if (parseFilter.FilterThreadId != threadId)
                     filterFlag = false;
             }
 
-            if (!String.IsNullOrEmpty(parseFilter.FilterLevel))
+            if (!String.IsNullOrEmpty(parseFilter.FilterLevel) && !String.IsNullOrEmpty(level))
             {
                 if (parseFilter.FilterLevel != level)
                     filterFlag = false;
@@ -276,6 +281,35 @@ namespace ProjectPilot.Extras.LogParser
                 {
                     filterFlag = false;
                     stopFlag = true;
+                }
+            }
+
+            if (parseFilter.MatchWholeWordOnly != null)
+            {
+                if (elementsPattern.IndexOf("Ndc") >= 0)
+                {
+                   if (count > 0)
+                   {
+                       bool existFlag = false;
+                       string[] elementsTemp = 
+                           elementsLog[(int)count-1].Elements[elementsPattern.IndexOf("Ndc")].ToString().Split(' ');
+
+                        foreach (string element in elementsTemp)
+                        {
+                            if (element == parseFilter.MatchWholeWordOnly)
+                                existFlag = true; 
+                        }
+
+                        if (existFlag == true && filterFlag == true)
+                            filterFlag = filterFlag;
+                        else   
+                            elementsLog.RemoveAt((int)count-1);
+                   }
+                }
+
+                if (elementsPattern.IndexOf("Message") >= 0)
+                {
+                    //elementsLog.ElementAt(count).Elements[elementsPattern.IndexOf("Message")];
                 }
             }
 

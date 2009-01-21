@@ -19,7 +19,7 @@ namespace ProjectPilot.Tests.Extras
             LogCollection lineParse = new LogCollection('|', "Time|ThreadId");
 
             lineParse.ParseLogLine(@"2008-12-22 09:16:02,734|[4904]");
-            
+
             Assert.AreEqual(2, lineParse.ElementsPattern.Count);
             Assert.AreEqual("Time", lineParse.ElementsPattern[0]);
             Assert.AreEqual("ThreadId", lineParse.ElementsPattern[1]);
@@ -30,11 +30,11 @@ namespace ProjectPilot.Tests.Extras
             Assert.AreEqual(typeof(TimestampElement).FullName, lineParse.ElementsLog[0].Elements[0].GetType().FullName);
             Assert.AreEqual(typeof(ThreadIdElement).FullName, lineParse.ElementsLog[0].Elements[1].GetType().FullName);
 
-            DateTime expectedTime = DateTime.ParseExact("2008-12-22 09:16:02,734", "yyyy-MM-dd HH:mm:ss,fff", CultureInfo.CurrentCulture);  
+            DateTime expectedTime = DateTime.ParseExact("2008-12-22 09:16:02,734", "yyyy-MM-dd HH:mm:ss,fff", CultureInfo.CurrentCulture);
             Assert.AreEqual(
-                expectedTime, 
+                expectedTime,
                 ((ParsedElementBase)lineParse.ElementsLog[0].Elements[0]).Element);
-           
+
             Assert.AreEqual(
                 "[4904]",
                 ((ParsedElementBase)lineParse.ElementsLog[0].Elements[1]).Element);
@@ -56,14 +56,14 @@ namespace ProjectPilot.Tests.Extras
             Assert.AreEqual(4, lineParse.ElementsLog[0].Elements.Count);
 
             DateTime expectedTime = DateTime.ParseExact("2008-12-22 09:16:02,734", "yyyy-MM-dd HH:mm:ss,fff", CultureInfo.CurrentCulture);
-            
+
             Assert.AreEqual(
                 expectedTime,
                 ((ParsedElementBase)lineParse.ElementsLog[0].Elements[0]).Element);
 
             Assert.AreEqual("[4904]", ((ParsedElementBase)lineParse.ElementsLog[0].Elements[1]).Element);
             Assert.AreEqual("INFO", ((ParsedElementBase)lineParse.ElementsLog[0].Elements[2]).Element);
-            
+
             Assert.AreEqual(
             "Hsl.UniversalHost.|",
             ((ParsedElementBase)lineParse.ElementsLog[0].Elements[3]).Element);
@@ -219,6 +219,29 @@ namespace ProjectPilot.Tests.Extras
             }
         }
 
+        [Test]
+        [Row(null, 15)]
+        [Row("[Listen(1)]", 4)]
+        [Row("[(null)]", 10)]
+        [Row("Test", 0)]
+        public void TestingSearchFilter(string matchWholeWordOnly, int expectedElementsLogCount)
+        {
+            using (Stream fileStream = File.OpenRead(@"..\..\..\Data\Samples\TestLogParser.log"))
+            {
+                LogParserFilter filter = new LogParserFilter();
+                filter.MatchWholeWordOnly = matchWholeWordOnly;
+
+                LogCollection lineParse = new LogCollection('|', "Time|ThreadId|Level|Ndc");
+                lineParse.ParseFilter = filter;
+                lineParse.ParseLogFile(fileStream);
+
+                Assert.AreEqual(expectedElementsLogCount, lineParse.ElementsLog.Count);
+            }
+        }
+
+        //        [Test]
+        //        public void TestAllFilters() {}
+                    
 //        [Test]
 //        public void Parsing10MBLogFile()
 //        {
