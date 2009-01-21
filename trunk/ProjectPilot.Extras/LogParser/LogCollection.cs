@@ -245,7 +245,7 @@ namespace ProjectPilot.Extras.LogParser
 
                 if (elementsLog.Count > 0)
                     
-                    //Filter (MatchWholeWord) for last element
+                    //Filter (MatchWholeWord && MatchCase) for last element
                     Filter(null, null, null, ElementsLog.Count);
             }
         }
@@ -300,17 +300,70 @@ namespace ProjectPilot.Extras.LogParser
                                 existFlag = true; 
                         }
 
-                        if (existFlag == true && filterFlag == true)
-                            filterFlag = filterFlag;
-                        else   
+                        if (existFlag == false || filterFlag == false)
                             elementsLog.RemoveAt((int)count-1);
                    }
                 }
 
                 if (elementsPattern.IndexOf("Message") >= 0)
                 {
-                    //elementsLog.ElementAt(count).Elements[elementsPattern.IndexOf("Message")];
+                    if (count > 0)
+                    {
+                        bool existFlag = false;
+                        string[] elementsTemp =
+                            elementsLog[(int)count - 1].Elements[elementsPattern.IndexOf("Message")].ToString().Split(' ');
+
+                        foreach (string element in elementsTemp)
+                        {
+                            if (element == parseFilter.MatchWholeWordOnly)
+                                existFlag = true;
+                        }
+
+                        if (existFlag == false || filterFlag == false)
+                            elementsLog.RemoveAt((int)count - 1);
+                    }
                 }
+            }
+
+            if (parseFilter.MatchCase != null)
+            {
+                if (elementsPattern.IndexOf("Ndc") >= 0)
+                {
+                    if (count > 0)
+                    {
+                        bool existFlag = false;
+                        string[] elementsTemp =
+                            elementsLog[(int)count - 1].Elements[elementsPattern.IndexOf("Ndc")].ToString().Split(' ');
+
+                        foreach (string element in elementsTemp)
+                        {
+                            if (element.Contains(parseFilter.MatchCase))
+                                existFlag = true;
+                        }
+
+                        if (existFlag == false || filterFlag == false)
+                            elementsLog.RemoveAt((int)count - 1);
+                    }
+                }
+
+                if (elementsPattern.IndexOf("Message") >= 0)
+                {
+                    if (count > 0)
+                    {
+                        bool existFlag = false;
+                        string[] elementsTemp =
+                            elementsLog[(int)count - 1].Elements[elementsPattern.IndexOf("Message")].ToString().Split(' ');
+
+                        foreach (string element in elementsTemp)
+                            {
+                                if (element.Contains(parseFilter.MatchCase))
+                                    existFlag = true;
+                            }
+
+                            if (existFlag == false || filterFlag == false)
+                                elementsLog.RemoveAt((int)count - 1);
+                    }
+                 }
             }
 
             if (filterFlag)
