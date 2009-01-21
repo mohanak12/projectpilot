@@ -37,7 +37,15 @@
             <option value="ERROR">ERROR</option>
             <option value="FATAL">FATAL</option>
         </select>
-        
+        <br />
+        <br />
+            <label>Search:</label>
+            <input type="text" name="Search" />
+            <input id="Radio1" checked="checked" name="searchType" type="radio" value="MatchCase" />
+            <label>Match Case</label>
+            <input id="Radio2" name="searchType" type="radio" value="MatchWholeWord" />
+            <label>Match Whole Word</label>
+            
         <br />
         <br />
         <input type="submit" value="OK" />&nbsp;
