@@ -28,9 +28,11 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
         }
 
         public ActionResult Load(
-                            string levelSelect, string StartTime, string EndTime,
-                            string ThreadId, string fileSelect, string numberOfItems,
-                            string logPattern, string separator)
+                            string levelSelect, string StartTime,
+                            string EndTime, string ThreadId, 
+                            string fileSelect, string numberOfItems, 
+                            string logPattern, string separator, 
+                            string searchType, string Search)
         {
             //file is not selected
             if (string.IsNullOrEmpty(fileSelect) || string.IsNullOrEmpty(logPattern) || string.IsNullOrEmpty(separator))
@@ -91,6 +93,19 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             else
             {
                 filter.FilterNumberOfLogItems = 255;
+            }
+
+            if (!string.IsNullOrEmpty(Search))
+            {
+                if (searchType == "MatchWholeWord")
+                {
+                    filter.MatchWholeWordOnly = Search;
+                }
+
+                if (searchType == "MatchCase")
+                {
+                    filter.MatchCase = Search;
+                }
             }
 
             parserContent.Parsing10MBLogFile(filter, fileSelected, pattern, separator);
