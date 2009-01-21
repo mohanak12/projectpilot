@@ -20,7 +20,7 @@ namespace Accipio.Console
         /// </summary>
         public string OutputFile
         {
-            get { return AcceptanceTestResultsFileName; }
+            get { return testReportOutputFileName; }
         }
 
         public string AccipioDirectory { get; set; }
@@ -52,6 +52,10 @@ namespace Accipio.Console
             // set acceptance test report file name
             testReportFileName = args[1];
 
+            if (args.Length < 3)
+                throw new ArgumentException("Missing acceptance test report output file name.");
+            testReportOutputFileName = args[2];
+
             FileInfo fileInfo = new FileInfo(testReportFileName);
 
             // check if file exists
@@ -77,10 +81,10 @@ namespace Accipio.Console
                 reportData = parser.Parse();
             }
 
-            System.Console.WriteLine("Creating report '{0}'", AcceptanceTestResultsFileName);
+            System.Console.WriteLine("Creating report '{0}'", testReportOutputFileName);
 
             // generate html report data
-            using (ICodeWriter writer = new FileCodeWriter(AcceptanceTestResultsFileName))
+            using (ICodeWriter writer = new FileCodeWriter(testReportOutputFileName))
             {
                 IHtmlTestReportGenerator htmlTestReportGenerator = new HtmlTestReportGenerator(writer);
                 htmlTestReportGenerator.Generate(reportData);
@@ -89,6 +93,6 @@ namespace Accipio.Console
 
         private readonly IConsoleCommand nextCommandInChain;
         private string testReportFileName;
-        private const string AcceptanceTestResultsFileName = "AcceptanceTestResults.html";
+        private string testReportOutputFileName;
     }
 }
