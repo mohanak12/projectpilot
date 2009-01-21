@@ -30,16 +30,15 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
         public ActionResult Load(
                             string levelSelect, string StartTime,
                             string EndTime, string ThreadId, 
-                            string fileSelect, string numberOfItems, 
-                            string logPattern, string separator, 
-                            string searchType, string Search)
+                            string numberOfItems, string logPattern,
+                            string separator, string searchType, string Search)
         {
             //file is not selected
-            if (string.IsNullOrEmpty(fileSelect) || string.IsNullOrEmpty(logPattern) || string.IsNullOrEmpty(separator))
-                return RedirectToAction("Index");
+            //if (string.IsNullOrEmpty(fileSelect) || string.IsNullOrEmpty(logPattern) || string.IsNullOrEmpty(separator))
+            //    return RedirectToAction("Index");
 
             //save values !!!  Session not supported yet
-            fileSelected = fileSelect;
+            //fileSelected = fileSelect;
             pattern = logPattern;
             logSeparator = separator;
 

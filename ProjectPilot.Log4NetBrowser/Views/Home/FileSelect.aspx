@@ -3,9 +3,6 @@
 <asp:Content ID="FileSelectContent" ContentPlaceHolderID="MainContent" runat="server">
     <form method="post" action="/Home/Load">
     
-        <label>File selected:</label>
-        <input name="fileSelect" type="file" />
-        <br />
         <br />
         <label>Log pattern:</label>
         <input type="text" name="logPattern" />&nbsp;
