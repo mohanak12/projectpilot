@@ -17,13 +17,13 @@
         <xsl:attribute name="version">
         </xsl:attribute>
         <suites>
-          <xsl:for-each select="//g:testStepRun/g:testStep[@isTestCase='false']">
+          <xsl:for-each select="g:testPackageRun//g:testStepRun/g:testStep[@isTestCase='false']">
             <xsl:if test="g:metadata/g:entry/g:value='Fixture'">
               <suite>
                 <xsl:attribute name="id">
                   <xsl:value-of select="@name"/>
                 </xsl:attribute>
-                <xsl:for-each select="//g:testStepRun/g:testStep[@isTestCase='true']">
+                <xsl:for-each select="../g:children//g:testStepRun/g:testStep[@isTestCase='true']">
                   <case>
                     <xsl:attribute name="id">
                       <xsl:value-of select="@name"/>
