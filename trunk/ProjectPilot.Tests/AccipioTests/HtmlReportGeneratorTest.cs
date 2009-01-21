@@ -73,7 +73,7 @@ namespace ProjectPilot.Tests.AccipioTests
         {
             string fileName = @"..\..\..\Data\Samples\TestResults.xml";
             IConsoleCommand consoleCommand = new HtmlReportGeneratorCommand(null)
-                .ParseArguments(new[] { "report", fileName });
+                .ParseArguments(new[] { "report", fileName, "Report.html" });
             consoleCommand.AccipioDirectory = string.Empty;
             // process command
             consoleCommand.ProcessCommand();
