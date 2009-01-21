@@ -88,15 +88,30 @@ namespace Accipio
             foreach (ReportCase reportCase in reportCases)
             {
                 WriteLine(
-                    HtmlTableRow, 
-                    reportCase.CaseId, 
+                    HtmlTableRow,
+                    reportCase.CaseId,
                     reportCase.Status,
                     AddUserStoriesInTestCaseToReport(reportCase.UserStories),
-                    reportCase.ReportDetails ?? HtmlSpaceElement);
+                    reportCase.ReportDetails ?? HtmlSpaceElement,
+                    AddColor(reportCase));
             }
 
             // write html table end element
             WriteLine(HtmlTableEndElement);
+        }
+
+        /// <summary>
+        /// Adds background color to test case column.
+        /// </summary>
+        /// <param name="reportCase">See <see cref="ReportCase"/></param>
+        /// <returns>
+        /// <c>Green</c> for Passed, 
+        /// <c>Red</c> for Failed, 
+        /// <c>Yellow</c> otherwise
+        /// </returns>
+        private static string AddColor(ReportCase reportCase)
+        {
+            return reportCase.Status == ReportCaseStatus.Passed ? "Green" : reportCase.Status == ReportCaseStatus.Failed ? "Red" : "Yellow";
         }
 
         /// <summary>
@@ -129,7 +144,7 @@ namespace Accipio
         }
 
         private const string HtmlTableRow =
-            "<tr style=\"background-color: White;\"><td style=\"vertical-align: top;\">{0}<br />[<b><i>{1}</i></b>]</td><td style=\"vertical-align: top;\">{2}</td><td style=\"vertical-align: top;\">{3}</td></tr>";
+            "<tr style=\"background-color: White;\"><td style=\"vertical-align: top; background-color: {4};\">{0}<br />[<b><i>{1}</i></b>]</td><td style=\"vertical-align: top;\">{2}</td><td style=\"vertical-align: top;\">{3}</td></tr>";
 
         private const string HtmlTableStartElement =
             "<table border=\"1\" width=\"80%\"><tr><td width=\"20%\"><b>CaseId</b></td><td width=\"30%\"><b>User stories</b></td><td><b>Details</b></td></tr>";
