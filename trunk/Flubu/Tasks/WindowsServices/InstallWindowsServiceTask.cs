@@ -10,6 +10,16 @@ namespace Flubu.Tasks.WindowsServices
     public class InstallWindowsServiceTask : TaskBase
     {
         /// <summary>
+        /// Gets or sets the period to wait after service uninstallation before continuing with reinstallation.
+        /// </summary>
+        /// <value>The service uninstallation wait time.</value>
+        public TimeSpan ServiceUninstallationWaitTime
+        {
+            get { return serviceUninstallationWaitTime; }
+            set { serviceUninstallationWaitTime = value; }
+        }
+
+        /// <summary>
         /// Gets the task description.
         /// </summary>
         /// <value>The task description.</value>
@@ -88,7 +98,7 @@ namespace Flubu.Tasks.WindowsServices
                         uninstallWindowsServiceTask.Execute (environment);
 
                         // wait for a while to ensure the service is really deleted
-                        SleepTask.Execute (environment, TimeSpan.FromSeconds (5));
+                        SleepTask.Execute (environment, serviceUninstallationWaitTime);
                         break;
 
                     default:
@@ -121,7 +131,8 @@ namespace Flubu.Tasks.WindowsServices
         }
 
         private string executablePath;
-        private string serviceName;
         private InstallWindowsServiceMode mode;
+        private string serviceName;
+        private TimeSpan serviceUninstallationWaitTime = TimeSpan.FromSeconds(5);
     }
 }
