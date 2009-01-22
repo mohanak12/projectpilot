@@ -495,10 +495,12 @@ namespace Flubu
         public TRunner InstallWindowsService(
             string executablePath,
             string serviceName, 
-            InstallWindowsServiceMode mode)
+            InstallWindowsServiceMode mode,
+            TimeSpan serviceUninstallationWaitTime)
         {
-            InstallWindowsServiceTask.Execute(scriptExecutionEnvironment, executablePath, serviceName, mode);
-            return ReturnThisTRunner();
+            InstallWindowsServiceTask task = new InstallWindowsServiceTask(executablePath, serviceName, mode);
+            task.ServiceUninstallationWaitTime = serviceUninstallationWaitTime;
+            return RunTask(task);
         }
 
         public TRunner KillProcess(string processName)

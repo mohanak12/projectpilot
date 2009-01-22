@@ -170,6 +170,18 @@ namespace Flubu.Builds
             return this;            
         }
 
+        /// <summary>
+        /// Clears the build products registry allowing a new products set to be organized.
+        /// </summary>
+        /// <returns>
+        /// This same instance of the <see cref="BuildProductsRegistry{TRunner}"/>.
+        /// </returns>
+        public BuildProductsRegistry<TRunner> ClearRegistry()
+        {
+            buildProducts.Clear();
+            return this;
+        }
+
         public void CopyProducts(string packageDirectory)
         {
             foreach (BuildProduct<TRunner> product in buildProducts)
