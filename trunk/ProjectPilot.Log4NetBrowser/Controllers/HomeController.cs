@@ -30,17 +30,9 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
         public ActionResult Load(
                             string levelSelect, string StartTime,
                             string EndTime, string ThreadId, 
-                            string numberOfItems, string logPattern,
-                            string separator, string searchType, string Search)
+                            string numberOfItems, string searchType, 
+                            string Search)
         {
-            //file is not selected
-            //if (string.IsNullOrEmpty(fileSelect) || string.IsNullOrEmpty(logPattern) || string.IsNullOrEmpty(separator))
-            //    return RedirectToAction("Index");
-
-            //save values !!!  Session not supported yet
-            //fileSelected = fileSelect;
-            pattern = logPattern;
-            logSeparator = separator;
 
             LogParserFilter filter = new LogParserFilter();
             parserContent = new LogDisplay();
@@ -107,12 +99,10 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
                 }
             }
 
-            parserContent.Parsing10MBLogFile(filter, fileSelected, pattern, separator);
+            parserContent.Parsing10MBLogFile(filter, fileSelected);
 
             Session["parserContent"] = parserContent;
             Session["fileSelected"] = fileSelected;
-            Session["logSeparator"] = logSeparator;
-            Session["pattern"] = pattern;
 
             return RedirectToAction("Display"); 
         }
@@ -133,8 +123,6 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             CultureInfo cultureToUse = CultureInfo.InvariantCulture;
 
             fileSelected = (string)Session["fileSelected"];
-            logSeparator =(string)Session["logSeparator"];
-            pattern = (string)Session["pattern"];
 
             if (string.IsNullOrEmpty(StartTime) && string.IsNullOrEmpty(EndTime))
             {
@@ -180,7 +168,7 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
                 filter.FilterNumberOfLogItems = 255;
             }
 
-            parserContent.Parsing10MBLogFile(filter, fileSelected, pattern, logSeparator);
+            parserContent.Parsing10MBLogFile(filter, fileSelected);
             
             //(Log4NetBrowser - Display) Search Filter /
             bool deleteFlag = false;
@@ -278,7 +266,5 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
 
         private LogDisplay parserContent;
         private string fileSelected;
-        private string pattern;
-        private string logSeparator;
     }
 }
