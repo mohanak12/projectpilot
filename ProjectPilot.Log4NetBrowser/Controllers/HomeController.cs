@@ -34,57 +34,9 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
                             string Search)
         {
 
-            LogParserFilter filter = new LogParserFilter();
+            LogParserFilter filter = LoadParameters.CreateFilter(levelSelect,StartTime,EndTime,ThreadId,null);
+
             parserContent = new LogDisplay();
-            bool time = true;
-
-            DateTime startTime = new DateTime();
-            DateTime endTime = new DateTime();
-            CultureInfo cultureToUse = CultureInfo.InvariantCulture;
-
-
-            if (string.IsNullOrEmpty(StartTime) && string.IsNullOrEmpty(EndTime))
-            {
-                StartTime = "";
-                EndTime = "";
-            }
-
-            try
-            {
-                startTime = DateTime.ParseExact(StartTime, "dd.MM.yyyy HH:mm:ss,fff", cultureToUse);
-            }
-            catch (FormatException)
-            {
-                time = false;
-            }
-
-            try
-            {
-                endTime = DateTime.ParseExact(EndTime, "dd.MM.yyyy HH:mm:ss,fff", cultureToUse);
-            }
-            catch (FormatException)
-            {
-                time = false;
-            }
-
-            if (time)
-            {
-                filter.FilterTimestampStart = startTime;
-                filter.FilterTimestampEnd = endTime;
-            }
-
-            filter.FilterLevel = levelSelect;
-
-            filter.FilterThreadId = ThreadId;
-
-            if (!string.IsNullOrEmpty(numberOfItems))
-            {
-                filter.FilterNumberOfLogItems = int.Parse(numberOfItems);
-            }
-            else
-            {
-                filter.FilterNumberOfLogItems = 255;
-            }
 
             if (!string.IsNullOrEmpty(Search))
             {
@@ -108,65 +60,21 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
         }
 
 
-        public ActionResult Reload(
-                            string levelSelect, string StartTime, string EndTime, 
-                            string ThreadId, string numberOfItems,
-                            string searchType, string Search)
+        public ActionResult Reload(string levelSelect, 
+                                   string StartTime, 
+                                   string EndTime, 
+                                   string ThreadId, 
+                                   string numberOfItems,
+                                   string searchType,
+                                   string Search)
         {
-            LogParserFilter filter = new LogParserFilter();
+            //LogParserFilter filter = new LogParserFilter();
+
+            LogParserFilter filter = LoadParameters.CreateFilter(levelSelect,StartTime,EndTime,ThreadId,numberOfItems);
+            
             parserContent = new LogDisplay();
-            bool time = true;
-//            StartTime = "";
-//            EndTime = "";
-            DateTime startTime = new DateTime();
-            DateTime endTime = new DateTime();
-            CultureInfo cultureToUse = CultureInfo.InvariantCulture;
 
             fileSelected = (string)Session["fileSelected"];
-
-            if (string.IsNullOrEmpty(StartTime) && string.IsNullOrEmpty(EndTime))
-            {
-                StartTime = "";
-                EndTime = "";
-            }
-
-            try
-            {
-                startTime = DateTime.ParseExact(StartTime, "dd.MM.yyyy HH:mm:ss,fff", cultureToUse);
-            }
-            catch (FormatException)
-            {
-                time = false;
-            }
-
-            try
-            {
-                endTime = DateTime.ParseExact(EndTime, "dd.MM.yyyy HH:mm:ss,fff", cultureToUse);
-            }
-            catch (FormatException)
-            {
-                time = false;
-            } 
-
-            if(time)
-            {
-                filter.FilterTimestampStart = startTime;
-                filter.FilterTimestampEnd = endTime;
-            }
-
-            
-            filter.FilterLevel = levelSelect;
-
-            filter.FilterThreadId = ThreadId;
-
-            if (!string.IsNullOrEmpty(numberOfItems))
-            {
-                filter.FilterNumberOfLogItems = int.Parse(numberOfItems);
-            }
-            else
-            {
-                filter.FilterNumberOfLogItems = 255;
-            }
 
             parserContent.Parsing10MBLogFile(filter, fileSelected);
             
