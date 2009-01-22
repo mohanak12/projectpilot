@@ -72,6 +72,11 @@ namespace ProjectPilot.Extras.LogParser
             get { return elementsPattern; }
         }
 
+        public int NumberOfLogItems
+        {
+            get { return numberOfLogItems; }
+        }
+
         [SuppressMessage("Microsoft.Design", "CA1044:PropertiesShouldNotBeWriteOnly")]
         public LogParserFilter ParseFilter
         {
@@ -121,6 +126,15 @@ namespace ProjectPilot.Extras.LogParser
                         patternHeadInLine = false;
                     } 
                 }
+            }
+
+            //LogCountFilter
+            if (parseFilter.LogCountMode)
+            {
+                if (patternHeadInLine)                    
+                    numberOfLogItems++;
+
+                return;
             }
 
             //Pattern in line
@@ -382,6 +396,7 @@ namespace ProjectPilot.Extras.LogParser
         private Dictionary<string, string> conversionMap = new Dictionary<string, string>();
         private List<string> elementsPattern = new List<string>();
         private List<LogEntry> elementsLog = new List<LogEntry>();
+        private int numberOfLogItems;
         private char separator = '|';
         private bool stopFlag;
         private string timePattern = "yyyy-MM-dd HH:mm:ss,fff";
