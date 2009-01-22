@@ -34,22 +34,11 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
                             string Search)
         {
 
-            LogParserFilter filter = LoadParameters.CreateFilter(levelSelect,StartTime,EndTime,ThreadId,null);
+            LogParserFilter filter = LoadParameters.CreateFilter(levelSelect,StartTime,
+                                                                 EndTime, ThreadId, null,
+                                                                 searchType, Search);
 
             parserContent = new LogDisplay();
-
-            if (!string.IsNullOrEmpty(Search))
-            {
-                if (searchType == "MatchWholeWord")
-                {
-                    filter.MatchWholeWordOnly = Search;
-                }
-
-                if (searchType == "MatchCase")
-                {
-                    filter.MatchCase = Search;
-                }
-            }
 
             parserContent.Parsing10MBLogFile(filter, fileSelected);
 
@@ -68,74 +57,18 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
                                    string searchType,
                                    string Search)
         {
-            //LogParserFilter filter = new LogParserFilter();
-
-            LogParserFilter filter = LoadParameters.CreateFilter(levelSelect,StartTime,EndTime,ThreadId,numberOfItems);
+            LogParserFilter filter = LoadParameters.CreateFilter(levelSelect, StartTime,
+                                                                 EndTime, ThreadId,
+                                                                 numberOfItems, searchType,
+                                                                 Search);
             
             parserContent = new LogDisplay();
 
             fileSelected = (string)Session["fileSelected"];
 
             parserContent.Parsing10MBLogFile(filter, fileSelected);
-            
-            //(Log4NetBrowser - Display) Search Filter /
-            bool deleteFlag = false;
-            
-            if (!string.IsNullOrEmpty(Search))
-            {
-                for(int i = 0; i < parserContent.LineParse.ElementsLog.Count; i++)
-                {
-                    if (searchType == "MatchCase")
-                    {
-                        if (parserContent.LineParse.ElementsPattern.Contains("Ndc"))
-                        {
-                            string stringTemp = (string)((NdcElement)parserContent.LineParse.ElementsLog[i].Elements[parserContent.LineParse.ElementsPattern.IndexOf("Ndc")]).Element;
 
-                            if (!stringTemp.Contains(Search))
-                                deleteFlag = true;
-                        }
-
-                        if (parserContent.LineParse.ElementsPattern.Contains("Message"))
-                        {
-                            string stringTemp = (string)((NdcElement)parserContent.LineParse.ElementsLog[i].Elements[parserContent.LineParse.ElementsPattern.IndexOf("Message")]).Element;
-
-                            if (!stringTemp.Contains(Search))
-                                deleteFlag = true;
-                        }
-
-                        if (searchType == "MatchWholeWord")
-                        {
-                            if (parserContent.LineParse.ElementsPattern.Contains("Ndc"))
-                            {
-                                string[] elementsTemp = ((string)((NdcElement)parserContent.LineParse.ElementsLog[i].Elements[parserContent.LineParse.ElementsPattern.IndexOf("Ndc")]).Element).Split(' ');
-
-                                foreach (string element in elementsTemp)
-                                {
-                                    if (element == Search)
-                                        deleteFlag = true;
-                                }
-                            }
-
-                            if (parserContent.LineParse.ElementsPattern.Contains("Message"))
-                            {
-                                string[] elementsTemp = ((string)((NdcElement)parserContent.LineParse.ElementsLog[i].Elements[parserContent.LineParse.ElementsPattern.IndexOf("Message")]).Element).Split(' ');
-
-                                foreach (string element in elementsTemp)
-                                {
-                                    if (element == Search)
-                                        deleteFlag = true;
-                                }
-                            }
-                        }
-                    }
-
-                    if (deleteFlag == true)
-                        parserContent.LineParse.ElementsLog.RemoveAt(i);
-
-                    deleteFlag = false;
-                }
-            }
-            //(Log4NetBrowser - Display) Search Filter /
+            parserContent = LocalSearchFilter.Filter(parserContent, searchType, Search);
 
             Session["parserContent"] = parserContent;
 
@@ -161,7 +94,8 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
 
             ViewData["Content"] = parserContent;
             ViewData["Id"] = (int)Id;
-            
+            ViewData["test"] = test;
+
             return View();
         }
 
@@ -174,5 +108,6 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
 
         private LogDisplay parserContent;
         private string fileSelected;
+        private string test = "Niz123";
     }
 }

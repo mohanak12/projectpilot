@@ -9,6 +9,7 @@
     <%
         ParserContent = ViewData["Content"] as LogDisplay;
         CalculateTableWidth(ParserContent.LineParse.ElementsPattern);
+        string test123 = (string)ViewData["test"];
     %>
     <div>
     <form method="post" action="/Home/Reload">
@@ -65,6 +66,13 @@
         <input type="submit" value="Submit filter" />&nbsp;
         
         <%= Html.ActionLink("Select File","FileSelect","Home")%>
+            <%int x = this.ParserContent.LineParse.ElementsLog.Count;
+
+            //  int z = numberOfItems;  
+            //  string showNext =" 123+ " + z; 
+              Response.Write(test123);%>
+        
+        <%= Html.ActionLink("showNext", "ShowNextLogEntries", "Home")%>
            
     </form>
     </div>

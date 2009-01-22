@@ -14,7 +14,9 @@ namespace ProjectPilot.Log4NetBrowser.Models
                                           string StartTime, 
                                           string EndTime, 
                                           string ThreadId, 
-                                          string numberOfItems)
+                                          string numberOfItems,
+                                          string searchType,
+                                          string searchContent)
         {
             LogParserFilter filter = new LogParserFilter();
 
@@ -54,7 +56,6 @@ namespace ProjectPilot.Log4NetBrowser.Models
                 filter.FilterTimestampEnd = endTime;
             }
 
-
             filter.FilterLevel = levelSelect;
 
             filter.FilterThreadId = ThreadId;
@@ -66,6 +67,19 @@ namespace ProjectPilot.Log4NetBrowser.Models
             else
             {
                 filter.FilterNumberOfLogItems = 255;
+            }
+
+            if (!string.IsNullOrEmpty(searchContent))
+            {
+                if (searchType == "MatchWholeWord")
+                {
+                    filter.MatchWholeWordOnly = searchContent;
+                }
+
+                if (searchType == "MatchCase")
+                {
+                    filter.MatchCase = searchContent;
+                }
             }
 
             return filter;
