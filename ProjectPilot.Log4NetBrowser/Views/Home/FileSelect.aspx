@@ -4,10 +4,6 @@
     <form method="post" action="/Home/Load">
     
         <br />
-        <label>Log pattern:</label>
-        <input type="text" name="logPattern" />&nbsp;
-        <label>Separator:</label>
-        <input type="text" name="separator" />&nbsp;
         <label>Number of items:</label>
         <input type="text"name="numberOfItems" />&nbsp;
         <label>(Default = 255)</label>

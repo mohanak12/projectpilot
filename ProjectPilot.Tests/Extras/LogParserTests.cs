@@ -273,12 +273,13 @@ namespace ProjectPilot.Tests.Extras
                 lineParse.ParseLogFile(fileStream);
 
                 Assert.AreEqual(15, lineParse.NumberOfLogItems);
-                //Resoults: 13,2 KB file take 2,685  seconds  (around 50 lines - 14 log entries)
-                //Resoults: 14,2 KB file take 3,081  seconds  (around 65 lines - 14 log entries)
-                //Resoults: 9,98 MB file take 4,770  seconds  (around 14.500 lines  - 2530 log entries)
-                //Resoults: 35,2 MB file take 8,263  seconds  (around 50.000 lines  - 8740 log entries)
-                //Resoults: 71,5 MB file take 12,429 seconds  (around 100.000 lines - 17.710 log entries)
-                //Resoults:  142 MB file take 21,642 seconds  (around 200.000 lines - 35.190 log entries)
+
+                //Results: 13,2 KB file take 2,685  seconds  (around 50 lines - 14 log entries)
+                //Results: 14,2 KB file take 3,081  seconds  (around 65 lines - 14 log entries)
+                //Results: 9,98 MB file take 4,770  seconds  (around 14.500 lines  - 2530 log entries)
+                //Results: 35,2 MB file take 8,263  seconds  (around 50.000 lines  - 8740 log entries)
+                //Results: 71,5 MB file take 12,429 seconds  (around 100.000 lines - 17.710 log entries)
+                //Results:  142 MB file take 21,642 seconds  (around 200.000 lines - 35.190 log entries)
             }
         }
 
