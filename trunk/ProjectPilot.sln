@@ -72,6 +72,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestReportSamples", "TestRe
 		Data\Samples\TestReportSamples\TestReport.htm = Data\Samples\TestReportSamples\TestReport.htm
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserStories", "UserStories", "{302944ED-A9B6-48E3-8D49-BF6167268491}"
+	ProjectSection(SolutionItems) = preProject
+		Data\Samples\TestReportSamples\UserStories\UserStory1.htm = Data\Samples\TestReportSamples\UserStories\UserStory1.htm
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -126,5 +131,6 @@ Global
 		{FBCD0FCA-E178-493F-BF6B-D4004FEF975A} = {29C5C89F-901C-4804-8A0D-B085445B48E3}
 		{0EBE64E9-CBA6-428D-B4BE-42ED11B35896} = {29C5C89F-901C-4804-8A0D-B085445B48E3}
 		{5A2EB129-BB03-4B16-8612-09F33EADB7D7} = {FBCD0FCA-E178-493F-BF6B-D4004FEF975A}
+		{302944ED-A9B6-48E3-8D49-BF6167268491} = {5A2EB129-BB03-4B16-8612-09F33EADB7D7}
 	EndGlobalSection
 EndGlobal
