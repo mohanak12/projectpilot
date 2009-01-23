@@ -1,12 +1,14 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" AutoEventWireup="true" CodeBehind="FileSelect.aspx.cs" Inherits="ProjectPilot.Log4NetBrowser.Views.Home.FileSelect" %>
 
 <asp:Content ID="FileSelectContent" ContentPlaceHolderID="MainContent" runat="server">
-    <form method="post" action="/Home/Load">
-    
+    <form method="post" action="/Home/Load"> 
         <br />
         <label>Number of items:</label>
         <input type="text"name="numberOfItems" />&nbsp;
-        <label>(Default = 255)</label>
+        <label>(Default = 255)</label>&nbsp;&nbsp;&nbsp;
+         <label>Number of items per page:</label>
+        <input type="text"name="numberOfItemsPerPage" />&nbsp;
+         <label>(Default = 50)</label>
         <br />
         <br />
         <label>Start time:</label>
@@ -34,11 +36,8 @@
         <br />
             <label>Search:</label>
             <input type="text" name="Search" />
-            <input id="Radio1" checked="checked" name="searchType" type="radio" value="MatchCase" />
-            <label>Match Case</label>
-            <input id="Radio2" name="searchType" type="radio" value="MatchWholeWord" />
-            <label>Match Whole Word</label>
-            
+            <input id="Checkbox1" type="checkbox" name="searchType" value="MatchWholeWord"/>
+            <label>Match Whole Word</label>      
         <br />
         <br />
         <input type="submit" value="OK" />&nbsp;

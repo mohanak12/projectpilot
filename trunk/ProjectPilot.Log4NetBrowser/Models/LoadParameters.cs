@@ -16,15 +16,18 @@ namespace ProjectPilot.Log4NetBrowser.Models
                                           string ThreadId, 
                                           string numberOfItems,
                                           string searchType,
-                                          string searchContent)
+                                          string searchContent,
+                                          bool logCountMode )
         {
             LogParserFilter filter = new LogParserFilter();
-
 
             bool time = true;
             DateTime startTime = new DateTime();
             DateTime endTime = new DateTime();
             CultureInfo cultureToUse = CultureInfo.InvariantCulture;
+
+            if (logCountMode)
+                filter.LogCountMode = true;
 
             if (string.IsNullOrEmpty(StartTime) && string.IsNullOrEmpty(EndTime))
             {

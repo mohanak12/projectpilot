@@ -6,11 +6,10 @@
 <%@ Import Namespace="System.Web.Mvc"%>
 
 <asp:Content ID="displayContent" ContentPlaceHolderID="MainContent" runat="server">
-    <%
+     <%
         ParserContent = ViewData["Content"] as LogDisplay;
         CalculateTableWidth(ParserContent.LineParse.ElementsPattern);
-        string test123 = (string)ViewData["test"];
-    %>
+     %>   
     <div>
     <form method="post" action="/Home/Reload">
         <%
@@ -56,23 +55,27 @@
         
         <label>Search:</label>
         <input type="text" name="Search" />
-        <input id="Radio1" checked="checked" name="searchType" type="radio" value="MatchCase" />
-        <label>Match Case</label>
-        <input id="Radio2" name="searchType" type="radio" value="MatchWholeWord" />
+        <input id="Checkbox1" type="checkbox" name="searchType" value="MatchWholeWord"/>
         <label>Match Whole Word</label>
         
-        <br />
+    <br />
         <br />
         <input type="submit" value="Submit filter" />&nbsp;
         
-        <%= Html.ActionLink("Select File","FileSelect","Home")%>
-            <%int x = this.ParserContent.LineParse.ElementsLog.Count;
+        <%= Html.ActionLink("Select File","FileSelect","Home")%> 
 
-            //  int z = numberOfItems;  
-            //  string showNext =" 123+ " + z; 
-              Response.Write(test123);%>
+        <br />
+        <br /> 
         
-        <%= Html.ActionLink("showNext", "ShowNextLogEntries", "Home")%>
+        <%if ((bool)ViewData["showPreviousControl"])
+            Response.Write(Html.ActionLink(" <- show previous", "ShowPreviousLogEntries", "Home"));%>
+
+        <%Response.Write("  " + (int)ViewData["StartIndexOfLogItemsShow"] + " - " + (int)ViewData["EndIndexOfLogItemsShow"] + "  ");%>
+        
+        <%if ((bool)ViewData["showNextControl"])
+              Response.Write(Html.ActionLink("show next -> ", "ShowNextLogEntries", "Home"));%>
+        
+
            
     </form>
     </div>
@@ -93,5 +96,8 @@
                 </tr>
             <%}%>
         </table>
+                <br />
+                <br /> 
+                <% Response.Write("Number of log items in file: " + (int)ViewData["numberOfLogItemsInLogFile"]); %> 
     </div>
 </asp:Content>

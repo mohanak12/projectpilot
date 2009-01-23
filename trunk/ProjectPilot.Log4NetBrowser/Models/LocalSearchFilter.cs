@@ -6,7 +6,7 @@ namespace ProjectPilot.Log4NetBrowser.Models
 {
     public class LocalSearchFilter
     {
-        public static LogDisplay Filter(LogDisplay logObject, string searchType, string searchContent)
+        public static LogDisplay Filter(LogDisplay logObject, int? startIndex, int? endIndex, string searchType, string searchContent)
         {
             bool deleteFlag = true;
             List<int> indexToDelete = new List<int>();
@@ -15,7 +15,12 @@ namespace ProjectPilot.Log4NetBrowser.Models
             {
                 for(int i = 0; i < logObject.LineParse.ElementsLog.Count; i++)
                 {
-                    if (searchType == "MatchCase")
+                    if (i < startIndex && i > endIndex)
+                    {
+                        indexToDelete.Add(i); 
+                    }
+
+                    if (searchType != "MatchWholeWord")
                     {
                         if (logObject.LineParse.ElementsPattern.Contains("Ndc"))
                         {
@@ -42,7 +47,7 @@ namespace ProjectPilot.Log4NetBrowser.Models
 
                             foreach (string element in elementsTemp)
                             {
-                                if (element == searchContent)
+                                if (element.ToLower() == searchContent.ToLower())
                                     deleteFlag = false;
                             }
                         }
@@ -53,7 +58,7 @@ namespace ProjectPilot.Log4NetBrowser.Models
 
                             foreach (string element in elementsTemp)
                             {
-                                if (element == searchContent)
+                                if (element.ToLower() == searchContent.ToLower())
                                     deleteFlag = false;
                             }
                         }
@@ -67,7 +72,7 @@ namespace ProjectPilot.Log4NetBrowser.Models
 
                 for (int i = indexToDelete.Count - 1; i >= 0; i--)
                 {
-                    logObject.LineParse.ElementsLog.RemoveAt(i);
+                    logObject.LineParse.ElementsLog.RemoveAt(indexToDelete[i]);
                 }
             }
 
