@@ -90,6 +90,7 @@
     <Compile Include="AccipioTests\ProjectPilotPortalTests.cs" />
     <Compile Include="AccipioTests\TestReportGeneratorCommandTests.cs" />
     <Compile Include="AccipioTests\ReportDataParserTest.cs" />
+    <Compile Include="AccipioTests\TestReportsTests.cs" />
     <Compile Include="AccipioTests\ValidatingTestSuiteSchemaTests.cs" />
     <Compile Include="AccipioTests\TestSuiteSchemaGeneratorTests.cs" />
     <Compile Include="AccipioTests\ConsoleAppTest.cs" />
