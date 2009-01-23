@@ -1,0 +1,109 @@
+body
+{
+    font-family: 'Palatino Linotype';
+}
+
+h1
+{
+    border-bottom-style: solid;
+    border-bottom-width: 4px;
+    border-bottom-color: #006600;
+}
+
+h2
+{
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+    border-bottom-color: #006600;
+}
+
+h3
+{
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+    border-bottom-color: #006600;
+}
+
+p
+{
+}
+
+.ReportHeader
+{
+    background-color: #eeeeee;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+.TestMainData
+{
+    padding-left: 20px;
+    line-height: 5px;
+}
+
+.SectionDiv
+{
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+.Section2Div
+{
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+.SectionTable
+{
+    margin: 0px 20px 0px 20px;
+    border-style: none;
+    border-collapse: collapse;
+}
+
+.SectionTableHeader th
+{
+    border-width: thin;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-color: #ffcc99 #ffcc99 #000000 #ffcc99;
+    background-color: #eeeeee;
+    border-bottom-style: solid;
+}
+
+.TableRowTodo td
+{
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #FFFFDD;
+}
+
+.TableRowFailed td
+{
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #FFCECE;
+}
+
+.TableRowSuccess td
+{
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #E1FFD2;
+} 
+
+.SectionTableRowTotals td
+{
+    border-style: solid none none none;
+    border-width: thin;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #eeeeee;
+    font-weight: bold;
+}
