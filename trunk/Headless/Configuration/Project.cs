@@ -4,6 +4,11 @@ namespace Headless.Configuration
 {
     public class Project
     {
+        public Project(string projectId)
+        {
+            this.projectId = projectId;
+        }
+
         public IList<BuildStage> BuildStages
         {
             get { return buildStages; }
