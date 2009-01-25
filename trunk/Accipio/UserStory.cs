@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Collections.Generic;
+using System.Globalization;
 
 namespace Accipio
 {
@@ -13,9 +14,26 @@ namespace Accipio
 
         public int SuccessfullyAccomplished { get; set; }
 
+        /// <summary>
+        /// Gets all test cases bind to one userstory.
+        /// </summary>
+        public IList<ReportCase> TestCases
+        {
+            get { return testCases; }
+        }
+
         public string UserStoryName
         {
             get { return userStoryName; }
+        }
+
+        /// <summary>
+        /// Adds test case to userstory.
+        /// </summary>
+        /// <param name="reportCase">Report case <see cref="ReportCase"/></param>
+        public void AddReportCase(ReportCase reportCase)
+        {
+            testCases.Add(reportCase);
         }
 
         public override string ToString()
@@ -29,5 +47,6 @@ namespace Accipio
         }
 
         private readonly string userStoryName;
+        private readonly List<ReportCase> testCases = new List<ReportCase>();
     }
 }

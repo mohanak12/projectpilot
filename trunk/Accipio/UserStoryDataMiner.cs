@@ -29,6 +29,8 @@ namespace Accipio
                             story.SuccessfullyAccomplished++;
 
                         story.PresentInTestCase++;
+
+                        story.AddReportCase(reportCase);
                     }
                 }
             }
