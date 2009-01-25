@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Accipio
 {
@@ -17,7 +18,7 @@ namespace Accipio
         }
 
         /// <summary>
-        /// Gets the collection of UserStory names.
+        /// Gets the ollection of userstories names.
         /// </summary>
         public IList<string> UserStories
         {
@@ -27,30 +28,28 @@ namespace Accipio
         /// <summary>
         /// Adds new item to collection.
         /// </summary>
-        /// <param name="userStory">Name of userStory</param>
+        /// <param name="fileName">Name of the key</param>
         /// <param name="reportData">Data from report.</param>
-        public void AddReportData(string userStory, ReportData reportData)
+        public void AddReportData(string fileName, ReportData reportData)
         {
-            if (reports.ContainsKey(userStory))
+            if (reports.ContainsKey(fileName))
             {
-                throw new ArgumentException("UserStory allredy added!");
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Key '{0}' allredy added!", fileName));
             }
 
-            reports.Add(userStory, reportData);
+            reports.Add(fileName, reportData);
         }
 
         /// <summary>
-        /// Adds new item to collection.
+        /// Add new userstory to collection.
         /// </summary>
-        /// <param name="userStory">Name of userStory</param>
-        public void AddUserStory(string userStory)
+        /// <param name="userStoryName">Name of the userStory</param>
+        public void AddUserStoryName(string userStoryName)
         {
-            if (!UserStories.Contains(userStory))
+            if (!userStories.Contains(userStoryName))
             {
-                UserStories.Add(userStory);
+                userStories.Add(userStoryName);
             }
-            else
-                throw new ArgumentException("UserStory allredy added!");
         }
 
         private readonly Dictionary<string, ReportData> reports = new Dictionary<string, ReportData>();

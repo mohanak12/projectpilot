@@ -1,9 +1,8 @@
-using System;
 using System.Globalization;
 
 namespace Accipio
 {
-    public class UserStoryGenerator : IHtmlTestReportGenerator
+    public class UserStoryGenerator
     {
         /// <summary>
         /// Initializes a new instance of the UserStoryGenerator class.
@@ -13,16 +12,15 @@ namespace Accipio
         {
             this.writer = writer;
         }
-        
-        public void Generate(ReportData reportData)
-        {
-            throw new NotImplementedException();
-        }
 
-        public void Generate(TestReports testReports)
+        public void Generate(UserStoryData testCases)
         {
             WriteLine("<html>");
-            WriteLine("    {0}", testReports.UserStories[0]);
+            foreach (ReportCase testCase in testCases.TestCases)
+            {
+                WriteLine("    {0} | {1} | {2} | {3}", testCase.CaseId, testCase.CaseStartTime, testCase.Status, testCase.ReportDetails);
+            }
+
             WriteLine("</html>");
         }
 
