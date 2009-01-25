@@ -8,9 +8,10 @@ namespace Headless.Configuration
 {
     public class BuildStage
     {
-        public BuildStage(string stageId)
+        public BuildStage(string stageId, Project project)
         {
             this.stageId = stageId;
+            this.project = project;
         }
 
         public string BuildComputer
@@ -22,6 +23,11 @@ namespace Headless.Configuration
         public IList<BuildStage> DependsOn
         {
             get { return dependsOn; }
+        }
+
+        public Project Project
+        {
+            get { return project; }
         }
 
         public string StageId
@@ -38,6 +44,7 @@ namespace Headless.Configuration
         private string buildComputer;
         private List<BuildStage> dependsOn = new List<BuildStage>();
         private string stageId;
+        private readonly Project project;
         private IBuildTask task;
     }
 }

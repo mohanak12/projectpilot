@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Headless.Configuration;
+using log4net.Core;
 
 namespace Headless
 {
     public class BuildRunner : IDisposable
     {
-        public BuildRunner(ITrafficCop cop, Project projectToBuild)
+        public BuildRunner(
+            Project projectToBuild, 
+            ITrafficCop trafficCop, 
+            IStageRunnerFactory stageRunnerFactory,
+            IHeadlessLogger logger)
         {
-            this.cop = cop;
+            this.trafficCop = trafficCop;
+            this.stageRunnerFactory = stageRunnerFactory;
+            this.logger = logger;
             this.projectToBuild = projectToBuild;
         }
 
@@ -24,17 +29,24 @@ namespace Headless
             GC.SuppressFinalize(this);
         }
 
-        public void Run()
+        public BuildReport Run()
         {
+            BuildReport report = new BuildReport();
+
+            Log(Level.Info, "Starting the build runner");
             lock (this)
             {
                 // construct a graph of build stages
                 foreach (BuildStage stage in projectToBuild.BuildStages)
                     BuildDependencyGraph(stage);
+
+                Log(Level.Debug, "Constructed build stages dependency graph");
             }
 
             while (true)
             {
+                Log(Level.Debug, "New cycle started");
+
                 lock (this)
                 {
                     // retrieve the fresh info about stage statuses
@@ -42,17 +54,19 @@ namespace Headless
                     {
                         StageStatus status = GetStageStatus(stage);
 
-                        if (status.Outcome == StageOutcome.InProgress)
+                        if (status.Outcome == BuildOutcome.InProgress)
                             status.StageRunner.UpdateStatus(status);
+
+                        Log(Level.Info, "Build stage '{0}' status: {1}", status.Stage.StageId, status.Outcome);
                     }
                 }
 
-                // check if the traffic cop has signalled the runner to stop
-                TrafficCopControlSignal signal = cop.WaitForControlSignal(TimeSpan.Zero);
+                // check if the traffic trafficCop has signalled the runner to stop
+                TrafficCopControlSignal signal = trafficCop.WaitForControlSignal(TimeSpan.Zero);
                 if (signal == TrafficCopControlSignal.Stop)
                     break;
 
-                bool stagesInWaiting = false;
+                bool stagesPending = false;
 
                 lock (this)
                 {
@@ -60,7 +74,7 @@ namespace Headless
                     foreach (BuildStage stage in stagesOrdered)
                     {
                         StageStatus status = stagesStatuses[stage.StageId];
-                        if (status.Outcome == StageOutcome.Initial)
+                        if (status.Outcome == BuildOutcome.Initial)
                         {
                             bool someDependenciesFailed = false;
                             bool allDependenciesSuccessful = true;
@@ -68,16 +82,16 @@ namespace Headless
                             // check dependecy stages
                             foreach (BuildStage dependency in stage.DependsOn)
                             {
-                                StageStatus dependencyStatus = GetStageStatus(stage);
+                                StageStatus dependencyStatus = GetStageStatus(dependency);
 
-                                if (dependencyStatus.Outcome == StageOutcome.Failed)
+                                if (dependencyStatus.Outcome == BuildOutcome.Failed)
                                 {
                                     // this stage will not be executed, so go to the next one
                                     someDependenciesFailed = true;
                                     allDependenciesSuccessful = false;
                                     break;
                                 }
-                                else if (dependencyStatus.Outcome == StageOutcome.Successful)
+                                else if (dependencyStatus.Outcome == BuildOutcome.Successful)
                                     continue;
 
                                 allDependenciesSuccessful = false;
@@ -88,20 +102,48 @@ namespace Headless
                             else if (allDependenciesSuccessful)
                             {
                                 // we can start this stage
-                                IStageRunner stageRunner = this.cop.StageRunnerFactory.CreateStageRunner(status.Stage);
+                                Log(Level.Info, "Starting stage '{0}'", status.Stage.StageId);
+
+                                IStageRunner stageRunner = this.stageRunnerFactory.CreateStageRunner(status.Stage);
                                 status.PrepareToStart(stageRunner);
+                                stageRunner.StartStage();
+                                // update the status immediatelly
+                                stageRunner.UpdateStatus(status);
+
+                                stagesPending = true;
                             }
                             else
-                                stagesInWaiting = true;
+                                stagesPending = true;
                         }
                     }
                 }
 
-                // check if the traffic cop has signalled the runner to stop
-                signal = cop.WaitForControlSignal(pollPeriod);
+                if (stagesPending)
+                    Log(Level.Debug, "Some build stages are still pending");
+                else
+                {
+                    Log(Level.Debug, "The build has been executed");
+                    break;
+                }
+
+                Log(Level.Debug, "Waiting for the traffic cop");
+
+                // check if the traffic trafficCop has signalled the runner to stop
+                signal = trafficCop.WaitForControlSignal(pollPeriod);
                 if (signal == TrafficCopControlSignal.Stop)
                     break;
             }
+
+            Log(Level.Info, "Stopping the build runner");
+
+            foreach (BuildStage stage in stagesOrdered)
+            {
+                BuildStageReport stageReport = new BuildStageReport();
+                stageReport.StageOutcome = GetStageStatus(stage).Outcome;
+                report.StageReports.Add(stage.StageId, stageReport);
+            }
+
+            return report;
         }
 
         /// <summary>
@@ -117,11 +159,22 @@ namespace Headless
 
                 if (disposing)
                 {
-                    // TODO: clean managed resources            
+                    foreach (StageStatus stageStatus in stagesStatuses.Values)
+                        stageStatus.Dispose();
                 }
 
                 disposed = true;
             }
+        }
+
+        protected void Log (Level level, string format, params object[] args)
+        {
+            logger.Log(
+                LogEvent.ForProject(
+                    projectToBuild.ProjectId, 
+                    level, 
+                    format, 
+                    args));
         }
 
         private void BuildDependencyGraph(BuildStage stage)
@@ -141,11 +194,13 @@ namespace Headless
             return stagesStatuses[stage.StageId];
         }
 
-        private ITrafficCop cop;
         private bool disposed;
+        private readonly IHeadlessLogger logger;
         private Project projectToBuild;
         private List<BuildStage> stagesOrdered = new List<BuildStage>();
+        private IStageRunnerFactory stageRunnerFactory;
         private Dictionary<string, StageStatus> stagesStatuses = new Dictionary<string, StageStatus>();
         private TimeSpan pollPeriod = TimeSpan.FromSeconds(10);
+        private ITrafficCop trafficCop;
     }
 }

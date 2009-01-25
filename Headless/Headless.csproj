@@ -34,6 +34,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\log4net-1.2.10\bin\net\2.0\release\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -51,15 +55,21 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="BuildReport.cs" />
     <Compile Include="BuildRunner.cs" />
+    <Compile Include="BuildStageReport.cs" />
     <Compile Include="Configuration\BuildStage.cs" />
     <Compile Include="Configuration\IBuildTask.cs" />
     <Compile Include="Configuration\IVersionControlSystem.cs" />
     <Compile Include="Configuration\Project.cs" />
+    <Compile Include="DefaultHeadlessLogger.cs" />
+    <Compile Include="IHeadlessLogger.cs" />
     <Compile Include="IStageRunner.cs" />
     <Compile Include="IStageRunnerFactory.cs" />
     <Compile Include="ITrafficCop.cs" />
-    <Compile Include="StageOutcome.cs" />
+    <Compile Include="LocalStageRunner.cs" />
+    <Compile Include="LogEvent.cs" />
+    <Compile Include="BuildOutcome.cs" />
     <Compile Include="StageStatus.cs" />
     <Compile Include="Subversion\SubversionVcs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
