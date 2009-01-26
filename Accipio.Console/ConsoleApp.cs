@@ -17,7 +17,8 @@ namespace Accipio.Console
                 new TestSuiteSchemaGeneratorCommand(
                     new TestCodeGeneratorCommand(
                         new TestReportGeneratorCommand(
-                            new HtmlReportGeneratorCommand(null))));
+                            new HtmlReportGeneratorCommand(
+                                new UserStoryGeneratorCommand(null)))));
 
             Uri uri = new Uri(Assembly.GetExecutingAssembly().CodeBase);
             string localPath = uri.LocalPath;
@@ -80,6 +81,7 @@ namespace Accipio.Console
             System.Console.WriteLine("  codegen                    Create acceptance test code");
             System.Console.WriteLine("  transform                  Run XSLTransform on Gallio test report file");
             System.Console.WriteLine("  report                     Creates html file with test results");
+            System.Console.WriteLine("  userstory                  Creates html files with UserStory history");
             System.Console.WriteLine(string.Empty);
             System.Console.WriteLine("Arguments:");
             System.Console.WriteLine("  [baschema]");
@@ -95,6 +97,9 @@ namespace Accipio.Console
             System.Console.WriteLine("  <transformed_file>.xml     Output file with transofrmed Gallio test results");
             System.Console.WriteLine("  [report]");
             System.Console.WriteLine("  <transformed_file>.xml     Xml file with transformed Gallio test results");
+            System.Console.WriteLine("  [userstory]");
+            System.Console.WriteLine("  <location_of_testresults>  Folder with test results");
+            System.Console.WriteLine("  <location_of_userstories>  Folder where files with UserStory history will be saved to");
             System.Console.WriteLine(string.Empty);
             System.Console.WriteLine("Example:");
             System.Console.WriteLine("  Accipio.Console.exe baschema <instance>.xml <schema_namespace>");
@@ -102,6 +107,7 @@ namespace Accipio.Console
             System.Console.WriteLine("  Accipio.Console.exe -o=C:\\temp\\ codegen <instance>.xml <schema>.xsd <test_suite_file>.xml [...]");
             System.Console.WriteLine("  Accipio.Console.exe transform <test_results_file>.xml <transformed_file>.xml");
             System.Console.WriteLine("  Accipio.Console.exe report <transformed_file>.xml");
+            System.Console.WriteLine("  Accipio.Console.exe userstory \"ReportFiles\\TestResults\" \"ReportFiles\\UserStory\"");
             System.Console.WriteLine(string.Empty);
         }
 
