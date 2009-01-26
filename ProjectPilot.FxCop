@@ -678,16 +678,25 @@
     <Modules>
      <Module Name="headless.dll">
       <Namespaces>
-       <Namespace Name="Headless">
+       <Namespace Name="Headless.Web">
         <Types>
-         <Type Name="LocalStageRunner">
+         <Type Name="WebRequestRoute">
           <Members>
-           <Member Name="#ThreadMethod()">
+           <Member Name="#Match(System.Uri)">
             <Messages>
-             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Created="2009-01-23 18:06:47Z">
+             <Message Id="Headless.Web.RoutedWebRequest" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2009-01-26 09:54:59Z">
+              <Issue Name="ObjectCreation">
+               <Item>'WebRequestRoute.Match(Uri)'</Item>
+               <Item>'RoutedWebRequest'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#routeProcessor">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2009-01-26 09:54:59Z">
               <Issue>
-               <Item>'LocalStageRunner.ThreadMethod()'</Item>
-               <Item>'Exception'</Item>
+               <Item>'WebRequestRoute.routeProcessor'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -880,15 +889,18 @@
    <Rule TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021">
     <Resolution Name="Default">Consider a design that does not require that {0} be an out parameter.</Resolution>
    </Rule>
+   <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
+    <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
+   </Rule>
    <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
     <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
     <Resolution Name="TypeShouldBeCompoundWord">The discrete term '{0}' in type name {1} should be expressed as a compound word, '{2}'.</Resolution>
    </Rule>
-   <Rule TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031">
-    <Resolution Name="Default">Modify {0} to catch a more specific exception than {1} or rethrow the exception.</Resolution>
-   </Rule>
    <Rule TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002">
     <Resolution Name="Default">Change {0} in {1} to use Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; or KeyedCollection&lt;K,V&gt;</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806">
+    <Resolution Name="ObjectCreation">{0} creates a new instance of {1} which is never used. Pass the instance as an argument to another method, assign the instance to a variable, or remove the object creation if it is unnecessary.</Resolution>
    </Rule>
    <Rule TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004">
     <Resolution Name="Default">Consider a design where {0} doesn't require explicit type parameter {1} in any call to it.</Resolution>
