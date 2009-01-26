@@ -1,0 +1,72 @@
+﻿body
+{
+    font-family:sans-serif;
+}
+
+h1
+{
+    color:#4F4E57;
+    background-color: #F4E9DF;
+    padding:5px;
+}
+
+.main
+{
+}
+
+.projectsuccess, .projectfail, .projectpending
+{
+    padding: 15px;
+    border-bottom-style: solid;
+    border-bottom-width:medium;
+    border-bottom-color:#4F4E57;
+}
+
+.projectsuccess
+{
+    background-color: #3F6166;
+}
+
+.projectfail
+{
+    background-color: #C4685A;
+}
+
+.projectpending
+{
+    color: #A19630;
+    background-color: #D6CC74;
+}
+
+.projectid
+{
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+.projectpending .projectid a:link,
+.projectpending .projectbuilddata a:link
+{
+    text-decoration:none;
+    color:#7A7124;
+}
+
+.projectpending .projectid a:hover,
+.projectpending .projectbuilddata a:hover
+{
+    text-decoration:none;
+    color:White;
+}
+
+.projectbuilddata
+{
+    font-weight:bold;
+}
+
+/* 
+#F4E9DF
+#8F776A
+#4F4E57
+#66AEF3
+#C7EDE8
+*/
