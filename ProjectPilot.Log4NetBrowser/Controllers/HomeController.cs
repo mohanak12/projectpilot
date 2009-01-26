@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -8,6 +9,7 @@ using System.Web.Mvc.Ajax;
 using System.Web.SessionState;
 using ProjectPilot.Extras.LogParser;
 using ProjectPilot.Log4NetBrowser.Models;
+using System.Xml;
 
 namespace ProjectPilot.Log4NetBrowser.Controllers
 {
@@ -18,13 +20,37 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
         {
             ViewData["Title"] = "ProjectPilot";
             ViewData["Message"] = "Project Pilot Log4Net browser!";
-                                   
+
+            XmlReaderSettings xmlReaderSettings = new XmlReaderSettings();
+            xmlReaderSettings.IgnoreComments = true;
+            xmlReaderSettings.IgnoreProcessingInstructions = true;
+            xmlReaderSettings.IgnoreWhitespace = true;
+
+            using (XmlReader xmlReader = XmlReader.Create(File.OpenRead(@"\\zarja\share\Marko\LogConfig.xml"), xmlReaderSettings))
+            {
+                string logKey;
+
+                while (false == xmlReader.EOF)
+                {
+                    xmlReader.Read();
+
+                    if (xmlReader.Name == "LogURL" && xmlReader.NodeType != XmlNodeType.EndElement)
+                        {
+                            logKey = xmlReader["logKey"];
+                            xmlReader.Read();
+                            logFiles.Add(logKey ,xmlReader.Value);
+                        }
+                }
+            }
+
+            Session["logFilesList"] = logFiles;
+
             return View();
         }
 
         public ActionResult FileSelect()
         {
-
+            ViewData["logFilesList"] = Session["logFilesList"];
             return View();
         }
 
@@ -55,6 +81,7 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
 
             Session["parserContent"] = parserContent;
             Session["fileSelected"] = fileSelected;
+            Session["numberOfItemsPerPage"] = numberOfItemsPerPage;
             Session["numberOfLogItems"] = parserContent.LineParse.ElementsLog.Count;
             Session["numberOfLogItemsInLogFile"] = numberOfLogItems;
             Session["currentLogIndex"] = 1;
@@ -119,9 +146,8 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             ViewData["numberOfLogItemsInLogFile"] = Session["numberOfLogItemsInLogFile"];
             ViewData["showPreviousControl"] = Session["showPreviousControl"];
             ViewData["showNextControl"] = Session["showNextControl"];
-            
-            ViewData["test"] = test;
-
+            ViewData["numberOfItemsPerPage"] = Session["numberOfItemsPerPage"];
+       
             return View();
         }
 
@@ -186,6 +212,33 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
 
         public ActionResult Ndc(string Id)
         {
+            XmlReaderSettings xmlReaderSettings = new XmlReaderSettings();
+            xmlReaderSettings.IgnoreComments = true;
+            xmlReaderSettings.IgnoreProcessingInstructions = true;
+            xmlReaderSettings.IgnoreWhitespace = true;
+
+            using (XmlReader xmlReader = XmlReader.Create(File.OpenRead(@"\\zarja\share\Marko\LogConfig.xml"), xmlReaderSettings))
+            {
+                string logKey;
+
+                while (false == xmlReader.EOF)
+                {
+                    xmlReader.Read();
+
+                    if (xmlReader.Name == "LogURL" && xmlReader.NodeType != XmlNodeType.EndElement)
+                    {
+                        logKey = xmlReader["logKey"];
+                        xmlReader.Read();
+                        logFiles.Add(logKey, xmlReader.Value);
+                    }
+                }
+            }
+
+            if (logFiles.ContainsKey(Id))
+            {
+                ViewData["DisplayURL"] = logFiles[Id];
+            }
+
             return View();
         }
 
@@ -196,6 +249,6 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
         private string fileSelected;
         private int numberOfLogItems;
         private int numberOfItemsPerPage;
-        private string test = "Niz123";
+        private readonly Dictionary<string, string> logFiles = new Dictionary<string, string>();
     }
 }
