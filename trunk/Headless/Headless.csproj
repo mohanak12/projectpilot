@@ -74,7 +74,14 @@
     <Compile Include="Subversion\SubversionVcs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TrafficCopControlSignal.cs" />
+    <Compile Include="Web\DefaultWebRequestRouter.cs" />
+    <Compile Include="Web\IRouteProcessor.cs" />
     <Compile Include="Web\IWebRequestProcessor.cs" />
+    <Compile Include="Web\IWebRequestRouter.cs" />
+    <Compile Include="Web\ResponseTemplate.cs" />
+    <Compile Include="Web\TemplatedWebRequestProcessor.cs" />
+    <Compile Include="Web\RoutedWebRequest.cs" />
+    <Compile Include="Web\WebRequestRoute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ProjectPilot.snk" />
