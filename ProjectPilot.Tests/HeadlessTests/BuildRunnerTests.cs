@@ -14,21 +14,6 @@ namespace ProjectPilot.Tests.HeadlessTests
     public class BuildRunnerTests
     {
         [Test]
-        public void BuildProjectSuccess()
-        {
-            buildStage1.Task = mockBuildTaskSuccess;
-            buildStage2.Task = mockBuildTaskSuccess;
-            buildStageAcceptTests.Task = mockBuildTaskSuccess;
-
-            BuildReport report = RunBuild();
-
-            Assert.AreEqual(BuildOutcome.Successful, report.BuildOutcome);
-            Assert.AreEqual(BuildOutcome.Successful, report.StageReports[buildStage1.StageId].StageOutcome);
-            Assert.AreEqual(BuildOutcome.Successful, report.StageReports[buildStage2.StageId].StageOutcome);
-            Assert.AreEqual(BuildOutcome.Successful, report.StageReports[buildStageAcceptTests.StageId].StageOutcome);
-        }
-
-        [Test]
         public void BuildProjectStage1Failed()
         {
             buildStage1.Task = this.mockBuildTaskFailure;
@@ -41,6 +26,21 @@ namespace ProjectPilot.Tests.HeadlessTests
             Assert.AreEqual(BuildOutcome.Failed, report.StageReports[buildStage1.StageId].StageOutcome);
             Assert.AreEqual(BuildOutcome.NotExecuted, report.StageReports[buildStage2.StageId].StageOutcome);
             Assert.AreEqual(BuildOutcome.NotExecuted, report.StageReports[buildStageAcceptTests.StageId].StageOutcome);
+        }
+
+        [Test]
+        public void BuildProjectSuccess()
+        {
+            buildStage1.Task = mockBuildTaskSuccess;
+            buildStage2.Task = mockBuildTaskSuccess;
+            buildStageAcceptTests.Task = mockBuildTaskSuccess;
+
+            BuildReport report = RunBuild();
+
+            Assert.AreEqual(BuildOutcome.Successful, report.BuildOutcome);
+            Assert.AreEqual(BuildOutcome.Successful, report.StageReports[buildStage1.StageId].StageOutcome);
+            Assert.AreEqual(BuildOutcome.Successful, report.StageReports[buildStage2.StageId].StageOutcome);
+            Assert.AreEqual(BuildOutcome.Successful, report.StageReports[buildStageAcceptTests.StageId].StageOutcome);
         }
 
         [FixtureSetUp]
