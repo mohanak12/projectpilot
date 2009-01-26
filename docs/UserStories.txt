@@ -1,0 +1,52 @@
+USER STORIES
+------------
+
+1.
+As a user, I want to have a direct static URL link to a specific log file.
+
+NOTE:
+When a browses to this link, the latest N log record are shown. 
+N does not need to be exact, only an approximation.
+
+TESTS:
+Go to a specific direct URL link and check that some log entries.
+
+2. 
+As an administrator, I want to be able to configure multiple log sources.
+
+NOTE:
+The configuration can be done by manually editing a configuration file.
+
+3.
+As a user, I want to be able to select a single log source from a list of available log sources.
+
+NOTE:
+When a user clicks on a link, the same layout will be shown as in US 1.
+
+4.
+As a user, I want to have an ability to refresh log display.
+
+NOTE:
+If a log file contents change, the user should have an ability to see the refreshed data.
+
+5.
+As a user, I want to see log records colored by their severity.
+
+6.
+As a user, I want to have following log data displayed as columns: date+time, severity, thread ID, message
+
+7.
+As a user, I want to see the entire log entry on the screen without using horizontal scroll bars. 
+
+8.
+As a user, I want to see log entry details by clicking on an individual log entry.
+
+NOTE:
+The details should be displayed as a bottom part of a splitted view.
+There should be a way to hide this bottom half once the user doesn't want it any more.
+
+9.
+As a user, I want to be able to see log entries even on a smaller screen size (example: 800x600).
+
+NOTE:
+This means that the screen resolution is not predetermined.
