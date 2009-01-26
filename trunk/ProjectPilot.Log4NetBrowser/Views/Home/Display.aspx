@@ -49,7 +49,12 @@
         %>
   
         <label>Number of items:</label>&nbsp;
-        <input type="text"name="numberOfItems" size="3" />
+        <%
+            if((int)ViewData["numberOfItemsPerPage"] != null)
+                Response.Write("<input type=\"text\" name=\"numberOfItems\" size=\"3\" value=\"" + (int)ViewData["numberOfItemsPerPage"] + "\" />");
+            else
+                Response.Write("<input type=\"text\" name=\"numberOfItems\" size=\"3\" />");
+        %> 
         <br />
         <br />
         

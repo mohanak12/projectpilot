@@ -41,5 +41,19 @@
         <br />
         <br />
         <input type="submit" value="OK" />&nbsp;
+        <br />
+        <br />
+        
+            
+    <%
+        Dictionary<string, string> logFilesList = ViewData["logFilesList"] as Dictionary<string, string>;
+
+        foreach (string logFile in logFilesList.Keys)
+        {
+            Response.Write(Html.ActionLink(logFile, "FileSelect", "Home"));
+            Response.Write("<BR />");
+        }
+
+    %>
     </form>
 </asp:Content>
