@@ -82,6 +82,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BusinessActionTransform.xslt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestReportTransform.xslt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
