@@ -22,6 +22,21 @@ namespace ProjectPilot.Framework
             set { configuration = value; }
         }
 
+        public string CreateNewFile(string directory, string localFileName)
+        {
+            string fullFileName = String.Format(
+                CultureInfo.InvariantCulture,
+                "{0}{1}{2}",
+                directory,
+                Path.DirectorySeparatorChar,
+                localFileName);
+            fullFileName = Path.Combine(storageRootDir, fullFileName);
+
+            CreateDirectories(fullFileName, true);
+
+            return fullFileName;
+        }
+
         public void DeleteFile(string fileName)
         {
             File.Delete(fileName);
@@ -51,6 +66,7 @@ namespace ProjectPilot.Framework
                 Path.DirectorySeparatorChar,
                 localFileName);
             fullFileName = Path.Combine(storageRootDir, fullFileName);
+
             return fullFileName;
         }
 
@@ -64,6 +80,7 @@ namespace ProjectPilot.Framework
                 projectId,
                 moduleId,
                 localFileName);
+
             fullFileName = Path.Combine(storageRootDir, fullFileName);
 
             if (ensureDirPathExists)

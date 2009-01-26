@@ -35,6 +35,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{0EBE64E9-CBA6-428D-B4BE-42ED11B35896}"
 	ProjectSection(SolutionItems) = preProject
 		Data\Templates\CCNetReportStatistics.vm = Data\Templates\CCNetReportStatistics.vm
+		Data\Templates\ReportTemplate.vm = Data\Templates\ReportTemplate.vm
 		Data\Templates\RevisionControlHistory.vm = Data\Templates\RevisionControlHistory.vm
 	EndProjectSection
 EndProject

@@ -84,11 +84,8 @@ namespace Accipio.Console
             System.Console.WriteLine("Creating report '{0}'", testReportOutputFileName);
 
             // generate html report data
-            using (ICodeWriter writer = new FileCodeWriter(testReportOutputFileName))
-            {
-                IHtmlTestReportGenerator htmlTestReportGenerator = new HtmlTestReportGenerator(writer);
-                htmlTestReportGenerator.Generate(reportData);
-            }
+            IHtmlTestReportGenerator htmlTestReportGenerator = new HtmlTestReportGenerator();
+            htmlTestReportGenerator.Generate(reportData);
         }
 
         private readonly IConsoleCommand nextCommandInChain;

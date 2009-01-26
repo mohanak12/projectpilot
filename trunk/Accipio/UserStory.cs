@@ -5,14 +5,34 @@ namespace Accipio
 {
     public class UserStory
     {
+        /// <summary>
+        /// Initializes a new instance of the UserStory class.
+        /// </summary>
+        /// <param name="userStoryName">Define user story name.</param>
         public UserStory(string userStoryName)
         {
             this.userStoryName = userStoryName;
         }
 
+        /// <summary>
+        /// Gets or sets number of test cases where user story is presented.
+        /// </summary>
         public int PresentInTestCase { get; set; }
 
+        /// <summary>
+        /// Gets or sets number of successfuly accomplished test case that contains user story.
+        /// </summary>
         public int SuccessfullyAccomplished { get; set; }
+
+        /// <summary>
+        /// Gets or sets number of failed tests.
+        /// </summary>
+        public int Failed { get; set; }
+
+        /// <summary>
+        /// Gets or sets number of skipped tests.
+        /// </summary>
+        public int Skipped { get; set; }
 
         /// <summary>
         /// Gets all test cases bind to one userstory.
@@ -22,6 +42,9 @@ namespace Accipio
             get { return testCases; }
         }
 
+        /// <summary>
+        /// Gets user story name.
+        /// </summary>
         public string UserStoryName
         {
             get { return userStoryName; }
