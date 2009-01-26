@@ -5,6 +5,8 @@ namespace ProjectPilot.Framework
 {
     public interface IFileManager
     {
+        string CreateNewFile(string directory, string localFileName);
+
         void DeleteFile(string fileName);
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]

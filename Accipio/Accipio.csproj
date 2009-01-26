@@ -109,6 +109,12 @@
   <ItemGroup>
     <None Include="ProjectPilot.snk" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ProjectPilot.Framework\ProjectPilot.Framework.csproj">
+      <Project>{C87F10BF-4132-4B75-9C07-CB0B1FCE6440}</Project>
+      <Name>ProjectPilot.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\lib\Microsoft StyleCop\Microsoft.StyleCop.Targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
