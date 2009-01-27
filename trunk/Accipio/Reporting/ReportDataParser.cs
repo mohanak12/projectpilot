@@ -2,8 +2,9 @@
 using System.Globalization;
 using System.IO;
 using System.Xml;
+using Accipio.Reporting;
 
-namespace Accipio
+namespace Accipio.Reporting
 {
     public class ReportDataParser : IDisposable
     {
@@ -34,11 +35,11 @@ namespace Accipio
         {
             XmlReaderSettings xmlReaderSettings =
                 new XmlReaderSettings
-                {
-                    IgnoreComments = true,
-                    IgnoreProcessingInstructions = true,
-                    IgnoreWhitespace = true
-                };
+                    {
+                        IgnoreComments = true,
+                        IgnoreProcessingInstructions = true,
+                        IgnoreWhitespace = true
+                    };
 
             ReportData reportData = new ReportData();
 
@@ -68,9 +69,9 @@ namespace Accipio
                             {
                                 throw new NotSupportedException(
                                     string.Format(
-                                    CultureInfo.InvariantCulture,
-                                    "Not supported xml node type. Node type = {0}",
-                                    xmlReader.NodeType));
+                                        CultureInfo.InvariantCulture,
+                                        "Not supported xml node type. Node type = {0}",
+                                        xmlReader.NodeType));
                             }
                     }
                 }
@@ -121,9 +122,9 @@ namespace Accipio
                         {
                             throw new NotSupportedException(
                                 string.Format(
-                                CultureInfo.InvariantCulture,
-                                "Not supported xml node type. Node type = {0}",
-                                xmlReader.NodeType));
+                                    CultureInfo.InvariantCulture,
+                                    "Not supported xml node type. Node type = {0}",
+                                    xmlReader.NodeType));
                         }
                 }
             }
@@ -141,25 +142,25 @@ namespace Accipio
                 {
                     case "case":
 
-                        ReportCaseStatus caseStatus =
-                            (ReportCaseStatus)Enum.Parse(typeof(ReportCaseStatus), ReadAttribute(xmlReader, "status"), true);
+                        TestCaseExecutionStatus caseExecutionStatus =
+                            (TestCaseExecutionStatus)Enum.Parse(typeof(TestCaseExecutionStatus), ReadAttribute(xmlReader, "status"), true);
 
-                        ReportCase reportCase = new ReportCase(
+                        TestCaseExecutionReport testCaseExecutionReport = new TestCaseExecutionReport(
                             ReadAttribute(xmlReader, "id"),
                             Convert.ToDateTime(ReadAttribute(xmlReader, "startTime"), CultureInfo.InvariantCulture),
                             ReadAttribute(xmlReader, "duration"),
-                            caseStatus);
+                            caseExecutionStatus);
 
-                        if (caseStatus == ReportCaseStatus.Failed)
+                        if (caseExecutionStatus == TestCaseExecutionStatus.Failed)
                             reportSuite.FailedTests++;
-                        else if (caseStatus == ReportCaseStatus.Passed)
+                        else if (caseExecutionStatus == TestCaseExecutionStatus.Passed)
                             reportSuite.PassedTests++;
-                        else if (caseStatus == ReportCaseStatus.Skipped)
+                        else if (caseExecutionStatus == TestCaseExecutionStatus.Skipped)
                             reportSuite.SkippedTests++;
 
-                        ReadUserStories(reportCase, xmlReader);
+                        ReadUserStories(testCaseExecutionReport, xmlReader);
 
-                        reportSuite.TestCases.Add(reportCase);
+                        reportSuite.TestCases.Add(testCaseExecutionReport);
 
                         break;
 
@@ -167,9 +168,9 @@ namespace Accipio
                         {
                             throw new NotSupportedException(
                                 string.Format(
-                                CultureInfo.InvariantCulture,
-                                "Not supported xml node type. Node type = {0}",
-                                xmlReader.NodeType));
+                                    CultureInfo.InvariantCulture,
+                                    "Not supported xml node type. Node type = {0}",
+                                    xmlReader.NodeType));
                         }
                 }
             }
@@ -199,9 +200,9 @@ namespace Accipio
                         {
                             throw new NotSupportedException(
                                 string.Format(
-                                CultureInfo.InvariantCulture,
-                                "Not supported xml node type. Node type = {0}",
-                                xmlReader.NodeType));
+                                    CultureInfo.InvariantCulture,
+                                    "Not supported xml node type. Node type = {0}",
+                                    xmlReader.NodeType));
                         }
                 }
             }
@@ -227,9 +228,9 @@ namespace Accipio
                         {
                             throw new NotSupportedException(
                                 string.Format(
-                                CultureInfo.InvariantCulture,
-                                "Not supported xml node type. Node type = {0}",
-                                xmlReader.NodeType));
+                                    CultureInfo.InvariantCulture,
+                                    "Not supported xml node type. Node type = {0}",
+                                    xmlReader.NodeType));
                         }
                 }
             }
@@ -237,7 +238,7 @@ namespace Accipio
             xmlReader.Read();
         }
 
-        private void ReadUserStories(ReportCase reportCase, XmlReader xmlReader)
+        private void ReadUserStories(TestCaseExecutionReport testCaseExecutionReport, XmlReader xmlReader)
         {
             xmlReader.Read();
 
@@ -247,7 +248,7 @@ namespace Accipio
                 {
                     case "userStories":
 
-                        ReadUserStory(reportCase, xmlReader);
+                        ReadUserStory(testCaseExecutionReport, xmlReader);
 
                         break;
 
@@ -255,9 +256,9 @@ namespace Accipio
                         {
                             throw new NotSupportedException(
                                 string.Format(
-                                CultureInfo.InvariantCulture,
-                                "Not supported xml node type. Node type = {0}",
-                                xmlReader.NodeType));
+                                    CultureInfo.InvariantCulture,
+                                    "Not supported xml node type. Node type = {0}",
+                                    xmlReader.NodeType));
                         }
                 }
             }
@@ -265,7 +266,7 @@ namespace Accipio
             xmlReader.Read();
         }
 
-        private void ReadUserStory(ReportCase reportCase, XmlReader xmlReader)
+        private void ReadUserStory(TestCaseExecutionReport testCaseExecutionReport, XmlReader xmlReader)
         {
             xmlReader.Read();
 
@@ -275,13 +276,13 @@ namespace Accipio
                 {
                     case "userStory":
 
-                        reportCase.UserStories.Add(xmlReader.ReadElementContentAsString());
+                        testCaseExecutionReport.UserStories.Add(xmlReader.ReadElementContentAsString());
 
                         break;
 
                     case "exception":
 
-                        reportCase.ReportDetails = xmlReader.ReadElementContentAsString();
+                        testCaseExecutionReport.ReportDetails = xmlReader.ReadElementContentAsString();
 
                         break;
 
@@ -289,9 +290,9 @@ namespace Accipio
                         {
                             throw new NotSupportedException(
                                 string.Format(
-                                CultureInfo.InvariantCulture,
-                                "Not supported xml node type. Node type = {0}",
-                                xmlReader.NodeType));
+                                    CultureInfo.InvariantCulture,
+                                    "Not supported xml node type. Node type = {0}",
+                                    xmlReader.NodeType));
                         }
                 }
             }

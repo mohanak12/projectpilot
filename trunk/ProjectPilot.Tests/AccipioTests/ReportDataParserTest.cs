@@ -1,4 +1,4 @@
-﻿using Accipio;
+﻿using Accipio.Reporting;
 using MbUnit.Framework;
 
 namespace ProjectPilot.Tests.AccipioTests

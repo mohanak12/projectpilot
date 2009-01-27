@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Accipio.Reporting;
 
-namespace Accipio
+namespace Accipio.Reporting
 {
     public class ReportSuite
     {
@@ -16,10 +17,10 @@ namespace Accipio
         /// <summary>
         /// Add new test case to test suite.
         /// </summary>
-        /// <param name="testCase">Test case.</param>
-        public void AddTestCase(ReportCase testCase)
+        /// <param name="testCaseExecutionReport">Test case.</param>
+        public void AddTestCase(TestCaseExecutionReport testCaseExecutionReport)
         {
-            testCases.Add(testCase);
+            testCases.Add(testCaseExecutionReport);
         }
 
         /// <summary>
@@ -33,7 +34,7 @@ namespace Accipio
         /// <summary>
         /// Gets list of test cases.
         /// </summary>
-        public IList<ReportCase> TestCases
+        public IList<TestCaseExecutionReport> TestCases
         {
             get { return testCases; }
         }
@@ -53,7 +54,7 @@ namespace Accipio
         /// </summary>
         public int SkippedTests { get; set; }
 
-        private readonly List<ReportCase> testCases = new List<ReportCase>();
+        private readonly List<TestCaseExecutionReport> testCases = new List<TestCaseExecutionReport>();
         private readonly string suiteId;
     }
 }
