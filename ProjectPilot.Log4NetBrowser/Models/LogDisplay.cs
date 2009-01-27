@@ -22,9 +22,9 @@ namespace ProjectPilot.Log4NetBrowser.Models
 
         public void Parsing10MBLogFile(LogParserFilter filter, string file)
         {
-            if (string.IsNullOrEmpty(file))
-                //file = @"..\..\..\Data\Samples\Log4Net_sample.log";
-                file = @"\\zarja\share\Marko\SSM+2009-01-08.log.28.small";
+            //if (string.IsNullOrEmpty(file))
+            //    //file = @"..\..\..\Data\Samples\Log4Net_sample.log";
+            //    file = @"\\zarja\share\Marko\SSM+2009-01-08.log.28.small";
                         
             using (Stream fileStream = File.OpenRead(file))
             {
