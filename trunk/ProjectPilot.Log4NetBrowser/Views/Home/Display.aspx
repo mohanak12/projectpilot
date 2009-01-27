@@ -103,6 +103,7 @@
         </table>
                 <br />
                 <br /> 
-                <% Response.Write("Number of log items in file: " + (int)ViewData["numberOfLogItemsInLogFile"]); %> 
+                <% Response.Write("Number of log items in file: " + (int)ViewData["numberOfLogItemsInLogFile"]); %> &nbsp&nbsp&nbsp&nbsp
+                <%Response.Write(Html.ActionLink("Refresh", "Ndc/" + (string)ViewData["fileKeySelected"], "Home"));%>
     </div>
 </asp:Content>

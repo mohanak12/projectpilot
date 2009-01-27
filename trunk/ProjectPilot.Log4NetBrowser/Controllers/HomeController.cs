@@ -43,6 +43,7 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
                 }
             }
 
+            Session["fileSelected"] = null;
             Session["logFilesList"] = logFiles;
 
             return View();
@@ -61,6 +62,10 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
                             string searchType, 
                             string Search)
         {
+            if (!string.IsNullOrEmpty((string)Session["fileSelected"]))
+                fileSelected = (string)Session["fileSelected"];
+            else
+                fileSelected = @"\\zarja\share\Marko\SSM+2009-01-08.log.28.small"; // Default file
 
             //Get number of log entries in log file
             LogParserFilter filter = LoadParameters.CreateFilter(null, null,
@@ -147,6 +152,7 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             ViewData["showPreviousControl"] = Session["showPreviousControl"];
             ViewData["showNextControl"] = Session["showNextControl"];
             ViewData["numberOfItemsPerPage"] = Session["numberOfItemsPerPage"];
+            ViewData["fileKeySelected"] = Session["fileKeySelected"];
        
             return View();
         }
@@ -219,7 +225,7 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
 
             using (XmlReader xmlReader = XmlReader.Create(File.OpenRead(@"\\zarja\share\Marko\LogConfig.xml"), xmlReaderSettings))
             {
-                string logKey;
+                string key;
 
                 while (false == xmlReader.EOF)
                 {
@@ -227,9 +233,10 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
 
                     if (xmlReader.Name == "LogURL" && xmlReader.NodeType != XmlNodeType.EndElement)
                     {
-                        logKey = xmlReader["logKey"];
+
+                        key = xmlReader["logKey"];
                         xmlReader.Read();
-                        logFiles.Add(logKey, xmlReader.Value);
+                        logFiles.Add(key, xmlReader.Value);
                     }
                 }
             }
@@ -237,6 +244,9 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             if (logFiles.ContainsKey(Id))
             {
                 ViewData["DisplayURL"] = logFiles[Id];
+                Session["fileSelected"] = logFiles[Id];
+                Session["fileKeySelected"] = Id;
+                return RedirectToAction("Load"); 
             }
 
             return View();
@@ -247,6 +257,7 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
         private int StartIndexOfLogItemsShow;
         private int EndIndexOfLogItemsShow;
         private string fileSelected;
+        private string fileKeySelected;
         private int numberOfLogItems;
         private int numberOfItemsPerPage;
         private readonly Dictionary<string, string> logFiles = new Dictionary<string, string>();

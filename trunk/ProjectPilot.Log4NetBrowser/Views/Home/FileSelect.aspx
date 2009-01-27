@@ -50,7 +50,7 @@
 
         foreach (string logFile in logFilesList.Keys)
         {
-            Response.Write(Html.ActionLink(logFile, "FileSelect", "Home"));
+            Response.Write(Html.ActionLink(logFile, "Ndc/" + logFile, "Home"));
             Response.Write("<BR />");
         }
 
