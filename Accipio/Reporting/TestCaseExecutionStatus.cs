@@ -1,7 +1,7 @@
 ﻿
-namespace Accipio
+namespace Accipio.Reporting
 {
-    public enum ReportCaseStatus
+    public enum TestCaseExecutionStatus
     {
         /// <summary>
         /// Test status failed.

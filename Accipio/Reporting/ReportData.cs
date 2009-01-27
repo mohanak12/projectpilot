@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Accipio
+namespace Accipio.Reporting
 {
     public class ReportData
     {

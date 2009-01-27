@@ -1,8 +1,10 @@
 ﻿
+using Accipio.Reporting;
+
 namespace Accipio
 {
     public interface IHtmlTestReportGenerator
     {
-        void Generate(ReportData reportData);
+        void Generate(TestRunsDatabase testRunDatabase);
     }
 }

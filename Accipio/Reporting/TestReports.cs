@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using Accipio.Reporting;
 
-namespace Accipio
+namespace Accipio.Reporting
 {
     /// <summary>
     /// Holds collection of reports from all parsed files

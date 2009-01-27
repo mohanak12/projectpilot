@@ -1,7 +1,7 @@
 #region
 
-using Accipio;
 using Accipio.Console;
+using Accipio.Reporting;
 using MbUnit.Framework;
 
 #endregion

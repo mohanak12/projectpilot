@@ -1,6 +1,7 @@
 using System.Globalization;
+using Accipio.Reporting;
 
-namespace Accipio
+namespace Accipio.Reporting
 {
     public class UserStoryGenerator
     {
@@ -16,9 +17,9 @@ namespace Accipio
         public void Generate(UserStoryData testCases)
         {
             WriteLine("<html>");
-            foreach (ReportCase testCase in testCases.TestCases)
+            foreach (TestCaseExecutionReport testCase in testCases.TestCases)
             {
-                WriteLine("    {0} | {1} | {2} | {3}", testCase.CaseId, testCase.CaseStartTime, testCase.Status, testCase.ReportDetails);
+                WriteLine("    {0} | {1} | {2} | {3}", testCase.TestCaseId, testCase.StartTime, testCase.ExecutionStatus, testCase.ReportDetails);
             }
 
             WriteLine("</html>");

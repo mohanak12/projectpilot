@@ -319,15 +319,27 @@
       <Namespaces>
        <Namespace Name="Accipio.Console">
         <Types>
-         <Type Name="GallioReportConverter">
-          <Messages>
-           <Message Id="Gallio" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-01-27 12:27:22Z">
-            <Issue Name="Type">
-             <Item>Gallio</Item>
-             <Item>'GallioReportConverter'</Item>
-            </Issue>
-           </Message>
-          </Messages>
+         <Type Name="HtmlTestReportGeneratorCommand">
+          <Members>
+           <Member Name="#outputDir">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Excluded" Created="2009-01-27 17:28:14Z">
+              <Issue>
+               <Item>'HtmlTestReportGeneratorCommand.outputDir'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#testReportsDir">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Excluded" Created="2009-01-27 17:28:14Z">
+              <Issue>
+               <Item>'HtmlTestReportGeneratorCommand.testReportsDir'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
          </Type>
         </Types>
        </Namespace>
@@ -688,6 +700,93 @@
      </Module>
     </Modules>
    </Target>
+   <Target Name="$(ProjectDir)/Accipio/bin/Release/Accipio.dll">
+    <Modules>
+     <Module Name="accipio.dll">
+      <Namespaces>
+       <Namespace Name="Accipio">
+        <Types>
+         <Type Name="HtmlTestReportGenerator">
+          <Members>
+           <Member Name="#Generate(Accipio.Reporting.TestRunsDatabase)">
+            <Messages>
+             <Message Id="ProjectPilot.Framework.DefaultTemplateEngine" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2009-01-27 17:28:14Z">
+              <Issue Name="ObjectCreation">
+               <Item>'HtmlTestReportGenerator.Generate(TestRunsDatabase)'</Item>
+               <Item>'DefaultTemplateEngine'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="Accipio.Reporting">
+        <Types>
+         <Type Name="TestCaseRun">
+          <Members>
+           <Member Name="#testCaseId">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Excluded" Created="2009-01-27 17:28:14Z">
+              <Issue>
+               <Item>'TestCaseRun.testCaseId'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="TestRun">
+          <Members>
+           <Member Name="#endTime">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Excluded" Created="2009-01-27 17:28:14Z">
+              <Issue>
+               <Item>'TestRun.endTime'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#startTime">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Excluded" Created="2009-01-27 17:28:14Z">
+              <Issue>
+               <Item>'TestRun.startTime'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#testSuitesRuns">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Excluded" Created="2009-01-27 17:28:14Z">
+              <Issue>
+               <Item>'TestRun.testSuitesRuns'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="TestSuiteRun">
+          <Members>
+           <Member Name="#testCasesRuns">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Excluded" Created="2009-01-27 17:28:14Z">
+              <Issue>
+               <Item>'TestSuiteRun.testCasesRuns'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
    <Target Name="$(ProjectDir)/ProjectPilot.Framework/bin/Release/ProjectPilot.Framework.dll">
     <Modules>
      <Module Name="projectpilot.framework.dll">
@@ -868,12 +967,18 @@
    <Rule TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021">
     <Resolution Name="Default">Consider a design that does not require that {0} be an out parameter.</Resolution>
    </Rule>
+   <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
+    <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
+   </Rule>
    <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
     <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
     <Resolution Name="TypeShouldBeCompoundWord">The discrete term '{0}' in type name {1} should be expressed as a compound word, '{2}'.</Resolution>
    </Rule>
    <Rule TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002">
     <Resolution Name="Default">Change {0} in {1} to use Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; or KeyedCollection&lt;K,V&gt;</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806">
+    <Resolution Name="ObjectCreation">{0} creates a new instance of {1} which is never used. Pass the instance as an argument to another method, assign the instance to a variable, or remove the object creation if it is unnecessary.</Resolution>
    </Rule>
    <Rule TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004">
     <Resolution Name="Default">Consider a design where {0} doesn't require explicit type parameter {1} in any call to it.</Resolution>

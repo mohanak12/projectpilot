@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 
-namespace Accipio
+namespace Accipio.Reporting
 {
     public class UserStory
     {
@@ -11,7 +11,7 @@ namespace Accipio
         /// <param name="userStoryName">Define user story name.</param>
         public UserStory(string userStoryName)
         {
-            this.userStoryName = userStoryName;
+            this.userStoryId = userStoryName;
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Accipio
         /// <summary>
         /// Gets all test cases bind to one userstory.
         /// </summary>
-        public IList<ReportCase> TestCases
+        public IList<TestCaseExecutionReport> TestCases
         {
             get { return testCases; }
         }
@@ -45,18 +45,18 @@ namespace Accipio
         /// <summary>
         /// Gets user story name.
         /// </summary>
-        public string UserStoryName
+        public string UserStoryId
         {
-            get { return userStoryName; }
+            get { return userStoryId; }
         }
 
         /// <summary>
         /// Adds test case to userstory.
         /// </summary>
-        /// <param name="reportCase">Report case <see cref="ReportCase"/></param>
-        public void AddReportCase(ReportCase reportCase)
+        /// <param name="testCaseExecutionReport">Report case <see cref="TestCaseExecutionReport"/></param>
+        public void AddReportCase(TestCaseExecutionReport testCaseExecutionReport)
         {
-            testCases.Add(reportCase);
+            testCases.Add(testCaseExecutionReport);
         }
 
         public override string ToString()
@@ -64,12 +64,12 @@ namespace Accipio
             return string.Format(
                 CultureInfo.InvariantCulture, 
                 "{0} ({1}/{2})", 
-                userStoryName, 
+                userStoryId, 
                 SuccessfullyAccomplished,
                 PresentInTestCase);
         }
 
-        private readonly string userStoryName;
-        private readonly List<ReportCase> testCases = new List<ReportCase>();
+        private readonly string userStoryId;
+        private readonly List<TestCaseExecutionReport> testCases = new List<TestCaseExecutionReport>();
     }
 }

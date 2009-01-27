@@ -46,6 +46,10 @@ namespace Flubu.Tasks.FileSystem
                         // cut off the leading part of the path (up to the root directory of the package)
                         string basedFileName = fileName.Substring(baseDir.Length + 1);
 
+                        // use non-Windows directory separator 
+                        if (Path.DirectorySeparatorChar == '\\')
+                            basedFileName = basedFileName.Replace(@"\", "/");
+
                         environment.LogMessage("Zipping file '{0}'", basedFileName);
 
                         ZipEntry entry = new ZipEntry(basedFileName);
@@ -56,12 +60,15 @@ namespace Flubu.Tasks.FileSystem
                         {
                             int sourceBytes;
 
-                            do
+                            while (true)
                             {
                                 sourceBytes = fileStream.Read(buffer, 0, buffer.Length);
+
+                                if (sourceBytes == 0)
+                                    break;
+
                                 zipStream.Write(buffer, 0, sourceBytes);
                             } 
-                            while (sourceBytes > 0);
                         }
                     }
                 }

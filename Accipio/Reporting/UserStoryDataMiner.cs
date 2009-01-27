@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Accipio.Reporting;
 
-namespace Accipio
+namespace Accipio.Reporting
 {
     [SuppressMessage("Microsoft.Design", "CA1053:StaticHolderTypesShouldNotHaveConstructors")]
     public class UserStoryDataMiner
@@ -21,12 +22,12 @@ namespace Accipio
 
             foreach (ReportSuite reportSuite in reportData.TestSuites)
             {
-                foreach (ReportCase reportCase in reportSuite.TestCases)
+                foreach (TestCaseExecutionReport reportCase in reportSuite.TestCases)
                 {
                     foreach (string userStory in reportCase.UserStories)
                     {
                         string tempStory = userStory;
-                        UserStory story = userStories.Find(temp => temp.UserStoryName == tempStory);
+                        UserStory story = userStories.Find(temp => temp.UserStoryId == tempStory);
 
                         if (story == null)
                         {
@@ -35,13 +36,13 @@ namespace Accipio
                             userStories.Add(story);
                         }
 
-                        if (reportCase.Status == ReportCaseStatus.Passed)
+                        if (reportCase.ExecutionStatus == TestCaseExecutionStatus.Passed)
                             story.SuccessfullyAccomplished++;
 
-                        if (reportCase.Status == ReportCaseStatus.Failed)
+                        if (reportCase.ExecutionStatus == TestCaseExecutionStatus.Failed)
                             story.Failed++;
 
-                        if (reportCase.Status == ReportCaseStatus.Skipped)
+                        if (reportCase.ExecutionStatus == TestCaseExecutionStatus.Skipped)
                             story.Skipped++;
 
                         story.PresentInTestCase++;

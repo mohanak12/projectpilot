@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using Accipio.Reporting;
 using NDesk.Options;
 
 namespace Accipio.Console
@@ -36,18 +37,18 @@ namespace Accipio.Console
             if (unhandledArguments.Count > 0)
                 throw new ArgumentException("There are some unsupported options.");
 
-            ReportData reportData;
-            using (ReportDataParser parser = new ReportDataParser(testReportsDir))
-            {
-                // parse report data from xml file
-                reportData = parser.Parse();
-            }
+            //ReportData reportData;
+            //using (ReportDataParser parser = new ReportDataParser(testReportsDir))
+            //{
+            //    // parse report data from xml file
+            //    reportData = parser.Parse();
+            //}
 
-            System.Console.WriteLine("Creating report files in the '{0}' directory", outputDir);
+            //System.Console.WriteLine("Creating report files in the '{0}' directory", outputDir);
 
-            // generate html report data
-            IHtmlTestReportGenerator htmlTestReportGenerator = new HtmlTestReportGenerator();
-            htmlTestReportGenerator.Generate(reportData);
+            //// generate html report data
+            //IHtmlTestReportGenerator htmlTestReportGenerator = new HtmlTestReportGenerator();
+            //htmlTestReportGenerator.Generate(reportData);
 
             return 0;
         }
