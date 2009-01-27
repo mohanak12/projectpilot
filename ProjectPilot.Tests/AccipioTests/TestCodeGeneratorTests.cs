@@ -16,19 +16,16 @@ namespace ProjectPilot.Tests.AccipioTests
         public void ParseTestSpec()
         {
             string[] args = GetArgs();
-            TestCodeGeneratorCommand testCodeGeneratorCommand = new TestCodeGeneratorCommand(null);
-            testCodeGeneratorCommand.AccipioDirectory = @"D:\Projects\MiMi\source\Hsl.Ganesha.AcceptanceTests";
-            testCodeGeneratorCommand.ParseArguments(args);
-            testCodeGeneratorCommand.ProcessCommand();
+            TestCodeGeneratorCommand testCodeGeneratorCommand = new TestCodeGeneratorCommand();
+            Assert.AreEqual(0, testCodeGeneratorCommand.Execute(args));
         }
 
         public static string[] GetArgs()
         {
-            string[] args = new string[4];
-            args[0] = "codegen";
-            args[1] = "..\\..\\..\\Data\\Samples\\BusinessActions.xml";
-            args[2] = TestSuiteSchemaGeneratorTests.GenerateXsdValidationSchemaOutputFile();
-            args[3] = "..\\..\\..\\Data\\Samples\\TestSuite.xml";
+            string[] args = new string[3];
+            args[0] = "-ba=..\\..\\..\\Data\\Samples\\BusinessActions.xml";
+            args[1] = "-tx=" + TestSuiteSchemaGeneratorTests.GenerateXsdValidationSchemaOutputFile();
+            args[2] = "-i=..\\..\\..\\Data\\Samples\\TestSuite.xml";
             return args;
         }
 

@@ -164,17 +164,14 @@ namespace ProjectPilot.Tests.AccipioTests
             try
             {
                 // first generate the schema
-                TestSuiteSchemaGeneratorCommand cmd = new TestSuiteSchemaGeneratorCommand(null);
-                cmd.AccipioDirectory = string.Empty;
-                string[] arguments = new string[] { "baschema", BusinessActionsXmlFile, "http://fikus" };
-                Assert.AreSame(cmd, cmd.ParseArguments(arguments));
-            
-                cmd.ProcessCommand();
-                string testSuiteSchemaFile = cmd.OutputFile;
+                TestSuiteSchemaGeneratorCommand cmd = new TestSuiteSchemaGeneratorCommand();
+                string[] arguments = new string[] { "-ba=" + BusinessActionsXmlFile, "-ns=http://fikus" };
+
+                Assert.AreEqual(0, cmd.Execute(arguments));
 
                 // now validate our test suite with the generated schema
                 XmlValidationHelper helper = new XmlValidationHelper();
-                helper.ValidateXmlDocument(TestSuiteXmlFile, testSuiteSchemaFile);
+                helper.ValidateXmlDocument(TestSuiteXmlFile, cmd.TestSuiteSchemaFileName);
                 Assert.IsTrue(shouldBeValid);
             }
             catch (XmlSchemaException ex)

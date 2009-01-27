@@ -21,15 +21,5 @@ namespace ProjectPilot.Tests.AccipioTests
             testReports.Reports.Add("story1", reportData);
             Assert.IsNotNull(testReports.Reports);
         }
-
-        [Test]
-        public void GenerateUserStoryHistory()
-        {
-            IConsoleCommand consoleCommand = new UserStoryGeneratorCommand(null)
-                .ParseArguments(new[] { "userstory", @"..\..\..\Data\Samples\TestReports", @"..\..\..\Data\Samples\UserStories" });
-            consoleCommand.AccipioDirectory = string.Empty;
-            // process command
-            consoleCommand.ProcessCommand();
-        }
-    }
+   }
 }

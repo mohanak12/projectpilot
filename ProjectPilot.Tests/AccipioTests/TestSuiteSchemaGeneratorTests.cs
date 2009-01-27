@@ -32,65 +32,14 @@ namespace ProjectPilot.Tests.AccipioTests
         public static string GenerateXsdValidationSchemaOutputFile()
         {
             string fileName = @"..\..\..\Data\Samples\BusinessActions.xml";
-            IConsoleCommand consoleCommand = new TestSuiteSchemaGeneratorCommand(null)
-                .ParseArguments(new[] { "baschema", fileName, "http://GenerateXsdValidationSchemaTest" });
-            consoleCommand.AccipioDirectory = string.Empty;
-            // process command
-            consoleCommand.ProcessCommand();
+            TestSuiteSchemaGeneratorCommand consoleCommand = new TestSuiteSchemaGeneratorCommand();
+
+            string[] args = new[] { "-ba=" + fileName, "-ns=http://GenerateXsdValidationSchemaTest" };
+
+            Assert.AreEqual(0, consoleCommand.Execute(args));
 
             // get output file
-            return ((TestSuiteSchemaGeneratorCommand) consoleCommand).OutputFile;
-        }
-
-        /// <summary>
-        /// Test checks that parser throws file not exists if invalid xml file name is passed
-        /// </summary>
-        [Test, ExpectedException(typeof(IOException))]
-        public void GenerateXsdSchemaFileNotExistsTest()
-        {
-            string fileName = @"AccipioActions123.xml";
-            IConsoleCommand consoleCommand = new TestSuiteSchemaGeneratorCommand(null)
-                .ParseArguments(new[] { "baschema", fileName, "http://GenerateXsdSchemaFileNotExistsTest" });
-        }
-
-        /// <summary>
-        /// Test checks that parser returns null value if no arguments is passed
-        /// </summary>
-        [Test]
-        public void ArgsIsNullTest()
-        {
-            IConsoleCommand consoleCommand = new TestSuiteSchemaGeneratorCommand(null);
-            Assert.IsNull(consoleCommand.ParseArguments(null));
-        }
-
-        /// <summary>
-        /// Test checks that parser returns null value if no arguments is passed
-        /// </summary>
-        [Test]
-        public void InvalidArgsLengthTest()
-        {
-            IConsoleCommand consoleCommand = new TestSuiteSchemaGeneratorCommand(null);
-            Assert.IsNull(consoleCommand.ParseArguments(new string[0]));
-        }
-
-        /// <summary>
-        /// Test checks that parser returns null value if some arguments are missing
-        /// </summary>
-        [Test, ExpectedException(typeof(ArgumentException))]
-        public void InvalidArgsLengthFirstArgOkTest()
-        {
-            IConsoleCommand consoleCommand = new TestSuiteSchemaGeneratorCommand(null);
-            Assert.IsNull(consoleCommand.ParseArguments(new[] { "baschema" }));
-        }
-
-        /// <summary>
-        /// Test checks that parser returns null value if invalid argument is passed
-        /// </summary>
-        [Test]
-        public void InvalidStartArgument()
-        {
-            IConsoleCommand consoleCommand = new TestSuiteSchemaGeneratorCommand(null);
-            Assert.IsNull(consoleCommand.ParseArguments(new[] { "test", string.Empty }));
+            return consoleCommand.TestSuiteSchemaFileName;
         }
 
         /// <summary>

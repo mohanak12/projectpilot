@@ -55,10 +55,9 @@
       <Link>Options.cs</Link>
       <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="HtmlReportGeneratorCommand.cs" />
-    <Compile Include="TestReportGeneratorCommand.cs" />
+    <Compile Include="HtmlTestReportGeneratorCommand.cs" />
+    <Compile Include="GallioReportConverter.cs" />
     <Compile Include="TestSuiteSchemaGeneratorCommand.cs" />
-    <Compile Include="UserStoryGeneratorCommand.cs" />
     <Compile Include="XmlValidationHelper.cs" />
     <Compile Include="ConsoleApp.cs" />
     <Compile Include="IConsoleCommand.cs" />

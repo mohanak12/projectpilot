@@ -11,17 +11,10 @@ namespace ProjectPilot.Tests.AccipioTests
         {
             string[] args = new string[]
                                 {
-                                    "transform",
-                                    "..\\..\\..\\Data\\Samples\\AcceptanceTestResults.xml",
-                                    "TestResults.xml"
+                                    "-i=..\\..\\..\\Data\\Samples\\AcceptanceTestResults.xml"
                                 };
-            TestReportGeneratorCommand testReportGeneratorCommand =
-                new TestReportGeneratorCommand(null)
-                    {
-                        AccipioDirectory = string.Empty
-                    };
-            testReportGeneratorCommand.ParseArguments(args);
-            testReportGeneratorCommand.ProcessCommand();
+            GallioReportConverter gallioReportConverter = new GallioReportConverter();
+            Assert.AreEqual(0, gallioReportConverter.Execute(args));
         }
     }
 }
