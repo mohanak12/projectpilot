@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Accipio.Console
 {
     /// <summary>
@@ -5,24 +7,12 @@ namespace Accipio.Console
     /// </summary>
     public interface IConsoleCommand
     {
-        /// <summary>
-        /// Returns the first <see cref="IConsoleCommand"/> in the command chain 
-        /// which can understand the provided command-line arguments.
-        /// </summary>
-        /// <param name="args">The command-line arguments.</param>
-        /// <returns>The first <see cref="IConsoleCommand"/> which can understand the provided command-line arguments
-        /// or <c>null</c> if none of the console commands can understand them.</returns>
-        IConsoleCommand ParseArguments(string[] args);
+        string CommandDescription { get; }
 
-        /// <summary>
-        /// Processes the command.
-        /// </summary>
-        void ProcessCommand();
+        string CommandName { get; }
 
-        /// <summary>
-        /// Gets or sets the accipio output directory.
-        /// </summary>
-        /// <value>The accipio output directory.</value>
-        string AccipioDirectory { get; set; }
+        int Execute(IEnumerable<string> args);
+        
+        void ShowHelp();
     }
 }

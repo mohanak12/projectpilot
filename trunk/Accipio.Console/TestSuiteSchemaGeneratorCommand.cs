@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Reflection;
 using System.Xml;
+using NDesk.Options;
 
 namespace Accipio.Console
 {
@@ -12,77 +12,50 @@ namespace Accipio.Console
     /// </summary>
     public class TestSuiteSchemaGeneratorCommand : IConsoleCommand
     {
-        /// <summary>
-        /// Initializes a new instance of the TestSuiteSchemaGeneratorCommand class.
-        /// </summary>
-        /// <param name="nextCommandInChain">Application arguments</param>
-        public TestSuiteSchemaGeneratorCommand(IConsoleCommand nextCommandInChain)
+        public TestSuiteSchemaGeneratorCommand()
         {
-            this.nextCommandInChain = nextCommandInChain;
-        }
-
-        /// <summary>
-        /// Gets output file name
-        /// </summary>
-        public string OutputFile
-        {
-            get { return outputFileName; }
-        }
-
-        public string AccipioDirectory { get; set; }
-
-        /// <summary>
-        /// Returns the first <see cref="IConsoleCommand"/> in the command chain
-        /// which can understand the provided command-line arguments.
-        /// </summary>
-        /// <param name="args">The command-line arguments.</param>
-        /// <returns>
-        /// The first <see cref="IConsoleCommand"/> which can understand the provided command-line arguments
-        /// or <c>null</c> if none of the console commands can understand them.
-        /// </returns>
-        public IConsoleCommand ParseArguments(string[] args)
-        {
-            if (args == null)
-                return null;
-
-            if (args.Length < 1
-                || 0 != String.Compare(args[0], "baschema", StringComparison.OrdinalIgnoreCase))
+            options = new OptionSet() 
             {
-                if (nextCommandInChain != null)
-                    return nextCommandInChain.ParseArguments(args);
-                return null;
-            }
+                { "ba|businessactions=", "Business actions XML {file}",
+                  (string inputFile) => this.businessActionsXmlFileName = inputFile },
+                { "ns|namespace=", "XML {namespace} to use for the generated XSD file",
+                  (string inputFile) => this.testSuiteSchemaNamespace = inputFile },
+                { "o|outputdir=", "output {directory} where Accipio test report file will be stored (the default is current directory)",
+                  (string outputDir) => this.outputDir = outputDir },
+            };
+        }
 
-            if (args.Length < 2)
+        public string CommandDescription
+        {
+            get { return "Generates XSD schema file for the specified business actions XML file"; }
+        }
+
+        public string CommandName
+        {
+            get { return "baschema"; }
+        }
+
+        public string TestSuiteSchemaFileName
+        {
+            get { return testSuiteSchemaFileName; }
+        }
+
+        public int Execute(IEnumerable<string> args)
+        {
+            List<string> unhandledArguments = options.Parse(args);
+
+            if (unhandledArguments.Count > 0)
+                throw new ArgumentException("There are some unsupported options.");
+
+            if (String.IsNullOrEmpty(businessActionsXmlFileName))
                 throw new ArgumentException("Missing business actions XML file name.");
-            // set xml file name
-            businessActionsXmlFileName = args[1];
 
-            if (args.Length < 3)
+            if (String.IsNullOrEmpty(testSuiteSchemaNamespace))
                 throw new ArgumentException("Missing XML namespace for the new test suite schema.");
-            testSuiteSchemaNamespace = args[2];
-
-            FileInfo fileInfo = new FileInfo(businessActionsXmlFileName);
-
-            // check if file exists
-            if (!fileInfo.Exists)
-                throw new System.IO.IOException(
-                    string.Format(
-                    CultureInfo.InvariantCulture, 
-                    "File {0} does not exist.", 
-                    businessActionsXmlFileName));
 
             // set output file name
-            outputFileName = Path.ChangeExtension(fileInfo.Name, "xsd");
+            testSuiteSchemaFileName = Path.Combine(outputDir, Path.GetFileName(Path.ChangeExtension(businessActionsXmlFileName, "xsd")));
 
-            return this;
-        }
-
-        /// <summary>
-        /// Processes the command.
-        /// </summary>
-        public void ProcessCommand()
-        {
             // create instance of class XmlValidationHelper
             XmlValidationHelper helper = new XmlValidationHelper();
             // validating XML with schema file
@@ -90,7 +63,7 @@ namespace Accipio.Console
 
             helper.ValidateXmlDocument(
                 businessActionsXmlFileName, 
-                Path.Combine(AccipioDirectory, AccipioActionsXsdFileName));
+                Path.Combine(ConsoleApp.AccipioDirectoryPath, AccipioActionsXsdFileName));
 
             // parse XML file
             BusinessActionData businessActionData = ParseXmlToObject(businessActionsXmlFileName);
@@ -99,15 +72,23 @@ namespace Accipio.Console
             XmlDocument xmlSchemaDocument = GenerateXsdSchema(businessActionData);
 
             // write xsd schema to file
-            using (Stream xsdSchemaDocument = File.Open(outputFileName, FileMode.Create))
+            ConsoleApp.EnsureDirectoryPathExists(testSuiteSchemaFileName, true);
+            using (Stream xsdSchemaDocument = File.Open(testSuiteSchemaFileName, FileMode.Create))
             {
                 xmlSchemaDocument.Save(xsdSchemaDocument);
             }
 
             System.Console.WriteLine(string.Format(
                 CultureInfo.InvariantCulture, 
-                "XSD schema file was created. Full path to file: '{0}'", 
-                new FileInfo(outputFileName).FullName));
+                "XSD schema file '{0}' was created", 
+                Path.GetFullPath(testSuiteSchemaFileName)));
+
+            return 0;
+        }
+
+        public void ShowHelp()
+        {
+            options.WriteOptionDescriptions(System.Console.Out);
         }
 
         /// <summary>
@@ -242,7 +223,7 @@ namespace Accipio.Console
         private XmlDocument GenerateXsdSchema(BusinessActionData businessActionData)
         {
             using (Stream stream = File.Open(
-                Path.Combine(AccipioDirectory, XsdTemplateFileName), 
+                Path.Combine(ConsoleApp.AccipioDirectoryPath, XsdTemplateFileName), 
                 FileMode.Open))
             {
                 XmlDocument xmlDocument = new XmlDocument();
@@ -291,10 +272,12 @@ namespace Accipio.Console
             xmlDocument.DocumentElement.Attributes.Append(targetNamespaceAtt);
         }
 
+        private readonly OptionSet options;
+        private string outputDir = ".";
+
         private const string AccipioActionsXsdFileName = @"AccipioActions.xsd";
         private string businessActionsXmlFileName;
-        private readonly IConsoleCommand nextCommandInChain;
-        private string outputFileName;
+        private string testSuiteSchemaFileName;
         private string testSuiteSchemaNamespace;
         private const string XsdTemplateFileName = @"TestSuiteTemplate.xsd";
         private const string XmlNsXs = "http://www.w3.org/2001/XMLSchema";

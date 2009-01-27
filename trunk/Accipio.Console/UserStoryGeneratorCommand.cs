@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using NDesk.Options;
 
 #endregion
 
@@ -10,26 +11,27 @@ namespace Accipio.Console
 {
     public class UserStoryGeneratorCommand : IConsoleCommand
     {
-        public UserStoryGeneratorCommand(IConsoleCommand nextCommandInChain)
+        public UserStoryGeneratorCommand()
         {
-            this.nextCommandInChain = nextCommandInChain;
+            options = new OptionSet() {
+            { "ba|businessactions=", "Business actions XML {file}",
+              (string inputFile) => this.businessActionsXmlFileName = inputFile},
+            { "ns|namespace=", "XML {namespace} to use for the generated XSD file",
+              (string inputFile) => this.testSuiteSchemaNamespace = inputFile},
+            { "o|outputdir=", "output {directory} where Accipio test report file will be stored (the default is current directory)",
+              (string outputDir) => this.outputDir = outputDir},
+            };
         }
 
-        /// <summary>
-        /// Gets or sets the accipio output directory.
-        /// </summary>
-        /// <value>The accipio output directory.</value>
-        public string AccipioDirectory { get; set; }
+        public string CommandDescription
+        {
+            get { return "Generates XSD schema file for the specified business actions XML file"; }
+        }
 
-        /// <summary>
-        /// Gets or sets the location with all transformed report files.
-        /// </summary>
-        public string FolderWithReportFiles { get; set; }
-
-        /// <summary>
-        /// Gets or sets the location where UserStories will be saved.
-        /// </summary>
-        public string FolderWithGeneratedUserStories { get; set; }
+        public string CommandName
+        {
+            get { return "userstory"; }
+        }
 
         /// <summary>
         /// Returns the first <see cref="IConsoleCommand"/> in the command chain 
@@ -40,22 +42,6 @@ namespace Accipio.Console
         /// or <c>null</c> if none of the console commands can understand them.</returns>
         public IConsoleCommand ParseArguments(string[] args)
         {
-            if (args == null)
-            {
-                return null;
-            }
-
-            if (args.Length < 1
-                || 0 != String.Compare(args[0], "userstory", StringComparison.OrdinalIgnoreCase))
-            {
-                if (nextCommandInChain != null)
-                {
-                    return nextCommandInChain.ParseArguments(args);
-                }
-
-                return null;
-            }
-
             if (args.Length < 2)
             {
                 throw new ArgumentException("Missing location of test reports files.");
@@ -145,6 +131,7 @@ namespace Accipio.Console
             }
         }
 
-        private readonly IConsoleCommand nextCommandInChain;
+        private readonly OptionSet options;
+        private string outputDir = ".";
     }
 }

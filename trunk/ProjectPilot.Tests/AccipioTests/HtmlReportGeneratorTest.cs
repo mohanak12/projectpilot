@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Globalization;
 using System.IO;
-using Accipio;
 using Accipio.Console;
 using MbUnit.Framework;
-using Rhino.Mocks;
 
 namespace ProjectPilot.Tests.AccipioTests
 {
@@ -28,14 +25,13 @@ namespace ProjectPilot.Tests.AccipioTests
         public static string GenerateHtmlTestReportOutputFile()
         {
             string fileName = @"..\..\..\Data\Samples\TestResults.xml";
-            IConsoleCommand consoleCommand = new HtmlReportGeneratorCommand(null)
-                .ParseArguments(new[] { "report", fileName, "Report.html" });
-            consoleCommand.AccipioDirectory = string.Empty;
-            // process command
-            consoleCommand.ProcessCommand();
+            HtmlTestReportGeneratorCommand consoleCommand = new HtmlTestReportGeneratorCommand();
+
+            string[] args = new[] { "report", fileName, "Report.html" };
+            Assert.AreEqual(0, consoleCommand.Execute(args));
 
             // get output file
-            return ((HtmlReportGeneratorCommand)consoleCommand).OutputFile;
+            throw new NotImplementedException();
         }
     }
 }

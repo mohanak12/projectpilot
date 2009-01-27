@@ -1,4 +1,5 @@
-﻿using Accipio.Console;
+﻿using System.IO;
+using Accipio.Console;
 using MbUnit.Framework;
 
 namespace ProjectPilot.Tests.AccipioTests
@@ -12,31 +13,40 @@ namespace ProjectPilot.Tests.AccipioTests
         [Test]
         public void ConsoleAppWithOption()
         {
-            string[] args = new string[] { @"-o=", "baschema", @"..\..\..\Data\Samples\BusinessActions.xml", "http://projectpilot/AccipioActions.xsd" };
+            string outputDir = "test";
+            if (Directory.Exists(outputDir))
+                Directory.Delete(outputDir, true);
 
-            ConsoleApp consoleApp = new ConsoleApp(args);
-            int exitCode = consoleApp.Process();
-            Assert.AreEqual(0, exitCode);
+            string[] args = new string[]
+                                {
+                                    "baschema", 
+                                    @"-ba=..\..\..\Data\Samples\BusinessActions.xml", 
+                                    "-ns=http://projectpilot/AccipioActions.xsd",
+                                    "-o=" + outputDir,
+                                };
+
+            RunConsole(args, 0);
         }
 
         [Test]
         public void ConsoleBusinessActionTest()
         {
-            string[] args = new string[] { "baschema", @"..\..\..\Data\Samples\BusinessActions.xml", "http://projectpilot/AccipioActions.xsd" };
+            string[] args = new string[]
+                                {
+                                    "baschema", 
+                                    @"-ba=..\..\..\Data\Samples\BusinessActions.xml", 
+                                    "-ns=http://projectpilot/AccipioActions.xsd"
+                                };
 
-            ConsoleApp consoleApp = new ConsoleApp(args);
-            int exitCode = consoleApp.Process();
-            Assert.AreEqual(0, exitCode);
+            RunConsole(args, 0);
         }
 
         [Test]
         public void ConsoleBusinessActionMissingSchemaNamespaceTest()
         {
-            string[] args = new string[] { "baschema", @"..\..\..\Data\Samples\AccipioActions.xml" };
+            string[] args = new string[] { "baschema", @"-ba=..\..\..\Data\Samples\AccipioActions.xml" };
 
-            ConsoleApp consoleApp = new ConsoleApp(args);
-            int exitCode = consoleApp.Process();
-            Assert.AreEqual(-1, exitCode);
+            RunConsole(args, 1);
         }
 
         [Test]
@@ -44,19 +54,14 @@ namespace ProjectPilot.Tests.AccipioTests
         {
             string[] args = new string[] { "baschema" };
 
-            ConsoleApp consoleApp = new ConsoleApp(args);
-            int exitCode = consoleApp.Process();
-            Assert.AreEqual(-1, exitCode);
+            RunConsole(args, 1);
         }
 
-        [Test]
-        public void ConsoleBusinessActionArgsNullTest()
+        private void RunConsole (string[] args, int expectedExitCode)
         {
-            string[] args = null;
-
             ConsoleApp consoleApp = new ConsoleApp(args);
             int exitCode = consoleApp.Process();
-            Assert.AreEqual(-1, exitCode);
+            Assert.AreEqual(expectedExitCode, exitCode);            
         }
     }
 }

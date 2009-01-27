@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using NDesk.Options;
 
 #endregion
 
@@ -14,60 +15,43 @@ namespace Accipio.Console
     /// </summary>
     public class TestCodeGeneratorCommand : IConsoleCommand
     {
-        public TestCodeGeneratorCommand(IConsoleCommand nextCommandInChain)
+        public TestCodeGeneratorCommand()
         {
-            this.nextCommandInChain = nextCommandInChain;
+            options = new OptionSet() 
+            {
+                { "ba|businessactions=", "Business actions XML {file}",
+                  (string file) => this.businessActionsXmlFileName = file },
+                { "tx|testsuitesschema=", "Test suites XML schema {file}",
+                  (string file) => this.testSuiteXsdFileName = file },
+                { "o|outputdir=", "output {directory} where generated C# code will be stored (the default is current directory)",
+                  (string outputDir) => this.outputDir = outputDir },
+                { "i|inputfile=", "input test suite XML file (can be repeated multiple times)",
+                  (string inputfile) => this.testSuitesFileNames.Add(inputfile) },
+            };
         }
 
-        public string AccipioDirectory { get; set; }
-
-        /// <summary>
-        /// Returns the first <see cref="IConsoleCommand"/> in the command chain
-        /// which can understand the provided command-line arguments.
-        /// </summary>
-        /// <param name="args">The command-line arguments.</param>
-        /// <returns>
-        /// The first <see cref="IConsoleCommand"/> which can understand the provided command-line arguments
-        /// or <c>null</c> if none of the console commands can understand them.
-        /// </returns>
-        public IConsoleCommand ParseArguments(string[] args)
+        public string CommandDescription
         {
-            if (args == null)
-                return null;
+            get { return "Generates C# code for running acceptance tests using Gallio"; }
+        }
 
-            if (args.Length < 1
-                || 0 != String.Compare(args[0], "codegen", StringComparison.OrdinalIgnoreCase))
-            {
-                if (nextCommandInChain != null)
-                    return nextCommandInChain.ParseArguments(args);
+        public string CommandName
+        {
+            get { return "codegen"; }
+        }
 
-                return null;
-            }
+        public int Execute(IEnumerable<string> args)
+        {
+            List<string> unhandledArguments = options.Parse(args);
 
-            if (args.Length < 3)
+            if (unhandledArguments.Count > 0)
+                throw new ArgumentException("There are some unsupported options.");
+
+            if (String.IsNullOrEmpty(businessActionsXmlFileName))
                 throw new ArgumentException("Missing business actions XML file name.");
 
-            testSuitesFileNames = new List<string>();
-
-            // business action file
-            businessActionsXmlFileName = CheckIfFileExists(args[1]);
-
-            if (args.Length < 4)
-                throw new ArgumentException("Missing test suite xsd schema file name.");
-
-            // xsd schema file for validating test suite xml files
-            string testSuiteXsdValidationSchema = CheckIfFileExists(args[2]);
-
-            XmlValidationHelper xmlValidationHelper = new XmlValidationHelper();
-
-            // add file names to list
-            for (int i = 3; i < args.Length; i++)
-            {
-                string testSuiteXmlFile = CheckIfFileExists(args[i]);
-                // validate xml with xsd schema
-                xmlValidationHelper.ValidateXmlDocument(testSuiteXmlFile, testSuiteXsdValidationSchema);
-                testSuitesFileNames.Add(testSuiteXmlFile);
-            }
+            if (String.IsNullOrEmpty(testSuiteXsdFileName))
+                throw new ArgumentException("Missing test suites XSD file name.");
 
             // parse business actions
             using (Stream xmlStream = File.OpenRead(businessActionsXmlFileName))
@@ -76,23 +60,22 @@ namespace Accipio.Console
                 businessActionData = businessActionXmlParser.Parse();
             }
 
-            return this;
-        }
+            XmlValidationHelper xmlValidationHelper = new XmlValidationHelper();
 
-        /// <summary>
-        /// Processes the command.
-        /// </summary>
-        public void ProcessCommand()
-        {
             foreach (string testSuiteFileName in testSuitesFileNames)
             {
+                // validate xml with xsd schema
+                xmlValidationHelper.ValidateXmlDocument(testSuiteFileName, testSuiteXsdFileName);
+
                 using (XmlTestSuiteParser testSuiteParser = new XmlTestSuiteParser(testSuiteFileName))
                 {
                     TestSuite parsedTestSuite = testSuiteParser.Parse();
                     parsedTestSuite.BusinessActionData = businessActionData;
 
                     // generate c# code
-                    string codeFileName = Path.ChangeExtension(testSuiteFileName, ".cs");
+                    string codeFileName = Path.Combine(
+                        outputDir, 
+                        Path.GetFileName(Path.ChangeExtension(testSuiteFileName, ".cs")));
                     System.Console.WriteLine("Creating '{0}'", codeFileName);
 
                     using (ICodeWriter writer = new FileCodeWriter(codeFileName))
@@ -112,19 +95,20 @@ namespace Accipio.Console
                     }
                 }
             }
+
+            return 0;
         }
 
-        private static string CheckIfFileExists(string fileName)
+        public void ShowHelp()
         {
-            if (!File.Exists(fileName))
-                throw new IOException(string.Format(CultureInfo.InvariantCulture, "File {0} does not exists.", fileName));
-
-            return fileName;
+            options.WriteOptionDescriptions(System.Console.Out);
         }
 
         private string businessActionsXmlFileName;
-        private readonly IConsoleCommand nextCommandInChain;
-        private List<string> testSuitesFileNames;
+        private readonly OptionSet options;
+        private string outputDir = ".";
+        private string testSuiteXsdFileName;
+        private List<string> testSuitesFileNames = new List<string>();
         private BusinessActionData businessActionData;
     }
 }
