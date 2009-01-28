@@ -242,9 +242,10 @@ namespace ProjectPilot.Tests.Extras
 
         [Test]
         [Row(null, 15)]
-        [Row("End", 2)]
+        [Row("End", 7)]
         [Row("null", 10)]
-        [Row("TeSt", 0)]
+        [Row("TeSt", 10)]
+        [Row("TeSt123", 0)]
         public void TestingSearchMatchCaseFilter(string matchCase, int expectedElementsLogCount)
         {
             using (Stream fileStream = File.OpenRead(@"..\..\..\Data\Samples\TestLogParser.log"))
