@@ -65,7 +65,7 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             if (!string.IsNullOrEmpty((string)Session["fileSelected"]))
                 fileSelected = (string)Session["fileSelected"];
             else
-                fileSelected = @"\\zarja\share\Marko\SSM+2009-01-08.log.28.small"; // Default file
+                fileSelected = @"..\..\..\Data\Samples\LogConfig.xml"; // Default file
 
             //Get number of log entries in log file
             LogParserFilter filter = LoadParameters.CreateFilter(null, null,
@@ -223,7 +223,7 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             xmlReaderSettings.IgnoreProcessingInstructions = true;
             xmlReaderSettings.IgnoreWhitespace = true;
 
-            using (XmlReader xmlReader = XmlReader.Create(File.OpenRead(@"\\zarja\share\Marko\LogConfig.xml"), xmlReaderSettings))
+            using (XmlReader xmlReader = XmlReader.Create(File.OpenRead(@"..\..\..\Data\Samples\LogConfig.xml"), xmlReaderSettings))
             {
                 string key;
 

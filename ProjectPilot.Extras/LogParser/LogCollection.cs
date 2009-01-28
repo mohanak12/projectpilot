@@ -310,7 +310,7 @@ namespace ProjectPilot.Extras.LogParser
 
                         foreach (string element in elementsTemp)
                         {
-                            if (element == parseFilter.MatchWholeWordOnly)
+                            if (element.ToLower(cultureToUse) == parseFilter.MatchWholeWordOnly.ToLower(cultureToUse))
                                 existFlag = true; 
                         }
 
@@ -329,7 +329,7 @@ namespace ProjectPilot.Extras.LogParser
 
                         foreach (string element in elementsTemp)
                         {
-                            if (element == parseFilter.MatchWholeWordOnly)
+                            if (element.ToLower(cultureToUse) == parseFilter.MatchWholeWordOnly.ToLower(cultureToUse))
                                 existFlag = true;
                         }
 
@@ -338,7 +338,7 @@ namespace ProjectPilot.Extras.LogParser
                     }
                 }
             }
-
+            //Rename MatchCase to Match (Marko) - (waiting for resharper)
             if (parseFilter.MatchCase != null)
             {
                 if (elementsPattern.IndexOf("Ndc") >= 0)
@@ -351,7 +351,7 @@ namespace ProjectPilot.Extras.LogParser
 
                         foreach (string element in elementsTemp)
                         {
-                            if (element.Contains(parseFilter.MatchCase))
+                            if (element.ToLower(cultureToUse).Contains(parseFilter.MatchCase.ToLower(cultureToUse)))
                                 existFlag = true;
                         }
 
@@ -370,7 +370,7 @@ namespace ProjectPilot.Extras.LogParser
 
                         foreach (string element in elementsTemp)
                             {
-                                if (element.Contains(parseFilter.MatchCase))
+                                if (element.ToLower(cultureToUse).Contains(parseFilter.MatchCase.ToLower(cultureToUse)))
                                     existFlag = true;
                             }
 
