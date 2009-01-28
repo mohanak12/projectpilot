@@ -81,6 +81,8 @@
     <Compile Include="Inservio\Server\ServicesRepository.cs" />
     <Compile Include="IHtmlTestReportGenerator.cs" />
     <Compile Include="ProjectPortalTestRunner.cs" />
+    <Compile Include="Reporting\TestCaseExecutionStatus.cs" />
+    <Compile Include="Reporting\TestRunLogParser.cs" />
     <Compile Include="Reporting\TestCaseRun.cs" />
     <Compile Include="Reporting\TestRun.cs" />
     <Compile Include="Reporting\TestRunsDatabase.cs" />

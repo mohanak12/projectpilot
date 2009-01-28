@@ -6,99 +6,74 @@ using Accipio.Reporting;
 
 namespace Accipio.Reporting
 {
-    public class ReportDataParser : IDisposable
+    public class TestRunLogParser
     {
         /// <summary>
-        /// Initializes a new instance of the ReportDataParser class.
+        /// Initializes a new instance of the TestRunLogParser class.
         /// </summary>
-        /// <param name="testSuiteFileName">File name of report.</param>
-        public ReportDataParser(string testSuiteFileName)
+        /// <param name="testRunLogFileName">The name of test run log file.</param>
+        public TestRunLogParser(string testRunLogFileName)
         {
-            xmlReportStream = File.OpenRead(testSuiteFileName);
-        }
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or
-        /// resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            this.testRunLogFileName = testRunLogFileName;
         }
 
         /// <summary>
         /// Parse xml data which contains build report data.
         /// </summary>
         /// <returns>Parsed data</returns>
-        public ReportData Parse()
+        public TestRun Parse()
         {
-            XmlReaderSettings xmlReaderSettings =
-                new XmlReaderSettings
-                    {
-                        IgnoreComments = true,
-                        IgnoreProcessingInstructions = true,
-                        IgnoreWhitespace = true
-                    };
-
-            ReportData reportData = new ReportData();
-
-            using (XmlReader xmlReader = XmlReader.Create(xmlReportStream, xmlReaderSettings))
+            using (FileStream xmlReportStream = File.OpenRead(testRunLogFileName))
             {
-                xmlReader.Read();
+                XmlReaderSettings xmlReaderSettings =
+                    new XmlReaderSettings
+                        {
+                            IgnoreComments = true,
+                            IgnoreProcessingInstructions = true,
+                            IgnoreWhitespace = true
+                        };
 
-                while (false == xmlReader.EOF)
+                TestRun testRun = new TestRun();
+
+                using (XmlReader xmlReader = XmlReader.Create(xmlReportStream, xmlReaderSettings))
                 {
-                    switch (xmlReader.NodeType)
+                    xmlReader.Read();
+
+                    while (false == xmlReader.EOF)
                     {
-                        case XmlNodeType.Element:
-                            {
-                                if (xmlReader.Name != "report")
-                                    throw new XmlException("<report> (root) element expected.");
+                        switch (xmlReader.NodeType)
+                        {
+                            case XmlNodeType.Element:
+                                {
+                                    if (xmlReader.Name != "report")
+                                        throw new XmlException("<report> (root) element expected.");
 
-                                ReadTestRunParameters(reportData, xmlReader);
+                                    ReadTestRunParameters(testRun, xmlReader);
 
-                                break;
-                            }
+                                    break;
+                                }
 
-                        case XmlNodeType.XmlDeclaration:
-                            xmlReader.Read();
-                            continue;
+                            case XmlNodeType.XmlDeclaration:
+                                xmlReader.Read();
+                                continue;
 
-                        default:
-                            {
-                                throw new NotSupportedException(
-                                    string.Format(
-                                        CultureInfo.InvariantCulture,
-                                        "Not supported xml node type. Node type = {0}",
-                                        xmlReader.NodeType));
-                            }
+                            default:
+                                {
+                                    throw new NotSupportedException(
+                                        string.Format(
+                                            CultureInfo.InvariantCulture,
+                                            "Not supported xml node type. Node type = {0}",
+                                            xmlReader.NodeType));
+                                }
+                        }
                     }
                 }
-            }
 
-            return reportData;
-        }
-
-        /// <summary>
-        /// Disposes the object.
-        /// </summary>
-        /// <param name="disposing">If <code>false</code>, cleans up native resources. 
-        /// If <code>true</code> cleans up both managed and native resources</param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (false == disposed)
-            {
-                if (disposing)
-                {
-                    xmlReportStream.Dispose();
-                }
-
-                disposed = true;
+                return testRun;
             }
         }
 
-        private void ReadReportSuite(ReportData reportData, XmlReader xmlReader)
+        private void ReadTestSuiteRun(TestRun testRun, XmlReader xmlReader)
         {
             xmlReader.Read();
 
@@ -107,14 +82,10 @@ namespace Accipio.Reporting
                 switch (xmlReader.Name)
                 {
                     case "suite":
-
-                        string reportSuiteId = ReadAttribute(xmlReader, "id");
-
-                        ReportSuite reportSuite = new ReportSuite(reportSuiteId);
-
-                        ReadReportCases(reportSuite, xmlReader);
-
-                        reportData.TestSuites.Add(reportSuite);
+                        string suiteId = ReadAttribute(xmlReader, "id");
+                        TestSuiteRun testSuiteRun = new TestSuiteRun(suiteId);
+                        ReadTestCaseRuns(testSuiteRun, xmlReader);
+                        testRun.AddTestSuiteRun(testSuiteRun);
 
                         break;
 
@@ -132,7 +103,7 @@ namespace Accipio.Reporting
             xmlReader.Read();
         }
 
-        private void ReadReportCases(ReportSuite reportSuite, XmlReader xmlReader)
+        private void ReadTestCaseRuns(TestSuiteRun testSuiteRun, XmlReader xmlReader)
         {
             xmlReader.Read();
 
@@ -141,26 +112,16 @@ namespace Accipio.Reporting
                 switch (xmlReader.Name)
                 {
                     case "case":
-
                         TestCaseExecutionStatus caseExecutionStatus =
                             (TestCaseExecutionStatus)Enum.Parse(typeof(TestCaseExecutionStatus), ReadAttribute(xmlReader, "status"), true);
 
-                        TestCaseExecutionReport testCaseExecutionReport = new TestCaseExecutionReport(
+                        TestCaseRun testCaseRun = new TestCaseRun(
                             ReadAttribute(xmlReader, "id"),
-                            Convert.ToDateTime(ReadAttribute(xmlReader, "startTime"), CultureInfo.InvariantCulture),
-                            ReadAttribute(xmlReader, "duration"),
                             caseExecutionStatus);
 
-                        if (caseExecutionStatus == TestCaseExecutionStatus.Failed)
-                            reportSuite.FailedTests++;
-                        else if (caseExecutionStatus == TestCaseExecutionStatus.Passed)
-                            reportSuite.PassedTests++;
-                        else if (caseExecutionStatus == TestCaseExecutionStatus.Skipped)
-                            reportSuite.SkippedTests++;
+                        ReadUserStories(testCaseRun, xmlReader);
 
-                        ReadUserStories(testCaseExecutionReport, xmlReader);
-
-                        reportSuite.TestCases.Add(testCaseExecutionReport);
+                        testSuiteRun.AddTestCaseRun(testCaseRun);
 
                         break;
 
@@ -178,7 +139,7 @@ namespace Accipio.Reporting
             xmlReader.Read();
         }
 
-        private void ReadTestRunParameters(ReportData reportData, XmlReader xmlReader)
+        private void ReadTestRunParameters(TestRun reportData, XmlReader xmlReader)
         {
             xmlReader.Read();
 
@@ -187,10 +148,10 @@ namespace Accipio.Reporting
                 switch (xmlReader.Name)
                 {
                     case "testRun":
-
-                        reportData.Duration = ReadAttribute(xmlReader, "duration");
+                        double duration = double.Parse(ReadAttribute(xmlReader, "duration"), CultureInfo.InvariantCulture);
                         reportData.StartTime = Convert.ToDateTime(ReadAttribute(xmlReader, "startTime"), CultureInfo.InvariantCulture);
-                        reportData.Version = ReadAttribute(xmlReader, "version");
+                        reportData.EndTime = reportData.StartTime.AddSeconds(duration);
+                        reportData.Version = new Version(ReadAttribute(xmlReader, "version"));
 
                         ReadSuites(reportData, xmlReader);
 
@@ -210,7 +171,7 @@ namespace Accipio.Reporting
             xmlReader.Read();
         }
 
-        private void ReadSuites(ReportData reportData, XmlReader xmlReader)
+        private void ReadSuites(TestRun reportData, XmlReader xmlReader)
         {
             xmlReader.Read();
 
@@ -220,7 +181,7 @@ namespace Accipio.Reporting
                 {
                     case "suites":
 
-                        ReadReportSuite(reportData, xmlReader);
+                        ReadTestSuiteRun(reportData, xmlReader);
 
                         break;
 
@@ -238,7 +199,7 @@ namespace Accipio.Reporting
             xmlReader.Read();
         }
 
-        private void ReadUserStories(TestCaseExecutionReport testCaseExecutionReport, XmlReader xmlReader)
+        private void ReadUserStories(TestCaseRun testCaseRun, XmlReader xmlReader)
         {
             xmlReader.Read();
 
@@ -248,7 +209,7 @@ namespace Accipio.Reporting
                 {
                     case "userStories":
 
-                        ReadUserStory(testCaseExecutionReport, xmlReader);
+                        ReadUserStory(testCaseRun, xmlReader);
 
                         break;
 
@@ -266,7 +227,7 @@ namespace Accipio.Reporting
             xmlReader.Read();
         }
 
-        private void ReadUserStory(TestCaseExecutionReport testCaseExecutionReport, XmlReader xmlReader)
+        private void ReadUserStory(TestCaseRun testCaseRun, XmlReader xmlReader)
         {
             xmlReader.Read();
 
@@ -275,15 +236,11 @@ namespace Accipio.Reporting
                 switch (xmlReader.Name)
                 {
                     case "userStory":
-
-                        testCaseExecutionReport.UserStories.Add(xmlReader.ReadElementContentAsString());
-
+                        testCaseRun.AddUserStory(xmlReader.ReadElementContentAsString());
                         break;
 
                     case "exception":
-
-                        testCaseExecutionReport.ReportDetails = xmlReader.ReadElementContentAsString();
-
+                        testCaseRun.Message = xmlReader.ReadElementContentAsString();
                         break;
 
                     default:
@@ -305,7 +262,6 @@ namespace Accipio.Reporting
             return xmlReader.GetAttribute(attributeName);
         }
 
-        private bool disposed;
-        private readonly Stream xmlReportStream;
+        private readonly string testRunLogFileName;
     }
 }
