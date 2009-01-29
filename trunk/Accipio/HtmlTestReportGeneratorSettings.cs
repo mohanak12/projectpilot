@@ -29,6 +29,7 @@ namespace Accipio
         public string ProjectName
         {
             get { return projectName; }
+            set { projectName = value; }
         }
 
         public string TemplatesDirectory
