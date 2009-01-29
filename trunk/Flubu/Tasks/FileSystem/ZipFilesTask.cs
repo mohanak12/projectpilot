@@ -43,8 +43,14 @@ namespace Flubu.Tasks.FileSystem
 
                     foreach (string fileName in filesToZip)
                     {
+                        int skipChar = 0;
+
+                        if (baseDir[baseDir.Length - 1] == '\\'
+                            || baseDir[baseDir.Length - 1] == '/')
+                            skipChar++;
+
                         // cut off the leading part of the path (up to the root directory of the package)
-                        string basedFileName = fileName.Substring(baseDir.Length + 1);
+                        string basedFileName = fileName.Substring(baseDir.Length + skipChar);
 
                         basedFileName = ZipEntry.CleanName(basedFileName);
 
