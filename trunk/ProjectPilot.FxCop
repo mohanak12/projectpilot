@@ -706,15 +706,6 @@
       <Namespaces>
        <Namespace Name="Accipio">
         <Types>
-         <Type Name="AccipioHelper">
-          <Messages>
-           <Message TypeName="StaticHolderTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1053" Created="2009-01-29 09:05:14Z">
-            <Issue>
-             <Item>'AccipioHelper'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="HtmlTestReportGenerator">
           <Members>
            <Member Name="#Generate(Accipio.Reporting.TestRunsDatabase)">
@@ -723,17 +714,6 @@
               <Issue Name="ObjectCreation">
                <Item>'HtmlTestReportGenerator.Generate(TestRunsDatabase)'</Item>
                <Item>'DefaultTemplateEngine'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GenerateReportFile(System.String,System.String,System.Collections.Hashtable)">
-            <Messages>
-             <Message Id="System.IO.StringWriter.#ctor" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2009-01-29 09:05:14Z">
-              <Issue>
-               <Item>'StringWriter.StringWriter()'</Item>
-               <Item>'HtmlTestReportGenerator.GenerateReportFile(string, string, Hashtable)'</Item>
-               <Item>'StringWriter.StringWriter(IFormatProvider)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -768,6 +748,28 @@
              </Message>
             </Messages>
            </Member>
+           <Member Name="#ListTestSuitesRuns()">
+            <Messages>
+             <Message Id="System.String.CompareTo(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2009-01-29 13:27:35Z">
+              <Issue>
+               <Item>'TestRun.ListTestSuitesRuns()'</Item>
+               <Item>'string.CompareTo(string)'</Item>
+               <Item>'string.Compare(string, string, StringComparison)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ListUserStoriesRuns()">
+            <Messages>
+             <Message Id="System.String.CompareTo(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2009-01-29 13:27:35Z">
+              <Issue>
+               <Item>'TestRun.ListUserStoriesRuns()'</Item>
+               <Item>'string.CompareTo(string)'</Item>
+               <Item>'string.Compare(string, string, StringComparison)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#startTime">
             <Messages>
              <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Excluded" Created="2009-01-27 17:28:14Z">
@@ -790,6 +792,17 @@
          </Type>
          <Type Name="TestSuiteRun">
           <Members>
+           <Member Name="#ListTestCasesRuns()">
+            <Messages>
+             <Message Id="System.String.CompareTo(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2009-01-29 13:27:35Z">
+              <Issue>
+               <Item>'TestSuiteRun.ListTestCasesRuns()'</Item>
+               <Item>'string.CompareTo(string)'</Item>
+               <Item>'string.Compare(string, string, StringComparison)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#testCasesRuns">
             <Messages>
              <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Excluded" Created="2009-01-27 17:28:14Z">
@@ -1008,9 +1021,6 @@
    </Rule>
    <Rule TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307">
     <Resolution Name="Default">{0} makes a call to {1} that does not explicitly provide a StringComparison. This should be replaced with a call to {2}.</Resolution>
-   </Rule>
-   <Rule TypeName="StaticHolderTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1053">
-    <Resolution Name="Default">Remove the public constructors from {0}.</Resolution>
    </Rule>
    <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
     <Resolution Name="Default">The type name {0} conflicts in whole or in part with the namespace name '{1}'. Change either name to eliminate the conflict.</Resolution>

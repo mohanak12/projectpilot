@@ -1,144 +1,104 @@
-<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"">
 <html>
     <head>
-        <link href="TestReport.css" rel="stylesheet" type="text/css" />
+        <link href="../$settings.CssShortFileName" rel="stylesheet" type="text/css" />
     </head>
     <body>
         <div class="ReportHeader">
-            <h1>Accipio Test Report</h1>
-            <p class="TestMainData">Project: MiMi</p>
-            <p class="TestMainData">Start Time: $startTime</p>
-            <p class="TestMainData">End Time: $endTime</p>
-            <p class="TestMainData">Duration: $duration (s)</p>
+            <h1>Accipio Test Run Report</h1>
+            <p class="AccipioVersion">Accipio $accipioVersion</p>
+            <p class="HeaderData">Project: $settings.ProjectName (<a href="../TestRunsHistory.htm">view the whole test history</a>)</p>
+            <p class="HeaderData">Start time: $testRun.StartTime</p>
+            <p class="HeaderData">End time: $testRun.EndTime</p>
+            <p class="HeaderData">Duration: $testRun.DurationString</p>
         </div>
-        ## user stories section
         <div class="SectionDiv">
             <h2>User Stories</h2>
             <table class="SectionTable">
                 <tr class="SectionTableHeader">
                     <th align="left">User story ID</th>
-                    <th style="width:100px">Tests passed</th>
-                    <th style="width:100px">Tests failed</th>
-                    <th style="width:100px">Tests not implemented</th>
+                    <th>Tests sucessful</th>
+                    <th>Tests failed</th>
+                    <th>Tests not implemented</th>
                     <th>Status</th>
                 </tr>
-                
-                #foreach ($userStory in $userStories)
-					## users story was successfully accomplished in all test cases
-					## if user story failes at least in one test case
-					## if user story has status pending in test case
-					
-					#set ($status = "")
-					
-					#if ($userStory.PresentInTestCase == $userStory.SuccessfullyAccomplished)
-						<tr class="TableRowSuccess">
-						#set ( $status = "Success" )
-					#elseif ($userStory.Failed > 0)
-						<tr class="TableRowFailed">
-						#set ( $status = "Failed" )
-					#elseif ($userStory.Skipped > 0)
-						<tr class="TableRowTodo">
-						#set ( $status = "In implementation" )
-					#end
-					
-					#set ($end = ".htm")
-					#set ($userStoryName = $userStory.UserStoryName)
-						
-						<td align="left"><a href="UserStories/$userStoryName$end">$userStoryName</a></td>
-						<td align="center">$userStory.SuccessfullyAccomplished</td>
-						<td align="center">$userStory.Failed</td>
-						<td align="center">$userStory.Skipped</td>
-						<td align="center">$status</td>
-					</tr>
-					
-				#end
-                
-			</table>
-		</div>
-		
-		## test suites section
-		
-		<div class="SectionDiv">
+                #foreach ( $userStoryRun in $testRun.ListUserStoriesRuns() )
+                    #if ($userStoryRun.Status == "Successful")
+                <tr class="TableRowSuccess">
+                    #elseif  ($userStoryRun.Status == "Failed")
+                <tr class="TableRowFailed">
+                    #else
+                <tr class="TableRowTodo">
+                    #end
+                    
+                    <td align="left">$userStoryRun.UserStoryId</td>
+                    <td align="center">$userStoryRun.TestCasesSuccess</td>
+                    <td align="center">$userStoryRun.TestCasesFail</td>
+                    <td align="center">$userStoryRun.TestCasesNotImplemented</td>
+                    <td align="center">$userStoryRun.Status</td>
+                </tr>
+                #end
+                <tr class="SectionTableRowTotals">
+                    <td align="left">Total</td>
+                    <td align="center">$testRun.TestCasesSuccess</td>
+                    <td align="center">$testRun.TestCasesFail</td>
+                    <td align="center">$testRun.TestCasesNotImplemented</td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+        <div class="SectionDiv">
             <h2>Test Suites</h2>
             <table class="SectionTable">
                 <tr class="SectionTableHeader">
                     <th align="left">Test suite ID</th>
-                    <th style="width:100px">Tests passed</th>
-                    <th style="width:100px">Tests failed</th>
-                    <th style="width:100px">Tests not implemented</th>
+                    <th>Tests passed</th>
+                    <th>Tests failed</th>
+                    <th>Tests not implemented</th>
                     <th>Status</th>
                 </tr>
-                
-                #foreach($reportSuite in $reportSuites)
-                
-					#if ($reportSuite.FailedTests > 0)
-						<tr class="TableRowFailed">
-						#set ($status = "Failed")
-					#elseif ($reportSuite.SkippedTests > 0)
-						<tr class="TableRowTodo">
-						#set ( $status = "In implementation" )
-					#else
-						<tr class="TableRowSuccess">
-						#set ($status = "Succes")
-					#end
-					
-					#set ($reportSuiteId = $reportSuite.SuiteId)
-					
-						<td align="left"><a href="UserStories/$reportSuiteId$end">$reportSuiteId</a></td>
-						<td align="center">$reportSuite.PassedTests</td>
-						<td align="center">$reportSuite.FailedTests</td>
-						<td align="center">$reportSuite.SkippedTests</td>
-						<td align="center">$status</td>
-					</tr>
-					
+                #foreach ( $testSuiteRun in $testRun.ListTestSuitesRuns() )
+                    #if ($testSuiteRun.Status == "Successful")
+                <tr class="TableRowSuccess">
+                    #elseif ($testSuiteRun.Status == "Failed")
+                <tr class="TableRowFailed">
+                    #else
+                <tr class="TableRowTodo">
+                    #end
+                    <td align="left">$testSuiteRun.TestSuiteId</td>
+                    <td align="center">$testSuiteRun.TestCasesSuccess</td>
+                    <td align="center">$testSuiteRun.TestCasesFail</td>
+                    <td align="center">$testSuiteRun.TestCasesNotImplemented</td>
+                    <td>Failed</td>
+                </tr>
                 #end
-                
-            </table>    
-            
-            ## test cases section
-            
-            #foreach($reportSuite in $reportSuites)
-            
-				<div class="Section2Div">
-					<h3>$reportSuite.SuiteId</h3> 
+            </table>         
+        </div>    
+            <div class="Section2Div">
+                #foreach ( $testSuiteRun in $testRun.ListTestSuitesRuns() )
+                <h3>Test Suite $testSuiteRun.TestSuiteId</h3> 
 
-					<table class="SectionTable">
-						<tr class="SectionTableHeader">
-							<th align="left">Test case ID</th>
-							<th>Status</th>
-							<th>Error message</th>
-						</tr>
-	                  
-	                  #foreach($testCase in $reportSuite.TestCases)
-						
-						#set ($testCaseMessage = "")
-						
-						#if ($testCase.Status == "Passed")
-							<tr class="TableRowSuccess">
-							#set ($status = "Success")
-						#elseif ($testCase.Status == "Failed")
-							<tr class="TableRowFailed">
-							#set ($status = "Failed")
-							#set ($testCaseMessage = $testCase.ReportDetails)
-						#else
-							<tr class="TableRowTodo">
-							#set ($status = "Skipped")
-						#end
-						
-						#set ( $testCaseName = $testCase.CaseId )
-						
-							<td align="left"><a href="TestCases/$testCaseName$end">$testCaseName</a></td>
-							<td>$status</td>
-							<td>$testCaseMessage</td>
-						</tr> 
-						       
-	                  #end
-	                                 
-					</table>            
-
-				</div>
-            #end
-            
-		</div>
-    </body>       
+                <table class="SectionTable">
+                    <tr class="SectionTableHeader">
+                        <th align="left">Test case ID</th>
+                        <th>Status</th>
+                        <th>Error message</th>
+                    </tr>
+                    #foreach ( $testCaseRun in $testSuiteRun.ListTestCasesRuns() )
+                        #if ($testCaseRun.Status == "Successful")
+                    <tr class="TableRowSuccess">
+                        #elseif ($testCaseRun.Status == "Failed")
+                    <tr class="TableRowFailed">
+                        #else
+                    <tr class="TableRowTodo">
+                        #end                    
+                        <td align="left">$testCaseRun.TestCaseId</td>
+                        <td>$testCaseRun.Status</td>
+                        <td>$!testCaseRun.Message</td>
+                    </tr>       
+                    #end         
+                </table>            
+                #end
+            </div>
+        </div>
+    </body>
 </html>

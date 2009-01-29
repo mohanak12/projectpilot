@@ -26,6 +26,11 @@ namespace Accipio.Reporting
             get { return testCaseId; }
         }
 
+        public IDictionary<string, string> UserStories
+        {
+            get { return userStories; }
+        }
+
         public void AddUserStory (string userStoryId)
         {
             userStories.Add(userStoryId, null);
