@@ -70,6 +70,18 @@ namespace ProjectPilot.Extras.LogParser
             set { matchCase = value; }
         }
 
+        public long? ReadIndexEnd
+        {
+            get { return readIndexEnd; }
+            set { readIndexEnd = value; }
+        }
+
+        public long? ReadIndexStart
+        {
+            get { return readIndexStart; }
+            set { readIndexStart = value; }
+        }
+
         public bool LogCountMode
         {
             get { return logCountMode; }
@@ -85,6 +97,8 @@ namespace ProjectPilot.Extras.LogParser
         private bool logCountMode;
         private string matchCase;
         private string matchWholeWordOnly;
+        private long? readIndexEnd;
+        private long? readIndexStart;
         private int? startLogIndex;
     }
 }

@@ -244,23 +244,50 @@ namespace ProjectPilot.Extras.LogParser
             
           //  if (elementsPattern.Count <= 1) return;
 
+            if (parseFilter.ReadIndexStart != null && parseFilter.ReadIndexEnd != null)
+            {
+                //if (fileStream.Length < parseFilter.ReadIndexEnd)
+                //    return;
+
+                if (parseFilter.ReadIndexStart < 0)
+                    return;
+
+                if (parseFilter.ReadIndexEnd - parseFilter.ReadIndexStart <= 0)
+                    return;
+                else
+                    fileStream.Position = (long)parseFilter.ReadIndexStart;
+            }
+
             using (StreamReader reader = new StreamReader(fileStream))
             {
-                    if (parseFilter.StartLogIndex > parseFilter.EndLogIndex)
+                if (parseFilter.StartLogIndex > parseFilter.EndLogIndex)
                         stopFlag = true;
 
                 while (!reader.EndOfStream && stopFlag == false)
                 {
                     line = reader.ReadLine();
+
+                    if (fileStream.Position >= parseFilter.ReadIndexEnd)
+                    {
+                        stopFlag = true;
+                        continue;
+                    }
+
                     if (true == string.IsNullOrEmpty(line))
                         continue;
+
                     ParseLogLine(line);
                 }
 
                 if (elementsLog.Count > 0)
-                    
+                {
                     //Filter (MatchWholeWord && MatchCase) for last element
                     Filter(null, null, null, ElementsLog.Count);
+
+                    //Remove last log enty in log file if file it's not readed to the end (last log it's not completed, maybe part of the log it's still missing) - log deleted
+                    if (parseFilter.ReadIndexEnd < fileStream.Length) 
+                        elementsLog.RemoveAt(elementsLog.Count - 1); 
+                }
             }
         }
 
