@@ -124,27 +124,6 @@ page width. Or, you can specify an exact pixel width. */
     _height: 1px; /* only IE6 applies CSS properties starting with an underscrore */
 }
 
-#logEntries a:link
-{
-	text-decoration: none
-}
-
-#logEntries a:visited
-{
-	text-decoration: none
-}
-
-#logEntries a:active
-{
-	text-decoration: none
-}
-
-#logEntries a:hover
-{
-	text-decoration: underline;
-	color: black;
-}
-
 a:link#main
 {
 	text-decoration: none;
@@ -274,4 +253,103 @@ ul#menu li.selected a
 {
     font-weight: bold;
     color: #ff0000;
+}
+
+/*---------*/
+#containerDiv {
+position: relative;
+width: 100%;
+}
+
+#headerDiv {
+position: fixed;
+border: 1px solid #777777;
+background-color: blue;
+color: yellow;
+top: 0px;
+left: 0px;
+width: 100%;
+z-index:100;
+}
+
+#menuDiv {
+float: left;
+width: 100%;
+border: 1px solid #777777;
+}
+
+#patternDiv {
+float: left;
+width: 100%;
+}
+
+#contentDiv {
+position: absolute;
+top: 35px;
+background-color: white;
+}
+
+#contentDiv a:link
+{
+	text-decoration: none
+}
+
+#contentDiv a:visited
+{
+	text-decoration: none
+}
+
+#contentDiv a:active
+{
+	text-decoration: none
+}
+
+#contentDiv a:hover
+{
+	text-decoration: underline;
+	color: black;
+}
+
+#bottomFixedDiv{
+position: fixed;
+border: 1px solid #999999;
+bottom: 1px;
+width: 100%;
+background-color: white;
+z-index:100;
+}
+
+tr.white
+{
+	background: white;
+	vertical-align: top;
+}
+
+tr.grey
+{
+	background: #F4F4F4;
+	vertical-align: top;
+}
+
+tr.trace {
+	color:Black; }
+
+tr.debug {
+	color:Gray; }
+
+tr.info {
+	color:Green; }
+
+tr.warn {
+	color:Orange; }
+
+tr.error {
+	color:Red; }
+
+tr.fatal {
+	color:Purple; }
+
+.invisible
+{
+	display:none;
 }
