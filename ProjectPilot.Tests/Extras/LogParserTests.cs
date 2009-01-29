@@ -284,24 +284,32 @@ namespace ProjectPilot.Tests.Extras
             }
         }
 
-        //        [Test]
+        [Test]
+        [Row(-1, 10472, 0)]
+        [Row(0, 1500, 1)]
+        [Row(8052294, 10000294, 490)]
+        [Row(10452294, 10472300, 2)]
+        [Row(10452294, 10472294, 2)]
+        [Row(10452294, 10472293, 1)]
+        public void ParsingPartOf10MBLogFile(int readIndexStart, long readIndexEnd, int expectedElementsLogCount)
+        {
+            using (Stream fileStream = File.OpenRead(@"..\..\..\Data\Samples\SSM+2009-01-08.log.28"))
+            {   // Size of file = 10472294
+                LogCollection lineParse = new LogCollection('|', "Time|Level|Ndc");
+
+                LogParserFilter filter = new LogParserFilter();
+                filter.ReadIndexStart = readIndexStart;
+                filter.ReadIndexEnd = readIndexEnd;
+
+                lineParse.ParseFilter = filter;
+                lineParse.ParseLogFile(fileStream);
+
+                Assert.AreEqual(expectedElementsLogCount, lineParse.ElementsLog.Count);
+            }
+        }
+
+        //        [Test]   still to implement!   - Marko
         //        public void TestAllFilters() {}
-                    
-//        [Test]
-//        public void Parsing10MBLogFile()
-//        {
-//            using (Stream fileStream = File.OpenRead(@"C:\SSM+2009-01-08.log.28"))
-//            {
-//                LogCollection lineParse = new LogCollection('|', "Time|Level|Ndc");
-//                
-//                LogParserFilter filter = new LogParserFilter();
-//                filter.FilterLevel = "WARN";
-//                lineParse.ParseFilter = filter;
-//                lineParse.ParseLogFile(fileStream);
-//                
-//                Assert.AreEqual(272, lineParse.ElementsLog.Count);
-//            }
-//        }
 
         [FixtureSetUp]
         public void FixtureSetup()
