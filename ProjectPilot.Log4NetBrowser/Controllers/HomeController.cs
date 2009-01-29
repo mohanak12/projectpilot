@@ -46,7 +46,8 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             Session["fileSelected"] = null;
             Session["logFilesList"] = logFiles;
 
-            return View();
+            //return View();
+            return RedirectToAction("DisplayLog", "LogView");
         }
 
         public ActionResult FileSelect()
