@@ -1,0 +1,97 @@
+<html>
+    <head>
+        <link href="TestReport.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div class="ReportHeader">
+            <h1>Accipio Test Run Report</h1>
+            <p class="AccipioVersion">Accipio 1.0.22.444</p>
+            <p class="HeaderData">Project: MiMi</p>
+            <p class="HeaderData">Start time: </p>
+            <p class="HeaderData">End time: </p>
+            <p class="HeaderData">Duration: </p>
+        </div>
+        <div class="SectionDiv">
+            <h2>User Stories</h2>
+            <table class="SectionTable">
+                <tr class="SectionTableHeader">
+                    <th align="left">User story ID</th>
+                    <th style="width:100px">Tests passed</th>
+                    <th style="width:100px">Tests failed</th>
+                    <th style="width:100px">Tests not implemented</th>
+                    <th>Status</th>
+                </tr>
+                <tr class="TableRowTodo">
+                    <td align="left"><a href="UserStories/SMSUi.AddSubs.Schedule.1.htm">SMSUi.AddSubs.Schedule.1</a></td>
+                    <td align="center">5</td>
+                    <td align="center">0</td>
+                    <td align="center">1</td>
+                    <td align="center">In implementation</td>
+                </tr>
+                <tr class="TableRowSuccess">
+                    <td align="left"><a href="UserStories/SMSUi.AddSubs.Schedule.2.htm">SMSUi.AddSubs.Schedule.2</a></td>
+                    <td align="center">5</td>
+                    <td align="center">0</td>
+                    <td align="center">0</td>
+                    <td align="center">Finished</td>
+                </tr>
+                <tr class="TableRowFailed">
+                    <td align="left"><a href="UserStories/SMSUi.AddSubs.Schedule.3.htm">SMSUi.AddSubs.Schedule.3</a></td>
+                    <td align="center">5</td>
+                    <td align="center">2</td>
+                    <td align="center">1</td>
+                    <td align="center">Failed</td>
+                </tr>
+                <tr class="SectionTableRowTotals">
+                    <td align="left">total</td>
+                    <td align="center">15</td>
+                    <td align="center">2</td>
+                    <td align="center">2</td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+        <div class="SectionDiv">
+            <h2>Test Suites</h2>
+            <table class="SectionTable">
+                <tr class="SectionTableHeader">
+                    <th align="left">Test suite ID</th>
+                    <th style="width:100px">Tests passed</th>
+                    <th style="width:100px">Tests failed</th>
+                    <th style="width:100px">Tests not implemented</th>
+                    <th>Status</th>
+                </tr>
+				<tr class="TableRowFailed">
+                    <td align="left"><a href="UserStories/Blabla.htm">Blabla</a></td>
+                    <td align="center">1</td>
+                    <td align="center">1</td>
+                    <td align="center">0</td>
+                    <td>Failed</td>
+                </tr>
+            </table>         
+        </div>    
+            <div class="Section2Div">
+                <h3>Test Suite Blabla</h3> 
+
+                <table class="SectionTable">
+                    <tr class="SectionTableHeader">
+                        <th align="left">Test case ID</th>
+                        <th>Status</th>
+                        <th>Error message</th>
+                    </tr>
+                    <tr class="TableRowSuccess">
+                        <td align="left"><a href="TestCases/AddSubscription.htm">AddSubscription</a></td>
+                        <td>Success</td>
+                        <td />
+                    </tr>                
+                    <tr class="TableRowFailed">
+                        <td align="left"><a href="TestCases/DeleteSubscription.htm">DeleteSubscription</a></td>
+                        <td>Failed</td>
+                        <td>The user '+38651454082' did not receive an expected SMS message: 'Narocilo je bilo sprejeto: MVREME CAS 1345 0730 67 0900 2 1722.'. Actual message: 'Na tej kratki stevilki ste vnesli napacno kljucno besedo (mvreme). Za vec informacij se obrnite na vasega ponudnika mobilnih storitev.'</td>
+                    </tr>                
+                </table>            
+
+            </div>
+        </div>
+    </body>
+</html>

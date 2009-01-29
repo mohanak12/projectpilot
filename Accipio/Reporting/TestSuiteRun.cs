@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Accipio.Reporting
 {
@@ -14,7 +15,36 @@ namespace Accipio.Reporting
             get { return testSuiteId; }
         }
 
-        public void AddTestCaseRun (TestCaseRun testCaseRun)
+        public int TestCasesTotal
+        {
+            get { return testCasesRuns.Count; }
+        }
+
+        public int TestCasesSuccess
+        {
+            get
+            {
+                return testCasesRuns.Count(n => n.Value.Status == TestExecutionStatus.Successful);
+            }
+        }
+
+        public int TestCasesFail
+        {
+            get
+            {
+                return testCasesRuns.Count(n => n.Value.Status == TestExecutionStatus.Failed);
+            }
+        }
+
+        public int TestCasesNotImplemented
+        {
+            get
+            {
+                return testCasesRuns.Count(n => n.Value.Status == TestExecutionStatus.NotImplemented);
+            }
+        }
+
+        public void AddTestCaseRun(TestCaseRun testCaseRun)
         {
             testCasesRuns.Add(testCaseRun.TestCaseId, testCaseRun);
         }

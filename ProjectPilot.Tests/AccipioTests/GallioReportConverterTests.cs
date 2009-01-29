@@ -4,7 +4,7 @@ using MbUnit.Framework;
 namespace ProjectPilot.Tests.AccipioTests
 {
     [TestFixture]
-    public class TestReportGeneratorCommandTests
+    public class GallioReportConverterTests
     {
         [Test]
         public void TransformGallioTestResults()

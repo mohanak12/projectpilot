@@ -112,12 +112,30 @@ namespace Accipio.Reporting
                 switch (xmlReader.Name)
                 {
                     case "case":
-                        TestCaseExecutionStatus caseExecutionStatus =
-                            (TestCaseExecutionStatus)Enum.Parse(typeof(TestCaseExecutionStatus), ReadAttribute(xmlReader, "status"), true);
+                        string gallioStatus = ReadAttribute(xmlReader, "status");
+                        TestExecutionStatus status = TestExecutionStatus.NotImplemented;
+
+                        switch (gallioStatus)
+                        {
+                            case "passed":
+                                status = TestExecutionStatus.Successful;
+                                break;
+
+                            case "failed":
+                                status = TestExecutionStatus.Failed;
+                                break;
+
+                            case "pending":
+                                status = TestExecutionStatus.NotImplemented;
+                                break;
+
+                            default:
+                                throw new NotSupportedException(String.Format(CultureInfo.InvariantCulture, "Gallio test status '{0}' not supported", gallioStatus));
+                        }
 
                         TestCaseRun testCaseRun = new TestCaseRun(
                             ReadAttribute(xmlReader, "id"),
-                            caseExecutionStatus);
+                            status);
 
                         ReadUserStories(testCaseRun, xmlReader);
 
@@ -151,7 +169,8 @@ namespace Accipio.Reporting
                         double duration = double.Parse(ReadAttribute(xmlReader, "duration"), CultureInfo.InvariantCulture);
                         reportData.StartTime = Convert.ToDateTime(ReadAttribute(xmlReader, "startTime"), CultureInfo.InvariantCulture);
                         reportData.EndTime = reportData.StartTime.AddSeconds(duration);
-                        reportData.Version = new Version(ReadAttribute(xmlReader, "version"));
+                        // TODO:
+                        //reportData.Version = new Version(ReadAttribute(xmlReader, "version"));
 
                         ReadSuites(reportData, xmlReader);
 

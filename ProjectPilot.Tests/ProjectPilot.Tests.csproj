@@ -90,11 +90,10 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="AccipioTests\HtmlReportGeneratorTest.cs" />
+    <Compile Include="AccipioTests\HtmlTestReportTests.cs" />
     <Compile Include="AccipioTests\ProjectPilotPortalTests.cs" />
-    <Compile Include="AccipioTests\TestReportGeneratorCommandTests.cs" />
-    <None Include="AccipioTests\ReportDataParserTest.cs" />
-    <None Include="AccipioTests\TestReportsTests.cs" />
+    <Compile Include="AccipioTests\GallioReportConverterTests.cs" />
+    <Compile Include="AccipioTests\TestRunLogParserTests.cs" />
     <Compile Include="AccipioTests\ValidatingTestSuiteSchemaTests.cs" />
     <Compile Include="AccipioTests\TestSuiteSchemaGeneratorTests.cs" />
     <Compile Include="AccipioTests\ConsoleAppTest.cs" />

@@ -72,7 +72,7 @@ namespace Accipio.Console
             XmlDocument xmlSchemaDocument = GenerateXsdSchema(businessActionData);
 
             // write xsd schema to file
-            ConsoleApp.EnsureDirectoryPathExists(testSuiteSchemaFileName, true);
+            AccipioHelper.EnsureDirectoryPathExists(testSuiteSchemaFileName, true);
             using (Stream xsdSchemaDocument = File.Open(testSuiteSchemaFileName, FileMode.Create))
             {
                 xmlSchemaDocument.Save(xsdSchemaDocument);

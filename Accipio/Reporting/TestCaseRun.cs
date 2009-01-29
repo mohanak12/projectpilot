@@ -4,7 +4,7 @@ namespace Accipio.Reporting
 {
     public class TestCaseRun
     {
-        public TestCaseRun(string testCaseId, TestCaseExecutionStatus status)
+        public TestCaseRun(string testCaseId, TestExecutionStatus status)
         {
             this.testCaseId = testCaseId;
             this.status = status;
@@ -16,7 +16,7 @@ namespace Accipio.Reporting
             set { message = value; }
         }
 
-        public TestCaseExecutionStatus Status
+        public TestExecutionStatus Status
         {
             get { return status; }
         }
@@ -32,7 +32,7 @@ namespace Accipio.Reporting
         }
 
         private string testCaseId;
-        private TestCaseExecutionStatus status;
+        private TestExecutionStatus status;
         private string message;
         private Dictionary<string, string> userStories = new Dictionary<string, string>();
     }

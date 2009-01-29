@@ -1,7 +1,7 @@
 ﻿
 namespace Accipio.Reporting
 {
-    public enum TestCaseExecutionStatus
+    public enum TestExecutionStatus
     {
         /// <summary>
         /// Test status failed.
@@ -9,13 +9,13 @@ namespace Accipio.Reporting
         Failed,
 
         /// <summary>
-        /// Test status passed.
+        /// Test status successful.
         /// </summary>
-        Passed,
+        Successful,
 
         /// <summary>
-        /// Test status skipped.
+        /// Test status not implemented.
         /// </summary>
-        Skipped,
+        NotImplemented,
     }
 }

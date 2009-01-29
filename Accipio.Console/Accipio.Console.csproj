@@ -70,6 +70,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="ProjectPilot.snk" />
+    <Content Include="Templates\TestRunReport.vm.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="TestSuiteTemplate.xsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -84,6 +87,10 @@
     <Content Include="BusinessActionTransform.xslt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Templates\TestRunsHistory.vm.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\TestReport.css" />
     <Content Include="TestReportTransform.xslt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
