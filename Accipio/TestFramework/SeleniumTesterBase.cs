@@ -7,7 +7,7 @@ using System.Threading;
 using MbUnit.Framework;
 using Selenium;
 
-namespace Accipio
+namespace Accipio.TestFramework
 {
     /// <summary>
     /// Tester class for testing Web application using Selenium. The class provides a fluent interface 

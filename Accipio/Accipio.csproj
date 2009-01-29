@@ -86,7 +86,6 @@
     <Compile Include="Inservio\Server\ServicePlugInRegistration.cs" />
     <Compile Include="Inservio\Server\ServicesRepository.cs" />
     <Compile Include="IHtmlTestReportGenerator.cs" />
-    <Compile Include="ProjectPortalTestRunner.cs" />
     <Compile Include="Reporting\TestExecutionStatus.cs" />
     <Compile Include="Reporting\TestRunLogParser.cs" />
     <Compile Include="Reporting\TestCaseRun.cs" />
@@ -94,7 +93,7 @@
     <Compile Include="Reporting\TestRunsDatabase.cs" />
     <Compile Include="Reporting\TestSuiteRun.cs" />
     <Compile Include="Reporting\UserStoryRun.cs" />
-    <Compile Include="SeleniumTesterBase.cs" />
+    <Compile Include="TestFramework\SeleniumTesterBase.cs" />
     <Compile Include="TestActionParameter.cs" />
     <Compile Include="CSharpTestCodeGenerator.cs" />
     <Compile Include="FileCodeWriter.cs" />

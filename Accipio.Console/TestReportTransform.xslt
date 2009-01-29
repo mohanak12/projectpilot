@@ -2,7 +2,7 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:msxsl="urn:schemas-microsoft-com:xslt"
                 xmlns:g="http://www.gallio.org/"
-                xmlns="http://www.w3.org/1999/xhtml">
+                xmlns="http://projectpilot/AccipioTestRunReport.xsd">
   <xsl:output method="xml"/>
 
   <xsl:template match="g:report">

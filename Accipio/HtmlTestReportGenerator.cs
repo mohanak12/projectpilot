@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using Accipio.Reporting;
 using Commons.Collections;
 using NVelocity;
@@ -50,9 +51,18 @@ namespace Accipio
             context.Add("accipioVersion", accipioVersion);
 
             GenerateReportFile(
-                "${settings.ProjectName}_TestRunsHistory.htm",
+                "TestRunsHistory.htm",
                 "TestRunsHistory.vm.htm",
                 context);
+
+            foreach (TestRun testRun in testRunDatabase.TestRuns)
+            {
+                context["testRun"] = testRun;
+                GenerateReportFile(
+                    @"TestRuns/$testRun.FileName",
+                    "TestRunReport.vm.htm",
+                    context);
+            }
         }
 
         private void GenerateReportFile (
@@ -69,7 +79,7 @@ namespace Accipio
 
             string fullTemplateFileName = Path.Combine(settings.TemplatesDirectory, templateFileName);
 
-            Template template = velocity.GetTemplate(fullTemplateFileName);
+            Template template = velocity.GetTemplate(fullTemplateFileName, new UTF8Encoding(false).WebName);
 
             string outputFileName;
 
@@ -87,7 +97,7 @@ namespace Accipio
 
             using (Stream stream = File.Open(fullOutputFileName, FileMode.Create))
             {
-                using (TextWriter writer = new StreamWriter(stream))
+                using (TextWriter writer = new StreamWriter(stream, new UTF8Encoding(false)))
                 {
                     template.Merge(velocityContext, writer);
                 }

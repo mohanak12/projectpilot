@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,6 +14,11 @@ namespace Accipio.Reporting
         public string TestSuiteId
         {
             get { return testSuiteId; }
+        }
+
+        public IDictionary<string, TestCaseRun> TestCasesRuns
+        {
+            get { return testCasesRuns; }
         }
 
         public int TestCasesTotal
@@ -47,6 +53,13 @@ namespace Accipio.Reporting
         public void AddTestCaseRun(TestCaseRun testCaseRun)
         {
             testCasesRuns.Add(testCaseRun.TestCaseId, testCaseRun);
+        }
+
+        public IEnumerable<TestCaseRun> ListTestCasesRuns()
+        {
+            List<TestCaseRun> sorted = new List<TestCaseRun>(testCasesRuns.Values);
+            sorted.Sort((a, b) => string.Compare(a.TestCaseId, b.TestCaseId, StringComparison.OrdinalIgnoreCase));
+            return sorted;
         }
 
         private Dictionary<string, TestCaseRun> testCasesRuns = new Dictionary<string, TestCaseRun>();

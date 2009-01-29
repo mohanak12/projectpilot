@@ -254,11 +254,7 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
         }
 
         private LogDisplay parserContent;
-        private int currentLogIndex;
-        private int StartIndexOfLogItemsShow;
-        private int EndIndexOfLogItemsShow;
         private string fileSelected;
-        private string fileKeySelected;
         private int numberOfLogItems;
         private int numberOfItemsPerPage;
         private readonly Dictionary<string, string> logFiles = new Dictionary<string, string>();

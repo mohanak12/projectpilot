@@ -5,6 +5,11 @@ namespace Accipio.Reporting
 {
     public class UserStoryRun
     {
+        public UserStoryRun(string userStoryId)
+        {
+            this.userStoryId = userStoryId;
+        }
+
         public TestExecutionStatus Status
         {
             get
@@ -52,6 +57,17 @@ namespace Accipio.Reporting
             }
         }
 
+        public string UserStoryId
+        {
+            get { return userStoryId; }
+        }
+
+        public void AddTestCaseRun (TestCaseRun testCaseRun)
+        {
+            testCasesRuns.Add(testCaseRun);
+        }
+
+        private string userStoryId;
         private List<TestCaseRun> testCasesRuns = new List<TestCaseRun>();
     }
 }

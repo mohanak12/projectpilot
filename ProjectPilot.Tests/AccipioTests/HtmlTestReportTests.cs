@@ -12,7 +12,7 @@ namespace ProjectPilot.Tests.AccipioTests
         /// Test checks generation of html report file context for report data.
         /// </summary>
         [Test]
-        public void GenerateHtmlReportFileTest()
+        public void GenerateHtmlReportFile()
         {
             TestRunsDatabase db = new TestRunsDatabase();
             db.LoadDatabase(@"..\..\..\Data\Samples\", @"TestResults.xml");

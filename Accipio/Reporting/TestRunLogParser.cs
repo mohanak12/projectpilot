@@ -48,6 +48,12 @@ namespace Accipio.Reporting
                                     if (xmlReader.Name != "report")
                                         throw new XmlException("<report> (root) element expected.");
 
+                                    string accipioVersion = xmlReader.GetAttribute("accipioVersion");
+                                    testRun.AccipioVersion = new Version(accipioVersion);
+
+                                    string testedSoftwareVersion = xmlReader.GetAttribute("testedSoftwareVersion");
+                                    testRun.TestedSoftwareVersion = new Version(testedSoftwareVersion);
+
                                     ReadTestRunParameters(testRun, xmlReader);
 
                                     break;
@@ -68,6 +74,8 @@ namespace Accipio.Reporting
                         }
                     }
                 }
+
+                testRun.FillUserStoriesData();
 
                 return testRun;
             }

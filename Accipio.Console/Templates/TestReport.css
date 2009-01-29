@@ -105,6 +105,8 @@ p
     padding-left: 10px;
     padding-right: 10px;
     background-color: #FFFFDD;
+    border-bottom-style: dotted;
+    border-bottom-width: thin;
 }
 
 .TableRowFailed td
@@ -112,6 +114,8 @@ p
     padding-left: 10px;
     padding-right: 10px;
     background-color: #FFCECE;
+    border-bottom-style: dotted;
+    border-bottom-width: thin;
 }
 
 .TableRowSuccess td
@@ -119,6 +123,8 @@ p
     padding-left: 10px;
     padding-right: 10px;
     background-color: #E1FFD2;
+    border-bottom-style: dotted;
+    border-bottom-width: thin;
 } 
 
 .SectionTableRowTotals td

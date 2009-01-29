@@ -7,6 +7,12 @@ namespace Accipio.Reporting
 {
     public class TestRun
     {
+        public Version AccipioVersion
+        {
+            get { return accipioVersion; }
+            set { accipioVersion = value; }
+        }
+
         public TimeSpan Duration
         {
             get { return endTime - startTime; }
@@ -14,7 +20,7 @@ namespace Accipio.Reporting
 
         public string DurationString
         {
-            get { return String.Format(CultureInfo.InvariantCulture, "{0:00}:{1:00}", Duration.Minutes, Duration.Seconds); }
+            get { return String.Format(CultureInfo.InvariantCulture, "{0:00}:{1:00}:{2:00}", Duration.Hours, Duration.Minutes, Duration.Seconds); }
         }
 
         public DateTime EndTime
@@ -115,10 +121,45 @@ namespace Accipio.Reporting
             testSuitesRuns.Add(testSuiteRun.TestSuiteId, testSuiteRun);
         }
 
+        public void FillUserStoriesData()
+        {
+            foreach (KeyValuePair<string, TestSuiteRun> entry in testSuitesRuns)
+            {
+                foreach (TestCaseRun testCaseRun in entry.Value.TestCasesRuns.Values)
+                {
+                    foreach (string userStoryId in testCaseRun.UserStories.Keys)
+                    {
+                        if (false == userStoryRuns.ContainsKey(userStoryId))
+                        {
+                            UserStoryRun userStoryRun = new UserStoryRun(userStoryId);
+                            userStoryRuns.Add(userStoryId, userStoryRun);
+                        }
+
+                        userStoryRuns[userStoryId].AddTestCaseRun(testCaseRun);
+                    }
+                }
+            }
+        }
+
+        public IEnumerable<TestSuiteRun> ListTestSuitesRuns()
+        {
+            List<TestSuiteRun> sorted = new List<TestSuiteRun>(testSuitesRuns.Values);
+            sorted.Sort((a, b) => string.Compare(a.TestSuiteId, b.TestSuiteId, StringComparison.OrdinalIgnoreCase));
+            return sorted;
+        }
+
+        public IEnumerable<UserStoryRun> ListUserStoriesRuns()
+        {
+            List<UserStoryRun> sorted = new List<UserStoryRun>(userStoryRuns.Values);
+            sorted.Sort((a, b) => string.Compare(a.UserStoryId, b.UserStoryId, StringComparison.OrdinalIgnoreCase));
+            return sorted;
+        }
+
+        private Version accipioVersion;
         private DateTime endTime;
         private DateTime startTime;
         private Dictionary<string, TestSuiteRun> testSuitesRuns = new Dictionary<string, TestSuiteRun>();
-        private Version testedSoftwareVersion = new Version(0, 0);
+        private Version testedSoftwareVersion;
         private Dictionary<string, UserStoryRun> userStoryRuns = new Dictionary<string, UserStoryRun>();
     }
 }

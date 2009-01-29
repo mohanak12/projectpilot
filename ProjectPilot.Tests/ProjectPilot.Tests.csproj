@@ -81,6 +81,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\CruiseControl.NET\ThoughtWorks.CruiseControl.Remote.dll</HintPath>
     </Reference>
+    <Reference Include="ThoughtWorks.Selenium.Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=29eb264786dd8746, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\selenium-remote-control-1.0-beta-1\selenium-dotnet-client-driver-1.0-beta-1\ThoughtWorks.Selenium.Core.dll</HintPath>
+    </Reference>
     <Reference Include="ZedGraph, Version=5.1.4.31904, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\ZedGraph\ZedGraph.dll</HintPath>
@@ -93,6 +97,7 @@
     <Compile Include="AccipioTests\HtmlTestReportTests.cs" />
     <Compile Include="AccipioTests\ProjectPilotPortalTests.cs" />
     <Compile Include="AccipioTests\GallioReportConverterTests.cs" />
+    <Compile Include="AccipioTests\ProjectPortalTestRunner.cs" />
     <Compile Include="AccipioTests\TestRunLogParserTests.cs" />
     <Compile Include="AccipioTests\ValidatingTestSuiteSchemaTests.cs" />
     <Compile Include="AccipioTests\TestSuiteSchemaGeneratorTests.cs" />
