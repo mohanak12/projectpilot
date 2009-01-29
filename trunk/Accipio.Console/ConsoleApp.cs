@@ -31,26 +31,6 @@ namespace Accipio.Console
             }
         }
 
-        public static void EnsureDirectoryPathExists(string path, bool containsFileName)
-        {
-            // remove the file name if it is a part of the path
-            if (containsFileName)
-            {
-                EnsureDirectoryPathExists(Path.GetDirectoryName(path), false);
-                return;
-            }
-
-            if (Directory.Exists(path))
-                return;
-
-            string parentPath = Path.GetDirectoryName(path);
-
-            if (false == String.IsNullOrEmpty(parentPath) && false == Directory.Exists(parentPath))
-                EnsureDirectoryPathExists(parentPath, false);
-
-            Directory.CreateDirectory(path);
-        }
-
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public int Process()
         {

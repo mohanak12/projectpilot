@@ -42,6 +42,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Gallio\bin\MbUnit2\MbUnit.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="NVelocity, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\NVelocity\NVelocity.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -64,6 +68,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AccipioHelper.cs" />
     <Compile Include="BusinessActionEntry.cs" />
     <Compile Include="BusinessFunctionEntry.cs" />
     <Compile Include="BusinessActionParameters.cs" />
@@ -72,6 +77,7 @@
     <Compile Include="BrowserType.cs" />
     <Compile Include="BusinessFunctionSteps.cs" />
     <Compile Include="HtmlTestReportGenerator.cs" />
+    <Compile Include="HtmlTestReportGeneratorSettings.cs" />
     <Compile Include="IBusinessActionXmlParser.cs" />
     <Compile Include="Inservio\Framework\IInservioServicePlugIn.cs" />
     <Compile Include="Inservio\Framework\IInservioRemoteControl.cs" />
@@ -81,7 +87,7 @@
     <Compile Include="Inservio\Server\ServicesRepository.cs" />
     <Compile Include="IHtmlTestReportGenerator.cs" />
     <Compile Include="ProjectPortalTestRunner.cs" />
-    <Compile Include="Reporting\TestCaseExecutionStatus.cs" />
+    <Compile Include="Reporting\TestExecutionStatus.cs" />
     <Compile Include="Reporting\TestRunLogParser.cs" />
     <Compile Include="Reporting\TestCaseRun.cs" />
     <Compile Include="Reporting\TestRun.cs" />
@@ -105,13 +111,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ProjectPilot.snk" />
-    <None Include="Templates\ReportTemplate.vm" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ProjectPilot.Framework\ProjectPilot.Framework.csproj">
-      <Project>{C87F10BF-4132-4B75-9C07-CB0B1FCE6440}</Project>
-      <Name>ProjectPilot.Framework</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\lib\Microsoft StyleCop\Microsoft.StyleCop.Targets" />
