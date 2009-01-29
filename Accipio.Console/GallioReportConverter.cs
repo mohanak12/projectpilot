@@ -89,7 +89,7 @@ namespace Accipio.Console
 
             string fileName = String.Format(
                 CultureInfo.InvariantCulture,
-                "AccipioTestLog_{0:yyyy}{0:MM}{0:dd}_{0:HH}{0:mm}{0:ss}.log",
+                "AccipioTestLog_{0:yyyy}{0:MM}{0:dd}_{0:HH}{0:mm}{0:ss}.xml",
                 testRunEndTime);
             return Path.Combine(
                 outputDir,

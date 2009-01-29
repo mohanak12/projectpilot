@@ -90,7 +90,9 @@
     <Content Include="Templates\TestRunsHistory.vm.htm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Templates\TestReport.css" />
+    <Content Include="Templates\TestReport.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestReportTransform.xslt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
