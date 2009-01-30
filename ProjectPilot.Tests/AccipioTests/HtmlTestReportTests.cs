@@ -1,5 +1,4 @@
-﻿using System.IO;
-using Accipio;
+﻿using Accipio;
 using Accipio.Reporting;
 using MbUnit.Framework;
 
@@ -15,13 +14,13 @@ namespace ProjectPilot.Tests.AccipioTests
         public void GenerateHtmlReportFile()
         {
             TestRunsDatabase db = new TestRunsDatabase();
-            db.LoadDatabase(@"..\..\..\Data\Samples\", @"TestResults.xml");
+            db.LoadDatabase(@"..\..\..\Data\Samples\", @"TestResults*.xml");
 
-            TestRun originalTestRun = db.TestRuns[0];
+            //TestRun originalTestRun = db.TestRuns[0];
 
             // make 100 copies of the same test run
-            for (int i = 0; i < 100; i++)
-                db.TestRuns.Add(originalTestRun);
+            //for (int i = 0; i < 100; i++)
+            //    db.TestRuns.Add(originalTestRun);
             
             HtmlTestReportGeneratorSettings settings = new HtmlTestReportGeneratorSettings("TestProject");
             settings.OutputDirectory = "reports";
