@@ -1,6 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Text;
+using Commons.Collections;
+using NVelocity;
+using NVelocity.App;
 
 namespace Accipio
 {
@@ -9,6 +14,19 @@ namespace Accipio
         public CSharpTestCodeGenerator(ICodeWriter writer)
         {
             this.writer = writer;
+        }
+
+        public void GenerateFromTemplate(TestSuite testSuite)
+        {
+            VelocityEngine velocity = new VelocityEngine();
+            ExtendedProperties props = new ExtendedProperties();
+            velocity.Init(props);
+            Template template = velocity.GetTemplate(@"Templates\CSharpTestCodeGenerator.vm");
+            VelocityContext context = new VelocityContext();
+            context.Put("testSuite", testSuite);
+            StringWriter writer = new StringWriter(CultureInfo.InvariantCulture);
+            template.Merge(context, writer);
+            Console.WriteLine(writer.GetStringBuilder().ToString());
         }
 
         public void Generate(TestSuite testSuite)
