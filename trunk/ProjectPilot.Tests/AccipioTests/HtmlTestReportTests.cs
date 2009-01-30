@@ -10,7 +10,7 @@ namespace ProjectPilot.Tests.AccipioTests
         /// <summary>
         /// Test checks generation of html report file context for report data.
         /// </summary>
-        [Test]
+        [Test, Pending("TODO: Gregor")]
         public void GenerateHtmlReportFile()
         {
             TestRunsDatabase db = new TestRunsDatabase();
