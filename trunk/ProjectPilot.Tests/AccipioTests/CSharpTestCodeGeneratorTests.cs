@@ -12,6 +12,71 @@ namespace ProjectPilot.Tests.AccipioTests
     [TestFixture]
     public class CSharpTestCodeGeneratorTests
     {
+        [Test, Pending("Template not ready yet!")]
+        public void GenerateTestFromTemplate()
+        {
+            ICodeWriter mockCodeWriter = MockRepository.GenerateMock<ICodeWriter>();
+            CSharpTestCodeGenerator csharpTestCodeGenerator = new CSharpTestCodeGenerator(mockCodeWriter);
+            TestSuite testSuite = new TestSuite("Banking")
+            {
+                Description = "Class description.",
+                TestRunnerName = "OnlineBanking",
+                Namespace = "OnlineBankingNamespace",
+                IsParallelizable = true,
+            };
+
+            TestCase testCase = new TestCase("ViewAccountTestCase")
+            {
+                TestCaseDescription = "Tests case description."
+            };
+            testCase.AddTestCaseTag("R15");
+            testCase.AddTestCaseTag("R21.1");
+            testCase.AddTestAction(new TestAction("GoToPortal"));
+            TestAction testAction = new TestAction("SignIn");
+            testAction.AddActionParameter(new TestActionParameter("username", "john"));
+            testAction.AddActionParameter(new TestActionParameter("password", "doe"));
+            testCase.AddTestAction(testAction);
+            testAction = new TestAction("AssertIsUserIdCorrect");
+            testAction.AddActionParameter(new TestActionParameter("userId", "1"));
+            testCase.AddTestAction(testAction);
+            testCase.AddTestAction(new TestAction("AssertOperationSuccessful"));
+            testSuite.AddTestCase(testCase);
+
+            BusinessActionData businessActionData = new BusinessActionData();
+            BusinessActionEntry businessActionEntry =
+                new BusinessActionEntry("GoToPortal")
+                {
+                    Description =
+                        "Open the online banking portal web site in the browser."
+                };
+            businessActionData.Actions.Add(businessActionEntry);
+            businessActionEntry =
+                new BusinessActionEntry("SignIn")
+                {
+                    Description = "Sign in user 'john'."
+                };
+            businessActionEntry.ActionParameters.Add(new BusinessActionParameters("username", "string"));
+            businessActionEntry.ActionParameters.Add(new BusinessActionParameters("password", "string"));
+            businessActionData.Actions.Add(businessActionEntry);
+            businessActionEntry =
+                new BusinessActionEntry("AssertIsUserIdCorrect")
+                {
+                    Description = "Assert if user id is correct."
+                };
+            businessActionEntry.ActionParameters.Add(new BusinessActionParameters("userId", "int"));
+            businessActionData.Actions.Add(businessActionEntry);
+            businessActionEntry =
+                new BusinessActionEntry("AssertOperationSuccessful")
+                {
+                    Description = "Assert the operation was successful."
+                };
+            businessActionData.Actions.Add(businessActionEntry);
+
+            testSuite.BusinessActionData = businessActionData; 
+            csharpTestCodeGenerator.GenerateFromTemplate(testSuite);
+            mockCodeWriter.VerifyAllExpectations();
+        }
+
         /// <summary>
         /// Test checks generation of cs file context for Test spec.
         /// </summary>

@@ -1,0 +1,49 @@
+using MbUnit.Framework;
+
+namespace ${testSuite.Namespace}
+{
+    /// <summary>
+    /// ${testSuite.Description}
+    /// </summary>
+    [TestFixture]
+    public class ${testSuite.TestSuiteName}TestSuite
+    {
+#foreach ( $testCase in ${testSuite.ListTestCases()} )	
+        /// <summary>
+        /// ${testCase.TestCaseDescription}
+        /// </summary>
+        [Test]
+#foreach ( $tag in ${testCase.Tags} )
+        [Metadata("UserStory", $tag)]
+#end
+#if (${testSuite.IsParallelizable})
+        [Parallelizable]
+#end
+        public void ${testCase.TestCaseName}()
+        {
+            using (${testSuite.TestRunnerName}TestRunner runner = new ${testSuite.TestRunnerName}TestRunner())
+            {
+                runner
+                    .SetDescription("${testCase.TestCaseDescription}")
+#foreach ( $tag in ${testCase.Tags})
+                    .AddTag("${tag}");
+#end
+
+                runner
+                    // Assert the operation was successful
+                    .AssertOperationSuccessful();
+            }
+        }
+
+#end
+
+        /// <summary>
+        /// Test fixture setup code.
+        /// </summary>
+        [FixtureSetUp]
+        public void FixtureSetup()
+        {
+            Gallio.Framework.Pattern.PatternTestGlobals.DegreeOfParallelism = 20;
+        }
+    }
+}
