@@ -3,15 +3,21 @@
     font-family:sans-serif;
 }
 
-h1
+a:link,
+a:visited,
+a:hover
 {
-    color:#4F4E57;
-    background-color: #F4E9DF;
-    padding:5px;
+    text-decoration:none;
+}
+
+a:hover
+{
+    color:White;
 }
 
 .main
 {
+    padding: 0px;
 }
 
 .projectsuccess, .projectfail, .projectpending
@@ -29,12 +35,11 @@ h1
 
 .projectfail
 {
-    background-color: #C4685A;
+    background-color: #C43636;
 }
 
 .projectpending
 {
-    color: #A19630;
     background-color: #D6CC74;
 }
 
@@ -44,15 +49,33 @@ h1
     font-weight: bold;
 }
 
+.projectpending,
 .projectpending .projectid a:link,
 .projectpending .projectbuilddata a:link
 {
-    text-decoration:none;
     color:#7A7124;
 }
 
+.projectfail,
+.projectfail .projectid a:link,
+.projectfail .projectbuilddata a:link
+{
+    color:#FFADAD;
+}
+
+.projectsuccess,
+.projectsuccess .projectid a:link,
+.projectsuccess .projectbuilddata a:link
+{
+    color:#97BABF;
+}
+
 .projectpending .projectid a:hover,
-.projectpending .projectbuilddata a:hover
+.projectpending .projectbuilddata a:hover,
+.projectfail .projectid a:hover,
+.projectfail .projectbuilddata a:hover,
+.projectsuccess .projectid a:hover,
+.projectsuccess .projectbuilddata a:hover
 {
     text-decoration:none;
     color:White;
@@ -61,6 +84,15 @@ h1
 .projectbuilddata
 {
     font-weight:bold;
+}
+
+.serverstats
+{
+    padding: 1px 5px 4px 15px;
+    font-size: small;
+    background-color: #4F4E57;
+    color: #CCFFFF;
+    font-weight: bold;
 }
 
 /* 

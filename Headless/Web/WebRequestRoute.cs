@@ -21,18 +21,17 @@ namespace Headless.Web
 
             RoutedWebRequest routedWebRequest = new RoutedWebRequest();
 
-            //for (int i = 0; i < match.; i++)
-            //{
-            //}
-            foreach (Group group in match.Groups)
+            for (int i = 0; i < match.Groups.Count; i++)
             {
-                foreach (Capture capture in group.Captures)
-                {
-                    throw new NotImplementedException();
-                }
+                string propertyName = routeRegex.GroupNameFromNumber(i);
+                string propertyValue = match.Groups[propertyName].Value;
+
+                routedWebRequest.RouteParameters.Add(propertyName, propertyValue);
             }
 
-            throw new NotImplementedException();
+            routedWebRequest.RouteProcessor = this.routeProcessor;
+
+            return routedWebRequest;
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
