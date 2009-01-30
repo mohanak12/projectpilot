@@ -12,8 +12,8 @@ namespace ProjectPilot.Tests.HeadlessTests
     [TestFixture]
     public class WebRoutingTests
     {
-        [Test, Pending("TODO")]
-        public void Test()
+        [Test]
+        public void RouteRequests()
         {
             IRouteProcessor routeProcessor1 = MockRepository.GenerateMock<IRouteProcessor>();
             IRouteProcessor routeProcessor2 = MockRepository.GenerateMock<IRouteProcessor>();
@@ -36,6 +36,14 @@ namespace ProjectPilot.Tests.HeadlessTests
 
             Assert.IsNotNull(routedWebRequest);
             Assert.AreSame(routeProcessor1, routedWebRequest.RouteProcessor);
+            Assert.AreEqual("Headless", routedWebRequest.RouteParameters["projectid"]);
+
+            routedWebRequest = router.RouteRequest(new Uri(@"http://localhost:9233/headless/Project/Headless/Build/blabla"));
+
+            Assert.IsNotNull(routedWebRequest);
+            Assert.AreSame(routeProcessor2, routedWebRequest.RouteProcessor);
+            Assert.AreEqual("Headless", routedWebRequest.RouteParameters["projectid"]);
+            Assert.AreEqual("blabla", routedWebRequest.RouteParameters["buildid"]);
         }
     }
 }
