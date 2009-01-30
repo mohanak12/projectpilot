@@ -26,7 +26,7 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             xmlReaderSettings.IgnoreProcessingInstructions = true;
             xmlReaderSettings.IgnoreWhitespace = true;
 
-            using (XmlReader xmlReader = XmlReader.Create(File.OpenRead(@"\\zarja\share\Marko\LogConfig.xml"), xmlReaderSettings))
+            using (XmlReader xmlReader = XmlReader.Create(System.IO.File.OpenRead(@"\\zarja\share\Marko\LogConfig.xml"), xmlReaderSettings))
             {
                 string logKey;
 
@@ -224,7 +224,7 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             xmlReaderSettings.IgnoreProcessingInstructions = true;
             xmlReaderSettings.IgnoreWhitespace = true;
 
-            using (XmlReader xmlReader = XmlReader.Create(File.OpenRead(@"..\..\..\Data\Samples\LogConfig.xml"), xmlReaderSettings))
+            using (XmlReader xmlReader = XmlReader.Create(System.IO.File.OpenRead(@"..\..\..\Data\Samples\LogConfig.xml"), xmlReaderSettings))
             {
                 string key;
 
