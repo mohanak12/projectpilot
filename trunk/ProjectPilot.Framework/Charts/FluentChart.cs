@@ -54,6 +54,31 @@ namespace ProjectPilot.Framework.Charts
             return this;
         }
 
+        public FluentChart AddDataByTime(SortedList<DateTime, double> dataValues, DateTime minDate, DateTime maxDate)
+        {
+            DateTime min = new DateTime(minDate.Year, minDate.Month, minDate.Day);
+            DateTime max = new DateTime(maxDate.Year, maxDate.Month, maxDate.Day);
+
+            for (DateTime date = min; date <= max; date = date.AddDays(1))
+            {
+                bool addEmptyRow = true;
+
+                foreach (DateTime temp in dataValues.Keys)
+                {
+                    if (temp.ToShortDateString() == date.ToShortDateString())
+                    {
+                        AddDataPair((double)new XDate(temp), dataValues[temp]);
+                        addEmptyRow = false;
+                    }
+                }
+
+                if (addEmptyRow)
+                    AddDataPair((double)new XDate(date), 0);
+            }
+
+            return this;
+        }
+
         public FluentChart AddLineSeries(string label, string color)
         {
             LineItem lineItem = new LineItem(label);
