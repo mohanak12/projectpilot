@@ -9,9 +9,19 @@ namespace Headless.Configuration
             this.projectId = projectId;
         }
 
+        public IList<BuildReport> BuildReports
+        {
+            get { return buildReports; }
+        }
+
         public IList<BuildStage> BuildStages
         {
             get { return buildStages; }
+        }
+
+        public BuildReport LastBuildReport
+        {
+            get { return buildReports[0]; }
         }
 
         public string ProjectId
@@ -27,6 +37,7 @@ namespace Headless.Configuration
         }
 
         private List<BuildStage> buildStages = new List<BuildStage>();
+        private List<BuildReport> buildReports = new List<BuildReport>();
         private string projectId;
         private IVersionControlSystem versionControlSystem;
     }

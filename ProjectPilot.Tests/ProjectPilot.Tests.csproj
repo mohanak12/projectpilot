@@ -120,6 +120,7 @@
     <Compile Include="Framework\SessionStateTests.cs" />
     <Compile Include="Framework\Subversion\HistoryTests.cs" />
     <Compile Include="HeadlessTests\BuildRunnerTests.cs" />
+    <Compile Include="HeadlessTests\WebServerTests.cs" />
     <Compile Include="HeadlessTests\WebRoutingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AccipioTests\CSharpTestCodeGeneratorTests.cs" />
