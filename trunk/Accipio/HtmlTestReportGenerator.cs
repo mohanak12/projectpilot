@@ -48,15 +48,10 @@ namespace Accipio
             FileVersionInfo version = System.Diagnostics.FileVersionInfo.GetVersionInfo (
                 System.Reflection.Assembly.GetExecutingAssembly ().Location);
             string accipioVersion = version.FileVersion;
+
             string testCasesHistoryGraphFileName = "TestCasesHistoyGraph.png";
             string userStoriesHistoryGraphFileName = "UserStoriesHistoyGraph.png";
-
-            IDictionary<string, string> graphs = new Dictionary<string, string>
-                                                     {
-                                                         { TestCaseGraph, testCasesHistoryGraphFileName },
-                                                         { UserStoriesGraph, userStoriesHistoryGraphFileName }
-                                                     };
-
+            
             Hashtable context = new Hashtable();
             context.Add("db", testRunDatabase);
             context.Add("accipioVersion", accipioVersion);
@@ -77,29 +72,37 @@ namespace Accipio
                     context);
             }
 
-            CreateTestReportGraphs(graphs, testRunDatabase.TestRuns);
-        }
+            // draw test cases report graph
+            IDictionary<string, SortedList<DateTime, double>> fetchHistory =
+                TestReportGraphData.FetchTestCasesRunHistory(testRunDatabase.TestRuns);
 
-        private void CreateTestReportGraphs(IDictionary<string, string> graphsFileNames, IList<TestRun> testRuns)
-        {
-            foreach (string graphType in graphsFileNames.Keys)
-            {
-                DrawTestReportGraph(graphType, graphsFileNames[graphType], testRuns);
-            }
+            DrawTestReportGraph(
+                testCasesHistoryGraphFileName, 
+                "Number of test cases", 
+                testRunDatabase.TestRuns,
+                fetchHistory);
+
+            // draw user stories report graph
+            fetchHistory = TestReportGraphData.FetchUserStoriesRunHistory(testRunDatabase.TestRuns);
+
+            DrawTestReportGraph(
+                userStoriesHistoryGraphFileName,
+                "Number of user stories",
+                testRunDatabase.TestRuns,
+                fetchHistory);
         }
 
         private void DrawTestReportGraph(
-            string graphType,
-            string graphFileName,
-            IList<TestRun> runs)
+            string graphFileName, 
+            string yAxisTitle, 
+            IList<TestRun> runs,
+            IDictionary<string, SortedList<DateTime, double>> fetchHistory)
         {
-            using (FluentChart chart = FluentChart.Create(string.Empty, string.Empty, string.Empty))
+            using (FluentChart chart = FluentChart.Create(string.Empty, string.Empty, yAxisTitle))
             {
                 chart
                     .SetBarSettings(BarType.Stack, 0)
                     .UseDateAsAxisY(runs[0].EndTime, runs[runs.Count - 1].EndTime);
-
-                IDictionary<string, SortedList<DateTime, double>> fetchHistory = FetchTestCaseHistory(runs, graphType);
 
                 string[] colors = { "green", "red", "yellow" };
 
@@ -112,36 +115,8 @@ namespace Accipio
                 }
 
                 chart
-                    .ExportToBitmap(graphFileName, ImageFormat.Png, 1024, 800);
+                    .ExportToBitmap(Path.Combine(settings.OutputDirectory, graphFileName), ImageFormat.Png, 1024, 800);
             }
-        }
-
-        private IDictionary<string, SortedList<DateTime, double>> FetchTestCaseHistory(IList<TestRun> runs, string graphType)
-        {
-            IDictionary<string, SortedList<DateTime, double>> testCaseshistory 
-                = new Dictionary<string, SortedList<DateTime, double>>
-                      {
-                          { "success", new SortedList<DateTime, double>() },
-                          { "failed", new SortedList<DateTime, double>() },
-                          { "not implemented", new SortedList<DateTime, double>() }
-                      };
-
-            foreach (TestRun testRun in runs)
-            {
-                DateTime date = testRun.EndTime;
-
-                testCaseshistory["success"].Add(
-                    date, 
-                    graphType == TestCaseGraph ? testRun.TestCasesSuccess : testRun.UserStoriesSuccess);
-                testCaseshistory["failed"].Add(
-                    date,
-                    graphType == TestCaseGraph ? testRun.TestCasesFail : testRun.UserStoriesFail);
-                testCaseshistory["not implemented"].Add(
-                    date,
-                    graphType == TestCaseGraph ? testRun.TestCasesNotImplemented : testRun.UserStoriesNotImplemented);
-            }
-
-            return testCaseshistory;
         }
 
         private void GenerateReportFile (
