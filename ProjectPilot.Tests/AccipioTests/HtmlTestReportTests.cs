@@ -10,18 +10,12 @@ namespace ProjectPilot.Tests.AccipioTests
         /// <summary>
         /// Test checks generation of html report file context for report data.
         /// </summary>
-        [Test, Pending("TODO: Gregor")]
+        [Test]
         public void GenerateHtmlReportFile()
         {
             TestRunsDatabase db = new TestRunsDatabase();
-            db.LoadDatabase(@"..\..\..\Data\Samples\", @"TestResults*.xml");
+            db.LoadDatabase(@"..\..\..\Data\Samples\", @"TestResults.xml");
 
-            //TestRun originalTestRun = db.TestRuns[0];
-
-            // make 100 copies of the same test run
-            //for (int i = 0; i < 100; i++)
-            //    db.TestRuns.Add(originalTestRun);
-            
             HtmlTestReportGeneratorSettings settings = new HtmlTestReportGeneratorSettings("TestProject");
             settings.OutputDirectory = "reports";
             settings.TemplatesDirectory = @"..\..\..\Accipio.Console\Templates";
