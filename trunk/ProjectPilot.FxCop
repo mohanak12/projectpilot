@@ -321,15 +321,6 @@
         <Types>
          <Type Name="HtmlTestReportGeneratorCommand">
           <Members>
-           <Member Name="#outputDir">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Excluded" Created="2009-01-27 17:28:14Z">
-              <Issue>
-               <Item>'HtmlTestReportGeneratorCommand.outputDir'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#testReportsDir">
             <Messages>
              <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Excluded" Created="2009-01-27 17:28:14Z">
@@ -748,28 +739,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#ListTestSuitesRuns()">
-            <Messages>
-             <Message Id="System.String.CompareTo(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2009-01-29 13:27:35Z">
-              <Issue>
-               <Item>'TestRun.ListTestSuitesRuns()'</Item>
-               <Item>'string.CompareTo(string)'</Item>
-               <Item>'string.Compare(string, string, StringComparison)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ListUserStoriesRuns()">
-            <Messages>
-             <Message Id="System.String.CompareTo(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2009-01-29 13:27:35Z">
-              <Issue>
-               <Item>'TestRun.ListUserStoriesRuns()'</Item>
-               <Item>'string.CompareTo(string)'</Item>
-               <Item>'string.Compare(string, string, StringComparison)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#startTime">
             <Messages>
              <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Excluded" Created="2009-01-27 17:28:14Z">
@@ -792,22 +761,66 @@
          </Type>
          <Type Name="TestSuiteRun">
           <Members>
-           <Member Name="#ListTestCasesRuns()">
-            <Messages>
-             <Message Id="System.String.CompareTo(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2009-01-29 13:27:35Z">
-              <Issue>
-               <Item>'TestSuiteRun.ListTestCasesRuns()'</Item>
-               <Item>'string.CompareTo(string)'</Item>
-               <Item>'string.Compare(string, string, StringComparison)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#testCasesRuns">
             <Messages>
              <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Excluded" Created="2009-01-27 17:28:14Z">
               <Issue>
                <Item>'TestSuiteRun.testCasesRuns'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/Headless/bin/Release/Headless.dll">
+    <Modules>
+     <Module Name="headless.dll">
+      <Namespaces>
+       <Namespace Name="Headless">
+        <Types>
+         <Type Name="IProjectRegistryProvider">
+          <Members>
+           <Member Name="#GetProjectRegistry()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-02-01 21:07:31Z">
+              <Issue Certainty="50">
+               <Item>'IProjectRegistryProvider.GetProjectRegistry()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="IService">
+          <Members>
+           <Member Name="#GetServiceInfo()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-02-01 21:07:31Z">
+              <Issue Certainty="50">
+               <Item>'IService.GetServiceInfo()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="Headless.Web">
+        <Types>
+         <Type Name="MainPageProcessor">
+          <Members>
+           <Member Name="#log">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2009-02-01 21:07:31Z">
+              <Issue>
+               <Item>'MainPageProcessor.log'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1028,6 +1041,9 @@
    </Rule>
    <Rule TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726">
     <Resolution Name="MemberParameterNoAlternate">In member {0}, replace the term '{1}' in parameter name {2} with an appropriate alternate or remove it entirely.</Resolution>
+   </Rule>
+   <Rule TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024">
+    <Resolution Name="Default">Change {0} to a property if appropriate.</Resolution>
    </Rule>
   </Rules>
  </FxCopReport>

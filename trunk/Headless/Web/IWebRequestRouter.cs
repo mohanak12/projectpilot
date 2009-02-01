@@ -4,6 +4,6 @@ namespace Headless.Web
 {
     public interface IWebRequestRouter
     {
-        RoutedWebRequest RouteRequest(Uri requestUrl);
+        RoutedWebRequest RouteRequest(WebRequestData request);
     }
 }

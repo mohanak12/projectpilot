@@ -1,0 +1,38 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+        <link href="Headless.css" rel="stylesheet" type="text/css" />
+		<title>headless: $service.ComputerName</title>
+	</head>
+	<body>
+        <div class="main">
+            #foreach ( $project in $registry.ListProjects() )
+                #if ($project.LastBuild.Status == "Successful")
+	        <div class="projectsuccess">
+                #elseif  ($project.LastBuild.Status == "Failed")
+	        <div class="projectfail">
+                #else
+	        <div class="projectpending">
+                #end
+	            <div class="projectid">
+	                <a href="project/$project.ProjectId">$project.ProjectId</a>
+	            </div>
+	            <div class="projectbuilddata">
+	                <a href="project/$project.ProjectId">$project.Status.ToString().ToLowerInvariant()</a> | 
+    	            <a href="project/$project.ProjectId/Build/Headless-1.2.33.112">
+    	            $project.LastBuild.Status.ToString().ToLowerInvariant() | $project.LastBuild.Time | $project.LastBuild.Label</a>
+	            </div>
+	        </div>
+	        #nodata
+	        <div class="projectpending">
+	            <div class="projectid">
+	                <a href="project/$project.ProjectId">No projects registered</a>
+	            </div>
+	        </div>
+	        #end
+	    </div>
+	    <div class="serverstats">
+	        headless running on $service.ComputerName:$service.PortNumber
+	    </div>
+	</body>
+</html>

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using Headless.Web;
 using MbUnit.Framework;
@@ -15,8 +12,8 @@ namespace ProjectPilot.Tests.HeadlessTests
         [Test]
         public void RouteRequests()
         {
-            IRouteProcessor routeProcessor1 = MockRepository.GenerateMock<IRouteProcessor>();
-            IRouteProcessor routeProcessor2 = MockRepository.GenerateMock<IRouteProcessor>();
+            IWebRouteProcessor webRouteProcessor1 = MockRepository.GenerateMock<IWebRouteProcessor>();
+            IWebRouteProcessor webRouteProcessor2 = MockRepository.GenerateMock<IWebRouteProcessor>();
 
             DefaultWebRequestRouter router = new DefaultWebRequestRouter();
             router.AddRoute(
@@ -24,24 +21,27 @@ namespace ProjectPilot.Tests.HeadlessTests
                     new Regex(
                         @"Project/(?<projectid>\w+)$", 
                         RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase), 
-                    routeProcessor1));
+                    webRouteProcessor1));
             router.AddRoute(
                 new WebRequestRoute(
                     new Regex(
                         @"Project/(?<projectid>\w+)/Build/(?<buildid>\w+)$",
                         RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase),
-                    routeProcessor2));
+                    webRouteProcessor2));
 
-            RoutedWebRequest routedWebRequest = router.RouteRequest(new Uri(@"http://localhost:9233/headless/Project/Headless"));
+            WebRequestData requestData = new WebRequestData();
+            requestData.RequestUrl = new Uri(@"http://localhost:9233/headless/Project/Headless");
+            RoutedWebRequest routedWebRequest = router.RouteRequest(requestData);
 
             Assert.IsNotNull(routedWebRequest);
-            Assert.AreSame(routeProcessor1, routedWebRequest.RouteProcessor);
+            Assert.AreSame(webRouteProcessor1, routedWebRequest.WebRouteProcessor);
             Assert.AreEqual("Headless", routedWebRequest.RouteParameters["projectid"]);
 
-            routedWebRequest = router.RouteRequest(new Uri(@"http://localhost:9233/headless/Project/Headless/Build/blabla"));
+            requestData.RequestUrl = new Uri(@"http://localhost:9233/headless/Project/Headless/Build/blabla");
+            routedWebRequest = router.RouteRequest(requestData);
 
             Assert.IsNotNull(routedWebRequest);
-            Assert.AreSame(routeProcessor2, routedWebRequest.RouteProcessor);
+            Assert.AreSame(webRouteProcessor2, routedWebRequest.WebRouteProcessor);
             Assert.AreEqual("Headless", routedWebRequest.RouteParameters["projectid"]);
             Assert.AreEqual("blabla", routedWebRequest.RouteParameters["buildid"]);
         }

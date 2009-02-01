@@ -1,26 +1,39 @@
 using System.Collections.Generic;
+using log4net;
 
 namespace Headless.Web
 {
     public class RoutedWebRequest
     {
+        public RoutedWebRequest(WebRequestData request, IWebRouteProcessor webRouteProcessor)
+        {
+            this.request = request;
+            this.webRouteProcessor = webRouteProcessor;
+        }
+
+        public WebRequestData Request
+        {
+            get { return request; }
+        }
+
         public IDictionary<string, object> RouteParameters
         {
             get { return routeParameters; }
         }
 
-        public IRouteProcessor RouteProcessor
+        public IWebRouteProcessor WebRouteProcessor
         {
-            get { return routeProcessor; }
-            set { routeProcessor = value; }
+            get { return webRouteProcessor; }
+            set { webRouteProcessor = value; }
         }
 
-        public ResponseTemplate Process()
+        public void Process(WebResponseData response)
         {
-            return routeProcessor.Process(this);
+            webRouteProcessor.Process(this, response);
         }
 
+        private WebRequestData request;
         private Dictionary<string, object> routeParameters = new Dictionary<string, object>();
-        private IRouteProcessor routeProcessor;
+        private IWebRouteProcessor webRouteProcessor;
     }
 }
