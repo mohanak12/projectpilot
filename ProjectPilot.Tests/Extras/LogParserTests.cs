@@ -308,6 +308,22 @@ namespace ProjectPilot.Tests.Extras
             }
         }
 
+        [Test]
+        public void ParsingLog4NetFileNamespaceTesting()
+        {
+            using (Stream fileStream = File.OpenRead(@"..\..\..\Data\Samples\ProjectPilot.Tests.log.2"))
+            {   
+                LogCollection lineParse = new LogCollection('|', "Time|Ndc|Level|Namespace|Message");
+
+                lineParse.ParseLogFile(fileStream);
+
+                Assert.AreEqual(61, lineParse.ElementsLog.Count);
+                Assert.AreEqual("Project.MyProject", ((NamespaceElement)lineParse.ElementsLog[0].Elements[3]).Element);
+                Assert.AreEqual("Builds.VSSolutionBrowsing.VSProject", ((NamespaceElement)lineParse.ElementsLog[60].Elements[3]).Element);
+                Assert.AreEqual("Builds.VSSolutionBrowsing.VSSolution", ((NamespaceElement)lineParse.ElementsLog[50].Elements[3]).Element);
+            }
+        }
+
         //        [Test]   still to implement!   - Marko
         //        public void TestAllFilters() {}
 

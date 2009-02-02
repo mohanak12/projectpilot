@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{59083E4A-3659-4D8E-805F-52321D1B84DE}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -85,6 +85,7 @@
     <Compile Include="LogParser\Log4NetPatterns\LocationPatternLayoutElement.cs" />
     <Compile Include="LogParser\LogParserFilter.cs" />
     <Compile Include="LogParser\MessageElement.cs" />
+    <Compile Include="LogParser\NamespaceElement.cs" />
     <Compile Include="LogParser\NdcElement.cs" />
     <Compile Include="LogParser\ParsedElementBase.cs" />
     <Compile Include="LogParser\LogCollection.cs" />
