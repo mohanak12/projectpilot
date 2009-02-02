@@ -1,0 +1,71 @@
+2009-02-02 12:35:04,180|[Task: Test Runner]|INFO |Project.MyProject                       |Starting the build runner
+2009-02-02 12:35:04,196|[Task: Test Runner]|DEBUG|Project.MyProject                       |Constructed build stages dependency graph
+2009-02-02 12:35:04,196|[Task: Test Runner]|DEBUG|Project.MyProject                       |New cycle started
+2009-02-02 12:35:04,196|[Task: Test Runner]|INFO |Project.MyProject                       |Build stage 'stage1' status: Initial
+2009-02-02 12:35:04,196|[Task: Test Runner]|INFO |Project.MyProject                       |Build stage 'stage2' status: Initial
+2009-02-02 12:35:04,196|[Task: Test Runner]|INFO |Project.MyProject                       |Build stage 'accept.tests' status: Initial
+2009-02-02 12:35:09,196|[Task: Test Runner]|INFO |Project.MyProject                       |Starting stage 'stage1'
+2009-02-02 12:35:09,196|[Task: Test Runner]|DEBUG|Project.MyProject                       |Some build stages are still pending
+2009-02-02 12:35:09,196|[Task: Test Runner]|DEBUG|Project.MyProject                       |Waiting for the traffic cop
+2009-02-02 12:35:12,243|[ 10]|ERROR|MyProject.Stage.stage1                  |Build task failed: System.InvalidOperationException: Operation is not valid due to the current state of the object.
+   at ProjectPilot.Tests.HeadlessTests.BuildRunnerTests.<Setup>b__5(MethodInvocation ) in e:\Data\svn\PilotProject\ProjectPilot.Tests\HeadlessTests\BuildRunnerTests.cs:line 92
+   at System.Action`1.Invoke(T obj)
+   at Rhino.Mocks.Expectations.AbstractExpectation.ReturnOrThrow(IInvocation invocation, Object[] args)
+   at Rhino.Mocks.Impl.ReplayDynamicMockState.DoMethodCall(IInvocation invocation, MethodInfo method, Object[] args)
+   at Rhino.Mocks.Impl.ReplayMockState.MethodCall(IInvocation invocation, MethodInfo method, Object[] args)
+   at Rhino.Mocks.MockRepository.MethodCall(IInvocation invocation, Object proxy, MethodInfo method, Object[] args)
+   at Rhino.Mocks.Impl.RhinoInterceptor.Intercept(IInvocation invocation)
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at IBuildTaskProxyb3b2ec3a5fd0493fa8c734a5a7cc5b75.Execute()
+   at Headless.LocalStageRunner.ThreadMethod() in e:\Data\svn\PilotProject\Headless\LocalStageRunner.cs:line 72
+2009-02-02 12:35:14,196|[Task: Test Runner]|DEBUG|Project.MyProject                       |New cycle started
+2009-02-02 12:35:14,196|[Task: Test Runner]|INFO |Project.MyProject                       |Build stage 'stage1' status: Failed
+2009-02-02 12:35:14,196|[Task: Test Runner]|INFO |Project.MyProject                       |Build stage 'stage2' status: Initial
+2009-02-02 12:35:14,196|[Task: Test Runner]|INFO |Project.MyProject                       |Build stage 'accept.tests' status: Initial
+2009-02-02 12:35:19,196|[Task: Test Runner]|DEBUG|Project.MyProject                       |The build has been executed
+2009-02-02 12:35:19,196|[Task: Test Runner]|INFO |Project.MyProject                       |Stopping the build runner
+2009-02-02 12:35:19,321|[Task: Test Runner]|INFO |Project.MyProject                       |Starting the build runner
+2009-02-02 12:35:19,321|[Task: Test Runner]|DEBUG|Project.MyProject                       |Constructed build stages dependency graph
+2009-02-02 12:35:19,321|[Task: Test Runner]|DEBUG|Project.MyProject                       |New cycle started
+2009-02-02 12:35:19,321|[Task: Test Runner]|INFO |Project.MyProject                       |Build stage 'stage1' status: Initial
+2009-02-02 12:35:19,321|[Task: Test Runner]|INFO |Project.MyProject                       |Build stage 'stage2' status: Initial
+2009-02-02 12:35:19,321|[Task: Test Runner]|INFO |Project.MyProject                       |Build stage 'accept.tests' status: Initial
+2009-02-02 12:35:24,321|[Task: Test Runner]|INFO |Project.MyProject                       |Starting stage 'stage1'
+2009-02-02 12:35:24,321|[Task: Test Runner]|DEBUG|Project.MyProject                       |Some build stages are still pending
+2009-02-02 12:35:24,321|[Task: Test Runner]|DEBUG|Project.MyProject                       |Waiting for the traffic cop
+2009-02-02 12:35:29,321|[Task: Test Runner]|DEBUG|Project.MyProject                       |New cycle started
+2009-02-02 12:35:29,321|[Task: Test Runner]|INFO |Project.MyProject                       |Build stage 'stage1' status: Successful
+2009-02-02 12:35:29,321|[Task: Test Runner]|INFO |Project.MyProject                       |Build stage 'stage2' status: Initial
+2009-02-02 12:35:29,321|[Task: Test Runner]|INFO |Project.MyProject                       |Build stage 'accept.tests' status: Initial
+2009-02-02 12:35:34,321|[Task: Test Runner]|INFO |Project.MyProject                       |Starting stage 'stage2'
+2009-02-02 12:35:34,321|[Task: Test Runner]|INFO |Project.MyProject                       |Starting stage 'accept.tests'
+2009-02-02 12:35:34,321|[Task: Test Runner]|DEBUG|Project.MyProject                       |Some build stages are still pending
+2009-02-02 12:35:34,321|[Task: Test Runner]|DEBUG|Project.MyProject                       |Waiting for the traffic cop
+2009-02-02 12:35:39,321|[Task: Test Runner]|DEBUG|Project.MyProject                       |New cycle started
+2009-02-02 12:35:39,321|[Task: Test Runner]|INFO |Project.MyProject                       |Build stage 'stage1' status: Successful
+2009-02-02 12:35:39,321|[Task: Test Runner]|INFO |Project.MyProject                       |Build stage 'stage2' status: Successful
+2009-02-02 12:35:39,321|[Task: Test Runner]|INFO |Project.MyProject                       |Build stage 'accept.tests' status: Successful
+2009-02-02 12:35:44,321|[Task: Test Runner]|DEBUG|Project.MyProject                       |The build has been executed
+2009-02-02 12:35:44,321|[Task: Test Runner]|INFO |Project.MyProject                       |Stopping the build runner
+2009-02-02 12:36:00,508|[Task: Test Runner]|DEBUG|Builds.VSSolutionBrowsing.VSSolution    |Load ('..\..\..\ProjectPilot.sln')
+2009-02-02 12:36:00,539|[Task: Test Runner]|DEBUG|Builds.VSSolutionBrowsing.VSProject     |Load ('E:\Data\svn\PilotProject\ProjectPilot.Framework\ProjectPilot.Framework.csproj')
+2009-02-02 12:36:00,555|[Task: Test Runner]|DEBUG|Builds.VSSolutionBrowsing.VSProject     |Load ('E:\Data\svn\PilotProject\ProjectPilot.Tests\ProjectPilot.Tests.csproj')
+2009-02-02 12:36:00,570|[Task: Test Runner]|DEBUG|Builds.VSSolutionBrowsing.VSProject     |Load ('E:\Data\svn\PilotProject\ProjectPilot.Portal\ProjectPilot.Portal.csproj')
+2009-02-02 12:36:00,586|[Task: Test Runner]|DEBUG|Builds.VSSolutionBrowsing.VSProject     |Load ('E:\Data\svn\PilotProject\ProjectPilot.BuildScripts\ProjectPilot.BuildScripts.csproj')
+2009-02-02 12:36:00,586|[Task: Test Runner]|DEBUG|Builds.VSSolutionBrowsing.VSProject     |Load ('E:\Data\svn\PilotProject\ProjectPilot.Extras\ProjectPilot.Extras.csproj')
+2009-02-02 12:36:00,617|[Task: Test Runner]|DEBUG|Builds.VSSolutionBrowsing.VSProject     |Load ('E:\Data\svn\PilotProject\Flubu\Flubu.csproj')
+2009-02-02 12:36:00,633|[Task: Test Runner]|DEBUG|Builds.VSSolutionBrowsing.VSProject     |Load ('E:\Data\svn\PilotProject\Accipio\Accipio.csproj')
+2009-02-02 12:36:00,633|[Task: Test Runner]|DEBUG|Builds.VSSolutionBrowsing.VSProject     |Load ('E:\Data\svn\PilotProject\Accipio.Console\Accipio.Console.csproj')
+2009-02-02 12:36:00,648|[Task: Test Runner]|DEBUG|Builds.VSSolutionBrowsing.VSProject     |Load ('E:\Data\svn\PilotProject\ProjectPilot.Log4NetBrowser\ProjectPilot.Log4NetBrowser.csproj')
+2009-02-02 12:36:00,664|[Task: Test Runner]|DEBUG|Builds.VSSolutionBrowsing.VSProject     |Load ('E:\Data\svn\PilotProject\Headless\Headless.csproj')
+2009-02-02 12:36:03,336|[Task: Test Runner]|DEBUG|Builds.VSSolutionBrowsing.VSSolution    |Load ('..\..\..\ProjectPilot.sln')
+2009-02-02 12:36:03,336|[Task: Test Runner]|DEBUG|Builds.VSSolutionBrowsing.VSProject     |Load ('E:\Data\svn\PilotProject\ProjectPilot.Framework\ProjectPilot.Framework.csproj')
+2009-02-02 12:36:03,336|[Task: Test Runner]|DEBUG|Builds.VSSolutionBrowsing.VSProject     |Load ('E:\Data\svn\PilotProject\ProjectPilot.Tests\ProjectPilot.Tests.csproj')
+2009-02-02 12:36:03,336|[Task: Test Runner]|DEBUG|Builds.VSSolutionBrowsing.VSProject     |Load ('E:\Data\svn\PilotProject\ProjectPilot.Portal\ProjectPilot.Portal.csproj')
+2009-02-02 12:36:03,336|[Task: Test Runner]|DEBUG|Builds.VSSolutionBrowsing.VSProject     |Load ('E:\Data\svn\PilotProject\ProjectPilot.BuildScripts\ProjectPilot.BuildScripts.csproj')
+2009-02-02 12:36:03,336|[Task: Test Runner]|DEBUG|Builds.VSSolutionBrowsing.VSProject     |Load ('E:\Data\svn\PilotProject\ProjectPilot.Extras\ProjectPilot.Extras.csproj')
+2009-02-02 12:36:03,352|[Task: Test Runner]|DEBUG|Builds.VSSolutionBrowsing.VSProject     |Load ('E:\Data\svn\PilotProject\Flubu\Flubu.csproj')
+2009-02-02 12:36:03,352|[Task: Test Runner]|DEBUG|Builds.VSSolutionBrowsing.VSProject     |Load ('E:\Data\svn\PilotProject\Accipio\Accipio.csproj')
+2009-02-02 12:36:03,352|[Task: Test Runner]|DEBUG|Builds.VSSolutionBrowsing.VSProject     |Load ('E:\Data\svn\PilotProject\Accipio.Console\Accipio.Console.csproj')
+2009-02-02 12:36:03,352|[Task: Test Runner]|DEBUG|Builds.VSSolutionBrowsing.VSProject     |Load ('E:\Data\svn\PilotProject\ProjectPilot.Log4NetBrowser\ProjectPilot.Log4NetBrowser.csproj')
+2009-02-02 12:36:03,352|[Task: Test Runner]|DEBUG|Builds.VSSolutionBrowsing.VSProject     |Load ('E:\Data\svn\PilotProject\Headless\Headless.csproj')

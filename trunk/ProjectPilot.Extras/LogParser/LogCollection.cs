@@ -33,6 +33,7 @@ namespace ProjectPilot.Extras.LogParser
             conversionMap.Add("Level", typeof(LevelElement).FullName);
             conversionMap.Add("Message", typeof(MessageElement).FullName);
             conversionMap.Add("Ndc", typeof(NdcElement).FullName);
+            conversionMap.Add("Namespace", typeof(NamespaceElement).FullName);
         }
 
         /// <summary>
@@ -60,6 +61,7 @@ namespace ProjectPilot.Extras.LogParser
             conversionMap.Add("Level", typeof(LevelElement).FullName);
             conversionMap.Add("Message", typeof(MessageElement).FullName);
             conversionMap.Add("Ndc", typeof(NdcElement).FullName);
+            conversionMap.Add("Namespace", typeof(NamespaceElement).FullName);
         }
 
         public IList<LogEntry> ElementsLog
@@ -240,15 +242,8 @@ namespace ProjectPilot.Extras.LogParser
         /// <param name="fileStream">The stream of the file.</param>
         public void ParseLogFile(Stream fileStream)
         {
-            string line;
-            
-          //  if (elementsPattern.Count <= 1) return;
-
             if (parseFilter.ReadIndexStart != null && parseFilter.ReadIndexEnd != null)
             {
-                //if (fileStream.Length < parseFilter.ReadIndexEnd)
-                //    return;
-
                 if (parseFilter.ReadIndexStart < 0)
                     return;
 
@@ -257,6 +252,8 @@ namespace ProjectPilot.Extras.LogParser
                 else
                     fileStream.Position = (long)parseFilter.ReadIndexStart;
             }
+            
+            string line;
 
             using (StreamReader reader = new StreamReader(fileStream))
             {
