@@ -61,6 +61,9 @@ namespace Accipio.Console
                 writerSettings.Indent = true;
                 writerSettings.NewLineOnAttributes = false;
                 writerSettings.ConformanceLevel = ConformanceLevel.Auto;
+
+                AccipioHelper.EnsureDirectoryPathExists(outputFileName, true);
+
                 using (XmlWriter writer = XmlWriter.Create(outputFileName, writerSettings))
                     transform.Transform(reader, writer);
             }
