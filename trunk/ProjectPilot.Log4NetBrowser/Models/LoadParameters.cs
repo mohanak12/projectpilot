@@ -81,7 +81,7 @@ namespace ProjectPilot.Log4NetBrowser.Models
 
                 if (searchType == "MatchCase")
                 {
-                    filter.MatchCase = searchContent;
+                    filter.Match = searchContent;
                 }
             }
 

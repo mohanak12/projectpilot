@@ -64,10 +64,10 @@ namespace ProjectPilot.Extras.LogParser
             set { matchWholeWordOnly = value; }
         }
 
-        public string MatchCase
+        public string Match
         {
-            get { return matchCase; }
-            set { matchCase = value; }
+            get { return match; }
+            set { match = value; }
         }
 
         public long? ReadIndexEnd
@@ -95,7 +95,7 @@ namespace ProjectPilot.Extras.LogParser
         private string filterLevel;
         private int? filterNumberOfLogItems;
         private bool logCountMode;
-        private string matchCase;
+        private string match;
         private string matchWholeWordOnly;
         private long? readIndexEnd;
         private long? readIndexStart;
