@@ -14,8 +14,6 @@
         <xsl:attribute name="duration">
           <xsl:value-of select="g:testPackageRun/g:statistics/@duration"/>
         </xsl:attribute>
-        <xsl:attribute name="version">
-        </xsl:attribute>
         <suites>
           <xsl:for-each select="g:testPackageRun//g:testStepRun/g:testStep[@isTestCase='false']">
             <xsl:if test="g:metadata/g:entry/g:value='Fixture'">

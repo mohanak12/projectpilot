@@ -49,10 +49,12 @@ namespace Accipio.Reporting
                                         throw new XmlException("<report> (root) element expected.");
 
                                     string accipioVersion = xmlReader.GetAttribute("accipioVersion");
-                                    testRun.AccipioVersion = new Version(accipioVersion);
+                                    if (false == String.IsNullOrEmpty(accipioVersion))
+                                        testRun.AccipioVersion = new Version(accipioVersion);
 
                                     string testedSoftwareVersion = xmlReader.GetAttribute("testedSoftwareVersion");
-                                    testRun.TestedSoftwareVersion = new Version(testedSoftwareVersion);
+                                    if (false == String.IsNullOrEmpty(testedSoftwareVersion))
+                                        testRun.TestedSoftwareVersion = new Version(testedSoftwareVersion);
 
                                     ReadTestRunParameters(testRun, xmlReader);
 
