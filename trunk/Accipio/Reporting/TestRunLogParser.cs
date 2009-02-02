@@ -137,6 +137,7 @@ namespace Accipio.Reporting
 
                             case "pending":
                             case "skipped":
+                            case "inconclusive":
                                 status = TestExecutionStatus.NotImplemented;
                                 break;
 
