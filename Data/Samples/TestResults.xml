@@ -1,451 +1,492 @@
-﻿<report 
-  xmlns="http://projectpilot/AccipioTestRunReport.xsd" 
-  xmlns:msxsl="urn:schemas-microsoft-com:xslt" 
-  xmlns:g="http://www.gallio.org/"
-  accipioVersion="1.2.4.2"
-  testedSoftwareVersion="2.2.4.2">
-  <testRun startTime="2009-01-15T10:21:44.2467888+01:00" duration="600.7718257" version="">
+﻿<report xmlns="http://projectpilot/AccipioTestRunReport.xsd" xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:g="http://www.gallio.org/">
+  <testRun startTime="2009-02-02T14:40:13.2713442+01:00" duration="517.75093229999993" version="">
     <suites>
       <suite id="SmsUISuiteTestSuite">
-        <case id="AddMultiScheduledSubs" startTime="2009-01-15T10:21:44.7975808+01:00" duration="16.916386" status="failed">
+        <case id="AddMultiScheduledSubs" startTime="2009-02-02T14:40:13.8494877+01:00" duration="65.6788579" status="passed">
           <userStories>
             <userStory>SMSUi.AddSubs.Schedule</userStory>
-            <exception>
-              The user '+38641276780' did not receive an expected SMS message: 'Narocilo je bilo sprejeto: vreme cas 1345 0730 67 0900 2 1722'. Actual message: 'Naročnina je dodana: VREME CAS 1345 0730 67 0900 2 1722.'
-
-            </exception>
           </userStories>
         </case>
-        <case id="AddScheduledSubs" startTime="2009-01-15T10:22:01.6718448+01:00" duration="10.1287998" status="failed">
+        <case id="AddScheduledSubs" startTime="2009-02-02T14:40:13.8651132+01:00" duration="35.6226722" status="passed">
           <userStories>
             <userStory>SMSUi.AddSubs.Schedule</userStory>
-            <exception>
-              The user '+38631176206' did not receive an expected SMS message: 'Narocilo je bilo sprejeto: vreme cas 15 0800'. Actual message: 'Naročnina je dodana: VREME CAS 15 0800.'
-
-            </exception>
           </userStories>
         </case>
-        <case id="AddSubsOnUpdateNotExist1" startTime="2009-01-15T10:22:11.7964032+01:00" duration="10.131882899999999" status="failed">
+        <case id="AddSubsPeriod" startTime="2009-02-02T14:40:13.8651132+01:00" duration="35.684801" status="passed">
+          <userStories>
+            <userStory>SMSUi.AddSubs.Periodical</userStory>
+          </userStories>
+        </case>
+        <case id="AddSubsOnUpdateNotExist1" startTime="2009-02-02T14:40:13.8651132+01:00" duration="35.610590099999996" status="passed">
           <userStories>
             <userStory>SMSUi.AddSubs.OnUpdate</userStory>
-            <exception>
-              The user '+38631006057' did not receive an expected SMS message: 'Na tej kratki stevilki ste vnesli napacno kljucno besedo (VRIME). Za vec informacij se obrnite na vasega ponudnika mobilnih storitev.'. Actual message: 'Na tej kratki stevilki ste vnesli napacno kljucno besedo (vrime). Za vec informacij se obrnite na vasega ponudnika mobilnih storitev.'
-
-            </exception>
           </userStories>
         </case>
-        <case id="AddSubsPeriod" startTime="2009-01-15T10:22:21.8909184+01:00" duration="10.0813659" status="failed">
+        <case id="AddSubsPerNotExist" startTime="2009-02-02T14:40:13.8963642+01:00" duration="35.5155923" status="passed">
           <userStories>
             <userStory>SMSUi.AddSubs.Periodical</userStory>
-            <exception>
-              The user '+38641762838' did not receive an expected SMS message: 'Narocilo je bilo sprejeto: vreme per 60'. Actual message: 'Naročnina je dodana: VREME PER 60.'
-
-            </exception>
           </userStories>
         </case>
-        <case id="AddSubsPerNotExist" startTime="2009-01-15T10:22:31.9754192+01:00" duration="10.1143108" status="failed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.Periodical</userStory>
-            <exception>
-              The user '+38641988065' did not receive an expected SMS message: 'Na tej kratki stevilki ste vnesli napacno kljucno besedo (VRIME). Za vec informacij se obrnite na vasega ponudnika mobilnih storitev.'. Actual message: 'Na tej kratki stevilki ste vnesli napacno kljucno besedo (vrime). Za vec informacij se obrnite na vasega ponudnika mobilnih storitev.'
-
-            </exception>
-          </userStories>
-        </case>
-        <case id="AddSubsPerNotExist2" startTime="2009-01-15T10:22:42.0899632+01:00" duration="10.1041554" status="failed">
+        <case id="AddSubsPerNotExist2" startTime="2009-02-02T14:40:13.9432407+01:00" duration="35.6293503" status="passed">
           <userStories>
             <userStory>SMSUi.AddSubs.Schedule</userStory>
-            <exception>
-              The user '+38631546321' did not receive an expected SMS message: 'Na tej kratki stevilki ste vnesli napacno kljucno besedo (VRIME). Za vec informacij se obrnite na vasega ponudnika mobilnih storitev.'. Actual message: 'Na tej kratki stevilki ste vnesli napacno kljucno besedo (vrime). Za vec informacij se obrnite na vasega ponudnika mobilnih storitev.'
-
-            </exception>
           </userStories>
         </case>
-        <case id="CasSubsNotAllowed" startTime="2009-01-15T10:22:52.1944928+01:00" duration="10.1012234" status="failed">
+        <case id="CasSubsNotAllowed" startTime="2009-02-02T14:40:13.9588662+01:00" duration="35.6752384" status="passed">
           <userStories>
             <userStory>SMSUi.AddSubs.Schedule</userStory>
-            <exception>
-              The user '+38641574697' did not receive an expected SMS message: 'Izbrano narocnino ni dovoljeno izbrati: NIDOSTOPACAS cas'. Actual message: 'Na tej kratki stevilki ste vnesli napacno kljucno besedo (NIDOSTOPACAS). Za vec informacij se obrnite na vasega ponudnika mobilnih storitev.'
-
-            </exception>
           </userStories>
         </case>
-        <case id="ExpectBillingInfoError1" startTime="2009-01-15T10:23:02.3090368+01:00" duration="10.0844051" status="failed">
+        <case id="ExpectBillingInfoError1" startTime="2009-02-02T14:40:13.9901172+01:00" duration="35.63286" status="passed">
           <userStories>
             <userStory>Billing.SystemMessages</userStory>
-            <exception>
-              The user '+38641123439' did not receive an expected SMS message: 'Na tej kratki stevilki ste vnesli napacno kljucno besedo (VRIME). Za vec informacij se obrnite na vasega ponudnika mobilnih storitev.'
-
-            </exception>
           </userStories>
         </case>
-        <case id="ExpectBillingInfoError10" startTime="2009-01-15T10:23:12.4135664+01:00" duration="9.8236788999999991" status="failed">
+        <case id="ExpectBillingInfoError2" startTime="2009-02-02T14:40:14.0057427+01:00" duration="35.6612955" status="passed">
           <userStories>
             <userStory>Billing.SystemMessages</userStory>
-            <exception>
-              The user '+38631150230' did not receive an expected SMS message: 'Izbrana naročnina je brez vsebine: NOCONTENT'
-
-            </exception>
           </userStories>
         </case>
-        <case id="ExpectBillingInfoError2" startTime="2009-01-15T10:23:22.4980672+01:00" duration="10.082557399999999" status="failed">
+        <case id="ExpectBillingInfoError3" startTime="2009-02-02T14:40:14.0682447+01:00" duration="35.493013999999995" status="passed">
           <userStories>
             <userStory>Billing.SystemMessages</userStory>
-            <exception>
-              The user '+38641014062' did not receive an expected SMS message: 'Čas dneva je napačen: 06ur. Za pomoc poslji ?'
-
-            </exception>
           </userStories>
         </case>
-        <case id="ExpectBillingInfoError3" startTime="2009-01-15T10:23:32.6025968+01:00" duration="10.1111202" status="failed">
+        <case id="ExpectBillingInfoError4" startTime="2009-02-02T14:40:14.0838702+01:00" duration="35.492393299999996" status="passed">
           <userStories>
             <userStory>Billing.SystemMessages</userStory>
-            <exception>
-              The user '+38641942248' did not receive an expected SMS message: 'Perioda naročnine je izven dovoljenih vrednosti: 5. Za pomoč pošlji ?'
-
-            </exception>
           </userStories>
         </case>
-        <case id="ExpectBillingInfoError4" startTime="2009-01-15T10:23:42.7371696+01:00" duration="10.0855318" status="failed">
+        <case id="ExpectBillingInfoError5" startTime="2009-02-02T14:40:14.0994957+01:00" duration="35.3574402" status="passed">
           <userStories>
             <userStory>Billing.SystemMessages</userStory>
-            <exception>
-              The user '+38631494129' did not receive an expected SMS message: 'Čas dneva je napačen: 06ur. Za pomoc poslji ?'
-
-            </exception>
           </userStories>
         </case>
-        <case id="ExpectBillingInfoError5" startTime="2009-01-15T10:23:52.8316848+01:00" duration="10.145596399999999" status="failed">
+        <case id="ExpectBillingInfoError6" startTime="2009-02-02T14:40:14.1151212+01:00" duration="35.4979958" status="passed">
           <userStories>
             <userStory>Billing.SystemMessages</userStory>
-            <exception>
-              User received message with incorrect billing information (service provider id is incorrect).
-
-            </exception>
           </userStories>
         </case>
-        <case id="ExpectBillingInfoError6" startTime="2009-01-15T10:24:02.9862864+01:00" duration="10.1014441" status="failed">
+        <case id="ExpectBillingInfoError7" startTime="2009-02-02T14:40:14.1619977+01:00" duration="35.3991742" status="passed">
           <userStories>
             <userStory>Billing.SystemMessages</userStory>
-            <exception>
-              The user '+38641972701' did not receive an expected SMS message: 'Nepričakovan niz: plus. Za pomoč pošlji ?'
-
-            </exception>
           </userStories>
         </case>
-        <case id="ExpectBillingInfoError7" startTime="2009-01-15T10:24:13.0808016+01:00" duration="10.0980174" status="failed">
+        <case id="ExpectBillingInfoError8" startTime="2009-02-02T14:40:14.1776232+01:00" duration="35.475169099999995" status="passed">
           <userStories>
             <userStory>Billing.SystemMessages</userStory>
-            <exception>
-              The user '+38631909503' did not receive an expected SMS message: 'Napaka v zahtevi: vreme cas 1 ?2 1455. Za pomoc poslji ?'
-
-            </exception>
           </userStories>
         </case>
-        <case id="ExpectBillingInfoError8" startTime="2009-01-15T10:24:23.1853312+01:00" duration="10.1792498" status="failed">
+        <case id="ExpectBillingInfoError9" startTime="2009-02-02T14:40:14.2088742+01:00" duration="35.193152399999995" status="passed">
           <userStories>
             <userStory>Billing.SystemMessages</userStory>
-            <exception>
-              The user '+38641830828' did not receive an expected SMS message: 'Perioda naročnine je izven dovoljenih vrednosti: 1442. Za pomoč pošlji ?'
-
-            </exception>
           </userStories>
         </case>
-        <case id="ExpectBillingInfoError9" startTime="2009-01-15T10:24:33.4100336+01:00" duration="10.1113585" status="failed">
+        <case id="ExpectBillingInfoHelp" startTime="2009-02-02T14:40:14.2401252+01:00" duration="35.3954016" status="passed">
           <userStories>
             <userStory>Billing.SystemMessages</userStory>
-            <exception>
-              The user '+38641980758' did not receive an expected SMS message: 'Izbrano narocnino ni dovoljeno izbrati: NIDOSTOPAPER per'
-
-            </exception>
           </userStories>
         </case>
-        <case id="ExpectBillingInfoHelp" startTime="2009-01-15T10:24:43.5145632+01:00" duration="10.0835016" status="failed">
+        <case id="ExpectBillingInfoProv1" startTime="2009-02-02T14:40:14.2401252+01:00" duration="35.3570095" status="passed">
           <userStories>
             <userStory>Billing.SystemMessages</userStory>
-            <exception>
-              The user '+38641809024' did not receive an expected SMS message: 'Za vec informacij se obrnite na vasega ponudnika mobilnih storitev.'
-
-            </exception>
           </userStories>
         </case>
-        <case id="ExpectBillingInfoProv1" startTime="2009-01-15T10:24:53.6090784+01:00" duration="10.1017391" status="failed">
+        <case id="ExpectBillingInfoProv2" startTime="2009-02-02T14:40:14.2713762+01:00" duration="35.1628715" status="passed">
           <userStories>
             <userStory>Billing.SystemMessages</userStory>
-            <exception>
-              The user '+38631664331' did not receive an expected SMS message: 'Narocilo je bilo sprejeto: vreme per 60'
-
-            </exception>
           </userStories>
         </case>
-        <case id="ExpectBillingInfoProv2" startTime="2009-01-15T10:25:03.7236224+01:00" duration="10.008028099999999" status="failed">
+        <case id="ExpectBillingInfoProv3" startTime="2009-02-02T14:40:14.2870017+01:00" duration="35.2725769" status="passed">
           <userStories>
             <userStory>Billing.SystemMessages</userStory>
-            <exception>
-              The user '+38641593182' did not receive an expected SMS message: 'Narocilo je bilo sprejeto: vreme cas 15 0800'
-
-            </exception>
           </userStories>
         </case>
-        <case id="ExpectBillingInfoProv3" startTime="2009-01-15T10:25:13.8081232+01:00" duration="10.1144304" status="failed">
+        <case id="ExpectBillingInfoProv4" startTime="2009-02-02T14:40:49.5537552+01:00" duration="90.3265555" status="passed">
           <userStories>
             <userStory>Billing.SystemMessages</userStory>
-            <exception>
-              The user '+38641358499' did not receive an expected SMS message: 'Narocilo je bilo sprejeto: vreme pos od 0700 do 0930'
-
-            </exception>
           </userStories>
         </case>
-        <case id="ExpectBillingInfoProv4" startTime="2009-01-15T10:25:23.9326816+01:00" duration="10.104342299999999" status="failed">
-          <userStories>
-            <userStory>Billing.SystemMessages</userStory>
-            <exception>
-              The user '+38641279624' did not receive an expected SMS message: 'Zahteva sprejeta: preklici vreme pos'
-
-            </exception>
-          </userStories>
-        </case>
-        <case id="HelpRequest" startTime="2009-01-15T10:25:34.05724+01:00" duration="10.131502399999999" status="failed">
+        <case id="HelpRequest" startTime="2009-02-02T14:40:49.5693807+01:00" duration="30.8862377" status="passed">
           <userStories>
             <userStory>SMSUi.Help</userStory>
-            <exception>
-              The user '+38631837081' did not receive an expected SMS message: 'Za vec informacij se obrnite na vasega ponudnika mobilnih storitev.'. Actual message: 'Pomoč.'
-
-            </exception>
           </userStories>
         </case>
-        <case id="ListManySubs" startTime="2009-01-15T10:25:44.1918128+01:00" duration="50.222736399999995" status="failed">
+        <case id="ListManySubs" startTime="2009-02-02T14:40:49.5850062+01:00" duration="150.2178317" status="passed">
           <userStories>
             <userStory>SMSUi.SubscriptionList</userStory>
-            <exception>
-              The user '+38631551356' did not receive an expected SMS message: 'ceste per 30 od 1700 do 2130
-              vreme pos od 0700 do 0930
-              sport cas 67 1700 12 1000 vreme pos'. Actual message: 'Naročnine: CESTE PER 30 OD 1700 DO 2130VREME POS OD 0700 DO 0930SPORT CAS 67 1700 12 1000VREME POS.'
-
-            </exception>
           </userStories>
         </case>
-        <case id="ListNoneSubs" startTime="2009-01-15T10:26:34.4240432+01:00" duration="10.1171905" status="failed">
+        <case id="ListNoneSubs" startTime="2009-02-02T14:40:49.6006317+01:00" duration="30.391844199999998" status="passed">
           <userStories>
             <userStory>SMSUi.SubscriptionList</userStory>
-            <exception>
-              The user '+38641616849' did not receive an expected SMS message: 'Nimate nobenih narocnin.'. Actual message: 'Nimate nobene naročnine.'
-
-            </exception>
           </userStories>
         </case>
-        <case id="ListNoneSubsForTopic" startTime="2009-01-15T10:26:44.5786448+01:00" duration="9.8613751" status="failed">
+        <case id="ListNoneSubsForTopic" startTime="2009-02-02T14:40:49.6318827+01:00" duration="30.315551199999998" status="passed">
           <userStories>
             <userStory>SMSUi.SubscriptionListForTopic</userStory>
-            <exception>
-              The user '+38641331689' did not receive an expected SMS message: 'Nimate nobenih narocnin.'. Actual message: 'Nimate nobene naročnine.'
-
-            </exception>
           </userStories>
         </case>
-        <case id="ListSameSubs" startTime="2009-01-15T10:26:54.7032032+01:00" duration="29.677752599999998" status="failed">
+        <case id="ListSameSubs" startTime="2009-02-02T14:40:49.6787592+01:00" duration="90.6565285" status="passed">
           <userStories>
             <userStory>SMSUi.SubscriptionList</userStory>
-            <exception>
-              The user '+38641890511' did not receive an expected SMS message: 'vreme pos od 0630 od 1430 vreme cas 15 1430'. Actual message: 'Naročnine: VREME CAS 15 1430.'
-
-            </exception>
           </userStories>
         </case>
-        <case id="ListSubsForTopic1" startTime="2009-01-15T10:27:24.8465472+01:00" duration="40.1198677" status="failed">
+        <case id="ListSubsForTopic1" startTime="2009-02-02T14:40:49.7100102+01:00" duration="120.1356254" status="passed">
           <userStories>
             <userStory>SMSUi.SubscriptionListForTopic</userStory>
-            <exception>
-              The user '+38631612668' did not receive an expected SMS message: 'vreme pos vreme cas 123 1533'. Actual message: 'Naročnine: VREME POSVREME CAS 123 1533.'
-
-            </exception>
           </userStories>
         </case>
-        <case id="ListSubsForTopicErr1" startTime="2009-01-15T10:28:05.0042912+01:00" duration="10.1041096" status="failed">
-          <userStories>
-            <userStory>SMSUi.SubscriptionListForTopic</userStory>
-            <exception>
-              The user '+38641716468' did not receive an expected SMS message: 'Na tej kratki stevilki ste vnesli napacno kljucno besedo (VRIME). Za vec informacij se obrnite na vasega ponudnika mobilnih storitev.'. Actual message: 'Na tej kratki stevilki ste vnesli napacno kljucno besedo (vrime). Za vec informacij se obrnite na vasega ponudnika mobilnih storitev.'
-
-            </exception>
-          </userStories>
-        </case>
-        <case id="MoreUsersAddOnUpdateSubs" startTime="2009-01-15T10:28:15.138864+01:00" duration="10.099507" status="failed">
+        <case id="MoreUsersAddOnUpdateSubs" startTime="2009-02-02T14:40:49.7256357+01:00" duration="90.5119022" status="passed">
           <userStories>
             <userStory>SMSUi.AddSubs.Schedule</userStory>
-            <exception>
-              The user '+38631331768' did not receive an expected SMS message: 'Narocilo je bilo sprejeto: +vreme od 0630 do 2230'. Actual message: 'Naročnina je dodana: VREME POS OD 0630 DO 2230.'
-
-            </exception>
           </userStories>
         </case>
-        <case id="MoreUsersAddPeriodSubs" startTime="2009-01-15T10:28:25.2734368+01:00" duration="10.0876991" status="failed">
+        <case id="MoreUsersAddPeriodSubs" startTime="2009-02-02T14:40:49.8350142+01:00" duration="90.419717699999993" status="passed">
           <userStories>
             <userStory>SMSUi.AddSubs.Periodical</userStory>
-            <exception>
-              The user '+38631331762' did not receive an expected SMS message: 'Narocilo je bilo sprejeto: vreme per 180 od 1259 do 2230.'. Actual message: 'Naročnina je dodana: VREME PER 180 OD 1259 DO 2230.'
-
-            </exception>
           </userStories>
         </case>
-        <case id="MoreUsersAddSchedSubs" startTime="2009-01-15T10:28:35.3979952+01:00" duration="10.0816888" status="failed">
+        <case id="MoreUsersAddSchedSubs" startTime="2009-02-02T14:40:49.8350142+01:00" duration="90.1761963" status="passed">
           <userStories>
             <userStory>SMSUi.AddSubs.Schedule</userStory>
-            <exception>
-              The user '+38631331765' did not receive an expected SMS message: 'Narocilo je bilo sprejeto: vreme cas 1345 0730 67 0900 2 1722.'. Actual message: 'Naročnina je dodana: VREME CAS 1345 0730 67 0900 2 1722.'
-
-            </exception>
           </userStories>
         </case>
-        <case id="OnUpdateSubsError1" startTime="2009-01-15T10:28:45.482496+01:00" duration="10.079396599999999" status="failed">
-          <userStories>
-            <userStory>SMSUi.Error</userStory>
-            <exception>
-              The user '+38631882158' did not receive an expected SMS message: 'Napaka v zahtevi: Vreme ?pis od 0630 do 2230. Za pomoc poslji ?'. Actual message: 'Nepričakovan niz: pis. Za pomoc poslji ?'
-
-            </exception>
-          </userStories>
-        </case>
-        <case id="OnUpdateSubsError2" startTime="2009-01-15T10:28:55.5870256+01:00" duration="10.132003899999999" status="failed">
-          <userStories>
-            <userStory>SMSUi.Error</userStory>
-            <exception>
-              The user '+38641430414' did not receive an expected SMS message: 'Nepričakovan niz: di. Za pomoc poslji ?'. Actual message: 'Nepričakovan niz: di 2230. Za pomoc poslji ?'
-
-            </exception>
-          </userStories>
-        </case>
-        <case id="OnUpdateSubsError3" startTime="2009-01-15T10:29:05.711584+01:00" duration="10.0852194" status="passed">
+        <case id="OnUpdateSubsError6" startTime="2009-02-02T14:40:49.8350142+01:00" duration="30.274437" status="passed">
           <userStories>
             <userStory>SMSUi.Error</userStory>
           </userStories>
         </case>
-        <case id="OnUpdateSubsError4" startTime="2009-01-15T10:29:15.776056+01:00" duration="10.1212581" status="passed">
+        <case id="OnUpdateSubsError2" startTime="2009-02-02T14:40:49.8975162+01:00" duration="30.455271" status="passed">
           <userStories>
             <userStory>SMSUi.Error</userStory>
           </userStories>
         </case>
-        <case id="OnUpdateSubsError5" startTime="2009-01-15T10:29:25.8204992+01:00" duration="10.139244999999999" status="failed">
+        <case id="OnUpdateSubsError4" startTime="2009-02-02T14:40:49.8975162+01:00" duration="30.444897599999997" status="passed">
           <userStories>
             <userStory>SMSUi.Error</userStory>
-            <exception>
-              The user '+38641652660' did not receive an expected SMS message: 'Na tej kratki številki ste vnesli napačno ključno besedo (weatherXXX). Za več informacij se obrnite na vašega ponudnika mobilnih storitev.'. Actual message: 'Na tej kratki stevilki ste vnesli napacno kljucno besedo (weatherXXX). Za vec informacij se obrnite na vasega ponudnika mobilnih storitev.'
-
-            </exception>
           </userStories>
         </case>
-        <case id="OnUpdateSubsError6" startTime="2009-01-15T10:29:35.9450576+01:00" duration="10.1272203" status="failed">
+        <case id="OnUpdateSubsError3" startTime="2009-02-02T14:40:49.9131417+01:00" duration="30.4903268" status="passed">
           <userStories>
             <userStory>SMSUi.Error</userStory>
-            <exception>
-              The user '+38631112066' did not receive an expected SMS message: 'Nepričakovan niz: plus. Za pomoč pošlji ?'. Actual message: 'Nepričakovan niz: plus. Za pomoc poslji ?'
-
-            </exception>
           </userStories>
         </case>
-        <case id="OnUpdateSubsError7" startTime="2009-01-15T10:29:46.1096736+01:00" duration="10.1136387" status="failed">
+        <case id="ListSubsForTopicErr1" startTime="2009-02-02T14:40:49.9287672+01:00" duration="30.2762925" status="passed">
+          <userStories>
+            <userStory>SMSUi.SubscriptionListForTopic</userStory>
+          </userStories>
+        </case>
+        <case id="OnUpdateSubsError5" startTime="2009-02-02T14:40:49.9287672+01:00" duration="30.5908768" status="passed">
           <userStories>
             <userStory>SMSUi.Error</userStory>
-            <exception>
-              The user '+38631838816' did not receive an expected SMS message: 'Na tej kratki številki ste vnesli napačno ključno besedo (+ plus). Za več informacij se obrnite na vašega ponudnika mobilnih storitev.'. Actual message: 'Na tej kratki stevilki ste vnesli napacno kljucno besedo (plus). Za vec informacij se obrnite na vasega ponudnika mobilnih storitev.'
-
-            </exception>
           </userStories>
         </case>
-        <case id="OnUpdateSubsError8" startTime="2009-01-15T10:29:56.234232+01:00" duration="10.1018093" status="failed">
+        <case id="OnUpdateSubsError1" startTime="2009-02-02T14:40:49.9443927+01:00" duration="30.3556617" status="passed">
           <userStories>
             <userStory>SMSUi.Error</userStory>
-            <exception>
-              The user '+38631487747' did not receive an expected SMS message: 'Nepričakovan niz: sxdsd. Za pomoč pošlji ?'. Actual message: 'Nepričakovan niz: sxdsd. Za pomoc poslji ?'
-
-            </exception>
           </userStories>
         </case>
-        <case id="OnUpdateSubsError9" startTime="2009-01-15T10:30:06.348776+01:00" duration="10.0881408" status="failed">
+        <case id="OnUpdateSubsError8" startTime="2009-02-02T14:40:49.9756437+01:00" duration="30.3214673" status="passed">
           <userStories>
             <userStory>SMSUi.Error</userStory>
-            <exception>
-              The user '+38641415913' did not receive an expected SMS message: 'Nepričakovan niz: od 2330. Za pomoč pošlji ?'. Actual message: 'Nepričakovan niz: od 2330. Za pomoc poslji ?'
-
-            </exception>
           </userStories>
         </case>
-        <case id="OnUpdateSubsFromTime1" startTime="2009-01-15T10:30:16.4533056+01:00" duration="10.116081999999999" status="failed">
+        <case id="OnUpdateSubsError7" startTime="2009-02-02T14:40:50.0068947+01:00" duration="30.299599299999997" status="passed">
           <userStories>
-            <userStory>SMSUi.AddSubs.OnUpdate</userStory>
-            <exception>
-              The user '+38641343290' did not receive an expected SMS message: 'Narocilo je bilo sprejeto: vreme pos od 0630'. Actual message: 'Naročnina je dodana: VREME POS OD 0630.'
-
-            </exception>
+            <userStory>SMSUi.Error</userStory>
           </userStories>
         </case>
-        <case id="OnUpdateSubsFromTime2" startTime="2009-01-15T10:30:26.5478208+01:00" duration="10.0844956" status="failed">
+        <case id="OnUpdateSubsError9" startTime="2009-02-02T14:41:19.5390897+01:00" duration="30.046461899999997" status="passed">
           <userStories>
-            <userStory>SMSUi.AddSubs.OnUpdate</userStory>
-            <exception>
-              The user '+38631108506' did not receive an expected SMS message: 'Narocilo je bilo sprejeto: +vreme od 0630'. Actual message: 'Naročnina je dodana: VREME POS OD 0630.'
-
-            </exception>
+            <userStory>SMSUi.Error</userStory>
           </userStories>
         </case>
-        <case id="OnUpdateSubsFromTime3" startTime="2009-01-15T10:30:36.6223072+01:00" duration="10.093026" status="failed">
+        <case id="OnUpdateSubsFromTime1" startTime="2009-02-02T14:41:19.9297272+01:00" duration="30.080567499999997" status="passed">
           <userStories>
             <userStory>SMSUi.AddSubs.OnUpdate</userStory>
-            <exception>
-              The user '+38641234733' did not receive an expected SMS message: 'Čas dneva je napačen:3430.'. Actual message: 'Čas dneva je napačen: 3430. Za pomoc poslji ?'
-
-            </exception>
           </userStories>
         </case>
-        <case id="OnUpdateSubsNotAllowed" startTime="2009-01-15T10:30:46.7468656+01:00" duration="10.127169199999999" status="failed">
+        <case id="OnUpdateSubsFromTime2" startTime="2009-02-02T14:41:19.9922292+01:00" duration="30.0878357" status="passed">
           <userStories>
             <userStory>SMSUi.AddSubs.OnUpdate</userStory>
-            <exception>
-              The user '+38641883664' did not receive an expected SMS message: 'Izbrano naročnino ni dovoljeno izbrati: NIDOSTOPAPOS pos'. Actual message: 'Na tej kratki stevilki ste vnesli napacno kljucno besedo (NIDOSTOPAPOS). Za vec informacij se obrnite na vasega ponudnika mobilnih storitev.'
-
-            </exception>
           </userStories>
         </case>
-        <case id="OnUpdateSubsRespond" startTime="2009-01-15T10:30:56.8413808+01:00" duration="10.1011463" status="failed">
+        <case id="OnUpdateSubsFromTime3" startTime="2009-02-02T14:41:20.1172332+01:00" duration="30.1036029" status="passed">
           <userStories>
             <userStory>SMSUi.AddSubs.OnUpdate</userStory>
-            <exception>
-              The user '+38631919891' did not receive an expected SMS message: 'Narocilo je bilo sprejeto: vreme pos'. Actual message: 'Naročnina je dodana: VREME POS.'
-
-            </exception>
           </userStories>
         </case>
-        <case id="OnUpdateSubsTillTime1" startTime="2009-01-15T10:31:06.9459104+01:00" duration="10.093244799999999" status="failed">
+        <case id="OnUpdateSubsRespond" startTime="2009-02-02T14:41:20.3203647+01:00" duration="60.107467" status="passed">
           <userStories>
             <userStory>SMSUi.AddSubs.OnUpdate</userStory>
-            <exception>
-              The user '+38631676157' did not receive an expected SMS message: 'Narocilo je bilo sprejeto: vreme pos do 2230'. Actual message: 'Naročnina je dodana: VREME POS DO 2230.'
-
-            </exception>
           </userStories>
         </case>
-        <case id="OnUpdateSubsTillTime2" startTime="2009-01-15T10:31:17.05044+01:00" duration="9.8196055" status="failed">
+        <case id="OnUpdateSubsTillTime2" startTime="2009-02-02T14:41:20.3359902+01:00" duration="30.1735081" status="passed">
           <userStories>
             <userStory>SMSUi.AddSubs.OnUpdate</userStory>
-            <exception>
-              The user '+38631603958' did not receive an expected SMS message: 'Narocilo je bilo sprejeto: +vreme do 2230'. Actual message: 'Naročnina je dodana: VREME POS DO 2230.'
-
-            </exception>
           </userStories>
         </case>
-        <case id="OnUpdateSubsTimeInterval1" startTime="2009-01-15T10:31:27.1449552+01:00" duration="10.125935" status="failed">
+        <case id="OnUpdateSubsTillTime1" startTime="2009-02-02T14:41:20.3516157+01:00" duration="30.2405007" status="passed">
           <userStories>
             <userStory>SMSUi.AddSubs.OnUpdate</userStory>
-            <exception>
-              The user '+38641350730' did not receive an expected SMS message: 'Narocilo je bilo sprejeto: vreme pos od 0600 do 2200'. Actual message: 'Naročnina je dodana: VREME POS OD 0600 DO 2200.'
-
-            </exception>
           </userStories>
         </case>
-        <case id="OnUpdateSubsTimeInterval2" startTime="2009-01-15T10:31:37.279528+01:00" duration="7.7221984" status="failed">
+        <case id="OnUpdateSubsNotAllowed" startTime="2009-02-02T14:41:20.3672412+01:00" duration="30.1776512" status="passed">
           <userStories>
             <userStory>SMSUi.AddSubs.OnUpdate</userStory>
-            <exception></exception>
+          </userStories>
+        </case>
+        <case id="OnUpdateSubsTimeInterval2" startTime="2009-02-02T14:41:20.3984922+01:00" duration="30.107066" status="passed">
+          <userStories>
+            <userStory>SMSUi.AddSubs.OnUpdate</userStory>
+          </userStories>
+        </case>
+        <case id="OnUpdateSubsTimeInterval1" startTime="2009-02-02T14:41:20.4297432+01:00" duration="30.189324499999998" status="passed">
+          <userStories>
+            <userStory>SMSUi.AddSubs.OnUpdate</userStory>
+          </userStories>
+        </case>
+        <case id="OnUpdateSubsTimeIntervalErr3" startTime="2009-02-02T14:41:20.4766197+01:00" duration="30.136339999999997" status="passed">
+          <userStories>
+            <userStory>SMSUi.AddSubs.OnUpdate</userStory>
+          </userStories>
+        </case>
+        <case id="OnUpdateSubsTimeIntervalErr5" startTime="2009-02-02T14:41:20.4766197+01:00" duration="30.0946857" status="passed">
+          <userStories>
+            <userStory>SMSUi.AddSubs.OnUpdate</userStory>
+          </userStories>
+        </case>
+        <case id="OnUpdateSubsTimeIntervalErr7" startTime="2009-02-02T14:41:20.5078707+01:00" duration="30.1346137" status="passed">
+          <userStories>
+            <userStory>SMSUi.AddSubs.OnUpdate</userStory>
+          </userStories>
+        </case>
+        <case id="PeriodSubsErr2" startTime="2009-02-02T14:41:49.6025517+01:00" duration="30.0220643" status="passed">
+          <userStories>
+            <userStory>SMSUi.AddSubs.Periodical</userStory>
+          </userStories>
+        </case>
+        <case id="PeriodSubsErr3" startTime="2009-02-02T14:41:50.0244402+01:00" duration="30.064126499999997" status="passed">
+          <userStories>
+            <userStory>SMSUi.AddSubs.Periodical</userStory>
+          </userStories>
+        </case>
+        <case id="PeriodSubsErr4" startTime="2009-02-02T14:41:50.1025677+01:00" duration="30.0670389" status="passed">
+          <userStories>
+            <userStory>SMSUi.AddSubs.Periodical</userStory>
+          </userStories>
+        </case>
+        <case id="PeriodSubsFromTime1" startTime="2009-02-02T14:41:50.2431972+01:00" duration="30.0519711" status="passed">
+          <userStories>
+            <userStory>SMSUi.AddSubs.Periodical</userStory>
+          </userStories>
+        </case>
+        <case id="PeriodSubsFromTime2" startTime="2009-02-02T14:41:50.5244562+01:00" duration="30.1091835" status="passed">
+          <userStories>
+            <userStory>SMSUi.AddSubs.Periodical</userStory>
+          </userStories>
+        </case>
+        <case id="PeriodSubsFromTime3" startTime="2009-02-02T14:41:50.5244562+01:00" duration="30.2030501" status="passed">
+          <userStories>
+            <userStory>SMSUi.AddSubs.Periodical</userStory>
+          </userStories>
+        </case>
+        <case id="PerSubInvalidTime1" startTime="2009-02-02T14:41:50.5244562+01:00" duration="30.128570399999997" status="passed">
+          <userStories>
+            <userStory>SMSUi.AddSubs.Periodical</userStory>
+          </userStories>
+        </case>
+        <case id="PerSubInvalidTime2" startTime="2009-02-02T14:41:50.6494602+01:00" duration="30.0870735" status="passed">
+          <userStories>
+            <userStory>SMSUi.AddSubs.Periodical</userStory>
+          </userStories>
+        </case>
+        <case id="PerSubsError6" startTime="2009-02-02T14:41:50.6494602+01:00" duration="30.0903636" status="passed">
+          <userStories>
+            <userStory>SMSUi.Error</userStory>
+          </userStories>
+        </case>
+        <case id="PerSubsError7" startTime="2009-02-02T14:41:50.7119622+01:00" duration="30.1358401" status="passed">
+          <userStories>
+            <userStory>SMSUi.Error</userStory>
+          </userStories>
+        </case>
+        <case id="PerSubsError8" startTime="2009-02-02T14:41:50.7119622+01:00" duration="30.0800153" status="passed">
+          <userStories>
+            <userStory>SMSUi.Error</userStory>
+          </userStories>
+        </case>
+        <case id="PerSubsError9" startTime="2009-02-02T14:41:50.7432132+01:00" duration="30.0855158" status="passed">
+          <userStories>
+            <userStory>SMSUi.Error</userStory>
+          </userStories>
+        </case>
+        <case id="PerSubsNotAllowed" startTime="2009-02-02T14:42:19.6347627+01:00" duration="30.0537988" status="passed">
+          <userStories>
+            <userStory>SMSUi.AddSubs.Periodical</userStory>
+          </userStories>
+        </case>
+        <case id="RemoveAllSubs" startTime="2009-02-02T14:42:19.8691452+01:00" duration="120.06904279999999" status="passed">
+          <userStories>
+            <userStory>SMSUi.RemoveAllSubs</userStory>
+          </userStories>
+        </case>
+        <case id="RemoveAllSubsEmpty" startTime="2009-02-02T14:42:20.0097747+01:00" duration="150.0406238" status="passed">
+          <userStories>
+            <userStory>SMSUi.RemoveAllSubs</userStory>
+          </userStories>
+        </case>
+        <case id="RemoveAllSubsForTopic" startTime="2009-02-02T14:42:20.1035277+01:00" duration="210.06694869999998" status="passed">
+          <userStories>
+            <userStory>SMSUi.RemoveSubsForTopic</userStory>
+          </userStories>
+        </case>
+        <case id="RemoveExistSubsForTopicAndType" startTime="2009-02-02T14:42:20.1816552+01:00" duration="150.1066165" status="passed">
+          <userStories>
+            <userStory>SMSUi.RemoveSubsForTopicAndType</userStory>
+          </userStories>
+        </case>
+        <case id="RemoveMoreSubs" startTime="2009-02-02T14:42:20.2597827+01:00" duration="150.1155134" status="passed">
+          <userStories>
+            <userStory>SMSUi.RemoveSubsForTopicAndType</userStory>
+          </userStories>
+        </case>
+        <case id="RemoveNonexistingTopic" startTime="2009-02-02T14:42:20.2754082+01:00" duration="30.083098099999997" status="passed">
+          <userStories>
+            <userStory>SMSUi.RemoveSubsForTopic</userStory>
+          </userStories>
+        </case>
+        <case id="RemoveNonexistSubsForTopicAndType" startTime="2009-02-02T14:42:20.3222847+01:00" duration="90.06095289999999" status="passed">
+          <userStories>
+            <userStory>SMSUi.RemoveSubsForTopicAndType</userStory>
+          </userStories>
+        </case>
+        <case id="RemoveSeveralSubsForTopic" startTime="2009-02-02T14:42:20.3222847+01:00" duration="240.1108806" status="passed">
+          <userStories>
+            <userStory>SMSUi.RemoveSubsForTopic</userStory>
+          </userStories>
+        </case>
+        <case id="RemoveSubForTopic1" startTime="2009-02-02T14:42:20.4316632+01:00" duration="30.0624978" status="passed">
+          <userStories>
+            <userStory>SMSUi.RemoveSubsForTopic</userStory>
+          </userStories>
+        </case>
+        <case id="RemoveSubsForTopic2" startTime="2009-02-02T14:42:20.6347947+01:00" duration="30.041652199999998" status="passed">
+          <userStories>
+            <userStory>SMSUi.RemoveSubsForTopic</userStory>
+          </userStories>
+        </case>
+        <case id="RemoveSubsForTopicErr1" startTime="2009-02-02T14:42:20.6816712+01:00" duration="30.0415986" status="passed">
+          <userStories>
+            <userStory>SMSUi.RemoveSubsForTopic</userStory>
+          </userStories>
+        </case>
+        <case id="RemoveTopicWithInvalidType" startTime="2009-02-02T14:42:20.7441732+01:00" duration="60.086942799999996" status="passed">
+          <userStories>
+            <userStory>SMSUi.RemoveSubsForTopicAndType</userStory>
+          </userStories>
+        </case>
+        <case id="RemoveTopicWithNonexistTopic" startTime="2009-02-02T14:42:20.7597987+01:00" duration="60.2019628" status="passed">
+          <userStories>
+            <userStory>SMSUi.RemoveSubsForTopicAndType</userStory>
+          </userStories>
+        </case>
+        <case id="SchedSubsError4" startTime="2009-02-02T14:42:20.8066752+01:00" duration="30.127673599999998" status="passed">
+          <userStories>
+            <userStory>SMSUi.Error</userStory>
+          </userStories>
+        </case>
+        <case id="SchedSubsError5" startTime="2009-02-02T14:42:20.8379262+01:00" duration="30.0968849" status="passed">
+          <userStories>
+            <userStory>SMSUi.Error</userStory>
+          </userStories>
+        </case>
+        <case id="ScheduledSubsErr1" startTime="2009-02-02T14:42:20.8379262+01:00" duration="30.110572299999998" status="passed">
+          <userStories>
+            <userStory>SMSUi.AddSubs.Schedule</userStory>
+          </userStories>
+        </case>
+        <case id="ScheduledSubsErr2" startTime="2009-02-02T14:42:20.8691772+01:00" duration="30.0991853" status="passed">
+          <userStories>
+            <userStory>SMSUi.AddSubs.Schedule</userStory>
+          </userStories>
+        </case>
+        <case id="ScheduledSubsErr3" startTime="2009-02-02T14:42:49.6982247+01:00" duration="30.0363601" status="passed">
+          <userStories>
+            <userStory>SMSUi.AddSubs.Schedule</userStory>
+          </userStories>
+        </case>
+        <case id="ScheduledSubsErr4" startTime="2009-02-02T14:42:49.8544797+01:00" duration="30.0665262" status="passed">
+          <userStories>
+            <userStory>SMSUi.AddSubs.Schedule</userStory>
+          </userStories>
+        </case>
+        <case id="ScheduledSubsErr5" startTime="2009-02-02T14:42:50.3857467+01:00" duration="30.103600099999998" status="passed">
+          <userStories>
+            <userStory>SMSUi.AddSubs.Schedule</userStory>
+          </userStories>
+        </case>
+        <case id="ScheduledSubsErr6" startTime="2009-02-02T14:42:50.5107507+01:00" duration="30.0456324" status="passed">
+          <userStories>
+            <userStory>SMSUi.AddSubs.Schedule</userStory>
+          </userStories>
+        </case>
+        <case id="ScheduledSubsErr7" startTime="2009-02-02T14:42:50.6826312+01:00" duration="30.0328022" status="passed">
+          <userStories>
+            <userStory>SMSUi.AddSubs.Schedule</userStory>
+          </userStories>
+        </case>
+        <case id="ScheduledSubsErr8" startTime="2009-02-02T14:42:50.7295077+01:00" duration="30.0617995" status="passed">
+          <userStories>
+            <userStory>SMSUi.AddSubs.Schedule</userStory>
+          </userStories>
+        </case>
+        <case id="SearchRequest1" startTime="2009-02-02T14:42:50.9638902+01:00" duration="30.0609218" status="passed">
+          <userStories>
+            <userStory>SMSUi.Search</userStory>
+          </userStories>
+        </case>
+        <case id="SearchRequest2" startTime="2009-02-02T14:42:50.9795157+01:00" duration="30.0795188" status="passed">
+          <userStories>
+            <userStory>SMSUi.Search</userStory>
+          </userStories>
+        </case>
+        <case id="SearchRequest3" startTime="2009-02-02T14:42:50.9951412+01:00" duration="30.073508699999998" status="passed">
+          <userStories>
+            <userStory>SMSUi.Search</userStory>
+          </userStories>
+        </case>
+      </suite>
+      <suite id="SPGUISuiteTestSuite">
+        <case id="AddDifferentSubsFromTopTopicLinkMms" startTime="2009-02-02T14:46:20.4862197+01:00" duration="0.1057582" status="skipped">
+          <userStories>
+            <userStory>SPGUI.AddSubs.Schedule</userStory>
+          </userStories>
+        </case>
+        <case id="AddDifferentSubsFromTopTopicLinkSms" startTime="2009-02-02T14:46:20.6112237+01:00" duration="0.058036399999999995" status="skipped">
+          <userStories>
+            <userStory>SPGUI.AddSubs.OnUpdate</userStory>
+          </userStories>
+        </case>
+        <case id="AddOnUpdateSubscriptionMms" startTime="2009-02-02T14:46:20.6737257+01:00" duration="0.030473499999999997" status="skipped">
+          <userStories>
+            <userStory>SPGUI.AddSubs.OnUpdate</userStory>
+          </userStories>
+        </case>
+        <case id="AddOnUpdateSubscriptionSms" startTime="2009-02-02T14:46:20.7206022+01:00" duration="0.031224099999999998" status="skipped">
+          <userStories>
+            <userStory>SPGUI.AddSubs.OnUpdate</userStory>
+          </userStories>
+        </case>
+        <case id="AddOnUpdateSubscriptionThroughTopTopic" startTime="2009-02-02T14:46:20.7674787+01:00" duration="0.0455625" status="skipped">
+          <userStories>
+            <userStory>SPGUI.AddSubs.OnUpdate</userStory>
+          </userStories>
+        </case>
+        <case id="AddOnUpdateSubsSeveralThroughSMSUi" startTime="2009-02-02T14:46:20.8143552+01:00" duration="0" status="inconclusive">
+          <userStories>
+            <userStory>SPGUI.ViewSubscriptionsList</userStory>
           </userStories>
         </case>
       </suite>
