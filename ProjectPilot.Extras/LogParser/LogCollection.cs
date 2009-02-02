@@ -365,8 +365,8 @@ namespace ProjectPilot.Extras.LogParser
                     }
                 }
             }
-            //Rename MatchCase to Match (Marko) - (waiting for resharper)
-            if (parseFilter.MatchCase != null)
+
+            if (parseFilter.Match != null)
             {
                 if (elementsPattern.IndexOf("Ndc") >= 0)
                 {
@@ -378,7 +378,7 @@ namespace ProjectPilot.Extras.LogParser
 
                         foreach (string element in elementsTemp)
                         {
-                            if (element.ToLower(cultureToUse).Contains(parseFilter.MatchCase.ToLower(cultureToUse)))
+                            if (element.ToLower(cultureToUse).Contains(parseFilter.Match.ToLower(cultureToUse)))
                                 existFlag = true;
                         }
 
@@ -397,7 +397,7 @@ namespace ProjectPilot.Extras.LogParser
 
                         foreach (string element in elementsTemp)
                             {
-                                if (element.ToLower(cultureToUse).Contains(parseFilter.MatchCase.ToLower(cultureToUse)))
+                                if (element.ToLower(cultureToUse).Contains(parseFilter.Match.ToLower(cultureToUse)))
                                     existFlag = true;
                             }
 

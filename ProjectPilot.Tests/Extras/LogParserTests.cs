@@ -246,12 +246,12 @@ namespace ProjectPilot.Tests.Extras
         [Row("null", 10)]
         [Row("TeSt", 10)]
         [Row("TeSt123", 0)]
-        public void TestingSearchMatchCaseFilter(string matchCase, int expectedElementsLogCount)
+        public void TestingSearchMatchFilter(string matchCase, int expectedElementsLogCount)
         {
             using (Stream fileStream = File.OpenRead(@"..\..\..\Data\Samples\TestLogParser.log"))
             {
                 LogParserFilter filter = new LogParserFilter();
-                filter.MatchCase = matchCase;
+                filter.Match = matchCase;
 
                 LogCollection lineParse = new LogCollection('|', "Time|ThreadId|Level|Ndc");
                 lineParse.ParseFilter = filter;
