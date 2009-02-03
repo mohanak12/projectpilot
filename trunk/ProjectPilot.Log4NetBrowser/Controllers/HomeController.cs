@@ -29,6 +29,7 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             using (XmlReader xmlReader = XmlReader.Create(System.IO.File.OpenRead(@"\\zarja\share\Marko\LogConfig.xml"), xmlReaderSettings))
             {
                 string logKey;
+                string logPattern;
 
                 while (false == xmlReader.EOF)
                 {
@@ -37,6 +38,7 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
                     if (xmlReader.Name == "LogURL" && xmlReader.NodeType != XmlNodeType.EndElement)
                         {
                             logKey = xmlReader["logKey"];
+                            logPattern = xmlReader["logPattern"];
                             xmlReader.Read();
                             logFiles.Add(logKey ,xmlReader.Value);
                         }
@@ -63,10 +65,26 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
                             string searchType, 
                             string Search)
         {
+            string fileSelected;
+            string filePattern;
+            char fileSeparator;
+
+            //Default values
             if (!string.IsNullOrEmpty((string)Session["fileSelected"]))
                 fileSelected = (string)Session["fileSelected"];
             else
                 fileSelected = @"..\..\..\Data\Samples\LogConfig.xml"; // Default file
+
+            if (!string.IsNullOrEmpty((string)Session["filePattern"]))
+                filePattern = (string)Session["filePattern"];
+            else
+                filePattern = "Time|Level|Message";
+
+            if (Session["fileSeparator"] != null)
+                fileSeparator = (char)Session["fileSeparator"];
+            else
+                fileSeparator = '|';
+            //Default values - end
 
             //Get number of log entries in log file
             LogParserFilter filter = LoadParameters.CreateFilter(null, null,
@@ -75,15 +93,15 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
                                                                  null, true);
             parserContent = new LogDisplay();
 
-            parserContent.Parsing10MBLogFile(filter, fileSelected);
+           // parserContent.Parsing10MBLogFile(filter, fileSelected, filePattern, fileSeparator);
 
-            numberOfLogItems = parserContent.LineParse.NumberOfLogItems;
+          //  numberOfLogItems = parserContent.LineParse.NumberOfLogItems;
 
             filter = LoadParameters.CreateFilter(levelSelect,StartTime,
                                                  EndTime, ThreadId, numberOfItems,
                                                  searchType, Search, false);
 
-            parserContent.Parsing10MBLogFile(filter, fileSelected);
+            parserContent.Parsing10MBLogFile(filter, fileSelected, filePattern, fileSeparator);
 
             Session["parserContent"] = parserContent;
             Session["fileSelected"] = fileSelected;
@@ -110,6 +128,10 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
                                    string searchType,
                                    string Search)
         {
+            string fileSelected;
+            string filePattern;
+            char fileSeparator;
+
             LogParserFilter filter = LoadParameters.CreateFilter(levelSelect, StartTime,
                                                                  EndTime, ThreadId,
                                                                  numberOfItems, searchType,
@@ -118,8 +140,10 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             parserContent = new LogDisplay();
 
             fileSelected = (string)Session["fileSelected"];
+            filePattern = (string)Session["filePattern"];
+            fileSeparator = (char)Session["fileSeparator"];
 
-            parserContent.Parsing10MBLogFile(filter, fileSelected);
+            parserContent.Parsing10MBLogFile(filter, fileSelected, filePattern, fileSeparator);
 
             parserContent = LocalSearchFilter.Filter(parserContent, null, null, searchType, Search);
 
@@ -224,7 +248,7 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             xmlReaderSettings.IgnoreProcessingInstructions = true;
             xmlReaderSettings.IgnoreWhitespace = true;
 
-            using (XmlReader xmlReader = XmlReader.Create(System.IO.File.OpenRead(@"..\..\..\Data\Samples\LogConfig.xml"), xmlReaderSettings))
+            using (XmlReader xmlReader = XmlReader.Create(System.IO.File.OpenRead(@"\\zarja\share\Marko\LogConfig.xml"), xmlReaderSettings))
             {
                 string key;
 
@@ -234,9 +258,13 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
 
                     if (xmlReader.Name == "LogURL" && xmlReader.NodeType != XmlNodeType.EndElement)
                     {
-
                         key = xmlReader["logKey"];
+                        
+                        logFilesPatterns.Add(key, xmlReader["logPattern"]);
+                        logFilesSeparators.Add(key, char.Parse(xmlReader["separator"]));
+                        
                         xmlReader.Read();
+
                         logFiles.Add(key, xmlReader.Value);
                     }
                 }
@@ -247,6 +275,8 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
                 ViewData["DisplayURL"] = logFiles[Id];
                 Session["fileSelected"] = logFiles[Id];
                 Session["fileKeySelected"] = Id;
+                Session["filePattern"] = logFilesPatterns[Id];
+                Session["fileSeparator"] = logFilesSeparators[Id];
                 return RedirectToAction("Load"); 
             }
 
@@ -254,9 +284,11 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
         }
 
         private LogDisplay parserContent;
-        private string fileSelected;
+       // private string fileSelected;
         private int numberOfLogItems;
         private int numberOfItemsPerPage;
         private readonly Dictionary<string, string> logFiles = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> logFilesPatterns = new Dictionary<string, string>();
+        private readonly Dictionary<string, char> logFilesSeparators= new Dictionary<string, char>();
     }
 }

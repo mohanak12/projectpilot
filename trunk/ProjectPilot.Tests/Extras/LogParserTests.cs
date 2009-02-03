@@ -313,7 +313,7 @@ namespace ProjectPilot.Tests.Extras
         {
             using (Stream fileStream = File.OpenRead(@"..\..\..\Data\Samples\ProjectPilot.Tests.log.2"))
             {   
-                LogCollection lineParse = new LogCollection('|', "Time|Ndc|Level|Namespace|Message");
+                LogCollection lineParse = new LogCollection('|', "Time|ThreadId|Level|Namespace|Message");
 
                 lineParse.ParseLogFile(fileStream);
 
