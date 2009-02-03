@@ -15,7 +15,7 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
         {
             // Add action logic here
             parserContent = new LogDisplay();
-            parserContent.Parsing10MBLogFile(null, null);
+            parserContent.Parsing10MBLogFile(null, null, null, null);
 
             Session["parserContent"] = parserContent;
             ViewData["Content"] = parserContent;
