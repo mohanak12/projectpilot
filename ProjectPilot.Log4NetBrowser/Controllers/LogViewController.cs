@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using ProjectPilot.Extras.LogParser;
 using ProjectPilot.Log4NetBrowser.Models;
+using System.Xml;
 
 namespace ProjectPilot.Log4NetBrowser.Controllers
 {
@@ -13,14 +14,25 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
     {
         public ActionResult DisplayLog()
         {
-            // Add action logic here
-            parserContent = new LogDisplay();
-            parserContent.Parsing10MBLogFile(null, null, null, null);
+            parserContent = (LogDisplay)Session["parserContent"];
 
-            Session["parserContent"] = parserContent;
+            if (parserContent == null)
+            {
+                parserContent = new LogDisplay();
+                parserContent.Parsing10MBLogFile(null, null, null, null);
+            }
+
             ViewData["Content"] = parserContent;
 
             return View();
+        }
+
+        public ActionResult Log(string Id)
+        {
+            parserContent = ParseLogFile.ParseFile(Id);
+
+            Session["parserContent"] = parserContent;
+            return RedirectToAction("DisplayLog"); 
         }
 
         private LogDisplay parserContent;
