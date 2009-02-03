@@ -10,6 +10,7 @@ using Accipio.Reporting;
 using Commons.Collections;
 using NVelocity;
 using NVelocity.App;
+using NVelocity.Runtime;
 using ProjectPilot.Framework.Charts;
 using ZedGraph;
 
@@ -120,20 +121,19 @@ namespace Accipio
         }
 
         private void GenerateReportFile (
-            string outputFileNameFormat, 
+            string outputFileNameFormat,
             string templateFileName, 
             Hashtable context)
         {
             VelocityEngine velocity = new VelocityEngine();
-            ExtendedProperties props = new ExtendedProperties();
-            velocity.Init(props);
+            velocity.SetProperty(RuntimeConstants.RESOURCE_LOADER, "file");
+            velocity.SetProperty(RuntimeConstants.FILE_RESOURCE_LOADER_PATH, settings.TemplatesDirectory);
+            velocity.Init();
             VelocityContext velocityContext = new VelocityContext(context);
             velocityContext.Put("settings", settings);
             velocityContext.Put("reportTime", DateTime.Now);
 
-            string fullTemplateFileName = Path.Combine(settings.TemplatesDirectory, templateFileName);
-
-            Template template = velocity.GetTemplate(fullTemplateFileName, new UTF8Encoding(false).WebName);
+            Template template = velocity.GetTemplate(templateFileName, new UTF8Encoding(false).WebName);
 
             string outputFileName;
 

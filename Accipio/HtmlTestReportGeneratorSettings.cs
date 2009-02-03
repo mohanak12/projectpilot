@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 
 namespace Accipio
@@ -7,6 +8,11 @@ namespace Accipio
         public HtmlTestReportGeneratorSettings(string projectFileName)
         {
             this.projectName = projectFileName;
+
+            Uri uri = new Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase);
+            string localPath = uri.LocalPath;
+            string dir = Path.GetDirectoryName(localPath);
+            this.templatesDirectory = Path.Combine(dir, "Templates");
         }
 
         public string CssFileName
@@ -41,6 +47,6 @@ namespace Accipio
         private string cssFileName = "TestReport.css";
         private string outputDirectory = "Reports";
         private string projectName;
-        private string templatesDirectory = "Templates";
+        private string templatesDirectory;
     }
 }
