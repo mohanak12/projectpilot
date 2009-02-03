@@ -37,8 +37,6 @@ namespace ProjectPilot.Log4NetBrowser.Views.LogView
                 lineOutput += logEntry.Elements[levelIndex].ToString().ToLower();
             }
 
-            /*lineOutput += "\" id=\"";
-            lineOutput += index.ToString();*/
             lineOutput += "\" idShow=\"" + index.ToString() + "\">";
 
             //for each element in table row
