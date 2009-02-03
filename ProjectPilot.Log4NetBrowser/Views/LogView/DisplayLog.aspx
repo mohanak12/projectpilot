@@ -25,8 +25,10 @@
 
 	            id = $(this).attr("idShow");
 	            id = "#" + id;
-	            $(id).addClass('selectedTD');
-	            $(prev).removeClass('selectedTD');
+	            if (id != prev) {
+	                $(id).addClass('selectedTD');
+	                $(prev).removeClass('selectedTD');
+	            }
 	            prev = id;
 
 	            var html = $(id).html();
