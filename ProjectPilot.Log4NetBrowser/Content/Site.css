@@ -6,163 +6,29 @@ to use a different color start by replacing all instances of
 body
 {
     background-color: #5c87b2;
-    font-size: .75em;
-    font-family: Verdana, Helvetica, Sans-Serif;
     margin: 0;
     padding: 0;
     color: #696969;
 }
 
-a:link
-{
-    color: #034af3;
-    text-decoration: none;
-}
-a:visited
-{
-    color: #505abc;
-}
-a:hover
-{
-    color: #1d60ff;
-    text-decoration: underline;
-}
-a:active
-{
-    color: #12eb87;
-}
 
-p, ul
-{
-    margin-bottom: 20px;
-    line-height: 1.6em;
-}
-
-/* HEADINGS   
-----------------------------------------------------------*/
-h1, h2, h3, h4, h5, h6
-{
-    font-size: 1.5em;
-    color: #000;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-h1
-{
-    font-size: 2em;
-    padding-bottom: 0;
-    margin-bottom: 0;
-}
-h2
-{
-    padding: 0 0 10px 0;
-}
-h3
-{
-    font-size: 1.2em;
-}
-h4
-{
-    font-size: 1.1em;
-}
-h5, h6
-{
-    font-size: 1em;
-}
-
-/* this rule styles <h2> tags that are the 
-first child of the left and right table columns */
-.rightColumn > h1, .rightColumn > h2, .leftColumn > h1, .leftColumn > h2
-{
-    margin-top: 0;
-}
-
-/* PRIMARY LAYOUT ELEMENTS   
-----------------------------------------------------------*/
-
-/* you can specify a greater or lesser percentage for the 
-page width. Or, you can specify an exact pixel width. */
-.page
-{
-    width: 95%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-#header
-{
-    position: relative;
-    margin-bottom: 0px;
-    color: #000;
-    padding: 0;
-    background: #FFF;
-	top: 0px;
-	left: 0px;
-	height: 40px;
-	border-bottom-style: solid;
-	border-bottom-width: thin;
-	border-bottom-color: #000000;
-}
-
-#header h1
-{
-    font-weight: bold;
-    padding: 5px 0;
-    margin: 0;
-    color: #fff;
-    border: none;
-    line-height: 2em;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 32px !important;
-}
-
-#main
-{
-    padding: 30px 30px 15px 30px;
-    background-color: #fff;
-    margin-bottom: 30px;
-    _height: 1px; /* only IE6 applies CSS properties starting with an underscrore */
-}
-
-a:link#main
-{
-	text-decoration: none;
-}
-
-#footer
-{
-    color: #999;
-    padding: 10px 0;
-    text-align: center;
-    line-height: normal;
-    margin: 0;
-    font-size: .9em;
-}
 
 /* TAB MENU   
 ----------------------------------------------------------*/
 ul#menu
 {
-    border-bottom: 1px #5C87B2 solid;
-    padding: 0 0 2px;
+    padding:   5px 0 0 0;
     position: relative;
     margin: 0;
-    text-align: right;
+    font-family:Verdana;
+    font-size:12px;
+    text-align: left;
 }
 
 ul#menu li
 {
     display: inline;
     list-style: none;
-}
-
-ul#menu li#greeting
-{
-    padding: 10px 20px;
-    font-weight: bold;
-    text-decoration: none;
-    line-height: 2.8em;
-    color: #fff;
 }
 
 ul#menu li a
@@ -193,161 +59,277 @@ ul#menu li.selected a
     color: #000;
 }
 
-/* MISC  
-----------------------------------------------------------*/
-.clear
-{
-    clear: both;
-}
-
-.error
-{
-    color:Red;
-}
-
-#menucontainer
-{
-    margin-top:40px;
-}
-
-#title
-{
-    display:block;
-    float:left;
-    text-align:left;
-}
-
-#logindisplay
-{
-    font-size:1.1em;
-    display:block;
-    text-align:right;
-    margin:10px;
-    color:White;
-}
-
-#logindisplay a:link
-{
-    color: white;
-    text-decoration: underline;
-}
-
-#logindisplay a:visited
-{
-    color: white;
-    text-decoration: underline;
-}
-
-.field-validation-error
-{
-    color: #ff0000;
-}
-
-.input-validation-error
-{
-    border: 1px solid #ff0000;
-    background-color: #ffeeee;
-}
-
-.validation-summary-errors
-{
-    font-weight: bold;
-    color: #ff0000;
-}
-
-/*---------*/
+/*------------------------*/
 #containerDiv {
 position: relative;
-width: 100%;
+width:100%;
 }
 
 #headerDiv {
 position: fixed;
-border: 1px solid #777777;
-background-color: blue;
-color: yellow;
-top: 0px;
-left: 0px;
+left:0px;
+background-color: Transparent;
 width: 100%;
 z-index:100;
 }
 
 #menuDiv {
-float: left;
-width: 100%;
-border: 1px solid #777777;
+position:relative;
+width: 95%;
+padding-left: 15px;
+padding-right: 15px;
+margin-left:auto;
+margin-right:auto;
+height: 45px;
+background-color:#5c87b2;
 }
 
 #patternDiv {
-float: left;
-width: 100%;
+position:relative;
+width: 95%;
+padding-left: 15px;
+padding-right: 15px;
+margin-left:auto;
+margin-right:auto;
+background-color: #2D659E;
+font-family:Verdana;
+font-weight:bold;
+font-size: 12px;
+color: White;
+height: 25px;
+}
+
+#menuList{
+float:left;
+}
+
+#Title
+{
+	width:50%;
+	float:left;
+	padding-top: 10px;
+	text-align:center;
+	height: 35px;
+	font-family:Verdana;
+	font-size:20px;
+	font-weight:bold;
+	color:White;
 }
 
 #contentDiv {
-position: absolute;
-top: 35px;
+position: relative;
+top: 70px;
+width: 95%;
+padding-left: 15px;
+padding-right: 15px;
+margin-left:auto;
+margin-right:auto;
 background-color: white;
-}
-
-#contentDiv a:link
-{
-	text-decoration: none
-}
-
-#contentDiv a:visited
-{
-	text-decoration: none
-}
-
-#contentDiv a:active
-{
-	text-decoration: none
-}
-
-#contentDiv a:hover
-{
-	text-decoration: underline;
-	color: black;
+font-family:Monospace;
+font-size:small;
 }
 
 #bottomFixedDiv{
 position: fixed;
-border: 1px solid #999999;
-bottom: 1px;
+bottom: 0px;
 width: 100%;
-background-color: white;
+background-color: Transparent;
 z-index:100;
 }
 
-tr.white
+#bottomFixedHeader{
+position: relative;
+width: 95%;
+padding-left: 15px;
+padding-right: 15px;
+padding-bottom: 5px;
+padding-top: 5px;
+margin-left:auto;
+margin-right:auto;
+border-top: 1px solid #999999;
+background-color: #5c87b2;
+z-index:100;
+color: White;
+font-weight:bold;
+}
+
+#bottomFixedContent{
+position: relative;
+width: 95%;
+padding-left: 15px;
+padding-right: 15px;
+padding-bottom: 25px;
+padding-top: 10px;
+margin-left:auto;
+margin-right:auto;
+border-top: 1px solid #999999;
+bottom: 0px;
+background-color: white;
+z-index:100;
+color: Black;
+font-family:Monospace;
+font-size:small;
+}
+
+#bottomFixedContent a:link
+{
+	text-decoration:none;
+	color:Black;
+}
+
+#bottomFixedContent a:hover
+{
+	text-decoration:none;
+	color:Black;
+}
+
+#bottomFixedContent a:visited
+{
+	text-decoration:none;
+	color:Black;
+}
+
+#bottomFixedContent a:active
+{
+	text-decoration:none;
+	color:Black;
+}
+
+.tableClass
+{
+	margin-left: auto;
+	margin-right: auto;
+	table-layout:fixed;
+	width:100%;
+	white-space:nowrap;
+	
+}
+
+.tableClass tr td
+{
+	white-space:nowrap;
+	overflow:hidden;
+}
+
+.tableClass a:link
+{
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+.tableClass a:visited
+{
+	text-decoration: none;
+}
+
+.tableClass a:active
+{
+	text-decoration: none;
+}
+
+.tableClass a:hover
+{
+	text-decoration: underline;
+}
+
+
+/*for specific td depending on the pattern */
+
+.time
+{
+	width:180px;
+
+}
+
+.level
+{
+	width:50px;
+}
+
+.threadid
+{
+	/*width:50px;*/
+}
+
+.namespace
+{
+	/*width:50px;*/
+}
+
+.message
+{
+}
+
+.ndc
+{
+}
+
+
+/*every second row is different color*/
+
+.even
 {
 	background: white;
 	vertical-align: top;
 }
 
-tr.grey
+.odd
 {
 	background: #F4F4F4;
 	vertical-align: top;
 }
 
-tr.trace {
-	color:Black; }
+.selectedTD
+{
+	background-color:Yellow;
+}
+/*coloring of the text according to level settings*/
 
-tr.debug {
-	color:Gray; }
+.trace,
+.trace a:link,
+.trace a:visited
+{
+	color:Black; 
+}
 
-tr.info {
-	color:Green; }
+.debug ,
+.debug td a:link,
+.debug td a:visited
+{
+	color:Gray; 
+}
 
-tr.warn {
-	color:Orange; }
+.info,
+.info td a:link,
+.info td a:visited
+{
+	color:Green;
+}
 
-tr.error {
-	color:Red; }
+.warn,
+.warn td a:link,
+.warn td a:visited
+{
+	color:Orange;
+}
 
-tr.fatal {
-	color:Purple; }
+.error,
+.error td a:link,
+.error td a:visited
+{
+	color:Red;
+}
+
+.fatal,
+.fatal td a:link,
+.fatal td a:visited
+{
+	color:#FF19FF;
+}
+
+
+
+/*obsolete*/
 
 .invisible
 {
