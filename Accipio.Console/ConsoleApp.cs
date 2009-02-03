@@ -26,7 +26,7 @@ namespace Accipio.Console
             {
                 Uri uri = new Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase);
                 string localPath = uri.LocalPath;
-                string dir = Path.GetDirectoryName(localPath);
+                string dir = Path.GetFullPath(Path.GetDirectoryName(localPath));
                 return dir;
             }
         }
