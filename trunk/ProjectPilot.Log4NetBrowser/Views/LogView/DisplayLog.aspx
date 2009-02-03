@@ -9,105 +9,97 @@
 
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head id="Head1" runat="server">
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    <title><%= Html.Encode(ViewData["Title"]) %></title>
-    <link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
+<head id="Head1"><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /><title>
+	Log4NetBrowser
+</title><link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="http://jquery.com/src/jquery.js"></script>
 	<script type="text/javascript">
-	$(document).ready(function()
-	{
-			$("#menuDiv").click(function()
-			{
-			    $("#bottomFixedDiv").toggle("slow");
-		    });
-			
-			$("#patternDiv").click(function()
-			{
-			    $("#bottomFixedDiv").toggle("slow");
-		    });
+	    var prev = 0;
+	    var id = 0;
+	    $(document).ready(function() {
+	        $("#bottomFixedDiv").click(function() {
+	            $(this).slideUp("slow");
+	        });
 
-		    $("#bottomFixedDiv").click(function()
-		    {
-			    $(this).toggle("slow");
-			});
+	        $("tr").click(function() {
 
-			/*$("tr").click(function() {
-			    $("#bottomFixedDiv").toggle("slow");
-			});*/
-			$("tr").click(function() {
+	            id = $(this).attr("idShow");
+	            id = "#" + id;
+	            $(id).addClass('selectedTD');
+	            $(prev).removeClass('selectedTD');
+	            prev = id;
 
-			    var id = $(this).attr("idShow");
-			    id ="#" +id;
-			    var html = $(id).html();
-			    $("#bottomFixedDiv").html(html);
-
-			    $("#bottomFixedDiv:reallyvisible").slideDown("slow");   //slideUp = hidden
-			    if ($("#bottomFixedDiv").is(":hidden").bool) {
-			        alert("Test!");
-			        $("#bottomFixedDiv").is(":hidden").slideDown("slow");
-			    }
-
-			});
-		  
-	});
+	            var html = $(id).html();
+	            $("#bottomFixedContent").html(html);
+	            $("#bottomFixedDiv").slideDown("slow");   //slideUp = hidden
+	        });
+	    });
     </script>
 </head>
 <body>
 
 
-    
-    
+
+
+
 <div id="containerDiv">
     <div id="headerDiv">
-        <div id="menuDiv">Tole je meni. File select .... refresh...
-            <%= Html.ActionLink("Select File","FileSelect","Home")%>
+        <div id="menuDiv">
+           <div id="menuList">
+            <ul id="menu">
+                <li>
+                <a href="#">File Select</a>
+                </li>
+                <li>
+                <a href="#">Refresh</a>
+                </li>
+            </ul>
+            </div>
+            <div id="Title">Log4Net-Browser</div>
         </div>
-        <div id="patternDiv">Time | ThreadID | Message</div>
+        <div id="patternDiv">
+        <table class="tableClass" style="height:25px;" border="0" cellpadding="0" cellspacing="0">
+        <tr valign="middle">
+            
+                <td width="200px" align="center">Time</td>
+            
+                <td width="75px">ThreadID</td>
+            
+                <td width="780px" align="center">Message</td>
+            
+        </tr>
+        </table>
+        </div>
     </div>
 
     <div id="contentDiv">
         <%
         ParserContent = ViewData["Content"] as LogDisplay;
-        CalculateTableWidth(ParserContent.LineParse.ElementsPattern);
-        %>   
+        FindLevelIndex(ParserContent.LineParse.ElementsPattern);
+        %>  
         
-        <table border="0" cellpadding="0" cellspacing="0">
-        <tr valign="top">
-            <%for (int i = 0; i < TableWidths.Count(); i++)
-              {%>
-                <td width="<%Response.Write(TableWidths[i].ToString());%>px">&nbsp</td>
-            <%}%>
-        </tr>
-           <%
-              int idx = 0;
-               foreach (LogEntry logEntry in ParserContent.LineParse.ElementsLog) {
-                   Response.Write(LogEntryToString(logEntry, idx));
-                   idx++;
-            }%>
+        <table class="tableClass" border="0" cellpadding="0" cellspacing="0">
+            
+                   <%
+          int idx = 0;
+           foreach (LogEntry logEntry in ParserContent.LineParse.ElementsLog) {
+               Response.Write(LogEntryToString(logEntry, idx));
+               idx++;
+        }%>
         </table>
         
         
     </div>
-    to je container
 </div>
 
+<div id="bottomFixedDiv">
+    <div id="bottomFixedHeader">
+    Message content:
+    </div>
+    <div id="bottomFixedContent">
 
-<div id="bottomFixedDiv">Pirakazi oz. skrije me!
-	    <BR /><BR /><BR /><BR /> 
-    
-	    Test!!</div>
-
-
-<%
-    idx = 0;
-    foreach (LogEntry logEntry in ParserContent.LineParse.ElementsLog) {%>
-       <div class="invisible" id="<%Response.Write(idx);%>">
-       <%Response.Write(logEntry.Elements[2].ToString());
-       idx++;
-        %>
-       </div>
-<%}%>
+    </div>
+</div>
 
 </body>
 </hmtl>
