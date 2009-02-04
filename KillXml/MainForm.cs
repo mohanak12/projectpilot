@@ -17,7 +17,7 @@ namespace KillXml
             textBoxXPathError.Hide();
         }
 
-        public string XmlContent
+        public string XmlSource
         {
             get { return richTextBoxXmlContent.Text; }
             set { richTextBoxXmlContent.Text = value; }
@@ -27,6 +27,12 @@ namespace KillXml
         {
             get { return textBoxXPathExpression.Text; }
             set { textBoxXPathExpression.Text = value; }
+        }
+
+        public string XsltSource
+        {
+            get { return richTextBoxXsltSource.Text; }
+            set { richTextBoxXsltSource.Text = value; }
         }
 
         public void ListNamespaces(IDictionary<string, string> namespaces)
@@ -59,7 +65,7 @@ namespace KillXml
                 {
                     ListViewItem listViewItem = new ListViewItem();
                     listViewItem.Text = item.NodeName;
-                    listViewItem.SubItems.Add(item.NodeValue);
+                    listViewItem.SubItems.Add(item.NodeInnerXml);
                     listViewItem.SubItems.Add(item.NodePath);
 
                     listViewXPathResults.Items.Add(listViewItem);
@@ -78,11 +84,32 @@ namespace KillXml
             listViewXPathResults.Show();
         }
 
+        public void ShowDocumentInTransformBrowser(Uri transformedXmlUrl)
+        {
+            webBrowserTransformedXml.Navigate(transformedXmlUrl);
+        }
+
         private MainFormPresenter presenter;
 
         private void ButtonQuery_Click(object sender, EventArgs e)
         {
             presenter.ExecuteXPathQuery();
+        }
+
+        private void ButtonTransform_Click(object sender, EventArgs e)
+        {
+            presenter.OnTransformButtonClicked();
+        }
+
+        private void TextBoxXPathExpression_Enter(object sender, EventArgs e)
+        {
+            textBoxXPathExpression.SelectAll();
+        }
+
+        private void TextBoxXPathExpression_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                presenter.ExecuteXPathQuery();
         }
 
         private void TabControlLower_Selected(object sender, TabControlEventArgs e)

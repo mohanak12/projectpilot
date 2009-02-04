@@ -27,7 +27,7 @@ namespace ProjectPilot.Tests.AccipioTests
             Assert.AreEqual(0, cmd.Execute(args));
         }
 
-        [Test, Pending("TODO: Igor")] 
+        [Test] 
         public void MultilineErrorMessage()
         {
             if (Directory.Exists("TestLogs"))
@@ -54,7 +54,16 @@ namespace ProjectPilot.Tests.AccipioTests
                 xmlNamespaceManager);
 
             Assert.IsNotNull(node);
-            Assert.IsFalse(string.IsNullOrEmpty(node.Value));
+            Assert.IsFalse(string.IsNullOrEmpty(node.InnerText));
         }
+
+        /* TODO:
+         *  + vertical grid in TestRunsHistory
+         *  + sort runs in descending order
+         *  - add shortcuts for graphs
+         *  + solve the "error" issue
+         *  - do not show missing fields
+         *  + TestedSWVersion
+        */
     }
 }

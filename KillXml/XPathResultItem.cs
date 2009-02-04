@@ -6,7 +6,7 @@ namespace KillXml
         {
             this.nodeName = nodeName;
             this.nodePath = nodePath;
-            this.nodeValue = nodeValue;
+            this.nodeInnerXml = nodeValue;
         }
 
         public string NodeName
@@ -19,13 +19,13 @@ namespace KillXml
             get { return nodePath; }
         }
 
-        public string NodeValue
+        public string NodeInnerXml
         {
-            get { return nodeValue; }
+            get { return nodeInnerXml; }
         }
 
         private string nodeName;
         private string nodePath;
-        private string nodeValue;
+        private string nodeInnerXml;
     }
 }

@@ -10,6 +10,13 @@ namespace Accipio.Reporting
             get { return testRuns; }
         }
 
+        public IEnumerable<TestRun> ListTestRunsInDescendingOrder()
+        {
+            List<TestRun> runs = new List<TestRun>(testRuns);
+            runs.Reverse();
+            return runs;
+        }
+
         /// <summary>
         /// Searches for test run log files and loads them into the database.
         /// </summary>

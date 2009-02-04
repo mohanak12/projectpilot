@@ -59,6 +59,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
+		<ExcludeFromStyleCop>true</ExcludeFromStyleCop> 
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MainFormPresenter.cs" />
