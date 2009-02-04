@@ -241,7 +241,10 @@ namespace Accipio.Reporting
                     case "userStories":
 
                         ReadUserStory(testCaseRun, xmlReader);
+                        break;
 
+                    case "error":
+                        ReadError(testCaseRun, xmlReader);
                         break;
 
                     default:
@@ -258,6 +261,11 @@ namespace Accipio.Reporting
             xmlReader.Read();
         }
 
+        private void ReadError(TestCaseRun testCaseRun, XmlReader xmlReader)
+        {
+            testCaseRun.Message = xmlReader.ReadElementContentAsString();
+        }
+
         private void ReadUserStory(TestCaseRun testCaseRun, XmlReader xmlReader)
         {
             xmlReader.Read();
@@ -268,10 +276,6 @@ namespace Accipio.Reporting
                 {
                     case "userStory":
                         testCaseRun.AddUserStory(xmlReader.ReadElementContentAsString());
-                        break;
-
-                    case "exception":
-                        testCaseRun.Message = xmlReader.ReadElementContentAsString();
                         break;
 
                     default:

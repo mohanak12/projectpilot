@@ -41,12 +41,14 @@
                           <xsl:value-of select="g:value"/>
                         </xsl:for-each>
                       </userStory>
-                      <xsl:if test="../g:result/g:outcome[@status='failed']">
-                        <exception>
-                          <xsl:value-of select="../g:testLog/g:streams/g:stream/g:body/g:contents/g:marker/g:contents/g:section/g:contents/g:text"/>
-                        </exception>
-                      </xsl:if>
                     </userStories>
+                    <xsl:if test="../g:result/g:outcome[@status='failed']">
+                      <error>
+                        <xsl:for-each select="../g:testLog//g:marker/text()">
+                          Test
+                        </xsl:for-each>
+                      </error>
+                    </xsl:if>
                   </case>
                 </xsl:for-each>
               </suite>
