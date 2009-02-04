@@ -142,3 +142,10 @@ p
     padding-left: 20px;
     width: 90%;
 }
+
+.CellSeparated
+{
+    border-right-style: dotted;
+    border-right-width: thin;
+    border-right-color: #000000;
+}

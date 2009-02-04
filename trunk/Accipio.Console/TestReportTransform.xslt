@@ -44,8 +44,8 @@
                     </userStories>
                     <xsl:if test="../g:result/g:outcome[@status='failed']">
                       <error>
-                        <xsl:for-each select="../g:testLog//g:marker/text()">
-                          Test
+                        <xsl:for-each select="../g:testLog/g:streams/g:stream[@name='Failures']//g:text">
+                          <xsl:value-of select="."/>
                         </xsl:for-each>
                       </error>
                     </xsl:if>

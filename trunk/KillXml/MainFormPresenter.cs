@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.IO;
 using System.Xml;
+using System.Xml.Xsl;
 
 namespace KillXml
 {
@@ -17,13 +19,13 @@ namespace KillXml
         public void ExecuteXPathQuery()
         {
             XmlDocument xmlDocument = new XmlDocument();
-            xmlDocument.LoadXml(view.XmlContent);
+            xmlDocument.LoadXml(view.XmlSource);
 
             XmlNamespaceManager xmlNamespaceManager = new XmlNamespaceManager(xmlDocument.NameTable);
 
             IDictionary<string, string> namespacesUsed = ListNamespacesUsed(xmlDocument);
             if (namespacesUsed.ContainsKey(String.Empty))
-                xmlNamespaceManager.AddNamespace("def", namespacesUsed[string.Empty]);
+                xmlNamespaceManager.AddNamespace("j", namespacesUsed[string.Empty]);
 
             XmlNodeList nodes = null;
             try
@@ -48,7 +50,7 @@ namespace KillXml
                     cursorNode = cursorNode.ParentNode;
                 }
 
-                XPathResultItem item = new XPathResultItem(node.Name, nodePath, node.Value);
+                XPathResultItem item = new XPathResultItem(node.Name, nodePath, node.InnerXml);
                 results.Add(item);
             }
 
@@ -58,10 +60,58 @@ namespace KillXml
         public void OnNamespacesTabShown()
         {
             XmlDocument xmlDocument = new XmlDocument();
-            xmlDocument.LoadXml(view.XmlContent);
+            xmlDocument.LoadXml(view.XmlSource);
 
             IDictionary<string, string> namespacesUsed = ListNamespacesUsed(xmlDocument);
             view.ListNamespaces (namespacesUsed);
+        }
+
+        public void OnTransformButtonClicked()
+        {
+            XsltSettings xsltSettings = new XsltSettings(true, true);
+            XmlDocument xsltDoc = new XmlDocument();
+            xsltDoc.LoadXml(view.XsltSource);
+
+            XmlUrlResolver resolver = new XmlUrlResolver();
+            XslCompiledTransform transform = new XslCompiledTransform(true);
+
+            try
+            {
+                transform.Load(xsltDoc, xsltSettings, resolver);
+            }
+            catch (XsltException ex)
+            {
+                ShowXsltError("Error in XSLT document: {0}", ex.Message);
+                return;
+            }
+
+            const string TransformedXmlFileName = "transformed.xml";
+
+            using (StringReader reader = new StringReader(view.XmlSource))
+            {
+                XmlReader xmlReader = XmlReader.Create(reader);
+                using (XmlWriter writer = XmlWriter.Create(TransformedXmlFileName))
+                    transform.Transform(xmlReader, writer);
+            }
+
+            ShowFileInTransformBrowser(TransformedXmlFileName);
+        }
+
+        private void ShowXsltError(string messageFormat, params object[] args)
+        {
+            File.WriteAllText("error.txt", String.Format(CultureInfo.InvariantCulture, messageFormat, args));
+            ShowFileInTransformBrowser("error.txt");
+        }
+
+        private void ShowFileInTransformBrowser(string fileName)
+        {
+            Uri uri = new Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase);
+            string localPath = uri.LocalPath;
+            string dir = Path.GetDirectoryName(localPath);
+
+            Uri pageUrl = new Uri(Path.Combine(dir, fileName));
+
+            view.ShowDocumentInTransformBrowser(pageUrl);
         }
 
         private void AnalyseNamespacesUsed(XmlElement element, IDictionary<string, string> namespacesUsed)

@@ -21,13 +21,13 @@
                     <th>total</th>
                     <th>successful</th>
                     <th>failed</th>
-                    <th>not impl.</th>
+                    <th class="CellSeparated">not impl.</th>
                     <th>total</th>
                     <th>successful</th>
                     <th>failed</th>
                     <th>not impl.</th>
                 </tr>
-                #foreach( $testRun in $db.TestRuns )
+                #foreach( $testRun in $db.ListTestRunsInDescendingOrder() )
                     #odd
                 <tr class="TableRowOdd">
                     #even
@@ -35,11 +35,11 @@
                     #each
                     <td align="left"><a href="TestRuns/$testRun.FileName">$testRun.EndTime</a></td>
                     <td align="center">$testRun.DurationString</td>
-                    <td align="center">$testRun.TestedSoftwareVersion</td>
+                    <td align="center">$!testRun.TestedSoftwareVersion</td>
                     <td align="center">$testRun.TestCasesTotal</td>
                     <td align="center">$testRun.TestCasesSuccess</td>
                     <td align="center">$testRun.TestCasesFail</td>
-                    <td align="center">$testRun.TestCasesNotImplemented</td>
+                    <td align="center" class="CellSeparated">$testRun.TestCasesNotImplemented</td>
                     <td align="center">$testRun.UserStoriesTotal</td>
                     <td align="center">$testRun.UserStoriesSuccess</td>
                     <td align="center">$testRun.UserStoriesFail</td>
