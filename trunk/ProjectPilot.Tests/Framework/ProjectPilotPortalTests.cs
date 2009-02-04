@@ -1,6 +1,6 @@
 using MbUnit.Framework;
 
-namespace ProjectPilot.Tests.AccipioTests
+namespace ProjectPilot.Tests.Framework
 {
     /// <summary>
     /// Contains test cases which cover search and selection of portal projects.

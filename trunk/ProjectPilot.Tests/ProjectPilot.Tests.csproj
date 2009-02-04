@@ -95,9 +95,9 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AccipioTests\HtmlTestReportTests.cs" />
-    <Compile Include="AccipioTests\ProjectPilotPortalTests.cs" />
+    <Compile Include="Framework\ProjectPilotPortalTests.cs" />
     <Compile Include="AccipioTests\GallioReportConverterTests.cs" />
-    <Compile Include="AccipioTests\ProjectPortalTestRunner.cs" />
+    <Compile Include="Framework\ProjectPortalTestRunner.cs" />
     <Compile Include="AccipioTests\TestRunLogParserTests.cs" />
     <Compile Include="AccipioTests\ValidatingTestSuiteSchemaTests.cs" />
     <Compile Include="AccipioTests\TestSuiteSchemaGeneratorTests.cs" />

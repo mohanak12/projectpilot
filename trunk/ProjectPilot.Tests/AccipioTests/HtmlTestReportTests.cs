@@ -16,6 +16,9 @@ namespace ProjectPilot.Tests.AccipioTests
             TestRunsDatabase db = new TestRunsDatabase();
             db.LoadDatabase(@"..\..\..\Data\Samples\", @"TestResults.xml");
 
+            for (int i = 0; i < 100; i++)
+                db.TestRuns.Add(db.TestRuns[0]);
+
             HtmlTestReportGeneratorSettings settings = new HtmlTestReportGeneratorSettings("TestProject");
             settings.OutputDirectory = "reports";
             settings.TemplatesDirectory = @"..\..\..\Accipio.Console\Templates";

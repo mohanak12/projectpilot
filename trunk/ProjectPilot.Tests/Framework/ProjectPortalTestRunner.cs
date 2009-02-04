@@ -3,7 +3,7 @@ using System.Globalization;
 using Accipio.TestFramework;
 using MbUnit.Framework;
 
-namespace ProjectPilot.Tests.AccipioTests
+namespace ProjectPilot.Tests.Framework
 {
     /// <summary>
     /// Selenium actions for ProjectPilot portal tests.
