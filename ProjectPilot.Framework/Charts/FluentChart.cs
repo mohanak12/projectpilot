@@ -41,6 +41,17 @@ namespace ProjectPilot.Framework.Charts
             return this;
         }
 
+        public FluentChart AddData(IList<int> dataValues)
+        {
+            int minValue = 0;
+            int maxValue = dataValues.Count - 1;
+
+            for (int i = minValue; i <= maxValue; i++)
+                AddDataPair(i, dataValues[i]);
+
+            return this;
+        }
+
         public FluentChart AddDataByDate(SortedList<DateTime, double> dataValues, DateTime minDate, DateTime maxDate)
         {
             for (DateTime date = minDate; date <= maxDate; date = date.AddDays(1))
@@ -79,6 +90,12 @@ namespace ProjectPilot.Framework.Charts
             return this;
         }
 
+        public FluentChart AddDataPair(double xValue, double yValue)
+        {
+            currentCurveItem.AddPoint(xValue, yValue);
+            return this;
+        }
+
         public FluentChart AddLineSeries(string label, string color)
         {
             LineItem lineItem = new LineItem(label);
@@ -86,12 +103,6 @@ namespace ProjectPilot.Framework.Charts
             lineItem.Symbol = new Symbol(SymbolType.None, Color.Black);
             zedGraph.GraphPane.CurveList.Add(lineItem);
             currentCurveItem = lineItem;
-            return this;
-        }
-
-        public FluentChart AddDataPair(double xValue, double yValue)
-        {
-            currentCurveItem.AddPoint(xValue, yValue);
             return this;
         }
 
@@ -132,6 +143,12 @@ namespace ProjectPilot.Framework.Charts
         {
             LineItem lineItem = (LineItem)currentCurveItem;
             lineItem.Line.Width = lineWidth;
+            return this;
+        }
+
+        public FluentChart SetGraphSize (int width, int height)
+        {
+            zedGraph.GraphPane.Rect = new RectangleF(0, 0, width, height);
             return this;
         }
 

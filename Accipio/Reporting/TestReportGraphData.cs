@@ -1,72 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Accipio.Reporting
 {
-    [SuppressMessage("Microsoft.Design", "CA1053:StaticHolderTypesShouldNotHaveConstructors")]
     public class TestReportGraphData
     {
-        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
-        public static IDictionary<string, SortedList<DateTime, double>> FetchTestCasesRunHistory(IEnumerable<TestRun> runs)
+        public TestReportGraphData(string graphName, string graphFileName)
         {
-            IDictionary<string, SortedList<DateTime, double>> testRunHistory
-                = new Dictionary<string, SortedList<DateTime, double>>
-                      {
-                          { "success", new SortedList<DateTime, double>() },
-                          { "failed", new SortedList<DateTime, double>() },
-                          { "pending", new SortedList<DateTime, double>() }
-                      };
+            this.graphName = graphName;
+            this.graphFileName = graphFileName;
+        }
 
-            foreach (TestRun testRun in runs)
-            {
-                DateTime date = testRun.EndTime;
+        public string GraphFileName
+        {
+            get { return graphFileName; }
+        }
 
-                // add number of success test cases
-                if (false == testRunHistory["success"].ContainsKey(date))
-                    testRunHistory["success"].Add(date, testRun.TestCasesSuccess);
-
-                // add number of failed test cases
-                if (false == testRunHistory["failed"].ContainsKey(date))
-                    testRunHistory["failed"].Add(date, testRun.TestCasesFail);
-
-                // add number of not implemented test cases
-                if (false == testRunHistory["pending"].ContainsKey(date))
-                    testRunHistory["pending"].Add(date, testRun.TestCasesNotImplemented);
-            }
-
-            return testRunHistory;
+        public string GraphName
+        {
+            get { return graphName; }
         }
 
         [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
-        public static IDictionary<string, SortedList<DateTime, double>> FetchUserStoriesRunHistory(IEnumerable<TestRun> runs)
+        public IDictionary<string, List<int>> GraphValues
         {
-            IDictionary<string, SortedList<DateTime, double>> testRunHistory
-                = new Dictionary<string, SortedList<DateTime, double>>
-                      {
-                          { "success", new SortedList<DateTime, double>() },
-                          { "failed", new SortedList<DateTime, double>() },
-                          { "pending", new SortedList<DateTime, double>() }
-                      };
-
-            foreach (TestRun testRun in runs)
-            {
-                DateTime date = testRun.EndTime;
-
-                // add number of success user stories
-                if (false == testRunHistory["success"].ContainsKey(date))
-                    testRunHistory["success"].Add(date, testRun.UserStoriesSuccess);
-
-                // add number of failed user stories
-                if (false == testRunHistory["failed"].ContainsKey(date))
-                    testRunHistory["failed"].Add(date, testRun.UserStoriesFail);
-
-                // add number of not implemented user stories
-                if (false == testRunHistory["pending"].ContainsKey(date))
-                    testRunHistory["pending"].Add(date, testRun.UserStoriesNotImplemented);
-            }
-
-            return testRunHistory;
+            get { return graphValues; }
         }
+
+        public int ValuesCount
+        {
+            get { return graphValues.Values[0].Count; }
+        }
+
+        public void AddDataValue(string series, int value)
+        {
+            graphValues[series].Add(value);
+        }
+
+        public void AddSeries(params string[] seriesNames)
+        {
+            foreach (string seriesName in seriesNames)
+                graphValues.Add(seriesName, new List<int>());
+        }
+
+        private string graphFileName;
+        private string graphName;
+        private SortedList<string, List<int>> graphValues = new SortedList<string, List<int>>();
     }
 }

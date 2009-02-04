@@ -2,17 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Text;
 using Accipio.Reporting;
-using Commons.Collections;
 using NVelocity;
 using NVelocity.App;
 using NVelocity.Runtime;
-using ProjectPilot.Framework.Charts;
-using ZedGraph;
 
 namespace Accipio
 {
@@ -25,6 +21,20 @@ namespace Accipio
         public HtmlTestReportGenerator(HtmlTestReportGeneratorSettings settings)
         {
             this.settings = settings;
+            graphDataGenerators.Add(new TestRunsThroughTimeGraphDataGenerator());
+            graphDataGenerators.Add(new UserStoriesThroughTimeGraphDataGenerator());
+            graphGenerator = new DefaultTestReportGraphGenerator();
+        }
+
+        public IList<ITestReportGraphDataGenerator> GraphDataGenerators
+        {
+            get { return graphDataGenerators; }
+        }
+
+        public ITestReportGraphGenerator GraphGenerator
+        {
+            get { return graphGenerator; }
+            set { graphGenerator = value; }
         }
 
         /// <summary>
@@ -73,50 +83,10 @@ namespace Accipio
                     context);
             }
 
-            // draw test cases report graph
-            IDictionary<string, SortedList<DateTime, double>> fetchHistory =
-                TestReportGraphData.FetchTestCasesRunHistory(testRunDatabase.TestRuns);
-
-            DrawTestReportGraph(
-                testCasesHistoryGraphFileName, 
-                "Number of test cases", 
-                testRunDatabase.TestRuns,
-                fetchHistory);
-
-            // draw user stories report graph
-            fetchHistory = TestReportGraphData.FetchUserStoriesRunHistory(testRunDatabase.TestRuns);
-
-            DrawTestReportGraph(
-                userStoriesHistoryGraphFileName,
-                "Number of user stories",
-                testRunDatabase.TestRuns,
-                fetchHistory);
-        }
-
-        private void DrawTestReportGraph(
-            string graphFileName, 
-            string yAxisTitle, 
-            IList<TestRun> runs,
-            IDictionary<string, SortedList<DateTime, double>> fetchHistory)
-        {
-            using (FluentChart chart = FluentChart.Create(string.Empty, string.Empty, yAxisTitle))
+            foreach (ITestReportGraphDataGenerator generator in graphDataGenerators)
             {
-                chart
-                    .SetBarSettings(BarType.Stack, 0)
-                    .UseDateAsAxisY(runs[0].EndTime, runs[runs.Count - 1].EndTime);
-
-                string[] colors = { "green", "red", "yellow" };
-
-                int i = 0;
-                foreach (string status in fetchHistory.Keys)
-                {
-                    chart
-                        .AddBarSeries(status, colors[i++])
-                        .AddDataByTime(fetchHistory[status], runs[0].EndTime, runs[runs.Count - 1].EndTime);
-                }
-
-                chart
-                    .ExportToBitmap(Path.Combine(settings.OutputDirectory, graphFileName), ImageFormat.Png, 1024, 800);
+                TestReportGraphData graphData = generator.GenerateData(testRunDatabase);
+                graphGenerator.GenerateGraph(graphData, settings);
             }
         }
 
@@ -159,7 +129,7 @@ namespace Accipio
         }
 
         private readonly HtmlTestReportGeneratorSettings settings;
-        private const string TestCaseGraph = "TestCases";
-        private const string UserStoriesGraph = "UserStories";
+        private List<ITestReportGraphDataGenerator> graphDataGenerators = new List<ITestReportGraphDataGenerator>();
+        private ITestReportGraphGenerator graphGenerator;
     }
 }
