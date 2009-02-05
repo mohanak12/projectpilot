@@ -50,7 +50,7 @@
            <div id="menuList">
             <ul id="menu">
                 <li>
-                <a href="#">File Select</a>
+                <a href="#"><%Response.Write(Html.ActionLink("File select", "DisplayLogFiles", "LogView"));%></a>
                 </li>
                 <li>
                 <a href="#">Refresh</a>
