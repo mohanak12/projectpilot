@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
 
 namespace Accipio.Reporting
 {
@@ -27,6 +28,11 @@ namespace Accipio.Reporting
             get { return graphValues; }
         }
 
+        public IDictionary<string, string> SeriesColors
+        {
+            get { return seriesColors; }
+        }
+
         public int ValuesCount
         {
             get { return graphValues.Values[0].Count; }
@@ -37,14 +43,22 @@ namespace Accipio.Reporting
             graphValues[series].Add(value);
         }
 
-        public void AddSeries(params string[] seriesNames)
+        public void AddSeries(string seriesName, string seriesColor)
         {
-            foreach (string seriesName in seriesNames)
-                graphValues.Add(seriesName, new List<int>());
+            seriesOrder.Add(seriesName);
+            graphValues.Add(seriesName, new List<int>());
+            seriesColors.Add(seriesName, seriesColor);
+        }
+
+        public IList<string> ListSeriesInOrder()
+        {
+            return seriesOrder;
         }
 
         private string graphFileName;
         private string graphName;
         private SortedList<string, List<int>> graphValues = new SortedList<string, List<int>>();
+        private Dictionary<string, string> seriesColors = new Dictionary<string, string>();
+        private List<string> seriesOrder = new List<string>();
     }
 }

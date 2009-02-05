@@ -17,7 +17,7 @@ namespace ProjectPilot.Framework.Charts
         public FluentChart AddBarSeries(string label, string color)
         {
             BarItem barItem = new BarItem(label);
-            barItem.Color = Color.FromName(color);
+            barItem.Color = ColorTranslator.FromHtml(color);
             barItem.Bar.Border = new Border(false, Color.Black, 0);
             barItem.Bar.Fill = new Fill(barItem.Color);
             zedGraph.GraphPane.CurveList.Add(barItem);
@@ -99,11 +99,60 @@ namespace ProjectPilot.Framework.Charts
         public FluentChart AddLineSeries(string label, string color)
         {
             LineItem lineItem = new LineItem(label);
-            lineItem.Color = Color.FromName(color);
+            lineItem.Color = ColorTranslator.FromHtml(color);
             lineItem.Symbol = new Symbol(SymbolType.None, Color.Black);
             zedGraph.GraphPane.CurveList.Add(lineItem);
             currentCurveItem = lineItem;
             return this;
+        }
+
+        public FluentChart AddStackedData(IList<int> dataValues)
+        {
+            int minValue = 0;
+            int maxValue = dataValues.Count - 1;
+
+            for (int i = minValue; i <= maxValue; i++)
+                AddStackedDataPair(i, dataValues[i]);
+
+            return this;
+        }
+
+        public FluentChart AddStackedData(SortedList<int, double> dataValues)
+        {
+            int minValue = 0;
+            int maxValue = dataValues.Keys[dataValues.Count - 1];
+
+            for (int i = minValue; i <= maxValue; i++)
+            {
+                if (dataValues.ContainsKey(i))
+                    AddStackedDataPair(i, dataValues[i]);
+                else
+                    AddStackedDataPair(i, 0);
+            }
+
+            return this;
+        }
+
+        public FluentChart AddStackedDataPair(double xValue, double yValue)
+        {
+            double stackedValue = 0;
+            if (stackedValues.ContainsKey(xValue))
+                stackedValue = stackedValues[xValue];
+
+            currentCurveItem.AddPoint(xValue, yValue + stackedValue);
+            stackedValues[xValue] = yValue + stackedValue;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or
+        /// resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         public FluentChart ExportToBitmap (
@@ -152,16 +201,47 @@ namespace ProjectPilot.Framework.Charts
             return this;
         }
 
+        /// <summary>
+        /// Sets the color filling for the current line item.
+        /// </summary>
+        /// <param name="color">The color to use for filling.</param>
+        /// <returns>This same instance of the <see cref="FluentChart"/> object.</returns>
+        public FluentChart SetFilling(string color)
+        {
+            ((LineItem)currentCurveItem).Line.Fill = new Fill(ColorTranslator.FromHtml(color));
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the global font for the chart.
+        /// </summary>
+        /// <param name="familyName">Name of the font family.</param>
+        /// <param name="emSize">Font size.</param>
+        /// <param name="isBold">if set to <c>true</c> the font will be bold.</param>
+        /// <returns>
+        /// This same instance of the <see cref="FluentChart"/> object.
+        /// </returns>
+        public FluentChart SetFont(string familyName, float emSize, bool isBold)
+        {
+            SetFontSpec(zedGraph.GraphPane.Title.FontSpec, familyName, emSize, isBold);
+            SetFontSpec(zedGraph.GraphPane.YAxis.Title.FontSpec, familyName, emSize, isBold);
+            SetFontSpec(zedGraph.GraphPane.YAxis.Scale.FontSpec, familyName, emSize, isBold);
+            SetFontSpec(zedGraph.GraphPane.XAxis.Scale.FontSpec, familyName, emSize, isBold);
+            SetFontSpec(zedGraph.GraphPane.XAxis.Title.FontSpec, familyName, emSize, isBold);
+            SetFontSpec(zedGraph.GraphPane.Legend.FontSpec, familyName, emSize, isBold);
+            return this;
+        }
+
         [CLSCompliant(false)]
         public FluentChart SetSymbol(SymbolType symbolType, string symbolColor, float symbolSize, bool fillSymbol)
         {
             LineItem lineItem = (LineItem)currentCurveItem;
-            lineItem.Symbol = new Symbol(symbolType, Color.FromName(symbolColor));
+            lineItem.Symbol = new Symbol(symbolType, ColorTranslator.FromHtml(symbolColor));
             lineItem.Symbol.Size = symbolSize;
             
             if (fillSymbol)
             {
-                lineItem.Symbol.Fill = new Fill(Color.FromName(symbolColor));
+                lineItem.Symbol.Fill = new Fill(ColorTranslator.FromHtml(symbolColor));
             }
 
             return this;
@@ -190,6 +270,25 @@ namespace ProjectPilot.Framework.Charts
             return this;
         }
 
+        /// <summary>
+        /// Disposes the object.
+        /// </summary>
+        /// <param name="disposing">If <code>false</code>, cleans up native resources. 
+        /// If <code>true</code> cleans up both managed and native resources</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (false == disposed)
+            {
+                if (disposing)
+                {
+                    if (zedGraph != null)
+                        zedGraph.Dispose();
+                }
+
+                disposed = true;
+            }
+        }
+
         private FluentChart(string chartTitle, string xAxisTitle, string yAxisTitle)
         {
             zedGraph = new ZedGraphControl();
@@ -213,42 +312,16 @@ namespace ProjectPilot.Framework.Charts
             }
         }
 
-        #region IDisposable Members
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or
-        /// resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
+        private void SetFontSpec (FontSpec fontSpec, string familyName, float emSize, bool isBold)
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            fontSpec.Family = familyName;
+            fontSpec.Size = emSize;
+            fontSpec.IsBold = isBold;
         }
 
-        /// <summary>
-        /// Disposes the object.
-        /// </summary>
-        /// <param name="disposing">If <code>false</code>, cleans up native resources. 
-        /// If <code>true</code> cleans up both managed and native resources</param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (false == disposed)
-            {
-                if (disposing)
-                {
-                    if (zedGraph != null)
-                        zedGraph.Dispose();
-                }
-
-                disposed = true;
-            }
-        }
-
-        private bool disposed;
-
-        #endregion
-                
-        private ZedGraphControl zedGraph;
         private CurveItem currentCurveItem;
+        private bool disposed;
+        private Dictionary<double, double> stackedValues = new Dictionary<double, double>();
+        private ZedGraphControl zedGraph;
     }
 }
