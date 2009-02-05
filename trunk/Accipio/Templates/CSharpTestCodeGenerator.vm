@@ -32,20 +32,32 @@ namespace ${testSuite.Namespace}
 #else
                     .AddTag("${tag}");
 #end
-#set( $tagCounter = $tagCounter + 1	 )
-#end
+#set( $tagCounter = ${tagCounter} + 1	 )
+#end ##foreach tag
+#if ( ${testCase.TestSteps.Count} > 0 )
+#set( $counter = 1 )
 
                 runner
-#set( $counter = 1 )
 #foreach ($testAction in ${testCase.TestSteps})
                     // ${testSuite.BusinessActionData.GetAction("${testAction.ActionName}").Description}
-                    .${testAction.ActionName}
-#set( $counter = ${	counter} + 1 )
+#if ( ${testAction.HasParameters} )
+#foreach ($actionParameter in ${testAction.ActionParameters} )
+#if ( ${actionParameter.ParameterKey} == "int" || ${actionParameter.ParameterKey} == "decimal" )
+                    .${testAction.ActionName}(${actionParameter.ParameterValue})
+#else
+                    .${testAction.ActionName}("${actionParameter.ParameterValue}")
+#end
+#end
+#else
+                    .${testAction.ActionName}()
+#end
+#set( $counter = ${counter} + 1 )
+#end
 #end
             }
         }
 
-#end
+#end ##foreach testcase
 
         /// <summary>
         /// Test fixture setup code.
