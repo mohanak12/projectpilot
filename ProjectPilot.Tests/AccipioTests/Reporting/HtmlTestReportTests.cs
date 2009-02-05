@@ -2,7 +2,7 @@
 using Accipio.Reporting;
 using MbUnit.Framework;
 
-namespace ProjectPilot.Tests.AccipioTests
+namespace ProjectPilot.Tests.AccipioTests.Reporting
 {
     [TestFixture]
     public class HtmlTestReportTests
@@ -16,7 +16,7 @@ namespace ProjectPilot.Tests.AccipioTests
             TestRunsDatabase db = new TestRunsDatabase();
             db.LoadDatabase(@"..\..\..\Data\Samples\", @"TestResults.xml");
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 20; i++)
                 db.TestRuns.Add(db.TestRuns[0]);
 
             HtmlTestReportGeneratorSettings settings = new HtmlTestReportGeneratorSettings("TestProject");

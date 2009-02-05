@@ -6,17 +6,19 @@ namespace Accipio.Reporting
     {
         public TestReportGraphData GenerateData(TestRunsDatabase testRunsDatabase)
         {
-            TestReportGraphData data = new TestReportGraphData("test cases", "TestCasesHistoyGraph.png");
-            data.AddSeries("success", "failed", "pending");
-
+            TestReportGraphData graphData = new TestReportGraphData("test cases", "TestCasesHistoyGraph.png");
+            graphData.AddSeries("successful", "#75FF47");
+            graphData.AddSeries("failed", "#FF6B90");
+            graphData.AddSeries("not implemented", "#FFFCA8");
+                
             foreach (TestRun testRun in testRunsDatabase.TestRuns)
             {
-                data.AddDataValue("success", testRun.TestCasesSuccess);
-                data.AddDataValue("failed", testRun.TestCasesFail);
-                data.AddDataValue("pending", testRun.TestCasesNotImplemented);
+                graphData.AddDataValue("successful", testRun.TestCasesSuccess);
+                graphData.AddDataValue("failed", testRun.TestCasesFail);
+                graphData.AddDataValue("not implemented", testRun.TestCasesNotImplemented);
             }
 
-            return data;
+            return graphData;
         }
     }
 }

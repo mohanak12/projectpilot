@@ -94,7 +94,8 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="AccipioTests\HtmlTestReportTests.cs" />
+    <Compile Include="AccipioTests\Reporting\HtmlTestReportTests.cs" />
+    <Compile Include="AccipioTests\Reporting\GraphGenerationTests.cs" />
     <Compile Include="Framework\ProjectPilotPortalTests.cs" />
     <Compile Include="AccipioTests\GallioReportConverterTests.cs" />
     <Compile Include="Framework\ProjectPortalTestRunner.cs" />

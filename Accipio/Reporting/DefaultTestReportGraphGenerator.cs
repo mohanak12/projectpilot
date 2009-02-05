@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.IO;
 using ProjectPilot.Framework.Charts;
@@ -16,17 +17,15 @@ namespace Accipio.Reporting
             {
                 chart
                     .SetGraphSize(GraphWidth, GraphHeight)
-                    .SetBarSettings(BarType.Stack, 0)
+                    .SetFont("Palatino Linotype", 11, true)
                     .SetXAxis(0, graphData.ValuesCount- 1);
 
-                string[] colors = { "green", "red", "yellow" };
-
-                int i = 0;
-                foreach (string status in graphData.GraphValues.Keys)
+                foreach (string seriesName in graphData.ListSeriesInOrder())
                 {
                     chart
-                        .AddBarSeries(status, colors[i++])
-                        .AddData(graphData.GraphValues[status]);
+                        .AddLineSeries(seriesName, graphData.SeriesColors[seriesName])
+                        .SetFilling (graphData.SeriesColors[seriesName])
+                        .AddStackedData(graphData.GraphValues[seriesName]);
                 }
 
                 chart
