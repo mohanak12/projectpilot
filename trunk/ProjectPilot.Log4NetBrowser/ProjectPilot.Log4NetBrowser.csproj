@@ -114,6 +114,13 @@
     <Compile Include="Views\LogView\DisplayLog.aspx.designer.cs">
       <DependentUpon>DisplayLog.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\LogView\DisplayLogFiles.aspx.cs">
+      <DependentUpon>DisplayLogFiles.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\LogView\DisplayLogFiles.aspx.designer.cs">
+      <DependentUpon>DisplayLogFiles.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Shared\Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -129,6 +136,7 @@
     <Content Include="Views\Home\FileSelect.aspx" />
     <Content Include="Views\Home\Ndc.aspx" />
     <Content Include="Views\LogView\DisplayLog.aspx" />
+    <Content Include="Views\LogView\DisplayLogFiles.aspx" />
     <Content Include="Web.config" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\jquery-1.2.6.js" />

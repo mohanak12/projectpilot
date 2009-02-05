@@ -8,9 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ProjectPilot.Log4NetBrowser.Views.LogView {
-    
-    
-    public partial class DisplayLog {
+namespace ProjectPilot.Log4NetBrowser.Views.LogView
+{
+
+
+    public partial class DisplayLogFiles
+    {
     }
 }
