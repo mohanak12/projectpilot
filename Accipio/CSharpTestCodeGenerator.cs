@@ -64,61 +64,65 @@ namespace Accipio
                 // add test case tags
                 AddTags(testCase);
 
-                WriteLine(string.Empty);
-                WriteLine("                runner");
                 // add test case actions
                 IList<TestAction> testActions = testCase.TestSteps;
-                int counter = 1;
-                foreach (TestAction testAction in testActions)
+                if (testActions.Count > 0)
                 {
-                    AddActionDescription(testAction, businessActionData);
-                    StringBuilder line = new StringBuilder();
-                    line.AppendFormat(CultureInfo.InvariantCulture, "                    .{0}(", testAction.ActionName);
-
-                    if (testAction.HasParameters)
+                    WriteLine(string.Empty);
+                    WriteLine("                runner");
+                    int counter = 1;
+                    foreach (TestAction testAction in testActions)
                     {
-                        string commaSeparator = string.Empty;
+                        AddActionDescription(testAction, businessActionData);
+                        StringBuilder line = new StringBuilder();
+                        line.AppendFormat(CultureInfo.InvariantCulture, "                    .{0}(", testAction.ActionName);
 
-                        // get business action parameters
-                        List<BusinessActionParameters> businessActionParameters =
-                            (List<BusinessActionParameters>)businessActionData.GetAction(testAction.ActionName).ActionParameters;
-
-                        foreach (TestActionParameter actionParameters in testAction.ActionParameters)
+                        if (testAction.HasParameters)
                         {
-                            TestActionParameter tempParameter = actionParameters;
+                            string commaSeparator = string.Empty;
 
-                            BusinessActionParameters parameterType =
-                                businessActionParameters.Find(parameters => parameters.ParameterName ==
-                                                                            tempParameter.ParameterKey);
-                            if (parameterType.ParameterType == "int" || parameterType.ParameterType == "decimal")
-                            {
-                                line.AppendFormat(
-                                CultureInfo.InvariantCulture,
-                                "{1}{0}",
-                                actionParameters.ParameterValue,
-                                commaSeparator);
-                            }
-                            else
-                            {
-                                line.AppendFormat(
-                                CultureInfo.InvariantCulture,
-                                "{1}\"{0}\"",
-                                actionParameters.ParameterValue,
-                                commaSeparator);
-                            }
+                            // get business action parameters
+                            List<BusinessActionParameters> businessActionParameters =
+                                (List<BusinessActionParameters>)
+                                businessActionData.GetAction(testAction.ActionName).ActionParameters;
 
-                            commaSeparator = ", ";
+                            foreach (TestActionParameter actionParameters in testAction.ActionParameters)
+                            {
+                                TestActionParameter tempParameter = actionParameters;
+
+                                BusinessActionParameters parameterType =
+                                    businessActionParameters.Find(parameters => parameters.ParameterName ==
+                                                                                tempParameter.ParameterKey);
+                                if (parameterType.ParameterType == "int" || parameterType.ParameterType == "decimal")
+                                {
+                                    line.AppendFormat(
+                                        CultureInfo.InvariantCulture,
+                                        "{1}{0}",
+                                        actionParameters.ParameterValue,
+                                        commaSeparator);
+                                }
+                                else
+                                {
+                                    line.AppendFormat(
+                                        CultureInfo.InvariantCulture,
+                                        "{1}\"{0}\"",
+                                        actionParameters.ParameterValue,
+                                        commaSeparator);
+                                }
+
+                                commaSeparator = ", ";
+                            }
                         }
+
+                        line.Append(")");
+
+                        if (counter == testActions.Count)
+                            line.Append(";");
+
+                        WriteLine(line.ToString());
+
+                        counter++;
                     }
-
-                    line.Append(")");
-
-                    if (counter == testActions.Count)
-                        line.Append(";");
-
-                    WriteLine(line.ToString());
-
-                    counter++;
                 }
 
                 WriteLine("            }");

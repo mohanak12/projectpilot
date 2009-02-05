@@ -25,13 +25,23 @@ namespace ${testSuite.Namespace}
             {
                 runner
                     .SetDescription("${testCase.TestCaseDescription}")
+#set( $tagCounter = 1 )
 #foreach ( $tag in ${testCase.Tags})
+#if( ${tagCounter} == ${testCase.Tags.Count} )
+                    .AddTag("${tag}")
+#else
                     .AddTag("${tag}");
+#end
+#set( $tagCounter = $tagCounter + 1	 )
 #end
 
                 runner
-                    // Assert the operation was successful
-                    .AssertOperationSuccessful();
+#set( $counter = 1 )
+#foreach ($testAction in ${testCase.TestSteps})
+                    // ${testSuite.BusinessActionData.GetAction("${testAction.ActionName}").Description}
+                    .${testAction.ActionName}
+#set( $counter = ${	counter} + 1 )
+#end
             }
         }
 
