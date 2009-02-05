@@ -27,6 +27,10 @@ namespace ProjectPilot.Log4NetBrowser.Views.LogView
         {
             string lineOutput = String.Empty;
 
+            lineOutput += "<a name=\"";
+            lineOutput += index.ToString();
+            lineOutput += "\"></a>";
+
             if (index % 2 == 0)
                 lineOutput += "<tr class=\"even ";
             else
@@ -54,7 +58,9 @@ namespace ProjectPilot.Log4NetBrowser.Views.LogView
                 }
                 
                 lineOutput += "\">";
-                lineOutput += "<a href=\"#\">";
+                lineOutput += "<a href=\"#";
+                lineOutput += index.ToString();
+                lineOutput += "\">";
                 
                 lineOutput += logEntry.Elements[i].ToString();
 
