@@ -5,7 +5,7 @@ using System.Drawing.Imaging;
 using System.Linq;
 using ZedGraph;
 
-namespace ProjectPilot.Framework.Charts
+namespace ProjectPilot.Common.Charts
 {
     public class FluentChart : IDisposable
     {

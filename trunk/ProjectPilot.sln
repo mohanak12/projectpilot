@@ -77,6 +77,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserStories", "UserStories"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KillXml", "KillXml\KillXml.csproj", "{D754C44E-5453-4772-93C7-D85932A0E30D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectPilot.Common", "ProjectPilot.Common\ProjectPilot.Common.csproj", "{CA2A5879-D111-4BC1-9A3D-EB156D0AF665}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -127,6 +129,10 @@ Global
 		{D754C44E-5453-4772-93C7-D85932A0E30D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D754C44E-5453-4772-93C7-D85932A0E30D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D754C44E-5453-4772-93C7-D85932A0E30D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA2A5879-D111-4BC1-9A3D-EB156D0AF665}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA2A5879-D111-4BC1-9A3D-EB156D0AF665}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA2A5879-D111-4BC1-9A3D-EB156D0AF665}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA2A5879-D111-4BC1-9A3D-EB156D0AF665}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

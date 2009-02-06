@@ -43,7 +43,7 @@ namespace ProjectPilot.Tests.BuildScriptsTests
                             vsProjectObjectsFound++;
                     });
 
-            Assert.AreEqual(11, vsProjectObjectsFound);
+            Assert.AreEqual(12, vsProjectObjectsFound);
         }
 
         /// <summary>

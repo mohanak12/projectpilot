@@ -150,6 +150,10 @@
       <Project>{37E1DED5-072D-456C-9FC2-465A7784C56F}</Project>
       <Name>ProjectPilot.BuildScripts</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ProjectPilot.Common\ProjectPilot.Common.csproj">
+      <Project>{CA2A5879-D111-4BC1-9A3D-EB156D0AF665}</Project>
+      <Name>ProjectPilot.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ProjectPilot.Extras\ProjectPilot.Extras.csproj">
       <Project>{59083E4A-3659-4D8E-805F-52321D1B84DE}</Project>
       <Name>ProjectPilot.Extras</Name>

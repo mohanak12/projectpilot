@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.Threading;
-using ProjectPilot.Framework.Charts;
+using ProjectPilot.Common.Charts;
 using ProjectPilot.Framework.Modules;
 using ZedGraph;
 

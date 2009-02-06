@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.IO;
-using ProjectPilot.Framework.Charts;
+using ProjectPilot.Common.Charts;
 using ZedGraph;
 
 namespace Accipio.Reporting

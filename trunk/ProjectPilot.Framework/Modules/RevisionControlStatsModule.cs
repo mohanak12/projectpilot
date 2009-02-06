@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.Threading;
-using ProjectPilot.Framework.Charts;
+using ProjectPilot.Common.Charts;
 using ProjectPilot.Framework.RevisionControlHistory;
 using ZedGraph;
 
