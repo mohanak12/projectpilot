@@ -21,22 +21,22 @@ namespace ProjectPilot.Tests.AccipioTests
         [Test]
         public void KeyParameterForActionIsNullTest()
         {
-            TestAction testAction = new TestAction("TestAction");
-            string parameter = testAction.GetParameterKeyValue("key");
+            TestCaseStep testCaseStep = new TestCaseStep("TestAction");
+            string parameter = testCaseStep.GetParameterKeyValue("key");
 
             Assert.IsNull(parameter);
         }
 
         /// <summary>
-        /// Test checks that test case does not contain test action with name TestAction.
+        /// Test checks that test case does not contain test action with name TestCaseStep.
         /// </summary>
         [Test]
         public void TestActionForTestCaseIsNullTest()
         {
             TestCase testCase = new TestCase("TestCase");
-            TestAction testAction = testCase.GetTestAction("TestAction");
+            TestCaseStep testCaseStep = testCase.GetTestAction("TestAction");
 
-            Assert.IsNull(testAction);
+            Assert.IsNull(testCaseStep);
         }
 
         /// <summary>
@@ -67,34 +67,34 @@ namespace ProjectPilot.Tests.AccipioTests
             Assert.AreEqual("MoneyTransfer", testCase.TestCaseName);
             Assert.AreEqual(8, testCase.TestSteps.Count);
 
-            TestAction testAction = testCase.GetTestAction("GoToPortal");
-            Assert.IsNotNull(testAction);
-            Assert.AreEqual("GoToPortal", testAction.ActionName);
-            Assert.IsFalse(testAction.HasParameters, "Action should NOT have parameters!");
+            TestCaseStep testCaseStep = testCase.GetTestAction("GoToPortal");
+            Assert.IsNotNull(testCaseStep);
+            Assert.AreEqual("GoToPortal", testCaseStep.ActionName);
+            Assert.IsFalse(testCaseStep.HasParameters, "Action should NOT have parameters!");
 
-            testAction = testCase.GetTestAction("SignIn");
-            Assert.IsNotNull(testAction);
-            Assert.AreEqual("SignIn", testAction.ActionName);
-            Assert.AreEqual(2, testAction.ActionParametersCount);
-            Assert.IsTrue(testAction.HasParameters, "Action should have 2 parameters!");
-            Assert.IsNotNull(testAction.GetParameterKeyValue("username"));
-            Assert.AreEqual("john", testAction.GetParameterKeyValue("username"));
-            Assert.IsNotNull(testAction.GetParameterKeyValue("password"));
-            Assert.AreEqual("doe", testAction.GetParameterKeyValue("password"));
+            testCaseStep = testCase.GetTestAction("SignIn");
+            Assert.IsNotNull(testCaseStep);
+            Assert.AreEqual("SignIn", testCaseStep.ActionName);
+            Assert.AreEqual(2, testCaseStep.ActionParametersCount);
+            Assert.IsTrue(testCaseStep.HasParameters, "Action should have 2 parameters!");
+            Assert.IsNotNull(testCaseStep.GetParameterKeyValue("username"));
+            Assert.AreEqual("john", testCaseStep.GetParameterKeyValue("username"));
+            Assert.IsNotNull(testCaseStep.GetParameterKeyValue("password"));
+            Assert.AreEqual("doe", testCaseStep.GetParameterKeyValue("password"));
 
-            testAction = testCase.GetTestAction("EnterDestinationAccountNumber");
-            Assert.IsNotNull(testAction);
-            Assert.AreEqual("EnterDestinationAccountNumber", testAction.ActionName);
-            Assert.AreEqual(1, testAction.ActionParametersCount);
-            Assert.IsNotNull(testAction.GetParameterKeyValue("destAccountId"));
-            Assert.AreEqual("23677", testAction.GetParameterKeyValue("destAccountId"));
+            testCaseStep = testCase.GetTestAction("EnterDestinationAccountNumber");
+            Assert.IsNotNull(testCaseStep);
+            Assert.AreEqual("EnterDestinationAccountNumber", testCaseStep.ActionName);
+            Assert.AreEqual(1, testCaseStep.ActionParametersCount);
+            Assert.IsNotNull(testCaseStep.GetParameterKeyValue("destAccountId"));
+            Assert.AreEqual("23677", testCaseStep.GetParameterKeyValue("destAccountId"));
 
-            testAction = testCase.GetTestAction("EnterTransferAmount");
-            Assert.IsNotNull(testAction);
-            Assert.AreEqual("EnterTransferAmount", testAction.ActionName);
-            Assert.AreEqual(1, testAction.ActionParametersCount);
-            Assert.IsNotNull(testAction.GetParameterKeyValue("transferAmount"));
-            Assert.AreEqual("644.33", testAction.GetParameterKeyValue("transferAmount"));
+            testCaseStep = testCase.GetTestAction("EnterTransferAmount");
+            Assert.IsNotNull(testCaseStep);
+            Assert.AreEqual("EnterTransferAmount", testCaseStep.ActionName);
+            Assert.AreEqual(1, testCaseStep.ActionParametersCount);
+            Assert.IsNotNull(testCaseStep.GetParameterKeyValue("transferAmount"));
+            Assert.AreEqual("644.33", testCaseStep.GetParameterKeyValue("transferAmount"));
         }
 
         /// <summary>
@@ -121,34 +121,34 @@ namespace ProjectPilot.Tests.AccipioTests
             Assert.AreEqual("MoneyTransfer", testCase.TestCaseName);
             Assert.AreEqual(8, testCase.TestSteps.Count);
 
-            TestAction testAction = testCase.GetTestAction("GoToPortal");
-            Assert.IsNotNull(testAction);
-            Assert.AreEqual("GoToPortal", testAction.ActionName);
-            Assert.IsFalse(testAction.HasParameters, "Action should NOT have parameters!");
+            TestCaseStep testCaseStep = testCase.GetTestAction("GoToPortal");
+            Assert.IsNotNull(testCaseStep);
+            Assert.AreEqual("GoToPortal", testCaseStep.ActionName);
+            Assert.IsFalse(testCaseStep.HasParameters, "Action should NOT have parameters!");
 
-            testAction = testCase.GetTestAction("SignIn");
-            Assert.IsNotNull(testAction);
-            Assert.AreEqual("SignIn", testAction.ActionName);
-            Assert.AreEqual(2, testAction.ActionParametersCount);
-            Assert.IsTrue(testAction.HasParameters, "Action should have 2 parameters!");
-            Assert.IsNotNull(testAction.GetParameterKeyValue("username"));
-            Assert.AreEqual("john", testAction.GetParameterKeyValue("username"));
-            Assert.IsNotNull(testAction.GetParameterKeyValue("password"));
-            Assert.AreEqual("doe", testAction.GetParameterKeyValue("password"));
+            testCaseStep = testCase.GetTestAction("SignIn");
+            Assert.IsNotNull(testCaseStep);
+            Assert.AreEqual("SignIn", testCaseStep.ActionName);
+            Assert.AreEqual(2, testCaseStep.ActionParametersCount);
+            Assert.IsTrue(testCaseStep.HasParameters, "Action should have 2 parameters!");
+            Assert.IsNotNull(testCaseStep.GetParameterKeyValue("username"));
+            Assert.AreEqual("john", testCaseStep.GetParameterKeyValue("username"));
+            Assert.IsNotNull(testCaseStep.GetParameterKeyValue("password"));
+            Assert.AreEqual("doe", testCaseStep.GetParameterKeyValue("password"));
 
-            testAction = testCase.GetTestAction("EnterDestinationAccountNumber");
-            Assert.IsNotNull(testAction);
-            Assert.AreEqual("EnterDestinationAccountNumber", testAction.ActionName);
-            Assert.AreEqual(1, testAction.ActionParametersCount);
-            Assert.IsNotNull(testAction.GetParameterKeyValue("destAccountId"));
-            Assert.AreEqual("23677", testAction.GetParameterKeyValue("destAccountId"));
+            testCaseStep = testCase.GetTestAction("EnterDestinationAccountNumber");
+            Assert.IsNotNull(testCaseStep);
+            Assert.AreEqual("EnterDestinationAccountNumber", testCaseStep.ActionName);
+            Assert.AreEqual(1, testCaseStep.ActionParametersCount);
+            Assert.IsNotNull(testCaseStep.GetParameterKeyValue("destAccountId"));
+            Assert.AreEqual("23677", testCaseStep.GetParameterKeyValue("destAccountId"));
 
-            testAction = testCase.GetTestAction("EnterTransferAmount");
-            Assert.IsNotNull(testAction);
-            Assert.AreEqual("EnterTransferAmount", testAction.ActionName);
-            Assert.AreEqual(1, testAction.ActionParametersCount);
-            Assert.IsNotNull(testAction.GetParameterKeyValue("transferAmount"));
-            Assert.AreEqual("644.33", testAction.GetParameterKeyValue("transferAmount"));
+            testCaseStep = testCase.GetTestAction("EnterTransferAmount");
+            Assert.IsNotNull(testCaseStep);
+            Assert.AreEqual("EnterTransferAmount", testCaseStep.ActionName);
+            Assert.AreEqual(1, testCaseStep.ActionParametersCount);
+            Assert.IsNotNull(testCaseStep.GetParameterKeyValue("transferAmount"));
+            Assert.AreEqual("644.33", testCaseStep.GetParameterKeyValue("transferAmount"));
         }
 
         /// <summary>

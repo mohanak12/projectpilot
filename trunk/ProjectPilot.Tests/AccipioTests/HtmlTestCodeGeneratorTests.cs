@@ -42,16 +42,16 @@ namespace ProjectPilot.Tests.AccipioTests
             {
                 TestCaseDescription = "Open page in web browser"
             };
-            TestAction testAction = new TestAction("NavigateTo");
+            TestCaseStep testCaseStep = new TestCaseStep("NavigateTo");
             TestActionParameter testActionParameter = 
                 new TestActionParameter("url", "http://test.aspx");
-            testAction.AddActionParameter(testActionParameter);
-            testCase.AddTestAction(testAction);
-            testAction = new TestAction("SelectModule");
+            testCaseStep.AddActionParameter(testActionParameter);
+            testCase.AddStep(testCaseStep);
+            testCaseStep = new TestCaseStep("SelectModule");
             testActionParameter = new TestActionParameter("name", "Mobi-Info");
-            testAction.AddActionParameter(testActionParameter);
-            testCase.AddTestAction(testAction);
-            testCase.AddTestAction(new TestAction("Details"));
+            testCaseStep.AddActionParameter(testActionParameter);
+            testCase.AddStep(testCaseStep);
+            testCase.AddStep(new TestCaseStep("Details"));
             testSuite.AddTestCase(testCase);
 
             ICodeWriter mockWriter = MockRepository.GenerateMock<ICodeWriter>();

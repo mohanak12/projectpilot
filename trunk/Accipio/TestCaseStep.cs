@@ -1,40 +1,36 @@
 ﻿#region
 
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 #endregion
 
 namespace Accipio
 {
-    public class TestAction
+    public class TestCaseStep
     {
         /// <summary>
-        /// Initializes a new instance of the TestAction class.
+        /// Initializes a new instance of the TestCaseStep class.
         /// </summary>
         /// <param name="actionName">Name of the action</param>
-        public TestAction(string actionName)
+        public TestCaseStep(string actionName)
         {
             this.actionName = actionName;
         }
 
         /// <summary>
-        /// Initializes a new instance of the TestAction class.
+        /// Initializes a new instance of the TestCaseStep class.
         /// </summary>
         /// <param name="actionName">Name of the action</param>
         /// <param name="testActionParameter">Action parameters <see cref="testActionParameter"/></param>
-        public TestAction (
+        public TestCaseStep (
             string actionName,
             TestActionParameter testActionParameter)
         {
             this.actionName = actionName;
             AddActionParameter(testActionParameter);
         }
-
-        /// <summary>
-        /// Gets or sets the action description.
-        /// </summary>
-        /// <value>The action description.</value>
-        public string ActionDescription { get; set; }
 
         /// <summary>
         /// Gets the name of the action.
@@ -72,11 +68,28 @@ namespace Accipio
             get { return actionParameters; }
         }
 
+        public string ExpandDescriptionWithParameterValues (BusinessActionData businessActionData)
+        {
+            string description = businessActionData.GetAction(ActionName).Description;
+            if (HasParameters)
+            {
+                List<string> parameters = new List<string>();
+                foreach (TestActionParameter actionParameter in ActionParameters)
+                    parameters.Add(actionParameter.ParameterValue);
+
+                return String.Format(CultureInfo.InvariantCulture, description, parameters.ToArray());
+            }
+            else
+            {
+                return description;
+            }            
+        }
+
         /// <summary>
         /// Gets <c>value</c> of specified <c>key</c>.
         /// </summary>
         /// <example>
-        /// If TestAction has TestActionParameter url="http://asd.aspx",
+        /// If TestCaseStep has TestActionParameter url="http://asd.aspx",
         /// Return value GetParameterKeyValue("url") is "http://asd.aspx".
         /// </example>
         /// <param name="parameterKey">XML attribute key</param>

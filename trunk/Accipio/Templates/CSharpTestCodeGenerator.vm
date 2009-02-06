@@ -25,31 +25,27 @@ namespace ${testSuite.Namespace}
             {
                 runner
                     .SetDescription("${testCase.TestCaseDescription}")
-#set( $tagCounter = 1 )
 #foreach ( $tag in ${testCase.Tags})
-#if( ${tagCounter} == ${testCase.Tags.Count} )
-                    .AddTag("${tag}")
-#else
-                    .AddTag("${tag}");
-#end
-#set( $tagCounter = ${tagCounter} + 1	 )
+                    .AddTag("${tag}")#if ($velocityCount == $testCase.Tags.Count);#end
+#each
+
 #end ##foreach tag
 #if ( ${testCase.TestSteps.Count} > 0 )
 #set( $counter = 1 )
 
                 runner
-#foreach ($testAction in ${testCase.TestSteps})
-                    // ${testSuite.BusinessActionData.GetAction("${testAction.ActionName}").Description}
-#if ( ${testAction.HasParameters} )
-#foreach ($actionParameter in ${testAction.ActionParameters} )
+#foreach ($testStep in ${testCase.TestSteps})
+                    // $testStep.ExpandDescriptionWithParameterValues($testSuite.BusinessActionData)
+#if ( ${testStep.HasParameters} )
+#foreach ($actionParameter in ${testStep.ActionParameters} )
 #if ( ${actionParameter.ParameterKey} == "int" || ${actionParameter.ParameterKey} == "decimal" )
-                    .${testAction.ActionName}(${actionParameter.ParameterValue})
+                    .${testStep.ActionName}(${actionParameter.ParameterValue})
 #else
-                    .${testAction.ActionName}("${actionParameter.ParameterValue}")
+                    .${testStep.ActionName}("${actionParameter.ParameterValue}")
 #end
 #end
 #else
-                    .${testAction.ActionName}()
+                    .${testStep.ActionName}()
 #end
 #set( $counter = ${counter} + 1 )
 #end
