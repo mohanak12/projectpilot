@@ -9,21 +9,23 @@ using NVelocity.App;
 
 namespace Accipio
 {
-    public class CSharpTestCodeGenerator : ITestCodeGenerator
+    public class TestCodeGenerator : ITestCodeGenerator
     {
-        public CSharpTestCodeGenerator(ICodeWriter writer)
+        public TestCodeGenerator(ICodeWriter writer)
         {
             this.writer = writer;
         }
 
         public void GenerateFromTemplate(TestSuite testSuite)
         {
+            //TestCodeGeneratorHelper helper = new TestCodeGeneratorHelper(testSuite);
             VelocityEngine velocity = new VelocityEngine();
             ExtendedProperties props = new ExtendedProperties();
             velocity.Init(props);
             Template template = velocity.GetTemplate(@"Templates\CSharpTestCodeGenerator.vm");
             VelocityContext context = new VelocityContext();
             context.Put("testSuite", testSuite);
+            //context.Put("helper", helper);
             StringWriter writer = new StringWriter(CultureInfo.InvariantCulture);
             template.Merge(context, writer);
             Console.WriteLine(writer.GetStringBuilder().ToString());
@@ -65,28 +67,28 @@ namespace Accipio
                 AddTags(testCase);
 
                 // add test case actions
-                IList<TestAction> testActions = testCase.TestSteps;
+                IList<TestCaseStep> testActions = testCase.TestSteps;
                 if (testActions.Count > 0)
                 {
                     WriteLine(string.Empty);
                     WriteLine("                runner");
                     int counter = 1;
-                    foreach (TestAction testAction in testActions)
+                    foreach (TestCaseStep testCaseStep in testActions)
                     {
-                        AddActionDescription(testAction, businessActionData);
+                        AddActionDescription(testCaseStep, businessActionData);
                         StringBuilder line = new StringBuilder();
-                        line.AppendFormat(CultureInfo.InvariantCulture, "                    .{0}(", testAction.ActionName);
+                        line.AppendFormat(CultureInfo.InvariantCulture, "                    .{0}(", testCaseStep.ActionName);
 
-                        if (testAction.HasParameters)
+                        if (testCaseStep.HasParameters)
                         {
                             string commaSeparator = string.Empty;
 
                             // get business action parameters
                             List<BusinessActionParameters> businessActionParameters =
                                 (List<BusinessActionParameters>)
-                                businessActionData.GetAction(testAction.ActionName).ActionParameters;
+                                businessActionData.GetAction(testCaseStep.ActionName).ActionParameters;
 
-                            foreach (TestActionParameter actionParameters in testAction.ActionParameters)
+                            foreach (TestActionParameter actionParameters in testCaseStep.ActionParameters)
                             {
                                 TestActionParameter tempParameter = actionParameters;
 
@@ -160,24 +162,20 @@ namespace Accipio
         /// <summary>
         /// Adds the action description (Action Comment).
         /// </summary>
-        /// <param name="testAction">The test action <see cref="TestAction"/></param>
+        /// <param name="testCaseStep">The test action <see cref="TestCaseStep"/></param>
         /// <param name="businessActionData">The business action data <see cref="businessActionData"/></param>
-        private void AddActionDescription(TestAction testAction, BusinessActionData businessActionData)
+        private void AddActionDescription(TestCaseStep testCaseStep, BusinessActionData businessActionData)
         {
             const string Line = "                    // {0}";
-            string description = businessActionData.GetAction(testAction.ActionName).Description;
+            string description = businessActionData.GetAction(testCaseStep.ActionName).Description;
             string lineFormat = string.Format(CultureInfo.InvariantCulture, Line, description);
-            if (testAction.HasParameters)
+            if (testCaseStep.HasParameters)
             {
-                string[] parameters = new string[testAction.ActionParametersCount];
+                List<string> parameters = new List<string>();
+                foreach (TestActionParameter actionParameter in testCaseStep.ActionParameters)
+                    parameters.Add(actionParameter.ParameterValue);
 
-                for (int i = 0; i < testAction.ActionParameters.Count; i++)
-                {
-                    TestActionParameter testActionParameter = testAction.ActionParameters[i];
-                    parameters[i] = testActionParameter.ParameterValue;
-                }
-
-                WriteLine(lineFormat, parameters);
+                WriteLine(lineFormat, parameters.ToArray());
             }
             else
             {

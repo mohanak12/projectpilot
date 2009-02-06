@@ -7,16 +7,16 @@ using TestSuite=Accipio.TestSuite;
 namespace ProjectPilot.Tests.AccipioTests
 {
     /// <summary>
-    /// Unit test for class <see cref="CSharpTestCodeGenerator"/>.
+    /// Unit test for class <see cref="TestCodeGenerator"/>.
     /// </summary>
     [TestFixture]
     public class CSharpTestCodeGeneratorTests
     {
-        [Test, Pending("Template not ready yet!")]
+        [Test, Pending("Working...")]
         public void GenerateTestFromTemplate()
         {
             ICodeWriter mockCodeWriter = MockRepository.GenerateMock<ICodeWriter>();
-            CSharpTestCodeGenerator csharpTestCodeGenerator = new CSharpTestCodeGenerator(mockCodeWriter);
+            TestCodeGenerator csharpTestCodeGenerator = new TestCodeGenerator(mockCodeWriter);
             TestSuite testSuite = new TestSuite("Banking")
             {
                 Description = "Class description.",
@@ -31,15 +31,15 @@ namespace ProjectPilot.Tests.AccipioTests
             };
             testCase.AddTestCaseTag("R15");
             testCase.AddTestCaseTag("R21.1");
-            testCase.AddTestAction(new TestAction("GoToPortal"));
-            TestAction testAction = new TestAction("SignIn");
-            testAction.AddActionParameter(new TestActionParameter("username", "john"));
-            testAction.AddActionParameter(new TestActionParameter("password", "doe"));
-            testCase.AddTestAction(testAction);
-            testAction = new TestAction("AssertIsUserIdCorrect");
-            testAction.AddActionParameter(new TestActionParameter("userId", "1"));
-            testCase.AddTestAction(testAction);
-            testCase.AddTestAction(new TestAction("AssertOperationSuccessful"));
+            testCase.AddStep(new TestCaseStep("GoToPortal"));
+            TestCaseStep testCaseStep = new TestCaseStep("SignIn");
+            testCaseStep.AddActionParameter(new TestActionParameter("username", "john"));
+            testCaseStep.AddActionParameter(new TestActionParameter("password", "doe"));
+            testCase.AddStep(testCaseStep);
+            testCaseStep = new TestCaseStep("AssertIsUserIdCorrect");
+            testCaseStep.AddActionParameter(new TestActionParameter("userId", "1"));
+            testCase.AddStep(testCaseStep);
+            testCase.AddStep(new TestCaseStep("AssertOperationSuccessful"));
             testSuite.AddTestCase(testCase);
 
             BusinessActionData businessActionData = new BusinessActionData();
@@ -53,7 +53,7 @@ namespace ProjectPilot.Tests.AccipioTests
             businessActionEntry =
                 new BusinessActionEntry("SignIn")
                 {
-                    Description = "Sign in user 'john'."
+                    Description = "Sign in user '{0}'."
                 };
             businessActionEntry.ActionParameters.Add(new BusinessActionParameters("username", "string"));
             businessActionEntry.ActionParameters.Add(new BusinessActionParameters("password", "string"));
@@ -85,7 +85,7 @@ namespace ProjectPilot.Tests.AccipioTests
         {
             ICodeWriter mockCodeWriter = MockRepository.GenerateMock<ICodeWriter>();
 
-            ITestCodeGenerator testCodeGenerator = new CSharpTestCodeGenerator(mockCodeWriter);
+            ITestCodeGenerator testCodeGenerator = new TestCodeGenerator(mockCodeWriter);
 
             TestSuite testSuite = new TestSuite("Banking")
                                       {
@@ -101,15 +101,15 @@ namespace ProjectPilot.Tests.AccipioTests
                                     };
             testCase.AddTestCaseTag("R15");
             testCase.AddTestCaseTag("R21.1");
-            testCase.AddTestAction(new TestAction("GoToPortal"));
-            TestAction testAction = new TestAction("SignIn");
-            testAction.AddActionParameter(new TestActionParameter("username", "john"));
-            testAction.AddActionParameter(new TestActionParameter("password", "doe"));
-            testCase.AddTestAction(testAction);
-            testAction = new TestAction("AssertIsUserIdCorrect");
-            testAction.AddActionParameter(new TestActionParameter("userId", "1"));
-            testCase.AddTestAction(testAction);
-            testCase.AddTestAction(new TestAction("AssertOperationSuccessful"));
+            testCase.AddStep(new TestCaseStep("GoToPortal"));
+            TestCaseStep testCaseStep = new TestCaseStep("SignIn");
+            testCaseStep.AddActionParameter(new TestActionParameter("username", "john"));
+            testCaseStep.AddActionParameter(new TestActionParameter("password", "doe"));
+            testCase.AddStep(testCaseStep);
+            testCaseStep = new TestCaseStep("AssertIsUserIdCorrect");
+            testCaseStep.AddActionParameter(new TestActionParameter("userId", "1"));
+            testCase.AddStep(testCaseStep);
+            testCase.AddStep(new TestCaseStep("AssertOperationSuccessful"));
             testSuite.AddTestCase(testCase);
 
             BusinessActionData businessActionData = new BusinessActionData();

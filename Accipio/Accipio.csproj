@@ -106,13 +106,13 @@
     <Compile Include="Reporting\UserStoryRun.cs" />
     <Compile Include="TestFramework\SeleniumTesterBase.cs" />
     <Compile Include="TestActionParameter.cs" />
-    <Compile Include="CSharpTestCodeGenerator.cs" />
+    <Compile Include="TestCodeGenerator.cs" />
     <Compile Include="FileCodeWriter.cs" />
     <Compile Include="HtmlTestCodeGenerator.cs" />
     <Compile Include="ICodeWriter.cs" />
     <Compile Include="ITestCodeGenerator.cs" />
     <Compile Include="ITestSuiteParser.cs" />
-    <Compile Include="TestAction.cs" />
+    <Compile Include="TestCaseStep.cs" />
     <Compile Include="TestCase.cs" />
     <Compile Include="TestFramework\AccipioTestRunnerBase.cs" />
     <Compile Include="TestSuite.cs" />

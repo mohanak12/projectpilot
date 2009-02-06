@@ -80,7 +80,7 @@ namespace Accipio.Console
 
                     using (ICodeWriter writer = new FileCodeWriter(codeFileName))
                     {
-                        ITestCodeGenerator codeGenerator = new CSharpTestCodeGenerator(writer);
+                        ITestCodeGenerator codeGenerator = new TestCodeGenerator(writer);
                         codeGenerator.Generate(parsedTestSuite);
                     }
 

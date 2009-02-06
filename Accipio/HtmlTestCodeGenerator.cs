@@ -32,7 +32,7 @@ namespace Accipio
                 WriteLine("    <p>Description : <i>{0}</i></p>", testCase.TestCaseDescription);
                 AddTestCaseTags(testCase);
                 WriteLine("    <ol>");
-                foreach (TestAction testAction in testCase.TestSteps)
+                foreach (TestCaseStep testAction in testCase.TestSteps)
                 {
                     AddTestStep(testAction, testSuite.BusinessActionData);
                 }
@@ -59,18 +59,18 @@ namespace Accipio
             }
         }
 
-        private void AddTestStep(TestAction testAction, BusinessActionData businessActionData)
+        private void AddTestStep(TestCaseStep testCaseStep, BusinessActionData businessActionData)
         {
             const string Line = "        <li>{0}</li>";
-            string description = businessActionData.GetAction(testAction.ActionName).Description;
+            string description = businessActionData.GetAction(testCaseStep.ActionName).Description;
             string lineFormat = string.Format(CultureInfo.InvariantCulture, Line, description);
-            if (testAction.HasParameters)
+            if (testCaseStep.HasParameters)
             {
-                string[] parameters = new string[testAction.ActionParametersCount];
+                string[] parameters = new string[testCaseStep.ActionParametersCount];
 
-                for (int i = 0; i < testAction.ActionParameters.Count; i++)
+                for (int i = 0; i < testCaseStep.ActionParameters.Count; i++)
                 {
-                    TestActionParameter testActionParameter = testAction.ActionParameters[i];
+                    TestActionParameter testActionParameter = testCaseStep.ActionParameters[i];
                     parameters[i] = testActionParameter.ParameterValue;
                 }
 

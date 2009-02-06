@@ -41,7 +41,7 @@ namespace Accipio
         /// <summary>
         /// Gets a list of test case's steps.
         /// </summary>
-        public IList<TestAction> TestSteps
+        public IList<TestCaseStep> TestSteps
         {
             get { return testSteps; }
         }
@@ -49,10 +49,10 @@ namespace Accipio
         /// <summary>
         /// Adds test action to Test case.
         /// </summary>
-        /// <param name="testAction">See <see cref="testAction"/></param>
-        public void AddTestAction(TestAction testAction)
+        /// <param name="testCaseStep">See <see cref="testAction"/></param>
+        public void AddStep(TestCaseStep testCaseStep)
         {
-            testSteps.Add(testAction);
+            testSteps.Add(testCaseStep);
         }
 
         /// <summary>
@@ -67,11 +67,11 @@ namespace Accipio
         /// <summary>
         /// Returns specified test action.
         /// </summary>
-        /// <param name="testActionName">Test action Name <see cref="TestAction.ActionName"/></param>
-        /// <returns>See <see cref="TestAction"/></returns>
-        public TestAction GetTestAction(string testActionName)
+        /// <param name="testActionName">Test action Name <see cref="TestCaseStep.ActionName"/></param>
+        /// <returns>See <see cref="TestCaseStep"/></returns>
+        public TestCaseStep GetTestAction(string testActionName)
         {
-            foreach (TestAction testAction in testSteps)
+            foreach (TestCaseStep testAction in testSteps)
             {
                 string actionName = testAction.ActionName;
                 if (actionName.Equals(testActionName))
@@ -86,7 +86,7 @@ namespace Accipio
         /// <summary>
         /// Collection of Test actions.
         /// </summary>
-        private readonly List<TestAction> testSteps = new List<TestAction>();
+        private readonly List<TestCaseStep> testSteps = new List<TestCaseStep>();
         private readonly List<string> tags = new List<string>();
         private readonly string testCaseName;
     }
