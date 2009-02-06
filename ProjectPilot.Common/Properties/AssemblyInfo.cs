@@ -6,14 +6,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ProjectPilot.BuildScripts")]
+[assembly: AssemblyTitle("ProjectPilot.Common")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ProjectPilot.BuildScripts")]
-[assembly: AssemblyCopyright("Copyright ©  2008")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -21,7 +15,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("c1421aab-53b9-48ea-b22b-3fe263f24735")]
+[assembly: Guid("a066d55e-8c13-4a54-a2f8-43f3af293284")]
 
 // Version information for an assembly consists of the following four values:
 //

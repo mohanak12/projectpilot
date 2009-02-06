@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing.Imaging;
 using MbUnit.Framework;
-using ProjectPilot.Framework.Charts;
+using ProjectPilot.Common.Charts;
 using ZedGraph;
 
 namespace ProjectPilot.Tests.Framework

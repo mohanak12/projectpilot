@@ -31,6 +31,7 @@
   <Target Name="$(ProjectDir)/Flubu/bin/Release/Flubu.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/Headless/bin/Release/Headless.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/KillXml/bin/Release/KillXml.exe" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/ProjectPilot.Common/bin/Release/ProjectPilot.Common.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/ProjectPilot.Extras/bin/Release/ProjectPilot.Extras.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/ProjectPilot.Framework/bin/Release/ProjectPilot.Framework.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/ProjectPilot.Portal/bin/ProjectPilot.Portal.dll" Analyze="True" AnalyzeAllChildren="True" />
@@ -158,15 +159,6 @@
      <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-11-03 07:17:41Z">
       <Issue>
        <Item>ProjectPilot.Framework.CCNet</Item>
-      </Issue>
-     </Message>
-    </Messages>
-   </Namespace>
-   <Namespace Name="ProjectPilot.Framework.Charts">
-    <Messages>
-     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-11-03 07:17:41Z">
-      <Issue>
-       <Item>ProjectPilot.Framework.Charts</Item>
       </Issue>
      </Message>
     </Messages>
@@ -710,15 +702,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#GraphDataGenerators">
-            <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2009-02-04 13:52:16Z">
-              <Issue>
-               <Item>'HtmlTestReportGenerator.GraphDataGenerators'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
           </Members>
          </Type>
         </Types>
@@ -732,31 +715,6 @@
              <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Excluded" Created="2009-01-27 17:28:14Z">
               <Issue>
                <Item>'TestCaseRun.testCaseId'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="TestReportGraphData">
-          <Members>
-           <Member Name="#AddDataValue(System.String,System.Int32)">
-            <Messages>
-             <Message Id="serie" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-02-04 13:52:16Z">
-              <Issue Name="MemberParameter">
-               <Item>'TestReportGraphData.AddDataValue(string, int)'</Item>
-               <Item>serie</Item>
-               <Item>'serie'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GraphValues">
-            <Messages>
-             <Message TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006" Created="2009-02-04 13:52:16Z">
-              <Issue>
-               <Item>'TestReportGraphData.GraphValues'</Item>
-               <Item>'IDictionary&lt;string, List&lt;int&gt;&gt;'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -885,6 +843,19 @@
         </Types>
        </Namespace>
       </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/ProjectPilot.Common/bin/Release/ProjectPilot.Common.dll">
+    <Modules>
+     <Module Name="projectpilot.common.dll">
+      <Messages>
+       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Created="2009-02-06 10:00:04Z">
+        <Issue>
+         <Item>'ProjectPilot.Common.dll'</Item>
+        </Issue>
+       </Message>
+      </Messages>
      </Module>
     </Modules>
    </Target>
@@ -1054,15 +1025,11 @@
    <Rule TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806">
     <Resolution Name="ObjectCreation">{0} creates a new instance of {1} which is never used. Pass the instance as an argument to another method, assign the instance to a variable, or remove the object creation if it is unnecessary.</Resolution>
    </Rule>
-   <Rule TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006">
-    <Resolution Name="Default">Consider a design where {0} doesn't nest generic type {1}.</Resolution>
-   </Rule>
    <Rule TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004">
     <Resolution Name="Default">Consider a design where {0} doesn't require explicit type parameter {1} in any call to it.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
     <Resolution Name="Member">Correct the spelling of '{0}' in member name {1} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
-    <Resolution Name="MemberParameter">In method {0}, correct the spelling of '{1}' in parameter name {2} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
     <Resolution Name="MemberParameterMoreMeaningfulName">In method {0}, consider providing a more meaningful name than parameter name {1}.</Resolution>
     <Resolution Name="Type">Correct the spelling of '{0}' in type name {1}.</Resolution>
    </Rule>
@@ -1086,11 +1053,11 @@
    <Rule TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033">
     <Resolution Name="Default">Make {0} sealed (a breaking change if this class has previously shipped), implement the method non-explicitly, or implement a new method that exposes the functionality of {1} and is visible to derived classes.</Resolution>
    </Rule>
+   <Rule TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014">
+    <Resolution Name="Default">Mark {0} with CLSCompliant(true) because it exposes externally visible types.</Resolution>
+   </Rule>
    <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
     <Resolution Name="Default" />
-   </Rule>
-   <Rule TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819">
-    <Resolution Name="Default">Change {0} to return a collection or make it a method.</Resolution>
    </Rule>
    <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
     <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Resolution>

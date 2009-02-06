@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{C87F10BF-4132-4B75-9C07-CB0B1FCE6440}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -67,7 +67,6 @@
     <Compile Include="CCNet\CCNetProjectStatisticsPlugIn.cs" />
     <Compile Include="CCNet\ProjectStatsGraphData.cs" />
     <Compile Include="CCNet\ICCNetProjectStatisticsPlugIn.cs" />
-    <Compile Include="Charts\FluentChart.cs" />
     <Compile Include="DefaultFileManager.cs" />
     <Compile Include="DefaultTemplateEngine.cs" />
     <Compile Include="FileSessionStorage.cs" />
@@ -121,6 +120,10 @@
     <ProjectReference Include="..\Flubu\Flubu.csproj">
       <Project>{5E8B73D7-B9DC-4DCF-93B6-4BFB5E845575}</Project>
       <Name>Flubu</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProjectPilot.Common\ProjectPilot.Common.csproj">
+      <Project>{CA2A5879-D111-4BC1-9A3D-EB156D0AF665}</Project>
+      <Name>ProjectPilot.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
