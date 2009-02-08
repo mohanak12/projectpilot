@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Text;
@@ -24,6 +25,7 @@ namespace Headless.Web
             get { return templateParameters; }
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public void Expand(WebResponseData response)
         {
             if (log.IsDebugEnabled)
@@ -45,7 +47,15 @@ namespace Headless.Web
 
             using (StreamWriter writer = new StreamWriter(response.OutputStream))
             {
-                template.Merge(velocityContext, writer);
+                try
+                {
+                    template.Merge(velocityContext, writer);
+                }
+                catch (Exception ex)
+                {
+                    writer.WriteLine();
+                    writer.WriteLine("Error in template '{0}': '{1}'", templateFileName, ex);
+                }
             }
         }
 

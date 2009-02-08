@@ -40,7 +40,7 @@ namespace ProjectPilot.Tests.Framework.Modules
             revisionControlHistoryFacility.Stub(action => action.FetchHistory()).Return(data);
 
             //IRevisionControlHistoryFacility revisionControlHistoryFacility = new SubversionHistoryFacility(
-            //    project.ProjectId,
+            //    project.CorrelationId,
             //    @"C:\Program Files\CollabNet Subversion\svn.exe",
             //    @"D:\svn\mobilkom.nl-bhwr\trunk\src");
 

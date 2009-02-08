@@ -19,15 +19,25 @@ namespace Headless.Configuration
             get { return buildStages; }
         }
 
-        public BuildReport LastBuildReport
+        public BuildReport LastBuild
         {
-            get { return buildReports[0]; }
+            get
+            {
+                if (buildReports.Count > 0)
+                    return buildReports[0];
+                return null;
+            }
         }
 
         public string ProjectId
         {
             get { return projectId; }
             set { projectId = value; }
+        }
+
+        public ProjectStatus Status
+        {
+            get { return status; }
         }
 
         public IVersionControlSystem VersionControlSystem
@@ -39,6 +49,7 @@ namespace Headless.Configuration
         private List<BuildStage> buildStages = new List<BuildStage>();
         private List<BuildReport> buildReports = new List<BuildReport>();
         private string projectId;
+        private ProjectStatus status;
         private IVersionControlSystem versionControlSystem;
     }
 }

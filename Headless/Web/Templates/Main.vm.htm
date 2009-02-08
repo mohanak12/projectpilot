@@ -7,10 +7,14 @@
 	<body>
         <div class="main">
             #foreach ( $project in $registry.ListProjects() )
-                #if ($project.LastBuild.Status == "Successful")
+                #if ($project.LastBuild)
+                    #if ($project.LastBuild.Status == "Successful")
 	        <div class="projectsuccess">
-                #elseif  ($project.LastBuild.Status == "Failed")
+                    #elseif  ($project.LastBuild.Status == "Failed")
 	        <div class="projectfail">
+                    #else
+	        <div class="projectpending">
+                    #end
                 #else
 	        <div class="projectpending">
                 #end
@@ -19,8 +23,12 @@
 	            </div>
 	            <div class="projectbuilddata">
 	                <a href="project/$project.ProjectId">$project.Status.ToString().ToLowerInvariant()</a> | 
+                #if ($project.LastBuild)
     	            <a href="project/$project.ProjectId/Build/Headless-1.2.33.112">
     	            $project.LastBuild.Status.ToString().ToLowerInvariant() | $project.LastBuild.Time | $project.LastBuild.Label</a>
+    	        #else
+    	            no builds yet
+    	        #end
 	            </div>
 	        </div>
 	        #nodata
