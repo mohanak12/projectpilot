@@ -771,6 +771,66 @@
      </Module>
     </Modules>
    </Target>
+   <Target Name="$(ProjectDir)/Headless/bin/Release/Headless.dll">
+    <Modules>
+     <Module Name="headless.dll">
+      <Namespaces>
+       <Namespace Name="Headless.Threading">
+        <Types>
+         <Type Name="JobQueue`1">
+          <Messages>
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2009-02-08 07:58:21Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>'JobQueue&lt;TJob&gt;'</Item>
+             <Item>Queue</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#WaitForJob(System.TimeSpan,!0&amp;)">
+            <Messages>
+             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2009-02-08 07:58:21Z">
+              <Issue>
+               <Item>'job'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="QueuedWorker`1">
+          <Messages>
+           <Message TypeName="AbstractTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1012" Created="2009-02-08 07:58:21Z">
+            <Issue>
+             <Item>'QueuedWorker&lt;TJob&gt;'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="Headless.Web">
+        <Types>
+         <Type Name="ResponseTemplate">
+          <Members>
+           <Member Name="#Expand(Headless.Web.WebResponseData)">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Created="2009-02-08 07:58:21Z">
+              <Issue>
+               <Item>'ResponseTemplate.Expand(WebResponseData)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
    <Target Name="$(ProjectDir)/KillXml/bin/Release/KillXml.exe">
     <Modules>
      <Module Name="killxml.exe">
@@ -843,19 +903,6 @@
         </Types>
        </Namespace>
       </Namespaces>
-     </Module>
-    </Modules>
-   </Target>
-   <Target Name="$(ProjectDir)/ProjectPilot.Common/bin/Release/ProjectPilot.Common.dll">
-    <Modules>
-     <Module Name="projectpilot.common.dll">
-      <Messages>
-       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Created="2009-02-06 10:00:04Z">
-        <Issue>
-         <Item>'ProjectPilot.Common.dll'</Item>
-        </Issue>
-       </Message>
-      </Messages>
      </Module>
     </Modules>
    </Target>
@@ -996,12 +1043,40 @@
          </Type>
         </Types>
        </Namespace>
+       <Namespace Name="ProjectPilot.Tests.HeadlessTests">
+        <Types>
+         <Type Name="WorkerTests">
+          <Members>
+           <Member Name="#Test()">
+            <Messages>
+             <Message Id="System.Collections.Generic.List`1&lt;ProjectPilot.Tests.HeadlessTests.TestWorker&gt;" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2009-02-08 07:58:21Z">
+              <Issue Name="ObjectCreation">
+               <Item>'WorkerTests.Test()'</Item>
+               <Item>'List&lt;TestWorker&gt;'</Item>
+              </Issue>
+             </Message>
+             <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2009-02-08 07:58:21Z">
+              <Issue>
+               <Item>'int.ToString()'</Item>
+               <Item>'WorkerTests.Test()'</Item>
+               <Item>'int.ToString(IFormatProvider)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
       </Namespaces>
      </Module>
     </Modules>
    </Target>
   </Targets>
   <Rules>
+   <Rule TypeName="AbstractTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1012">
+    <Resolution Name="Default">Change the accessibility of all public constructors in {0} to protected.</Resolution>
+   </Rule>
    <Rule TypeName="AvoidEmptyInterfaces" Category="Microsoft.Design" CheckId="CA1040">
     <Resolution Name="Default">Define a custom attribute to replace {0}.</Resolution>
    </Rule>
@@ -1018,6 +1093,9 @@
     <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
     <Resolution Name="TypeShouldBeCompoundWord">The discrete term '{0}' in type name {1} should be expressed as a compound word, '{2}'.</Resolution>
     <Resolution Name="TypeShouldBeDiscreteTerm">The compound word '{0}' in type name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}'.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031">
+    <Resolution Name="Default">Modify {0} to catch a more specific exception than {1} or rethrow the exception.</Resolution>
    </Rule>
    <Rule TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002">
     <Resolution Name="Default">Change {0} in {1} to use Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; or KeyedCollection&lt;K,V&gt;</Resolution>
@@ -1039,6 +1117,9 @@
    <Rule TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707">
     <Resolution Name="Type">Remove the underscores from type name {0}.</Resolution>
    </Rule>
+   <Rule TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711">
+    <Resolution Name="TypeNoAlternate">Rename type name {0} so that it does not end in '{1}'.</Resolution>
+   </Rule>
    <Rule TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716">
     <Resolution Name="Member">Rename virtual/interface member {0} so that it no longer conflicts with the reserved language keyword '{1}'. Using a reserved keyword as the name of a virtual/interface member makes it harder for consumers in other languages to override/implement the member.</Resolution>
     <Resolution Name="Namespace">Rename namespace {0} so that it no longer conflicts with the reserved language keyword '{1}'. Using a reserved keyword as the name of a namespace makes it harder for consumers in other languages to use the namespace.</Resolution>
@@ -1052,9 +1133,6 @@
    </Rule>
    <Rule TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033">
     <Resolution Name="Default">Make {0} sealed (a breaking change if this class has previously shipped), implement the method non-explicitly, or implement a new method that exposes the functionality of {1} and is visible to derived classes.</Resolution>
-   </Rule>
-   <Rule TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014">
-    <Resolution Name="Default">Mark {0} with CLSCompliant(true) because it exposes externally visible types.</Resolution>
    </Rule>
    <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
     <Resolution Name="Default" />
