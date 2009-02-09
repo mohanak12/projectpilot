@@ -22,7 +22,7 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
                 parserContent = new LogDisplay();
                 parserContent.Parsing10MBLogFile(null, null, null, null);
             }
-
+            ViewData["Id"] = Session["Id"];
             ViewData["Content"] = parserContent;
 
             return View();
@@ -37,6 +37,7 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
         {
             parserContent = ParseLogFile.ParseFile(Id);
 
+            Session["Id"] = Id;
             Session["parserContent"] = parserContent;
 
             //return RedirectToAction("DisplayLog"); 
