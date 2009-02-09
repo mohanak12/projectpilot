@@ -75,29 +75,16 @@ namespace Accipio
                     int counter = 1;
                     foreach (TestCaseStep testCaseStep in testActions)
                     {
-                        AddActionDescription(testCaseStep, businessActionData);
+                        WriteLine("                    // {0}", testCaseStep.ExpandDescriptionWithParameterValues(businessActionData));
                         StringBuilder line = new StringBuilder();
-                        line.AppendFormat(CultureInfo.InvariantCulture, "                    .{0}(", testCaseStep.ActionName);
+                        line.AppendFormat(
+                            CultureInfo.InvariantCulture, 
+                            "                    .{0}(", 
+                            testCaseStep.ActionName);
 
                         if (testCaseStep.HasParameters)
                         {
-                            string commaSeparator = string.Empty;
-
-                            // get business action parameters
-                            List<BusinessActionParameters> businessActionParameters =
-                                (List<BusinessActionParameters>)
-                                businessActionData.GetAction(testCaseStep.ActionName).ActionParameters;
-
-                            foreach (TestActionParameter actionParameters in testCaseStep.ActionParameters)
-                            {
-                                TestActionParameter tempParameter = actionParameters;
-
-                                BusinessActionParameters parameterType =
-                                    businessActionParameters.Find(parameters => parameters.ParameterName ==
-                                                                                tempParameter.ParameterKey);
-                                SelectParameterType(line, actionParameters, parameterType, commaSeparator);
-                                commaSeparator = ", ";
-                            }
+                            line.AppendFormat(CultureInfo.InvariantCulture, "{0}", testCaseStep.ExpandTestCaseStepWithParametersForCSharp(businessActionData));
                         }
 
                         line.Append(")");
@@ -141,57 +128,6 @@ namespace Accipio
 
             WriteLine("    }");
             WriteLine("}");
-        }
-
-        /// <summary>
-        /// Selects the type of the parameter. If it is string it adds quotes.
-        /// </summary>
-        /// <param name="line">The formated line.</param>
-        /// <param name="actionParameters">The action parameters.</param>
-        /// <param name="parameterType">Type of the parameter.</param>
-        /// <param name="commaSeparator">The comma separator.</param>
-        private static void SelectParameterType(StringBuilder line, TestActionParameter actionParameters, BusinessActionParameters parameterType, string commaSeparator)
-        {
-            if (parameterType.ParameterType == "string")
-            {
-                line.AppendFormat(
-                    CultureInfo.InvariantCulture,
-                    "{1}\"{0}\"",
-                    actionParameters.ParameterValue,
-                    commaSeparator);
-            }
-            else
-            {
-                line.AppendFormat(
-                    CultureInfo.InvariantCulture,
-                    "{1}{0}",
-                    actionParameters.ParameterValue,
-                    commaSeparator);
-            }
-        }
-
-        /// <summary>
-        /// Adds the action description (Action Comment).
-        /// </summary>
-        /// <param name="testCaseStep">The test action <see cref="TestCaseStep"/></param>
-        /// <param name="businessActionData">The business action data <see cref="businessActionData"/></param>
-        private void AddActionDescription(TestCaseStep testCaseStep, BusinessActionData businessActionData)
-        {
-            const string Line = "                    // {0}";
-            string description = businessActionData.GetAction(testCaseStep.ActionName).Description;
-            string lineFormat = string.Format(CultureInfo.InvariantCulture, Line, description);
-            if (testCaseStep.HasParameters)
-            {
-                List<string> parameters = new List<string>();
-                foreach (TestActionParameter actionParameter in testCaseStep.ActionParameters)
-                    parameters.Add(actionParameter.ParameterValue);
-
-                WriteLine(lineFormat, parameters.ToArray());
-            }
-            else
-            {
-                WriteLine(lineFormat);
-            }
         }
 
         /// <summary>
