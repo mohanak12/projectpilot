@@ -12,6 +12,171 @@ namespace ProjectPilot.Tests.AccipioTests
     [TestFixture]
     public class CSharpTestCodeGeneratorTests
     {
+        [Test, Pending("MiMi")]
+        public void MoreParametersInTestStep()
+        {
+            ICodeWriter mockCodeWriter = MockRepository.GenerateMock<ICodeWriter>();
+
+            ITestCodeGenerator testCodeGenerator = new TestCodeGenerator(mockCodeWriter);
+
+            TestSuite testSuite = new TestSuite("IT3Suite")
+            {
+                Description = "Following test suite defines acceptance test cases for Iteration3 (Content Delivery) in MiMi project.",
+                TestRunnerName = "MiMi",
+                Namespace = "Hsl.Ganesha.AcceptanceTests",
+                IsParallelizable = true,
+            };
+
+            TestCase testCase = new TestCase("TopicWithoutContent")
+            {
+                TestCaseDescription = "Subscribe onDemand news to category SALA through SP Gui, where particular topic news does not exists. Check received SMS on phone."
+            };
+            testCase.AddTestCaseTag("CD.SMS.ImmediateRequest");
+
+            TestCaseStep testCaseStep;
+            //testCase.AddStep(new TestCaseStep("GoToSmsWebSelfProvisioning"));
+            //testCase.AddStep(new TestCaseStep("SelectForward"));
+            //testCaseStep = new TestCaseStep("AssertSubscriptionsCount");
+            //testCaseStep.AddActionParameter(new TestActionParameter("count", "0"));
+            //testCase.AddStep(testCaseStep);
+            //testCaseStep = new TestCaseStep("AssertNoSubscriptionsMessage");
+            //testCaseStep.AddActionParameter(new TestActionParameter("isVisible", "true"));
+            //testCase.AddStep(testCaseStep);
+            //testCase.AddStep(new TestCaseStep("SelectAllServicesList"));
+            //testCaseStep = new TestCaseStep("SelectGroup");
+            //testCaseStep.AddActionParameter(new TestActionParameter("group", "Zabavne vsebine"));
+            //testCaseStep.AddActionParameter(new TestActionParameter("level", "1"));
+            //testCase.AddStep(testCaseStep);
+            testCaseStep = new TestCaseStep("AssertTopicDescription");
+            testCaseStep.AddActionParameter(new TestActionParameter("topic", "SALA"));
+            testCaseStep.AddActionParameter(new TestActionParameter("sequenceNumberInList", "3"));
+            testCaseStep.AddActionParameter(new TestActionParameter("topicDescription", "šala dneva"));
+            testCase.AddStep(testCaseStep);
+            //testCaseStep = new TestCaseStep("SelectTopic");
+            //testCaseStep.AddActionParameter(new TestActionParameter("topic", "SALA"));
+            //testCase.AddStep(testCaseStep);
+            //testCaseStep = new TestCaseStep("SelectSubscriptionType");
+            //testCaseStep.AddActionParameter(new TestActionParameter("type", "OnDemand"));
+            //testCase.AddStep(testCaseStep);
+            //testCase.AddStep(new TestCaseStep("ClickSaveSubscription"));
+            //testCaseStep = new TestCaseStep("AssertContentSentMessage");
+            //testCaseStep.AddActionParameter(new TestActionParameter("message", "Sporočilo je bilo poslano\r\n Čez nekaj trenutkov boste prejeli sporočilo na vaš aparat."));
+            //testCase.AddStep(testCaseStep);
+            //testCaseStep = new TestCaseStep("AssertSmsReceived");
+            //testCaseStep.AddActionParameter(new TestActionParameter("receivedMessage", "Tema nima vsebine: SALA."));
+            //testCase.AddStep(testCaseStep);
+            //testCaseStep = new TestCaseStep("AssertSmsCount");
+            //testCaseStep.AddActionParameter(new TestActionParameter("count", "1"));
+            //testCase.AddStep(testCaseStep);
+            testSuite.AddTestCase(testCase);
+
+            BusinessActionData businessActionData = new BusinessActionData();
+            BusinessActionEntry businessActionEntry;
+            //businessActionEntry = new BusinessActionEntry("GoToSmsWebSelfProvisioning")
+            //                          {
+            //                              Description =
+            //                                  "Open the SMS  Self Provisioning web gui in the browser."
+            //                          };
+            //businessActionData.Actions.Add(businessActionEntry);
+            //businessActionEntry =
+            //                new BusinessActionEntry("SelectForward")
+            //                {
+            //                    Description =
+            //                        "Click on the 'Forward' link to open \"My subscriptions\" page (tab)."
+            //                };
+            //businessActionData.Actions.Add(businessActionEntry);
+            //businessActionEntry =
+            //                new BusinessActionEntry("AssertSubscriptionsCount")
+            //                {
+            //                    Description =
+            //                        "Assert the subscription was correctly counted (added to the list in SP Web GUI)."
+            //                };
+            //businessActionEntry.ActionParameters.Add(new BusinessActionParameters("count", "int"));
+            //businessActionData.Actions.Add(businessActionEntry);
+            //businessActionEntry =
+            //                new BusinessActionEntry("AssertNoSubscriptionsMessage")
+            //                {
+            //                    Description =
+            //                        "User doesn't have any subscriptions for the channel, no subscriptions message should be indicated, otherwise it shouldn't be (statement:true/false)."
+            //                };
+            //businessActionEntry.ActionParameters.Add(new BusinessActionParameters("isVisible", "string"));
+            //businessActionData.Actions.Add(businessActionEntry);
+            //businessActionEntry =
+            //                new BusinessActionEntry("SelectAllServicesList")
+            //                {
+            //                    Description =
+            //                        "Select \"List of all services\" page (tab)."
+            //                };
+            //businessActionData.Actions.Add(businessActionEntry);
+            businessActionEntry =
+                            new BusinessActionEntry("AssertTopicDescription")
+                            {
+                                Description =
+                                    "Assert each topic has correct description with the content '{0}' in AllServices list."
+                            };
+            businessActionEntry.ActionParameters.Add(new BusinessActionParameters("topic", "string"));
+            businessActionEntry.ActionParameters.Add(new BusinessActionParameters("sequenceNumberInList", "int"));
+            businessActionEntry.ActionParameters.Add(new BusinessActionParameters("topicDescription", "string"));
+            businessActionData.Actions.Add(businessActionEntry);
+
+            testSuite.BusinessActionData = businessActionData;
+
+            mockCodeWriter.Expect(writer => writer.WriteLine("using MbUnit.Framework;"));
+            mockCodeWriter.Expect(writer => writer.WriteLine(string.Empty));
+            mockCodeWriter.Expect(writer => writer.WriteLine("namespace Hsl.Ganesha.AcceptanceTests"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("{"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("    /// <summary>"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("    /// Following test suite defines acceptance test cases for Iteration3 (Content Delivery) in MiMi project."));
+            mockCodeWriter.Expect(writer => writer.WriteLine("    /// </summary>"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("    [TestFixture]"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("    public class IT3SuiteTestSuite"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("    {"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("        /// <summary>"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("        /// Subscribe onDemand news to category SALA through SP Gui, where particular topic news does not exists. Check received SMS on phone."));
+            mockCodeWriter.Expect(writer => writer.WriteLine("        /// </summary>"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("        [Test]"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("        [Metadata(\"UserStory\", \"CD.SMS.ImmediateRequest\")]"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("        [Parallelizable]"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("        public void TopicWithoutContent()"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("        {"));
+            mockCodeWriter.Expect(
+                writer =>
+                writer.WriteLine("            using (MiMiTestRunner runner = new MiMiTestRunner())"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("            {"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("                runner"));
+            mockCodeWriter.Expect(
+                writer => writer.WriteLine("                    .SetDescription(\"Subscribe onDemand news to category SALA through SP Gui, where particular topic news does not exists. Check received SMS on phone.\")"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("                    .AddTag(\"CD.SMS.ImmediateRequest\");"));
+            mockCodeWriter.Expect(writer => writer.WriteLine(string.Empty));
+            mockCodeWriter.Expect(writer => writer.WriteLine("                runner"));
+            mockCodeWriter.Expect(
+                writer =>
+                writer.WriteLine("                    // Assert each topic has correct description with the content 'SALA' in AllServices list."));
+            mockCodeWriter.Expect(writer => writer.WriteLine("                    .AssertTopicDescription(\"SALA\", 3, \"šala dneva\");"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("            }"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("        }"));
+            mockCodeWriter.Expect(writer => writer.WriteLine(string.Empty));
+
+            mockCodeWriter.Expect(writer => writer.WriteLine("        /// <summary>"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("        /// Test fixture setup code."));
+            mockCodeWriter.Expect(writer => writer.WriteLine("        /// </summary>"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("        [FixtureSetUp]"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("        public void FixtureSetup()"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("        {"));
+            mockCodeWriter.Expect(
+                writer =>
+                writer.WriteLine("            Gallio.Framework.Pattern.PatternTestGlobals.DegreeOfParallelism = 10;"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("        }"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("    }"));
+            mockCodeWriter.Expect(writer => writer.WriteLine("}"));
+
+            // execution
+            testCodeGenerator.Generate(testSuite);
+
+            // post-conditions
+            mockCodeWriter.VerifyAllExpectations();
+        }
+
         [Test, Pending("Working...")]
         public void GenerateTestFromTemplate()
         {

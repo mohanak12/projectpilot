@@ -95,23 +95,7 @@ namespace Accipio
                                 BusinessActionParameters parameterType =
                                     businessActionParameters.Find(parameters => parameters.ParameterName ==
                                                                                 tempParameter.ParameterKey);
-                                if (parameterType.ParameterType == "int" || parameterType.ParameterType == "decimal")
-                                {
-                                    line.AppendFormat(
-                                        CultureInfo.InvariantCulture,
-                                        "{1}{0}",
-                                        actionParameters.ParameterValue,
-                                        commaSeparator);
-                                }
-                                else
-                                {
-                                    line.AppendFormat(
-                                        CultureInfo.InvariantCulture,
-                                        "{1}\"{0}\"",
-                                        actionParameters.ParameterValue,
-                                        commaSeparator);
-                                }
-
+                                SelectParameterType(line, actionParameters, parameterType, commaSeparator);
                                 commaSeparator = ", ";
                             }
                         }
@@ -157,6 +141,33 @@ namespace Accipio
 
             WriteLine("    }");
             WriteLine("}");
+        }
+
+        /// <summary>
+        /// Selects the type of the parameter. If it is string it adds quotes.
+        /// </summary>
+        /// <param name="line">The formated line.</param>
+        /// <param name="actionParameters">The action parameters.</param>
+        /// <param name="parameterType">Type of the parameter.</param>
+        /// <param name="commaSeparator">The comma separator.</param>
+        private static void SelectParameterType(StringBuilder line, TestActionParameter actionParameters, BusinessActionParameters parameterType, string commaSeparator)
+        {
+            if (parameterType.ParameterType == "string")
+            {
+                line.AppendFormat(
+                    CultureInfo.InvariantCulture,
+                    "{1}\"{0}\"",
+                    actionParameters.ParameterValue,
+                    commaSeparator);
+            }
+            else
+            {
+                line.AppendFormat(
+                    CultureInfo.InvariantCulture,
+                    "{1}{0}",
+                    actionParameters.ParameterValue,
+                    commaSeparator);
+            }
         }
 
         /// <summary>
