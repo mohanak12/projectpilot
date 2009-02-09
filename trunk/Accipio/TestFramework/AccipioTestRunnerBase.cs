@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Gallio.Framework;
+using Gallio.Model;
 
 namespace Accipio.TestFramework
 {
@@ -39,6 +41,15 @@ namespace Accipio.TestFramework
         {
             this.tags.Add(tag);
             return (TRunner)this;
+        }
+
+        /// <summary>
+        /// Marks the test as pending. This method should be called by all MiMiTestRunner actions
+        /// which have not been implemented fully. 
+        /// </summary>
+        public void MarkTestAsPending()
+        {
+            throw new SilentTestException(TestOutcome.Pending, "To be implemented.");
         }
 
         /// <summary>
