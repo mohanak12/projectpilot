@@ -17,6 +17,8 @@
 	    var prev = 0;
 	    var id = 0;
 	    $(document).ready(function() {
+	        $("#bottomFixedDiv").addClass('invisible');
+	    
 	        $("#bottomFixedDiv").click(function() {
 	            $(this).slideUp("slow");
 	        });
@@ -50,7 +52,7 @@
            <div id="menuList">
             <ul id="menu">
                 <li>
-                <a href="#"><%Response.Write(Html.ActionLink("File select", "DisplayLogFiles", "LogView"));%></a>
+                <%Response.Write(Html.ActionLink("File select", "DisplayLogFiles", "LogView"));%></a>
                 </li>
                 <li>
                 <a href="#">Refresh</a>
@@ -59,15 +61,22 @@
             </div>
             <div id="Title">Log4Net-Browser</div>
         </div>
+        
+        <%
+        ParserContent = ViewData["Content"] as LogDisplay;
+        FindLevelIndex(ParserContent.LineParse.ElementsPattern);
+        %>  
+        
         <div id="patternDiv">
         <table class="tableClass" style="height:25px;" border="0" cellpadding="0" cellspacing="0">
         <tr valign="middle">
             
-                <td width="200px" align="center">Time</td>
-            
-                <td width="75px">ThreadID</td>
-            
-                <td width="780px" align="center">Message</td>
+        <% //Time pattern in head of table
+        foreach (string pattern in ParserContent.LineParse.ElementsPattern)
+        {
+            Response.Write("<td align=\"center\" class=\"" + pattern.ToLower() + "\">" + pattern + "</td>");     
+        }
+        %>
             
         </tr>
         </table>
@@ -75,14 +84,10 @@
     </div>
 
     <div id="contentDiv">
-        <%
-        ParserContent = ViewData["Content"] as LogDisplay;
-        FindLevelIndex(ParserContent.LineParse.ElementsPattern);
-        %>  
-        
+
         <table class="tableClass" border="0" cellpadding="0" cellspacing="0">
             
-                   <%
+         <%
           int idx = 0;
            foreach (LogEntry logEntry in ParserContent.LineParse.ElementsLog) {
                Response.Write(LogEntryToString(logEntry, idx));
