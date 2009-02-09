@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text;
 
 #endregion
 
@@ -79,10 +80,47 @@ namespace Accipio
 
                 return String.Format(CultureInfo.InvariantCulture, description, parameters.ToArray());
             }
-            else
+
+            return description;
+        }
+
+        public string ExpandTestCaseStepWithParametersForCSharp(BusinessActionData businessActionData)
+        {
+            string commaSeparator = string.Empty;
+            StringBuilder line = new StringBuilder();
+            // get business action parameters
+            List<BusinessActionParameters> businessActionParameters =
+                (List<BusinessActionParameters>)
+                businessActionData.GetAction(ActionName).ActionParameters;
+
+            foreach (TestActionParameter parameter in ActionParameters)
             {
-                return description;
-            }            
+                TestActionParameter tempParameter = parameter;
+
+                BusinessActionParameters parameterType =
+                    businessActionParameters.Find(parameters => parameters.ParameterName ==
+                                                                tempParameter.ParameterKey);
+                if (parameterType.ParameterType == "string")
+                {
+                    line.AppendFormat(
+                        CultureInfo.InvariantCulture,
+                        "{1}\"{0}\"",
+                        parameter.ParameterValue,
+                        commaSeparator);
+                }
+                else
+                {
+                    line.AppendFormat(
+                        CultureInfo.InvariantCulture,
+                        "{1}{0}",
+                        parameter.ParameterValue,
+                        commaSeparator);
+                }
+
+                commaSeparator = ", ";
+            }
+
+            return line.ToString();
         }
 
         /// <summary>

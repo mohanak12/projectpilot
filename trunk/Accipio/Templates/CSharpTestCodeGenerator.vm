@@ -29,32 +29,21 @@ namespace ${testSuite.Namespace}
                     .AddTag("${tag}")#if ($velocityCount == $testCase.Tags.Count);#end
 #each
 
-#end ##foreach tag
+#end
 #if ( ${testCase.TestSteps.Count} > 0 )
-#set( $counter = 1 )
 
                 runner
 #foreach ($testStep in ${testCase.TestSteps})
-                    // $testStep.ExpandDescriptionWithParameterValues($testSuite.BusinessActionData)
-#if ( ${testStep.HasParameters} )
-#foreach ($actionParameter in ${testStep.ActionParameters} )
-#if ( ${actionParameter.ParameterKey} == "int" || ${actionParameter.ParameterKey} == "decimal" )
-                    .${testStep.ActionName}(${actionParameter.ParameterValue})
-#else
-                    .${testStep.ActionName}("${actionParameter.ParameterValue}")
-#end
-#end
-#else
-                    .${testStep.ActionName}()
-#end
-#set( $counter = ${counter} + 1 )
+                    // ${testStep.ExpandDescriptionWithParameterValues(${testSuite.BusinessActionData})}
+                    .${testStep.ActionName}(${testStep.ExpandTestCaseStepWithParametersForCSharp(${testSuite.BusinessActionData})})#if ($velocityCount == ${testCase.TestSteps.Count});#end
+#each
+
 #end
 #end
             }
         }
 
-#end ##foreach testcase
-
+#end
         /// <summary>
         /// Test fixture setup code.
         /// </summary>
