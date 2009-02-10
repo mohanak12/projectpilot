@@ -74,6 +74,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Filter.cs" />
     <Compile Include="Models\LoadParameters.cs" />
     <Compile Include="Models\LocalSearchFilter.cs" />
     <Compile Include="Models\LogDisplay.cs" />
