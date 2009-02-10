@@ -29,9 +29,13 @@ namespace ProjectPilot.Log4NetBrowser.Models
             if (string.IsNullOrEmpty(pattern))
                 pattern = "Time|Level|Message";
 
-            //if (separator != null)
+            //if (separator != null)  !!!
                 char separator1 = '|';
-                        
+
+            this.separator = separator1;  //!!!
+            this.pattern = pattern;
+            this.file = file;
+
             using (Stream fileStream = File.OpenRead(file))
             {
                 lineParse = new LogCollection(separator1, pattern);
@@ -43,6 +47,23 @@ namespace ProjectPilot.Log4NetBrowser.Models
             }
         }
 
+        public void ParseLogFile(LogParserFilter filter)
+        {
+
+            using (Stream fileStream = File.OpenRead(file))
+            {
+                lineParse = new LogCollection(separator, pattern);
+
+                if (filter != null)
+                    lineParse.ParseFilter = filter;
+
+                lineParse.ParseLogFile(fileStream);
+            }
+        }
+
+        private string file;
+        private string pattern;
+        private char separator;
         private LogCollection lineParse;
         private List<int> indexList = new List<int>();
     }

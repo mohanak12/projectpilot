@@ -13,6 +13,44 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
 {
     public class LogViewController : Controller
     {
+        public ActionResult Reload(
+                                   string startTime,
+                                   string endTime,
+                                   string threadId,
+                                   string level,
+                                   string searchContent,
+                                   string matchWholeWord,
+                                   int? numberOfItemsPerPage,
+                                   int? searchNumberOfItems,
+                                   int? startSearchIndex,
+                                   int? endSearchIndex,
+                                   int? startSearchByte,
+                                   int? endSearchByte)
+        {
+            bool matchWholeWordFilter;
+            if(matchWholeWord == "on")
+            {
+                matchWholeWordFilter = true;
+            }
+            else
+            {
+                matchWholeWordFilter = false;
+            }
+
+
+            LogParserFilter filter = Filter.CreateFilter(startTime, endTime, threadId, level, searchContent, matchWholeWordFilter, searchNumberOfItems,
+                                                         startSearchIndex, endSearchIndex, startSearchByte,
+                                                         endSearchByte);
+            
+            parserContent = (LogDisplay)Session["parserContent"];
+            
+            parserContent.ParseLogFile(filter);
+            
+            Session["parserContent"] = parserContent;
+
+            return RedirectToAction("DisplayLog", "LogView");     
+        }
+
         public ActionResult DisplayLog()
         {
             parserContent = (LogDisplay)Session["parserContent"];
@@ -40,7 +78,6 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             Session["Id"] = Id;
             Session["parserContent"] = parserContent;
 
-            //return RedirectToAction("DisplayLog"); 
             return RedirectToAction("DisplayLog", "LogView");
         }
 
