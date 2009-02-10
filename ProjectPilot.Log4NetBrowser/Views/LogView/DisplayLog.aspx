@@ -127,8 +127,8 @@
                 <!-- FILTER -->
                 <div id="filterDiv" style="background-color: #c6c6c6;">
                     <table class="tableClass" style="height: 35px;" border="0" cellpadding="0" cellspacing="0">
+                        <br />
                         <tr valign="middle">
-                            <br />
                             <%
                                 bool search = false;
 
@@ -139,25 +139,25 @@
                                         case "time":
                                             {
                                                 Response.Write(
-                                                    "<td class='time' align=right> Start:" +
-                                                    "<input type\"text\" name =\"startTime\" size=\"19\">" +
+                                                    "<td class='time' align='right'> Start:" +
+                                                    "<input type=\"text\" name =\"startTime\" size=\"19\" />" +
                                                     "<br />" +
                                                     "End:" +
-                                                    "<input type\"text\" name =\"endTime\" size=\"19\"></td>");
+                                                    "<input type=\"text\" name =\"endTime\" size=\"19\" /></td>");
                                                 break;
                                             }
 
                                         case "threadid":
                                             {
                                                 Response.Write(
-                                                   "<td class='threadid' align=center> <input type\"text\" name =\"threadId\" size=\"10\"> </td>");
+                                                   "<td class='threadid' align='center'> <input type=\"text\" name =\"threadId\" size=\"10\"/> </td>");
                                                 break;
                                             }
 
                                         case "level":
                                             {
                                                 Response.Write(
-                                                    "<td class='level' align=center>&nbsp;" +
+                                                    "<td class='level' align='center'>&nbsp;" +
                                                     "<select id=\"levelSelect\" name=\"level\"\">" +
                                                     "<option value=\"\"></option>" +
                                                     "<option value=\"TRACE\">TRACE</option>" +
@@ -172,16 +172,16 @@
                                             }
                                         case "message":
                                             {
-                                                Response.Write("<td class='message' align=left>");
+                                                Response.Write("<td class='message' align='left'>");
 
                                                 if (search == false)
                                                 {
                                                     Response.Write(
                                                         "&nbsp;&nbsp;Search:&nbsp;" +
-                                                        "<input type\"text\" name =\"searchContent\" size=\"11\">" +
+                                                        "<input type=\"text\" name =\"searchContent\" size=\"11\"/>" +
                                                         "<br />" +
                                                         "&nbsp;&nbsp;SearchWholeWord:" +
-                                                        "<input type=\"checkbox\" name =\"matchWholeWord\">");
+                                                        "<input type=\"checkbox\" name =\"matchWholeWord\"/>");
 
                                                     search = true;
                                                 }
@@ -193,16 +193,16 @@
 
                                         case "ndc":
                                             {
-                                                Response.Write("<td class='ndc' align=left>");
+                                                Response.Write("<td class='ndc' align='left'>");
 
                                                 if (search == false)
                                                 {
                                                     Response.Write(
                                                         "&nbsp;&nbsp;Search:&nbsp;" +
-                                                        "<input type\"text\" name =\"searchContent\" size=\"11\">" +
+                                                        "<input type=\"text\" name =\"searchContent\" size=\"11\"/>" +
                                                         "<br />" +
                                                         "&nbsp;&nbsp;SearchWholeWord:" +
-                                                        "<input type=\"checkbox\" name =\"matchWholeWord\">");
+                                                        "<input type=\"checkbox\" name =\"matchWholeWord\"/>");
 
                                                     search = true;
                                                 }
@@ -213,16 +213,16 @@
                                             }
                                         case "namespace":
                                             {
-                                                Response.Write("<td class='namespace' align=left>");
+                                                Response.Write("<td class='namespace' align='left'>");
 
                                                 if (search == false)
                                                 {
                                                     Response.Write(
                                                         "&nbsp;&nbsp;Search:&nbsp;" +
-                                                        "<input type\"text\" name =\"searchContent\" size=\"11\">" +
+                                                        "<input type=\"text\" name =\"searchContent\" size=\"11\"/>" +
                                                         "<br />" +
                                                         "&nbsp;&nbsp;SearchWholeWord:" +
-                                                        "<input type=\"checkbox\" name =\"matchWholeWord\">");
+                                                        "<input type=\"checkbox\" name =\"matchWholeWord\"/>");
 
                                                     search = true;
                                                 }
@@ -242,13 +242,14 @@
                  <!-- ADVANCED FILTER -->
                 <div id="advancedFilterDiv" style="background-color: #cFcFcF;">
                     <table class="tableClass" style="height: 35px;" border="0" cellpadding="0" cellspacing="0">
+                       <br />
                        <tr valign = "middle">
                             <td align="right">Display items per page: <input id="NumOfItemsPerPage" name="numberOfItemsPerPage" type="text" size="3" /> </td> 
-                            <td align="right">Search number: <input id="Text1" name="searchNumberOfItems" type="text" size="3" /></td>
-                            <td align="right">Start search index: <input id="Text2" name="startSearchIndex" type="text" size="3" /> <br />
-                            End search index: <input id="Text3" type="text" name="endSearchIndex" size="3" /> </td>
-                            <td align="right">Start search:<input id="Text4" name="startSearchByte" type="text" size="3" />[Byte]<br />
-                            End search:<input id="Text5" type="text" name="endSearchByte" size="3" />[Byte]</td>
+                            <td align="right">Search items: <input id="Text1" name="searchNumberOfItems" type="text" size="3" /></td>
+                            <td align="right">Start search index: <input id="Text2" name="startSearchIndex" type="text" size="4" /> <br />
+                            End search index: <input id="Text3" type="text" name="endSearchIndex" size="4" /> </td>
+                            <td align="right">Start search:<input id="Text4" name="startSearchByte" type="text" size="6" />&nbsp;[Byte]<br />
+                            End search:<input id="Text5" type="text" name="endSearchByte" size="6" />&nbsp;[Byte]</td>
                             <td style="size: auto"></td>
                        </tr>
                     </table>

@@ -13,6 +13,50 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
 {
     public class LogViewController : Controller
     {
+        public ActionResult LoadFile(
+                           string startTime,
+                           string endTime,
+                           string threadId,
+                           string level,
+                           string searchContent,
+                           string matchWholeWord,
+                           int? numberOfItemsPerPage,
+                           int? searchNumberOfItems,
+                           int? startSearchIndex,
+                           int? endSearchIndex,
+                           int? startSearchByte,
+                           int? endSearchByte,
+                           string selectedFile)
+        {
+           if (string.IsNullOrEmpty(selectedFile))
+                return RedirectToAction("DisplayLogFiles", "LogView"); 
+
+            bool matchWholeWordFilter;
+
+            if (matchWholeWord == "on")
+            {
+                matchWholeWordFilter = true;
+            }
+            else
+            {
+                matchWholeWordFilter = false;
+            }
+
+
+            LogParserFilter filter = Filter.CreateFilter(startTime, endTime, threadId, level, searchContent, matchWholeWordFilter, searchNumberOfItems,
+                                                         startSearchIndex, endSearchIndex, startSearchByte,
+                                                         endSearchByte);
+
+
+            parserContent = ParseLogFile.ParseFile(selectedFile);
+
+            parserContent.ParseLogFile(filter);
+
+            Session["parserContent"] = parserContent;
+
+            return RedirectToAction("DisplayLog", "LogView");
+        }
+        
         public ActionResult Reload(
                                    string startTime,
                                    string endTime,
@@ -28,7 +72,8 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
                                    int? endSearchByte)
         {
             bool matchWholeWordFilter;
-            if(matchWholeWord == "on")
+
+            if (matchWholeWord == "on")
             {
                 matchWholeWordFilter = true;
             }
