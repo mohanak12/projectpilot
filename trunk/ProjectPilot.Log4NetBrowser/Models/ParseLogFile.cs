@@ -15,7 +15,7 @@ namespace ProjectPilot.Log4NetBrowser.Models
 {
     public class ParseLogFile
     {
-        public static LogDisplay ParseFile(string logKey)
+        public static LogDisplay ParseFile(string logKey, string settingsXMLfilePath)
         {
             LogDisplay parserContent = new LogDisplay();
 
@@ -28,7 +28,7 @@ namespace ProjectPilot.Log4NetBrowser.Models
             xmlReaderSettings.IgnoreProcessingInstructions = true;
             xmlReaderSettings.IgnoreWhitespace = true;
 
-            using (XmlReader xmlReader = XmlReader.Create(System.IO.File.OpenRead(@"\\zarja\share\Marko\LogConfig.xml"), xmlReaderSettings))
+            using (XmlReader xmlReader = XmlReader.Create(System.IO.File.OpenRead(settingsXMLfilePath), xmlReaderSettings))
             {
                 string key;
 

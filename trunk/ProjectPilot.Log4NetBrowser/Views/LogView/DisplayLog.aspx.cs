@@ -94,6 +94,34 @@ namespace ProjectPilot.Log4NetBrowser.Views.LogView
             }
         }
 
+        public void WriteSearchInputFields(bool checkbox, string searchContent)
+        {
+            Response.Write(
+                "&nbsp;&nbsp;Search:&nbsp;" +
+                "<input type=\"text\" name =\"searchContent\" size=\"11\" value=\"" + searchContent + "\" />" +
+                "<br />" +
+                "&nbsp;&nbsp;SearchWholeWord:");
+
+            if (checkbox)
+            {
+               Response.Write("<input type=\"checkbox\" name =\"matchWholeWord\" checked=\"checked\" />");   
+            }
+            else
+            {
+               Response.Write("<input type=\"checkbox\" name =\"matchWholeWord\"/>");
+            }
+        }
+
+        public int NumberOfItemsPerPage()
+        {
+            return (int)Session["numberOfItemsPerPage"];
+        }
+    
+        public int SearchNumberOfItems()
+        {
+            return (int)Session["searchNumberOfItems"];
+        }
+
         private LogDisplay parserContent;
         private int levelIndex=-1;
     }
