@@ -79,6 +79,7 @@
     <Compile Include="Models\LocalSearchFilter.cs" />
     <Compile Include="Models\LogDisplay.cs" />
     <Compile Include="Models\ParseLogFile.cs" />
+    <Compile Include="Models\SettingsFromXMLfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\Home\Display.aspx.cs">
       <DependentUpon>Display.aspx</DependentUpon>

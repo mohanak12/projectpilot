@@ -2,7 +2,7 @@
 <%@ Import Namespace="System"%>
 <%@ Import Namespace="System.Web"%>
 <%@ Import Namespace="System.Web.Mvc"%>
-
+<%@ Import Namespace="ProjectPilot.Extras.LogParser" %>
  
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -41,7 +41,7 @@
                                 </td>
                                 <td width='150' align='center'>
                                     &nbsp;Level:
-                                    <select id="levelSelect" name="level"">
+                                    <select id="levelSelect" name="level">
                                         <option value=""></option>
                                         <option value="TRACE">TRACE</option>
                                         <option value="DEBUG">DEBUG</option>
@@ -57,7 +57,7 @@
                                     &nbsp;&nbsp;Search:&nbsp;
                                     <input type="text" name ="searchContent" size="11"/>
                                     <br />
-                                    &nbsp;&nbsp;SearchWholeWord:<input type="checkbox" name ="matchWholeWord"/>
+                                    &nbsp;&nbsp;SearchWholeWord:<input type="checkbox" name ="matchWholeWord" />
                                 </td>
                                 <td style="size: auto"></td>
                             </tr>
@@ -68,8 +68,12 @@
                         <table class="tableClass" style="height: 35px;" border="0" cellpadding="0" cellspacing="0">
                            <br />
                            <tr valign = "middle">
-                                <td align="right" width='260'>Display items per page: <input id="NumOfItemsPerPage" name="numberOfItemsPerPage" type="text" size="3" /> </td> 
-                                <td align="right" width='200'>Search items: <input id="Text1" name="searchNumberOfItems" type="text" size="3" /></td>
+                            <%
+                               Response.Write("<td align=\"right\">Display items per page: <input id=\"NumOfItemsPerPage\" name=\"numberOfItemsPerPage\" type=\"text\" size=\"3\" value=\"" + (int)ViewData["numberOfItemsPerPage"] + "\" /> </td> ");
+                               
+                               LogParserFilter filter = (LogParserFilter) ViewData["filter"];
+                               Response.Write("<td align=\"right\">Search items: <input id=\"Text1\" name=\"searchNumberOfItems\" type=\"text\" size=\"3\" value=\"" + filter.FilterNumberOfLogItems + "\" /> </td> ");
+                            %>
                                 <td align="right" width='220'>Start search index: <input id="Text2" name="startSearchIndex" type="text" size="4" /> <br />
                                 End search index: <input id="Text3" type="text" name="endSearchIndex" size="4" /> </td>
                                 <td align="right" width='220'>Start search:<input id="Text4" name="startSearchByte" type="text" size="6" />&nbsp;[Byte]<br />

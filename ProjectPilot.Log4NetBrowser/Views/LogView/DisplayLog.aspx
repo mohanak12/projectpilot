@@ -5,6 +5,7 @@
 <%@ Import Namespace="System" %>
 <%@ Import Namespace="System.Web" %>
 <%@ Import Namespace="System.Web.Mvc" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <form method="post" action="/LogView/Reload">
@@ -111,6 +112,29 @@
                 <%
                     ParserContent = ViewData["Content"] as LogDisplay;
                     FindLevelIndex(ParserContent.LineParse.ElementsPattern);
+                    
+                    //InitialData
+                    LogParserFilter filter;
+                    if(ViewData["filter"] == null)
+                    { 
+                        filter = new LogParserFilter();
+                    } 
+                    else
+                    {
+                        filter = (LogParserFilter)ViewData["filter"];
+                    }
+
+                    if (ViewData["numberOfItemsPerPage"] == null)
+                        ViewData["numberOfItemsPerPage"] = NumberOfItemsPerPage();
+                    
+                    if (ViewData["matchWholeWordFilter"] == null)
+                    {
+                        ViewData["matchWholeWordFilter"] = false; 
+                    }
+                    if (ViewData["searchContent"] == null)
+                    {
+                        ViewData["searchContent"] = string.Empty;
+                    }
                 %>
                 <div id="patternDiv">
                     <table class="tableClass" style="height: 25px;" border="0" cellpadding="0" cellspacing="0">
@@ -130,27 +154,31 @@
                         <br />
                         <tr valign="middle">
                             <%
+
+                                
                                 bool search = false;
 
                                 foreach (string pattern in ParserContent.LineParse.ElementsPattern)
-                                {
+                                {                       
                                     switch (pattern.ToLower())
                                     {
                                         case "time":
                                             {
                                                 Response.Write(
                                                     "<td class='time' align='right'> Start:" +
-                                                    "<input type=\"text\" name =\"startTime\" size=\"19\" />" +
+                                                    "<input type=\"text\" name =\"startTime\" size=\"19\" value=\"" +
+                                                    filter.FilterTimestampStart.ToString() + "\" />" +
                                                     "<br />" +
                                                     "End:" +
-                                                    "<input type=\"text\" name =\"endTime\" size=\"19\" /></td>");
+                                                    "<input type=\"text\" name =\"endTime\" size=\"19\" value=\"" +
+                                                    filter.FilterTimestampEnd.ToString() + "\" />");
                                                 break;
                                             }
 
                                         case "threadid":
                                             {
                                                 Response.Write(
-                                                   "<td class='threadid' align='center'> <input type=\"text\" name =\"threadId\" size=\"10\"/> </td>");
+                                                   "<td class='threadid' align='center'> <input type=\"text\" name =\"threadId\" size=\"10\" value=\"" + filter.FilterThreadId + "\" /> </td>");
                                                 break;
                                             }
 
@@ -159,15 +187,39 @@
                                                 Response.Write(
                                                     "<td class='level' align='center'>&nbsp;" +
                                                     "<select id=\"levelSelect\" name=\"level\"\">" +
-                                                    "<option value=\"\"></option>" +
-                                                    "<option value=\"TRACE\">TRACE</option>" +
-                                                    "<option value=\"DEBUG\">DEBUG</option>" +
-                                                    "<option value=\"INFO\">INFO</option>" +
-                                                    "<option value=\"WARN\">WARN</option>" +
-                                                    "<option value=\"ERROR\">ERROR</option>" +
-                                                    "<option value=\"FATAL\">FATAL</option>" +
-                                                    "</select>&nbsp;" +
-                                                    "</td>");
+                                                    "<option value=\"\"></option>");
+                                               
+                                                if (filter.FilterLevel == "TRACE")
+                                                    Response.Write("<option value=\"TRACE\" selected=\"selected\">TRACE</option>");
+                                                else
+                                                    Response.Write("<option value=\"TRACE\">TRACE</option>");
+               
+                                                if (filter.FilterLevel == "DEBUG")
+                                                    Response.Write("<option value=\"DEBUG\" selected=\"selected\">DEBUG</option>");
+                                                else
+                                                    Response.Write("<option value=\"DEBUG\">DEBUG</option>");
+
+                                                if (filter.FilterLevel == "INFO")
+                                                    Response.Write("<option value=\"INFO\" selected=\"selected\">INFO</option>");
+                                                else
+                                                    Response.Write("<option value=\"INFO\">INFO</option>");
+                                                
+                                                if (filter.FilterLevel == "WARN")
+                                                    Response.Write("<option value=\"WARN\" selected=\"selected\">WARN</option>");
+                                                else
+                                                    Response.Write("<option value=\"WARN\">WARN</option>");
+                         
+                                                if (filter.FilterLevel == "ERROR")
+                                                    Response.Write("<option value=\"ERROR\" selected=\"selected\">ERROR</option>");
+                                                else                                                    
+                                                    Response.Write("<option value=\"ERROR\">ERROR</option>");
+                                               
+                                                if (filter.FilterLevel == "FATAL")
+                                                    Response.Write("<option value=\"FATAL\" selected=\"selected\">FATAL</option>");
+                                                else
+                                                    Response.Write("<option value=\"FATAL\">FATAL</option>");
+                                                
+                                                Response.Write("</select>&nbsp;</td>");
                                                 break;
                                             }
                                         case "message":
@@ -176,12 +228,7 @@
 
                                                 if (search == false)
                                                 {
-                                                    Response.Write(
-                                                        "&nbsp;&nbsp;Search:&nbsp;" +
-                                                        "<input type=\"text\" name =\"searchContent\" size=\"11\"/>" +
-                                                        "<br />" +
-                                                        "&nbsp;&nbsp;SearchWholeWord:" +
-                                                        "<input type=\"checkbox\" name =\"matchWholeWord\"/>");
+                                                    WriteSearchInputFields((bool)ViewData["matchWholeWordFilter"], (string)ViewData["searchContent"]);
 
                                                     search = true;
                                                 }
@@ -197,12 +244,7 @@
 
                                                 if (search == false)
                                                 {
-                                                    Response.Write(
-                                                        "&nbsp;&nbsp;Search:&nbsp;" +
-                                                        "<input type=\"text\" name =\"searchContent\" size=\"11\"/>" +
-                                                        "<br />" +
-                                                        "&nbsp;&nbsp;SearchWholeWord:" +
-                                                        "<input type=\"checkbox\" name =\"matchWholeWord\"/>");
+                                                    WriteSearchInputFields((bool)ViewData["matchWholeWordFilter"], (string)ViewData["searchContent"]);
 
                                                     search = true;
                                                 }
@@ -217,12 +259,7 @@
 
                                                 if (search == false)
                                                 {
-                                                    Response.Write(
-                                                        "&nbsp;&nbsp;Search:&nbsp;" +
-                                                        "<input type=\"text\" name =\"searchContent\" size=\"11\"/>" +
-                                                        "<br />" +
-                                                        "&nbsp;&nbsp;SearchWholeWord:" +
-                                                        "<input type=\"checkbox\" name =\"matchWholeWord\"/>");
+                                                    WriteSearchInputFields((bool)ViewData["matchWholeWordFilter"], (string)ViewData["searchContent"]);
 
                                                     search = true;
                                                 }
@@ -244,12 +281,14 @@
                     <table class="tableClass" style="height: 35px;" border="0" cellpadding="0" cellspacing="0">
                        <br />
                        <tr valign = "middle">
-                            <td align="right">Display items per page: <input id="NumOfItemsPerPage" name="numberOfItemsPerPage" type="text" size="3" /> </td> 
-                            <td align="right">Search items: <input id="Text1" name="searchNumberOfItems" type="text" size="3" /></td>
-                            <td align="right">Start search index: <input id="Text2" name="startSearchIndex" type="text" size="4" /> <br />
-                            End search index: <input id="Text3" type="text" name="endSearchIndex" size="4" /> </td>
-                            <td align="right">Start search:<input id="Text4" name="startSearchByte" type="text" size="6" />&nbsp;[Byte]<br />
-                            End search:<input id="Text5" type="text" name="endSearchByte" size="6" />&nbsp;[Byte]</td>
+                       <%
+                           Response.Write("<td align=\"right\">Display items per page: <input id=\"NumOfItemsPerPage\" name=\"numberOfItemsPerPage\" type=\"text\" size=\"3\" value=\"" + (int)ViewData["numberOfItemsPerPage"] + "\" /> </td> ");
+                           Response.Write("<td align=\"right\">Search items: <input id=\"Text1\" name=\"searchNumberOfItems\" type=\"text\" size=\"3\" value=\"" + filter.FilterNumberOfLogItems + "\" /> </td> ");
+                           Response.Write(" <td align=\"right\">Start search index: <input id=\"Text2\" name=\"startSearchIndex\" type=\"text\" size=\"4\" value=\"" + filter.StartLogIndex + "\"  /> <br />");
+                           Response.Write("End search index: <input id=\"Text3\" type=\"text\" name=\"endSearchIndex\" size=\"4\" value=\"" + filter.EndLogIndex + "\" /> </td>");
+                           Response.Write(" <td align=\"right\">Start search:<input id=\"Text4\" name=\"startSearchByte\" type=\"text\" size=\"6\" value=\"" + filter.ReadIndexStart + "\" />&nbsp;[Byte]<br />");
+                           Response.Write("End search:<input id=\"Text5\" type=\"text\" name=\"endSearchByte\" size=\"6\" value=\"" + filter.ReadIndexEnd + "\" />&nbsp;[Byte]</td>");
+                       %>
                             <td style="size: auto"></td>
                        </tr>
                     </table>

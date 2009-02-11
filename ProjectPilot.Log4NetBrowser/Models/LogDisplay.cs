@@ -22,7 +22,7 @@ namespace ProjectPilot.Log4NetBrowser.Models
 
         public void Parsing10MBLogFile(LogParserFilter filter, string file, string pattern, char? separator)
         {
-            //Default settings
+            //Default settings  TEMP!!
             if (string.IsNullOrEmpty(file))
                 file = @"\\zarja\share\Marko\SSM+2009-01-08.log.28.small";
 

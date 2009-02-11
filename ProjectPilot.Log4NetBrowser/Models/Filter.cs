@@ -27,7 +27,8 @@ namespace ProjectPilot.Log4NetBrowser.Models
                                           int? startSearchIndex,
                                           int? endSearchIndex,
                                           int? startSearchByte,
-                                          int? endSearchByte
+                                          int? endSearchByte,
+                                          int? numberOfItemsPerPage
              )
          {
              LogParserFilter filter = new LogParserFilter();
