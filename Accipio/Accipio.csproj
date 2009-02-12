@@ -121,7 +121,7 @@
     <None Include="ProjectPilot.snk" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Templates\CSharpMbUnitTestCodeGenerator.vm">
+    <None Include="Templates\TestRunners\CSharpMbUnitTestRunner.vm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -130,6 +130,17 @@
       <Project>{CA2A5879-D111-4BC1-9A3D-EB156D0AF665}</Project>
       <Name>ProjectPilot.Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Templates\TestReports\TestReport.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\TestReports\TestRunReport.vm.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\TestReports\TestRunsHistory.vm.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\lib\Microsoft StyleCop\Microsoft.StyleCop.Targets" />

@@ -21,7 +21,7 @@ namespace ProjectPilot.Tests.AccipioTests.Reporting
 
             HtmlTestReportGeneratorSettings settings = new HtmlTestReportGeneratorSettings("TestProject");
             settings.OutputDirectory = "reports";
-            settings.TemplatesDirectory = @"..\..\..\Accipio.Console\Templates";
+            settings.TemplatesDirectory = @"../../../Accipio/Templates/TestReports";
 
             HtmlTestReportGenerator generator = new HtmlTestReportGenerator(settings);
             generator.Generate(db);

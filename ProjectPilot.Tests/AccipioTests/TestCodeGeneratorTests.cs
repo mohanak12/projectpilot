@@ -20,7 +20,7 @@ namespace ProjectPilot.Tests.AccipioTests
             args.Add("-ba=..\\..\\..\\Data\\Samples\\BusinessActions.xml");
             args.Add("-tx=" + TestSuiteSchemaGeneratorTests.GenerateXsdValidationSchemaOutputFile());
             args.Add("-i=..\\..\\..\\Data\\Samples\\TestSuite.xml");
-            args.Add("-tm=Templates/CSharpMbUnitTestCodeGenerator.vm");
+            args.Add("-tm=Templates/TestRunners/CSharpMbUnitTestRunner.vm");
             args.Add("-tmx=.cs");
             TestCodeGeneratorCommand testCodeGeneratorCommand = new TestCodeGeneratorCommand();
             Assert.AreEqual(0, testCodeGeneratorCommand.Execute(args));
