@@ -15,7 +15,7 @@ namespace ProjectPilot.Tests.Framework
         [Category("")]
         public void GoToPortal()
         {
-            using (ProjectPortalTestRunner runner = new ProjectPortalTestRunner())
+            using (ProjectPortalTestRunner runner = new ProjectPortalTestRunner("GoToPortal"))
             {
                 runner
                     .SetDescription("Opens Project portal home page in browser.")
@@ -38,7 +38,7 @@ namespace ProjectPilot.Tests.Framework
         [Category("")]
         public void SelectProjectEbsy()
         {
-            using (ProjectPortalTestRunner runner = new ProjectPortalTestRunner())
+            using (ProjectPortalTestRunner runner = new ProjectPortalTestRunner("SelectProjectEbsy"))
             {
                 runner
                     .SetDescription("Finds and select a project on Project portal.")

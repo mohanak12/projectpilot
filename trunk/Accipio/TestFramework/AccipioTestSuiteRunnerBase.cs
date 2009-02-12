@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using log4net;
 
 namespace Accipio.TestFramework
 {
-    public abstract class AccipioTestSuiteRunnerBase : IDisposable
+    public abstract class AccipioTestSuiteRunnerBase<TTestCaseRunner> : IDisposable
+        where TTestCaseRunner : AccipioTestRunnerBase<TTestCaseRunner> 
     {
+        public abstract TTestCaseRunner CreateTestRunner(string testCaseName);
+
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or
         /// resetting unmanaged resources.
@@ -15,6 +16,12 @@ namespace Accipio.TestFramework
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        protected AccipioTestSuiteRunnerBase(string testSuiteName)
+        {
+            this.testSuiteName = testSuiteName;
+            log.InfoFormat("Starting test suite '{0}'", testSuiteName);
         }
 
         /// <summary>
@@ -30,7 +37,7 @@ namespace Accipio.TestFramework
 
                 if (disposing)
                 {
-                    // TODO: clean managed resources
+                    log.InfoFormat("Finishing test suite '{0}'", testSuiteName);
                 }
 
                 disposed = true;
@@ -38,5 +45,7 @@ namespace Accipio.TestFramework
         }
 
         private bool disposed;
+        private static readonly ILog log = LogManager.GetLogger(typeof(AccipioTestSuiteRunnerBase<TTestCaseRunner>));
+        private readonly string testSuiteName;
     }
 }
