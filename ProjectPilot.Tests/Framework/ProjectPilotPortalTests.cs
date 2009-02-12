@@ -11,7 +11,7 @@ namespace ProjectPilot.Tests.Framework
         /// <summary>
         /// Opens Project portal home page in browser.
         /// </summary>
-        [Test, Pending("Used as example")]
+        [Test, Ignore("Used as example")]
         [Category("")]
         public void GoToPortal()
         {
@@ -34,7 +34,7 @@ namespace ProjectPilot.Tests.Framework
         /// <summary>
         /// Finds and select a project on Project portal.
         /// </summary>
-        [Test, Pending("Used as example")]
+        [Test, Ignore("Used as example")]
         [Category("")]
         public void SelectProjectEbsy()
         {

@@ -105,11 +105,9 @@
     <Compile Include="Reporting\UserStoriesThroughTimeGraphDataGenerator.cs" />
     <Compile Include="Reporting\UserStoryRun.cs" />
     <Compile Include="TestFramework\SeleniumTesterBase.cs" />
-    <Compile Include="TestActionParameter.cs" />
-    <Compile Include="TestCodeGenerator.cs" />
-    <Compile Include="FileCodeWriter.cs" />
+    <Compile Include="TestStepParameter.cs" />
+    <Compile Include="TemplatedTestCodeGenerator.cs" />
     <Compile Include="HtmlTestCodeGenerator.cs" />
-    <Compile Include="ICodeWriter.cs" />
     <Compile Include="ITestCodeGenerator.cs" />
     <Compile Include="ITestSuiteParser.cs" />
     <Compile Include="TestCaseStep.cs" />
@@ -123,7 +121,7 @@
     <None Include="ProjectPilot.snk" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Templates\CSharpTestCodeGenerator.vm">
+    <None Include="Templates\CSharpMbUnitTestCodeGenerator.vm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

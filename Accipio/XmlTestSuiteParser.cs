@@ -125,7 +125,7 @@ namespace Accipio
                         string key = xmlReader.LocalName;
                         string value = xmlReader.Value;
 
-                        testCaseStep.AddActionParameter(new TestActionParameter(key, value));
+                        testCaseStep.AddParameter(new TestStepParameter(key, value));
                     }
 
                     // move back to element
@@ -138,7 +138,7 @@ namespace Accipio
                     if (xmlReader.NodeType == XmlNodeType.Text)
                     {
                         string content = xmlReader.ReadContentAsString();
-                        testCaseStep.AddActionParameter(new TestActionParameter("value", content));
+                        testCaseStep.AddParameter(new TestStepParameter("value", content));
                     }
                 }
 

@@ -704,6 +704,20 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="TemplatedTestCodeGenerator">
+          <Members>
+           <Member Name="#Generate(Accipio.TestSuite)">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Created="2009-02-11 22:53:30Z">
+              <Issue>
+               <Item>'TemplatedTestCodeGenerator.Generate(TestSuite)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
         </Types>
        </Namespace>
        <Namespace Name="Accipio.Reporting">
@@ -759,66 +773,6 @@
              <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Excluded" Created="2009-01-27 17:28:14Z">
               <Issue>
                <Item>'TestSuiteRun.testCasesRuns'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
-      </Namespaces>
-     </Module>
-    </Modules>
-   </Target>
-   <Target Name="$(ProjectDir)/Headless/bin/Release/Headless.dll">
-    <Modules>
-     <Module Name="headless.dll">
-      <Namespaces>
-       <Namespace Name="Headless.Threading">
-        <Types>
-         <Type Name="JobQueue`1">
-          <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2009-02-08 07:58:21Z">
-            <Issue Name="TypeNoAlternate">
-             <Item>'JobQueue&lt;TJob&gt;'</Item>
-             <Item>Queue</Item>
-            </Issue>
-           </Message>
-          </Messages>
-          <Members>
-           <Member Name="#WaitForJob(System.TimeSpan,!0&amp;)">
-            <Messages>
-             <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2009-02-08 07:58:21Z">
-              <Issue>
-               <Item>'job'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="QueuedWorker`1">
-          <Messages>
-           <Message TypeName="AbstractTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1012" Created="2009-02-08 07:58:21Z">
-            <Issue>
-             <Item>'QueuedWorker&lt;TJob&gt;'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-        </Types>
-       </Namespace>
-       <Namespace Name="Headless.Web">
-        <Types>
-         <Type Name="ResponseTemplate">
-          <Members>
-           <Member Name="#Expand(Headless.Web.WebResponseData)">
-            <Messages>
-             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Created="2009-02-08 07:58:21Z">
-              <Issue>
-               <Item>'ResponseTemplate.Expand(WebResponseData)'</Item>
-               <Item>'Exception'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1043,40 +997,12 @@
          </Type>
         </Types>
        </Namespace>
-       <Namespace Name="ProjectPilot.Tests.HeadlessTests">
-        <Types>
-         <Type Name="WorkerTests">
-          <Members>
-           <Member Name="#Test()">
-            <Messages>
-             <Message Id="System.Collections.Generic.List`1&lt;ProjectPilot.Tests.HeadlessTests.TestWorker&gt;" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2009-02-08 07:58:21Z">
-              <Issue Name="ObjectCreation">
-               <Item>'WorkerTests.Test()'</Item>
-               <Item>'List&lt;TestWorker&gt;'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2009-02-08 07:58:21Z">
-              <Issue>
-               <Item>'int.ToString()'</Item>
-               <Item>'WorkerTests.Test()'</Item>
-               <Item>'int.ToString(IFormatProvider)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
       </Namespaces>
      </Module>
     </Modules>
    </Target>
   </Targets>
   <Rules>
-   <Rule TypeName="AbstractTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1012">
-    <Resolution Name="Default">Change the accessibility of all public constructors in {0} to protected.</Resolution>
-   </Rule>
    <Rule TypeName="AvoidEmptyInterfaces" Category="Microsoft.Design" CheckId="CA1040">
     <Resolution Name="Default">Define a custom attribute to replace {0}.</Resolution>
    </Rule>
@@ -1100,9 +1026,7 @@
    <Rule TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002">
     <Resolution Name="Default">Change {0} in {1} to use Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; or KeyedCollection&lt;K,V&gt;</Resolution>
    </Rule>
-   <Rule TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806">
-    <Resolution Name="ObjectCreation">{0} creates a new instance of {1} which is never used. Pass the instance as an argument to another method, assign the instance to a variable, or remove the object creation if it is unnecessary.</Resolution>
-   </Rule>
+   <Rule TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" />
    <Rule TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004">
     <Resolution Name="Default">Consider a design where {0} doesn't require explicit type parameter {1} in any call to it.</Resolution>
    </Rule>
@@ -1116,9 +1040,6 @@
    </Rule>
    <Rule TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707">
     <Resolution Name="Type">Remove the underscores from type name {0}.</Resolution>
-   </Rule>
-   <Rule TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711">
-    <Resolution Name="TypeNoAlternate">Rename type name {0} so that it does not end in '{1}'.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716">
     <Resolution Name="Member">Rename virtual/interface member {0} so that it no longer conflicts with the reserved language keyword '{1}'. Using a reserved keyword as the name of a virtual/interface member makes it harder for consumers in other languages to override/implement the member.</Resolution>

@@ -1,11 +1,6 @@
-﻿#region
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
-
-#endregion
 
 namespace Accipio
 {
@@ -21,19 +16,6 @@ namespace Accipio
         }
 
         /// <summary>
-        /// Initializes a new instance of the TestCaseStep class.
-        /// </summary>
-        /// <param name="actionName">Name of the action</param>
-        /// <param name="testActionParameter">Action parameters <see cref="testActionParameter"/></param>
-        public TestCaseStep (
-            string actionName,
-            TestActionParameter testActionParameter)
-        {
-            this.actionName = actionName;
-            AddActionParameter(testActionParameter);
-        }
-
-        /// <summary>
         /// Gets the name of the action.
         /// </summary>
         /// <example><c>selectProject</c> in <selectProject>Mobi-Info</selectProject></example>
@@ -43,30 +25,30 @@ namespace Accipio
         }
 
         /// <summary>
-        /// Add action parameter.
-        /// </summary>
-        /// <param name="testActionParameter">See <see cref="TestActionParameter"/></param>
-        /// <example>url=http://asd.html</example>
-        /// <example>name=parameter1</example>
-        public void AddActionParameter(TestActionParameter testActionParameter)
-        {
-            actionParameters.Add(testActionParameter);
-        }
-
-        /// <summary>
-        /// Gets number of action parameters in test action.
-        /// </summary>
-        public int ActionParametersCount
-        {
-            get { return actionParameters.Count; }
-        }
-
-        /// <summary>
         /// Gets collection of action parameters.
         /// </summary>
-        public IList<TestActionParameter> ActionParameters
+        public IList<TestStepParameter> Parameters
         {
-            get { return actionParameters; }
+            get { return parameters; }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the test step has parameters.
+        /// </summary>
+        public bool HasParameters
+        {
+            get { return parameters.Count > 0 ? true : false; }
+        }
+
+        /// <summary>
+        /// Add test step parameter.
+        /// </summary>
+        /// <param name="testStepParameter">See <see cref="TestStepParameter"/></param>
+        /// <example>url=http://asd.html</example>
+        /// <example>name=parameter1</example>
+        public void AddParameter(TestStepParameter testStepParameter)
+        {
+            parameters.Add(testStepParameter);
         }
 
         public string ExpandDescriptionWithParameterValues (BusinessActionData businessActionData)
@@ -74,83 +56,36 @@ namespace Accipio
             string description = businessActionData.GetAction(ActionName).Description;
             if (HasParameters)
             {
-                List<string> parameters = new List<string>();
-                foreach (TestActionParameter actionParameter in ActionParameters)
-                    parameters.Add(actionParameter.ParameterValue);
+                List<object> args = new List<object>();
+                foreach (TestStepParameter parameter in Parameters)
+                    args.Add(parameter.ParameterValue);
 
-                return String.Format(CultureInfo.InvariantCulture, description, parameters.ToArray());
+                return String.Format(CultureInfo.InvariantCulture, description, args.ToArray());
             }
 
             return description;
-        }
-
-        public string ExpandTestCaseStepWithParametersForCSharp(BusinessActionData businessActionData)
-        {
-            string commaSeparator = string.Empty;
-            StringBuilder line = new StringBuilder();
-            // get business action parameters
-            List<BusinessActionParameters> businessActionParameters =
-                (List<BusinessActionParameters>)
-                businessActionData.GetAction(ActionName).ActionParameters;
-
-            foreach (TestActionParameter parameter in ActionParameters)
-            {
-                TestActionParameter tempParameter = parameter;
-
-                BusinessActionParameters parameterType =
-                    businessActionParameters.Find(parameters => parameters.ParameterName ==
-                                                                tempParameter.ParameterKey);
-                if (parameterType.ParameterType == "string")
-                {
-                    line.AppendFormat(
-                        CultureInfo.InvariantCulture,
-                        "{1}\"{0}\"",
-                        parameter.ParameterValue,
-                        commaSeparator);
-                }
-                else
-                {
-                    line.AppendFormat(
-                        CultureInfo.InvariantCulture,
-                        "{1}{0}",
-                        parameter.ParameterValue,
-                        commaSeparator);
-                }
-
-                commaSeparator = ", ";
-            }
-
-            return line.ToString();
         }
 
         /// <summary>
         /// Gets <c>value</c> of specified <c>key</c>.
         /// </summary>
         /// <example>
-        /// If TestCaseStep has TestActionParameter url="http://asd.aspx",
-        /// Return value GetParameterKeyValue("url") is "http://asd.aspx".
+        /// If TestCaseStep has TestStepParameter url="http://asd.aspx",
+        /// Return value GetParameterValue("url") is "http://asd.aspx".
         /// </example>
         /// <param name="parameterKey">XML attribute key</param>
         /// <returns>XML attribute value</returns>
-        public string GetParameterKeyValue(string parameterKey)
+        public object GetParameterValue(string parameterKey)
         {
-            foreach (TestActionParameter actionParameter in actionParameters)
+            foreach (TestStepParameter parameter in parameters)
             {
-                if (actionParameter.ParameterKey.Equals(parameterKey))
+                if (parameter.ParameterName.Equals(parameterKey))
                 {
-                    return actionParameter.ParameterValue;
+                    return parameter.ParameterValue;
                 }
             }
 
             return null;
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether the test actiona has parameters.
-        /// </summary>
-        public bool HasParameters
-        {
-            get { return actionParameters.Count > 0 ? true : false; }
         }
 
         private readonly string actionName;
@@ -158,6 +93,6 @@ namespace Accipio
         /// <summary>
         /// Collection of test action parameters.
         /// </summary>
-        private readonly List<TestActionParameter> actionParameters = new List<TestActionParameter>();
+        private readonly List<TestStepParameter> parameters = new List<TestStepParameter>();
     }
 }

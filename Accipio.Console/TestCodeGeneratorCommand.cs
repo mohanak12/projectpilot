@@ -21,12 +21,16 @@ namespace Accipio.Console
             {
                 { "ba|businessactions=", "Business actions XML {file}",
                   (string file) => this.businessActionsXmlFileName = file },
-                { "tx|testsuitesschema=", "Test suites XML schema {file}",
-                  (string file) => this.testSuiteXsdFileName = file },
-                { "o|outputdir=", "output {directory} where generated C# code will be stored (the default is current directory)",
-                  (string outputDir) => this.outputDir = outputDir },
                 { "i|inputfile=", "input test suite XML file (can be repeated multiple times)",
                   (string inputfile) => this.testSuitesFileNames.Add(inputfile) },
+                { "o|outputdir=", "output {directory} where generated C# code will be stored (the default is current directory)",
+                  (string outputDir) => this.outputDir = outputDir },
+                { "tm|templatefilename=", "Template {file} to use for generating the test code",
+                  (string file) => this.templateFileName = file },
+                { "tmx|templatefileextension=", "Template file {extension} to use for generating the test code file(s). Examples: '.cs', '.html'",
+                  (string extension) => this.templateFileExtension = extension },
+                { "tx|testsuitesschema=", "Test suites XML schema {file}",
+                  (string file) => this.testSuiteXsdFileName = file },
             };
         }
 
@@ -53,6 +57,12 @@ namespace Accipio.Console
             if (String.IsNullOrEmpty(testSuiteXsdFileName))
                 throw new ArgumentException("Missing test suites XSD file name.");
 
+            if (String.IsNullOrEmpty(templateFileName))
+                throw new ArgumentException("Missing template file name.");
+
+            if (String.IsNullOrEmpty(templateFileExtension))
+                throw new ArgumentException("Missing template file extension.");
+
             // parse business actions
             using (Stream xmlStream = File.OpenRead(businessActionsXmlFileName))
             {
@@ -75,24 +85,11 @@ namespace Accipio.Console
                     // generate c# code
                     string codeFileName = Path.Combine(
                         outputDir, 
-                        Path.GetFileName(Path.ChangeExtension(testSuiteFileName, ".cs")));
+                        Path.GetFileName(Path.ChangeExtension(testSuiteFileName, templateFileExtension)));
                     System.Console.WriteLine("Creating '{0}'", codeFileName);
 
-                    using (ICodeWriter writer = new FileCodeWriter(codeFileName))
-                    {
-                        ITestCodeGenerator codeGenerator = new TestCodeGenerator(writer);
-                        codeGenerator.Generate(parsedTestSuite);
-                    }
-
-                    // generate html test specifications
-                    string htmlFileName = Path.ChangeExtension(testSuiteFileName, ".html");
-                    System.Console.WriteLine("Creating '{0}'", htmlFileName);
-
-                    using (ICodeWriter writer = new FileCodeWriter(htmlFileName))
-                    {
-                        ITestCodeGenerator htmlTestSpecs = new HtmlTestCodeGenerator(writer);
-                        htmlTestSpecs.Generate(parsedTestSuite);
-                    }
+                    ITestCodeGenerator codeGenerator = new TemplatedTestCodeGenerator(templateFileName, codeFileName);
+                    codeGenerator.Generate(parsedTestSuite);
                 }
             }
 
@@ -104,11 +101,13 @@ namespace Accipio.Console
             options.WriteOptionDescriptions(System.Console.Out);
         }
 
+        private BusinessActionData businessActionData;
         private string businessActionsXmlFileName;
         private readonly OptionSet options;
         private string outputDir = ".";
-        private string testSuiteXsdFileName;
+        private string templateFileExtension;
+        private string templateFileName;
         private List<string> testSuitesFileNames = new List<string>();
-        private BusinessActionData businessActionData;
+        private string testSuiteXsdFileName;
     }
 }

@@ -13,7 +13,7 @@ namespace ProjectPilot.Tests.HeadlessTests
     [TestFixture]
     public class WorkerTests
     {
-        [Test]
+        [Test, Pending("TODO Igor: something is wrong with the threading")]
         public void Test()
         {
             IWorkerMonitor workerMonitor = new TestWorkerMonitor();
