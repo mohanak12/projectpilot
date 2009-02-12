@@ -25,19 +25,19 @@ namespace Accipio
         }
 
         /// <summary>
+        /// Gets a value indicating whether the test step has parameters.
+        /// </summary>
+        public bool HasParameters
+        {
+            get { return parameters.Count > 0; }
+        }
+
+        /// <summary>
         /// Gets collection of action parameters.
         /// </summary>
         public IList<TestStepParameter> Parameters
         {
             get { return parameters; }
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether the test step has parameters.
-        /// </summary>
-        public bool HasParameters
-        {
-            get { return parameters.Count > 0 ? true : false; }
         }
 
         /// <summary>
@@ -51,14 +51,19 @@ namespace Accipio
             parameters.Add(testStepParameter);
         }
 
-        public string ExpandDescriptionWithParameterValues (BusinessActionData businessActionData)
+        public string ExpandDescriptionWithParameterValues (BusinessActionsRepository businessActionsRepository)
         {
-            string description = businessActionData.GetAction(ActionName).Description;
+            BusinessAction businessAction = businessActionsRepository.GetAction(ActionName);
+            string description = businessAction.Description;
             if (HasParameters)
             {
                 List<object> args = new List<object>();
-                foreach (TestStepParameter parameter in Parameters)
-                    args.Add(parameter.ParameterValue);
+
+                foreach (BusinessActionParameter parameter in businessAction.EnumerateParameters())
+                {
+                    object value = this.GetParameterValue(parameter.ParameterName);
+                    args.Add(value);
+                }
 
                 return String.Format(CultureInfo.InvariantCulture, description, args.ToArray());
             }
@@ -73,13 +78,13 @@ namespace Accipio
         /// If TestCaseStep has TestStepParameter url="http://asd.aspx",
         /// Return value GetParameterValue("url") is "http://asd.aspx".
         /// </example>
-        /// <param name="parameterKey">XML attribute key</param>
+        /// <param name="parameterName">XML attribute key</param>
         /// <returns>XML attribute value</returns>
-        public object GetParameterValue(string parameterKey)
+        public object GetParameterValue(string parameterName)
         {
             foreach (TestStepParameter parameter in parameters)
             {
-                if (parameter.ParameterName.Equals(parameterKey))
+                if (parameter.ParameterName.Equals(parameterName))
                 {
                     return parameter.ParameterValue;
                 }

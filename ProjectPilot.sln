@@ -8,7 +8,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{FBCD
 		Data\Samples\AcceptanceTestResults.xml = Data\Samples\AcceptanceTestResults.xml
 		Data\Samples\AccipioTestReportSample.xml = Data\Samples\AccipioTestReportSample.xml
 		Data\Samples\AspxSample.aspx = Data\Samples\AspxSample.aspx
-		Data\Samples\BusinessActions.xml = Data\Samples\BusinessActions.xml
 		Data\Samples\ccnet.stats.xml = Data\Samples\ccnet.stats.xml
 		Data\Samples\GallioReportSample.xml = Data\Samples\GallioReportSample.xml
 		Data\Samples\Hsl.Ganesha.DBAccess.csproj = Data\Samples\Hsl.Ganesha.DBAccess.csproj

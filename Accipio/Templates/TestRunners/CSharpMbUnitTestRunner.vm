@@ -33,7 +33,7 @@ namespace ${testSuite.Namespace}
 #if ( ${testCase.TestSteps.Count} > 0 )
 
 #foreach ($testStep in ${testCase.TestSteps})
-                // ${testStep.ExpandDescriptionWithParameterValues(${testSuite.BusinessActionData})}
+                // ${testStep.ExpandDescriptionWithParameterValues(${testSuite.BusinessActionsRepository})}
                 runner.${testStep.ActionName}(#if ($testStep.Parameters.Count > 0)
 #foreach ($parameter in $testStep.Parameters)
 

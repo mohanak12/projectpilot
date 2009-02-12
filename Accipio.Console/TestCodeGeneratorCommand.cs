@@ -67,7 +67,7 @@ namespace Accipio.Console
             using (Stream xmlStream = File.OpenRead(businessActionsXmlFileName))
             {
                 IBusinessActionXmlParser businessActionXmlParser = new BusinessActionsXmlParser(xmlStream);
-                businessActionData = businessActionXmlParser.Parse();
+                businessActionsRepository = businessActionXmlParser.Parse();
             }
 
             XmlValidationHelper xmlValidationHelper = new XmlValidationHelper();
@@ -77,10 +77,10 @@ namespace Accipio.Console
                 // validate xml with xsd schema
                 xmlValidationHelper.ValidateXmlDocument(testSuiteFileName, testSuiteXsdFileName);
 
-                using (XmlTestSuiteParser testSuiteParser = new XmlTestSuiteParser(testSuiteFileName))
+                using (XmlTestSuiteParser testSuiteParser = new XmlTestSuiteParser(testSuiteFileName, businessActionsRepository))
                 {
                     TestSuite parsedTestSuite = testSuiteParser.Parse();
-                    parsedTestSuite.BusinessActionData = businessActionData;
+                    parsedTestSuite.BusinessActionsRepository = businessActionsRepository;
 
                     // generate c# code
                     string codeFileName = Path.Combine(
@@ -101,7 +101,7 @@ namespace Accipio.Console
             options.WriteOptionDescriptions(System.Console.Out);
         }
 
-        private BusinessActionData businessActionData;
+        private BusinessActionsRepository businessActionsRepository;
         private string businessActionsXmlFileName;
         private readonly OptionSet options;
         private string outputDir = ".";

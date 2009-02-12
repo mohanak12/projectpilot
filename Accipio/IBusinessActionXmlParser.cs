@@ -3,6 +3,6 @@ namespace Accipio
 {
     public interface IBusinessActionXmlParser
     {
-        BusinessActionData Parse();
+        BusinessActionsRepository Parse();
     }
 }

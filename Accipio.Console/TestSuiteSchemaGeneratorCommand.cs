@@ -66,10 +66,10 @@ namespace Accipio.Console
                 Path.Combine(ConsoleApp.AccipioDirectoryPath, AccipioActionsXsdFileName));
 
             // parse XML file
-            BusinessActionData businessActionData = ParseXmlToObject(businessActionsXmlFileName);
+            BusinessActionsRepository businessActionsRepository = ParseXmlToObject(businessActionsXmlFileName);
 
             // generating XSD schema file with business actions validation parameters
-            XmlDocument xmlSchemaDocument = GenerateXsdSchema(businessActionData);
+            XmlDocument xmlSchemaDocument = GenerateXsdSchema(businessActionsRepository);
 
             // write xsd schema to file
             AccipioHelper.EnsureDirectoryPathExists(testSuiteSchemaFileName, true);
@@ -94,13 +94,13 @@ namespace Accipio.Console
         /// <summary>
         /// Adds XML nodes for the specified parameters.
         /// </summary>
+        /// <param name="businessAction">The business action whose parameters should be added.</param>
         /// <param name="testSuiteSchemaDocument"><see cref="XmlDocument"/> which contains the test suite template XSD.</param>
         /// <param name="xmlNode">Parent node</param>
-        /// <param name="parameters">Action parameters</param>
         private void AddBusinessActionParameters(
+            BusinessAction businessAction, 
             XmlDocument testSuiteSchemaDocument, 
-            XmlNode xmlNode, 
-            IList<BusinessActionParameters> parameters)
+            XmlNode xmlNode)
         {
             // create element complextype
             XmlNode complexTypeNode = testSuiteSchemaDocument.CreateNode(
@@ -109,7 +109,7 @@ namespace Accipio.Console
                 "complexType", 
                 XmlNsXs);
 
-            if (parameters.Count == 0)
+            if (businessAction.ParametersCount == 0)
             {
                 // add restriction to action withput parameters to disable text node
 
@@ -142,7 +142,7 @@ namespace Accipio.Console
             else
             {
                 // go through all business action paramters and add elements to xsd schema
-                foreach (BusinessActionParameters parameter in parameters)
+                foreach (BusinessActionParameter parameter in businessAction.EnumerateParameters())
                 {
                     // create element attribute
                     XmlNode attributeNode = testSuiteSchemaDocument.CreateNode(
@@ -158,7 +158,7 @@ namespace Accipio.Console
 
                     // append attribute type
                     xmlAttribute = testSuiteSchemaDocument.CreateAttribute("type");
-                    xmlAttribute.Value = string.Format(CultureInfo.InvariantCulture, "xs:{0}", parameter.ParameterType ?? "string");
+                    xmlAttribute.Value = string.Format(CultureInfo.InvariantCulture, "xs:{0}", parameter.ParameterXsdType);
                     attributeNode.Attributes.Append(xmlAttribute);
 
                     xmlAttribute = testSuiteSchemaDocument.CreateAttribute("use");
@@ -177,13 +177,13 @@ namespace Accipio.Console
         /// </summary>
         /// <param name="testSuiteSchemaDocument"><see cref="XmlDocument"/> which contains the test suite template XSD.</param>
         /// <param name="testActionsParentNode">Parent node where the test actions should be filled.</param>
-        /// <param name="businessActionData">Business action data</param>
+        /// <param name="businessActionsRepository">Business action data</param>
         private void FillTestSuiteSchemaTemplate(
             XmlDocument testSuiteSchemaDocument, 
             XmlNode testActionsParentNode, 
-            BusinessActionData businessActionData)
+            BusinessActionsRepository businessActionsRepository)
         {
-            foreach (BusinessActionEntry entry in businessActionData.Actions)
+            foreach (BusinessAction businessAction in businessActionsRepository.EnumerateActions())
             {
                 XmlNode newNode = testSuiteSchemaDocument.CreateNode(
                     XmlNodeType.Element, 
@@ -193,7 +193,7 @@ namespace Accipio.Console
 
                 // add attribute name
                 XmlAttribute xmlAttribute = testSuiteSchemaDocument.CreateAttribute("name");
-                xmlAttribute.Value = entry.ActionId;
+                xmlAttribute.Value = businessAction.ActionName;
                 newNode.Attributes.Append(xmlAttribute);
 
                 // add attribute minOccurs
@@ -201,14 +201,7 @@ namespace Accipio.Console
                 xmlAttribute.Value = "1";
                 newNode.Attributes.Append(xmlAttribute);
 
-                //if (entry.Parameters.Count == 0)
-                //{
-                    // add complex node with restriction
-                //}
-                //else if (entry.Parameters.Count > 0)
-                //{
-                    AddBusinessActionParameters(testSuiteSchemaDocument, newNode, entry.ActionParameters);
-                //}
+                AddBusinessActionParameters(businessAction, testSuiteSchemaDocument, newNode);
 
                 // append child node
                 testActionsParentNode.AppendChild(newNode);
@@ -218,9 +211,9 @@ namespace Accipio.Console
         /// <summary>
         /// Generate xsd file
         /// </summary>
-        /// <param name="businessActionData">Business action data</param>
+        /// <param name="businessActionsRepository">Business action data</param>
         /// <returns>Return xsd schema</returns>
-        private XmlDocument GenerateXsdSchema(BusinessActionData businessActionData)
+        private XmlDocument GenerateXsdSchema(BusinessActionsRepository businessActionsRepository)
         {
             using (Stream stream = File.Open(
                 Path.Combine(ConsoleApp.AccipioDirectoryPath, XsdTemplateFileName), 
@@ -241,7 +234,7 @@ namespace Accipio.Console
                 XmlNode xmlNode = xmlElement.SelectSingleNode(
                     "//xs:element[@name='steps']/xs:complexType/xs:sequence/xs:choice",
                     namespaceManager);
-                FillTestSuiteSchemaTemplate(xmlDocument, xmlNode, businessActionData);
+                FillTestSuiteSchemaTemplate(xmlDocument, xmlNode, businessActionsRepository);
 
                 return xmlDocument;
             }
@@ -251,18 +244,18 @@ namespace Accipio.Console
         /// Parse business action xml document to object
         /// </summary>
         /// <param name="businessActionsXmlFileName">file name of business action</param>
-        /// <returns>Parsed xml document as BusinessActionData object</returns>
-        private static BusinessActionData ParseXmlToObject(string businessActionsXmlFileName)
+        /// <returns>Parsed xml document as BusinessActionsRepository object</returns>
+        private static BusinessActionsRepository ParseXmlToObject(string businessActionsXmlFileName)
         {
-            BusinessActionData businessActionData;
+            BusinessActionsRepository businessActionsRepository;
 
             using (Stream xmlStream = File.OpenRead(businessActionsXmlFileName))
             {
                 IBusinessActionXmlParser businessActionXmlParser = new BusinessActionsXmlParser(xmlStream);
-                businessActionData = businessActionXmlParser.Parse();
+                businessActionsRepository = businessActionXmlParser.Parse();
             }
 
-            return businessActionData;
+            return businessActionsRepository;
         }
 
         private void SetXmlDocumentNamespaces(XmlDocument xmlDocument)

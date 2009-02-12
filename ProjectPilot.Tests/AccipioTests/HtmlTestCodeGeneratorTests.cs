@@ -24,17 +24,17 @@ namespace ProjectPilot.Tests.AccipioTests
             const string ActionSelectModuleDescription = "Select module name '{0}'";
             const string ActionDetailsDescription = "Select details";
             
-            BusinessActionData businessActionData = new BusinessActionData();
-            BusinessActionEntry businessActionEntry = new BusinessActionEntry("NavigateTo");
-            businessActionEntry.Description = ActionNavigateToDescription;
-            businessActionData.Actions.Add(businessActionEntry);
-            businessActionEntry = new BusinessActionEntry("SelectModule");
-            businessActionEntry.Description = ActionSelectModuleDescription;
-            businessActionData.Actions.Add(businessActionEntry);
-            businessActionEntry = new BusinessActionEntry("Details");
-            businessActionEntry.Description = ActionDetailsDescription;
-            businessActionData.Actions.Add(businessActionEntry);
-            testSuite.BusinessActionData = businessActionData;
+            BusinessActionsRepository businessActionsRepository = new BusinessActionsRepository();
+            BusinessAction businessAction = new BusinessAction("NavigateTo");
+            businessAction.Description = ActionNavigateToDescription;
+            businessActionsRepository.AddAction(businessAction);
+            businessAction = new BusinessAction("SelectModule");
+            businessAction.Description = ActionSelectModuleDescription;
+            businessActionsRepository.AddAction(businessAction);
+            businessAction = new BusinessAction("Details");
+            businessAction.Description = ActionDetailsDescription;
+            businessActionsRepository.AddAction(businessAction);
+            testSuite.BusinessActionsRepository = businessActionsRepository;
             
             // Test case
             TestCase testCase = new TestCase("Open Page")

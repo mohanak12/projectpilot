@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Xml;
 
@@ -6,7 +8,7 @@ namespace Accipio
 {
     /// <summary>
     /// Implementation of <see cref="IBusinessActionXmlParser"/> interface which parse xml file 
-    /// of business actions to object <see cref="BusinessActionData" />
+    /// of business actions to object <see cref="BusinessActionsRepository" />
     /// </summary>
     public class BusinessActionsXmlParser : IBusinessActionXmlParser
     {
@@ -18,16 +20,27 @@ namespace Accipio
         public BusinessActionsXmlParser(Stream xmlStream)
         {
             this.xmlStream = xmlStream;
+
+            supportedParameterTypes.Add("boolean", typeof(bool));
+            supportedParameterTypes.Add("decimal", typeof(decimal));
+            supportedParameterTypes.Add("double", typeof(double));
+            supportedParameterTypes.Add("float", typeof(float));
+            supportedParameterTypes.Add("integer", typeof(int));
+            supportedParameterTypes.Add("negativeInteger", typeof(int));
+            supportedParameterTypes.Add("nonNegativeInteger", typeof(int));
+            supportedParameterTypes.Add("nonPositiveInteger", typeof(int));
+            supportedParameterTypes.Add("positiveInteger", typeof(int));
+            supportedParameterTypes.Add("string", typeof(string));
         }
 
         /// <summary>
-        /// Parse xml to object <see cref="BusinessActionData" />
+        /// Parse xml to object <see cref="BusinessActionsRepository" />
         /// </summary>
         /// <returns>
-        /// <see cref="BusinessActionData" />
+        /// <see cref="BusinessActionsRepository" />
         /// Object that contains all business actions data
         /// </returns>
-        public BusinessActionData Parse()
+        public BusinessActionsRepository Parse()
         {
             XmlReaderSettings xmlReaderSettings =
                 new XmlReaderSettings
@@ -37,7 +50,7 @@ namespace Accipio
                     IgnoreWhitespace = true
                 };
 
-            BusinessActionData businessActionData = new BusinessActionData();
+            BusinessActionsRepository businessActionsRepository = new BusinessActionsRepository();
                     
             using (XmlReader xmlReader = XmlReader.Create(xmlStream, xmlReaderSettings))
             {
@@ -52,7 +65,7 @@ namespace Accipio
                                 if (xmlReader.Name != "actions")
                                     throw new XmlException("<actions> (root) element expected.");
 
-                                ReadAction(businessActionData, xmlReader);
+                                ReadAction(businessActionsRepository, xmlReader);
                                 
                                 break;
                             }
@@ -69,15 +82,15 @@ namespace Accipio
                 }
             }
 
-            return businessActionData;
+            return businessActionsRepository;
         }
 
         /// <summary>
         /// Goes through all action elements in xml file
         /// </summary>
-        /// <param name="businessActionData">object that will contain all data about business actions and functions</param>
+        /// <param name="businessActionsRepository">object that will contain all data about business actions and functions</param>
         /// <param name="xmlReader">Xml reader provides access to xml file</param>
-        private static void ReadAction(BusinessActionData businessActionData, XmlReader xmlReader)
+        private void ReadAction(BusinessActionsRepository businessActionsRepository, XmlReader xmlReader)
         {
             xmlReader.Read();
 
@@ -89,30 +102,32 @@ namespace Accipio
                         {
                             string testActionId = ReadAttribute("id", xmlReader);
 
-                            BusinessActionEntry businessActionEntry = new BusinessActionEntry(testActionId);
+                            BusinessAction businessAction = new BusinessAction(testActionId);
 
                             // read action parameters
-                            ReadActionParameters(businessActionEntry, xmlReader);
+                            ReadActionParameters(businessAction, xmlReader);
 
                             // add new action to list
-                            businessActionData.Actions.Add(businessActionEntry);
+                            businessActionsRepository.AddAction(businessAction);
 
                             break;
                         }
 
                     case "function":
                         {
-                            string functionId = ReadAttribute("id", xmlReader);
-
-                            BusinessFunctionEntry businessFunctionEntry = new BusinessFunctionEntry(functionId);
-
-                            // read function steps
-                            ReadFunctionsSteps(businessFunctionEntry, xmlReader);
-
-                            // add new function to list
-                            businessActionData.Functions.Add(businessFunctionEntry);
-
+                            xmlReader.Skip();
                             break;
+                    //        string functionId = ReadAttribute("id", xmlReader);
+
+                    //        BusinessFunctionEntry businessFunctionEntry = new BusinessFunctionEntry(functionId);
+
+                    //        // read function steps
+                    //        ReadFunctionsSteps(businessFunctionEntry, xmlReader);
+
+                    //        // add new function to list
+                    //        businessActionsRepository.Functions.Add(businessFunctionEntry);
+
+                    //        break;
                         }
 
                     default:
@@ -128,12 +143,13 @@ namespace Accipio
         /// <summary>
         /// Goes through all child elements of element action in xml document
         /// </summary>
-        /// <param name="businessActionEntry">object that will contain all data about business actions</param>
+        /// <param name="businessAction">object that will contain all data about business actions</param>
         /// <param name="xmlReader">Xml reader provides access to xml file</param>
-        private static void ReadActionParameters(BusinessActionEntry businessActionEntry, XmlReader xmlReader)
+        private void ReadActionParameters(BusinessAction businessAction, XmlReader xmlReader)
         {
             xmlReader.Read();
 
+            int parameterOrder = 0;
             while (xmlReader.NodeType != XmlNodeType.EndElement)
             {
                 switch (xmlReader.Name)
@@ -141,17 +157,43 @@ namespace Accipio
                     case "description":
 
                         // set description of business action
-                        businessActionEntry.Description = xmlReader.ReadElementContentAsString();
+                        businessAction.Description = xmlReader.ReadElementContentAsString();
 
                         break;
 
                     case "parameter":
 
                         string parameterName = ReadAttribute("name", xmlReader);
-                        string parameterType = ReadAttribute("type", xmlReader);
+                        string parameterTypeXsd = ReadAttribute("type", xmlReader);
+
+                        Type parameterType = null;
+
+                        if (parameterTypeXsd != null)
+                        {
+                            if (false == supportedParameterTypes.ContainsKey(parameterTypeXsd))
+                                throw new ArgumentException(string.Format(
+                                                                CultureInfo.InvariantCulture,
+                                                                "Unsupported action parameter type: {0}. Business action = '{1}', parameter = '{2}'",
+                                                                parameterTypeXsd,
+                                                                businessAction.ActionName,
+                                                                parameterName));
+
+                            parameterType = supportedParameterTypes[parameterTypeXsd];
+                        }
+                        else
+                        {
+                            // the default parameter type is string
+                            parameterType = typeof(string);
+                            parameterTypeXsd = "string";
+                        }
 
                         // add action parameter name and type
-                        businessActionEntry.AddParameter(parameterName, parameterType);
+                        businessAction.AddParameter(
+                            new BusinessActionParameter(
+                                parameterName, 
+                                parameterType,
+                                parameterTypeXsd,
+                                parameterOrder++));
 
                         xmlReader.Read();
 
@@ -237,6 +279,7 @@ namespace Accipio
             return runActions;
         }
 
+        private Dictionary<string, Type> supportedParameterTypes = new Dictionary<string, Type>();
         private readonly Stream xmlStream;
     }
 }
