@@ -53,6 +53,16 @@ namespace Accipio.TestFramework
         }
 
         /// <summary>
+        /// Marks the test as pending. This method should be called by all MiMiTestRunner actions
+        /// which have not been implemented fully.
+        /// </summary>
+        /// <param name="pendingMessage">The pending message.</param>
+        public void MarkTestAsPending(string pendingMessage)
+        {
+            throw new SilentTestException(TestOutcome.Pending, pendingMessage);
+        }
+
+        /// <summary>
         /// Sets the description of the test case that will be run.
         /// </summary>
         /// <param name="description">The description of the test case.</param>
