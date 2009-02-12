@@ -218,67 +218,6 @@ namespace Accipio
             return xmlReader.GetAttribute(attributeName);
         }
 
-        /// <summary>
-        /// Goes through all steps elements in xml file
-        /// </summary>
-        /// <param name="businessFunctionEntry">object that will contain all data about business functions</param>
-        /// <param name="xmlReader">Xml reader provides access to xml file</param>
-        private static void ReadFunctionsSteps(BusinessFunctionEntry businessFunctionEntry, XmlReader xmlReader)
-        {
-            xmlReader.Read();
-
-            while (xmlReader.NodeType != XmlNodeType.EndElement)
-            {
-                switch (xmlReader.Name)
-                {
-                    case "steps":
-
-                        // add new steps of the function
-                        businessFunctionEntry.AddFunctionStep(ReadRunParameters(xmlReader));
-
-                        break;
-
-                    default:
-                        throw new System.NotSupportedException();
-                }
-            }
-
-            xmlReader.Read();
-        }
-
-        /// <summary>
-        /// Goes through all run elements in xml file
-        /// </summary>
-        /// <param name="xmlReader">Xml reader provides access to xml file</param>
-        /// <returns>List of run elements</returns>
-        private static List<string> ReadRunParameters(XmlReader xmlReader)
-        {
-            xmlReader.Read();
-
-            List<string> runActions = new List<string>();
-
-            while (xmlReader.NodeType != XmlNodeType.EndElement)
-            {
-                switch (xmlReader.Name)
-                {
-                    case "run":
-
-                        // add run actions to list
-                        runActions.Add(ReadAttribute("action", xmlReader));
-                        xmlReader.Read();
-
-                        break;
-
-                    default:
-                        throw new System.NotSupportedException();
-                }
-            }
-
-            xmlReader.Read();
-
-            return runActions;
-        }
-
         private Dictionary<string, Type> supportedParameterTypes = new Dictionary<string, Type>();
         private readonly Stream xmlStream;
     }

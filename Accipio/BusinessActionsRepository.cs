@@ -26,7 +26,7 @@ namespace Accipio
             actionsSorted.Sort(
                 delegate (BusinessAction action1, BusinessAction action2)
                     {
-                        return action1.ActionName.CompareTo(action2.ActionName);
+                        return string.Compare(action1.ActionName, action2.ActionName, StringComparison.OrdinalIgnoreCase);
                     });
 
             return actionsSorted;

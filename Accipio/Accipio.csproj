@@ -104,6 +104,7 @@
     <Compile Include="Reporting\TestSuiteRun.cs" />
     <Compile Include="Reporting\UserStoriesThroughTimeGraphDataGenerator.cs" />
     <Compile Include="Reporting\UserStoryRun.cs" />
+    <Compile Include="TestFramework\AccipioTestSuiteRunnerBase.cs" />
     <Compile Include="TestFramework\SeleniumTesterBase.cs" />
     <Compile Include="TestStepParameter.cs" />
     <Compile Include="TemplatedTestCodeGenerator.cs" />

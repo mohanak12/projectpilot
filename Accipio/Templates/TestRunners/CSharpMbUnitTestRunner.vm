@@ -23,27 +23,34 @@ namespace ${testSuite.Namespace}
         {
             using (${testSuite.TestRunnerName}TestRunner runner = suiteRunner.CreateTestRunner("${testCase.TestCaseName}"))
             {
-                runner
-                    .SetDescription("${testCase.TestCaseDescription}")
+                try
+                {
+                    runner
+                        .SetDescription("${testCase.TestCaseDescription}")
 #foreach ( $tag in ${testCase.Tags})
-                    .AddTag("${tag}")#if ($velocityCount == $testCase.Tags.Count);#end
+                        .AddTag("${tag}")#if ($velocityCount == $testCase.Tags.Count);#end
 #each
 
 #end
 #if ( ${testCase.TestSteps.Count} > 0 )
 
 #foreach ($testStep in ${testCase.TestSteps})
-                // ${testStep.ExpandDescriptionWithParameterValues(${testSuite.BusinessActionsRepository})}
-                runner.${testStep.ActionName}(#if ($testStep.Parameters.Count > 0)
+                    // ${testStep.ExpandDescriptionWithParameterValues(${testSuite.BusinessActionsRepository})}
+                    runner.${testStep.ActionName}(#if ($testStep.Parameters.Count > 0)
 #foreach ($parameter in $testStep.Parameters)
 
-                    #if ($parameter.ParameterValue.GetType().Name == "String")
+                        #if ($parameter.ParameterValue.GetType().Name == "String")
 "#end  
 $parameter.ParameterValue#if ($parameter.ParameterValue.GetType().Name == "String")"#end,#end
 
-                #end);
+                    #end);
 #end
 #end
+                }
+                catch (NotImplementedException ex)
+                {
+                    runner.MarkTestAsPending(ex.Message);
+                }
             }
         }
 
