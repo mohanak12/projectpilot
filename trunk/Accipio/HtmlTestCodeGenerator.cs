@@ -33,7 +33,7 @@ namespace Accipio
         //        WriteLine("    <ol>");
         //        foreach (TestCaseStep testAction in testCase.TestSteps)
         //        {
-        //            AddTestStep(testAction, testSuite.BusinessActionData);
+        //            AddTestStep(testAction, testSuite.BusinessActionsRepository);
         //        }
 
         //        WriteLine("    </ol>");
@@ -58,7 +58,7 @@ namespace Accipio
         //    }
         //}
 
-        //private void AddTestStep(TestCaseStep testCaseStep, BusinessActionData businessActionData)
+        //private void AddTestStep(TestCaseStep testCaseStep, BusinessActionsRepository businessActionData)
         //{
         //    const string Line = "        <li>{0}</li>";
         //    string description = businessActionData.GetAction(testCaseStep.ActionName).Description;

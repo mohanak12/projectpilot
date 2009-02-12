@@ -20,7 +20,7 @@ namespace ProjectPilot.Tests.AccipioTests
             string[] args = new string[]
                                 {
                                     "baschema", 
-                                    @"-ba=..\..\..\Data\Samples\BusinessActions.xml", 
+                                    "-ba=../../AccipioTests/Samples/OnlineBankingBusinessActions.xml", 
                                     "-ns=http://projectpilot/AccipioActions.xsd",
                                     "-o=" + outputDir,
                                 };
@@ -34,7 +34,7 @@ namespace ProjectPilot.Tests.AccipioTests
             string[] args = new string[]
                                 {
                                     "baschema", 
-                                    @"-ba=..\..\..\Data\Samples\BusinessActions.xml", 
+                                    "-ba=../../AccipioTests/Samples/OnlineBankingBusinessActions.xml", 
                                     "-ns=http://projectpilot/AccipioActions.xsd"
                                 };
 

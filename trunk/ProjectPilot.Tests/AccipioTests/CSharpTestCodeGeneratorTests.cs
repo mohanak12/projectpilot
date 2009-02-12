@@ -41,21 +41,21 @@ namespace ProjectPilot.Tests.AccipioTests
             testCase.AddStep(testCaseStep);
             testSuite.AddTestCase(testCase);
 
-            BusinessActionData businessActionData = new BusinessActionData();
-            BusinessActionEntry businessActionEntry;
-            businessActionEntry =
-                            new BusinessActionEntry("AssertTopicDescription")
+            BusinessActionsRepository businessActionsRepository = new BusinessActionsRepository();
+            BusinessAction businessAction;
+            businessAction =
+                            new BusinessAction("AssertTopicDescription")
                             {
                                 Description =
                                     "Assert each topic has correct description with the content '{0}' in AllServices list."
                             };
-            businessActionEntry.ActionParameters.Add(new BusinessActionParameters("topic", "string"));
-            businessActionEntry.ActionParameters.Add(new BusinessActionParameters("sequenceNumberInList", "int"));
-            businessActionEntry.ActionParameters.Add(new BusinessActionParameters("topicDescription", "string"));
-            businessActionEntry.ActionParameters.Add(new BusinessActionParameters("isBool", "bool"));
-            businessActionData.Actions.Add(businessActionEntry);
+            businessAction.AddParameter(new BusinessActionParameter("topic", typeof(string), "string", 0));
+            businessAction.AddParameter(new BusinessActionParameter("sequenceNumberInList", typeof(int), "integer", 1));
+            businessAction.AddParameter(new BusinessActionParameter("topicDescription", typeof(string), "string", 2));
+            businessAction.AddParameter(new BusinessActionParameter("isBool", typeof(bool), "boolean", 3));
+            businessActionsRepository.AddAction(businessAction);
 
-            testSuite.BusinessActionData = businessActionData;
+            testSuite.BusinessActionsRepository = businessActionsRepository;
 
             // execution
             testCodeGenerator.Generate(testSuite);
@@ -97,37 +97,37 @@ namespace ProjectPilot.Tests.AccipioTests
             testCase.AddStep(new TestCaseStep("AssertOperationSuccessful"));
             testSuite.AddTestCase(testCase);
 
-            BusinessActionData businessActionData = new BusinessActionData();
-            BusinessActionEntry businessActionEntry =
-                new BusinessActionEntry("GoToPortal")
+            BusinessActionsRepository businessActionsRepository = new BusinessActionsRepository();
+            BusinessAction businessAction =
+                new BusinessAction("GoToPortal")
                 {
                     Description =
                         "Open the online banking portal web site in the browser."
                 };
-            businessActionData.Actions.Add(businessActionEntry);
-            businessActionEntry =
-                new BusinessActionEntry("SignIn")
+            businessActionsRepository.AddAction(businessAction);
+            businessAction =
+                new BusinessAction("SignIn")
                 {
                     Description = "Sign in user '{0}'."
                 };
-            businessActionEntry.ActionParameters.Add(new BusinessActionParameters("username", "string"));
-            businessActionEntry.ActionParameters.Add(new BusinessActionParameters("password", "string"));
-            businessActionData.Actions.Add(businessActionEntry);
-            businessActionEntry =
-                new BusinessActionEntry("AssertIsUserIdCorrect")
+            businessAction.AddParameter(new BusinessActionParameter("username", typeof(string), "string", 0));
+            businessAction.AddParameter(new BusinessActionParameter("password", typeof(string), "string", 1));
+            businessActionsRepository.AddAction(businessAction);
+            businessAction =
+                new BusinessAction("AssertIsUserIdCorrect")
                 {
                     Description = "Assert if user id is correct."
                 };
-            businessActionEntry.ActionParameters.Add(new BusinessActionParameters("userId", "int"));
-            businessActionData.Actions.Add(businessActionEntry);
-            businessActionEntry =
-                new BusinessActionEntry("AssertOperationSuccessful")
+            businessAction.AddParameter(new BusinessActionParameter("userId", typeof(int), "integer", 0));
+            businessActionsRepository.AddAction(businessAction);
+            businessAction =
+                new BusinessAction("AssertOperationSuccessful")
                 {
                     Description = "Assert the operation was successful."
                 };
-            businessActionData.Actions.Add(businessActionEntry);
+            businessActionsRepository.AddAction(businessAction);
 
-            testSuite.BusinessActionData = businessActionData; 
+            testSuite.BusinessActionsRepository = businessActionsRepository; 
             testCodeGenerator.Generate(testSuite);
         }
 
@@ -166,37 +166,37 @@ namespace ProjectPilot.Tests.AccipioTests
             testCase.AddStep(new TestCaseStep("AssertOperationSuccessful"));
             testSuite.AddTestCase(testCase);
 
-            BusinessActionData businessActionData = new BusinessActionData();
-            BusinessActionEntry businessActionEntry =
-                new BusinessActionEntry("GoToPortal")
+            BusinessActionsRepository businessActionsRepository = new BusinessActionsRepository();
+            BusinessAction businessAction =
+                new BusinessAction("GoToPortal")
                     {
                         Description =
                             "Open the online banking portal web site in the browser."
                     };
-            businessActionData.Actions.Add(businessActionEntry);
-            businessActionEntry =
-                new BusinessActionEntry("SignIn")
+            businessActionsRepository.AddAction(businessAction);
+            businessAction =
+                new BusinessAction("SignIn")
                     {
                         Description = "Sign in user 'john'."
                     };
-            businessActionEntry.ActionParameters.Add(new BusinessActionParameters("username", "string"));
-            businessActionEntry.ActionParameters.Add(new BusinessActionParameters("password", "string"));
-            businessActionData.Actions.Add(businessActionEntry);
-            businessActionEntry =
-                new BusinessActionEntry("AssertIsUserIdCorrect")
+            businessAction.AddParameter(new BusinessActionParameter("username", typeof(string), "string", 0));
+            businessAction.AddParameter(new BusinessActionParameter("password", typeof(string), "string", 1));
+            businessActionsRepository.AddAction(businessAction);
+            businessAction =
+                new BusinessAction("AssertIsUserIdCorrect")
                 {
                     Description = "Assert if user id is correct."
                 };
-            businessActionEntry.ActionParameters.Add(new BusinessActionParameters("userId", "int"));
-            businessActionData.Actions.Add(businessActionEntry);
-            businessActionEntry =
-                new BusinessActionEntry("AssertOperationSuccessful")
+            businessAction.AddParameter(new BusinessActionParameter("userId", typeof(int), "integer", 0));
+            businessActionsRepository.AddAction(businessAction);
+            businessAction =
+                new BusinessAction("AssertOperationSuccessful")
                     {
                         Description = "Assert the operation was successful."
                     };
-            businessActionData.Actions.Add(businessActionEntry);
+            businessActionsRepository.AddAction(businessAction);
 
-            testSuite.BusinessActionData = businessActionData;
+            testSuite.BusinessActionsRepository = businessActionsRepository;
 
             // execution
             testCodeGenerator.Generate(testSuite);

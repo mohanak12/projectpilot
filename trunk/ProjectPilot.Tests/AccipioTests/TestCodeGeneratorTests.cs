@@ -17,7 +17,7 @@ namespace ProjectPilot.Tests.AccipioTests
         public void ParseTestSpec()
         {
             List<string> args = new List<string>();
-            args.Add("-ba=..\\..\\..\\Data\\Samples\\BusinessActions.xml");
+            args.Add("-ba=../../AccipioTests/Samples/OnlineBankingBusinessActions.xml");
             args.Add("-tx=" + TestSuiteSchemaGeneratorTests.GenerateXsdValidationSchemaOutputFile());
             args.Add("-i=..\\..\\..\\Data\\Samples\\TestSuite.xml");
             args.Add("-tm=Templates/TestRunners/CSharpMbUnitTestRunner.vm");

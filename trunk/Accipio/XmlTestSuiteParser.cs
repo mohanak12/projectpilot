@@ -11,14 +11,16 @@ namespace Accipio
 {
     public class XmlTestSuiteParser : ITestSuiteParser, IDisposable
     {
-        public XmlTestSuiteParser(Stream xmlSpecs)
+        public XmlTestSuiteParser(Stream stream, BusinessActionsRepository businessActionsRepository)
         {
-            xmlSpecsStream = xmlSpecs;
+            xmlSpecsStream = stream;
+            this.businessActionsRepository = businessActionsRepository;
         }
 
-        public XmlTestSuiteParser (string testSuiteFileName)
+        public XmlTestSuiteParser(string testSuiteFileName, BusinessActionsRepository businessActionsRepository)
         {
             xmlSpecsStream = File.OpenRead(testSuiteFileName);
+            this.businessActionsRepository = businessActionsRepository;
         }
 
         /// <summary>
@@ -110,36 +112,53 @@ namespace Accipio
             }
         }
 
-        private static void ReadAction(TestCase testCase, XmlReader xmlReader)
+        private void ReadAction(TestCase testCase, XmlReader xmlReader)
         {
             xmlReader.Read();
 
             while (xmlReader.NodeType != XmlNodeType.EndElement)
             {
-                TestCaseStep testCaseStep = new TestCaseStep(xmlReader.Name);
+                string businessActionName = xmlReader.Name;
+                TestCaseStep testCaseStep = new TestCaseStep(businessActionName);
+
+                BusinessAction businessAction = businessActionsRepository.GetAction(businessActionName);
 
                 if (xmlReader.HasAttributes)
                 {
                     while (xmlReader.MoveToNextAttribute())
                     {
-                        string key = xmlReader.LocalName;
-                        string value = xmlReader.Value;
+                        string parameterName = xmlReader.LocalName;
+                        string valueString = xmlReader.Value;
 
-                        testCaseStep.AddParameter(new TestStepParameter(key, value));
+                        BusinessActionParameter parameter = businessAction.GetParameter(parameterName);
+
+                        // convert value
+                        try
+                        {
+                            object value = Convert.ChangeType(
+                                valueString,
+                                parameter.ParameterType,
+                                CultureInfo.InvariantCulture);
+
+                            testCaseStep.AddParameter(new TestStepParameter(parameterName, value));
+                        }
+                        catch (InvalidCastException ex)
+                        {
+                            throw new InvalidCastException(
+                                string.Format(
+                                   CultureInfo.InvariantCulture,
+                                   "Could not cast parameter value '{0}' to '{1}'. Test case = '{2}', business action = '{3}', parameter = '{4}'",
+                                   valueString,
+                                   parameter.ParameterType.Name,
+                                   testCase.TestCaseName,
+                                   businessAction.ActionName,
+                                   parameter.ParameterName),
+                                ex);
+                        }
                     }
 
                     // move back to element
                     xmlReader.MoveToElement();
-                }
-
-                if (!xmlReader.IsEmptyElement)
-                {
-                    xmlReader.Read();
-                    if (xmlReader.NodeType == XmlNodeType.Text)
-                    {
-                        string content = xmlReader.ReadContentAsString();
-                        testCaseStep.AddParameter(new TestStepParameter("value", content));
-                    }
                 }
 
                 // add test action parameters
@@ -153,7 +172,7 @@ namespace Accipio
             xmlReader.Read();
         }
 
-        private static void ReadTestCase(TestCase testCase, XmlReader xmlReader)
+        private void ReadTestCase(TestCase testCase, XmlReader xmlReader)
         {
             xmlReader.Read();
 
@@ -181,7 +200,7 @@ namespace Accipio
             xmlReader.Read();
         }
 
-        private static void ReadTestSuite(TestSuite testSuite, XmlReader xmlReader)
+        private void ReadTestSuite(TestSuite testSuite, XmlReader xmlReader)
         {
             xmlReader.Read();
 
@@ -217,5 +236,6 @@ namespace Accipio
 
         private bool disposed;
         private readonly Stream xmlSpecsStream;
+        private readonly BusinessActionsRepository businessActionsRepository;
     }
 }

@@ -74,10 +74,10 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AccipioHelper.cs" />
-    <Compile Include="BusinessActionEntry.cs" />
+    <Compile Include="BusinessAction.cs" />
     <Compile Include="BusinessFunctionEntry.cs" />
-    <Compile Include="BusinessActionParameters.cs" />
-    <Compile Include="BusinessActionData.cs" />
+    <Compile Include="BusinessActionParameter.cs" />
+    <Compile Include="BusinessActionsRepository.cs" />
     <Compile Include="BusinessActionsXmlParser.cs" />
     <Compile Include="BrowserType.cs" />
     <Compile Include="BusinessFunctionSteps.cs" />

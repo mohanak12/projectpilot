@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml;
@@ -9,7 +10,7 @@ using MbUnit.Framework;
 namespace ProjectPilot.Tests.AccipioTests
 {
     /// <summary>
-    /// This is set of tests that checks if data from business action xml file are properly serialized to object <see cref="BusinessActionData" />
+    /// This is set of tests that checks if data from business action xml file are properly serialized to object <see cref="BusinessActionsRepository" />
     /// Tests also checks if correct exception returns in case of invalid xml file.
     /// </summary>
     [TestFixture]
@@ -31,7 +32,7 @@ namespace ProjectPilot.Tests.AccipioTests
         /// <returns>generated filename.</returns>
         public static string GenerateXsdValidationSchemaOutputFile()
         {
-            string fileName = @"..\..\..\Data\Samples\BusinessActions.xml";
+            string fileName = "../../AccipioTests/Samples/OnlineBankingBusinessActions.xml";
             TestSuiteSchemaGeneratorCommand consoleCommand = new TestSuiteSchemaGeneratorCommand();
 
             string[] args = new[] { "-ba=" + fileName, "-ns=http://GenerateXsdValidationSchemaTest" };
@@ -48,46 +49,35 @@ namespace ProjectPilot.Tests.AccipioTests
         [Test]
         public void ParseBusinessActionsTest()
         {
-            using (Stream stream = File.OpenRead(@"..\..\..\Data\Samples\BusinessActions.xml"))
+            using (Stream stream = File.OpenRead("../../AccipioTests/Samples/OnlineBankingBusinessActions.xml"))
             {
                 IBusinessActionXmlParser parser = new BusinessActionsXmlParser(stream);
-                BusinessActionData data = parser.Parse();
+                BusinessActionsRepository businessActionsRepository = parser.Parse();
 
                 // test id of actions
-                Assert.AreEqual(data.Actions.Count, 8);
-                Assert.AreEqual(data.Actions[0].ActionId, "GoToPortal");
-                Assert.AreEqual(data.Actions[1].ActionId, "SignIn");
-                Assert.AreEqual(data.Actions[2].ActionId, "ViewAccount");
-                Assert.AreEqual(data.Actions[3].ActionId, "ClickActionTransfer");
-                Assert.AreEqual(data.Actions[4].ActionId, "EnterTransferAmount");
-                Assert.AreEqual(data.Actions[5].ActionId, "EnterDestinationAccountNumber");
-                Assert.AreEqual(data.Actions[6].ActionId, "ConfirmTransfer");
-                Assert.AreEqual(data.Actions[7].ActionId, "AssertOperationSuccessful");
+                Assert.AreEqual(businessActionsRepository.EnumerateActions().Count, 8);
+                IList<BusinessAction> actions = businessActionsRepository.EnumerateActions();
 
-                // test functions & steps
-                Assert.AreEqual(data.Functions.Count, 1);
-                Assert.AreEqual(data.Functions[0].FunctionId, "TransferMoney");
-                Assert.AreEqual(data.Functions[0].Steps.Count, 1);
-
-                // test run actions
-                Assert.AreEqual(data.Functions[0].Steps[0].RunActions.Count, 5);
-                Assert.AreEqual(data.Functions[0].Steps[0].RunActions[0], "ViewAccount");
-                Assert.AreEqual(data.Functions[0].Steps[0].RunActions[1], "ClickActionTranfer");
-                Assert.AreEqual(data.Functions[0].Steps[0].RunActions[2], "EnterTransferAmount");
-                Assert.AreEqual(data.Functions[0].Steps[0].RunActions[3], "EnterDestinationAccountNumber");
-                Assert.AreEqual(data.Functions[0].Steps[0].RunActions[4], "ConfirmTransfer");
+                int i = 0;
+                Assert.AreEqual(actions[i++].ActionName, "AssertOperationSuccessful");
+                Assert.AreEqual(actions[i++].ActionName, "ClickActionTransfer");
+                Assert.AreEqual(actions[i++].ActionName, "ConfirmTransfer");
+                Assert.AreEqual(actions[i++].ActionName, "EnterDestinationAccountNumber");
+                Assert.AreEqual(actions[i++].ActionName, "EnterTransferAmount");
+                Assert.AreEqual(actions[i++].ActionName, "GoToPortal");
+                Assert.AreEqual(actions[i++].ActionName, "SignIn");
+                Assert.AreEqual(actions[i++].ActionName, "ViewAccount");
             }
         }
 
         /// <summary>
-        /// Test checks that <see cref="BusinessActionEntry"/> is null if invalid action id is passed
+        /// Test checks that <see cref="BusinessAction"/> is null if invalid action id is passed
         /// </summary>
-        [Test]
+        [Test, ExpectedException(typeof(KeyNotFoundException))]
         public void MissingBusinessActionDataEntryTest()
         {
-            BusinessActionData data = new BusinessActionData();
-            BusinessActionEntry entry = data.GetAction("NoAction");
-            Assert.IsNull(entry);
+            BusinessActionsRepository businessActionsRepository = new BusinessActionsRepository();
+            BusinessAction entry = businessActionsRepository.GetAction("NoAction");
         }
 
         /// <summary>
@@ -128,23 +118,7 @@ namespace ProjectPilot.Tests.AccipioTests
         [Test, ExpectedException(typeof(NotSupportedException))]
         public void NotSupportedFunctionElementTest()
         {
-            string xml = "<actions><function><element></element></function></actions>";
-
-            byte[] bytes = Encoding.ASCII.GetBytes(xml);
-            using (MemoryStream stream = new MemoryStream(bytes))
-            {
-                IBusinessActionXmlParser parser = new BusinessActionsXmlParser(stream);
-                parser.Parse();
-            }
-        }
-
-        /// <summary>
-        /// Test checks that parser throws exception if xml document has invalid element
-        /// </summary>
-        [Test, ExpectedException(typeof(NotSupportedException))]
-        public void NotSupportedStepsElementTest()
-        {
-            string xml = "<actions><function><steps><element></element></steps></function></actions>";
+            string xml = "<actions><functions></functions></actions>";
 
             byte[] bytes = Encoding.ASCII.GetBytes(xml);
             using (MemoryStream stream = new MemoryStream(bytes))

@@ -181,6 +181,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AccipioTests\AccipioActionsIncorrectXml.xml" />
+    <Content Include="AccipioTests\Samples\OnlineBankingBusinessActions.xml" />
     <Content Include="AccipioTests\Samples\GallioTestResults1.xml">
     </Content>
     <Content Include="AccipioTests\TestSuite.xml" />

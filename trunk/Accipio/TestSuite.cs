@@ -18,8 +18,8 @@ namespace Accipio
         /// <summary>
         /// Gets or sets the business action data.
         /// </summary>
-        /// <value>The <see cref="BusinessActionData"/></value>
-        public BusinessActionData BusinessActionData { get; set; }
+        /// <value>The <see cref="BusinessActionsRepository"/></value>
+        public BusinessActionsRepository BusinessActionsRepository { get; set; }
 
         /// <summary>
         /// Gets or sets the value which indicates how many concurrent test cases can run in this test suite.

@@ -1,7 +1,11 @@
-﻿+ move all templates to a single source
-    + separate templates into subdirectories
+﻿+ test step parameters should be stored in their own type's values
+    + support bool values
+        - modify Mimi's actions to use bool
+    + use string as the default type
+- handle NotImplementedException
 - update test runner base class
 - create test suite runner base class
 - add log4net logging
 - see how selenium could produce screenshots
     - see other selenium command-line settings
+- make code generation work on an input directory

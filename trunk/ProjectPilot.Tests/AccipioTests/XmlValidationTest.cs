@@ -16,7 +16,7 @@ namespace ProjectPilot.Tests.AccipioTests
         [Test]
         public void XmlValidationWithSchemaTest()
         {
-            const string XmlFileName = @"..\..\..\Data\Samples\BusinessActions.xml";
+            const string XmlFileName = "../../AccipioTests/Samples/OnlineBankingBusinessActions.xml";
             const string XsdFileName = @"..\..\..\Accipio.Console\AccipioActions.xsd";
 
             XmlValidationHelper xmlValidationHelper = new XmlValidationHelper();

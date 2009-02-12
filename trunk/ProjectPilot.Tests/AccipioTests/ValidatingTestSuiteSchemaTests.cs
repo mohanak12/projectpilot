@@ -190,13 +190,13 @@ namespace ProjectPilot.Tests.AccipioTests
 
     <action id='Action1Parameter'>
        <description>Description1</description>
-       <parameter name='parameter' type='int'/>
+       <parameter name='parameter' type='integer'/>
     </action>
 
     <action id='Action2Parameters'>
        <description>Description1</description>
-       <parameter name='parameter1' type='int'/>
-       <parameter name='parameter2' type='int'/>
+       <parameter name='parameter1' type='integer'/>
+       <parameter name='parameter2'/>
     </action>
 </actions>
 ";

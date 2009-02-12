@@ -48,7 +48,7 @@ namespace ProjectPilot.Tests.AccipioTests
             TestSuite testSuite;
             using (Stream stream = File.OpenRead(@"..\..\..\Data\Samples\TestSuite.xml"))
             {
-                using (XmlTestSuiteParser parser = new XmlTestSuiteParser(stream))
+                using (XmlTestSuiteParser parser = new XmlTestSuiteParser(stream, businessActionsRepository))
                 {
                     testSuite = parser.Parse();
                 }
@@ -87,14 +87,14 @@ namespace ProjectPilot.Tests.AccipioTests
             Assert.AreEqual("EnterDestinationAccountNumber", testCaseStep.ActionName);
             Assert.AreEqual(1, testCaseStep.Parameters.Count);
             Assert.IsNotNull(testCaseStep.GetParameterValue("destAccountId"));
-            Assert.AreEqual("23677", testCaseStep.GetParameterValue("destAccountId"));
+            Assert.AreEqual(23677, testCaseStep.GetParameterValue("destAccountId"));
 
             testCaseStep = testCase.GetTestAction("EnterTransferAmount");
             Assert.IsNotNull(testCaseStep);
             Assert.AreEqual("EnterTransferAmount", testCaseStep.ActionName);
             Assert.AreEqual(1, testCaseStep.Parameters.Count);
             Assert.IsNotNull(testCaseStep.GetParameterValue("transferAmount"));
-            Assert.AreEqual("644.33", testCaseStep.GetParameterValue("transferAmount"));
+            Assert.AreEqual(644.33m, testCaseStep.GetParameterValue("transferAmount"));
         }
 
         /// <summary>
@@ -105,7 +105,9 @@ namespace ProjectPilot.Tests.AccipioTests
         {
             TestSuite testSuite;
 
-            using (XmlTestSuiteParser parser = new XmlTestSuiteParser(@"..\..\..\Data\Samples\TestSuite.xml"))
+            using (XmlTestSuiteParser parser = new XmlTestSuiteParser(
+                @"..\..\..\Data\Samples\TestSuite.xml", 
+                businessActionsRepository))
             {
                 testSuite = parser.Parse();
             }
@@ -141,14 +143,14 @@ namespace ProjectPilot.Tests.AccipioTests
             Assert.AreEqual("EnterDestinationAccountNumber", testCaseStep.ActionName);
             Assert.AreEqual(1, testCaseStep.Parameters.Count);
             Assert.IsNotNull(testCaseStep.GetParameterValue("destAccountId"));
-            Assert.AreEqual("23677", testCaseStep.GetParameterValue("destAccountId"));
+            Assert.AreEqual(23677, testCaseStep.GetParameterValue("destAccountId"));
 
             testCaseStep = testCase.GetTestAction("EnterTransferAmount");
             Assert.IsNotNull(testCaseStep);
             Assert.AreEqual("EnterTransferAmount", testCaseStep.ActionName);
             Assert.AreEqual(1, testCaseStep.Parameters.Count);
             Assert.IsNotNull(testCaseStep.GetParameterValue("transferAmount"));
-            Assert.AreEqual("644.33", testCaseStep.GetParameterValue("transferAmount"));
+            Assert.AreEqual(644.33m, testCaseStep.GetParameterValue("transferAmount"));
         }
 
         /// <summary>
@@ -162,7 +164,7 @@ namespace ProjectPilot.Tests.AccipioTests
             byte[] bytes = Encoding.ASCII.GetBytes(Xml);
             using (MemoryStream stream = new MemoryStream(bytes))
             {
-                using (XmlTestSuiteParser parser = new XmlTestSuiteParser(stream))
+                using (XmlTestSuiteParser parser = new XmlTestSuiteParser(stream, businessActionsRepository))
                 {
                     parser.Parse();
                 }
@@ -180,7 +182,7 @@ namespace ProjectPilot.Tests.AccipioTests
             byte[] bytes = Encoding.ASCII.GetBytes(Xml);
             using (MemoryStream stream = new MemoryStream(bytes))
             {
-                using (XmlTestSuiteParser parser = new XmlTestSuiteParser(stream))
+                using (XmlTestSuiteParser parser = new XmlTestSuiteParser(stream, businessActionsRepository))
                 {
                     parser.Parse();
                 }
@@ -198,11 +200,25 @@ namespace ProjectPilot.Tests.AccipioTests
             byte[] bytes = Encoding.ASCII.GetBytes(Xml);
             using (MemoryStream stream = new MemoryStream(bytes))
             {
-                using (XmlTestSuiteParser parser = new XmlTestSuiteParser(stream))
+                using (XmlTestSuiteParser parser = new XmlTestSuiteParser(stream, businessActionsRepository))
                 {
                     parser.Parse();
                 }
             }
         }
+
+        /// <summary>Test case setup code.</summary>
+        [SetUp]
+        public void Setup()
+        {
+            // parse business actions
+            using (Stream xmlStream = File.OpenRead("../../AccipioTests/Samples/OnlineBankingBusinessActions.xml"))
+            {
+                IBusinessActionXmlParser businessActionXmlParser = new BusinessActionsXmlParser(xmlStream);
+                businessActionsRepository = businessActionXmlParser.Parse();
+            }
+        }
+
+        private BusinessActionsRepository businessActionsRepository;
     }
 }
