@@ -19,7 +19,15 @@ namespace KillXml
         public void ExecuteXPathQuery()
         {
             XmlDocument xmlDocument = new XmlDocument();
-            xmlDocument.LoadXml(view.XmlSource);
+            try
+            {
+                xmlDocument.LoadXml(view.XmlSource);
+            }
+            catch (Exception ex)
+            {
+                view.ShowXPathError(ex);
+                return;
+            }
 
             XmlNamespaceManager xmlNamespaceManager = new XmlNamespaceManager(xmlDocument.NameTable);
 

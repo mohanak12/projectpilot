@@ -47,9 +47,9 @@ namespace Accipio
         }
 
         /// <summary>
-        /// Adds test action to Test case.
+        /// Adds a test step to the test case.
         /// </summary>
-        /// <param name="testCaseStep">See <see cref="testAction"/></param>
+        /// <param name="testCaseStep">Test step to add.</param>
         public void AddStep(TestCaseStep testCaseStep)
         {
             testSteps.Add(testCaseStep);

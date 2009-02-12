@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Accipio.Console;
 using MbUnit.Framework;
 
@@ -15,29 +16,14 @@ namespace ProjectPilot.Tests.AccipioTests
         [Test]
         public void ParseTestSpec()
         {
-            string[] args = GetArgs();
+            List<string> args = new List<string>();
+            args.Add("-ba=..\\..\\..\\Data\\Samples\\BusinessActions.xml");
+            args.Add("-tx=" + TestSuiteSchemaGeneratorTests.GenerateXsdValidationSchemaOutputFile());
+            args.Add("-i=..\\..\\..\\Data\\Samples\\TestSuite.xml");
+            args.Add("-tm=Templates/CSharpMbUnitTestCodeGenerator.vm");
+            args.Add("-tmx=.cs");
             TestCodeGeneratorCommand testCodeGeneratorCommand = new TestCodeGeneratorCommand();
             Assert.AreEqual(0, testCodeGeneratorCommand.Execute(args));
-        }
-
-        public static string[] GetArgs()
-        {
-            string[] args = new string[3];
-            args[0] = "-ba=..\\..\\..\\Data\\Samples\\BusinessActions.xml";
-            args[1] = "-tx=" + TestSuiteSchemaGeneratorTests.GenerateXsdValidationSchemaOutputFile();
-            args[2] = "-i=..\\..\\..\\Data\\Samples\\TestSuite.xml";
-            return args;
-        }
-
-        public static string[] GetArgsWithOption()
-        {
-            string[] args = new string[5];
-            args[0] = "-o=..\\..\\..\\Data\\Samples";
-            args[1] = "codegen";
-            args[2] = "..\\..\\..\\Data\\Samples\\BusinessActions.xml";
-            args[3] = TestSuiteSchemaGeneratorTests.GenerateXsdValidationSchemaOutputFile();
-            args[4] = "..\\..\\..\\Data\\Samples\\TestSuite.xml";
-            return args;
         }
     }
 }

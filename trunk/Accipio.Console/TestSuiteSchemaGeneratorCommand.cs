@@ -201,11 +201,11 @@ namespace Accipio.Console
                 xmlAttribute.Value = "1";
                 newNode.Attributes.Append(xmlAttribute);
 
-                //if (entry.ActionParameters.Count == 0)
+                //if (entry.Parameters.Count == 0)
                 //{
                     // add complex node with restriction
                 //}
-                //else if (entry.ActionParameters.Count > 0)
+                //else if (entry.Parameters.Count > 0)
                 //{
                     AddBusinessActionParameters(testSuiteSchemaDocument, newNode, entry.ActionParameters);
                 //}
