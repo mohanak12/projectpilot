@@ -3,6 +3,7 @@ using System.Text;
 using Commons.Collections;
 using NVelocity;
 using NVelocity.App;
+using NVelocity.Runtime;
 
 namespace Accipio
 {
@@ -17,8 +18,9 @@ namespace Accipio
         public void Generate(TestSuite testSuite)
         {
             VelocityEngine velocity = new VelocityEngine();
-            ExtendedProperties props = new ExtendedProperties();
-            velocity.Init(props);
+            velocity.SetProperty(RuntimeConstants.RESOURCE_LOADER, "file");
+            //velocity.SetProperty(RuntimeConstants.FILE_RESOURCE_LOADER_PATH, settings.TemplatesDirectory);
+            velocity.Init();
 
             VelocityContext velocityContext = new VelocityContext();
             velocityContext.Put("testSuite", testSuite);

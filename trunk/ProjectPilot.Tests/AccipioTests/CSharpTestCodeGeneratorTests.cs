@@ -201,5 +201,17 @@ namespace ProjectPilot.Tests.AccipioTests
             // execution
             testCodeGenerator.Generate(testSuite);
         }
+
+        /// <summary>
+        /// Tests loading of templates from location different from the default one.
+        /// </summary>
+        [Test]
+        public void LoadTemplateFromDifferentLocation()
+        {
+            ITestCodeGenerator testCodeGenerator = new TemplatedTestCodeGenerator(
+                @"../../../Accipio/Templates/TestRunners/CSharpMbUnitTestRunner.vm",
+                "Banking.cs");      
+            testCodeGenerator.Generate(new TestSuite("test"));
+        }
     }
 }
