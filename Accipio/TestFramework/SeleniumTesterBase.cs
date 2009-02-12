@@ -18,7 +18,8 @@ namespace Accipio.TestFramework
         /// <summary>
         /// Initializes a new instance of the <see cref="SeleniumTesterBase"/> class.
         /// </summary>
-        public SeleniumTesterBase()
+        /// <param name="testCaseName">Name of the test case.</param>
+        public SeleniumTesterBase(string testCaseName) : base (testCaseName)
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
@@ -33,7 +34,6 @@ namespace Accipio.TestFramework
                 CultureInfo.InvariantCulture);
             seleniumSpeed = ConfigurationManager.AppSettings["SeleniumSpeed"];
             browserUrl = ConfigurationManager.AppSettings["BrowserUrl"];
-            targetUrl = new Uri(ConfigurationManager.AppSettings["TargetUrl"]);
 
             string browserExe;
 
@@ -651,22 +651,6 @@ namespace Accipio.TestFramework
             return this;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SeleniumTesterBase"/> class
-        /// by copying data from an existing <see cref="SeleniumTesterBase"/> object.
-        /// </summary>
-        /// <param name="testerBase">The existing tester object.</param>
-        protected SeleniumTesterBase(SeleniumTesterBase testerBase)
-        {
-            browserType = testerBase.browserType;
-            browserUrl = testerBase.browserUrl;
-            selenium = testerBase.selenium;
-            seleniumPort = testerBase.seleniumPort;
-            seleniumSpeed = testerBase.seleniumSpeed;
-            targetUrl = testerBase.targetUrl;
-            testMachine = testerBase.testMachine;
-        }
-
         private readonly ISelenium selenium;
 
         private readonly BrowserType browserType = BrowserType.InternetExplorer;
@@ -678,7 +662,5 @@ namespace Accipio.TestFramework
         private readonly string seleniumSpeed;
 
         private readonly string browserUrl;
-
-        private readonly Uri targetUrl;
     }
 }

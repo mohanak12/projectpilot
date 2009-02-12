@@ -10,6 +10,10 @@ namespace ProjectPilot.Tests.Framework
     /// </summary>
     public class ProjectPortalTestRunner : SeleniumTesterBase
     {
+        public ProjectPortalTestRunner(string testCaseName) : base(testCaseName)
+        {
+        }
+
         /// <summary>
         /// Open the url specified.
         /// </summary>

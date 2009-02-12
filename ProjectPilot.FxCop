@@ -690,43 +690,6 @@
       <Namespaces>
        <Namespace Name="Accipio">
         <Types>
-         <Type Name="BusinessActionsRepository">
-          <Members>
-           <Member Name="#EnumerateActions()">
-            <Messages>
-             <Message Id="System.String.CompareTo(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2009-02-12 10:05:50Z">
-              <Issue>
-               <Item>'BusinessActionsRepository.EnumerateActions()'</Item>
-               <Item>'string.CompareTo(string)'</Item>
-               <Item>'string.Compare(string, string, StringComparison)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="BusinessActionsXmlParser">
-          <Members>
-           <Member Name="#ReadFunctionsSteps(Accipio.BusinessFunctionEntry,System.Xml.XmlReader)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-02-12 10:05:50Z">
-              <Issue>
-               <Item>'BusinessActionsXmlParser.ReadFunctionsSteps(BusinessFunctionEntry, XmlReader)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReadRunParameters(System.Xml.XmlReader)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-02-12 10:05:50Z">
-              <Issue>
-               <Item>'BusinessActionsXmlParser.ReadRunParameters(XmlReader)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="HtmlTestReportGenerator">
           <Members>
            <Member Name="#Generate(Accipio.Reporting.TestRunsDatabase)">
@@ -796,6 +759,23 @@
              <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Status="Excluded" Created="2009-01-27 17:28:14Z">
               <Issue>
                <Item>'TestSuiteRun.testCasesRuns'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="Accipio.TestFramework">
+        <Types>
+         <Type Name="SeleniumTesterBase">
+          <Members>
+           <Member Name="#targetUrl">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2009-02-12 11:36:49Z">
+              <Issue>
+               <Item>'SeleniumTesterBase.targetUrl'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1034,9 +1014,6 @@
    </Rule>
    <Rule TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021">
     <Resolution Name="Default">Consider a design that does not require that {0} be an out parameter.</Resolution>
-   </Rule>
-   <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
-    <Resolution Name="Default">{0} appears to have no upstream public or protected callers.</Resolution>
    </Rule>
    <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
     <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>

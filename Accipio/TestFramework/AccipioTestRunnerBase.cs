@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Gallio.Framework;
 using Gallio.Model;
+using log4net;
 
 namespace Accipio.TestFramework
 {
@@ -44,6 +45,16 @@ namespace Accipio.TestFramework
         }
 
         /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or
+        /// resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
         /// Marks the test as pending. This method should be called by all MiMiTestRunner actions
         /// which have not been implemented fully. 
         /// </summary>
@@ -73,16 +84,10 @@ namespace Accipio.TestFramework
             return (TRunner)this;
         }
 
-        #region IDisposable Members
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or
-        /// resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
+        protected AccipioTestRunnerBase(string testCaseName)
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            this.testCaseName = testCaseName;
+            log.InfoFormat("Starting test case '{0}'", testCaseName);
         }
 
         /// <summary>
@@ -96,17 +101,17 @@ namespace Accipio.TestFramework
             {
                 if (disposing)
                 {
+                    log.InfoFormat("Finishing test case '{0}'", testCaseName);
                 }
 
                 disposed = true;
             }
         }
 
-        private bool disposed;
-
-        #endregion
-
         private string description;
+        private bool disposed;
+        private static readonly ILog log = log4net.LogManager.GetLogger(typeof(AccipioTestRunnerBase<TRunner>));
         private List<string> tags = new List<string>();
+        private readonly string testCaseName;
     }
 }

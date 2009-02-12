@@ -1,9 +1,13 @@
 ﻿+ handle NotImplementedException
-- update test runner base class
-- create test suite runner base class
-- add log4net logging
++ update test runner base class
++ create test suite runner base class
++ add log4net logging
 - see how selenium could produce screenshots
     - see other selenium command-line settings
 - make code generation work on an input directory
 
-- modify Mimi's actions to use bool
+Mimi:
+    - modify Mimi's actions to use bool
+    - int -> integer
+    - modify test runner to reuse Selenium
+

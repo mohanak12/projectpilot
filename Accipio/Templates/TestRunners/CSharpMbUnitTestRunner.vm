@@ -61,7 +61,7 @@ $parameter.ParameterValue#if ($parameter.ParameterValue.GetType().Name == "Strin
         [FixtureSetUp]
         public void FixtureSetup()
         {
-            suiteRunner = new ${testSuite.TestRunnerName}TestSuiteRunner("$testSuite.TestSuiteName");
+            suiteRunner = new ${testSuite.TestRunnerName}TestSuiteRunner<${testSuite.TestRunnerName}TestRunner>("$testSuite.TestSuiteName");
 #if (${testSuite.IsParallelizable})
             Gallio.Framework.Pattern.PatternTestGlobals.DegreeOfParallelism = ${testSuite.DegreeOfParallelism};
 #end
@@ -76,6 +76,6 @@ $parameter.ParameterValue#if ($parameter.ParameterValue.GetType().Name == "Strin
             suiteRunner.Dispose();
         }
         
-        private ${testSuite.TestRunnerName}TestSuiteRunner suiteRunner;
+        private ${testSuite.TestRunnerName}TestSuiteRunner<${testSuite.TestRunnerName}TestRunner> suiteRunner;
     }
 }
