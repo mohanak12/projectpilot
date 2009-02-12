@@ -1,0 +1,7 @@
+﻿+ move all templates to a single source
+    + separate templates into subdirectories
+- update test runner base class
+- create test suite runner base class
+- add log4net logging
+- see how selenium could produce screenshots
+    - see other selenium command-line settings

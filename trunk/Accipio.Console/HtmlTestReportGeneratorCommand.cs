@@ -22,7 +22,7 @@ namespace Accipio.Console
                     (string projectName) => this.settings.ProjectName = projectName
                 },
                 { 
-                    "t|templatesdir=", "the {directory} where the report templates are stored (the default is 'Templates' directory)",
+                    "t|templatesdir=", "the {directory} where the report templates are stored (the default is 'Templates/TestReports' directory)",
                     (string dir) => this.settings.TemplatesDirectory = dir
                 },
                 { 

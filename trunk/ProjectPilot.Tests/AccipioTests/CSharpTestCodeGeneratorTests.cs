@@ -15,7 +15,7 @@ namespace ProjectPilot.Tests.AccipioTests
         public void MoreParametersInTestStep()
         {
             ITestCodeGenerator testCodeGenerator = new TemplatedTestCodeGenerator(
-                @"Templates\CSharpMbUnitTestCodeGenerator.vm",
+                @"Templates/TestRunners/CSharpMbUnitTestRunner.vm",
                 "IT3Suite.cs");
 
             TestSuite testSuite = new TestSuite("IT3Suite")
@@ -65,7 +65,7 @@ namespace ProjectPilot.Tests.AccipioTests
         public void GenerateTestFromTemplate()
         {
             ITestCodeGenerator testCodeGenerator = new TemplatedTestCodeGenerator(
-                @"Templates\CSharpMbUnitTestCodeGenerator.vm",
+                @"Templates/TestRunners/CSharpMbUnitTestRunner.vm",
                 "Banking.cs");
 
             TestSuite testSuite = new TestSuite("Banking")
@@ -138,7 +138,7 @@ namespace ProjectPilot.Tests.AccipioTests
         public void GenerateTest()
         {
             ITestCodeGenerator testCodeGenerator = new TemplatedTestCodeGenerator(
-                @"Templates\CSharpMbUnitTestCodeGenerator.vm",
+                @"Templates/TestRunners/CSharpMbUnitTestRunner.vm",
                 "Banking.cs");
 
             TestSuite testSuite = new TestSuite("Banking")

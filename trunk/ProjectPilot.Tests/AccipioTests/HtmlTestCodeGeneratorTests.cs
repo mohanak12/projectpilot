@@ -54,7 +54,7 @@ namespace ProjectPilot.Tests.AccipioTests
             testSuite.AddTestCase(testCase);
 
             ITestCodeGenerator generator = new TemplatedTestCodeGenerator(
-                @"Templates\HtmlTestCodeGenerator.vm",
+                @"Templates/TestRunners/HtmlTestCodeGenerator.vm",
                 "TestSuiteId.html");
             generator.Generate(testSuite);
         }
