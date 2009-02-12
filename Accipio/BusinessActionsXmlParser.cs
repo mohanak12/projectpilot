@@ -22,6 +22,7 @@ namespace Accipio
             this.xmlStream = xmlStream;
 
             supportedParameterTypes.Add("boolean", typeof(bool));
+            supportedParameterTypes.Add("dateTime", typeof(DateTime));
             supportedParameterTypes.Add("decimal", typeof(decimal));
             supportedParameterTypes.Add("double", typeof(double));
             supportedParameterTypes.Add("float", typeof(float));
