@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Threading;
 using Headless.Configuration;
 using Headless.Threading;
@@ -8,37 +9,60 @@ namespace Headless
     public class CheckTriggersQueueFeeder : Worker
     {
         public CheckTriggersQueueFeeder(
-            WaitHandle stopSignal, 
+            WaitHandle stopSignal,
+            JobQueue<ProjectRelatedJob> buildQueue,
+            IThreadFactory threadFactory,
             IWorkerMonitor workerMonitor,
-            IProjectRegistryProvider projectRegistryProvider)
-            : base("CheckTriggersQueueFeeder", stopSignal, workerMonitor)
+            IProjectRegistry projectRegistry)
+            : base("CheckTriggersQueueFeeder", stopSignal, threadFactory, workerMonitor)
         {
-            this.projectRegistryProvider = projectRegistryProvider;
-            this.checkTriggersQueue = new JobQueue<ProjectRelatedJob> (stopSignal);
+            this.projectRegistry = projectRegistry;
+            this.checkTriggersQueue = new JobQueue<ProjectRelatedJob> ("Check triggers queue", stopSignal);
+
+            for (int i = 0; i < checkTriggersWorkersCount; i++)
+            {
+                CheckTriggersWorker worker = new CheckTriggersWorker(
+                    string.Format(
+                        CultureInfo.InvariantCulture,
+                        "CheckTriggersWorker {0}",
+                        i),
+                    checkTriggersQueue, 
+                    buildQueue,
+                    threadFactory,
+                    projectRegistry,
+                    workerMonitor);
+                checkTriggersQueue.AddWorker(worker);
+            }
+
+            checkTriggersQueue.StartWorkers();
+        }
+
+        public JobQueue<ProjectRelatedJob> CheckTriggersQueue
+        {
+            get { return checkTriggersQueue; }
         }
 
         protected override void Run()
         {
             while (true)
             {
-                if (true == WaitForStopSignal(TimeSpan.FromSeconds(10)))
-                    break;
-
-                ProjectRegistry projectRegistry = projectRegistryProvider.GetProjectRegistry();
-
-                foreach (Project project in projectRegistry.ListProjects())
+                foreach (string projectId in projectRegistry.ListProjects())
                 {
-                    if (project.Status == ProjectStatus.Listening)
+                    Project project = projectRegistry.GetProject(projectId);
+                    if (project.Status == ProjectStatus.Sleeping)
                     {
-                        // skip projects which are already in the queue
-                        if (false == checkTriggersQueue.IsInQueue(project.ProjectId))
-                            checkTriggersQueue.Enqueue(new ProjectRelatedJob(project.ProjectId));
+                        project.Status = ProjectStatus.CheckingTriggers;
+                        checkTriggersQueue.Enqueue(new ProjectRelatedJob(project.ProjectId));
                     }
                 }
+
+                if (true == WaitForStopSignal(TimeSpan.FromSeconds(10)))
+                    break;
             }
         }
 
         private JobQueue<ProjectRelatedJob> checkTriggersQueue;
-        private IProjectRegistryProvider projectRegistryProvider;
+        private int checkTriggersWorkersCount = 3;
+        private IProjectRegistry projectRegistry;
     }
 }

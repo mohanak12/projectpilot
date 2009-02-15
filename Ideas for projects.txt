@@ -1,0 +1,21 @@
+- Web dashboard running on an embedded Web server
+    - using NVelocity templates
+    - some sort of a MVP pattern
+
+------------------   
+- wikitext translator
+
+------------------
+- code snippets publisher
+    - converts snippets to HTML for human viewing
+    
+------------------
+- robot simulation
+
+------------------
+- system monitor - could be related to the Web dashboard
+    - monitoring event log, system services, log files etc...
+    - responding to events
+    
+------------------
+- GUI mockups

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Headless;
@@ -16,31 +17,17 @@ namespace ProjectPilot.Tests.HeadlessTests
         [Test, Explicit]
         public void Test()
         {
+            HeadlessMother mother = new HeadlessMother();
+
             IService mockService = MockRepository.GenerateStub<IService>();
-            IProjectRegistryProvider mockProjectRegistryProvider = MockRepository.GenerateStub<IProjectRegistryProvider>();
 
             ServiceInfo serviceInfo = new ServiceInfo();
             serviceInfo.ComputerName = "computer";
             serviceInfo.PortNumber = 3434;
 
-            ProjectRegistry projectRegistry = new ProjectRegistry();
-            
-            Project project;
-
-            project = new Project("ProjectPilot");
-            projectRegistry.AddProject(project);
-
-            project = new Project("Headless");
-            projectRegistry.AddProject(project);
-
-            project = new Project("Flubu");
-            projectRegistry.AddProject(project);
-
-            mockProjectRegistryProvider.Expect(p => p.GetProjectRegistry()).Return(projectRegistry).Repeat.Any();
-
             mockService.Expect(s => s.GetServiceInfo()).Return(serviceInfo).Repeat.Any();
 
-            IWebRouteProcessor mainPageProcessor = new MainPageProcessor(mockService, mockProjectRegistryProvider);
+            IWebRouteProcessor mainPageProcessor = new MainPageProcessor(mockService, mother.ProjectRegistry);
             IWebRouteProcessor fileWebRouteProcessor = new FileWebRouteProcessor();
 
             DefaultWebRequestRouter webRequestRouter = new DefaultWebRequestRouter();

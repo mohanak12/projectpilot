@@ -32,12 +32,31 @@ namespace Headless.Configuration
         public string ProjectId
         {
             get { return projectId; }
-            set { projectId = value; }
+        }
+
+        public IProjectRegistry ProjectRegistry
+        {
+            get { return projectRegistry; }
+            set { projectRegistry = value; }
         }
 
         public ProjectStatus Status
         {
-            get { return status; }
+            get
+            {
+                return status;
+            }
+
+            set
+            {
+                status = value;
+                projectRegistry.ChangeProjectStatus(this.projectId, value);
+            }
+        }
+
+        public IList<ITrigger> Triggers
+        {
+            get { return triggers; }
         }
 
         public IVersionControlSystem VersionControlSystem
@@ -49,7 +68,9 @@ namespace Headless.Configuration
         private List<BuildStage> buildStages = new List<BuildStage>();
         private List<BuildReport> buildReports = new List<BuildReport>();
         private string projectId;
+        private IProjectRegistry projectRegistry;
         private ProjectStatus status;
+        private List<ITrigger> triggers = new List<ITrigger>();
         private IVersionControlSystem versionControlSystem;
     }
 }

@@ -119,6 +119,7 @@
     <Compile Include="Framework\SessionStateTests.cs" />
     <Compile Include="Framework\Subversion\HistoryTests.cs" />
     <Compile Include="HeadlessTests\BuildRunnerTests.cs" />
+    <Compile Include="HeadlessTests\HeadlessMother.cs" />
     <Compile Include="HeadlessTests\TestWorker.cs" />
     <Compile Include="HeadlessTests\TestWorkerMonitor.cs" />
     <Compile Include="HeadlessTests\ThreadingTests.cs" />
