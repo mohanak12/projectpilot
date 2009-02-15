@@ -8,17 +8,16 @@ namespace Headless.Web
     {
         public MainPageProcessor(
             IService service,
-            IProjectRegistryProvider projectRegistryProvider)
+            IProjectRegistry projectRegistry)
         {
             this.service = service;
-            this.projectRegistryProvider = projectRegistryProvider;
+            this.projectRegistry = projectRegistry;
         }
 
         protected override ResponseTemplate GetResponseTemplate(RoutedWebRequest route)
         {
             ResponseTemplate template = new ResponseTemplate(@"Web\Templates\Main.vm.htm", "text/html");
 
-            ProjectRegistry projectRegistry = projectRegistryProvider.GetProjectRegistry();
             template.TemplateParameters.Add("registry", projectRegistry);
 
             ServiceInfo serviceInfo = service.GetServiceInfo();
@@ -29,7 +28,7 @@ namespace Headless.Web
 
         [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         private static readonly ILog log = LogManager.GetLogger(typeof(MainPageProcessor));
-        private IProjectRegistryProvider projectRegistryProvider;
+        private IProjectRegistry projectRegistry;
         private readonly IService service;
     }
 }

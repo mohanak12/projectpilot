@@ -1,13 +1,12 @@
 using System;
 using System.Threading;
-using Headless.Threading;
 
 namespace Headless.Threading
 {
     public abstract class QueuedWorker<TJob> : Worker where TJob : Job
     {
-        protected QueuedWorker(string workerName, JobQueue<TJob> jobQueue, IWorkerMonitor workerMonitor)
-            : base(workerName, jobQueue.StopWorkingSignal, workerMonitor)
+        protected QueuedWorker(string workerName, JobQueue<TJob> jobQueue, IThreadFactory threadFactory, IWorkerMonitor workerMonitor)
+            : base(workerName, jobQueue.StopWorkingSignal, threadFactory, workerMonitor)
         {
             this.jobQueue = jobQueue;
         }

@@ -1,3 +1,16 @@
+#macro ( ExpandParameterValue $value )
+#set ($printedValue = $value)
+#set ($needsQuotes = $value.GetType().Name == "String" || $value.GetType().Name == "DateTime")
+#if ($value.GetType().Name == "Boolean")
+#if ($value) #set ($printedValue = "true")
+#else #set ($printedValue = "false")
+#end
+#end
+#if ($needsQuotes)
+"#end  
+$printedValue#if ($needsQuotes)"#end
+#end
+using System;
 using MbUnit.Framework;
 
 namespace ${testSuite.Namespace}
@@ -14,7 +27,7 @@ namespace ${testSuite.Namespace}
         /// </summary>
         [Test]
 #foreach ( $tag in ${testCase.Tags} )
-        [Metadata("UserStory", $tag)]
+        [Metadata("UserStory", "$tag")]
 #end
 #if (${testSuite.IsParallelizable})
         [Parallelizable]
@@ -38,12 +51,15 @@ namespace ${testSuite.Namespace}
                     // ${testStep.ExpandDescriptionWithParameterValues(${testSuite.BusinessActionsRepository})}
                     runner.${testStep.ActionName}(#if ($testStep.Parameters.Count > 0)
 #foreach ($parameter in $testStep.Parameters)
+#set ($parameterValue = $parameter.ParameterValue)
+#if ($testStep.Parameters.Count > 1)
 
-                        #if ($parameter.ParameterValue.GetType().Name == "String")
-"#end  
-$parameter.ParameterValue#if ($parameter.ParameterValue.GetType().Name == "String")"#end,#end
+                        #end#ExpandParameterValue($parameterValue)#if ($velocityCount < $testStep.Parameters.Count)
+,#end#end#end
+);
+#if ($velocityCount < $testCase.TestSteps.Count)
 
-                    #end);
+#end
 #end
 #end
                 }
@@ -61,7 +77,7 @@ $parameter.ParameterValue#if ($parameter.ParameterValue.GetType().Name == "Strin
         [FixtureSetUp]
         public void FixtureSetup()
         {
-            suiteRunner = new ${testSuite.TestRunnerName}TestSuiteRunner<${testSuite.TestRunnerName}TestRunner>("$testSuite.TestSuiteName");
+            suiteRunner = new ${testSuite.TestRunnerName}TestSuiteRunner("$testSuite.TestSuiteName");
 #if (${testSuite.IsParallelizable})
             Gallio.Framework.Pattern.PatternTestGlobals.DegreeOfParallelism = ${testSuite.DegreeOfParallelism};
 #end
@@ -76,6 +92,6 @@ $parameter.ParameterValue#if ($parameter.ParameterValue.GetType().Name == "Strin
             suiteRunner.Dispose();
         }
         
-        private ${testSuite.TestRunnerName}TestSuiteRunner<${testSuite.TestRunnerName}TestRunner> suiteRunner;
+        private ${testSuite.TestRunnerName}TestSuiteRunner suiteRunner;
     }
 }

@@ -59,9 +59,15 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="BuildWorker.cs" />
     <Compile Include="CheckTriggersWorker.cs" />
+    <Compile Include="Configuration\ITrigger.cs" />
+    <Compile Include="HeadlessService.cs" />
+    <Compile Include="Threading\DefaultThreadFactory.cs" />
+    <Compile Include="Threading\DefaultWorkerMonitor.cs" />
     <Compile Include="Threading\IWorkerMonitor.cs" />
     <Compile Include="ProjectRelatedJob.cs" />
+    <Compile Include="Threading\IThreadFactory.cs" />
     <Compile Include="Threading\QueuedWorker.cs" />
     <Compile Include="Threading\WorkerActivityType.cs" />
     <Compile Include="Threading\JobQueue.cs" />
@@ -73,11 +79,10 @@
     <Compile Include="Configuration\IBuildTask.cs" />
     <Compile Include="Configuration\IVersionControlSystem.cs" />
     <Compile Include="Configuration\Project.cs" />
-    <Compile Include="Configuration\ProjectRegistry.cs" />
     <Compile Include="Configuration\ProjectStatus.cs" />
     <Compile Include="DefaultHeadlessLogger.cs" />
     <Compile Include="IHeadlessLogger.cs" />
-    <Compile Include="IProjectRegistryProvider.cs" />
+    <Compile Include="IProjectRegistry.cs" />
     <Compile Include="IService.cs" />
     <Compile Include="Runner\WebServer.cs" />
     <Compile Include="CheckTriggersQueueFeeder.cs" />

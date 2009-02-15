@@ -8,5 +8,10 @@ namespace Headless
             : base(projectId)
         {
         }
+
+        public string ProjectId
+        {
+            get { return this.CorrelationId; }
+        }
     }
 }

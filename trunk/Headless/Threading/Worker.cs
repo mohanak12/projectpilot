@@ -5,8 +5,9 @@ namespace Headless.Threading
 {
     public abstract class Worker : IDisposable
     {
-        protected Worker(string workerName, WaitHandle stopSignal, IWorkerMonitor workerMonitor)
+        protected Worker(string workerName, WaitHandle stopSignal, IThreadFactory threadFactory, IWorkerMonitor workerMonitor)
         {
+            this.threadFactory = threadFactory;
             this.workerName = workerName;
             this.stopSignal = stopSignal;
             this.workerMonitor = workerMonitor;
@@ -19,8 +20,7 @@ namespace Headless.Threading
 
         public void Start()
         {
-            thread = new Thread(Run);
-            thread.Name = workerName;
+            thread = threadFactory.CreateThread(workerName, Run);
             thread.Start();
         }
 
@@ -37,6 +37,11 @@ namespace Headless.Threading
         public IWorkerMonitor WorkerMonitor
         {
             get { return workerMonitor; }
+        }
+
+        public string WorkerName
+        {
+            get { return workerName; }
         }
 
         /// <summary>
@@ -64,9 +69,10 @@ namespace Headless.Threading
         }
 
         private bool disposed;
-        private Thread thread;
-        private readonly string workerName;
         private WaitHandle stopSignal;
+        private Thread thread;
+        private readonly IThreadFactory threadFactory;
         private readonly IWorkerMonitor workerMonitor;
+        private readonly string workerName;
     }
 }

@@ -7,7 +7,8 @@ namespace ProjectPilot.Tests.HeadlessTests
 {
     public class TestWorker : QueuedWorker<Job>
     {
-        public TestWorker(string workerName, JobQueue<Job> jobQueue, IWorkerMonitor workerMonitor) : base(workerName, jobQueue, workerMonitor)
+        public TestWorker(string workerName, JobQueue<Job> jobQueue, IThreadFactory threadFactory, IWorkerMonitor workerMonitor) 
+            : base(workerName, jobQueue, threadFactory, workerMonitor)
         {
         }
 

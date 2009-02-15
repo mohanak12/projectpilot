@@ -1,36 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using Headless.Threading;
 using MbUnit.Framework;
-using Rhino.Mocks;
 
 namespace ProjectPilot.Tests.HeadlessTests
 {
     [TestFixture]
     public class WorkerTests
     {
-        [Test, Pending("TODO Igor: something is wrong with the threading")]
-        public void Test()
+        [Test]
+        [Row(20, 3)]
+        [Row(3, 15)]
+        public void Test(int threads, int jobs)
         {
             IWorkerMonitor workerMonitor = new TestWorkerMonitor();
+            IThreadFactory threadFactory = new DefaultThreadFactory();
 
             using (ManualResetEvent stopSignal = new ManualResetEvent(false))
             {
-                using (JobQueue<Job> queue = new JobQueue<Job>(stopSignal))
+                using (JobQueue<Job> queue = new JobQueue<Job>("Worker queue", stopSignal))
                 {
-                    for (int i = 0; i < 3; i++)
+                    for (int i = 0; i < threads; i++)
                     {
-                        TestWorker worker = new TestWorker (i.ToString(CultureInfo.InvariantCulture), queue, workerMonitor);
+                        TestWorker worker = new TestWorker (i.ToString(CultureInfo.InvariantCulture), queue, threadFactory, workerMonitor);
                         queue.AddWorker(worker);
                     }
 
                     queue.StartWorkers();
 
-                    for (int i = 0; i < 7; i++)
+                    for (int i = 0; i < jobs; i++)
                     {
                         Job job = new Job("0");
                         queue.Enqueue(job);
@@ -38,9 +37,11 @@ namespace ProjectPilot.Tests.HeadlessTests
 
                     Assert.IsTrue(queue.WaitForQueueToEmpty(TimeSpan.FromSeconds(10)));
 
+                    queue.AssertAllThreadsAlive();
+
                     stopSignal.Set();
 
-                    queue.WaitForWorkersToStop(TimeSpan.FromSeconds(5));
+                    threadFactory.WaitForAllThreadsToStop(TimeSpan.FromSeconds(5));
 
                     Assert.IsTrue(queue.IsEmpty);
                 }

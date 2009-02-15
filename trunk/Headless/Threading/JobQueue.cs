@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
+using log4net;
 
 namespace Headless.Threading
 {
@@ -10,8 +10,9 @@ namespace Headless.Threading
     public class JobQueue<TJob> : IDisposable 
         where TJob : Job 
     {
-        public JobQueue(WaitHandle stopWorkingSignal)
+        public JobQueue(string queueName, WaitHandle stopWorkingSignal)
         {
+            this.queueName = queueName;
             this.stopWorkingSignal = stopWorkingSignal;
             signals = new WaitHandle[2];
             signals[0] = stopWorkingSignal;
@@ -28,6 +29,23 @@ namespace Headless.Threading
             get { return stopWorkingSignal; }
         }
 
+        public void AddWorker (QueuedWorker<TJob> worker)
+        {
+            if (log.IsDebugEnabled)
+                log.DebugFormat("JobQueue '{0}': added worker '{1}'", queueName, worker.WorkerName);
+
+            workers.Add(worker);
+        }
+
+        public void AssertAllThreadsAlive()
+        {
+            foreach (QueuedWorker<TJob> worker in workers)
+            {
+                if (false == worker.Thread.IsAlive)
+                    throw new InvalidOperationException("At least one worker thread is dead");
+            }            
+        }
+
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or
         /// resetting unmanaged resources.
@@ -38,15 +56,13 @@ namespace Headless.Threading
             GC.SuppressFinalize(this);
         }
 
-        public void AddWorker (QueuedWorker<TJob> worker)
-        {
-            workers.Add(worker);
-        }
-
         public void Enqueue (TJob job)
         {
             lock (this)
             {
+                if (log.IsDebugEnabled)
+                    log.DebugFormat("JobQueue '{0}': added job, {1} jobs in queue now", queueName, queue.Count);
+
                 queue.Enqueue(job);
                 jobsInQueueSignal.Set();
                 emptyQueueSignal.Reset();
@@ -85,11 +101,18 @@ namespace Headless.Threading
             {
                 lock (this)
                 {
-                    job = queue.Dequeue();
                     if (queue.Count > 0)
-                        jobsInQueueSignal.Set();
+                    {
+                        job = queue.Dequeue();
+                        if (queue.Count > 0)
+                            jobsInQueueSignal.Set();
+                        else
+                            emptyQueueSignal.Set();
+                    }
                     else
-                        emptyQueueSignal.Set();
+                    {
+                        result = WaitHandle.WaitTimeout;
+                    }
                 }
             }
 
@@ -99,37 +122,6 @@ namespace Headless.Threading
         public bool WaitForQueueToEmpty(TimeSpan timeout)
         {
             return emptyQueueSignal.WaitOne(timeout);
-        }
-
-        public void WaitForWorkersToStop (TimeSpan workerStoppingTimeout)
-        {
-            List<QueuedWorker<TJob>> workersStilLRunning = new List<QueuedWorker<TJob>>();
-
-            foreach (QueuedWorker<TJob> worker in workers)
-            {
-                if (worker.Thread.IsAlive)
-                    workersStilLRunning.Add(worker);
-            }
-
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-
-            while (workersStilLRunning.Count > 0 && stopwatch.Elapsed < workerStoppingTimeout)
-            {
-                for (int i = 0; i < workersStilLRunning.Count;)
-                {
-                    Worker worker = workersStilLRunning[i];
-                    if (false == worker.Thread.IsAlive)
-                        workersStilLRunning.RemoveAt(i);
-                    else
-                        i++;
-                }
-
-                Thread.Sleep(TimeSpan.FromSeconds(1));
-            }
-
-            foreach (QueuedWorker<TJob> worker in workersStilLRunning)
-                worker.Thread.Abort();
         }
 
         /// <summary>
@@ -152,8 +144,10 @@ namespace Headless.Threading
 
         private bool disposed;
         private EventWaitHandle emptyQueueSignal = new ManualResetEvent(true);
-        private Queue<TJob> queue = new Queue<TJob>();
         private EventWaitHandle jobsInQueueSignal = new AutoResetEvent(false);
+        private static readonly ILog log = LogManager.GetLogger(typeof(JobQueue<TJob>));
+        private Queue<TJob> queue = new Queue<TJob>();
+        private readonly string queueName;
         private WaitHandle[] signals;
         private readonly WaitHandle stopWorkingSignal;
         private List<QueuedWorker<TJob>> workers = new List<QueuedWorker<TJob>>();

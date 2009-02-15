@@ -3,9 +3,14 @@ namespace Headless.Configuration
     public enum ProjectStatus
     {
         /// <summary>
-        /// The project is actively listening for new events.
+        /// The project is sleeping.
         /// </summary>
-        Listening,
+        Sleeping,
+
+        /// <summary>
+        /// The project is checking its build triggers.
+        /// </summary>
+        CheckingTriggers,
 
         /// <summary>
         /// The project is currently executing the build. 
