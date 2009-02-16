@@ -59,6 +59,12 @@ namespace Accipio
         /// <value>The name of the namespace.</value>
         public string Namespace { get; set; }
 
+        public bool ShouldBeSkipped
+        {
+            get { return shouldBeSkipped; }
+            set { shouldBeSkipped = value; }
+        }
+
         /// <summary>
         /// Gets total count of test cases in collection.
         /// </summary>
@@ -127,6 +133,7 @@ namespace Accipio
 
         private int degreeOfParallelism = 10;
         private bool isParallelizable;
+        private bool shouldBeSkipped;
         private readonly SortedList<string, TestCase> testCases = new SortedList<string, TestCase>();
     }
 }

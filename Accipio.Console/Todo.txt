@@ -1,7 +1,7 @@
-﻿- report graph - axis should be from 0
+﻿+ turning off (pending) cases and suites
+- report graph - axis should be from 0
 - handle messages for NotImplementedException
 - set order of test suites
-- turning off (pending) cases and suites
 - see how selenium could produce screenshots
     - see other selenium command-line settings
 - make code generation work on an input directory

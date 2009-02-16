@@ -45,6 +45,7 @@ namespace ${testSuite.Namespace}
 #each
 
 #end
+#if ( false == ${testSuite.ShouldBeSkipped} )
 #if ( ${testCase.TestSteps.Count} > 0 )
 
 #foreach ($testStep in ${testCase.TestSteps})
@@ -61,6 +62,9 @@ namespace ${testSuite.Namespace}
 
 #end
 #end
+#end
+#else
+                    runner.MarkTestAsPending ("Test suite is marked for skipping.");
 #end
                 }
                 catch (NotImplementedException ex)
