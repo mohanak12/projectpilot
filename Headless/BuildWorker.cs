@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Headless.Configuration;
 using Headless.Threading;
 
@@ -11,20 +12,27 @@ namespace Headless
             JobQueue<ProjectRelatedJob> buildQueue, 
             IThreadFactory threadFactory,
             IProjectRegistry projectRegistry,
-            IWorkerMonitor workerMonitor) 
+            IWorkerMonitor workerMonitor,
+            IHeadlessLogger headlessLogger) 
             : base(workerName, buildQueue, threadFactory, workerMonitor)
         {
             this.projectRegistry = projectRegistry;
+            this.headlessLogger = headlessLogger;
         }
 
         protected override void ExecuteJob(ProjectRelatedJob job)
         {
-            Project project = projectRegistry.GetProject(job.ProjectId);
+            using (IBuildRunner buildRunner = projectRegistry.RegisterBuild(job.ProjectId))
+            {
+                BuildReport report = buildRunner.Run();
+            }
 
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            Project project = projectRegistry.GetProject(job.ProjectId);
             project.Status = ProjectStatus.Sleeping;
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
+        private readonly IHeadlessLogger headlessLogger;
         private readonly IProjectRegistry projectRegistry;
     }
 }

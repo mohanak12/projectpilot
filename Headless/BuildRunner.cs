@@ -5,18 +5,20 @@ using log4net.Core;
 
 namespace Headless
 {
-    public class BuildRunner : IDisposable
+    public class BuildRunner : IBuildRunner
     {
         public BuildRunner(
-            Project projectToBuild, 
-            ITrafficCop trafficCop, 
-            IStageRunnerFactory stageRunnerFactory,
+            string projectId, 
+            IProjectRegistry projectRegistry,
+            IBuildTrafficSignals buildTrafficSignals, 
+            IBuildStageRunnerFactory buildStageRunnerFactory,
             IHeadlessLogger logger)
         {
-            this.trafficCop = trafficCop;
-            this.stageRunnerFactory = stageRunnerFactory;
+            this.projectId = projectId;
+            this.projectRegistry = projectRegistry;
+            this.buildTrafficSignals = buildTrafficSignals;
+            this.buildStageRunnerFactory = buildStageRunnerFactory;
             this.logger = logger;
-            this.projectToBuild = projectToBuild;
         }
 
         /// <summary>
@@ -32,6 +34,7 @@ namespace Headless
         public BuildReport Run()
         {
             BuildReport report = new BuildReport();
+            Project projectToBuild = projectRegistry.GetProject(projectId);
 
             Log(Level.Info, "Starting the build runner");
             lock (this)
@@ -61,9 +64,9 @@ namespace Headless
                     }
                 }
 
-                // check if the traffic trafficCop has signalled the runner to stop
-                TrafficCopControlSignal signal = trafficCop.WaitForControlSignal(TimeSpan.Zero);
-                if (signal == TrafficCopControlSignal.Stop)
+                // check if the traffic buildTrafficSignals has signalled the runner to stop
+                BuildTrafficCopSignal signal = buildTrafficSignals.WaitForControlSignal(TimeSpan.Zero);
+                if (signal == BuildTrafficCopSignal.Stop)
                     break;
 
                 bool stagesPending = false;
@@ -104,7 +107,7 @@ namespace Headless
                                 // we can start this stage
                                 Log(Level.Info, "Starting stage '{0}'", status.Stage.StageId);
 
-                                IStageRunner stageRunner = this.stageRunnerFactory.CreateStageRunner(status.Stage);
+                                IStageRunner stageRunner = this.buildStageRunnerFactory.CreateStageRunner(status.Stage);
                                 status.PrepareToStart(stageRunner);
                                 stageRunner.StartStage();
                                 // update the status immediatelly
@@ -128,9 +131,9 @@ namespace Headless
 
                 Log(Level.Debug, "Waiting for the traffic cop");
 
-                // check if the traffic trafficCop has signalled the runner to stop
-                signal = trafficCop.WaitForControlSignal(pollPeriod);
-                if (signal == TrafficCopControlSignal.Stop)
+                // check if the traffic buildTrafficSignals has signalled the runner to stop
+                signal = buildTrafficSignals.WaitForControlSignal(pollPeriod);
+                if (signal == BuildTrafficCopSignal.Stop)
                     break;
             }
 
@@ -171,7 +174,7 @@ namespace Headless
         {
             logger.Log(
                 LogEvent.ForProject(
-                    projectToBuild.ProjectId, 
+                    projectId, 
                     level, 
                     format, 
                     args));
@@ -196,11 +199,12 @@ namespace Headless
 
         private bool disposed;
         private readonly IHeadlessLogger logger;
-        private Project projectToBuild;
         private List<BuildStage> stagesOrdered = new List<BuildStage>();
-        private IStageRunnerFactory stageRunnerFactory;
+        private IBuildStageRunnerFactory buildStageRunnerFactory;
         private Dictionary<string, StageStatus> stagesStatuses = new Dictionary<string, StageStatus>();
         private TimeSpan pollPeriod = TimeSpan.FromSeconds(10);
-        private ITrafficCop trafficCop;
+        private readonly string projectId;
+        private readonly IProjectRegistry projectRegistry;
+        private IBuildTrafficSignals buildTrafficSignals;
     }
 }

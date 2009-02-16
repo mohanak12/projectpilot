@@ -3,7 +3,7 @@ namespace Headless
     /// <summary>
     /// Control signals emmited by the traffic cop.
     /// </summary>
-    public enum TrafficCopControlSignal
+    public enum BuildTrafficCopSignal
     {
         /// <summary>
         /// The traffic cop has not emitted any control signal.

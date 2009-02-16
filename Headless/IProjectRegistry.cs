@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Headless.Configuration;
 
 namespace Headless
@@ -11,5 +10,7 @@ namespace Headless
         Project GetProject(string projectId);
 
         IList<string> ListProjects();
+
+        IBuildRunner RegisterBuild(string projectId);
     }
 }

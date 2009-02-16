@@ -11,7 +11,7 @@ namespace ProjectPilot.Tests.HeadlessTests
     [TestFixture]
     public class ThreadingTests
     {
-        [Test]
+        [Test, Pending("Igor: TODO")]
         public void CheckTriggersQueue()
         {
             HeadlessMother mother = new HeadlessMother();
@@ -48,12 +48,15 @@ namespace ProjectPilot.Tests.HeadlessTests
         {
             HeadlessMother mother = new HeadlessMother();
             IThreadFactory threadFactory = new DefaultThreadFactory();
-            IWorkerMonitor workerMonitor = mother.WorkerMonitor;
 
             mother.ProjectRegistry.Expect(r => r.ChangeProjectStatus("Headless", ProjectStatus.CheckingTriggers)).Repeat
                 .Any();
 
-            using (HeadlessService service = new HeadlessService(mother.ProjectRegistry, threadFactory, workerMonitor))
+            using (HeadlessService service = new HeadlessService(
+                mother.ProjectRegistry,
+                threadFactory, 
+                mother.WorkerMonitor,
+                mother.HeadlessLogger))
             {
                 service.Start();
                 Thread.Sleep(TimeSpan.FromSeconds(20));
