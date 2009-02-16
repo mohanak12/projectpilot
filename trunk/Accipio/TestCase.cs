@@ -13,6 +13,12 @@ namespace Accipio
             this.testCaseName = testCaseName;
         }
 
+        public string PendingMessage
+        {
+            get { return pendingMessage; }
+            set { pendingMessage = value; }
+        }
+
         /// <summary>
         /// Gets test case tags
         /// </summary>
@@ -20,6 +26,12 @@ namespace Accipio
         {
             get { return tags; }
         }
+
+        /// <summary>
+        /// Gets or sets the test case description.
+        /// </summary>
+        /// <value>The test case description.</value>
+        public string TestCaseDescription { get; set; }
 
         /// <summary>
         /// Gets the TestCase name.
@@ -31,12 +43,6 @@ namespace Accipio
                 return testCaseName;
             }
         }
-
-        /// <summary>
-        /// Gets or sets the test case description.
-        /// </summary>
-        /// <value>The test case description.</value>
-        public string TestCaseDescription { get; set; }
 
         /// <summary>
         /// Gets a list of test case's steps.
@@ -83,9 +89,7 @@ namespace Accipio
             return null;
         }
 
-        /// <summary>
-        /// Collection of Test actions.
-        /// </summary>
+        private string pendingMessage;        
         private readonly List<TestCaseStep> testSteps = new List<TestCaseStep>();
         private readonly List<string> tags = new List<string>();
         private readonly string testCaseName;
