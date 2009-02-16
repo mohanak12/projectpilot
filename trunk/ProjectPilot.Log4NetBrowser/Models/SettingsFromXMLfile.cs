@@ -23,10 +23,6 @@ namespace ProjectPilot.Log4NetBrowser.Models
         {
             Dictionary<string, string> settings = new Dictionary<string, string>();
 
-            Dictionary<string, string> logFiles = new Dictionary<string, string>();
-            Dictionary<string, string> logFilesPatterns = new Dictionary<string, string>();
-            Dictionary<string, char> logFilesSeparators = new Dictionary<string, char>();
-
             XmlReaderSettings xmlReaderSettings = new XmlReaderSettings();
             xmlReaderSettings.IgnoreComments = true;
             xmlReaderSettings.IgnoreProcessingInstructions = true;

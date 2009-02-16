@@ -117,7 +117,7 @@
                     change = true;  
                 }
 
-                Response.Write("<input type=\"radio\" name=\"selectedFile\" value=\"" +logFiles.ElementAt(n).Key + "\"\">&nbsp;");
+                Response.Write("<input type=\"radio\" name=\"selectedFile\" value=\"" + logFiles.ElementAt(n).Key + "\"\">&nbsp;");
                 Response.Write(Html.ActionLink(logFiles.ElementAt(n).Value, "Log/" + logFiles.ElementAt(n).Key, "LogView"));
                 Response.Write("<BR />");
                 Response.Write(@"</div>");
@@ -126,6 +126,8 @@
     	    
             </table>
 	     </div>
+	     <br /> <br />
+	     &nbsp;<%Response.Write(Html.ActionLink("LoC Metrics", "SelectSolutionFile", "XML"));%>
 	    </div>
     </body>
     </html>
