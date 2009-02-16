@@ -74,6 +74,7 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
 
             parserContent.ParseLogFile(filter);
 
+            Session["Id"] = selectedFile;
             Session["filter"] = filter;
             Session["parserContent"] = parserContent;
             Session["searchContent"] = searchContent;
@@ -166,6 +167,7 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             ViewData["numberOfItemsPerPage"] = numberOfItemsPerPage;
             ViewData["matchWholeWordFilter"] = Session["matchWholeWordFilter"];
             ViewData["searchContent"] = Session["searchContent"];
+            Session["parserContent"] = parserContent;
 
             return View();
         }
@@ -184,6 +186,7 @@ namespace ProjectPilot.Log4NetBrowser.Controllers
             }
             ViewData["filter"] = filter;
             ViewData["numberOfItemsPerPage"] = numberOfItemsPerPage;
+
             return View();
         }
 

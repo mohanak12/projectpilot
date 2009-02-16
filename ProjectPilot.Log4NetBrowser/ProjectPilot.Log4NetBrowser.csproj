@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogViewController.cs" />
+    <Compile Include="Controllers\XMLController.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -130,6 +131,20 @@
     <Compile Include="Views\Shared\Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
+    <Compile Include="Views\XML\SelectSolutionFile.aspx.cs">
+      <DependentUpon>SelectSolutionFile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\XML\SelectSolutionFile.aspx.designer.cs">
+      <DependentUpon>SelectSolutionFile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\XML\XML.aspx.cs">
+      <DependentUpon>XML.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\XML\XML.aspx.designer.cs">
+      <DependentUpon>XML.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Default.aspx" />
@@ -139,6 +154,8 @@
     <Content Include="Views\Home\Ndc.aspx" />
     <Content Include="Views\LogView\DisplayLog.aspx" />
     <Content Include="Views\LogView\DisplayLogFiles.aspx" />
+    <Content Include="Views\XML\SelectSolutionFile.aspx" />
+    <Content Include="Views\XML\XML.aspx" />
     <Content Include="Web.config" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\jquery-1.2.6.js" />
@@ -155,6 +172,10 @@
     <ProjectReference Include="..\ProjectPilot.Extras\ProjectPilot.Extras.csproj">
       <Project>{59083E4A-3659-4D8E-805F-52321D1B84DE}</Project>
       <Name>ProjectPilot.Extras</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProjectPilot.Framework\ProjectPilot.Framework.csproj">
+      <Project>{C87F10BF-4132-4B75-9C07-CB0B1FCE6440}</Project>
+      <Name>ProjectPilot.Framework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
