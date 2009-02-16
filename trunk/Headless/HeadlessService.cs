@@ -7,11 +7,16 @@ namespace Headless
 {
     public class HeadlessService : IDisposable
     {
-        public HeadlessService(IProjectRegistry projectRegistry, IThreadFactory threadFactory, IWorkerMonitor workerMonitor)
+        public HeadlessService(
+            IProjectRegistry projectRegistry, 
+            IThreadFactory threadFactory, 
+            IWorkerMonitor workerMonitor,
+            IHeadlessLogger headlessLogger)
         {
             this.projectRegistry = projectRegistry;
             this.threadFactory = threadFactory;
             this.workerMonitor = workerMonitor;
+            this.headlessLogger = headlessLogger;
         }
 
         /// <summary>
@@ -38,9 +43,10 @@ namespace Headless
                         "BuildWorker {0}",
                         i),
                     buildQueue,
-                    threadFactory,
-                    projectRegistry,
-                    workerMonitor);
+                    threadFactory, 
+                    projectRegistry, 
+                    workerMonitor,
+                    headlessLogger);
                 buildQueue.AddWorker(worker);
             }
 
@@ -96,6 +102,7 @@ namespace Headless
         private int buildWorkersCount = 3;
         private CheckTriggersQueueFeeder checkTriggersQueueFeeder;
         private bool disposed;
+        private readonly IHeadlessLogger headlessLogger;
         private IProjectRegistry projectRegistry;
         private EventWaitHandle stopSignal;
         private readonly IThreadFactory threadFactory;

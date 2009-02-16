@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using Headless;
 using Headless.Configuration;
@@ -10,7 +7,7 @@ using Rhino.Mocks;
 
 namespace ProjectPilot.Tests.HeadlessTests
 {
-    [TestFixture]
+    [TestFixture, Pending("Igor: TODO")]
     public class BuildRunnerTests
     {
         [Test]
@@ -52,11 +49,13 @@ namespace ProjectPilot.Tests.HeadlessTests
         [SetUp]
         public void Setup()
         {
-            mockTrafficCop = MockRepository.GenerateMock<ITrafficCop>();
-            mockStageRunnerFactory = MockRepository.GenerateMock<IStageRunnerFactory>();
+            mother = new HeadlessMother();
+
+            mockBuildTrafficSignals = MockRepository.GenerateMock<IBuildTrafficSignals>();
+            mockBuildStageRunnerFactory = MockRepository.GenerateMock<IBuildStageRunnerFactory>();
             logger = new DefaultHeadlessLogger();
 
-            project = new Project("MyProject");
+            project = new Project("Headless");
 
             buildStage1 = new BuildStage("stage1", this.project);
             buildStage2 = new BuildStage("stage2", this.project);
@@ -78,9 +77,9 @@ namespace ProjectPilot.Tests.HeadlessTests
             IStageRunner stageRunner3 = new LocalStageRunner(this.logger);
             stageRunner3.SetBuildStage(this.buildStageAcceptTests);
 
-            this.mockStageRunnerFactory.Expect(factory => factory.CreateStageRunner(this.buildStage1)).Return(stageRunner1).Repeat.Once();
-            this.mockStageRunnerFactory.Expect(factory => factory.CreateStageRunner(this.buildStage2)).Return(stageRunner2).Repeat.Once();
-            this.mockStageRunnerFactory.Expect(factory => factory.CreateStageRunner(this.buildStageAcceptTests)).Return(stageRunner3).Repeat.Once();
+            this.mockBuildStageRunnerFactory.Expect(factory => factory.CreateStageRunner(this.buildStage1)).Return(stageRunner1).Repeat.Once();
+            this.mockBuildStageRunnerFactory.Expect(factory => factory.CreateStageRunner(this.buildStage2)).Return(stageRunner2).Repeat.Once();
+            this.mockBuildStageRunnerFactory.Expect(factory => factory.CreateStageRunner(this.buildStageAcceptTests)).Return(stageRunner3).Repeat.Once();
 
             mockBuildTaskSuccess = MockRepository.GenerateMock<IBuildTask>();
             this.mockBuildTaskSuccess.Expect(task => task.Execute()).WhenCalled(delegate { Thread.Sleep(3000); });
@@ -92,25 +91,27 @@ namespace ProjectPilot.Tests.HeadlessTests
                                                                                         throw new InvalidOperationException();
                                                                                     });
 
-            this.mockTrafficCop.Expect(cop => cop.WaitForControlSignal(TimeSpan.Zero))
-                .IgnoreArguments().WhenCalled(delegate { Thread.Sleep(5000); }).Return(TrafficCopControlSignal.NoSignal)
+            this.mockBuildTrafficSignals.Expect(cop => cop.WaitForControlSignal(TimeSpan.Zero))
+                .IgnoreArguments().WhenCalled(delegate { Thread.Sleep(5000); }).Return(BuildTrafficCopSignal.NoSignal)
                 .Repeat.Any();
         }
 
         private BuildReport RunBuild()
         {
             using (BuildRunner buildRunner = new BuildRunner(
-                this.project,
-                this.mockTrafficCop,
-                this.mockStageRunnerFactory,
+                this.project.ProjectId,
+                mother.ProjectRegistry,
+                this.mockBuildTrafficSignals,
+                this.mockBuildStageRunnerFactory,
                 this.logger))
             {
                 return buildRunner.Run();
             }
         }
 
-        private ITrafficCop mockTrafficCop;
-        private IStageRunnerFactory mockStageRunnerFactory;
+        private HeadlessMother mother;
+        private IBuildTrafficSignals mockBuildTrafficSignals;
+        private IBuildStageRunnerFactory mockBuildStageRunnerFactory;
         private IHeadlessLogger logger;
         private Project project;
         private BuildStage buildStage1;

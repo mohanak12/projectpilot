@@ -11,13 +11,24 @@ namespace ProjectPilot.Tests.HeadlessTests
         {
             projectRegistry = MockRepository.GenerateMock<IProjectRegistry>();
             workerMonitor = new DefaultWorkerMonitor();
+            headlessLogger = new DefaultHeadlessLogger();
+            buildStageRunnerFactory = new DefaultBuildStageRunnerFactory(headlessLogger);
 
             ServiceInfo serviceInfo = new ServiceInfo();
             serviceInfo.ComputerName = "computer";
             serviceInfo.PortNumber = 3434;
 
-            projectRegistry.Expect(r => r.ListProjects()).Return(new string[] { "ProjectPilot", "Headless", "Flubu" })
+            projectRegistry.Stub(r => r.ListProjects()).Return(new string[] { "ProjectPilot", "Headless", "Flubu" })
                 .Repeat.Any();
+
+            DefaultBuildTrafficSignals defaultBuildTrafficSignals = new DefaultBuildTrafficSignals();
+            BuildRunner buildRunner = new BuildRunner(
+                "Headless", 
+                projectRegistry,
+                defaultBuildTrafficSignals, 
+                buildStageRunnerFactory,
+                headlessLogger);
+            projectRegistry.Stub(r => r.RegisterBuild("Headless")).Return(buildRunner).Repeat.Once();
 
             Project project;
             project = new Project("ProjectPilot");
@@ -36,6 +47,16 @@ namespace ProjectPilot.Tests.HeadlessTests
             projectRegistry.Expect(r => r.GetProject("Flubu")).Return(project).Repeat.Any();
         }
 
+        public IBuildStageRunnerFactory BuildStageRunnerFactory
+        {
+            get { return buildStageRunnerFactory; }
+        }
+
+        public IHeadlessLogger HeadlessLogger
+        {
+            get { return headlessLogger; }
+        }
+
         public IProjectRegistry ProjectRegistry
         {
             get { return projectRegistry; }
@@ -46,6 +67,8 @@ namespace ProjectPilot.Tests.HeadlessTests
             get { return workerMonitor; }
         }
 
+        private IBuildStageRunnerFactory buildStageRunnerFactory;
+        private IHeadlessLogger headlessLogger;
         private IProjectRegistry projectRegistry;
         private int triggerCounter;
         private IWorkerMonitor workerMonitor;

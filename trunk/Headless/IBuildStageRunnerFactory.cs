@@ -2,7 +2,7 @@ using Headless.Configuration;
 
 namespace Headless
 {
-    public interface IStageRunnerFactory
+    public interface IBuildStageRunnerFactory
     {
         IStageRunner CreateStageRunner(BuildStage stage);
     }
