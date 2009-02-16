@@ -59,10 +59,10 @@ namespace Accipio
         /// <value>The name of the namespace.</value>
         public string Namespace { get; set; }
 
-        public bool ShouldBeSkipped
+        public string PendingMessage
         {
-            get { return shouldBeSkipped; }
-            set { shouldBeSkipped = value; }
+            get { return pendingMessage; }
+            set { pendingMessage = value; }
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Accipio
 
         private int degreeOfParallelism = 10;
         private bool isParallelizable;
-        private bool shouldBeSkipped;
+        private string pendingMessage;
         private readonly SortedList<string, TestCase> testCases = new SortedList<string, TestCase>();
     }
 }

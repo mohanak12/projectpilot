@@ -64,9 +64,9 @@ namespace Accipio
                                 if (false == String.IsNullOrEmpty(isParallelizableValue))
                                     testSuite.IsParallelizable = bool.Parse(isParallelizableValue);
 
-                                string shouldBeSkippedValue = xmlReader.GetAttribute("shouldBeSkipped");
-                                if (false == String.IsNullOrEmpty(shouldBeSkippedValue))
-                                    testSuite.ShouldBeSkipped = bool.Parse(shouldBeSkippedValue);
+                                string pendingValue = xmlReader.GetAttribute("pending");
+                                if (false == String.IsNullOrEmpty(pendingValue))
+                                    testSuite.PendingMessage = pendingValue;
 
                                 string degreeOfParallelismValue = xmlReader.GetAttribute("degreeOfParallelism");
                                 if (false == String.IsNullOrEmpty(degreeOfParallelismValue))
@@ -214,9 +214,14 @@ namespace Accipio
                 {
                     case "case":
                         {
-                            //TODO: check for white spaces in Id
-                            string testCaseName = xmlReader.GetAttribute("id");
+                            string testCaseName = xmlReader.GetAttribute("id").Trim();
+
                             TestCase testCase = new TestCase(testCaseName);
+
+                            string pendingValue = xmlReader.GetAttribute("pending");
+                            if (false == String.IsNullOrEmpty(pendingValue))
+                                testCase.PendingMessage = pendingValue;
+
                             testSuite.AddTestCase(testCase);
                             ReadTestCase(testCase, xmlReader);
                             break;

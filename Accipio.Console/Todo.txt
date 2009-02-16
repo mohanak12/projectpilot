@@ -1,6 +1,6 @@
 ﻿+ turning off (pending) cases and suites
+    - handle messages for NotImplementedException
 - report graph - axis should be from 0
-- handle messages for NotImplementedException
 - set order of test suites
 - see how selenium could produce screenshots
     - see other selenium command-line settings
