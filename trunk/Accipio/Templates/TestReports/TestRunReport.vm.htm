@@ -1,4 +1,4 @@
-<html>
+﻿<html>
     <head>
         <link href="../$settings.CssShortFileName" rel="stylesheet" type="text/css" />
         <title>Accipio Test Run Report ($settings.ProjectName)</title>
@@ -83,6 +83,7 @@
                         <th align="left">Test case ID</th>
                         <th>Status</th>
                         <th>Error message</th>
+                        <th>Duration (s)</th>
                     </tr>
                     #foreach ( $testCaseRun in $testSuiteRun.ListTestCasesRuns() )
                         #if ($testCaseRun.Status == "Successful")
@@ -95,6 +96,7 @@
                         <td align="left">$testCaseRun.TestCaseId</td>
                         <td>$testCaseRun.Status</td>
                         <td>$!testCaseRun.Message</td>
+                        <td>$!testCaseRun.Duration.TotalSeconds.ToString("n1")</td>
                     </tr>       
                     #end         
                 </table>            
