@@ -1,4 +1,4 @@
-﻿+ handle messages for NotImplementedException
+﻿+ show test case duration in test report
 - report graph - axis should be from 0
 - set order of test suites
 - see how selenium could produce screenshots

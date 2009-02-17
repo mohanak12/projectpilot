@@ -157,7 +157,7 @@ namespace Accipio.Reporting
                             ReadAttribute(xmlReader, "id"),
                             status);
 
-                        ReadUserStories(testCaseRun, xmlReader);
+                        ReadTestCaseRun(testCaseRun, xmlReader);
 
                         testSuiteRun.AddTestCaseRun(testCaseRun);
 
@@ -238,8 +238,12 @@ namespace Accipio.Reporting
             xmlReader.Read();
         }
 
-        private void ReadUserStories(TestCaseRun testCaseRun, XmlReader xmlReader)
+        private void ReadTestCaseRun(TestCaseRun testCaseRun, XmlReader xmlReader)
         {
+            string durationString = xmlReader.GetAttribute("duration");
+            if (false == String.IsNullOrEmpty(durationString))
+                testCaseRun.Duration = TimeSpan.FromSeconds(double.Parse(durationString, CultureInfo.InvariantCulture));
+
             xmlReader.Read();
 
             while (xmlReader.NodeType != XmlNodeType.EndElement)

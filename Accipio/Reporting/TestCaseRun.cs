@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Accipio.Reporting
@@ -8,6 +9,12 @@ namespace Accipio.Reporting
         {
             this.testCaseId = testCaseId;
             this.status = status;
+        }
+
+        public TimeSpan Duration
+        {
+            get { return duration; }
+            set { duration = value; }
         }
 
         public string Message
@@ -36,9 +43,10 @@ namespace Accipio.Reporting
             userStories.Add(userStoryId, null);
         }
 
-        private string testCaseId;
+        private TimeSpan duration;
         private TestExecutionStatus status;
         private string message;
+        private string testCaseId;
         private Dictionary<string, string> userStories = new Dictionary<string, string>();
     }
 }
