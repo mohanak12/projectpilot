@@ -251,8 +251,9 @@ namespace Accipio.Reporting
                         ReadUserStory(testCaseRun, xmlReader);
                         break;
 
-                    case "error":
-                        ReadError(testCaseRun, xmlReader);
+                    case "message":
+                    case "error": // obsolete
+                        ReadMessage(testCaseRun, xmlReader);
                         break;
 
                     default:
@@ -269,7 +270,7 @@ namespace Accipio.Reporting
             xmlReader.Read();
         }
 
-        private void ReadError(TestCaseRun testCaseRun, XmlReader xmlReader)
+        private void ReadMessage(TestCaseRun testCaseRun, XmlReader xmlReader)
         {
             testCaseRun.Message = xmlReader.ReadElementContentAsString();
         }

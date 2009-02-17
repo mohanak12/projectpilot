@@ -50,20 +50,44 @@ namespace ProjectPilot.Tests.AccipioTests
             xmlNamespaceManager.AddNamespace("a", "http://projectpilot/AccipioTestRunReport.xsd");
 
             XmlNode node = xmlDoc.SelectSingleNode(
-                "/a:report/a:testRun/a:suites/a:suite/a:case[@id='RemoveAllMmsSubsFromSpGui']/a:error",
+                "/a:report/a:testRun/a:suites/a:suite/a:case[@id='RemoveAllMmsSubsFromSpGui']/a:message",
                 xmlNamespaceManager);
 
             Assert.IsNotNull(node);
             Assert.IsFalse(string.IsNullOrEmpty(node.InnerText));
         }
 
-        /* TODO:
-         *  + vertical grid in TestRunsHistory
-         *  + sort runs in descending order
-         *  - add shortcuts for graphs
-         *  + solve the "error" issue
-         *  - do not show missing fields
-         *  + TestedSWVersion
-        */
+        /// <summary>
+        /// Makes sure the warning messages are also extracted from the Gallio report.
+        /// </summary>
+        [Test]
+        public void WarningMessage()
+        {
+            if (Directory.Exists("TestLogs"))
+                Directory.Delete("TestLogs", true);
+
+            string[] args = new string[]
+                                {
+                                    @"-i=..\..\AccipioTests\Samples\GallioTestResults1.xml",
+                                    "-o=TestLogs"
+                                };
+            GallioReportConverter gallioReportConverter = new GallioReportConverter();
+            Assert.AreEqual(0, gallioReportConverter.Execute(args));
+
+            string[] files = Directory.GetFiles("TestLogs");
+            Assert.IsTrue(files.Length > 0);
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(files[0]);
+            XmlNamespaceManager xmlNamespaceManager = new XmlNamespaceManager(xmlDoc.NameTable);
+            xmlNamespaceManager.AddNamespace("a", "http://projectpilot/AccipioTestRunReport.xsd");
+
+            XmlNode node = xmlDoc.SelectSingleNode(
+                "/a:report/a:testRun/a:suites/a:suite/a:case[@id='AddDifferentSubsFromTopTopicLinkMms']/a:message",
+                xmlNamespaceManager);
+
+            Assert.IsNotNull(node);
+            Assert.IsFalse(string.IsNullOrEmpty(node.InnerText));
+        }
     }
 }
