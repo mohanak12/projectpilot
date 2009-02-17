@@ -94,7 +94,9 @@ namespace Accipio.Reporting
                     case "suite":
                         string suiteId = ReadAttribute(xmlReader, "id");
                         TestSuiteRun testSuiteRun = new TestSuiteRun(suiteId);
+                        
                         ReadTestCaseRuns(testSuiteRun, xmlReader);
+                        
                         testRun.AddTestSuiteRun(testSuiteRun);
 
                         break;
@@ -115,6 +117,12 @@ namespace Accipio.Reporting
 
         private void ReadTestCaseRuns(TestSuiteRun testSuiteRun, XmlReader xmlReader)
         {
+            if (xmlReader.IsEmptyElement)
+            {
+                xmlReader.Skip();
+                return;
+            }
+
             xmlReader.Read();
 
             while (xmlReader.NodeType != XmlNodeType.EndElement)
@@ -160,8 +168,8 @@ namespace Accipio.Reporting
                             throw new NotSupportedException(
                                 string.Format(
                                     CultureInfo.InvariantCulture,
-                                    "Not supported xml node type. Node type = {0}",
-                                    xmlReader.NodeType));
+                                    "Unsupported xml node '{0}'",
+                                    xmlReader.Name));
                         }
                 }
             }

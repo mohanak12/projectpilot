@@ -1,493 +1,338 @@
 ﻿<report xmlns="http://projectpilot/AccipioTestRunReport.xsd" xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:g="http://www.gallio.org/">
-  <testRun startTime="2009-02-02T14:40:13.2713442+01:00" duration="517.75093229999993" version="">
+  <testRun startTime="2009-02-17T07:23:18.3197264+01:00" duration="603.7860504">
     <suites>
-      <suite id="SmsUISuiteTestSuite">
-        <case id="AddMultiScheduledSubs" startTime="2009-02-02T14:40:13.8494877+01:00" duration="65.6788579" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.Schedule</userStory>
-          </userStories>
-        </case>
-        <case id="AddScheduledSubs" startTime="2009-02-02T14:40:13.8651132+01:00" duration="35.6226722" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.Schedule</userStory>
-          </userStories>
-        </case>
-        <case id="AddSubsPeriod" startTime="2009-02-02T14:40:13.8651132+01:00" duration="35.684801" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.Periodical</userStory>
-          </userStories>
-        </case>
-        <case id="AddSubsOnUpdateNotExist1" startTime="2009-02-02T14:40:13.8651132+01:00" duration="35.610590099999996" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.OnUpdate</userStory>
-          </userStories>
-        </case>
-        <case id="AddSubsPerNotExist" startTime="2009-02-02T14:40:13.8963642+01:00" duration="35.5155923" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.Periodical</userStory>
-          </userStories>
-        </case>
-        <case id="AddSubsPerNotExist2" startTime="2009-02-02T14:40:13.9432407+01:00" duration="35.6293503" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.Schedule</userStory>
-          </userStories>
-        </case>
-        <case id="CasSubsNotAllowed" startTime="2009-02-02T14:40:13.9588662+01:00" duration="35.6752384" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.Schedule</userStory>
-          </userStories>
-        </case>
-        <case id="ExpectBillingInfoError1" startTime="2009-02-02T14:40:13.9901172+01:00" duration="35.63286" status="passed">
-          <userStories>
-            <userStory>Billing.SystemMessages</userStory>
-          </userStories>
-        </case>
-        <case id="ExpectBillingInfoError2" startTime="2009-02-02T14:40:14.0057427+01:00" duration="35.6612955" status="passed">
-          <userStories>
-            <userStory>Billing.SystemMessages</userStory>
-          </userStories>
-        </case>
-        <case id="ExpectBillingInfoError3" startTime="2009-02-02T14:40:14.0682447+01:00" duration="35.493013999999995" status="passed">
-          <userStories>
-            <userStory>Billing.SystemMessages</userStory>
-          </userStories>
-        </case>
-        <case id="ExpectBillingInfoError4" startTime="2009-02-02T14:40:14.0838702+01:00" duration="35.492393299999996" status="passed">
-          <userStories>
-            <userStory>Billing.SystemMessages</userStory>
-          </userStories>
-        </case>
-        <case id="ExpectBillingInfoError5" startTime="2009-02-02T14:40:14.0994957+01:00" duration="35.3574402" status="passed">
-          <userStories>
-            <userStory>Billing.SystemMessages</userStory>
-          </userStories>
-        </case>
-        <case id="ExpectBillingInfoError6" startTime="2009-02-02T14:40:14.1151212+01:00" duration="35.4979958" status="passed">
-          <userStories>
-            <userStory>Billing.SystemMessages</userStory>
-          </userStories>
-        </case>
-        <case id="ExpectBillingInfoError7" startTime="2009-02-02T14:40:14.1619977+01:00" duration="35.3991742" status="passed">
-          <userStories>
-            <userStory>Billing.SystemMessages</userStory>
-          </userStories>
-        </case>
-        <case id="ExpectBillingInfoError8" startTime="2009-02-02T14:40:14.1776232+01:00" duration="35.475169099999995" status="passed">
-          <userStories>
-            <userStory>Billing.SystemMessages</userStory>
-          </userStories>
-        </case>
-        <case id="ExpectBillingInfoError9" startTime="2009-02-02T14:40:14.2088742+01:00" duration="35.193152399999995" status="passed">
-          <userStories>
-            <userStory>Billing.SystemMessages</userStory>
-          </userStories>
-        </case>
-        <case id="ExpectBillingInfoHelp" startTime="2009-02-02T14:40:14.2401252+01:00" duration="35.3954016" status="passed">
-          <userStories>
-            <userStory>Billing.SystemMessages</userStory>
-          </userStories>
-        </case>
-        <case id="ExpectBillingInfoProv1" startTime="2009-02-02T14:40:14.2401252+01:00" duration="35.3570095" status="passed">
-          <userStories>
-            <userStory>Billing.SystemMessages</userStory>
-          </userStories>
-        </case>
-        <case id="ExpectBillingInfoProv2" startTime="2009-02-02T14:40:14.2713762+01:00" duration="35.1628715" status="passed">
-          <userStories>
-            <userStory>Billing.SystemMessages</userStory>
-          </userStories>
-        </case>
-        <case id="ExpectBillingInfoProv3" startTime="2009-02-02T14:40:14.2870017+01:00" duration="35.2725769" status="passed">
-          <userStories>
-            <userStory>Billing.SystemMessages</userStory>
-          </userStories>
-        </case>
-        <case id="ExpectBillingInfoProv4" startTime="2009-02-02T14:40:49.5537552+01:00" duration="90.3265555" status="passed">
-          <userStories>
-            <userStory>Billing.SystemMessages</userStory>
-          </userStories>
-        </case>
-        <case id="HelpRequest" startTime="2009-02-02T14:40:49.5693807+01:00" duration="30.8862377" status="passed">
-          <userStories>
-            <userStory>SMSUi.Help</userStory>
-          </userStories>
-        </case>
-        <case id="ListManySubs" startTime="2009-02-02T14:40:49.5850062+01:00" duration="150.2178317" status="passed">
-          <userStories>
-            <userStory>SMSUi.SubscriptionList</userStory>
-          </userStories>
-        </case>
-        <case id="ListNoneSubs" startTime="2009-02-02T14:40:49.6006317+01:00" duration="30.391844199999998" status="passed">
-          <userStories>
-            <userStory>SMSUi.SubscriptionList</userStory>
-          </userStories>
-        </case>
-        <case id="ListNoneSubsForTopic" startTime="2009-02-02T14:40:49.6318827+01:00" duration="30.315551199999998" status="passed">
-          <userStories>
-            <userStory>SMSUi.SubscriptionListForTopic</userStory>
-          </userStories>
-        </case>
-        <case id="ListSameSubs" startTime="2009-02-02T14:40:49.6787592+01:00" duration="90.6565285" status="passed">
-          <userStories>
-            <userStory>SMSUi.SubscriptionList</userStory>
-          </userStories>
-        </case>
-        <case id="ListSubsForTopic1" startTime="2009-02-02T14:40:49.7100102+01:00" duration="120.1356254" status="passed">
-          <userStories>
-            <userStory>SMSUi.SubscriptionListForTopic</userStory>
-          </userStories>
-        </case>
-        <case id="MoreUsersAddOnUpdateSubs" startTime="2009-02-02T14:40:49.7256357+01:00" duration="90.5119022" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.Schedule</userStory>
-          </userStories>
-        </case>
-        <case id="MoreUsersAddPeriodSubs" startTime="2009-02-02T14:40:49.8350142+01:00" duration="90.419717699999993" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.Periodical</userStory>
-          </userStories>
-        </case>
-        <case id="MoreUsersAddSchedSubs" startTime="2009-02-02T14:40:49.8350142+01:00" duration="90.1761963" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.Schedule</userStory>
-          </userStories>
-        </case>
-        <case id="OnUpdateSubsError6" startTime="2009-02-02T14:40:49.8350142+01:00" duration="30.274437" status="passed">
-          <userStories>
-            <userStory>SMSUi.Error</userStory>
-          </userStories>
-        </case>
-        <case id="OnUpdateSubsError2" startTime="2009-02-02T14:40:49.8975162+01:00" duration="30.455271" status="passed">
-          <userStories>
-            <userStory>SMSUi.Error</userStory>
-          </userStories>
-        </case>
-        <case id="OnUpdateSubsError4" startTime="2009-02-02T14:40:49.8975162+01:00" duration="30.444897599999997" status="passed">
-          <userStories>
-            <userStory>SMSUi.Error</userStory>
-          </userStories>
-        </case>
-        <case id="OnUpdateSubsError3" startTime="2009-02-02T14:40:49.9131417+01:00" duration="30.4903268" status="passed">
-          <userStories>
-            <userStory>SMSUi.Error</userStory>
-          </userStories>
-        </case>
-        <case id="ListSubsForTopicErr1" startTime="2009-02-02T14:40:49.9287672+01:00" duration="30.2762925" status="passed">
-          <userStories>
-            <userStory>SMSUi.SubscriptionListForTopic</userStory>
-          </userStories>
-        </case>
-        <case id="OnUpdateSubsError5" startTime="2009-02-02T14:40:49.9287672+01:00" duration="30.5908768" status="passed">
-          <userStories>
-            <userStory>SMSUi.Error</userStory>
-          </userStories>
-        </case>
-        <case id="OnUpdateSubsError1" startTime="2009-02-02T14:40:49.9443927+01:00" duration="30.3556617" status="passed">
-          <userStories>
-            <userStory>SMSUi.Error</userStory>
-          </userStories>
-        </case>
-        <case id="OnUpdateSubsError8" startTime="2009-02-02T14:40:49.9756437+01:00" duration="30.3214673" status="passed">
-          <userStories>
-            <userStory>SMSUi.Error</userStory>
-          </userStories>
-        </case>
-        <case id="OnUpdateSubsError7" startTime="2009-02-02T14:40:50.0068947+01:00" duration="30.299599299999997" status="passed">
-          <userStories>
-            <userStory>SMSUi.Error</userStory>
-          </userStories>
-        </case>
-        <case id="OnUpdateSubsError9" startTime="2009-02-02T14:41:19.5390897+01:00" duration="30.046461899999997" status="passed">
-          <userStories>
-            <userStory>SMSUi.Error</userStory>
-          </userStories>
-        </case>
-        <case id="OnUpdateSubsFromTime1" startTime="2009-02-02T14:41:19.9297272+01:00" duration="30.080567499999997" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.OnUpdate</userStory>
-          </userStories>
-        </case>
-        <case id="OnUpdateSubsFromTime2" startTime="2009-02-02T14:41:19.9922292+01:00" duration="30.0878357" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.OnUpdate</userStory>
-          </userStories>
-        </case>
-        <case id="OnUpdateSubsFromTime3" startTime="2009-02-02T14:41:20.1172332+01:00" duration="30.1036029" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.OnUpdate</userStory>
-          </userStories>
-        </case>
-        <case id="OnUpdateSubsRespond" startTime="2009-02-02T14:41:20.3203647+01:00" duration="60.107467" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.OnUpdate</userStory>
-          </userStories>
-        </case>
-        <case id="OnUpdateSubsTillTime2" startTime="2009-02-02T14:41:20.3359902+01:00" duration="30.1735081" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.OnUpdate</userStory>
-          </userStories>
-        </case>
-        <case id="OnUpdateSubsTillTime1" startTime="2009-02-02T14:41:20.3516157+01:00" duration="30.2405007" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.OnUpdate</userStory>
-          </userStories>
-        </case>
-        <case id="OnUpdateSubsNotAllowed" startTime="2009-02-02T14:41:20.3672412+01:00" duration="30.1776512" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.OnUpdate</userStory>
-          </userStories>
-        </case>
-        <case id="OnUpdateSubsTimeInterval2" startTime="2009-02-02T14:41:20.3984922+01:00" duration="30.107066" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.OnUpdate</userStory>
-          </userStories>
-        </case>
-        <case id="OnUpdateSubsTimeInterval1" startTime="2009-02-02T14:41:20.4297432+01:00" duration="30.189324499999998" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.OnUpdate</userStory>
-          </userStories>
-        </case>
-        <case id="OnUpdateSubsTimeIntervalErr3" startTime="2009-02-02T14:41:20.4766197+01:00" duration="30.136339999999997" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.OnUpdate</userStory>
-          </userStories>
-        </case>
-        <case id="OnUpdateSubsTimeIntervalErr5" startTime="2009-02-02T14:41:20.4766197+01:00" duration="30.0946857" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.OnUpdate</userStory>
-          </userStories>
-        </case>
-        <case id="OnUpdateSubsTimeIntervalErr7" startTime="2009-02-02T14:41:20.5078707+01:00" duration="30.1346137" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.OnUpdate</userStory>
-          </userStories>
-        </case>
-        <case id="PeriodSubsErr2" startTime="2009-02-02T14:41:49.6025517+01:00" duration="30.0220643" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.Periodical</userStory>
-          </userStories>
-        </case>
-        <case id="PeriodSubsErr3" startTime="2009-02-02T14:41:50.0244402+01:00" duration="30.064126499999997" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.Periodical</userStory>
-          </userStories>
-        </case>
-        <case id="PeriodSubsErr4" startTime="2009-02-02T14:41:50.1025677+01:00" duration="30.0670389" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.Periodical</userStory>
-          </userStories>
-        </case>
-        <case id="PeriodSubsFromTime1" startTime="2009-02-02T14:41:50.2431972+01:00" duration="30.0519711" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.Periodical</userStory>
-          </userStories>
-        </case>
-        <case id="PeriodSubsFromTime2" startTime="2009-02-02T14:41:50.5244562+01:00" duration="30.1091835" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.Periodical</userStory>
-          </userStories>
-        </case>
-        <case id="PeriodSubsFromTime3" startTime="2009-02-02T14:41:50.5244562+01:00" duration="30.2030501" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.Periodical</userStory>
-          </userStories>
-        </case>
-        <case id="PerSubInvalidTime1" startTime="2009-02-02T14:41:50.5244562+01:00" duration="30.128570399999997" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.Periodical</userStory>
-          </userStories>
-        </case>
-        <case id="PerSubInvalidTime2" startTime="2009-02-02T14:41:50.6494602+01:00" duration="30.0870735" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.Periodical</userStory>
-          </userStories>
-        </case>
-        <case id="PerSubsError6" startTime="2009-02-02T14:41:50.6494602+01:00" duration="30.0903636" status="passed">
-          <userStories>
-            <userStory>SMSUi.Error</userStory>
-          </userStories>
-        </case>
-        <case id="PerSubsError7" startTime="2009-02-02T14:41:50.7119622+01:00" duration="30.1358401" status="passed">
-          <userStories>
-            <userStory>SMSUi.Error</userStory>
-          </userStories>
-        </case>
-        <case id="PerSubsError8" startTime="2009-02-02T14:41:50.7119622+01:00" duration="30.0800153" status="passed">
-          <userStories>
-            <userStory>SMSUi.Error</userStory>
-          </userStories>
-        </case>
-        <case id="PerSubsError9" startTime="2009-02-02T14:41:50.7432132+01:00" duration="30.0855158" status="passed">
-          <userStories>
-            <userStory>SMSUi.Error</userStory>
-          </userStories>
-        </case>
-        <case id="PerSubsNotAllowed" startTime="2009-02-02T14:42:19.6347627+01:00" duration="30.0537988" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.Periodical</userStory>
-          </userStories>
-        </case>
-        <case id="RemoveAllSubs" startTime="2009-02-02T14:42:19.8691452+01:00" duration="120.06904279999999" status="passed">
-          <userStories>
-            <userStory>SMSUi.RemoveAllSubs</userStory>
-          </userStories>
-        </case>
-        <case id="RemoveAllSubsEmpty" startTime="2009-02-02T14:42:20.0097747+01:00" duration="150.0406238" status="passed">
-          <userStories>
-            <userStory>SMSUi.RemoveAllSubs</userStory>
-          </userStories>
-        </case>
-        <case id="RemoveAllSubsForTopic" startTime="2009-02-02T14:42:20.1035277+01:00" duration="210.06694869999998" status="passed">
-          <userStories>
-            <userStory>SMSUi.RemoveSubsForTopic</userStory>
-          </userStories>
-        </case>
-        <case id="RemoveExistSubsForTopicAndType" startTime="2009-02-02T14:42:20.1816552+01:00" duration="150.1066165" status="passed">
-          <userStories>
-            <userStory>SMSUi.RemoveSubsForTopicAndType</userStory>
-          </userStories>
-        </case>
-        <case id="RemoveMoreSubs" startTime="2009-02-02T14:42:20.2597827+01:00" duration="150.1155134" status="passed">
-          <userStories>
-            <userStory>SMSUi.RemoveSubsForTopicAndType</userStory>
-          </userStories>
-        </case>
-        <case id="RemoveNonexistingTopic" startTime="2009-02-02T14:42:20.2754082+01:00" duration="30.083098099999997" status="passed">
-          <userStories>
-            <userStory>SMSUi.RemoveSubsForTopic</userStory>
-          </userStories>
-        </case>
-        <case id="RemoveNonexistSubsForTopicAndType" startTime="2009-02-02T14:42:20.3222847+01:00" duration="90.06095289999999" status="passed">
-          <userStories>
-            <userStory>SMSUi.RemoveSubsForTopicAndType</userStory>
-          </userStories>
-        </case>
-        <case id="RemoveSeveralSubsForTopic" startTime="2009-02-02T14:42:20.3222847+01:00" duration="240.1108806" status="passed">
-          <userStories>
-            <userStory>SMSUi.RemoveSubsForTopic</userStory>
-          </userStories>
-        </case>
-        <case id="RemoveSubForTopic1" startTime="2009-02-02T14:42:20.4316632+01:00" duration="30.0624978" status="passed">
-          <userStories>
-            <userStory>SMSUi.RemoveSubsForTopic</userStory>
-          </userStories>
-        </case>
-        <case id="RemoveSubsForTopic2" startTime="2009-02-02T14:42:20.6347947+01:00" duration="30.041652199999998" status="passed">
-          <userStories>
-            <userStory>SMSUi.RemoveSubsForTopic</userStory>
-          </userStories>
-        </case>
-        <case id="RemoveSubsForTopicErr1" startTime="2009-02-02T14:42:20.6816712+01:00" duration="30.0415986" status="passed">
-          <userStories>
-            <userStory>SMSUi.RemoveSubsForTopic</userStory>
-          </userStories>
-        </case>
-        <case id="RemoveTopicWithInvalidType" startTime="2009-02-02T14:42:20.7441732+01:00" duration="60.086942799999996" status="passed">
-          <userStories>
-            <userStory>SMSUi.RemoveSubsForTopicAndType</userStory>
-          </userStories>
-        </case>
-        <case id="RemoveTopicWithNonexistTopic" startTime="2009-02-02T14:42:20.7597987+01:00" duration="60.2019628" status="passed">
-          <userStories>
-            <userStory>SMSUi.RemoveSubsForTopicAndType</userStory>
-          </userStories>
-        </case>
-        <case id="SchedSubsError4" startTime="2009-02-02T14:42:20.8066752+01:00" duration="30.127673599999998" status="passed">
-          <userStories>
-            <userStory>SMSUi.Error</userStory>
-          </userStories>
-        </case>
-        <case id="SchedSubsError5" startTime="2009-02-02T14:42:20.8379262+01:00" duration="30.0968849" status="passed">
-          <userStories>
-            <userStory>SMSUi.Error</userStory>
-          </userStories>
-        </case>
-        <case id="ScheduledSubsErr1" startTime="2009-02-02T14:42:20.8379262+01:00" duration="30.110572299999998" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.Schedule</userStory>
-          </userStories>
-        </case>
-        <case id="ScheduledSubsErr2" startTime="2009-02-02T14:42:20.8691772+01:00" duration="30.0991853" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.Schedule</userStory>
-          </userStories>
-        </case>
-        <case id="ScheduledSubsErr3" startTime="2009-02-02T14:42:49.6982247+01:00" duration="30.0363601" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.Schedule</userStory>
-          </userStories>
-        </case>
-        <case id="ScheduledSubsErr4" startTime="2009-02-02T14:42:49.8544797+01:00" duration="30.0665262" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.Schedule</userStory>
-          </userStories>
-        </case>
-        <case id="ScheduledSubsErr5" startTime="2009-02-02T14:42:50.3857467+01:00" duration="30.103600099999998" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.Schedule</userStory>
-          </userStories>
-        </case>
-        <case id="ScheduledSubsErr6" startTime="2009-02-02T14:42:50.5107507+01:00" duration="30.0456324" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.Schedule</userStory>
-          </userStories>
-        </case>
-        <case id="ScheduledSubsErr7" startTime="2009-02-02T14:42:50.6826312+01:00" duration="30.0328022" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.Schedule</userStory>
-          </userStories>
-        </case>
-        <case id="ScheduledSubsErr8" startTime="2009-02-02T14:42:50.7295077+01:00" duration="30.0617995" status="passed">
-          <userStories>
-            <userStory>SMSUi.AddSubs.Schedule</userStory>
-          </userStories>
-        </case>
-        <case id="SearchRequest1" startTime="2009-02-02T14:42:50.9638902+01:00" duration="30.0609218" status="passed">
-          <userStories>
-            <userStory>SMSUi.Search</userStory>
-          </userStories>
-        </case>
-        <case id="SearchRequest2" startTime="2009-02-02T14:42:50.9795157+01:00" duration="30.0795188" status="passed">
-          <userStories>
-            <userStory>SMSUi.Search</userStory>
-          </userStories>
-        </case>
-        <case id="SearchRequest3" startTime="2009-02-02T14:42:50.9951412+01:00" duration="30.073508699999998" status="passed">
-          <userStories>
-            <userStory>SMSUi.Search</userStory>
-          </userStories>
-        </case>
-      </suite>
+      <suite id="IT3SuiteTestSuite" />
+      <suite id="SmsUISuiteTestSuite" />
       <suite id="SPGUISuiteTestSuite">
-        <case id="AddDifferentSubsFromTopTopicLinkMms" startTime="2009-02-02T14:46:20.4862197+01:00" duration="0.1057582" status="skipped">
+        <case id="AddDifferentSubsFromTopTopicLinkMms" startTime="2009-02-17T07:23:19.0007056+01:00" duration="13.3988708" status="failed">
+          <userStories>
+            <userStory>SPGUI.AddSubs.OnUpdate</userStory>
+          </userStories>
+          <error>
+            Table with subscriptions should not be present
+
+            Actual Value : true
+
+            at Hsl.Ganesha.AcceptanceTests.SeleniumTesterBase.AssertElementIsNotPresent(String locator, String errorMessage) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\SeleniumTesterBase.cs:line 141
+            at Hsl.Ganesha.AcceptanceTests.SpGuiTester.AssertSubscriptionsCount(Int32 count) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\SpGuiTester.cs:line 212
+            at Hsl.Ganesha.AcceptanceTests.SPGUISuiteTestSuite.AddDifferentSubsFromTopTopicLinkMms() in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\Iteration2.cs:line 41
+          </error>
+        </case>
+        <case id="AddDifferentSubsFromTopTopicLinkSms" startTime="2009-02-17T07:23:32.3599152+01:00" duration="0.024345799999999997" status="skipped">
+          <userStories>
+            <userStory>SPGUI.AddSubs.OnUpdate</userStory>
+          </userStories>
+        </case>
+        <case id="AddOnUpdateSubscriptionMms" startTime="2009-02-17T07:23:32.3899584+01:00" duration="16.3853866" status="skipped">
+          <userStories>
+            <userStory>SPGUI.AddSubs.OnUpdate</userStory>
+          </userStories>
+        </case>
+        <case id="AddOnUpdateSubscriptionSms" startTime="2009-02-17T07:23:48.8235888+01:00" duration="11.4743306" status="failed">
+          <userStories>
+            <userStory>SPGUI.AddSubs.OnUpdate</userStory>
+          </userStories>
+          <error>
+            Table with subscriptions should not be present
+
+            Actual Value : true
+
+            at Hsl.Ganesha.AcceptanceTests.SeleniumTesterBase.AssertElementIsNotPresent(String locator, String errorMessage) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\SeleniumTesterBase.cs:line 141
+            at Hsl.Ganesha.AcceptanceTests.SpGuiTester.AssertSubscriptionsCount(Int32 count) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\SpGuiTester.cs:line 212
+            at Hsl.Ganesha.AcceptanceTests.SPGUISuiteTestSuite.AddOnUpdateSubscriptionSms() in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\Iteration2.cs:line 408
+          </error>
+        </case>
+        <case id="AddOnUpdateSubscriptionThroughTopTopic" startTime="2009-02-17T07:24:00.3101056+01:00" duration="11.4953107" status="failed">
+          <userStories>
+            <userStory>SPGUI.AddSubs.OnUpdate</userStory>
+          </userStories>
+          <error>
+            Table with subscriptions should not be present
+
+            Actual Value : true
+
+            at Hsl.Ganesha.AcceptanceTests.SeleniumTesterBase.AssertElementIsNotPresent(String locator, String errorMessage) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\SeleniumTesterBase.cs:line 141
+            at Hsl.Ganesha.AcceptanceTests.SpGuiTester.AssertSubscriptionsCount(Int32 count) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\SpGuiTester.cs:line 212
+            at Hsl.Ganesha.AcceptanceTests.SPGUISuiteTestSuite.AddOnUpdateSubscriptionThroughTopTopic() in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\Iteration2.cs:line 488
+          </error>
+        </case>
+        <case id="AddOnUpdateSubsSeveralThroughSMSUi" startTime="2009-02-17T07:24:11.7665792+01:00" duration="18.4362219" status="failed">
+          <userStories>
+            <userStory>SPGUI.ViewSubscriptionsList</userStory>
+          </userStories>
+          <error>
+            Wrong subscriptions count: expected = 2; actual = 3
+
+            Expected Value : 2
+            Actual Value   : 3
+
+            at Hsl.Ganesha.AcceptanceTests.SpGuiTester.AssertSubscriptionsCount(Int32 count) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\SpGuiTester.cs:line 235
+            at Hsl.Ganesha.AcceptanceTests.SPGUISuiteTestSuite.AddOnUpdateSubsSeveralThroughSMSUi() in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\Iteration2.cs:line 590
+          </error>
+        </case>
+        <case id="AddOnUpdateSubsSeveralThroughSMSUi1" startTime="2009-02-17T07:24:30.2331328+01:00" duration="17.7127517" status="failed">
+          <userStories>
+            <userStory>SPGUI.ViewSubscriptionsList</userStory>
+          </userStories>
+          <error>
+            Wrong subscriptions count: expected = 2; actual = 3
+
+            Expected Value : 2
+            Actual Value   : 3
+
+            at Hsl.Ganesha.AcceptanceTests.SpGuiTester.AssertSubscriptionsCount(Int32 count) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\SpGuiTester.cs:line 235
+            at Hsl.Ganesha.AcceptanceTests.SPGUISuiteTestSuite.AddOnUpdateSubsSeveralThroughSMSUi1() in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\Iteration2.cs:line 694
+          </error>
+        </case>
+        <case id="AddPeriodicalSubscriptionMms" startTime="2009-02-17T07:24:48.0086928+01:00" duration="18.3402133" status="skipped">
+          <userStories>
+            <userStory>SPGUI.AddSubs.Periodical</userStory>
+          </userStories>
+        </case>
+        <case id="AddPeriodicalSubscriptionSms" startTime="2009-02-17T07:25:06.3250304+01:00" duration="11.648621799999999" status="failed">
+          <userStories>
+            <userStory>SPGUI.AddSubs.Periodical</userStory>
+          </userStories>
+          <error>
+            Table with subscriptions should not be present
+
+            Actual Value : true
+
+            at Hsl.Ganesha.AcceptanceTests.SeleniumTesterBase.AssertElementIsNotPresent(String locator, String errorMessage) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\SeleniumTesterBase.cs:line 141
+            at Hsl.Ganesha.AcceptanceTests.SpGuiTester.AssertSubscriptionsCount(Int32 count) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\SpGuiTester.cs:line 212
+            at Hsl.Ganesha.AcceptanceTests.SPGUISuiteTestSuite.AddPeriodicalSubscriptionSms() in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\Iteration2.cs:line 856
+          </error>
+        </case>
+        <case id="AddPeriodicalSubsThroughSeveralSMSUi2" startTime="2009-02-17T07:25:18.0018208+01:00" duration="46.3891156" status="passed">
+          <userStories>
+            <userStory>SPGUI.ViewSubscriptionsList</userStory>
+          </userStories>
+        </case>
+        <case id="AddPeriodicalSubsThroughSMSUi" startTime="2009-02-17T07:26:04.2583344+01:00" duration="35.4587745" status="passed">
+          <userStories>
+            <userStory>SPGUI.ViewSubscriptionsList</userStory>
+          </userStories>
+        </case>
+        <case id="AddScheduledSubscriptionMms" startTime="2009-02-17T07:26:40.400304+01:00" duration="16.8058946" status="skipped">
           <userStories>
             <userStory>SPGUI.AddSubs.Schedule</userStory>
           </userStories>
         </case>
-        <case id="AddDifferentSubsFromTopTopicLinkSms" startTime="2009-02-02T14:46:20.6112237+01:00" duration="0.058036399999999995" status="skipped">
+        <case id="AddScheduledSubscriptionSms" startTime="2009-02-17T07:26:57.2845824+01:00" duration="12.3414428" status="failed">
           <userStories>
-            <userStory>SPGUI.AddSubs.OnUpdate</userStory>
+            <userStory>SPGUI.AddSubs.Schedule</userStory>
           </userStories>
+          <error>
+            Table with subscriptions should not be present
+
+            Actual Value : true
+
+            at Hsl.Ganesha.AcceptanceTests.SeleniumTesterBase.AssertElementIsNotPresent(String locator, String errorMessage) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\SeleniumTesterBase.cs:line 141
+            at Hsl.Ganesha.AcceptanceTests.SpGuiTester.AssertSubscriptionsCount(Int32 count) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\SpGuiTester.cs:line 212
+            at Hsl.Ganesha.AcceptanceTests.SPGUISuiteTestSuite.AddScheduledSubscriptionSms() in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\Iteration2.cs:line 1210
+          </error>
         </case>
-        <case id="AddOnUpdateSubscriptionMms" startTime="2009-02-02T14:46:20.6737257+01:00" duration="0.030473499999999997" status="skipped">
-          <userStories>
-            <userStory>SPGUI.AddSubs.OnUpdate</userStory>
-          </userStories>
-        </case>
-        <case id="AddOnUpdateSubscriptionSms" startTime="2009-02-02T14:46:20.7206022+01:00" duration="0.031224099999999998" status="skipped">
-          <userStories>
-            <userStory>SPGUI.AddSubs.OnUpdate</userStory>
-          </userStories>
-        </case>
-        <case id="AddOnUpdateSubscriptionThroughTopTopic" startTime="2009-02-02T14:46:20.7674787+01:00" duration="0.0455625" status="skipped">
-          <userStories>
-            <userStory>SPGUI.AddSubs.OnUpdate</userStory>
-          </userStories>
-        </case>
-        <case id="AddOnUpdateSubsSeveralThroughSMSUi" startTime="2009-02-02T14:46:20.8143552+01:00" duration="0" status="inconclusive">
+        <case id="AddScheduleSubsThroughSMSUi" startTime="2009-02-17T07:27:09.7625248+01:00" duration="18.9688287" status="failed">
           <userStories>
             <userStory>SPGUI.ViewSubscriptionsList</userStory>
           </userStories>
+          <error>
+            Wrong subscriptions count: expected = 1; actual = 3
+
+            Expected Value : 1
+            Actual Value   : 3
+
+            at Hsl.Ganesha.AcceptanceTests.SpGuiTester.AssertSubscriptionsCount(Int32 count) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\SpGuiTester.cs:line 235
+            at Hsl.Ganesha.AcceptanceTests.SPGUISuiteTestSuite.AddScheduleSubsThroughSMSUi() in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\Iteration2.cs:line 1311
+          </error>
+        </case>
+        <case id="AddSchedulSubsThroughSeveralSMSUi3" startTime="2009-02-17T07:27:28.8099136+01:00" duration="15.488837799999999" status="failed">
+          <userStories>
+            <userStory>SPGUI.ViewSubscriptionsList</userStory>
+          </userStories>
+          <error>
+            Expected Value : "Na dni: pon, tor, sre, čet, pet, sob, ned ob 08:33\nNa dni: pet, sob, ned ob 18:55\nNa dni: pon, tor, sre, čet, pet ob 07:07"
+            Actual Value   : "Na dni: pon,tor,sre,čet,pet,sob,ned ob 08:33\nNa dni: pet,sob,ned ob 18:55\nNa dni: pon,tor,sre,čet,pet ob 07:07"
+
+            at Hsl.Ganesha.AcceptanceTests.SpGuiTester.AssertSubscriptionPresent(Int32 subscriptionPosition, String topic, String sendTime, String duration) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\SpGuiTester.cs:line 192
+            at Hsl.Ganesha.AcceptanceTests.MiMiTestRunner.AssertSubscriptionInList(Int32 subscriptionPosition, String topic, String sendTime, String duration) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\MiMiTestRunner.cs:line 364
+            at Hsl.Ganesha.AcceptanceTests.SPGUISuiteTestSuite.AddSchedulSubsThroughSeveralSMSUi3() in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\Iteration2.cs:line 1387
+          </error>
+        </case>
+        <case id="AddSubscriptionThroughTopTopicLink" startTime="2009-02-17T07:27:44.7227952+01:00" duration="14.7367265" status="skipped">
+          <userStories>
+            <userStory>SPGUI.AddSubs.OnUpdate</userStory>
+          </userStories>
+        </case>
+        <case id="AddSubsToBothChannels" startTime="2009-02-17T07:27:59.66428+01:00" duration="38.7753113" status="passed">
+          <userStories>
+            <userStory>SPGUI.ViewSubscriptionsList</userStory>
+          </userStories>
+        </case>
+        <case id="AssertAddSubsPageIsOpen" startTime="2009-02-17T07:28:38.3499072+01:00" duration="13.531709099999999" status="failed">
+          <userStories>
+            <userStory>SPGUI.TopTopics</userStory>
+          </userStories>
+          <error>
+            Table with subscriptions should not be present
+
+            Actual Value : true
+
+            at Hsl.Ganesha.AcceptanceTests.SeleniumTesterBase.AssertElementIsNotPresent(String locator, String errorMessage) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\SeleniumTesterBase.cs:line 141
+            at Hsl.Ganesha.AcceptanceTests.SpGuiTester.AssertSubscriptionsCount(Int32 count) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\SpGuiTester.cs:line 212
+            at Hsl.Ganesha.AcceptanceTests.SPGUISuiteTestSuite.AssertAddSubsPageIsOpen() in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\Iteration2.cs:line 1664
+          </error>
+        </case>
+        <case id="CancelOnUpdateSubscription" startTime="2009-02-17T07:28:51.98952+01:00" duration="11.746092299999999" status="failed">
+          <userStories>
+            <userStory>SPGUI.AddSubs.OnUpdate</userStory>
+          </userStories>
+          <error>
+            Table with subscriptions should not be present
+
+            Actual Value : true
+
+            at Hsl.Ganesha.AcceptanceTests.SeleniumTesterBase.AssertElementIsNotPresent(String locator, String errorMessage) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\SeleniumTesterBase.cs:line 141
+            at Hsl.Ganesha.AcceptanceTests.SpGuiTester.AssertSubscriptionsCount(Int32 count) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\SpGuiTester.cs:line 212
+            at Hsl.Ganesha.AcceptanceTests.SPGUISuiteTestSuite.CancelOnUpdateSubscription() in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\Iteration2.cs:line 1704
+          </error>
+        </case>
+        <case id="CancelPeriodicalSubscription" startTime="2009-02-17T07:29:04.0668864+01:00" duration="14.4881941" status="skipped">
+          <userStories>
+            <userStory>SPGUI.AddSubs.Periodical</userStory>
+          </userStories>
+        </case>
+        <case id="CancelRemoveSmsSubsFromSpGui2" startTime="2009-02-17T07:29:18.6678816+01:00" duration="24.3024381" status="failed">
+          <userStories>
+            <userStory>SPGUI.RemoveSubs</userStory>
+          </userStories>
+          <error>
+            Wrong subscriptions count: expected = 1; actual = 3
+
+            Expected Value : 1
+            Actual Value   : 3
+
+            at Hsl.Ganesha.AcceptanceTests.SpGuiTester.AssertSubscriptionsCount(Int32 count) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\SpGuiTester.cs:line 235
+            at Hsl.Ganesha.AcceptanceTests.SPGUISuiteTestSuite.CancelRemoveSmsSubsFromSpGui2() in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\Iteration2.cs:line 1843
+          </error>
+        </case>
+        <case id="CancelScheduleSubscriptionSms" startTime="2009-02-17T07:29:43.2231904+01:00" duration="15.538498299999999" status="failed">
+          <userStories>
+            <userStory>SPGUI.AddSubs.Schedule</userStory>
+          </userStories>
+          <error>
+            Wrong subscriptions count: expected = 1; actual = 2
+
+            Expected Value : 1
+            Actual Value   : 2
+
+            at Hsl.Ganesha.AcceptanceTests.SpGuiTester.AssertSubscriptionsCount(Int32 count) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\SpGuiTester.cs:line 235
+            at Hsl.Ganesha.AcceptanceTests.SPGUISuiteTestSuite.CancelScheduleSubscriptionSms() in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\Iteration2.cs:line 1915
+          </error>
+        </case>
+        <case id="ChangeOnUpdateSubscriptionSms1" startTime="2009-02-17T07:29:58.9658272+01:00" duration="15.618387199999999" status="failed">
+          <userStories>
+            <userStory>SPGUI.ChangeSubs</userStory>
+          </userStories>
+          <error>
+            Wrong subscriptions count: expected = 3; actual = 4
+
+            Expected Value : 3
+            Actual Value   : 4
+
+            at Hsl.Ganesha.AcceptanceTests.SpGuiTester.AssertSubscriptionsCount(Int32 count) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\SpGuiTester.cs:line 235
+            at Hsl.Ganesha.AcceptanceTests.SPGUISuiteTestSuite.ChangeOnUpdateSubscriptionSms1() in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\Iteration2.cs:line 2025
+          </error>
+        </case>
+        <case id="ChangeOnUpdateSubscriptionSms2" startTime="2009-02-17T07:30:14.8486656+01:00" duration="25.1390785" status="skipped">
+          <userStories>
+            <userStory>SPGUI.ChangeSubs</userStory>
+          </userStories>
+        </case>
+        <case id="ChangePeriodicalSubscriptionSms" startTime="2009-02-17T07:30:40.5756592+01:00" duration="22.276822" status="skipped">
+          <userStories>
+            <userStory>SPGUI.ChangeSubs</userStory>
+          </userStories>
+        </case>
+        <case id="ChangeSchedSubscriptionSms" startTime="2009-02-17T07:31:03.2082032+01:00" duration="19.7986319" status="failed">
+          <userStories>
+            <userStory>SPGUI.ChangeSubs</userStory>
+          </userStories>
+          <error>
+            Expected Value : "Na dni: pon, sre, čet, pet ob 07:30\nNa dni: sob, ned ob 09:00\nNa dni: tor ob 17:22"
+            Actual Value   : "Na dni: pon,sre,čet,pet ob 07:30\nNa dni: sob,ned ob 09:00\nNa dni: tor ob 17:22"
+
+            at Hsl.Ganesha.AcceptanceTests.SpGuiTester.AssertSubscriptionPresent(Int32 subscriptionPosition, String topic, String sendTime, String duration) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\SpGuiTester.cs:line 192
+            at Hsl.Ganesha.AcceptanceTests.MiMiTestRunner.AssertSubscriptionInList(Int32 subscriptionPosition, String topic, String sendTime, String duration) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\MiMiTestRunner.cs:line 364
+            at Hsl.Ganesha.AcceptanceTests.SPGUISuiteTestSuite.ChangeSchedSubscriptionSms() in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\Iteration2.cs:line 2337
+          </error>
+        </case>
+        <case id="ChangeScheduleSubscriptionMms" startTime="2009-02-17T07:31:23.2770608+01:00" duration="13.331822599999999" status="failed">
+          <userStories>
+            <userStory>SPGUI.ChangeSubs</userStory>
+          </userStories>
+          <error>
+            Wrong subscriptions count: expected = 1; actual = 3
+
+            Expected Value : 1
+            Actual Value   : 3
+
+            at Hsl.Ganesha.AcceptanceTests.SpGuiTester.AssertSubscriptionsCount(Int32 count) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\SpGuiTester.cs:line 235
+            at Hsl.Ganesha.AcceptanceTests.SPGUISuiteTestSuite.ChangeScheduleSubscriptionMms() in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\Iteration2.cs:line 2436
+          </error>
+        </case>
+        <case id="ChangeSubscriptionWithWrongIntervalParam" startTime="2009-02-17T07:31:37.1670336+01:00" duration="17.902848799999997" status="skipped">
+          <userStories>
+            <userStory>SPGUI.ChangeSubs</userStory>
+          </userStories>
+        </case>
+        <case id="ChangeSubscriptionWithWrongTimeParam" startTime="2009-02-17T07:31:55.102824+01:00" duration="26.0939521" status="skipped">
+          <userStories>
+            <userStory>SPGUI.ChangeSubs</userStory>
+          </userStories>
+        </case>
+        <case id="CheckTheExactnessOfGroupsAndTopicsMms" startTime="2009-02-17T07:32:21.490768+01:00" duration="16.1862574" status="failed">
+          <userStories>
+            <userStory>SPGUI.Topics.HierarchyTree</userStory>
+          </userStories>
+          <error>
+            Selected group has invalid number of topics: expected = 1; actual = 0
+
+            Expected Value : 1
+            Actual Value   : 0
+
+            at Hsl.Ganesha.AcceptanceTests.SpGuiTester.AssertTopicsCount(Int32 numberOfTopics) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\SpGuiTester.cs:line 309
+            at Hsl.Ganesha.AcceptanceTests.SPGUISuiteTestSuite.CheckTheExactnessOfGroupsAndTopicsMms() in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\Iteration2.cs:line 2758
+          </error>
+        </case>
+        <case id="CheckTheExactnessOfGroupsAndTopicsSms" startTime="2009-02-17T07:32:37.81424+01:00" duration="27.2454817" status="failed">
+          <userStories>
+            <userStory>SPGUI.Topics.HierarchyTree</userStory>
+          </userStories>
+          <error>
+            Topic 'OVEM' is not present at given position 1.
+
+            Actual Value : false
+
+            at Hsl.Ganesha.AcceptanceTests.SeleniumTesterBase.AssertElementIsPresent(String locator, String errorMessageFormat, Object[] args) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\SeleniumTesterBase.cs:line 155
+            at Hsl.Ganesha.AcceptanceTests.SpGuiTester.AssertTopicDescription(String topic, Int32 sequenceNumberInList, String topicDescription) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\SpGuiTester.cs:line 258
+            at Hsl.Ganesha.AcceptanceTests.MiMiTestRunner.AssertTopicDescription(String topic, Int32 sequenceNumberInList, String topicDescription) in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\MiMiTestRunner.cs:line 783
+            at Hsl.Ganesha.AcceptanceTests.SPGUISuiteTestSuite.CheckTheExactnessOfGroupsAndTopicsSms() in d:\svn\Mimi\trunk\source\Hsl.Ganesha.AcceptanceTests\Iteration2.cs:line 2887
+          </error>
+        </case>
+        <case id="CountAllAvailableTopicsForMmsChannel" startTime="2009-02-17T07:33:05.3438256+01:00" duration="20.0429875" status="failed">
+          <userStories>
+            <userStory>SPGUI.Topics.HierarchyTree</userStory>
+          </userStories>
+          <error>
+            The test timed out after 600 seconds.
+            System.Threading.ThreadAbortException: Thread was being aborted.
+            at System.Threading.Thread.AbortInternal()
+            at System.Threading.Thread.Abort(Object stateInfo)The test timed out after 600 seconds.
+            System.Threading.ThreadAbortException: Thread was being aborted.
+            at System.Threading.Thread.AbortInternal()
+            at System.Threading.Thread.Abort(Object stateInfo)
+          </error>
         </case>
       </suite>
     </suites>

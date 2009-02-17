@@ -19,6 +19,9 @@ namespace ${testSuite.Namespace}
     /// ${testSuite.Description}
     /// </summary>
     [TestFixture]
+#if (${testSuite.PendingMessage})
+    [Pending("$!testSuite.PendingMessage")]
+#end
     public class ${testSuite.TestSuiteName}TestSuite
     {
 #foreach ( $testCase in ${testSuite.ListTestCases()} )	
@@ -31,6 +34,9 @@ namespace ${testSuite.Namespace}
 #end
 #if (${testSuite.IsParallelizable})
         [Parallelizable]
+#end
+#if (${testCase.PendingMessage})
+        [Pending("$!testCase.PendingMessage")]
 #end
         public void ${testCase.TestCaseName}()
         {
@@ -45,7 +51,6 @@ namespace ${testSuite.Namespace}
 #each
 
 #end
-#if ( !$testSuite.PendingMessage && !$testCase.PendingMessage )
 #if ( $testCase.TestSteps.Count > 0 )
 
 #foreach ($testStep in ${testCase.TestSteps})
@@ -60,12 +65,9 @@ namespace ${testSuite.Namespace}
 );
 #if ($velocityCount < $testCase.TestSteps.Count)
 
+#end ##if
 #end
-#end
-#end
-#else
-                    runner.MarkTestAsPending ($testCase.PendingMessage);
-#end
+#end ##if
                 }
                 catch (NotImplementedException ex)
                 {
