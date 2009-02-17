@@ -42,13 +42,11 @@
                         </xsl:for-each>
                       </userStory>
                     </userStories>
-                    <xsl:if test="../g:result/g:outcome[@status='failed']">
-                      <error>
-                        <xsl:for-each select="../g:testLog/g:streams/g:stream[@name='Failures']//g:text">
-                          <xsl:value-of select="."/>
-                        </xsl:for-each>
-                      </error>
-                    </xsl:if>
+                    <message>
+                      <xsl:for-each select="../g:testLog/g:streams/g:stream//g:text">
+                        <xsl:value-of select="."/>
+                      </xsl:for-each>
+                    </message>
                   </case>
                 </xsl:for-each>
               </suite>

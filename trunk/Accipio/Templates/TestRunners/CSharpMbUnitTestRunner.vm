@@ -65,9 +65,9 @@ namespace ${testSuite.Namespace}
 );
 #if ($velocityCount < $testCase.TestSteps.Count)
 
-#end ##if
+#end##if
 #end
-#end ##if
+#end##if
                 }
                 catch (NotImplementedException ex)
                 {
