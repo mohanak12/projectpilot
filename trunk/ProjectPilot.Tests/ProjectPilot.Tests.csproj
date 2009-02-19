@@ -130,6 +130,9 @@
     <Compile Include="AccipioTests\CSharpTestCodeGeneratorTests.cs" />
     <Compile Include="AccipioTests\HtmlTestCodeGeneratorTests.cs" />
     <Compile Include="AccipioTests\XmlTestSuiteParserTests.cs" />
+    <Compile Include="StumpTests\LogTabsTests.cs" />
+    <Compile Include="StumpTests\StumpMother.cs" />
+    <Compile Include="StumpTests\WorkspaceTests.cs" />
     <Compile Include="WindsorContainerGraphs.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +167,10 @@
     <ProjectReference Include="..\ProjectPilot.Framework\ProjectPilot.Framework.csproj">
       <Project>{C87F10BF-4132-4B75-9C07-CB0B1FCE6440}</Project>
       <Name>ProjectPilot.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Stump\Stump.csproj">
+      <Project>{FA22A3EF-51A7-445F-AF2C-5AF5F985605F}</Project>
+      <Name>Stump</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
