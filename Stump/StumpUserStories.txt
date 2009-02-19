@@ -1,0 +1,36 @@
+Stump
+-------
+
+The application should not block when (re)loading log files
+----------------
+The application should be able to show multiple log files at the same time.
+
+NOTE: each log file would have its own tab.
+----------------
+The application would only reload log file if its tab is currently active.
+
+NOTE: however, the app. should detect changes in ALL log files and indicate them in the tab 
+(probably by using different font color or style).
+---------------
+The application should not lock files it is monitoring.
+
+TESTS: Try to delete a file that is monitored.
+---------------
+There should be a global checkbox which would turn the log monitoring on/off.
+---------------
+The application should remember the log files which are currently monitored even if it is closed.
+
+NOTE: it should also remember the settings for each of these files.
+---------------
+The application should hold a registry (history) of all log files it has monitored. The user can
+then select a log file from the history and start monitoring it.
+
+NOTE: it should be indicated to the user which of the files do exist on the disk.
+---------------
+The application should not fail if the log file is a on a remote source. It should check its availability
+(without blocking)
+
+NOTE: if the file is not available, its tab should indicate this.
+---------------
+The user should be able to delete the contents of the log file with one click.
+---------------
