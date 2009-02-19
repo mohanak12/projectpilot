@@ -7,6 +7,7 @@ using System.Text;
 using Commons.Collections;
 using NVelocity;
 using NVelocity.App;
+using NVelocity.Runtime;
 
 namespace Flubu.Tasks.Text
 {
@@ -48,6 +49,7 @@ namespace Flubu.Tasks.Text
         protected override void DoExecute (IScriptExecutionEnvironment environment)
         {
             VelocityEngine velocity = new VelocityEngine();
+            velocity.SetProperty(RuntimeConstants.RESOURCE_LOADER, "file");
             ExtendedProperties props = new ExtendedProperties();
             velocity.Init(props);
 
