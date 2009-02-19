@@ -4,6 +4,7 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{29C5C89F-901C-4804-8A0D-B085445B48E3}"
 	ProjectSection(SolutionItems) = preProject
 		Ideas for projects.txt = Ideas for projects.txt
+		Stump.txt = Stump.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{FBCD0FCA-E178-493F-BF6B-D4004FEF975A}"
