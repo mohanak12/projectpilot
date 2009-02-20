@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace EventMuncher
 {
@@ -6,7 +7,14 @@ namespace EventMuncher
     {
         public int EventSourcesCount
         {
-            get { return 5; }
+            get { return eventSources.Count; }
         }
+
+        public void AddEventSource (EventSource eventSource)
+        {
+            eventSources.Add(eventSource);
+        }
+
+        private List<EventSource> eventSources = new List<EventSource>();
     }
 }

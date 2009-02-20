@@ -46,9 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventProcessor.cs" />
+    <Compile Include="EventSource.cs" />
     <Compile Include="EventSourceRegistry.cs" />
     <Compile Include="EventSourcesConfiguration.cs" />
     <Compile Include="IEventSourcesConfigurationProvider.cs" />
+    <Compile Include="InMemoryEventSourcesConfigurationProvider.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

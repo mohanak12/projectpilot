@@ -1,4 +1,6 @@
 using System;
+using Castle.Windsor;
+using Castle.Windsor.Configuration.Interpreters;
 using EventMuncher;
 using MbUnit.Framework;
 using Rhino.Mocks;
@@ -8,9 +10,6 @@ namespace EventMucher.Tests
     [TestFixture]
     public class EventSourceRegistryTests
     {
-        /// <summary>
-        /// Makes the sure the registry loads configuration on startup.
-        /// </summary>
         [Test]
         public void MakeSureTheRegistryLoadsConfigurationOnStartup()
         {
@@ -34,6 +33,19 @@ namespace EventMucher.Tests
 
             //Pes p = new Pes();
             //p.Laja().Laja().Scije().Laja().Laja().Poserje().Smrdi();
+        }
+
+        [Test]
+        public void MakeSureTheRegistryLoadsConfigurationOnStartup2()
+        {
+            IWindsorContainer container = new WindsorContainer(new XmlInterpreter());
+
+            // execution
+            EventSourceRegistry registry 
+                = container.Resolve<EventSourceRegistry>();
+
+            // checking
+            Assert.AreEqual(5, registry.EventSourcesCount);
         }
     }
 
