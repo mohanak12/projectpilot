@@ -18,11 +18,13 @@ The approach to development should be to start with abstractions and not concent
 
 Once you start with this kind of approach, you will tend to design the architecture in a more open, manageable and testable way. Then you will see how the mocking and IoC containers come into the picture. You will also (hopefully) more easily understand the SOLID principles.
 
+I recommend doing as much of pair-programming as possible.
+
 The project will not necessarily result in some very useful product - this is not the primary goal. The main goal is to learn.
 
 = !EventMuncher =
 
-Here comes the starting story for the software (working title is !EventMuncher) to be developed:
+This is a first sample "story" which will introduce concepts of IoC and mocking (working title is !EventMuncher):
 
 A system that will receive events from event sources and, based on filters and rules, publish these events.
 
@@ -30,11 +32,13 @@ A system that will receive events from event sources and, based on filters and r
 
 *Filters* define whether the events should be processed or ignored. There could be various filters: based on the content of the event, based on time etc...
 
-*Presenters* define how the recived events are presented: as a e-mail, text log, HTML page etc.
+*Presenters* define how the received events are presented: as an e-mail, text log, HTML page etc.
 
 There could be various *publishers*: email, RSS feed, SMS
 
+The final result of this "project" should be a command line tool which uses an IoC container configuration file to process events and publishes them according to the configuration specification.
 
+Later I will specify which event sources, publishers etc. to actually implement.
 
 = Links =
  * TDD: [http://en.wikipedia.org/wiki/Test-driven_development]
