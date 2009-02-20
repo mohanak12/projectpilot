@@ -20,11 +20,20 @@ Once you start with this kind of approach, you will tend to design the architect
 
 The project will not necessarily result in some very useful product - this is not the primary goal. The main goal is to learn.
 
-= EventMuncher =
+= !EventMuncher =
 
 Here comes the starting story for the software (working title is !EventMuncher) to be developed:
 
-A system that will receive events and, based on rules, publish these events.
+A system that will receive events from event sources and, based on filters and rules, publish these events.
+
+*Event sources* could be anything. Some examples (not necessarily to be implemented): RSS feeds, event logs, text log files, Web pages, directories ...
+
+*Filters* define whether the events should be processed or ignored. There could be various filters: based on the content of the event, based on time etc...
+
+*Presenters* define how the recived events are presented: as a e-mail, text log, HTML page etc.
+
+There could be various *publishers*: email, RSS feed, SMS
+
 
 
 = Links =
