@@ -22,3 +22,11 @@
 
 ------------------
 http://martinfowler.com/eaaDev/EventSourcing.html
+
+-----------------
+OSM
+    - calculating length of roads
+    - suggesting hiking routes
+    
+----------------
+Calculator

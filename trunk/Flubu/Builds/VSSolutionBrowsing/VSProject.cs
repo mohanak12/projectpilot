@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Xml;
 using log4net;
@@ -11,13 +12,9 @@ namespace Flubu.Builds.VSSolutionBrowsing
     /// </summary>
     public class VSProject
     {
-        /// <summary>
-        /// Gets a read-only collection of all .cs files in the solution.
-        /// </summary>
-        /// <value>A read-only collection of all the .cs files in the solution.</value>
-        public IList<VSProjectItem> Items
+        public VSProject(string projectFileName)
         {
-            get { return items; }
+            this.projectFileName = projectFileName;
         }
 
         /// <summary>
@@ -27,6 +24,20 @@ namespace Flubu.Builds.VSSolutionBrowsing
         public IList<VSProjectConfiguration> Configurations
         {
             get { return configurations; }
+        }
+
+        /// <summary>
+        /// Gets a read-only collection of all .cs files in the solution.
+        /// </summary>
+        /// <value>A read-only collection of all the .cs files in the solution.</value>
+        public IList<VSProjectItem> Items
+        {
+            get { return items; }
+        }
+
+        public string ProjectFileName
+        {
+            get { return projectFileName; }
         }
 
         /// <summary>
@@ -67,7 +78,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
 
             using (Stream stream = File.OpenRead (projectFileName))
             {
-                VSProject data = new VSProject();
+                VSProject data = new VSProject(projectFileName);
                 data.propertiesDictionary = true;
 
                 XmlReaderSettings xmlReaderSettings = new XmlReaderSettings();
@@ -169,10 +180,26 @@ namespace Flubu.Builds.VSSolutionBrowsing
             {
                 if (this.propertiesDictionary == true)
                 {
+                    if (this.properties.ContainsKey(xmlReader.Name))
+                        throw new ArgumentException(
+                            string.Format(
+                                CultureInfo.InvariantCulture,
+                                "Property '{0}' has already been added to the group. VS project '{1}'",
+                                xmlReader.Name, 
+                                this.ProjectFileName));
+
                     this.properties.Add(xmlReader.Name, xmlReader.ReadElementContentAsString());
                 }
                 else
                 {
+                    if (configuration.Properties.ContainsKey(xmlReader.Name))
+                        throw new ArgumentException(
+                            string.Format(
+                                CultureInfo.InvariantCulture,
+                                "Property '{0}' has already been added to the group. VS project '{1}'",
+                                xmlReader.Name, 
+                                this.ProjectFileName));
+
                     configuration.Properties.Add(xmlReader.Name, xmlReader.ReadElementContentAsString());
                 }
             }
@@ -224,7 +251,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
             }
         }
 
-        private static VSProjectItem ReadItem(XmlReader xmlReader, string itemType)
+        private VSProjectItem ReadItem(XmlReader xmlReader, string itemType)
         {
             VSProjectItem item = new VSProjectItem(itemType);
 
@@ -238,6 +265,14 @@ namespace Flubu.Builds.VSSolutionBrowsing
 
                 if (xmlReader.HasAttributes == false && xmlReader.NodeType != XmlNodeType.EndElement)
                 {
+                    if (item.ItemAttributes.ContainsKey(xmlReader.Name))
+                        throw new ArgumentException(
+                            string.Format(
+                                CultureInfo.InvariantCulture,
+                                "Attribute '{0}' has already been added to the item. VS project '{1}'",
+                                xmlReader.Name, 
+                                this.ProjectFileName));
+
                     item.ItemAttributes.Add(xmlReader.Name, xmlReader.ReadElementContentAsString());
                 }
                 else
@@ -249,6 +284,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
             return item;
         }
 
+        private string projectFileName;
         private readonly List<VSProjectConfiguration> configurations = new List<VSProjectConfiguration>();
         private readonly List<VSProjectItem> items = new List<VSProjectItem>();
         private static readonly ILog log = LogManager.GetLogger(typeof(VSProject));
