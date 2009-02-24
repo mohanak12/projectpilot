@@ -50,8 +50,7 @@ namespace Flubu.Tasks.Text
         {
             VelocityEngine velocity = new VelocityEngine();
             velocity.SetProperty(RuntimeConstants.RESOURCE_LOADER, "file");
-            ExtendedProperties props = new ExtendedProperties();
-            velocity.Init(props);
+            velocity.Init();
 
             Template template = velocity.GetTemplate(sourceFileName, this.sourceFileEncoding.WebName);
 
