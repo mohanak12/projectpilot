@@ -18,9 +18,12 @@ namespace Stump.Presenters
             this.logFile = logFile;
             this.monitor = logMonitor;
 
-            OnMonitoringEnabledToggled();
+            view.MonitoringEnabled = logFile.IsActive;
+
+            if (logFile.IsActive)
+                StartMonitor();
             
-            if (view.IsLogDisplayActive && logFile.IsActive)
+            if (view.IsLogDisplayActive)
                 OnLogDisplayActivated();
         }
 
@@ -36,15 +39,23 @@ namespace Stump.Presenters
 
         public void OnLogDisplayActivated()
         {
-            string logContents = logReader.FetchLogContents(logFile.FileName);
-            view.ShowLogContents(logContents);
+            if (logFile.IsActive)
+            {
+                logReader.FetchLogContents(logFile.FileName, OnLogContentsFetchedCallback);
+            }
+            else
+                view.IndicateLogFileNotMonitored();
         }
 
         public void OnMonitoringEnabledToggled()
         {
+            logFile.IsActive = !logFile.IsActive;
             bool isMonitored = logFile.IsActive;
             if (false == isMonitored)
+            {
                 ShutdownMonitor();
+                view.IndicateLogFileNotMonitored();
+            }
             else
                 StartMonitor();
         }
@@ -74,6 +85,32 @@ namespace Stump.Presenters
             }
         }
 
+        private void OnLogContentsFetchedCallback(string logContents)
+        {
+            view.ShowLogContents(logContents);
+        }
+
+        private void OnLogFileCreated(string logFileName)
+        {
+            if (logFile.FileName != logFileName)
+                throw new InvalidOperationException();
+
+            throw new NotImplementedException();
+        }
+
+        private void OnLogFileDeleted(string logFileName)
+        {
+            if (logFile.FileName != logFileName)
+                throw new InvalidOperationException();
+
+            view.IndicateLogFileDeleted();
+        }
+
+        private void OnLogFileMonitorError(string logFileName, Exception ex)
+        {
+            throw ex;
+        }
+
         private void OnLogFileUpdated(string logFileName)
         {
             if (logFile.FileName != logFileName)
@@ -85,14 +122,6 @@ namespace Stump.Presenters
                 view.IndicateLogFileUpdated();
         }
 
-        private void OnLogFileDeleted(string logFileName)
-        {
-            if (logFile.FileName != logFileName)
-                throw new InvalidOperationException();
-
-            view.IndicateLogFileDeleted();
-        }
-
         private void ShutdownMonitor()
         {
             monitor.StopMonitoring();
@@ -102,8 +131,10 @@ namespace Stump.Presenters
         {
             monitor.StartMonitoring(
                 logFile.FileName,
+                OnLogFileCreated,
                 OnLogFileUpdated,
-                OnLogFileDeleted);
+                OnLogFileDeleted,
+                OnLogFileMonitorError);
         }
 
         private bool disposed;

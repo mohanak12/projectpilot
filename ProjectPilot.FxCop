@@ -984,24 +984,6 @@
          </Type>
         </Types>
        </Namespace>
-       <Namespace Name="ProjectPilot.Tests.StumpTests">
-        <Types>
-         <Type Name="LogViewingTests">
-          <Members>
-           <Member Name="#CreateLogViewWhichIsActive()">
-            <Messages>
-             <Message Id="Stump.Presenters.LogPresenter" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2009-02-27 09:16:58Z">
-              <Issue Name="ObjectCreation">
-               <Item>'LogViewingTests.CreateLogViewWhichIsActive()'</Item>
-               <Item>'LogPresenter'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
       </Namespaces>
      </Module>
     </Modules>
@@ -1010,47 +992,15 @@
     <Modules>
      <Module Name="stump.exe">
       <Namespaces>
-       <Namespace Name="Stump.Models">
+       <Namespace Name="Stump.ViewImplementations">
         <Types>
-         <Type Name="MonitoredLogFile">
+         <Type Name="MainForm">
           <Members>
-           <Member Name="#isActive">
+           <Member Name="#logTabsPresenter">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2009-02-27 09:16:58Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2009-02-27 14:10:02Z">
               <Issue>
-               <Item>'MonitoredLogFile.isActive'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
-       <Namespace Name="Stump.Presenters">
-        <Types>
-         <Type Name="LogPresenter">
-          <Messages>
-           <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Created="2009-02-27 09:16:58Z" FixCategory="DependsOnFix">
-            <Issue Name="DependsOnFix">
-             <Item>'LogPresenter'</Item>
-             <Item>'DefaultLogMonitor'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-        </Types>
-       </Namespace>
-       <Namespace Name="Stump.Services">
-        <Types>
-         <Type Name="ILogMonitor">
-          <Members>
-           <Member Name="#Stop()">
-            <Messages>
-             <Message Id="Stop" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Created="2009-02-27 09:16:58Z">
-              <Issue Name="Member">
-               <Item>'ILogMonitor.Stop()'</Item>
-               <Item>Stop</Item>
+               <Item>'MainForm.logTabsPresenter'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1128,9 +1078,6 @@
    <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
     <Resolution Name="Default">The type name {0} conflicts in whole or in part with the namespace name '{1}'. Change either name to eliminate the conflict.</Resolution>
     <Resolution Name="System">The type name {0} conflicts in whole or in part with the namespace name '{1}' defined in the .NET Framework. Rename the type to eliminate the conflict.</Resolution>
-   </Rule>
-   <Rule TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001">
-    <Resolution Name="DependsOnFix">Implement IDisposable on {0} because it creates members of the following IDisposable types: {1}. If {0} has previously shipped, adding new members that implement IDisposable to this type is considered a breaking change to existing consumers.</Resolution>
    </Rule>
    <Rule TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726">
     <Resolution Name="MemberParameterNoAlternate">In member {0}, replace the term '{1}' in parameter name {2} with an appropriate alternate or remove it entirely.</Resolution>

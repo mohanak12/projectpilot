@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Rhino.Mocks;
+using Rhino.Mocks.Constraints;
 using Stump.Models;
 using Stump.Services;
 
@@ -11,10 +12,6 @@ namespace ProjectPilot.Tests.StumpTests
         {
             CreateWorkspace();
             logReader = MockRepository.GenerateStub<ILogReader>();
-
-            logReader.Expect(lr => lr.FetchLogContents("d:/log1.txt")).Return("logContents1");
-            logReader.Expect(lr => lr.FetchLogContents("d:/log2.txt")).Return("logContents2");
-            logReader.Expect(lr => lr.FetchLogContents("d:/log3.txt")).Return("logContents2");
 
             for (int i = 0; i < 3; i++)
             {
