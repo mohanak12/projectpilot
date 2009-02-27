@@ -8,8 +8,11 @@ namespace Stump.Presenters
 {
     public class LogTabsPresenter
     {
-        public LogTabsPresenter(ILogTabsView view, Workspace workspace)
+        public LogTabsPresenter(
+            ILogTabsView view, 
+            Workspace workspace)
         {
+            this.view = view;
             this.workspace = workspace;
 
             foreach (MonitoredLogFile logFile in workspace.LogFiles)
@@ -17,14 +20,16 @@ namespace Stump.Presenters
                 LogTabData data = new LogTabData(Path.GetFileName(logFile.FileName), logFile.FileName);
                 view.AddTab(data);
             }
+
+            view.SwitchToLog(0);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "tabIndex")]
         public void OnTabSelected(int tabIndex)
         {
-            throw new NotImplementedException();
+            view.SwitchToLog(tabIndex);
         }
 
+        private readonly ILogTabsView view;
         [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         private readonly Workspace workspace;
     }
