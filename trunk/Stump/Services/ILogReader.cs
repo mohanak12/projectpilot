@@ -1,7 +1,9 @@
 namespace Stump.Services
 {
+    public delegate void LogContentsFetchedCallback(string logContents);
+
     public interface ILogReader
     {
-        string FetchLogContents(string logFileName);
+        void FetchLogContents(string logFileName, LogContentsFetchedCallback logContentsFetchedCallback);
     }
 }

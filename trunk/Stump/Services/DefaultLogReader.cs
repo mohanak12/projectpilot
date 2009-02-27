@@ -2,7 +2,7 @@ namespace Stump.Services
 {
     public class DefaultLogReader : ILogReader
     {
-        public string FetchLogContents(string logFileName)
+        public void FetchLogContents(string logFileName, LogContentsFetchedCallback logContentsFetchedCallback)
         {
             throw new System.NotImplementedException();
         }

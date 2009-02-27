@@ -10,6 +10,16 @@ namespace Stump.Views
             this.toolTipText = toolTipText;
         }
 
+        public string TabText
+        {
+            get { return tabText; }
+        }
+
+        public string ToolTipText
+        {
+            get { return toolTipText; }
+        }
+
         /// <summary>
         /// Compares the current <see cref="LogTabData"/> object to the specified object for equivalence.
         /// </summary>

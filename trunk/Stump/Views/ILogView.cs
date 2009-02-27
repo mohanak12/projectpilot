@@ -7,7 +7,9 @@ namespace Stump.Views
         bool MonitoringEnabled { get; set; }
 
         void IndicateLogFileDeleted();
-        
+
+        void IndicateLogFileNotMonitored();
+
         void IndicateLogFileUpdated();
 
         void ShowLogContents(string logContents);

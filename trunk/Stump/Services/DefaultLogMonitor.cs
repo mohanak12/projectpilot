@@ -7,21 +7,28 @@ namespace Stump.Services
     {
         public void StartMonitoring(
             string logFileName,
+            LogFileCreatedCallback logFileCreatedCallback,
             LogFileDeletedCallback logFileDeletedCallback,
-            LogFileUpdatedCallback logFileUpdatedCallback)
+            LogFileUpdatedCallback logFileUpdatedCallback,
+            LogFileMonitorErrorCallback logFileMonitorErrorCallback)
         {
             if (watcher == null)
             {
                 this.logFileName = logFileName;
+                this.logFileCreatedCallback = logFileCreatedCallback;
                 this.logFileDeletedCallback = logFileDeletedCallback;
                 this.logFileUpdatedCallback = logFileUpdatedCallback;
+                this.logFileMonitorErrorCallback = logFileMonitorErrorCallback;
 
                 watcher = new FileSystemWatcher();
-                watcher.Path = Path.GetDirectoryName(logFileName);
-                watcher.Filter = Path.GetFileName(logFileName);
-                watcher.NotifyFilter = NotifyFilters.LastWrite;
+                watcher.Path = Path.GetDirectoryName(Path.GetFullPath(logFileName));
+                //watcher.Filter = "*";
+                //watcher.Filter = Path.GetFileName(logFileName);
+                //watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime;
                 watcher.Changed += new FileSystemEventHandler(WatcherChanged);
+                watcher.Created += new FileSystemEventHandler(WatcherCreated);
                 watcher.Deleted += new FileSystemEventHandler(WatcherDeleted);
+                watcher.Error += new ErrorEventHandler(WatcherError);
                 watcher.EnableRaisingEvents = true;
             }
         }
@@ -30,6 +37,7 @@ namespace Stump.Services
         {
             if (watcher != null)
             {
+                watcher.EnableRaisingEvents = false;
                 watcher.Dispose();
                 watcher = null;
             }
@@ -65,17 +73,32 @@ namespace Stump.Services
 
         private void WatcherChanged(object sender, FileSystemEventArgs e)
         {
-            logFileUpdatedCallback(logFileName);
+            if (e.Name == Path.GetFileName(logFileName))
+                logFileUpdatedCallback(logFileName);
+        }
+
+        private void WatcherCreated(object sender, FileSystemEventArgs e)
+        {
+            if (e.Name == Path.GetFileName(logFileName))
+                logFileCreatedCallback(logFileName);
         }
 
         private void WatcherDeleted(object sender, FileSystemEventArgs e)
         {
-            logFileDeletedCallback(logFileName);
+            if (e.Name == Path.GetFileName(logFileName))
+                logFileDeletedCallback(logFileName);
+        }
+
+        private void WatcherError(object sender, ErrorEventArgs e)
+        {
+            logFileMonitorErrorCallback(logFileName, e.GetException());
         }
 
         private bool disposed;
+        private LogFileCreatedCallback logFileCreatedCallback;
         private LogFileDeletedCallback logFileDeletedCallback;
         private string logFileName;
+        private LogFileMonitorErrorCallback logFileMonitorErrorCallback;
         private LogFileUpdatedCallback logFileUpdatedCallback;
         private FileSystemWatcher watcher;
     }
