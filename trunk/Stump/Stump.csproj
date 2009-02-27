@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{FA22A3EF-51A7-445F-AF2C-5AF5F985605F}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -67,6 +67,7 @@
     <Compile Include="Models\MonitoredLogFile.cs" />
     <Compile Include="Models\StumpApplication.cs" />
     <Compile Include="Models\Workspace.cs" />
+    <Compile Include="Presenters\LogPresenter.cs" />
     <Compile Include="Presenters\LogTabsPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -89,9 +90,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Services\DefaultLogMonitor.cs" />
+    <Compile Include="Services\DefaultLogReader.cs" />
     <Compile Include="Services\DefaultWorkspaceStorage.cs" />
+    <Compile Include="Services\ILogMonitor.cs" />
+    <Compile Include="Services\ILogReader.cs" />
     <Compile Include="Services\IWorkspaceStorage.cs" />
     <Compile Include="Views\ILogTabsView.cs" />
+    <Compile Include="Views\ILogView.cs" />
     <Compile Include="Views\LogTabData.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,5 @@
 using System;
+using Stump.Services;
 
 namespace Stump.Models
 {
@@ -15,6 +16,13 @@ namespace Stump.Models
             get { return fileName; }
         }
 
+        public bool IsActive
+        {
+            get { return isActive; }
+            set { isActive = value; }
+        }
+
         private string fileName;
+        private bool isActive = true;
     }
 }

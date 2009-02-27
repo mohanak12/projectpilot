@@ -986,28 +986,19 @@
        </Namespace>
        <Namespace Name="ProjectPilot.Tests.StumpTests">
         <Types>
-         <Type Name="LogTabsTests">
+         <Type Name="LogViewingTests">
           <Members>
-           <Member Name="#ShowMultipleLogTabs()">
+           <Member Name="#CreateLogViewWhichIsActive()">
             <Messages>
-             <Message Id="Stump.Presenters.LogTabsPresenter" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2009-02-19 06:46:03Z">
+             <Message Id="Stump.Presenters.LogPresenter" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Created="2009-02-27 09:16:58Z">
               <Issue Name="ObjectCreation">
-               <Item>'LogTabsTests.ShowMultipleLogTabs()'</Item>
-               <Item>'LogTabsPresenter'</Item>
+               <Item>'LogViewingTests.CreateLogViewWhichIsActive()'</Item>
+               <Item>'LogPresenter'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
           </Members>
-         </Type>
-         <Type Name="StumpMother">
-          <Messages>
-           <Message TypeName="StaticHolderTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1053" Created="2009-02-19 06:46:03Z">
-            <Issue>
-             <Item>'StumpMother'</Item>
-            </Issue>
-           </Message>
-          </Messages>
          </Type>
         </Types>
        </Namespace>
@@ -1018,33 +1009,16 @@
    <Target Name="$(ProjectDir)/Stump/bin/Release/Stump.exe">
     <Modules>
      <Module Name="stump.exe">
-      <Messages>
-       <Message TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824" Created="2009-02-19 06:46:03Z">
-        <Issue>
-         <Item>'Stump.exe'</Item>
-        </Issue>
-       </Message>
-      </Messages>
       <Namespaces>
-       <Namespace Name="Stump.Presenters">
+       <Namespace Name="Stump.Models">
         <Types>
-         <Type Name="LogTabsPresenter">
+         <Type Name="MonitoredLogFile">
           <Members>
-           <Member Name="#OnTabSelected(System.Int32)">
+           <Member Name="#isActive">
             <Messages>
-             <Message Id="tabIndex" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2009-02-19 06:46:03Z" FixCategory="DependsOnFix">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2009-02-27 09:16:58Z">
               <Issue>
-               <Item>'tabIndex'</Item>
-               <Item>'LogTabsPresenter.OnTabSelected(int)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#workspace">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2009-02-19 06:46:03Z">
-              <Issue>
-               <Item>'LogTabsPresenter.workspace'</Item>
+               <Item>'MonitoredLogFile.isActive'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1053,26 +1027,30 @@
          </Type>
         </Types>
        </Namespace>
+       <Namespace Name="Stump.Presenters">
+        <Types>
+         <Type Name="LogPresenter">
+          <Messages>
+           <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Created="2009-02-27 09:16:58Z" FixCategory="DependsOnFix">
+            <Issue Name="DependsOnFix">
+             <Item>'LogPresenter'</Item>
+             <Item>'DefaultLogMonitor'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+        </Types>
+       </Namespace>
        <Namespace Name="Stump.Services">
         <Types>
-         <Type Name="DefaultWorkspaceStorage">
+         <Type Name="ILogMonitor">
           <Members>
-           <Member Name="#LoadWorkspace()">
+           <Member Name="#Stop()">
             <Messages>
-             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Created="2009-02-19 06:46:03Z">
-              <Issue>
-               <Item>'DefaultWorkspaceStorage.LoadWorkspace()'</Item>
-               <Item>'Exception'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#SaveWorkspace(Stump.Models.Workspace)">
-            <Messages>
-             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Created="2009-02-19 06:46:03Z">
-              <Issue>
-               <Item>'DefaultWorkspaceStorage.SaveWorkspace(Workspace)'</Item>
-               <Item>'Exception'</Item>
+             <Message Id="Stop" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Created="2009-02-27 09:16:58Z">
+              <Issue Name="Member">
+               <Item>'ILogMonitor.Stop()'</Item>
+               <Item>Stop</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1103,9 +1081,6 @@
     <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
     <Resolution Name="TypeShouldBeCompoundWord">The discrete term '{0}' in type name {1} should be expressed as a compound word, '{2}'.</Resolution>
     <Resolution Name="TypeShouldBeDiscreteTerm">The compound word '{0}' in type name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}'.</Resolution>
-   </Rule>
-   <Rule TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031">
-    <Resolution Name="Default">Modify {0} to catch a more specific exception than {1} or rethrow the exception.</Resolution>
    </Rule>
    <Rule TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002">
     <Resolution Name="Default">Change {0} in {1} to use Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; or KeyedCollection&lt;K,V&gt;</Resolution>
@@ -1141,14 +1116,8 @@
    <Rule TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033">
     <Resolution Name="Default">Make {0} sealed (a breaking change if this class has previously shipped), implement the method non-explicitly, or implement a new method that exposes the functionality of {1} and is visible to derived classes.</Resolution>
    </Rule>
-   <Rule TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824">
-    <Resolution Name="Default">Because assembly {0} contains a ResX-based resource file, mark it with the NeutralResourcesLanguage attribute, specifying the language of the resources within the assembly. This could improve lookup performance the first time a resource is retrieved.</Resolution>
-   </Rule>
    <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
     <Resolution Name="Default" />
-   </Rule>
-   <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
-    <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
    </Rule>
    <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
     <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Resolution>
@@ -1156,12 +1125,12 @@
    <Rule TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307">
     <Resolution Name="Default">{0} makes a call to {1} that does not explicitly provide a StringComparison. This should be replaced with a call to {2}.</Resolution>
    </Rule>
-   <Rule TypeName="StaticHolderTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1053">
-    <Resolution Name="Default">Remove the public constructors from {0}.</Resolution>
-   </Rule>
    <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
     <Resolution Name="Default">The type name {0} conflicts in whole or in part with the namespace name '{1}'. Change either name to eliminate the conflict.</Resolution>
     <Resolution Name="System">The type name {0} conflicts in whole or in part with the namespace name '{1}' defined in the .NET Framework. Rename the type to eliminate the conflict.</Resolution>
+   </Rule>
+   <Rule TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001">
+    <Resolution Name="DependsOnFix">Implement IDisposable on {0} because it creates members of the following IDisposable types: {1}. If {0} has previously shipped, adding new members that implement IDisposable to this type is considered a breaking change to existing consumers.</Resolution>
    </Rule>
    <Rule TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726">
     <Resolution Name="MemberParameterNoAlternate">In member {0}, replace the term '{1}' in parameter name {2} with an appropriate alternate or remove it entirely.</Resolution>
