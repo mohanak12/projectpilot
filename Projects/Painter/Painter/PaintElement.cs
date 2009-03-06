@@ -2,11 +2,21 @@ using System.Collections.Generic;
 
 namespace Painter
 {
-    public class PaintElement
+    public abstract class PaintElement
     {
-        public PaintElement(string elementName)
+        public PaintElement(Point point)
         {
-            this.elementName = elementName;
+            this.point = point;
+        }
+
+        public List<int> Parameters
+        {
+            get { return parameters; }
+        }
+
+        public Point Point
+        {
+            get { return point; }
         }
 
         public void AddParameter (int parameter)
@@ -14,7 +24,7 @@ namespace Painter
             parameters.Add(parameter);
         }
 
-        private string elementName;
+        private Point point;
         private List<int> parameters = new List<int>();
     }
 }
