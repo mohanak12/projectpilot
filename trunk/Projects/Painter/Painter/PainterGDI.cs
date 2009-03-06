@@ -8,13 +8,20 @@ namespace Painter
 {
     class PainterGDI : IPainter
     {
-        public PainterGDI(Pen pen)
+        public Graphics G { get; set; }
+        //void PaintAll(Graphics g);
+        //void Paint(Graphics g, PaintElement element);
+        //void AddElement(PaintElement element);
+
+        public PainterGDI(Graphics g, Pen pen)
         {
+            this.g = g;
             this.pen = pen;
         }
 
-        public PainterGDI(Brush brush)
+        public PainterGDI(Graphics g, Brush brush)
         {
+            this.g = g;
             this.brush = brush;
         }
 
@@ -30,54 +37,16 @@ namespace Painter
             set { brush = value; }
         }
 
-        public void Paint(Graphics g, PaintElement element)
-        {
-            if (element.GetType() == typeof (Rectangle))
-            {
-                g.DrawRectangle(pen, 
-                                element.Point.X,
-                                element.Point.Y, 
-                                element.Parameters[0],
-                                element.Parameters[1]);
-            }
-            else if (element.GetType() == typeof (Circle))
-            {
-                g.DrawEllipse(pen,
-                              element.Point.X,
-                              element.Point.Y,
-                              element.Parameters[0],
-                              element.Parameters[0]);
-            }
-            else if (element.GetType() == typeof(Line))
-            {
-                g.DrawLine(pen,
-                              element.Point.X,
-                              element.Point.Y,
-                              element.Parameters[0],
-                              element.Parameters[1]);
-            }
-        }
-
-        public IList<PaintElement> Elements
-        {
-            get { return elements; }
-        }
-
-        public void AddElement(PaintElement element)
-        {
-            elements.Add(element);
-        }
-    
-        private IList<PaintElement> elements = new List<PaintElement>();
-        private Pen pen;
-        private Brush brush;
-
-        public void PaintAll(Graphics g)
+        public void Paint(IList<PaintElement> elements)
         {
             foreach (PaintElement element in elements)
             {
-                this.Paint(g,element);
+                //element.Draw(g, pen);
             }
         }
+
+        private Graphics g;
+        private Pen pen;
+        private Brush brush;
     }
 }

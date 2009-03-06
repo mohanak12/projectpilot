@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace Painter
 {
@@ -23,6 +24,9 @@ namespace Painter
         {
             parameters.Add(parameter);
         }
+
+        //public abstract void Draw(Graphics g, Pen pen);
+        public abstract void Draw(IDrawingEngine engine);
 
         private Point point;
         private List<int> parameters = new List<int>();
