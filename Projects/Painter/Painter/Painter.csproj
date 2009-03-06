@@ -55,6 +55,8 @@
     <Compile Include="FormPainter.Designer.cs">
       <DependentUpon>FormPainter.cs</DependentUpon>
     </Compile>
+    <Compile Include="GDIdrawingEngine.cs" />
+    <Compile Include="IDrawingEngine.cs" />
     <Compile Include="IPainter.cs" />
     <Compile Include="Line.cs" />
     <Compile Include="PaintElement.cs" />
