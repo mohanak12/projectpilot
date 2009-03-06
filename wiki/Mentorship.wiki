@@ -58,3 +58,9 @@ This should be a bit less abstract than !EventMuncher.
  * A sample shape list: Rectangle (10, 10, 200, 200), Circle (100, 100, 40), Circle (100, 130, 40), Line (10, 10, 20, 20)
  * As a demonstration, implement a *simple* WinForms application which will draw the shapes using GDI+. The shapes list can be hardcoded in the application (you don't need to implement any configuration reading in this stage).
  * The coordinates should be integers.
+
+
+= Task 2: Painter, Stage 2 =
+*New requirements:*
+ * The developer should be able to add new types of shapes without changing the IPainter implementation (PainterGDI in your case).
+ * By following this requirement, add some new shape types: Triangle, Pie slice
