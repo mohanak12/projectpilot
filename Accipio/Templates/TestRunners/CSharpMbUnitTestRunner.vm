@@ -11,6 +11,7 @@
 $printedValue#if ($needsQuotes)"#end
 #end
 using System;
+using System.Reflection;
 using MbUnit.Framework;
 
 namespace ${testSuite.Namespace}
@@ -22,6 +23,7 @@ namespace ${testSuite.Namespace}
 #if (${testSuite.PendingMessage})
     [Pending("$!testSuite.PendingMessage")]
 #end
+    [Timeout(1200)]
     public class ${testSuite.TestSuiteName}TestSuite
     {
 #foreach ( $testCase in ${testSuite.ListTestCases()} )	
@@ -38,6 +40,7 @@ namespace ${testSuite.Namespace}
 #if (${testCase.PendingMessage})
         [Pending("$!testCase.PendingMessage")]
 #end
+        [Timeout(100)]
         public void ${testCase.TestCaseName}()
         {
             using (${testSuite.TestRunnerName}TestRunner runner = suiteRunner.CreateTestRunner("${testCase.TestCaseName}"))
@@ -55,13 +58,12 @@ namespace ${testSuite.Namespace}
 
 #foreach ($testStep in ${testCase.TestSteps})
                     // ${testStep.ExpandDescriptionWithParameterValues(${testSuite.BusinessActionsRepository})}
-                    runner.${testStep.ActionName}(#if ($testStep.Parameters.Count > 0)
-#foreach ($parameter in $testStep.Parameters)
-#set ($parameterValue = $parameter.ParameterValue)
-#if ($testStep.Parameters.Count > 1)
+                    runner.RunAction (#if ($testStep.Parameters.Count > 0)
 
-                        #end#ExpandParameterValue($parameterValue)#if ($velocityCount < $testStep.Parameters.Count)
-,#end#end#end
+                        #end"${testStep.ActionName}"#foreach ($parameter in $testStep.Parameters)
+,
+#set ($parameterValue = $parameter.ParameterValue)
+                        #ExpandParameterValue($parameterValue)#end
 );
 #if ($velocityCount < $testCase.TestSteps.Count)
 

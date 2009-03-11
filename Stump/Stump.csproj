@@ -94,11 +94,13 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Services\DefaultLogMonitor.cs" />
-    <Compile Include="Services\DefaultLogReader.cs" />
+    <Compile Include="Services\DefaultLogUpdaterQueue.cs" />
     <Compile Include="Services\DefaultWorkspaceStorage.cs" />
     <Compile Include="Services\ILogMonitor.cs" />
     <Compile Include="Services\ILogReader.cs" />
+    <Compile Include="Services\ILogUpdaterQueue.cs" />
     <Compile Include="Services\IWorkspaceStorage.cs" />
+    <Compile Include="Services\LogUpdateRequest.cs" />
     <Compile Include="ViewImplementations\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

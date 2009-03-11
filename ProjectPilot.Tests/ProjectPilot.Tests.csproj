@@ -131,6 +131,7 @@
     <Compile Include="AccipioTests\HtmlTestCodeGeneratorTests.cs" />
     <Compile Include="AccipioTests\XmlTestSuiteParserTests.cs" />
     <Compile Include="StumpTests\DefaultLogMonitorTests.cs" />
+    <Compile Include="StumpTests\DefaultLogUpdaterQueueTests.cs" />
     <Compile Include="StumpTests\LogTabsTests.cs" />
     <Compile Include="StumpTests\LogViewingTests.cs" />
     <Compile Include="StumpTests\StumpMother.cs" />
