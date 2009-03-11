@@ -154,7 +154,10 @@ namespace Flubu.Builds
                 if (extendedInfo.IsWebProject)
                 {
                     buildProducts.Add (
-                        new WebApplicationBuildProduct<TRunner> (productPartId, projectInfo.ProjectDirectoryPath, productDirectoryPath));
+                        new WebApplicationBuildProduct<TRunner> (
+                            productPartId, 
+                            projectInfo.ProjectDirectoryPath, 
+                            productDirectoryPath));
                     return this;
                 }
             }

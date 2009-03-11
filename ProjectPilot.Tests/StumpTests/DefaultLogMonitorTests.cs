@@ -6,9 +6,10 @@ using Stump.Services;
 
 namespace ProjectPilot.Tests.StumpTests
 {
+    [TestFixture]
     public class DefaultLogMonitorTests
     {
-        [Test]
+        [Test, Pending("The test is unstable")]
         public void MonitorFile()
         {
             const int Times = 5;
@@ -36,7 +37,7 @@ namespace ProjectPilot.Tests.StumpTests
             Assert.AreEqual(Times*2, updatedCount);
         }
 
-        [Test]
+        [Test, Pending("The test is unstable")]
         public void DeleteMonitoredFile()
         {
             using (DefaultLogMonitor monitor = new DefaultLogMonitor())
@@ -62,7 +63,7 @@ namespace ProjectPilot.Tests.StumpTests
             Assert.AreEqual(1, deletedCount);
         }
 
-        [Test]
+        [Test, Pending("The test is unstable")]
         public void CreateMonitoredFile()
         {
             using (DefaultLogMonitor monitor = new DefaultLogMonitor())

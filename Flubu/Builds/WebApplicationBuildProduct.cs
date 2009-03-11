@@ -26,7 +26,7 @@ namespace Flubu.Builds
                 true,
                 null,
                 //@"^.*\.(asax|aspx|ascx|asmx|master|css|gif)$",
-                @"obj\\|\.svn|\.(cs|snk|csproj)$|logs\\");
+                @"obj\\|\.svn|\.(cs|snk|csproj|user|svclog)$|logs\\");
 
             AddFilesToCopiedList(buildRunner.LastCopiedFilesList);
         }
