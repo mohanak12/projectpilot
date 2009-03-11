@@ -992,20 +992,27 @@
     <Modules>
      <Module Name="stump.exe">
       <Namespaces>
-       <Namespace Name="Stump.ViewImplementations">
+       <Namespace Name="Stump.Services">
         <Types>
-         <Type Name="MainForm">
-          <Members>
-           <Member Name="#logTabsPresenter">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2009-02-27 14:10:02Z">
-              <Issue>
-               <Item>'MainForm.logTabsPresenter'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
+         <Type Name="DefaultLogUpdaterQueue">
+          <Messages>
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2009-03-06 13:13:01Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>'DefaultLogUpdaterQueue'</Item>
+             <Item>Queue</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="ILogUpdaterQueue">
+          <Messages>
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2009-03-06 13:13:01Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>'ILogUpdaterQueue'</Item>
+             <Item>Queue</Item>
+            </Issue>
+           </Message>
+          </Messages>
          </Type>
         </Types>
        </Namespace>
@@ -1051,6 +1058,9 @@
    </Rule>
    <Rule TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707">
     <Resolution Name="Type">Remove the underscores from type name {0}.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711">
+    <Resolution Name="TypeNoAlternate">Rename type name {0} so that it does not end in '{1}'.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716">
     <Resolution Name="Member">Rename virtual/interface member {0} so that it no longer conflicts with the reserved language keyword '{1}'. Using a reserved keyword as the name of a virtual/interface member makes it harder for consumers in other languages to override/implement the member.</Resolution>

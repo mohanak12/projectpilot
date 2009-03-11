@@ -18,7 +18,7 @@ namespace ProjectPilot.Tests.StumpTests
             ILogView view = MockRepository.GenerateMock<ILogView>();
             ILogMonitor monitor = mother.LogMonitors[0];
 
-            mother.LogReader.Expect(lr => lr.FetchLogContents("d:/log1.txt", null))
+            mother.LogUpdaterQueue.Expect(lr => lr.FetchLogContents("d:/log1.txt", null))
                 .Constraints(Is.Equal("d:/log1.txt"), Is.Anything())
                 .Do((Action<string, LogContentsFetchedCallback>) delegate { view.ShowLogContents("logContents1"); });
 
@@ -32,7 +32,7 @@ namespace ProjectPilot.Tests.StumpTests
             using (LogPresenter presenter = new LogPresenter(
                 view,
                 monitor,
-                mother.LogReader,
+                mother.LogUpdaterQueue,
                 mother.Workspace.LogFiles[0]))
             {
             }
@@ -58,7 +58,7 @@ namespace ProjectPilot.Tests.StumpTests
             using (LogPresenter presenter = new LogPresenter(
                 view,
                 monitor,
-                mother.LogReader,
+                mother.LogUpdaterQueue,
                 mother.Workspace.LogFiles[0]))
             {
             }
@@ -83,7 +83,7 @@ namespace ProjectPilot.Tests.StumpTests
             using (LogPresenter presenter = new LogPresenter(
                 view,
                 monitor,
-                mother.LogReader,
+                mother.LogUpdaterQueue,
                 mother.Workspace.LogFiles[0]))
             {
             }
@@ -107,7 +107,7 @@ namespace ProjectPilot.Tests.StumpTests
             using (LogPresenter presenter = new LogPresenter(
                 view,
                 monitor,
-                mother.LogReader,
+                mother.LogUpdaterQueue,
                 mother.Workspace.LogFiles[0]))
             {
                 // turn off monitoring

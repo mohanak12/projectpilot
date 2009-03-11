@@ -11,7 +11,7 @@ namespace ProjectPilot.Tests.StumpTests
         public StumpMother()
         {
             CreateWorkspace();
-            logReader = MockRepository.GenerateStub<ILogReader>();
+            logUpdaterQueue = MockRepository.GenerateStub<ILogUpdaterQueue>();
 
             for (int i = 0; i < 3; i++)
             {
@@ -24,9 +24,9 @@ namespace ProjectPilot.Tests.StumpTests
             get { return logMonitors; }
         }
 
-        public ILogReader LogReader
+        public ILogUpdaterQueue LogUpdaterQueue
         {
-            get { return logReader; }
+            get { return logUpdaterQueue; }
         }
 
         public Workspace Workspace
@@ -43,7 +43,7 @@ namespace ProjectPilot.Tests.StumpTests
             return workspace;
         }
 
-        private readonly ILogReader logReader;
+        private readonly ILogUpdaterQueue logUpdaterQueue;
         private List<ILogMonitor> logMonitors = new List<ILogMonitor>();
         private Workspace workspace;
     }

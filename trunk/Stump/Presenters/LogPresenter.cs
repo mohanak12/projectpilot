@@ -10,11 +10,11 @@ namespace Stump.Presenters
         public LogPresenter(
             ILogView view, 
             ILogMonitor logMonitor,
-            ILogReader logReader,
+            ILogUpdaterQueue logUpdaterQueue,
             MonitoredLogFile logFile)
         {
             this.view = view;
-            this.logReader = logReader;
+            this.logUpdaterQueue = logUpdaterQueue;
             this.logFile = logFile;
             this.monitor = logMonitor;
 
@@ -41,7 +41,7 @@ namespace Stump.Presenters
         {
             if (logFile.IsActive)
             {
-                logReader.FetchLogContents(logFile.FileName, OnLogContentsFetchedCallback);
+                logUpdaterQueue.FetchLogContents(logFile.FileName, OnLogContentsFetchedCallback);
             }
             else
                 view.IndicateLogFileNotMonitored();
@@ -85,9 +85,9 @@ namespace Stump.Presenters
             }
         }
 
-        private void OnLogContentsFetchedCallback(string logContents)
+        private void OnLogContentsFetchedCallback(LogUpdateRequest request)
         {
-            view.ShowLogContents(logContents);
+            view.ShowLogContents(request.LogContents);
         }
 
         private void OnLogFileCreated(string logFileName)
@@ -140,7 +140,7 @@ namespace Stump.Presenters
         private bool disposed;
         private readonly MonitoredLogFile logFile;
         private ILogMonitor monitor;
-        private readonly ILogReader logReader;
+        private readonly ILogUpdaterQueue logUpdaterQueue;
         private readonly ILogView view;
     }
 }
