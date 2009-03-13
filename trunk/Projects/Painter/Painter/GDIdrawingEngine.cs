@@ -20,11 +20,9 @@ namespace Painter
             graphics.DrawLine(pen, startPoint.X, startPoint.Y, endPoint.X, endPoint.Y);
         }
 
-        public void Arc()
+        public void Arc(Point point, int height, int width, int startAngle, int sweepAngle)
         {
-            //TODO
-            throw new NotImplementedException();
-            //graphics.DrawArc(pen,..);
+            graphics.DrawArc(pen, point.X, point.Y, width, height, startAngle, sweepAngle);
         }
 
         private Graphics graphics;

@@ -24,9 +24,7 @@ namespace Painter
         
         public override void Draw(IDrawingEngine engine)
         {
-            //Todo
-        
-            throw new NotImplementedException();
+            engine.Arc(this.Point, this.Parameters[0] * 2, this.Parameters[0] * 2, 0, 360);
         }
          
     }
