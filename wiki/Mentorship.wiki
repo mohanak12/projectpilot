@@ -66,4 +66,15 @@ This should be a bit less abstract than !EventMuncher.
 
 = Task 2: Painter, Stage 3 =
 *New requirements:*
- * The color of each shape should be configurable. Again, when adding new shape types, the IPainter inteface should not change.
+ * The user wants to specify color and pen width of each shape. But there are some catches: 
+  * She wants these parameters to be optional. If she doesn't specify a parameter, a default value should be used when painting.
+  * She wants to be able to specify new parameters for shapes later without changing the interface.
+HINT: maybe you could find some useful directions on how to solve this elegantly here: http://martinfowler.com/apsupp/properties.pdf
+
+= Task 2: Painter, Stage 4 =
+*New requirements:*
+ * The user now wants to have some new filled shapes. We must provide her with a new shape parameter: fill color. We must extend the IDrawingEngine interface to allow drawing of filled elements. HINT: look how the interface for the [http://msdn.microsoft.com/en-us/library/system.drawing.graphics.fillpath.aspx Graphics.FillPath] method looks like.
+
+= Task 2: Painter, Stage 5 =
+*New requirements:*
+ * The user wants to be able to draw more complex drawings with a reusable elements.
