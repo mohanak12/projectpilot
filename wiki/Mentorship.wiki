@@ -90,3 +90,4 @@ HINT: maybe this could help? http://en.wikipedia.org/wiki/Composite_pattern
 = Task 2: Painter, Stage 7 =
 *New requirements:*
  * The user wants to have an Undo button in the application. After drawing something on the screen, she wants to be able to undo drawing steps (similarly to how undo functions works in MS Word). After clicking on the Undo button, the drawing should be redrawed without the undo-ed step.
+HINT: look at the http://en.wikipedia.org/wiki/Command_pattern
