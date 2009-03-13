@@ -14,13 +14,6 @@ namespace Painter
              this.AddParameter(width);
         }
 
-        /*
-        public override void Draw(Graphics g, Pen pen)
-        {
-            g.DrawRectangle(pen, this.Point.X, this.Point.Y, this.Parameters[0], this.Parameters[1]);
-        } 
-        */
-
         public override void Draw(IDrawingEngine engine)
         {
             //this.Parameters[0] - width
