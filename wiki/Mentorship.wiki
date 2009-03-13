@@ -59,8 +59,11 @@ This should be a bit less abstract than !EventMuncher.
  * As a demonstration, implement a *simple* WinForms application which will draw the shapes using GDI+. The shapes list can be hardcoded in the application (you don't need to implement any configuration reading in this stage).
  * The coordinates should be integers.
 
-
 = Task 2: Painter, Stage 2 =
 *New requirements:*
  * The developer should be able to add new types of shapes without changing the IPainter implementation (PainterGDI in your case).
  * By following this requirement, add some new shape types: Triangle, Pie slice
+
+= Task 2: Painter, Stage 3 =
+*New requirements:*
+ * The color of each shape should be configurable. Again, when adding new shape types, the IPainter inteface should not change.
