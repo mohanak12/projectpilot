@@ -82,3 +82,7 @@ HINT: maybe you could find some useful directions on how to solve this elegantly
   * She also wants to be able to later change the design of a window in a single place.
 
 HINT: maybe this could help? http://en.wikipedia.org/wiki/Composite_pattern
+
+= Task 2: Painter, Stage 6 =
+*New requirements:*
+ * The user is tired of having to change the source code and recompile each time she wants to draw something different. Provide a way for her to change the drawing without recompiling your drawing software.
