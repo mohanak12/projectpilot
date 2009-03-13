@@ -20,12 +20,12 @@ namespace Painter
         {
             IList<PaintElement> elements = new List<PaintElement>();
             Rectangle rectangle = new Rectangle(new Point(30, 30), 100, 100);
-            Circle circle = new Circle(new Point(70, 70), 150);
+            Circle circle = new Circle(new Point(70, 70), 50);
             Line line = new Line(new Point(15, 15), new Point(100, 150));
             Rectangle rectangle1 = new Rectangle(new Point(90, 90), 120, 100);
 
             elements.Add(rectangle);
-            //elements.Add(circle);
+            elements.Add(circle);
             elements.Add(line);
             elements.Add(rectangle1);
             
