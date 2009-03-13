@@ -12,16 +12,7 @@ namespace Painter
         {
             this.AddParameter(radius);
         }
-
-        /*
-        public override void Draw(Graphics g, Pen pen)
-        {
-            g.DrawEllipse(pen, this.Point.X, this.Point.Y, this.Parameters[0], this.Parameters[0]);
-        
-        }
-        */
-
-        
+       
         public override void Draw(IDrawingEngine engine)
         {
             engine.Arc(this.Point, this.Parameters[0] * 2, this.Parameters[0] * 2, 0, 360);

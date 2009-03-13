@@ -23,11 +23,15 @@ namespace Painter
             Circle circle = new Circle(new Point(70, 70), 50);
             Line line = new Line(new Point(15, 15), new Point(100, 150));
             Rectangle rectangle1 = new Rectangle(new Point(90, 90), 120, 100);
+            Triangle triangle = new Triangle(new Point(290, 90), new Point(190, 290), new Point(375, 165));
+            PieSlice piceSlice = new PieSlice(new Point(325, 225), new Point(385, 250), 60);
 
             elements.Add(rectangle);
             elements.Add(circle);
             elements.Add(line);
             elements.Add(rectangle1);
+            elements.Add(triangle);
+            //elements.Add(piceSlice);
             
             using (Graphics g = this.pictureBoxPainting.CreateGraphics())
             {
@@ -37,14 +41,6 @@ namespace Painter
                 {
                     element.Draw(drawingEngine);
                 }
-                
-                /*
-                using (Pen pen = new Pen(Color.Blue, 10))
-                {
-                    IPainter painter = new PainterGDI(g, pen);
-                    painter.Paint(elements);
-                }
-                */
             }
 
         }
