@@ -77,4 +77,8 @@ HINT: maybe you could find some useful directions on how to solve this elegantly
 
 = Task 2: Painter, Stage 5 =
 *New requirements:*
- * The user wants to be able to draw more complex drawings with a reusable elements.
+ * The user wants to be able to draw more complex drawings with reusable elements. Example: she wants to draw a house with windows. Each window consists of a frame and two lines, one horizontal and one vertical. Here are the catches:
+  * She doesn't have the time to specify this again and again for each window 
+  * She also wants to be able to later change the design of a window in a single place.
+
+HINT: maybe this could help? http://en.wikipedia.org/wiki/Composite_pattern
