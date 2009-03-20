@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Circle.cs" />
+    <Compile Include="Colour.cs" />
     <Compile Include="FormPainter.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -56,7 +57,9 @@
       <DependentUpon>FormPainter.cs</DependentUpon>
     </Compile>
     <Compile Include="GDIdrawingEngine.cs" />
+    <Compile Include="GDIDrawingProperties.cs" />
     <Compile Include="IDrawingEngine.cs" />
+    <Compile Include="IDrawingProperties.cs" />
     <Compile Include="IPainter.cs" />
     <Compile Include="Line.cs" />
     <Compile Include="PaintElement.cs" />

@@ -16,7 +16,7 @@ namespace Painter
 
         public override void Draw(IDrawingEngine engine)
         {
-            engine.Line(this.Point, new Point(this.Parameters[0], this.Parameters[1]));
+            engine.Line(this.Point, new Point(this.Parameters[0], this.Parameters[1]), this.DrawingProperties);
         }
     }
 }

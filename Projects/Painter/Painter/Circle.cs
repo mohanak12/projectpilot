@@ -15,7 +15,7 @@ namespace Painter
        
         public override void Draw(IDrawingEngine engine)
         {
-            engine.Arc(this.Point, this.Parameters[0] * 2, this.Parameters[0] * 2, 0, 360);
+            engine.Arc(this.Point, this.Parameters[0] * 2, this.Parameters[0] * 2, 0, 360, this.DrawingProperties);
         }
          
     }
