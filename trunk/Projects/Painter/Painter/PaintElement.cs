@@ -20,6 +20,12 @@ namespace Painter
             get { return point; }
         }
 
+        public IDrawingProperties DrawingProperties
+        {
+            get { return drawingProperties; }
+            set { drawingProperties = value; }
+        }
+
         public void AddParameter (int parameter)
         {
             parameters.Add(parameter);
@@ -28,6 +34,7 @@ namespace Painter
         //public abstract void Draw(Graphics g, Pen pen);
         public abstract void Draw(IDrawingEngine engine);
 
+        private IDrawingProperties drawingProperties;
         private Point point;
         private List<int> parameters = new List<int>();
     }
