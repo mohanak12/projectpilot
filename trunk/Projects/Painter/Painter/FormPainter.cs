@@ -24,7 +24,6 @@ namespace Painter
             Line line = new Line(new Point(15, 15), new Point(100, 150));
             Rectangle rectangle1 = new Rectangle(new Point(90, 90), 120, 100);
             Triangle triangle = new Triangle(new Point(290, 90), new Point(190, 290), new Point(375, 165));
-            PieSlice piceSlice = new PieSlice(new Point(325, 225), new Point(385, 250), 60);
 
             elements.Add(rectangle);
             elements.Add(circle);

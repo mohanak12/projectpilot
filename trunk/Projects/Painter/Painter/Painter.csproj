@@ -61,7 +61,6 @@
     <Compile Include="Line.cs" />
     <Compile Include="PaintElement.cs" />
     <Compile Include="PainterGDI.cs" />
-    <Compile Include="PieSlice.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
