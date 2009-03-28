@@ -53,9 +53,9 @@ namespace ProjectPilot.Tests.BuildScriptsTests
 
             Assert.AreEqual(" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ", project.Configurations[1].Condition);
             Assert.AreEqual("System.Web.Routing, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL", project.Items[6].Item);//ref
-            Assert.AreEqual("HintPath", referenceItems.ElementAt(6).ItemAttributes.ElementAt(1).Key);//ref
-            Assert.AreEqual("HintPath", project.Items[6].ItemAttributes.ElementAt(1).Key);//ref
-            Assert.AreEqual("True", project.Items[6].ItemAttributes.ElementAt(3).Value);//ref
+            Assert.AreEqual("HintPath", referenceItems.ElementAt(6).ItemProperties.ElementAt(1).Key);//ref
+            Assert.AreEqual("HintPath", project.Items[6].ItemProperties.ElementAt(1).Key);//ref
+            Assert.AreEqual("True", project.Items[6].ItemProperties.ElementAt(3).Value);//ref
             Assert.AreEqual("ProjectGuid", project.Properties.ElementAt(4).Key);
             Assert.AreEqual("{603c0e0b-db56-11dc-be95-000d561079b0};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}", project.Properties.ElementAt(5).Value);
         }

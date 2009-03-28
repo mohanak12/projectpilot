@@ -99,9 +99,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
 
                             case XmlNodeType.Element:
                                 if (xmlReader.Name == "Project")
-                                {
                                     data.ReadProject(xmlReader);
-                                }
 
                                 xmlReader.Read();
                                 break;
@@ -218,36 +216,30 @@ namespace Flubu.Builds.VSSolutionBrowsing
                     case "Content":
                         VSProjectItem contentItem = ReadItem(xmlReader, VSProjectItem.Content);
                         items.Add(contentItem);
-
-                        if (xmlReader.NodeType == XmlNodeType.EndElement)
-                            xmlReader.Read();
                         break;
 
                     case "Compile":
                         VSProjectItem compileItems = ReadItem(xmlReader, VSProjectItem.CompileItem);
                         items.Add(compileItems);
-
-                        if (xmlReader.NodeType == XmlNodeType.EndElement)
-                            xmlReader.Read();
                         break;
 
                     case "None":
                         VSProjectItem noneItem = ReadItem (xmlReader, VSProjectItem.NoneItem);
                         items.Add (noneItem);
+                        break;
 
-                        if (xmlReader.NodeType == XmlNodeType.EndElement)
-                            xmlReader.Read ();
+                    case "ProjectReference":
+                        VSProjectItem projectReference = ReadItem (xmlReader, VSProjectItem.ProjectReference);
+                        items.Add (projectReference);
                         break;
 
                     case "Reference":
                         VSProjectItem reference = ReadItem(xmlReader, VSProjectItem.Reference);
                         items.Add(reference);
-                        if (xmlReader.NodeType == XmlNodeType.EndElement)
-                            xmlReader.Read();
                         break;
 
                     default:
-                        xmlReader.Read();
+                        xmlReader.Skip();
                         continue;
                 }
             }
@@ -257,39 +249,37 @@ namespace Flubu.Builds.VSSolutionBrowsing
         {
             VSProjectItem item = new VSProjectItem(itemType);
 
-            while (xmlReader.NodeType != XmlNodeType.EndElement && false == xmlReader.EOF)
+            item.Item = xmlReader["Include"];
+
+            if (false == xmlReader.IsEmptyElement)
             {
-                if (xmlReader.HasAttributes && xmlReader.NodeType != XmlNodeType.EndElement)
-                {
-                    item.Item = xmlReader[0];
-                    xmlReader.Read();
-                }
+                xmlReader.Read ();
 
-                if (xmlReader.HasAttributes == false && xmlReader.NodeType != XmlNodeType.EndElement)
+                while (true)
                 {
-                    if (item.ItemAttributes.ContainsKey(xmlReader.Name))
-                        throw new ArgumentException(
-                            string.Format(
-                                CultureInfo.InvariantCulture,
-                                "Attribute '{0}' has already been added to the item. VS project '{1}'",
-                                xmlReader.Name, 
-                                this.ProjectFileName));
+                    if (xmlReader.NodeType == XmlNodeType.EndElement)
+                        break;
 
-                    item.ItemAttributes.Add(xmlReader.Name, xmlReader.ReadElementContentAsString());
-                }
-                else
-                {
-                    return item;
+                    ReadItemProperty(item, xmlReader);
                 }
             }
+
+            xmlReader.Read();
 
             return item;
         }
 
-        private string projectFileName;
+        private void ReadItemProperty(VSProjectItem item, XmlReader xmlReader)
+        {
+            string propertyName = xmlReader.Name;
+            string propertyValue = xmlReader.ReadElementContentAsString();
+            item.ItemProperties.Add(propertyName, propertyValue);
+        }
+
         private readonly List<VSProjectConfiguration> configurations = new List<VSProjectConfiguration>();
         private readonly List<VSProjectItem> items = new List<VSProjectItem>();
         private static readonly ILog log = LogManager.GetLogger(typeof(VSProject));
+        private readonly string projectFileName;
         private readonly Dictionary<string, string> properties = new Dictionary<string, string>();
         private bool propertiesDictionary;
     }

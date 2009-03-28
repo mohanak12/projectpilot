@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using Flubu;
-using Flubu.Builds;
+﻿using Flubu.Builds;
 using Flubu.Builds.VSSolutionBrowsing;
 using MbUnit.Framework;
 
@@ -78,6 +75,19 @@ namespace ProjectPilot.Tests.BuildScriptsTests
             }
 
             Assert.Fail ("ProjectPilot.snk file is missing from the project data");
+        }
+
+        [Test]
+        public void MakeSureContentFilesAreInProject ()
+        {
+            VSProject project = VSProject.Load(@"..\..\..\ProjectPilot.Tests\ProjectPilot.Tests.csproj");
+            foreach (VSProjectItem item in project.Items)
+            {
+                if (item.Item == @"AccipioTests\Samples\GallioTestResults1.xml")
+                    return;
+            }
+
+            Assert.Fail ("Content files are missing from the project data");
         }
     }
 }
