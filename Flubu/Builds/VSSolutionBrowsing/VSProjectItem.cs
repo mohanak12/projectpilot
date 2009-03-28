@@ -23,17 +23,18 @@ namespace Flubu.Builds.VSSolutionBrowsing
             get { return itemType; }
         }
 
-        public IDictionary<string, string> ItemAttributes
+        public IDictionary<string, string> ItemProperties
         {
-            get { return itemAttributes; }
+            get { return itemProperties; }
         }
 
         private string item;
-        private Dictionary<string, string> itemAttributes = new Dictionary<string, string>();
+        private Dictionary<string, string> itemProperties = new Dictionary<string, string>();
         private string itemType;
         public const string Content = "Content";
         public const string CompileItem = "CompileItem";
         public const string NoneItem = "None";
+        public const string ProjectReference = "ProjectReference";
         public const string Reference = "Reference";
     }
 }
