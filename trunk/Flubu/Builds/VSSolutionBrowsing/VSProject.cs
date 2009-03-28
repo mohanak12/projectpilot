@@ -155,12 +155,12 @@ namespace Flubu.Builds.VSSolutionBrowsing
                         xmlReader.Read();
                         break;
                     case "ItemGroup":
-                        ReadItemGroup(xmlReader);
-                        xmlReader.Read();
-                         break;
+                        ReadItemGroup (xmlReader);
+                        xmlReader.Read ();
+                        break;
                     default:
-                         xmlReader.Read();
-                         continue;
+                        xmlReader.Read ();
+                        continue;
                 }
             }
         }
@@ -215,35 +215,37 @@ namespace Flubu.Builds.VSSolutionBrowsing
             {
                 switch (xmlReader.Name)
                 {
-                    case "Reference":
-                        VSProjectItem reference = ReadItem(xmlReader, VSProjectItem.Reference);
-                        items.Add(reference);
-                        if (xmlReader.NodeType == XmlNodeType.EndElement)
-                        {
-                            xmlReader.Read();
-                        }
-
-                        break;
-                    case "Compile":
-                        VSProjectItem compileItems = ReadItem(xmlReader, VSProjectItem.CompileItem);
-                        items.Add(compileItems);
-
-                        if (xmlReader.NodeType == XmlNodeType.EndElement)
-                        {
-                            xmlReader.Read();
-                        }
-
-                        break;
                     case "Content":
                         VSProjectItem contentItem = ReadItem(xmlReader, VSProjectItem.Content);
                         items.Add(contentItem);
 
                         if (xmlReader.NodeType == XmlNodeType.EndElement)
-                        {
                             xmlReader.Read();
-                        }
-
                         break;
+
+                    case "Compile":
+                        VSProjectItem compileItems = ReadItem(xmlReader, VSProjectItem.CompileItem);
+                        items.Add(compileItems);
+
+                        if (xmlReader.NodeType == XmlNodeType.EndElement)
+                            xmlReader.Read();
+                        break;
+
+                    case "None":
+                        VSProjectItem noneItem = ReadItem (xmlReader, VSProjectItem.NoneItem);
+                        items.Add (noneItem);
+
+                        if (xmlReader.NodeType == XmlNodeType.EndElement)
+                            xmlReader.Read ();
+                        break;
+
+                    case "Reference":
+                        VSProjectItem reference = ReadItem(xmlReader, VSProjectItem.Reference);
+                        items.Add(reference);
+                        if (xmlReader.NodeType == XmlNodeType.EndElement)
+                            xmlReader.Read();
+                        break;
+
                     default:
                         xmlReader.Read();
                         continue;

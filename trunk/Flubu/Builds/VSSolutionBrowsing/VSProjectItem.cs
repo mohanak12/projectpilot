@@ -31,9 +31,9 @@ namespace Flubu.Builds.VSSolutionBrowsing
         private string item;
         private Dictionary<string, string> itemAttributes = new Dictionary<string, string>();
         private string itemType;
-
         public const string Content = "Content";
         public const string CompileItem = "CompileItem";
+        public const string NoneItem = "None";
         public const string Reference = "Reference";
     }
 }
