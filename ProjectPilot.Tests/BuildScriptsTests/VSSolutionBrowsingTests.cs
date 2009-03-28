@@ -62,5 +62,22 @@ namespace ProjectPilot.Tests.BuildScriptsTests
                 Assert.AreEqual (@"bin\", outputPath);
             }
         }
+
+        [Test]
+        public void MakeSureProjectKeyIsInProject()
+        {
+            VSSolution solution = VSSolution.Load (@"..\..\..\ProjectPilot.sln");
+
+            solution.LoadProjects ();
+
+            VSProjectInfo projectInfo = solution.FindProjectByName("Accipio");
+            foreach (VSProjectItem item in projectInfo.Project.Items)
+            {
+                if (item.Item == "ProjectPilot.snk")
+                    return;
+            }
+
+            Assert.Fail ("ProjectPilot.snk file is missing from the project data");
+        }
     }
 }

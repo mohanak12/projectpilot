@@ -112,7 +112,5 @@ namespace Flubu.Builds.VSSolutionBrowsing
         private readonly Guid projectTypeGuid;
 
         public const string MSBuildNamespace = @"http://schemas.microsoft.com/developer/msbuild/2003";
-
-        //static readonly private ILog log = LogManager.GetLogger (typeof (VSProjectInfo));
     }
 }

@@ -12,32 +12,33 @@ namespace Flubu.Tasks.FileSystem
         {
             this.zipFileName = zipFileName;
             this.baseDir = baseDir;
-            this.filesToZip.AddRange(filesToZip);
+            this.filesToZip.AddRange (filesToZip);
 
-            Path.GetExtension(zipFileName);
+            Path.GetExtension (zipFileName);
         }
 
         public override string TaskDescription
         {
             get
             {
-                return String.Format(
+                return String.Format (
                     CultureInfo.InvariantCulture,
-                    "Zipping {1} files to the '{0}' archive",
+                    "Zipping {1} files to the '{0}' archive, using the base directory '{2}'",
                     zipFileName,
-                    filesToZip.Count);
+                    filesToZip.Count,
+                    baseDir);
             }
         }
 
-        protected override void DoExecute(IScriptExecutionEnvironment environment)
+        protected override void DoExecute (IScriptExecutionEnvironment environment)
         {
-            using (FileStream zipFileStream = new FileStream(
+            using (FileStream zipFileStream = new FileStream (
                 zipFileName,
                 FileMode.Create,
                 FileAccess.ReadWrite,
                 FileShare.None))
             {
-                using (ZipOutputStream zipStream = new ZipOutputStream(zipFileStream))
+                using (ZipOutputStream zipStream = new ZipOutputStream (zipFileStream))
                 {
                     byte[] buffer = new byte[1024 * 1024];
 
@@ -45,21 +46,22 @@ namespace Flubu.Tasks.FileSystem
                     {
                         int skipChar = 0;
 
-                        if (baseDir[baseDir.Length - 1] == '\\'
-                            || baseDir[baseDir.Length - 1] == '/')
+                        if (false == String.IsNullOrEmpty (baseDir)
+                            && (baseDir[baseDir.Length - 1] == '\\'
+                            || baseDir[baseDir.Length - 1] == '/'))
                             skipChar++;
 
                         // cut off the leading part of the path (up to the root directory of the package)
-                        string basedFileName = fileName.Substring(baseDir.Length + skipChar);
+                        string basedFileName = fileName.Substring (baseDir.Length + skipChar);
 
-                        basedFileName = ZipEntry.CleanName(basedFileName);
+                        basedFileName = ZipEntry.CleanName (basedFileName);
 
-                        environment.LogMessage("Zipping file '{0}'", basedFileName);
+                        environment.LogMessage ("Zipping file '{0}'", basedFileName);
 
                         using (FileStream fileStream = File.OpenRead (fileName))
                         {
                             ZipEntry entry = new ZipEntry (basedFileName);
-                            entry.DateTime = File.GetLastWriteTime(fileName);
+                            entry.DateTime = File.GetLastWriteTime (fileName);
                             entry.Size = fileStream.Length;
                             zipStream.PutNextEntry (entry);
 
@@ -67,13 +69,13 @@ namespace Flubu.Tasks.FileSystem
 
                             while (true)
                             {
-                                sourceBytes = fileStream.Read(buffer, 0, buffer.Length);
+                                sourceBytes = fileStream.Read (buffer, 0, buffer.Length);
 
                                 if (sourceBytes == 0)
                                     break;
 
-                                zipStream.Write(buffer, 0, sourceBytes);
-                            } 
+                                zipStream.Write (buffer, 0, sourceBytes);
+                            }
                         }
                     }
                 }
@@ -81,7 +83,7 @@ namespace Flubu.Tasks.FileSystem
         }
 
         private readonly string baseDir;
-        private List<string> filesToZip = new List<string>();
+        private List<string> filesToZip = new List<string> ();
         private readonly string zipFileName;
     }
 }
