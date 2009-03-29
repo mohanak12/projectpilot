@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using ICSharpCode.SharpZipLib.Zip;
@@ -30,6 +31,21 @@ namespace Flubu.Tasks.FileSystem
             }
         }
 
+        public ZipFileCallback ZipFileFooterCallback
+        {
+            get { return zipFileFooterCallback; }
+            set { zipFileFooterCallback = value; }
+        }
+
+        public ZipFileCallback ZipFileHeaderCallback
+        {
+            get { return zipFileHeaderCallback; }
+            set { zipFileHeaderCallback = value; }
+        }
+
+        [SuppressMessage ("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
+        public delegate void ZipFileCallback (string fileName, ZipOutputStream zipOutputStream);
+
         protected override void DoExecute (IScriptExecutionEnvironment environment)
         {
             using (FileStream zipFileStream = new FileStream (
@@ -40,7 +56,7 @@ namespace Flubu.Tasks.FileSystem
             {
                 using (ZipOutputStream zipStream = new ZipOutputStream (zipFileStream))
                 {
-                    byte[] buffer = new byte[1024 * 1024];
+                    buffer = new byte[1024 * 1024];
 
                     foreach (string fileName in filesToZip)
                     {
@@ -57,33 +73,46 @@ namespace Flubu.Tasks.FileSystem
                         basedFileName = ZipEntry.CleanName (basedFileName);
 
                         environment.LogMessage ("Zipping file '{0}'", basedFileName);
-
-                        using (FileStream fileStream = File.OpenRead (fileName))
-                        {
-                            ZipEntry entry = new ZipEntry (basedFileName);
-                            entry.DateTime = File.GetLastWriteTime (fileName);
-                            entry.Size = fileStream.Length;
-                            zipStream.PutNextEntry (entry);
-
-                            int sourceBytes;
-
-                            while (true)
-                            {
-                                sourceBytes = fileStream.Read (buffer, 0, buffer.Length);
-
-                                if (sourceBytes == 0)
-                                    break;
-
-                                zipStream.Write (buffer, 0, sourceBytes);
-                            }
-                        }
+                        AddFileToZip(fileName, basedFileName, zipStream);
                     }
                 }
             }
         }
 
+        private void AddFileToZip(string fileName, string basedFileName, ZipOutputStream zipStream)
+        {
+            using (FileStream fileStream = File.OpenRead (fileName))
+            {
+                ZipEntry entry = new ZipEntry (basedFileName);
+                entry.DateTime = File.GetLastWriteTime (fileName);
+                entry.Size = fileStream.Length;
+                zipStream.PutNextEntry (entry);
+
+                if (zipFileHeaderCallback != null)
+                    zipFileHeaderCallback(fileName, zipStream);
+
+                int sourceBytes;
+
+                while (true)
+                {
+                    sourceBytes = fileStream.Read (buffer, 0, buffer.Length);
+
+                    if (sourceBytes == 0)
+                        break;
+
+                    zipStream.Write (buffer, 0, sourceBytes);
+                }
+
+                if (zipFileFooterCallback != null)
+                    zipFileFooterCallback (fileName, zipStream);
+            }
+        }
+
         private readonly string baseDir;
+        private byte[] buffer;
         private List<string> filesToZip = new List<string> ();
+        private ZipFileCallback zipFileFooterCallback;
+        private ZipFileCallback zipFileHeaderCallback;
         private readonly string zipFileName;
     }
 }
