@@ -776,22 +776,13 @@
     <Modules>
      <Module Name="flubu.dll">
       <Namespaces>
-       <Namespace Name="Flubu.Builds.VSSolutionBrowsing">
+       <Namespace Name="Flubu.Tasks.FileSystem">
         <Types>
-         <Type Name="ParserContext">
+         <Type Name="ZipFilesTask+ZipFileCallback">
           <Messages>
-           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2009-03-29 07:05:40Z">
+           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Created="2009-03-29 08:13:06Z">
             <Issue>
-             <Item>'ParserContext'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="VSProjectInfo">
-          <Messages>
-           <Message TypeName="AbstractTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1012" Created="2009-03-29 07:05:40Z">
-            <Issue>
-             <Item>'VSProjectInfo'</Item>
+             <Item>'ZipFilesTask.ZipFileCallback'</Item>
             </Issue>
            </Message>
           </Messages>
@@ -1020,9 +1011,6 @@
    </Target>
   </Targets>
   <Rules>
-   <Rule TypeName="AbstractTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1012">
-    <Resolution Name="Default">Change the accessibility of all public constructors in {0} to protected.</Resolution>
-   </Rule>
    <Rule TypeName="AvoidEmptyInterfaces" Category="Microsoft.Design" CheckId="CA1040">
     <Resolution Name="Default">Define a custom attribute to replace {0}.</Resolution>
    </Rule>
@@ -1031,9 +1019,6 @@
    </Rule>
    <Rule TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021">
     <Resolution Name="Default">Consider a design that does not require that {0} be an out parameter.</Resolution>
-   </Rule>
-   <Rule TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812">
-    <Resolution Name="Default">{0} is an internal class that is apparently never instantiated. If so, remove the code from the assembly. If this class is intended to contain only static methods, consider adding a private constructor to prevent the compiler from generating a default constructor.</Resolution>
    </Rule>
    <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
     <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
@@ -1079,6 +1064,9 @@
    </Rule>
    <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
     <Resolution Name="Default" />
+   </Rule>
+   <Rule TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034">
+    <Resolution Name="Default">Do not nest type {0}. Alternatively, change its accessibility so that it is not externally visible.</Resolution>
    </Rule>
    <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
     <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Resolution>
