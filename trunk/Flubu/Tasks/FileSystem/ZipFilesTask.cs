@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
+using System.Text;
 using ICSharpCode.SharpZipLib.Zip;
 
 namespace Flubu.Tasks.FileSystem
@@ -44,7 +45,7 @@ namespace Flubu.Tasks.FileSystem
         }
 
         [SuppressMessage ("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
-        public delegate void ZipFileCallback (string fileName, ZipOutputStream zipOutputStream);
+        public delegate string ZipFileCallback (string fileName);
 
         protected override void DoExecute (IScriptExecutionEnvironment environment)
         {
@@ -83,15 +84,23 @@ namespace Flubu.Tasks.FileSystem
         {
             using (FileStream fileStream = File.OpenRead (fileName))
             {
-                ZipEntry entry = new ZipEntry (basedFileName);
-                entry.DateTime = File.GetLastWriteTime (fileName);
-                entry.Size = fileStream.Length;
-                zipStream.PutNextEntry (entry);
+                string fileHeader = String.Empty;
+                string fileFooter = String.Empty;
 
                 if (zipFileHeaderCallback != null)
-                    zipFileHeaderCallback(fileName, zipStream);
+                    fileHeader = zipFileHeaderCallback (fileName);
+
+                if (zipFileFooterCallback != null)
+                    fileFooter = zipFileFooterCallback (fileName);
+
+                ZipEntry entry = new ZipEntry (basedFileName);
+                entry.DateTime = File.GetLastWriteTime (fileName);
+                entry.Size = fileStream.Length + fileHeader.Length + fileFooter.Length;
+                zipStream.PutNextEntry (entry);
 
                 int sourceBytes;
+
+                WriteTextToZipStream(fileHeader, zipStream);
 
                 while (true)
                 {
@@ -103,8 +112,16 @@ namespace Flubu.Tasks.FileSystem
                     zipStream.Write (buffer, 0, sourceBytes);
                 }
 
-                if (zipFileFooterCallback != null)
-                    zipFileFooterCallback (fileName, zipStream);
+                WriteTextToZipStream (fileFooter, zipStream);
+            }
+        }
+
+        private static void WriteTextToZipStream(string text, ZipOutputStream zipStream)
+        {
+            if (text.Length > 0)
+            {
+                byte[] bytes = Encoding.ASCII.GetBytes (text.ToString ());
+                zipStream.Write (bytes, 0, bytes.Length);                    
             }
         }
 
