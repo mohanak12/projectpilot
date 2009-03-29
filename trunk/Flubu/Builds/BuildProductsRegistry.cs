@@ -146,7 +146,7 @@ namespace Flubu.Builds
         /// </returns>
         public BuildProductsRegistry<TRunner> AddProject (string productPartId, string projectName, string productDirectoryPath)
         {
-            VSProjectInfo projectInfo = runner.Solution.FindProjectByName (projectName);
+            VSProjectWithFileInfo projectWithFileInfo = (VSProjectWithFileInfo) runner.Solution.FindProjectByName (projectName);
 
             if (runner.ProjectExtendedInfos.ContainsKey (projectName))
             {
@@ -156,7 +156,7 @@ namespace Flubu.Builds
                     buildProducts.Add (
                         new WebApplicationBuildProduct<TRunner> (
                             productPartId, 
-                            projectInfo.ProjectDirectoryPath, 
+                            projectWithFileInfo.ProjectDirectoryPath, 
                             productDirectoryPath));
                     return this;
                 }
@@ -165,7 +165,7 @@ namespace Flubu.Builds
             buildProducts.Add (
                 new SimpleBuildProduct<TRunner> (
                     productPartId,
-                    Path.Combine (projectInfo.ProjectDirectoryPath, runner.GetProjectOutputPath (projectName)),
+                    Path.Combine (projectWithFileInfo.ProjectDirectoryPath, runner.GetProjectOutputPath (projectName)),
                     productDirectoryPath,
                     null,
                     null));

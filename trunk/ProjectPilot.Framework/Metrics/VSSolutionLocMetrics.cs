@@ -39,7 +39,9 @@ namespace ProjectPilot.Framework.Metrics
                     continue;
 
                 //Calculate the metrics for each containing project.
-                VSProjectLocMetrics projectMetrics = VSProjectLocMetrics.CalculateLocForProject(projectInfo, locStatsMap);
+                VSProjectLocMetrics projectMetrics = VSProjectLocMetrics.CalculateLocForProject(
+                    (VSProjectWithFileInfo) projectInfo, 
+                    locStatsMap);
                 this.AddLocMetrics(projectMetrics);
             }
 
