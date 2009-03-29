@@ -76,5 +76,21 @@ namespace ProjectPilot.Tests.BuildScriptsTests
             Assert.AreEqual(@"Properties\AssemblyInfo.cs", compileItems.ElementAt(2).Item);
             Assert.AreEqual("System.Data", project.Items[1].Item);
         }
+
+        [Test]
+        [Row ("ProjectPilot.snk")]
+        [Row (@"AccipioTests\Samples\GallioTestResults1.xml")]
+        public void AssertFileIsInProject(string fileName)
+        {
+            const string ProjectFileName = @"..\..\..\ProjectPilot.Tests\ProjectPilot.Tests.csproj";
+            VSProject project = VSProject.Load (ProjectFileName);
+            foreach (VSProjectItem item in project.Items)
+            {
+                if (item.Item == fileName)
+                    return;
+            }
+
+            Assert.Fail ("{0} file is missing from the project data", fileName);
+        }
     }
 }

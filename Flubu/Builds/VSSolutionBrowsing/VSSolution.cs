@@ -14,9 +14,9 @@ namespace Flubu.Builds.VSSolutionBrowsing
     public class VSSolution
     {
         /// <summary>
-        /// Gets a read-only collection of <see cref="VSProjectInfo"/> objects for all of the projects in the solution.
+        /// Gets a read-only collection of <see cref="VSProjectWithFileInfo"/> objects for all of the projects in the solution.
         /// </summary>
-        /// <value>A read-only collection of <see cref="VSProjectInfo"/> objects .</value>
+        /// <value>A read-only collection of <see cref="VSProjectWithFileInfo"/> objects .</value>
         [SuppressMessage ("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
         public ReadOnlyCollection<VSProjectInfo> Projects
         {
@@ -55,7 +55,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
         /// Finds the project by its unique id.
         /// </summary>
         /// <param name="projectGuid">The project's GUID.</param>
-        /// <returns>The <see cref="VSProjectInfo"/> object representing the project.</returns>
+        /// <returns>The <see cref="VSProjectWithFileInfo"/> object representing the project.</returns>
         /// <exception cref="ArgumentException">The project was not found.</exception>
         public VSProjectInfo FindProjectById (Guid projectGuid)
         {
@@ -94,23 +94,21 @@ namespace Flubu.Builds.VSSolutionBrowsing
             log.DebugFormat("Load ('{0}')", fileName);
 
             VSSolution solution = new VSSolution (fileName);
-            ParserContext parserContext = new ParserContext ();
 
             using (Stream stream = File.Open (fileName, FileMode.Open, FileAccess.Read))
             {
                 using (StreamReader reader = new StreamReader (stream))
                 {
+                    VSSolutionFileParser parser = new VSSolutionFileParser(reader);
+
                     string line;
 
-                    line = GetNextLineToParse (reader, parserContext);
+                    line = parser.NextLine();
 
-                    if (line == null)
-                        throw new NotSupportedException ();
-
-                    Match solutionMatch = VSSolution.regexSolutionVersion.Match (line);
+                    Match solutionMatch = VSSolution.RegexSolutionVersion.Match (line);
 
                     if (solutionMatch.Success == false)
-                        throw new NotSupportedException ();
+                        parser.ThrowParserException("Not a solution file.");
 
                     solution.solutionVersion = decimal.Parse (
                         solutionMatch.Groups["version"].Value, 
@@ -118,50 +116,51 @@ namespace Flubu.Builds.VSSolutionBrowsing
 
                     while (true)
                     {
-                        line = GetNextLineToParse (reader, parserContext);
+                        line = parser.NextLine ();
 
                         if (line == null)
                             break;
 
                         // exit the loop when 'Global' section appears
-                        Match globalMatch = VSSolution.regexGlobal.Match (line);
+                        Match globalMatch = VSSolution.RegexGlobal.Match (line);
                         if (globalMatch.Success)
                             break;
 
-                        Match projectMatch = VSSolution.regexProject.Match (line);
+                        Match projectMatch = VSSolution.RegexProject.Match (line);
 
                         if (projectMatch.Success == false)
-                            throw new ArgumentException (
+                            parser.ThrowParserException (
                                 String.Format (
                                     System.Globalization.CultureInfo.InvariantCulture,
                                     "Could not parse solution file (line {0}).", 
-                                    parserContext.LineCount));
+                                    parser.LineCount));
 
                         Guid projectGuid = new Guid (projectMatch.Groups["projectGuid"].Value);
                         string projectName = projectMatch.Groups["name"].Value;
                         string projectFileName = projectMatch.Groups["path"].Value;
                         Guid projectTypeGuid = new Guid (projectMatch.Groups["projectTypeGuid"].Value);
-                        VSProjectInfo projectInfo = new VSProjectInfo(
-                            solution,
-                            projectGuid,
-                            projectName,
-                            projectFileName,
-                            projectTypeGuid);
-                        solution.projects.Add(projectInfo);
 
-                        // parse until the EndProject
-                        while (true)
+                        VSProjectInfo project = null;
+                        if (projectTypeGuid == VSProjectType.SolutionFolderProjectType.ProjectTypeGuid)
                         {
-                            line = GetNextLineToParse (reader, parserContext);
-
-                            if (line == null)
-                                throw new ArgumentException ("Unexpected end of solution file.");
-
-                            Match endProjectMatch = VSSolution.regexEndProject.Match (line);
-
-                            if (endProjectMatch.Success)
-                                break;
+                            project = new VSSolutionFilesInfo(
+                                solution,
+                                projectGuid,
+                                projectName,
+                                projectTypeGuid);
                         }
+                        else
+                        {
+                            project = new VSProjectWithFileInfo(
+                                solution,
+                                projectGuid,
+                                projectName,
+                                projectFileName,
+                                projectTypeGuid);
+                        }
+
+                        solution.projects.Add (project);
+                        project.Parse (parser);
                     }
                 }
             }
@@ -170,7 +169,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
         }
 
         /// <summary>
-        /// Loads the VisualStudio project files and fills the project data into <see cref="VSProjectInfo.Project"/> 
+        /// Loads the VisualStudio project files and fills the project data into <see cref="VSProjectWithFileInfo.Project"/> 
         /// properties for each of the project in the solution.
         /// </summary>
         public void LoadProjects()
@@ -179,41 +178,22 @@ namespace Flubu.Builds.VSSolutionBrowsing
                 delegate (VSProjectInfo projectInfo)
                 {
                     if (projectInfo.ProjectTypeGuid == VSProjectType.CSharpProjectType.ProjectTypeGuid)
-                        projectInfo.Project = VSProject.Load(projectInfo.ProjectFileNameFull);
+                        ((VSProjectWithFileInfo)projectInfo).Project = VSProject.Load (((VSProjectWithFileInfo)projectInfo).ProjectFileNameFull);
                 });
         }
+
+        public static readonly Regex RegexEndProject = new Regex (@"^EndProject$");
+        public static readonly Regex RegexGlobal = new Regex (@"^Global$");
+        public static readonly Regex RegexProject = new Regex (@"^Project\(""(?<projectTypeGuid>.*)""\) = ""(?<name>.*)"", ""(?<path>.*)"", ""(?<projectGuid>.*)""$");
+        public static readonly Regex RegexSolutionVersion = new Regex (@"^Microsoft Visual Studio Solution File, Format Version (?<version>.+)$");
 
         protected VSSolution (string fileName)
         {
             this.solutionFileName = fileName;
         }
 
-        private static string GetNextLineToParse (StreamReader reader, ParserContext parserContext)
-        {
-            string line = null;
-
-            do
-            {
-                if (reader.EndOfStream)
-                    break;
-
-                line = reader.ReadLine ();
-                parserContext.IncrementLineCount ();
-
-                //if (log.IsDebugEnabled)
-                //    log.DebugFormat ("Read line ({0}): {1}", parserContext.LineCount, line);
-            } 
-            while (line.Trim ().Length == 0 || line.StartsWith ("#", StringComparison.OrdinalIgnoreCase));
-
-            return line;
-        }
-
         private List<VSProjectInfo> projects = new List<VSProjectInfo> ();
         private VSProjectTypesDictionary projectTypesDictionary = new VSProjectTypesDictionary();
-        private static readonly Regex regexEndProject = new Regex(@"^EndProject$");
-        private static readonly Regex regexGlobal = new Regex(@"^Global$");
-        private static readonly Regex regexProject = new Regex(@"^Project\(""(?<projectTypeGuid>.*)""\) = ""(?<name>.*)"", ""(?<path>.*)"", ""(?<projectGuid>.*)""$");
-        private static readonly Regex regexSolutionVersion = new Regex(@"^Microsoft Visual Studio Solution File, Format Version (?<version>.+)$");
         private string solutionFileName;
         private decimal solutionVersion;
 

@@ -18,7 +18,10 @@ namespace ProjectPilot.Tests.BuildScriptsTests
             solution.ForEachProject(delegate (VSProjectInfo projectInfo)
             {
                 VSProjectType projectType = solution.ProjectTypesDictionary.FindProjectType(projectInfo.ProjectTypeGuid);
-                System.Console.Out.WriteLine("{0} ({1})", projectInfo.ProjectFileName, projectType.ProjectTypeName);
+                System.Console.Out.WriteLine(
+                    "{0} ({1})",
+                    projectInfo.ProjectName,
+                    projectType.ProjectTypeName);
             });
         }
 
@@ -36,8 +39,11 @@ namespace ProjectPilot.Tests.BuildScriptsTests
             solution.ForEachProject(
                 delegate(VSProjectInfo projectInfo)
                     {
-                        if (projectInfo.Project != null)
-                            vsProjectObjectsFound++;
+                        if (projectInfo is VSProjectWithFileInfo)
+                        {
+                            if (((VSProjectWithFileInfo) projectInfo).Project != null)
+                                vsProjectObjectsFound++;
+                        }
                     });
 
             Assert.AreEqual(13, vsProjectObjectsFound);
@@ -61,33 +67,14 @@ namespace ProjectPilot.Tests.BuildScriptsTests
         }
 
         [Test]
-        public void MakeSureProjectKeyIsInProject()
+        public void CheckSolutionFiles()
         {
-            VSSolution solution = VSSolution.Load (@"..\..\..\ProjectPilot.sln");
+            VSSolution solution = VSSolution.Load(@"..\..\..\ProjectPilot.sln");
 
-            solution.LoadProjects ();
-
-            VSProjectInfo projectInfo = solution.FindProjectByName("Accipio");
-            foreach (VSProjectItem item in projectInfo.Project.Items)
-            {
-                if (item.Item == "ProjectPilot.snk")
-                    return;
-            }
-
-            Assert.Fail ("ProjectPilot.snk file is missing from the project data");
-        }
-
-        [Test]
-        public void MakeSureContentFilesAreInProject ()
-        {
-            VSProject project = VSProject.Load(@"..\..\..\ProjectPilot.Tests\ProjectPilot.Tests.csproj");
-            foreach (VSProjectItem item in project.Items)
-            {
-                if (item.Item == @"AccipioTests\Samples\GallioTestResults1.xml")
-                    return;
-            }
-
-            Assert.Fail ("Content files are missing from the project data");
+            VSProjectInfo project = solution.FindProjectByName("Samples");
+            Assert.IsInstanceOfType(typeof(VSSolutionFilesInfo), project);
+            VSSolutionFilesInfo solutionFilesInfo = (VSSolutionFilesInfo) project;
+            Assert.AreEqual(17, solutionFilesInfo.Files.Count);
         }
     }
 }

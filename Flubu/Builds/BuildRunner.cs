@@ -137,23 +137,28 @@ namespace Flubu.Builds
 
             solution.ForEachProject(
                 delegate (VSProjectInfo projectInfo)
-                    {             
-                        string projectOutputPath = GetProjectOutputPath(projectInfo.ProjectName);
+                    {
+                        if (projectInfo is VSProjectWithFileInfo)
+                        {
+                            VSProjectWithFileInfo info = (VSProjectWithFileInfo) projectInfo;
 
-                        if (projectOutputPath == null)
-                            return;
+                            string projectOutputPath = GetProjectOutputPath(info.ProjectName);
 
-                        projectOutputPath = Path.Combine(projectInfo.ProjectDirectoryPath, projectOutputPath);
+                            if (projectOutputPath == null)
+                                return;
 
-                        DeleteDirectory(projectOutputPath, false);
+                            projectOutputPath = Path.Combine(info.ProjectDirectoryPath, projectOutputPath);
 
-                        string projectObjPath = String.Format(
-                            CultureInfo.InvariantCulture,
-                            @"{0}\obj\{1}",
-                            projectInfo.ProjectName,
-                            buildConfiguration);
-                        projectObjPath = Path.Combine(productRootDir, projectObjPath);
-                        DeleteDirectory(projectObjPath, false);
+                            DeleteDirectory(projectOutputPath, false);
+
+                            string projectObjPath = String.Format(
+                                CultureInfo.InvariantCulture,
+                                @"{0}\obj\{1}",
+                                projectInfo.ProjectName,
+                                buildConfiguration);
+                            projectObjPath = Path.Combine(productRootDir, projectObjPath);
+                            DeleteDirectory(projectObjPath, false);
+                        }
                     });
 
             ScriptExecutionEnvironment.LogTaskFinished();
@@ -450,15 +455,15 @@ namespace Flubu.Builds
         /// <exception cref="ArgumentException">The method could not extract the data from the project file.</exception>
         public string GetProjectOutputPath(string projectName)
         {
-            VSProjectInfo projectInfo = solution.FindProjectByName(projectName);
+            VSProjectWithFileInfo projectWithFileInfo = (VSProjectWithFileInfo) solution.FindProjectByName(projectName);
 
             // skip non-C# projects
-            if (projectInfo.ProjectTypeGuid != VSProjectType.CSharpProjectType.ProjectTypeGuid)
+            if (projectWithFileInfo.ProjectTypeGuid != VSProjectType.CSharpProjectType.ProjectTypeGuid)
                 return null;
 
             // find the project configuration
             string condition = FormatString(" '$(Configuration)|$(Platform)' == '{0}|AnyCPU' ", buildConfiguration);
-            VSProjectConfiguration projectConfiguration = projectInfo.Project.FindConfiguration(condition);
+            VSProjectConfiguration projectConfiguration = projectWithFileInfo.Project.FindConfiguration(condition);
             if (projectConfiguration == null)
                 throw new ArgumentException(
                     FormatString(
@@ -662,9 +667,10 @@ namespace Flubu.Builds
                                 webApplicationUrl));
 
                     string virtualDirectoryName = webApplicationUrl.GetComponents(UriComponents.Path, UriFormat.SafeUnescaped);
+                    VSProjectWithFileInfo project = (VSProjectWithFileInfo) Solution.FindProjectByName(projectName);
                     string localAppPath =
                         Path.GetFullPath(
-                            MakePathFromRootDir(Solution.FindProjectByName(projectName).ProjectDirectoryPath));
+                            MakePathFromRootDir(project.ProjectDirectoryPath));
 
                     CreateVirtualDirectoryTask task = new CreateVirtualDirectoryTask(
                         virtualDirectoryName,
@@ -703,13 +709,13 @@ namespace Flubu.Builds
 
             string buildLogsDir = EnsureBuildLogsTestDirectoryExists();
 
-            VSProjectInfo testProjectInfo = Solution.FindProjectByName(projectName);
-            string testedAssemblyFileName = testProjectInfo.ProjectDirectoryPath;
+            VSProjectWithFileInfo testProjectWithFileInfo = (VSProjectWithFileInfo) Solution.FindProjectByName(projectName);
+            string testedAssemblyFileName = testProjectWithFileInfo.ProjectDirectoryPath;
             string path2 = String.Format(
                 CultureInfo.InvariantCulture,
                 @"bin\{0}\{1}.dll",
                 BuildConfiguration,
-                testProjectInfo.ProjectName);
+                testProjectWithFileInfo.ProjectName);
             testedAssemblyFileName = Path.Combine(
                 testedAssemblyFileName,
                 path2);

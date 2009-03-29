@@ -12,37 +12,37 @@ namespace ProjectPilot.Framework.Metrics
     /// </summary>
     public class VSProjectLocMetrics : GroupLocMetricsBase
     {
-        public VSProjectLocMetrics(VSProjectInfo projectInfo)
-            : base(projectInfo.ProjectFileNameFull)
+        public VSProjectLocMetrics(VSProjectWithFileInfo projectWithFileInfo)
+            : base(projectWithFileInfo.ProjectFileNameFull)
         {
-            this.projectInfo = projectInfo;
+            this.projectWithFileInfo = projectWithFileInfo;
         }
 
-        public VSProjectInfo ProjectInfo
+        public VSProjectWithFileInfo ProjectWithFileInfo
         {
-            get { return projectInfo; }
+            get { return projectWithFileInfo; }
         }
 
         /// <summary>
         /// Calculates the loc metrics for the whole project.
         /// </summary>
-        /// <param name="projectInfo">The project info.</param>
+        /// <param name="projectWithFileInfo">The project info.</param>
         /// <param name="map">The map of <see cref="ILocStats"/> objects which can calculate LoC metrics for different source file types.</param>
         /// <returns>
         /// Returns the VSProjectLocMetrics instance.
         /// </returns>
-        public static VSProjectLocMetrics CalculateLocForProject(VSProjectInfo projectInfo, LocStatsMap map)
+        public static VSProjectLocMetrics CalculateLocForProject(VSProjectWithFileInfo projectWithFileInfo, LocStatsMap map)
         {
-            VSProjectLocMetrics projectMetrics = new VSProjectLocMetrics(projectInfo);
+            VSProjectLocMetrics projectMetrics = new VSProjectLocMetrics(projectWithFileInfo);
 
             //For each Item file in project
-            foreach (VSProjectItem item in projectInfo.Project.Items)
+            foreach (VSProjectItem item in projectWithFileInfo.Project.Items)
             {
                 if (item.ItemType == VSProjectItem.CompileItem ||
                     item.ItemType == VSProjectItem.Content)
                 {
                     string filePath = Path.Combine(
-                        projectMetrics.ProjectInfo.ProjectDirectoryPath,
+                        projectMetrics.ProjectWithFileInfo.ProjectDirectoryPath,
                         item.Item);
                     SourceFileLocMetrics sourceFile = SourceFileLocMetrics.CalcLocStatData(filePath, map);
 
@@ -55,6 +55,6 @@ namespace ProjectPilot.Framework.Metrics
             return projectMetrics;
         }
 
-        private VSProjectInfo projectInfo;
+        private VSProjectWithFileInfo projectWithFileInfo;
     }
 }

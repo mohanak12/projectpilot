@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{5E8B73D7-B9DC-4DCF-93B6-4BFB5E845575}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -103,7 +103,10 @@
     <Compile Include="Builds\BuildProductsRegistry.cs" />
     <Compile Include="Builds\BuildRunner.cs" />
     <Compile Include="Builds\FileBuildProduct.cs" />
+    <Compile Include="Builds\VSSolutionBrowsing\VSProjectInfo.cs" />
     <Compile Include="Builds\VSSolutionBrowsing\VSProjectItem.cs" />
+    <Compile Include="Builds\VSSolutionBrowsing\VSSolutionFileParser.cs" />
+    <Compile Include="Builds\VSSolutionBrowsing\VSSolutionFilesInfo.cs" />
     <Compile Include="Deployment\ConcreteDeploymentRunner.cs" />
     <Compile Include="Deployment\DeploymentModule.cs" />
     <Compile Include="Deployment\DeploymentModulesRegistry.cs" />
@@ -119,10 +122,9 @@
     <Compile Include="Builds\IBuildLogger.cs" />
     <Compile Include="Builds\SimpleBuildProduct.cs" />
     <Compile Include="Builds\VSProjectExtendedInfo.cs" />
-    <Compile Include="Builds\VSSolutionBrowsing\ParserContext.cs" />
     <Compile Include="Builds\VSSolutionBrowsing\VSProject.cs" />
     <Compile Include="Builds\VSSolutionBrowsing\VSProjectConfiguration.cs" />
-    <Compile Include="Builds\VSSolutionBrowsing\VSProjectInfo.cs" />
+    <Compile Include="Builds\VSSolutionBrowsing\VSProjectWithFileInfo.cs" />
     <Compile Include="Builds\VSSolutionBrowsing\VSProjectType.cs" />
     <Compile Include="Builds\VSSolutionBrowsing\VSProjectTypesDictionary.cs" />
     <Compile Include="Builds\VSSolutionBrowsing\VSSolution.cs" />
