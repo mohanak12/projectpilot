@@ -19,6 +19,12 @@ namespace Flubu.Tasks.FileSystem
             Path.GetExtension (zipFileName);
         }
 
+        public int? CompressionLevel
+        {
+            get { return compressionLevel; }
+            set { compressionLevel = value; }
+        }
+
         public override string TaskDescription
         {
             get
@@ -57,6 +63,9 @@ namespace Flubu.Tasks.FileSystem
             {
                 using (ZipOutputStream zipStream = new ZipOutputStream (zipFileStream))
                 {
+                    if (compressionLevel.HasValue)
+                        zipStream.SetLevel(compressionLevel.Value);
+
                     buffer = new byte[1024 * 1024];
 
                     foreach (string fileName in filesToZip)
@@ -128,6 +137,7 @@ namespace Flubu.Tasks.FileSystem
         private readonly string baseDir;
         private byte[] buffer;
         private List<string> filesToZip = new List<string> ();
+        private int? compressionLevel;
         private ZipFileCallback zipFileFooterCallback;
         private ZipFileCallback zipFileHeaderCallback;
         private readonly string zipFileName;
