@@ -35,12 +35,22 @@ namespace Painter
             Triangle triangle = new Triangle(new Point(290, 90), new Point(190, 290), new Point(375, 165));
             triangle.DrawingProperties = new GDIDrawingProperties();
             
+            House house = new House(new Point(350, 350), 250, 400);
+            Window window = new Window(new Point(125, 250), 50, 100);
+
+            House house1 = new House(new Point(850, 350), 150, 200);
+            House house2 = new House(new Point(950, 650), 250, 100);
+
 
             elements.Add(rectangle);
             elements.Add(circle);
             elements.Add(line);
             elements.Add(rectangle1);
             elements.Add(triangle);
+            elements.Add(house);
+            elements.Add(window);
+            elements.Add(house1);
+            //elements.Add(house2);
             
             using (Graphics g = this.pictureBoxPainting.CreateGraphics())
             {
