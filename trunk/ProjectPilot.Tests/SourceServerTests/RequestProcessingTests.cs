@@ -42,7 +42,7 @@ namespace ProjectPilot.Tests.SourceServerTests
             SourceServerRequestProcessor processor = new SourceServerRequestProcessor(fileBrowser);
 
             Uri requestUrl = new Uri("file.cs");
-            string reponseHtml = processor.ProcessRequest(requestUrl);
+            string reponseHtml = processor.ProcessRequest(requestUrl, "/VDF");
 
             File.WriteAllText("code.html", reponseHtml);
 
@@ -59,7 +59,8 @@ namespace ProjectPilot.Tests.SourceServerTests
 
             Uri requestUrl = new Uri(@"http://localhost/VDF/Accipio/BusinessActionsXmlParser.cs");
             string reponseHtml = processor.ProcessRequest(
-                requestUrl);
+                requestUrl, 
+                "/VDF");
 
             File.WriteAllText("code.html", reponseHtml);            
         }
@@ -74,7 +75,8 @@ namespace ProjectPilot.Tests.SourceServerTests
 
             Uri requestUrl = new Uri(@"http://localhost/VDF/Accipio/");
             string reponseHtml = processor.ProcessRequest(
-                requestUrl);
+                requestUrl,
+                "/VDF");
 
             File.WriteAllText("code.html", reponseHtml);
         }

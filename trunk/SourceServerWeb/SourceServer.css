@@ -1,0 +1,59 @@
+﻿body
+{
+}
+
+a.el { text-decoration: none; font-weight: bold }
+a.ln:link { text-decoration: none; font-weight: normal; color: #0000FF}
+a.ln:visited { text-decoration: none; font-weight: normal; color: #0000FF}
+a:link { text-decoration: none; }
+a:visited { text-decoration: none; }
+a:hover { text-decoration: none; background-color: #f2f2ff }
+
+.header
+{
+}
+
+.footer
+{
+}
+
+.file
+{
+    background-color: #EFEFE7;
+}
+
+.ln
+{
+}
+
+.dirlist
+{
+}
+
+.diritem
+{
+    font-weight: bold;
+}
+
+.fileitem
+{
+}
+
+.dln
+{
+    float:left;
+}
+
+.dc0
+{
+    float: left;
+    background-color: #ECF9FF;
+    width: 90%;
+}
+
+.dc1
+{
+    float: left;
+    background-color: #FBFEFF;
+    width: 90%;
+}

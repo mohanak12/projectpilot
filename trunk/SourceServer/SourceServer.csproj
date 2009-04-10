@@ -10,11 +10,13 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SourceServer</RootNamespace>
     <AssemblyName>SourceServer</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>ProjectPilot.snk</AssemblyOriginatorKeyFile>
+    <TargetFrameworkSubset>
+    </TargetFrameworkSubset>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,9 +53,6 @@
       <HintPath>..\lib\log4net-1.2.10\bin\net\2.0\release\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -82,10 +81,12 @@
     <Compile Include="PlainSourceCodeRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FileBrowser.cs" />
+    <Compile Include="RendererBase.cs" />
     <Compile Include="SourceServerRequestProcessor.cs" />
     <Compile Include="SourceServerModule.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="ProjectPilot.snk" />
   </ItemGroup>
   <ItemGroup>
