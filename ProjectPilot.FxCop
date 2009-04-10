@@ -36,6 +36,7 @@
   <Target Name="$(ProjectDir)/ProjectPilot.Framework/bin/Release/ProjectPilot.Framework.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/ProjectPilot.Portal/bin/ProjectPilot.Portal.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/ProjectPilot.Tests/bin/Release/ProjectPilot.Tests.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/SourceServer/bin/Release/SourceServer.dll" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/Stump/bin/Release/Stump.exe" Analyze="True" AnalyzeAllChildren="True" />
  </Targets>
  <Rules>
@@ -772,27 +773,6 @@
      </Module>
     </Modules>
    </Target>
-   <Target Name="$(ProjectDir)/Flubu/bin/Release/Flubu.dll">
-    <Modules>
-     <Module Name="flubu.dll">
-      <Namespaces>
-       <Namespace Name="Flubu.Tasks.FileSystem">
-        <Types>
-         <Type Name="ZipFilesTask+ZipFileCallback">
-          <Messages>
-           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Created="2009-03-29 08:13:06Z">
-            <Issue>
-             <Item>'ZipFilesTask.ZipFileCallback'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-        </Types>
-       </Namespace>
-      </Namespaces>
-     </Module>
-    </Modules>
-   </Target>
    <Target Name="$(ProjectDir)/KillXml/bin/Release/KillXml.exe">
     <Modules>
      <Module Name="killxml.exe">
@@ -1009,6 +989,57 @@
      </Module>
     </Modules>
    </Target>
+   <Target Name="$(ProjectDir)/SourceServer/bin/Release/SourceServer.dll">
+    <Modules>
+     <Module Name="sourceserver.dll">
+      <Namespaces>
+       <Namespace Name="SourceServer">
+        <Types>
+         <Type Name="FileTypeRecognizer">
+          <Members>
+           <Member Name="#RecognizeFileType(System.String)">
+            <Messages>
+             <Message TypeName="NormalizeStringsToUppercase" Category="Microsoft.Globalization" CheckId="CA1308" Created="2009-04-10 05:18:51Z">
+              <Issue Name="ToUpperInvariant">
+               <Item>'FileTypeRecognizer.RecognizeFileType(string)'</Item>
+               <Item>'string.ToLower(CultureInfo)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="PathUrlResolver">
+          <Members>
+           <Member Name="#ResolveUrl(System.Uri)">
+            <Messages>
+             <Message Id="System.String.IndexOf(System.String,System.Int32,System.StringComparison)" TypeName="UseOrdinalStringComparison" Category="Microsoft.Globalization" CheckId="CA1309" Created="2009-04-10 05:18:51Z">
+              <Issue Name="StringComparison">
+               <Item>'PathUrlResolver.ResolveUrl(Uri)'</Item>
+               <Item>StringComparison.InvariantCulture</Item>
+               <Item>'string.IndexOf(string, int, StringComparison)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="SourceServerModule">
+          <Messages>
+           <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Created="2009-04-10 05:12:00Z" FixCategory="DependsOnFix">
+            <Issue Name="DependsOnFix">
+             <Item>'SourceServerModule'</Item>
+             <Item>'WindsorContainer'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
   </Targets>
   <Rules>
    <Rule TypeName="AvoidEmptyInterfaces" Category="Microsoft.Design" CheckId="CA1040">
@@ -1065,8 +1096,8 @@
    <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
     <Resolution Name="Default" />
    </Rule>
-   <Rule TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034">
-    <Resolution Name="Default">Do not nest type {0}. Alternatively, change its accessibility so that it is not externally visible.</Resolution>
+   <Rule TypeName="NormalizeStringsToUppercase" Category="Microsoft.Globalization" CheckId="CA1308">
+    <Resolution Name="ToUpperInvariant">In method {0}, replace the call to {1} with String.ToUpperInvariant().</Resolution>
    </Rule>
    <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
     <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Resolution>
@@ -1077,6 +1108,12 @@
    <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
     <Resolution Name="Default">The type name {0} conflicts in whole or in part with the namespace name '{1}'. Change either name to eliminate the conflict.</Resolution>
     <Resolution Name="System">The type name {0} conflicts in whole or in part with the namespace name '{1}' defined in the .NET Framework. Rename the type to eliminate the conflict.</Resolution>
+   </Rule>
+   <Rule TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001">
+    <Resolution Name="DependsOnFix">Implement IDisposable on {0} because it creates members of the following IDisposable types: {1}. If {0} has previously shipped, adding new members that implement IDisposable to this type is considered a breaking change to existing consumers.</Resolution>
+   </Rule>
+   <Rule TypeName="UseOrdinalStringComparison" Category="Microsoft.Globalization" CheckId="CA1309">
+    <Resolution Name="StringComparison">{0} passes {1} as an argument to {2}. Replace this usage with StringComparison.Ordinal or StringComparison.OrdinalIgnoreCase if appropriate.</Resolution>
    </Rule>
    <Rule TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726">
     <Resolution Name="MemberParameterNoAlternate">In member {0}, replace the term '{1}' in parameter name {2} with an appropriate alternate or remove it entirely.</Resolution>

@@ -130,6 +130,8 @@
     <Compile Include="AccipioTests\CSharpTestCodeGeneratorTests.cs" />
     <Compile Include="AccipioTests\HtmlTestCodeGeneratorTests.cs" />
     <Compile Include="AccipioTests\XmlTestSuiteParserTests.cs" />
+    <Compile Include="SourceServerTests\PathUrlResolverTests.cs" />
+    <Compile Include="SourceServerTests\RequestProcessingTests.cs" />
     <Compile Include="StumpTests\DefaultLogMonitorTests.cs" />
     <Compile Include="StumpTests\DefaultLogUpdaterQueueTests.cs" />
     <Compile Include="StumpTests\LogTabsTests.cs" />
@@ -170,6 +172,10 @@
     <ProjectReference Include="..\ProjectPilot.Framework\ProjectPilot.Framework.csproj">
       <Project>{C87F10BF-4132-4B75-9C07-CB0B1FCE6440}</Project>
       <Name>ProjectPilot.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SourceServer\SourceServer.csproj">
+      <Project>{8E539DB0-3243-4D4D-B0D8-9C8057EDB829}</Project>
+      <Name>SourceServer</Name>
     </ProjectReference>
     <ProjectReference Include="..\Stump\Stump.csproj">
       <Project>{FA22A3EF-51A7-445F-AF2C-5AF5F985605F}</Project>
