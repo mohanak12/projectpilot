@@ -1,0 +1,10 @@
+﻿-css
+    - fix the line numbering links
+- add breadcrumbs in the header and footer
+- add file name in the header and footer
+- "file not found" renderer
+- "unsupported file" renderer
+    - add into the configuration
+- syntax highlighting
+- line number ranges
+    
