@@ -1,23 +1,37 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Text;
 using System.Web;
 
 namespace SourceServer
 {
-    public class DirectoryRenderer : IDirectoryRenderer
+    public class DirectoryRenderer : RendererBase, IDirectoryRenderer
     {
-        public string RenderDirectory(string directoryPath, DirectoryItem[] directoryItems)
+        public string RenderDirectory(string basePath, string directoryPath, DirectoryItem[] directoryItems)
         {
+            this.basePath = basePath;
             this.directoryPath = directoryPath;
             this.directoryItems = directoryItems;
-            this.response = new StringBuilder();
+            Response = new StringBuilder();
 
             RenderHeader();
             RenderDirectoryItems();
             RenderFooter();
 
-            return response.ToString();
+            return Response.ToString();
+        }
+
+        private string GenerateDirectoryItemUrl(DirectoryItem directoryItem)
+        {
+            string path = directoryItem.Path;
+            string parentName = Path.GetFileName(Path.GetDirectoryName(path));
+            string localName = Path.GetFileName(path);
+            path = Path.Combine(parentName, localName);
+
+            string properUrl = SwitchFilePathToUseSlashes(path);
+            return properUrl;
+            //return HttpUtility.UrlEncode(properUrl);
         }
 
         private void RenderDirectoryItems()
@@ -28,46 +42,34 @@ namespace SourceServer
 
         private void RenderDirectoryItem(DirectoryItem item)
         {
-            string slashedPath = SwitchFilePathToUseSlashes(item);
-
-            response.AppendFormat("<li><a href='{0}'>", GenerateDirectoryItemUrl(item));
-            if (item.IsDirectory)
-                response.Append("<b>");
-            response.Append(slashedPath);
-            if (item.IsDirectory)
-                response.Append("</b>");
-            response.AppendLine("</a></li>");
-        }
-
-        private string GenerateDirectoryItemUrl(DirectoryItem directoryItem)
-        {
-            string properUrl = SwitchFilePathToUseSlashes(directoryItem);
-            return HttpUtility.UrlEncode(properUrl);
-        }
-
-        private string SwitchFilePathToUseSlashes(DirectoryItem directoryItem)
-        {
-            return directoryItem.Path.Replace('\\', '/');
+            Response.AppendFormat(
+                "<li><a href='{0}' class='{1}'>", 
+                GenerateDirectoryItemUrl(item),
+                item.IsDirectory ? "diritem" : "fileitem");
+            Response.Append(Path.GetFileName(item.Path));
+            Response.AppendLine("</a></li>");
         }
 
         private void RenderFooter()
         {
-            response.Append("</ul>");
-            response.Append("</body></html>");
+            Response.Append("</ul>");
+            base.RenderFooter(basePath, directoryPath);
         }
 
         private void RenderHeader()
         {
-            response.Append("<html>");
-            response.Append("<head>");
-            response.Append("</head>");
-            response.Append("<body>");
-            response.Append("<ul>");
+            RenderHeader(basePath, directoryPath, directoryPath);
+            Response.Append("<ul class='dirlist'>");
         }
 
+        private static string SwitchFilePathToUseSlashes(string path)
+        {
+            return path.Replace('\\', '/');
+        }
+
+        private string basePath;
         private DirectoryItem[] directoryItems;
         [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         private string directoryPath;
-        private StringBuilder response;
     }
 }

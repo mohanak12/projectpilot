@@ -8,26 +8,41 @@ namespace SourceServer
     // http://shjs.sourceforge.net/
     // http://code.google.com/p/syntaxhighlighter/
 
-    public class PlainSourceCodeRenderer : ISourceCodeRenderer
+    public class PlainSourceCodeRenderer : RendererBase, ISourceCodeRenderer
     {
-        public string Render(string sourceCode, string fileName, string fileType)
+        public string Render(string basePath, string sourceCode, string fileName, string fileType)
         {
-            using (reader = new StringReader(sourceCode))
+            this.basePath = basePath;
+            this.fileName = fileName;
+
+            Response = new StringBuilder();
+            RenderHeader();
+
+            if (sourceCode != null)
             {
-                response = new StringBuilder();
+                Response.Append("<pre>");
 
-                RenderHeader();
-
-                while (reader.Peek() != -1)
+                using (reader = new StringReader(sourceCode))
                 {
-                    ReadLine();
-                    RenderLine();
+                    while (reader.Peek() != -1)
+                    {
+                        ReadLine();
+                        RenderLine();
+                    }
                 }
 
-                RenderFooter();
-
-                return response.ToString();
+                Response.Append("</pre>");
             }
+            else
+                RenderDoesNotExistMessage();
+
+            RenderFooter();
+            return Response.ToString();
+        }
+
+        private void RenderDoesNotExistMessage()
+        {
+            Response.AppendLine("Looking for it? Well, you won't find it because it doesn't exist... tough luck");
         }
 
         private void ReadLine()
@@ -38,24 +53,12 @@ namespace SourceServer
 
         private void RenderFooter()
         {
-            response.Append("</pre>");
-            response.Append("</body></html>");
+            base.RenderFooter(basePath, fileName);
         }
 
         private void RenderHeader()
         {
-            response.Append("<html>");
-            response.Append("<head>");
-            response.Append(
-                @"<style type='text/css'>
-A:link {text-decoration: none}
-A:visited {text-decoration: none}
-A:active {text-decoration: none}
-A:hover {text-decoration: underline; color: red;}
-</style>");
-            response.Append("</head>");
-            response.Append("<body>");
-            response.Append("<pre>");
+            RenderHeader(basePath, fileName, fileName);
         }
 
         private void RenderLine()
@@ -63,17 +66,24 @@ A:hover {text-decoration: underline; color: red;}
             string trimmedLine = currentLine.Trim();
             if (trimmedLine.Length > 0)
             {
-                response.AppendFormat("<a href='#{0}'>{0,5}</a>", lineCounter);
-                response.AppendFormat("<a name='{0}'>  </a>", lineCounter);
-                response.AppendLine(HttpUtility.HtmlEncode(currentLine));
+                Response.AppendFormat("<div class='dln'><a href='#{0}' class='ln'>{0,5}</a>", lineCounter);
+                Response.AppendFormat("<a name='{0}'>  </a></div>", lineCounter);
+                Response.AppendFormat("<div class='dc{0}'>", lineCounter % 2);
+                Response.Append(HttpUtility.HtmlEncode(currentLine));
+                Response.AppendLine("</div>");
             }
             else
-                response.AppendLine();
+            {
+                Response.Append("<div class='dln'>       </div>");
+                Response.AppendFormat("<div class='dc{0}'>&nbsp;", lineCounter % 2);
+                Response.AppendLine("</div>");
+            }   
         }
 
-        private int lineCounter;
+        private string basePath;
         private string currentLine;
+        private string fileName;
+        private int lineCounter;
         private StringReader reader;
-        private StringBuilder response;
     }
 }

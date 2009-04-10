@@ -28,13 +28,16 @@ namespace SourceServer
             set { plainRenderer = value; }
         }
 
-        public string ProcessRequest(Uri requestUrl)
+        public string ProcessRequest(Uri requestUrl, string basePath)
         {
             path = pathUrlResolver.ResolveUrl(requestUrl);
+            this.basePath = basePath;
 
             if (path != null)
             {
-                if (fileBrowser.IsDirectory(path))
+                if (false == fileBrowser.Exists(path))
+                    return RenderFileDoesNotExist();
+                else if (fileBrowser.IsDirectory(path))
                     return RenderDirectory();
                 else
                     return RenderFile();
@@ -46,7 +49,7 @@ namespace SourceServer
         private string RenderDirectory()
         {
             DirectoryItem[] listDirectoryItems = fileBrowser.ListDirectoryItems(path);
-            return directoryRenderer.RenderDirectory(path, listDirectoryItems);
+            return directoryRenderer.RenderDirectory(basePath, path, listDirectoryItems);
         }
 
         private string RenderFile()
@@ -60,17 +63,23 @@ namespace SourceServer
             return RenderPlainSourceCode(fileContents, path);
         }
 
+        private string RenderFileDoesNotExist()
+        {
+            return RenderPlainSourceCode(null, path);
+        }
+
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         private string RenderHighlightedSourceCode(string fileContents, string filePath, string fileType)
         {
-            return highlightedRenderer.Render(fileContents, filePath, fileType);
+            return highlightedRenderer.Render(basePath, fileContents, filePath, fileType);
         }
 
         private string RenderPlainSourceCode(string fileContents, string filePath)
         {
-            return plainRenderer.Render(fileContents, filePath, null);
+            return plainRenderer.Render(basePath, fileContents, filePath, null);
         }
 
+        private string basePath;
         private IDirectoryRenderer directoryRenderer = new DirectoryRenderer();
         private IFileTypeRecognizer fileTypeRecognizer = new FileTypeRecognizer();
         private ISourceCodeRenderer highlightedRenderer = new HighlightedSourceCodeRenderer();

@@ -995,44 +995,19 @@
       <Namespaces>
        <Namespace Name="SourceServer">
         <Types>
-         <Type Name="FileTypeRecognizer">
+         <Type Name="PathUrlResolver">
           <Members>
-           <Member Name="#RecognizeFileType(System.String)">
+           <Member Name="#ResolveUrl(System.Uri)">
             <Messages>
-             <Message TypeName="NormalizeStringsToUppercase" Category="Microsoft.Globalization" CheckId="CA1308" Created="2009-04-10 05:18:51Z">
+             <Message TypeName="NormalizeStringsToUppercase" Category="Microsoft.Globalization" CheckId="CA1308" Created="2009-04-10 11:01:47Z">
               <Issue Name="ToUpperInvariant">
-               <Item>'FileTypeRecognizer.RecognizeFileType(string)'</Item>
+               <Item>'PathUrlResolver.ResolveUrl(Uri)'</Item>
                <Item>'string.ToLower(CultureInfo)'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
           </Members>
-         </Type>
-         <Type Name="PathUrlResolver">
-          <Members>
-           <Member Name="#ResolveUrl(System.Uri)">
-            <Messages>
-             <Message Id="System.String.IndexOf(System.String,System.Int32,System.StringComparison)" TypeName="UseOrdinalStringComparison" Category="Microsoft.Globalization" CheckId="CA1309" Created="2009-04-10 05:18:51Z">
-              <Issue Name="StringComparison">
-               <Item>'PathUrlResolver.ResolveUrl(Uri)'</Item>
-               <Item>StringComparison.InvariantCulture</Item>
-               <Item>'string.IndexOf(string, int, StringComparison)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="SourceServerModule">
-          <Messages>
-           <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Created="2009-04-10 05:12:00Z" FixCategory="DependsOnFix">
-            <Issue Name="DependsOnFix">
-             <Item>'SourceServerModule'</Item>
-             <Item>'WindsorContainer'</Item>
-            </Issue>
-           </Message>
-          </Messages>
          </Type>
         </Types>
        </Namespace>
@@ -1108,12 +1083,6 @@
    <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
     <Resolution Name="Default">The type name {0} conflicts in whole or in part with the namespace name '{1}'. Change either name to eliminate the conflict.</Resolution>
     <Resolution Name="System">The type name {0} conflicts in whole or in part with the namespace name '{1}' defined in the .NET Framework. Rename the type to eliminate the conflict.</Resolution>
-   </Rule>
-   <Rule TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001">
-    <Resolution Name="DependsOnFix">Implement IDisposable on {0} because it creates members of the following IDisposable types: {1}. If {0} has previously shipped, adding new members that implement IDisposable to this type is considered a breaking change to existing consumers.</Resolution>
-   </Rule>
-   <Rule TypeName="UseOrdinalStringComparison" Category="Microsoft.Globalization" CheckId="CA1309">
-    <Resolution Name="StringComparison">{0} passes {1} as an argument to {2}. Replace this usage with StringComparison.Ordinal or StringComparison.OrdinalIgnoreCase if appropriate.</Resolution>
    </Rule>
    <Rule TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726">
     <Resolution Name="MemberParameterNoAlternate">In member {0}, replace the term '{1}' in parameter name {2} with an appropriate alternate or remove it entirely.</Resolution>

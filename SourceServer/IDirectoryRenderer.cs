@@ -1,7 +1,9 @@
+using System;
+
 namespace SourceServer
 {
     public interface IDirectoryRenderer
     {
-        string RenderDirectory(string directoryPath, DirectoryItem[] directoryItems);
+        string RenderDirectory(string basePath, string directoryPath, DirectoryItem[] directoryItems);
     }
 }

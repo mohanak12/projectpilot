@@ -11,6 +11,13 @@ namespace SourceServer
             this.configuration = configuration;
         }
 
+        public bool Exists(string path)
+        {
+            string fullPath = GetFullPath(path);
+
+            return Directory.Exists(fullPath) || File.Exists(fullPath);
+        }
+
         public bool IsDirectory(string path)
         {
             return Directory.Exists(GetFullPath(path));

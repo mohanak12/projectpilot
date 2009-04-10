@@ -4,7 +4,7 @@ namespace SourceServer
 {
     public class HighlightedSourceCodeRenderer : ISourceCodeRenderer
     {
-        public string Render(string sourceCode, string fileName, string fileType)
+        public string Render(string basePath, string sourceCode, string fileName, string fileType)
         {
             throw new NotImplementedException();
         }

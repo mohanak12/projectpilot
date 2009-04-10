@@ -1,10 +1,14 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using log4net;
 
 namespace SourceServer
 {
     public class PathUrlResolver
     {
-        public string ResolveUrl (Uri url)
+        [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
+        public string ResolveUrl(Uri url)
         {
             string path = url.LocalPath;
 
@@ -18,7 +22,17 @@ namespace SourceServer
                 start++;
             }
 
-            return path.Substring(start);
+            string realLocalPath = path.Substring(start);
+            
+            if (realLocalPath.ToLower(CultureInfo.InvariantCulture).Contains("sourceserver.css"))
+                realLocalPath = null;
+
+            if (log.IsDebugEnabled)
+                log.DebugFormat("'{0}' resolved to '{1}'", url, realLocalPath);
+
+            return realLocalPath;
         }
+
+        private static readonly ILog log = LogManager.GetLogger(typeof(PathUrlResolver));
     }
 }
