@@ -70,7 +70,7 @@ namespace SourceServer
                 Response.AppendFormat("<a name='{0}'>  </a></div>", lineCounter);
                 Response.AppendFormat("<div class='dc{0}'>", lineCounter % 2);
                 Response.Append(HttpUtility.HtmlEncode(currentLine));
-                Response.AppendLine("</div>");
+                Response.AppendLine("</div><div style='clear:left;margins:0px'/>");
             }
             else
             {
