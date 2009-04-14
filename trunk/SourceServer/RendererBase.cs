@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Web;
 
 namespace SourceServer
 {
@@ -11,6 +12,11 @@ namespace SourceServer
         {
             get { return response; }
             set { response = value; }
+        }
+
+        protected string ConvertToWebSafePath (string unsafePath)
+        {
+            return HttpUtility.UrlPathEncode(SwitchFilePathToUseSlashes(unsafePath));
         }
 
         protected virtual void RenderFooter(string basePath, string path)
@@ -50,7 +56,7 @@ namespace SourceServer
                     break;
 
                 crumbs.Insert(0, rightPart);
-                crumbsLinks.Insert(0, leftOverPath);
+                crumbsLinks.Insert(0, ConvertToWebSafePath(leftOverPath));
 
                 try
                 {
@@ -74,6 +80,11 @@ namespace SourceServer
             }
 
             response.Append("</h2>");
+        }
+
+        private static string SwitchFilePathToUseSlashes(string path)
+        {
+            return path.Replace('\\', '/');
         }
 
         private StringBuilder response;

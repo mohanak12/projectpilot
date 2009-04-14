@@ -24,14 +24,7 @@ namespace SourceServer
 
         private string GenerateDirectoryItemUrl(DirectoryItem directoryItem)
         {
-            string path = directoryItem.Path;
-            string parentName = Path.GetFileName(Path.GetDirectoryName(path));
-            string localName = Path.GetFileName(path);
-            path = Path.Combine(parentName, localName);
-
-            string properUrl = SwitchFilePathToUseSlashes(path);
-            return properUrl;
-            //return HttpUtility.UrlEncode(properUrl);
+            return basePath + ConvertToWebSafePath(directoryItem.Path);
         }
 
         private void RenderDirectoryItems()
@@ -60,11 +53,6 @@ namespace SourceServer
         {
             RenderHeader(basePath, directoryPath, directoryPath);
             Response.Append("<ul class='dirlist'>");
-        }
-
-        private static string SwitchFilePathToUseSlashes(string path)
-        {
-            return path.Replace('\\', '/');
         }
 
         private string basePath;
