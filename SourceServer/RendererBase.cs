@@ -33,13 +33,18 @@ namespace SourceServer
             response.Append("<html>");
             response.Append("<head>");
             response.AppendFormat("<title>{0}</title>", pageTitle);
-            response.AppendFormat("<link type='text/css' rel='stylesheet' href='{0}/SourceServer.css'/>", basePath);
+            response.AppendFormat("<link type='text/css' rel='stylesheet' href='{0}/SS_stuff/SourceServer.css'/>", basePath);
+            RenderHtmlHead();
             response.Append("</head>");
             response.Append("<body>");
             response.Append("<div class='header'>");
             RenderBreadcrumbs(basePath, path);
             response.Append("</div>");
             response.Append("<div class='file'>");
+        }
+
+        protected virtual void RenderHtmlHead()
+        {
         }
 
         private void RenderBreadcrumbs(string basePath, string path)

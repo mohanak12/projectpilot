@@ -38,7 +38,9 @@ namespace SourceServer
             {
                 HttpContext context = ((HttpApplication)sender).Context;
 
-                string responseText = requestProcessor.ProcessRequest(context.Request.Url, context.Request.ApplicationPath);
+                string responseText = requestProcessor.ProcessRequest(
+                    context.Request.Url, 
+                    context.Request.ApplicationPath);
 
                 if (responseText != null)
                 {

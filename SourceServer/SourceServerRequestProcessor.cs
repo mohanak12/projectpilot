@@ -16,16 +16,10 @@ namespace SourceServer
             set { fileTypeRecognizer = value; }
         }
 
-        public ISourceCodeRenderer HighlightedRenderer
+        public ISourceCodeRenderer SourceCodeRenderer
         {
-            get { return highlightedRenderer; }
-            set { highlightedRenderer = value; }
-        }
-
-        public ISourceCodeRenderer PlainRenderer
-        {
-            get { return plainRenderer; }
-            set { plainRenderer = value; }
+            get { return sourceCodeRenderer; }
+            set { sourceCodeRenderer = value; }
         }
 
         public string ProcessRequest(Uri requestUrl, string basePath)
@@ -57,35 +51,28 @@ namespace SourceServer
             string fileContents = fileBrowser.ReadFile(path);
             string fileType = fileTypeRecognizer.RecognizeFileType(path);
 
-            //if (fileType != null)
-            //    return RenderHighlightedSourceCode(fileContents, filePath, fileType);
-            //else
-            return RenderPlainSourceCode(fileContents, path);
+            if (fileType != null)
+                return RenderSourceCodeFile(fileContents, fileType, path);
+
+            return String.Empty;
         }
 
         private string RenderFileDoesNotExist()
         {
-            return RenderPlainSourceCode(null, path);
+            return RenderSourceCodeFile(null, null, path);
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        private string RenderHighlightedSourceCode(string fileContents, string filePath, string fileType)
+        private string RenderSourceCodeFile(string fileContents, string fileType, string filePath)
         {
-            return highlightedRenderer.Render(basePath, fileContents, filePath, fileType);
-        }
-
-        private string RenderPlainSourceCode(string fileContents, string filePath)
-        {
-            return plainRenderer.Render(basePath, fileContents, filePath, null);
+            return sourceCodeRenderer.Render(basePath, fileContents, filePath, fileType);
         }
 
         private string basePath;
         private IDirectoryRenderer directoryRenderer = new DirectoryRenderer();
-        private IFileTypeRecognizer fileTypeRecognizer = new FileTypeRecognizer();
-        private ISourceCodeRenderer highlightedRenderer = new HighlightedSourceCodeRenderer();
-        private ISourceCodeRenderer plainRenderer = new PlainSourceCodeRenderer();
         private IFileBrowser fileBrowser;
+        private IFileTypeRecognizer fileTypeRecognizer = new FileTypeRecognizer();
         private string path;
         private PathUrlResolver pathUrlResolver = new PathUrlResolver();
+        private ISourceCodeRenderer sourceCodeRenderer = new SourceCodeRenderer();
     }
 }

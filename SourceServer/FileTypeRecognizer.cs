@@ -16,7 +16,7 @@ namespace SourceServer
                 case ".h":
                     return "cpp";
                 case ".cs":
-                    return "c#";
+                    return "csharp";
                 case ".css":
                     return "css";
                 case ".java":
@@ -35,9 +35,14 @@ namespace SourceServer
                 case ".xsd":
                 case ".xsl":
                 case ".xslt":
+                case ".wsdl":
+                case ".build":
                     return "xml";
-                default:
+                case ".dll":
+                case ".exe":
                     return null;
+                default:
+                    return "text";
             }
         }
     }
