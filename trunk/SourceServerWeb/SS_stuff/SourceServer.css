@@ -15,6 +15,7 @@ a:hover { text-decoration: none; background-color: #f2f2ff }
 
 .footer
 {
+    clear:both;
 }
 
 .file
@@ -22,8 +23,27 @@ a:hover { text-decoration: none; background-color: #f2f2ff }
     background-color: #EFEFE7;
 }
 
+.divln
+{
+    padding: 4px;
+    float: left;
+    line-height: 1.1em !important;
+    font-family: Consolas, Monaco, 'Bitstream Vera Sans Mono' , 'Courier New' , Courier, 'monospace !important';
+    font-weight: normal !important;
+    font-style: normal !important;
+    font-size: 1em !important;
+}
+
 .ln
 {
+}
+
+.divcode
+{
+    clear:right;
+    float:left;
+    width:90%;
+    white-space: pre;
 }
 
 .dirlist
@@ -39,21 +59,16 @@ a:hover { text-decoration: none; background-color: #f2f2ff }
 {
 }
 
-.dln
-{
-    float:left;
-}
-
 .dc0
 {
-    float: left;
+    width:90%;
     background-color: #ECF9FF;
-    width: 90%;
+    white-space: pre;
 }
 
 .dc1
 {
-    float: left;
+    width:90%;
     background-color: #FBFEFF;
-    width: 90%;
+    white-space: pre;
 }
