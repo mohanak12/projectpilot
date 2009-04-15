@@ -23,8 +23,9 @@ namespace SourceServer
             }
 
             string realLocalPath = path.Substring(start);
-            
-            if (realLocalPath.ToLower(CultureInfo.InvariantCulture).Contains("sourceserver.css"))
+            string realLocalPathLower = realLocalPath.ToLower(CultureInfo.InvariantCulture);
+
+            if (realLocalPathLower.Contains("ss_stuff"))
                 realLocalPath = null;
 
             if (log.IsDebugEnabled)
