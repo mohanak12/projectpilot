@@ -6,9 +6,9 @@ using log4net;
 
 namespace Flubu
 {
-    public class Log4netLoger: IFlubuLogger
+    public class Log4NetLogger: IFlubuLogger
     {
-        public Log4netLoger(string name)
+        public Log4NetLogger(string name)
         {
            log = LogManager.GetLogger(name);
         }
