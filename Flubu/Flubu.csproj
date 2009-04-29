@@ -9,11 +9,14 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Flubu</RootNamespace>
     <AssemblyName>Flubu</AssemblyName>
-    <SccProjectName>Hsl.Brejc.Scripting</SccProjectName>
-    <SccLocalPath>..</SccLocalPath>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
     <SccAuxPath>
     </SccAuxPath>
-    <SccProvider>MSSCCI:ClearCase</SccProvider>
+    <SccProvider>
+    </SccProvider>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>ProjectPilot.snk</AssemblyOriginatorKeyFile>
     <FileUpgradeFlags>
@@ -130,6 +133,7 @@
     <Compile Include="Builds\VSSolutionBrowsing\VSSolution.cs" />
     <Compile Include="Builds\WebApplicationBuildProduct.cs" />
     <Compile Include="IFlubuLogger.cs" />
+    <Compile Include="Log4netLoger.cs" />
     <Compile Include="MessageBeepType.cs" />
     <Compile Include="MulticoloredConsoleLogger.cs" />
     <Compile Include="OperatingSystem.cs" />
