@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using log4net;
 
@@ -29,7 +30,7 @@ namespace Flubu
 
         public void LogError(string format, params object[] args)
         {
-            log.ErrorFormat(format, args);
+            log.ErrorFormat(CultureInfo.InvariantCulture, format, args);
         }
 
         public void LogMessage(string message)
@@ -39,7 +40,7 @@ namespace Flubu
 
         public void LogMessage(string format, params object[] args)
         {
-            log.InfoFormat(format, args);
+            log.InfoFormat(CultureInfo.InvariantCulture, format, args);
         }
 
         public void LogRunnerFinished(bool success, TimeSpan buildDuration)
@@ -52,8 +53,9 @@ namespace Flubu
             else
                 log.Error("BUILD FAILED");
 
-            log.InfoFormat("Build finish time: {0:g}", DateTime.Now);
+            log.InfoFormat(CultureInfo.InvariantCulture, "Build finish time: {0:g}", DateTime.Now);
             log.InfoFormat(
+                CultureInfo.InvariantCulture, 
                 "Build duration: {0:D2}:{1:D2}:{2:D2} ({3:d} seconds)",
                 buildDuration.Hours,
                 buildDuration.Minutes,
@@ -68,7 +70,7 @@ namespace Flubu
 
         public void LogTargetStarted(string targetName)
         {
-            log.InfoFormat("{0}:", targetName);
+            log.InfoFormat(CultureInfo.InvariantCulture, "{0}:", targetName);
             executionDepthCounter++;
         }
 
@@ -79,7 +81,7 @@ namespace Flubu
 
         public void LogTaskStarted(string taskDescription)
         {
-            log.InfoFormat("TASK: {0}", taskDescription);
+            log.InfoFormat(CultureInfo.InvariantCulture, "TASK: {0}", taskDescription);
             executionDepthCounter++;
         }
 
