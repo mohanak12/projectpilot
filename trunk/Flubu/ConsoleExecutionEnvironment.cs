@@ -35,7 +35,7 @@ namespace Flubu
 
             log4net.Config.BasicConfigurator.Configure (appender);
 
-            this.AddLogger(new Log4netLoger(scriptName));
+            this.AddLogger(new Log4NetLogger(scriptName));
             this.AddLogger(new MulticoloredConsoleLogger(System.Console.Out));
         }
 
