@@ -10,6 +10,24 @@ namespace Accipio.Reporting
         {
             this.testSuiteId = testSuiteId;
         }
+        
+        public TestExecutionStatus Status
+        {
+            get
+            {
+                bool allSuccessful = true;
+
+                foreach (TestCaseRun testCaseRun in testCasesRuns.Values)
+                {
+                    if (testCaseRun.Status == TestExecutionStatus.NotImplemented)
+                        return TestExecutionStatus.NotImplemented;
+                    if (testCaseRun.Status == TestExecutionStatus.Failed)
+                        allSuccessful = false;
+                }
+
+                return allSuccessful ? TestExecutionStatus.Successful : TestExecutionStatus.Failed;
+            }
+        }
 
         public string TestSuiteId
         {
