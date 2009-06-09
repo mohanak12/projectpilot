@@ -91,6 +91,11 @@ namespace Flubu.Builds
             get { return lastZipPackageFileName; }
         }
 
+        public string LibDir
+        {
+            get { return libDir; }
+        }
+
         public string ProductId
         {
             get { return productId; }
@@ -659,6 +664,13 @@ namespace Flubu.Builds
                 {
                     string projectName = info.Key;
 
+                    if (info.Value.ApplicationPoolName != null)
+                    {
+                        this.CreateApplicationPool(
+                            info.Value.ApplicationPoolName,
+                            CreateApplicationPoolMode.UpdateIfExists);
+                    }
+
                     Uri webApplicationUrl = info.Value.WebApplicationUrl;
                     if (0 != String.Compare(webApplicationUrl.Host, "localhost", StringComparison.OrdinalIgnoreCase))
                         throw new ArgumentException(
@@ -676,6 +688,9 @@ namespace Flubu.Builds
                         virtualDirectoryName,
                         localAppPath,
                         CreateVirtualDirectoryMode.UpdateIfExists);
+
+                    if (info.Value.ApplicationPoolName != null)
+                        task.ApplicationPoolName = info.Value.ApplicationPoolName;
 
                     task.Execute(this.ScriptExecutionEnvironment);
 
@@ -697,9 +712,19 @@ namespace Flubu.Builds
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "1#")]
         public TRunner RegisterAsWebProject(string projectName, string webApplicationUrl)
         {
+            return RegisterAsWebProject(projectName, webApplicationUrl, null);
+        }
+
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "1#")]
+        public TRunner RegisterAsWebProject(
+            string projectName, 
+            string webApplicationUrl,
+            string applicationPoolName)
+        {
             VSProjectExtendedInfo projectExtendedInfo = projectExtendedInfos[projectName];
             projectExtendedInfo.IsWebProject = true;
             projectExtendedInfo.WebApplicationUrl = new Uri(webApplicationUrl);
+            projectExtendedInfo.ApplicationPoolName = applicationPoolName;
             return ReturnThisTRunner();
         }
 

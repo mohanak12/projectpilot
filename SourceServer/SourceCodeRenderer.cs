@@ -35,22 +35,18 @@ namespace SourceServer
         protected override void RenderHtmlHead()
         {
             base.RenderHtmlHead();
+            Response.AppendFormat(@"	<script type='text/javascript' src='{0}/SS_stuff/scripts/shCore.js'></script>", basePath);
             Response.AppendFormat(
-                @"	<script type='text/javascript' src='{0}/SS_stuff/scripts/shCore.js'></script>
-	<script type='text/javascript' src='{0}/SS_stuff/scripts/shBrushCpp.js'></script>
-	<script type='text/javascript' src='{0}/SS_stuff/scripts/shBrushCSharp.js'></script>
-	<script type='text/javascript' src='{0}/SS_stuff/scripts/shBrushCss.js'></script>
-	<script type='text/javascript' src='{0}/SS_stuff/scripts/shBrushJava.js'></script>
-	<script type='text/javascript' src='{0}/SS_stuff/scripts/shBrushJScript.js'></script>
-	<script type='text/javascript' src='{0}/SS_stuff/scripts/shBrushPhp.js'></script>
-	<script type='text/javascript' src='{0}/SS_stuff/scripts/shBrushPlain.js'></script>
-	<script type='text/javascript' src='{0}/SS_stuff/scripts/shBrushSql.js'></script>
-	<script type='text/javascript' src='{0}/SS_stuff/scripts/shBrushVb.js'></script>
-	<script type='text/javascript' src='{0}/SS_stuff/scripts/shBrushXml.js'></script>
-	<link type='text/css' rel='stylesheet' href='{0}/SS_stuff/styles/shCore.css'/>
-	<link type='text/css' rel='stylesheet' href='{0}/SS_stuff/styles/shThemeDefault.css'/>
+                @"	<script type='text/javascript' src='{0}/SS_stuff/scripts/shBrush{1}.js'></script>", 
+                basePath,
+                fileType);
+            Response.AppendFormat(
+@"<link type='text/css' rel='stylesheet' href='{0}/SS_stuff/styles/shCore.css'/>
+	<link type='text/css' rel='stylesheet' href='{0}/SS_stuff/styles/shThemeMidnight.css'/>
 	<script type='text/javascript'>
-		SyntaxHighlighter.config.clipboardSwf = '{0}/SS_stuff/scripts/clipboard.swf';
+		SyntaxHighlighter.defaults['auto-links'] = false;
+		SyntaxHighlighter.defaults['gutter'] = false;
+		SyntaxHighlighter.defaults['smart-tabs'] = false;
 		SyntaxHighlighter.all();
 	</script>", 
               basePath);

@@ -10,6 +10,12 @@ namespace Flubu.Builds
             this.projectInfo = projectInfo;
         }
 
+        public string ApplicationPoolName
+        {
+            get { return applicationPoolName; }
+            set { applicationPoolName = value; }
+        }
+
         public bool IsWebProject
         {
             get { return isWebProject; }
@@ -27,6 +33,7 @@ namespace Flubu.Builds
             get { return projectInfo; }
         }
 
+        private string applicationPoolName;
         private bool isWebProject;
         private readonly VSProjectInfo projectInfo;
         private Uri webApplicationUrl;
