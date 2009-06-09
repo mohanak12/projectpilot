@@ -22,12 +22,15 @@ namespace SourceServer
                 case ".java":
                     return "java";
                 case ".js":
-                    return "js";
+                    return "jscript";
                 case ".php":
                     return "php";
                 case ".sql":
                     return "sql";
                 case ".vb":
+                case ".asp":
+                case ".bas":
+                case ".cls":
                     return "vb";
                 case ".htm":
                 case ".html":
@@ -42,7 +45,7 @@ namespace SourceServer
                 case ".exe":
                     return null;
                 default:
-                    return "text";
+                    return "plain";
             }
         }
     }

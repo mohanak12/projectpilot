@@ -25,7 +25,7 @@ a:hover { text-decoration: none; background-color: #f2f2ff }
 
 .divln
 {
-    padding: 4px;
+    padding-top: 8px;
     float: left;
     line-height: 1.1em !important;
     font-family: Consolas, Monaco, 'Bitstream Vera Sans Mono' , 'Courier New' , Courier, 'monospace !important';
