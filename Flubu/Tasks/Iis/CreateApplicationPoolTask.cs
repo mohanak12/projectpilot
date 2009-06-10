@@ -6,6 +6,18 @@ namespace Flubu.Tasks.Iis
 {
     public class CreateApplicationPoolTask : TaskBase
     {
+        public CreateApplicationPoolTask (string applicationPoolName, CreateApplicationPoolMode mode)
+        {
+            this.applicationPoolName = applicationPoolName;
+            this.mode = mode;
+        }
+
+        public bool ClassicManagedPipelineMode
+        {
+            get { return classicManagedPipelineMode; }
+            set { classicManagedPipelineMode = value; }
+        }
+
         public override string TaskDescription
         {
             get
@@ -15,12 +27,6 @@ namespace Flubu.Tasks.Iis
                     "Create application pool '{0}'.", 
                     applicationPoolName);
             }
-        }
-
-        public CreateApplicationPoolTask (string applicationPoolName, CreateApplicationPoolMode mode)
-        {
-            this.applicationPoolName = applicationPoolName;
-            this.mode = mode;
         }
 
         public static void Execute(
@@ -74,6 +80,10 @@ namespace Flubu.Tasks.Iis
                         applicationPoolEntry = parent.Children.Add (applicationPoolName, "IIsApplicationPool");
                     }
 
+                    applicationPoolEntry.InvokeSet(
+                        "ManagedPipelineMode", 
+                        new object[] { classicManagedPipelineMode ? 1 : 0 });
+
                     applicationPoolEntry.CommitChanges ();
                 }
                 finally
@@ -87,6 +97,7 @@ namespace Flubu.Tasks.Iis
         }
 
         private readonly string applicationPoolName;
+        private bool classicManagedPipelineMode;
         private CreateApplicationPoolMode mode;
     }
 }
