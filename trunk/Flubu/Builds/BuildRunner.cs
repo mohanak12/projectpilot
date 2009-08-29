@@ -735,17 +735,10 @@ namespace Flubu.Builds
             string buildLogsDir = EnsureBuildLogsTestDirectoryExists();
 
             VSProjectWithFileInfo testProjectWithFileInfo = (VSProjectWithFileInfo) Solution.FindProjectByName(projectName);
-            string testedAssemblyFileName = testProjectWithFileInfo.ProjectDirectoryPath;
-            string path2 = String.Format(
-                CultureInfo.InvariantCulture,
-                @"bin\{0}\{1}.dll",
-                BuildConfiguration,
-                testProjectWithFileInfo.ProjectName);
-            testedAssemblyFileName = Path.Combine(
-                testedAssemblyFileName,
-                path2);
-
-            testedAssemblyFileName = Path.GetFullPath(MakePathFromRootDir(testedAssemblyFileName));
+            string projectTargetPath = GetProjectOutputPath (testProjectWithFileInfo.ProjectName);
+            projectTargetPath = Path.Combine (testProjectWithFileInfo.ProjectDirectoryPath, projectTargetPath);
+            projectTargetPath = projectTargetPath + testProjectWithFileInfo.ProjectName + ".dll";
+            projectTargetPath = Path.GetFullPath (MakePathFromRootDir (projectTargetPath));
 
             string gallioEchoExePath = MakePathFromRootDir(Path.Combine(libDir, @"Gallio\bin\Gallio.Echo.exe"));
 
@@ -763,7 +756,7 @@ namespace Flubu.Builds
                 }
 
                 ProgramRunner
-                    .AddArgument(testedAssemblyFileName)
+                    .AddArgument(projectTargetPath)
                     .AddArgument("/report-directory:{0}", buildLogsDir)
                     .AddArgument("/report-name-format:TestResults-{0}", TestRuns)
                     .AddArgument("/report-type:xml")
@@ -777,7 +770,7 @@ namespace Flubu.Builds
                         .AddArgument("//ea")
                         .AddArgument("MbUnit.Framework.TestFixtureAttribute")
                         .AddArgument("//w")
-                        .AddArgument(Path.GetDirectoryName(testedAssemblyFileName))
+                        .AddArgument(Path.GetDirectoryName(projectTargetPath))
                         .AddArgument("//v")
                         .Run(MakePathFromRootDir(Path.Combine(libDir, @"NCover v1.5.8\NCover.Console.exe")));
 
