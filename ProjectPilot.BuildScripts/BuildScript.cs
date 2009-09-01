@@ -28,9 +28,12 @@ namespace ProjectPilot.BuildScripts
                     runner.AddTarget("package")
                         .SetDescription("Packages all the build products into ZIP files")
                         .Do(TargetPackage).DependsOn("load.solution");
+                    runner.AddTarget("stats")
+                        .SetDescription("Generates project statistics")
+                        .Do(r => r.SourceMonitor());
                     runner.AddTarget("rebuild")
                         .SetDescription("Rebuilds the project, runs tests and packages the build products.")
-                        .SetAsDefault().DependsOn("compile", "unit.tests", "package", "prepare.web");
+                        .SetAsDefault().DependsOn("compile", "unit.tests", "stats", "package", "prepare.web");
 
                     // actual run
                     if (args.Length == 0)
@@ -82,7 +85,18 @@ namespace ProjectPilot.BuildScripts
                 .CleanOutput()
                 .GenerateCommonAssemblyInfo()
                 .CompileSolution()
-                .FxCop();
+                .FxCop()
+                .Gendarme(
+                    "Accipio", 
+                    "Accipio.Console", 
+                    "Headless", 
+                    "KillXml", 
+                    "ProjectPilot.Common",
+                    "ProjectPilot.Extras",
+                    "ProjectPilot.Framework",
+                    "ProjectPilot.Log4NetBrowser",
+                    "ProjectPilot.Portal",
+                    "Stump");
             runner
                 .RunTarget("unit.tests");
         }
