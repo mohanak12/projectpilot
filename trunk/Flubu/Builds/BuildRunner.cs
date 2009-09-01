@@ -404,6 +404,56 @@ namespace Flubu.Builds
             return ReturnThisTRunner();
         }
 
+        public TRunner Gendarme(params string[] projectNames)
+        {
+            string reportDir = EnsureBuildLogsTestDirectoryExists();
+            string reportFileName = string.Format(
+                CultureInfo.InvariantCulture,
+                "{0}.GendarmeReport.xml", 
+                this.ProductId);
+            string gendarmeXmlReportFile = Path.Combine(reportDir, reportFileName);
+
+            this.ProgramRunner
+                .AddArgument("--html")
+                .AddArgument("{0}.GendarmeReport.html", this.ProductId)
+                .AddArgument("--xml")
+                .AddArgument(gendarmeXmlReportFile)
+                .AddArgument("--severity")
+                .AddArgument("all");
+
+            new List<string>(projectNames).ForEach(
+                projectName =>
+                {
+                    string outputPath = GetProjectOutputPath(projectName);
+                    if (outputPath == null)
+                        return;
+
+                    VSProjectWithFileInfo projectInfo = (VSProjectWithFileInfo)Solution.FindProjectByName(projectName);
+
+                    string projectOutputType = projectInfo.Project.Properties["OutputType"];
+                    string projectAssemblyName = projectInfo.Project.Properties["AssemblyName"];
+                    string projectAssemblyFileName = string.Format(
+                        CultureInfo.InvariantCulture,
+                        "{0}.{1}",
+                        projectAssemblyName,
+                        projectOutputType == "Library" ? "dll" : "exe");
+
+                    string projectAssemblyFullPath = Path.Combine(
+                        Path.Combine(
+                            projectInfo.ProjectDirectoryPath,
+                            outputPath),
+                        projectAssemblyFileName);
+
+                    this.ProgramRunner.AddArgument(projectAssemblyFullPath);
+                });
+
+            string gendarmePath = MakePathFromRootDir(LibDir + @"\Gendarme\gendarme.exe");
+            AssertFileExists("Gendarme.exe", gendarmePath);
+            ProgramRunner.Run(gendarmePath, true);
+
+            return ReturnThisTRunner();
+        }
+
         public TRunner GenerateCommonAssemblyInfo()
         {
             ScriptExecutionEnvironment.LogTaskStarted("Generating CommonAssemblyInfo file");
@@ -829,6 +879,67 @@ namespace Flubu.Builds
         {
             this.productRootDir = productRootDir;
             return ReturnThisTRunner();
+        }
+
+        public TRunner SourceMonitor()
+        {
+            string sourceMonitorProjectFile = MakePathFromRootDir(this.ProductId + ".smp");
+            AssertFileExists("SourceMonitor project file", sourceMonitorProjectFile);
+
+            string copyOfProjectFile = MakePathFromRootDir(this.ProductId + ".copy.smp");
+
+            CopyFile(sourceMonitorProjectFile, copyOfProjectFile, true);
+
+            string sourceMonitorCommandFile = MakePathFromRootDir("SourceMonitor.Commands.xml");
+
+            string reportDir = EnsureBuildLogsTestDirectoryExists();
+            string sourceMonitorCommands = ConstructSourceMonitorCommands(
+                copyOfProjectFile,
+                reportDir);
+            File.WriteAllText(
+                sourceMonitorCommandFile,
+                sourceMonitorCommands);
+
+            this.ProgramRunner
+                .AddArgument("/C")
+                .AddArgument(sourceMonitorCommandFile)
+                .Run(MakePathFromRootDir(LibDir + @"\SourceMonitor\SourceMonitor.exe"));
+
+            return ReturnThisTRunner();
+        }
+
+        protected static string ConstructSourceMonitorCommands(
+            string sourceMonitorProjectFile,
+            string reportsOutputDir)
+        {
+            const string SourceMonitorCommandsFormat = @"<?xml version='1.0' encoding='utf-8'?>
+<sourcemonitor_commands>
+  <write_log>true</write_log>
+  <command>
+    <project_file>{0}</project_file>
+    <include_subdirectories>true</include_subdirectories>
+    <export>
+      <export_insert>xml-stylesheet type='text/xsl' href='lib\SourceMonitor\Contributions\van_de_Burgt\SourceMonitor.xslt'</export_insert>
+      <export_file>{1}\sm_summary.xml</export_file>
+      <export_type>1</export_type>
+    </export>
+  </command>
+  <command>
+    <project_file>{0}</project_file>
+    <export>
+      <export_insert>xml-stylesheet type='text/xsl' href='lib\SourceMonitor\Contributions\van_de_Burgt\SourceMonitor.xslt'</export_insert>
+      <export_file>{1}\sm_details.xml</export_file>
+      <export_type>2</export_type>
+    </export>
+    <delete_checkpoint />
+  </command>
+</sourcemonitor_commands>";
+
+            return string.Format(
+                CultureInfo.InvariantCulture,
+                SourceMonitorCommandsFormat,
+                sourceMonitorProjectFile,
+                reportsOutputDir);
         }
 
         /// <summary>
