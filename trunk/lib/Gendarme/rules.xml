@@ -2,17 +2,14 @@
 	<ruleset name="self-test">
 		<rules include="*" from="Gendarme.Rules.BadPractice.dll"/>
 		<rules include="*" from="Gendarme.Rules.Concurrency.dll" />
-		<rules include="*" from="Gendarme.Rules.Correctness.dll"/>
+		<rules include="*" exclude="NullDerefRule" from="Gendarme.Rules.Correctness.dll"/>
 		<rules include="*" from="Gendarme.Rules.Design.dll"/>
-		<rules include="*" from="Gendarme.Rules.Design.Generic.dll"/>
-		<rules include="*" from="Gendarme.Rules.Design.Linq.dll"/>
 		<rules include="*" from="Gendarme.Rules.Exceptions.dll" />
 		<rules include="*" from="Gendarme.Rules.Interoperability.dll"/>
 		<rules include="*" from="Gendarme.Rules.Naming.dll"/>
 		<rules include="*" from="Gendarme.Rules.Performance.dll" />
 		<rules include="*" from="Gendarme.Rules.Portability.dll" />
 		<rules include="*" from="Gendarme.Rules.Security.dll" />
-		<rules include="*" from="Gendarme.Rules.Security.Cas.dll" />
 		<rules include="*" from="Gendarme.Rules.Serialization.dll" />
 		<rules include="*" from="Gendarme.Rules.Smells.dll"/>
 		<rules include="*" from="Gendarme.Rules.Ui.dll" />
@@ -22,17 +19,14 @@
 	<ruleset name="default">
 		<rules include="*" from="Gendarme.Rules.BadPractice.dll"/>
 		<rules include="*" from="Gendarme.Rules.Concurrency.dll" />
-		<rules include="*" from="Gendarme.Rules.Correctness.dll"/>
+		<rules include="*" exclude="NullDerefRule" from="Gendarme.Rules.Correctness.dll"/>
 		<rules include="*" from="Gendarme.Rules.Design.dll"/>
-		<rules include="*" from="Gendarme.Rules.Design.Generic.dll"/>
-		<rules include="*" from="Gendarme.Rules.Design.Linq.dll"/>
 		<rules include="*" from="Gendarme.Rules.Exceptions.dll" />
 		<rules include="*" from="Gendarme.Rules.Interoperability.dll"/>
 		<rules include="*" from="Gendarme.Rules.Naming.dll"/>
 		<rules include="*" from="Gendarme.Rules.Performance.dll" />
 		<rules include="*" from="Gendarme.Rules.Portability.dll" />
 		<rules include="*" from="Gendarme.Rules.Security.dll" />
-		<rules include="*" from="Gendarme.Rules.Security.Cas.dll" />
 		<rules include="*" from="Gendarme.Rules.Serialization.dll" />
 		<rules include="*" from="Gendarme.Rules.Ui.dll" />
 		<rules include="*" from="Gendarme.Rules.Maintainability.dll"/>
@@ -66,9 +60,6 @@
 	<ruleset name="security">
 		<rules include="*" from="Gendarme.Rules.Security.dll" />
 	</ruleset>
-	<ruleset name="security-cas">
-		<rules include="*" from="Gendarme.Rules.Security.Cas.dll" />
-	</ruleset>
 	<ruleset name="performance">
 		<rules include="*" from="Gendarme.Rules.Performance.dll" />
 	</ruleset>
@@ -92,12 +83,6 @@
 	</ruleset>
 	<ruleset name="design">
 		<rules include="*" from="Gendarme.Rules.Design.dll"/>
-	</ruleset>
-	<ruleset name="design-generic">
-		<rules include="*" from="Gendarme.Rules.Design.Generic.dll"/>
-	</ruleset>
-	<ruleset name="design-linq">
-		<rules include="*" from="Gendarme.Rules.Design.Linq.dll"/>
 	</ruleset>
 	<ruleset name="interoperability">
 		<rules include="*" from="Gendarme.Rules.Interoperability.dll"/>

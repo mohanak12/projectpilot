@@ -37,15 +37,16 @@ namespace Flubu.Builds
         /// Adds all VisualStudio Web projects registered in the solution to the list of build products.
         /// </summary>
         /// <param name="productPartId">The ID of the product part Web projects will belong to.</param>
+        /// <param name="includeDebugFiles">Indicates whether the PDB files should be included in the package.</param>
         /// <returns>
         /// This same instance of the <see cref="BuildProductsRegistry{TRunner}"/>.
         /// </returns>
-        public BuildProductsRegistry<TRunner> AddAllWebProjects(string productPartId)
+        public BuildProductsRegistry<TRunner> AddAllWebProjects (string productPartId, bool includeDebugFiles)
         {
             foreach (VSProjectExtendedInfo projectExtendedInfo in runner.ProjectExtendedInfos.Values)
             {
                 if (projectExtendedInfo.IsWebProject)
-                    AddProject(productPartId, projectExtendedInfo.ProjectInfo.ProjectName);
+                    AddProject (productPartId, projectExtendedInfo.ProjectInfo.ProjectName, includeDebugFiles);
             }
 
             return this;
@@ -125,13 +126,21 @@ namespace Flubu.Builds
         /// <param name="productPartId">The ID of the product part this project belongs to.</param>
         /// <param name="projectName">Name of the project. This name will be used as a directory name where all the product's
         /// files will be copied.</param>
+        /// <param name="includeDebugFiles">Indicates whether the PDB files should be included in the package.</param>
         /// <returns>
         /// This same instance of the <see cref="BuildProductsRegistry{TRunner}"/>.
         /// </returns>
-        public BuildProductsRegistry<TRunner> AddProject(string productPartId, string projectName)
+        public BuildProductsRegistry<TRunner> AddProject(
+            string productPartId, 
+            string projectName,
+            bool includeDebugFiles)
         {
             string productDirectoryName = projectName;
-            return this.AddProject(productPartId, projectName, productDirectoryName);
+            return this.AddProject(
+                productPartId, 
+                projectName, 
+                productDirectoryName,
+                includeDebugFiles);
         }
 
         /// <summary>
@@ -141,10 +150,15 @@ namespace Flubu.Builds
         /// <param name="projectName">Name of the project.</param>
         /// <param name="productDirectoryPath">The path relative to the package directory where this product's files will be copied.
         /// If set to <see cref="string.Empty"/>, the files will be copied directly on the top-level directory.</param>
+        /// <param name="includeDebugFiles">Indicates whether the PDB files should be included in the package.</param>
         /// <returns>
         /// This same instance of the <see cref="BuildProductsRegistry{TRunner}"/>.
         /// </returns>
-        public BuildProductsRegistry<TRunner> AddProject (string productPartId, string projectName, string productDirectoryPath)
+        public BuildProductsRegistry<TRunner> AddProject (
+            string productPartId, 
+            string projectName, 
+            string productDirectoryPath,
+            bool includeDebugFiles)
         {
             VSProjectWithFileInfo projectWithFileInfo = (VSProjectWithFileInfo) runner.Solution.FindProjectByName (projectName);
 
@@ -162,13 +176,17 @@ namespace Flubu.Builds
                 }
             }
 
+            string excludeFilter = null;
+            if (false == includeDebugFiles)
+                excludeFilter = @".*\.pdb$";
+
             buildProducts.Add (
                 new SimpleBuildProduct<TRunner> (
                     productPartId,
                     Path.Combine (projectWithFileInfo.ProjectDirectoryPath, runner.GetProjectOutputPath (projectName)),
                     productDirectoryPath,
                     null,
-                    null));
+                    excludeFilter));
 
             return this;            
         }
