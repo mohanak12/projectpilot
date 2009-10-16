@@ -11,7 +11,7 @@
 .if t .sp .5v
 .if n .sp
 ..
-.TH Gendarme "Gendarme 2.4.0.0"
+.TH Gendarme "Gendarme 2.0.0.0"
 .SH NAME
 Gendarme \- Rule-based code analysis for Mono::
 .SH SYNOPSIS
@@ -43,17 +43,6 @@ Save the output, formatted as HTML, to the specified file.
 .I "--ignore ignore-file"
 Do not report the known defects that are part of the specified file.
 .TP
-.I "--limit N"
-Stop reporting after N defects are found.
-.TP
-.I "--severity [all | audit[+] | low[+|-] | medium[+|-] | high[+|-] | critical[-]],...
-Filter the reported defects to include the specified severity levels.
-Default is 'medium+' (i.e. low and audit levels are ignored).
-.TP
-.I "--confidence [all | low[+] | normal[+|-] | high[+|-] | total[-]],...
-Filter the reported defects to include the specified confidence levels.
-Default is 'normal+' (i.e. low level is ignored).
-.TP
 .I "--quiet"
 Display minimal output (results) from the runner.
 .TP
@@ -75,11 +64,6 @@ line.
 This files contains a list of all the rulesets available to Gendarme. Each 
 ruleset includes a list of assemblies in which some, or all, rules can be
 verified (include) or not (exclude).
-+.TP
-+.I gendarme.exe.config
-+Used by debug versions of Gendarme to enable logging for rules. A config
-+file will be generated automatically by the make file. To enable logging
-+for a rule add a switch using the rule's name and set the value to 1.
 .SH ENVIRONMENT VARIABLES
 .TP
 .I GENDARME_COLOR
