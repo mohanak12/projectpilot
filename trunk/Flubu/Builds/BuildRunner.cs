@@ -366,7 +366,10 @@ namespace Flubu.Builds
 
             string fxReportPath = EnsureBuildLogsTestDirectoryExists();
             fxReportPath = Path.Combine(fxReportPath, productId);
-            fxReportPath = String.Format(CultureInfo.InvariantCulture, "{0}.FxCopReport.xml", fxReportPath);
+            fxReportPath = String.Format(
+                CultureInfo.InvariantCulture, 
+                "{0}.FxCopReport.xml", 
+                fxReportPath);
 
             ProgramRunner
                 .AddArgument(@"/project:{0}", fxProjectPath)
@@ -374,7 +377,8 @@ namespace Flubu.Builds
                 .AddArgument(@"/dictionary:CustomDictionary.xml")
                 .AddArgument(@"/ignoregeneratedcode");
             
-            string fxCopCmdPath = MakePathFromRootDir(Path.Combine(libDir, @"Microsoft FxCop 1.36\FxCopCmd.exe"));
+            string fxCopCmdPath = MakePathFromRootDir(
+                Path.Combine(libDir, @"Microsoft FxCop 1.36\FxCopCmd.exe"));
             AssertFileExists("FxCopCmd.exe", fxCopCmdPath);
             ProgramRunner.Run(fxCopCmdPath, true);
 
@@ -395,7 +399,19 @@ namespace Flubu.Builds
                         .Run(MakePathFromRootDir(Path.Combine(libDir, @"Microsoft FxCop 1.36\FxCop.exe")));
                 }
                 else if (File.Exists(fxReportPath))
-                    File.Copy(fxReportPath, ccnetDir);
+                {
+                    string fxcopReportFileName = Path.GetFileName(fxReportPath);
+                    try
+                    {
+                        this.CopyFile(fxReportPath, Path.Combine(ccnetDir, fxcopReportFileName), true);
+                    }
+                    catch (IOException ex)
+                    {
+                        Log(
+                            "Warning: could not copy FxCop report file '{0}' to the CC.NET dir", 
+                            fxReportPath);
+                    }
+                }
 
                 Fail("FxCop found violations in the code.");
             }
