@@ -47,7 +47,26 @@
                         <xsl:value-of select="."/>
                       </xsl:for-each>
                     </message>
-                  </case>
+                      <xsl:for-each select="../g:testLog/g:attachments/g:attachment">
+                        <attachments>
+                          <attachment>
+                            <xsl:attribute name="name">
+                              <xsl:value-of select="@name"/>
+                            </xsl:attribute>
+                            <xsl:attribute name="contentType">
+                              <xsl:value-of select="@contentType"/>
+                            </xsl:attribute>
+                            <xsl:attribute name="contentPath">
+                              <xsl:value-of select="@contentPath"/>
+                            </xsl:attribute>
+                            <xsl:attribute name="contentDisposition">
+                              <xsl:value-of select="@contentDisposition"/>
+                            </xsl:attribute>
+                            <xsl:value-of select="."/>
+                          </attachment>
+                        </attachments>
+                      </xsl:for-each>
+                    </case>
                 </xsl:for-each>
               </suite>
             </xsl:if>
