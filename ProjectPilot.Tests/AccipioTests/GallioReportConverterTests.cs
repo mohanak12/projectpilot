@@ -9,6 +9,43 @@ namespace ProjectPilot.Tests.AccipioTests
     public class GallioReportConverterTests
     {
         [Test]
+        public void Attachment()
+        {
+            if (Directory.Exists("TestLogs"))
+                Directory.Delete("TestLogs", true);
+
+            string[] args = new string[]
+                                {
+                                    @"-i=..\..\AccipioTests\Samples\LastTestResults.xml",
+                                    "-o=TestLogs"
+                                };
+            GallioReportConverter gallioReportConverter = new GallioReportConverter();
+            Assert.AreEqual(0, gallioReportConverter.Execute(args));
+
+            string[] files = Directory.GetFiles("TestLogs");
+            Assert.IsTrue(files.Length > 0);
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(files[0]);
+            XmlNamespaceManager xmlNamespaceManager = new XmlNamespaceManager(xmlDoc.NameTable);
+            xmlNamespaceManager.AddNamespace("a", "http://projectpilot/AccipioTestRunReport.xsd");
+
+            XmlNode node = xmlDoc.SelectSingleNode(
+                "/a:report/a:testRun/a:suites/a:suite/a:case[@id='Failed']/a:attachments/a:attachment",
+                xmlNamespaceManager);
+            
+            Assert.IsNotNull(node);
+            Assert.AreEqual("Failed test", node.Attributes["name"].Value, "Name attribute");
+            
+            node = xmlDoc.SelectSingleNode(
+                "/a:report/a:testRun/a:suites/a:suite/a:case[@id='Failed1']/a:attachments/a:attachment",
+                xmlNamespaceManager);
+
+            Assert.IsNotNull(node);
+            Assert.AreEqual(@"LastTestResults\b689dd6e6cc01622\Failed1 test.png", node.Attributes["contentPath"].Value, "cantentPath attribute");
+        }
+
+        [Test]
         public void TransformGallioTestResults()
         {
             string[] args = new string[]
