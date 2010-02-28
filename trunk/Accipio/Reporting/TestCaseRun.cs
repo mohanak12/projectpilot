@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Accipio.Reporting
 {
@@ -38,9 +39,19 @@ namespace Accipio.Reporting
             get { return userStories; }
         }
 
-        public void AddUserStory (string userStoryId)
+        public IList<Attachment> Attachments
+        {
+            get { return attachments; }
+        }
+
+        public void AddUserStory(string userStoryId)
         {
             userStories.Add(userStoryId, null);
+        }
+
+        public void AddAttachment(Attachment attachment)
+        {
+            attachments.Add(attachment);
         }
 
         private TimeSpan duration;
@@ -48,5 +59,6 @@ namespace Accipio.Reporting
         private string message;
         private string testCaseId;
         private Dictionary<string, string> userStories = new Dictionary<string, string>();
+        private List<Attachment> attachments = new List<Attachment>();
     }
 }

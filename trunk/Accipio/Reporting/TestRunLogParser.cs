@@ -260,13 +260,51 @@ namespace Accipio.Reporting
                         ReadMessage(testCaseRun, xmlReader);
                         break;
 
+                    case "attachments":
+                        ReadAttachments(testCaseRun, xmlReader);
+                        break;
+
                     default:
                         {
                             throw new NotSupportedException(
                                 string.Format(
                                     CultureInfo.InvariantCulture,
-                                    "Not supported xml node type. Node type = {0}",
-                                    xmlReader.NodeType));
+                                    "Not supported xml node type. Node type = {0} [{1}]",
+                                    xmlReader.NodeType, 
+                                    xmlReader.Name));
+                        }
+                }
+            }
+
+            xmlReader.Read();
+        }
+
+        private void ReadAttachments(TestCaseRun testCaseRun, XmlReader xmlReader)
+        {
+            xmlReader.Read();
+            
+            while (xmlReader.NodeType != XmlNodeType.EndElement)
+            {
+                switch (xmlReader.Name)
+                {
+                    case "attachment":
+                        string attachmentName = ReadAttribute(xmlReader, "name");
+                        string attachmentContentType = ReadAttribute(xmlReader, "contentType");
+                        string attachmentPath = ReadAttribute(xmlReader, "contentPath");
+                        string attachmentContentDisposition = ReadAttribute(xmlReader, "contentDisposition");
+                        string content = xmlReader.ReadElementContentAsString();
+                        Attachment attachment = new Attachment(attachmentName, attachmentContentType, attachmentPath, attachmentContentDisposition, content);
+                        testCaseRun.AddAttachment(attachment);
+                        break;
+
+                    default:
+                        {
+                            throw new NotSupportedException(
+                                string.Format(
+                                    CultureInfo.InvariantCulture,
+                                    "Not supported xml node type. Node type = {0} [{1}]",
+                                    xmlReader.NodeType,
+                                    xmlReader.Name));
                         }
                 }
             }

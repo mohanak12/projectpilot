@@ -95,6 +95,7 @@
     <Compile Include="Inservio\Server\ServicePlugInRegistration.cs" />
     <Compile Include="Inservio\Server\ServicesRepository.cs" />
     <Compile Include="IHtmlTestReportGenerator.cs" />
+    <Compile Include="Reporting\Attachment.cs" />
     <Compile Include="Reporting\DefaultTestReportGraphGenerator.cs" />
     <Compile Include="Reporting\ITestReportGraphDataGenerator.cs" />
     <Compile Include="Reporting\ITestReportGraphGenerator.cs" />
