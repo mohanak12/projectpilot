@@ -20,6 +20,14 @@ namespace Flubu
             this.path = path;
         }
 
+        public string FileName
+        {
+            get
+            {
+                return System.IO.Path.GetFileName(path);
+            }
+        }
+
         /// <summary>
         /// Gets the file path contained in this object.
         /// </summary>
