@@ -50,8 +50,6 @@ namespace Flubu
                     foreach (string programArg in programArgs)
                         argumentLineBuilder.AppendFormat("\"{0}\" ", programArg);
 
-                    runner.Log("Running program '{0}' ('{1}')", programExePath, argumentLineBuilder);
-
                     ProcessStartInfo processStartInfo = new ProcessStartInfo(programExePath, argumentLineBuilder.ToString());
                     processStartInfo.CreateNoWindow = true;
                     processStartInfo.ErrorDialog = false;
@@ -63,6 +61,12 @@ namespace Flubu
                         processStartInfo.WorkingDirectory = Path.GetDirectoryName(programExePath);
                     else
                         processStartInfo.WorkingDirectory = workingDirectory;
+
+                    runner.Log(
+                        "Running program '{0}' (work. dir='{1}', args = '{2}')",
+                        programExePath,
+                        processStartInfo.WorkingDirectory,
+                        argumentLineBuilder);
 
                     process.StartInfo = processStartInfo;
                     process.ErrorDataReceived += new DataReceivedEventHandler(Process_ErrorDataReceived);

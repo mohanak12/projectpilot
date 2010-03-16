@@ -82,6 +82,15 @@ namespace Flubu.Builds
             }
         }
 
+        public bool IsRunningUnderHudson
+        {
+            get
+            {
+                string hudsonEnv = System.Environment.GetEnvironmentVariable("BUILD_NUMBER");
+                return hudsonEnv != null;
+            }
+        }
+
         /// <summary>
         /// Gets the file name of the last zip package that was produced by calling the <see cref="PackageBuildProduct"/> method.
         /// </summary>
@@ -391,26 +400,32 @@ namespace Flubu.Builds
             // which are then removed from the code
             if ((ProgramRunner.LastExitCode != 0 && ProgramRunner.LastExitCode != 4) || isReportFileGenerated)
             {
-                if (false == IsRunningUnderCruiseControl)
+                if (IsRunningUnderCruiseControl)
+                {
+                    if (File.Exists(fxReportPath))
+                    {
+                        string fxcopReportFileName = Path.GetFileName(fxReportPath);
+                        try
+                        {
+                            this.CopyFile(fxReportPath, Path.Combine(ccnetDir, fxcopReportFileName), true);
+                        }
+                        catch (IOException ex)
+                        {
+                            Log(
+                                "Warning: could not copy FxCop report file '{0}' to the CC.NET dir",
+                                fxReportPath);
+                        }                        
+                    }
+                }
+                else if (IsRunningUnderHudson)
+                {
+                }
+                else
                 {
                     // run FxCop GUI
                     ProgramRunner
                         .AddArgument(fxProjectPath)
                         .Run(MakePathFromRootDir(Path.Combine(libDir, @"Microsoft FxCop 1.36\FxCop.exe")));
-                }
-                else if (File.Exists(fxReportPath))
-                {
-                    string fxcopReportFileName = Path.GetFileName(fxReportPath);
-                    try
-                    {
-                        this.CopyFile(fxReportPath, Path.Combine(ccnetDir, fxcopReportFileName), true);
-                    }
-                    catch (IOException ex)
-                    {
-                        Log(
-                            "Warning: could not copy FxCop report file '{0}' to the CC.NET dir", 
-                            fxReportPath);
-                    }
                 }
 
                 Fail("FxCop found violations in the code.");
@@ -550,6 +565,49 @@ namespace Flubu.Builds
                         projectName));
 
             return projectConfiguration.Properties["OutputPath"];
+        }
+
+        public TRunner HudsonFetchBuildVersion()
+        {
+            ScriptExecutionEnvironment.LogTaskStarted("Fetching the build version");
+
+            if (IsRunningUnderHudson)
+            {
+                ScriptExecutionEnvironment.LogMessage("Running under Hudson");
+
+                string projectVersionFileName = MakePathFromRootDir(ProductId) + ".ProjectVersion.txt";
+
+                if (false == File.Exists(projectVersionFileName))
+                    Fail("Project version file ('{0}') is missing.", projectVersionFileName);
+
+                using (Stream stream = File.Open(projectVersionFileName, FileMode.Open))
+                {
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        string versionAsString = reader.ReadLine();
+                        BuildVersion = new Version(versionAsString);
+                    }
+                }
+
+                string hudsonBuildNumberString = Environment.GetEnvironmentVariable("BUILD_NUMBER");
+                int hudsonBuildNumber = int.Parse(hudsonBuildNumberString, CultureInfo.InvariantCulture);
+
+                string svnRevisionNumberString = Environment.GetEnvironmentVariable("SVN_REVISION");
+                int svnRevisionNumber = int.Parse(svnRevisionNumberString, CultureInfo.InvariantCulture);
+
+                BuildVersion = new Version(
+                    BuildVersion.Major,
+                    BuildVersion.Minor,
+                    svnRevisionNumber,
+                    hudsonBuildNumber);
+
+                Log("Project build version: {0}", BuildVersion);
+
+                ScriptExecutionEnvironment.LogTaskFinished();
+                return ReturnThisTRunner();
+            }
+            else
+                return FetchBuildVersion();
         }
 
         /// <summary>
