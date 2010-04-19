@@ -63,9 +63,9 @@ namespace ProjectPilot.Tests.FlubuTests
 
             directoryFilesLister = MockRepository.GenerateMock<IDirectoryFilesLister>();
             directoryFilesLister.Expect(x => x.ListFiles(
-                Path.GetFullPath("somedir1"))).Return(filesList1);
+                Path.GetFullPath("somedir1"), true)).Return(filesList1);
             directoryFilesLister.Expect(x => x.ListFiles(
-                Path.GetFullPath("somedir2"))).Return(filesList2);
+                Path.GetFullPath("somedir2"), true)).Return(filesList2);
 
             DirectorySource dir1 = new DirectorySource(
                 logger,

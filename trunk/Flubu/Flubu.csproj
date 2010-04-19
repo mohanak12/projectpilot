@@ -143,6 +143,7 @@
     <Compile Include="Packaging\CopyProcessor.cs" />
     <Compile Include="Packaging\DirectoryFilesLister.cs" />
     <Compile Include="Packaging\DirectorySource.cs" />
+    <Compile Include="Packaging\NegativeFilter.cs" />
     <Compile Include="Packaging\PackagedFileInfo.cs" />
     <Compile Include="Packaging\FilesList.cs" />
     <Compile Include="Packaging\FilterCollection.cs" />

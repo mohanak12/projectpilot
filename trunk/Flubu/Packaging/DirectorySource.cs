@@ -10,12 +10,22 @@ namespace Flubu.Packaging
             ILogger logger,
             IDirectoryFilesLister directoryFilesLister, 
             string id, 
-            string directoryName)
+            string directoryName) : this (logger, directoryFilesLister, id, directoryName, true)
+        {
+        }
+
+        public DirectorySource(
+            ILogger logger,
+            IDirectoryFilesLister directoryFilesLister,
+            string id,
+            string directoryName,
+            bool recursive)
         {
             this.logger = logger;
             this.directoryFilesLister = directoryFilesLister;
             this.id = id;
-            this.directoryPath = new FullPath(directoryName);
+            this.recursive = recursive;
+            directoryPath = new FullPath(directoryName);
         }
 
         public string Id
@@ -32,7 +42,7 @@ namespace Flubu.Packaging
             if (false == directoryPathString.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal))
                 directoryPathStringLength++;
 
-            foreach (string fileName in directoryFilesLister.ListFiles(directoryPathString))
+            foreach (string fileName in directoryFilesLister.ListFiles(directoryPathString, recursive))
             {
                 if (false == fileName.StartsWith(
                     directoryPathString, 
@@ -61,5 +71,6 @@ namespace Flubu.Packaging
         private readonly string id;
         private readonly FullPath directoryPath;
         private IFileFilter filter;
+        private bool recursive = true;
     }
 }
