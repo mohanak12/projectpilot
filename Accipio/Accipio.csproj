@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{97619247-E00B-41B7-AF3F-D24A35F6602A}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -34,7 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Gallio, Version=3.0.4.485, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL">
+    <Reference Include="Gallio, Version=3.1.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Gallio\bin\Gallio.dll</HintPath>
     </Reference>
@@ -42,9 +42,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\log4net-1.2.10\bin\net\2.0\release\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="MbUnit.Framework, Version=2.4.2.175, Culture=neutral, PublicKeyToken=5e72ecd30bc408d5">
+    <Reference Include="MbUnit, Version=3.1.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\Gallio\bin\MbUnit2\MbUnit.Framework.dll</HintPath>
+      <HintPath>..\lib\Gallio\bin\MbUnit.dll</HintPath>
     </Reference>
     <Reference Include="NVelocity, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
