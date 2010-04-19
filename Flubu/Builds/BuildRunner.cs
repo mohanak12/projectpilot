@@ -409,7 +409,7 @@ namespace Flubu.Builds
                         {
                             this.CopyFile(fxReportPath, Path.Combine(ccnetDir, fxcopReportFileName), true);
                         }
-                        catch (IOException ex)
+                        catch (IOException)
                         {
                             Log(
                                 "Warning: could not copy FxCop report file '{0}' to the CC.NET dir",
