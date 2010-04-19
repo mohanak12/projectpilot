@@ -779,98 +779,15 @@
       <Namespaces>
        <Namespace Name="Flubu.Packaging">
         <Types>
-         <Type Name="CompositeFilesSource">
-          <Members>
-           <Member Name="#filter">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2010-04-19 18:27:24Z">
-              <Issue>
-               <Item>'CompositeFilesSource.filter'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="DirectorySource">
           <Members>
-           <Member Name="#IsFilePassedThrough(System.String)">
+           <Member Name="#ListFiles()">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2010-04-19 18:27:24Z">
+             <Message Id="System.String.EndsWith(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2010-04-19 19:42:37Z">
               <Issue>
-               <Item>'DirectorySource.IsFilePassedThrough(string)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="FilterCollection">
-          <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2010-04-19 18:27:24Z">
-            <Issue Name="TypeNoAlternate">
-             <Item>'FilterCollection'</Item>
-             <Item>Collection</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="IFileRenamer">
-          <Messages>
-           <Message TypeName="AvoidEmptyInterfaces" Category="Microsoft.Design" CheckId="CA1040" Created="2010-04-19 18:27:24Z">
-            <Issue>
-             <Item>'IFileRenamer'</Item>
-            </Issue>
-           </Message>
-           <Message Id="Renamer" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-04-19 18:27:24Z">
-            <Issue Name="Type">
-             <Item>Renamer</Item>
-             <Item>'IFileRenamer'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="LocalPath">
-          <Members>
-           <Member Name="#.ctor(System.String)">
-            <Messages>
-             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2010-04-19 18:27:24Z">
-              <Issue Name="IncorrectMessage">
-               <Item>'LocalPath.LocalPath(string)'</Item>
-               <Item>path</Item>
-               <Item>'message'</Item>
-               <Item>'ArgumentException'</Item>
-              </Issue>
-              <Issue Name="IncorrectParameterName">
-               <Item>'LocalPath.LocalPath(string)'</Item>
-               <Item>Path must be local</Item>
-               <Item>'paramName'</Item>
-               <Item>'ArgumentException'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Zipper">
-          <Members>
-           <Member Name="#logger">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2010-04-19 18:27:24Z">
-              <Issue>
-               <Item>'Zipper.logger'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ZipFiles(System.String,System.String,System.Nullable`1&lt;System.Int32&gt;,System.Collections.Generic.IEnumerable`1&lt;System.String&gt;)">
-            <Messages>
-             <Message Id="3#" TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725" Created="2010-04-19 18:27:24Z">
-              <Issue>
-               <Item>'Zipper.ZipFiles(string, string, int?, IEnumerable&lt;string&gt;)'</Item>
-               <Item>'filesToZip'</Item>
-               <Item>'files'</Item>
-               <Item>'IZipper.ZipFiles(string, string, int?, IEnumerable&lt;string&gt;)'</Item>
+               <Item>'DirectorySource.ListFiles()'</Item>
+               <Item>'string.EndsWith(string)'</Item>
+               <Item>'string.EndsWith(string, StringComparison)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1167,9 +1084,6 @@
    <Rule TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707">
     <Resolution Name="Type">Remove the underscores from type name {0}.</Resolution>
    </Rule>
-   <Rule TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711">
-    <Resolution Name="TypeNoAlternate">Rename type name {0} so that it does not end in '{1}'.</Resolution>
-   </Rule>
    <Rule TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716">
     <Resolution Name="Member">Rename virtual/interface member {0} so that it no longer conflicts with the reserved language keyword '{1}'. Using a reserved keyword as the name of a virtual/interface member makes it harder for consumers in other languages to override/implement the member.</Resolution>
     <Resolution Name="Namespace">Rename namespace {0} so that it no longer conflicts with the reserved language keyword '{1}'. Using a reserved keyword as the name of a namespace makes it harder for consumers in other languages to use the namespace.</Resolution>
@@ -1179,7 +1093,6 @@
     <Resolution Name="MissingConstructor">Add the following constructor to {0}: {1}.</Resolution>
    </Rule>
    <Rule TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208">
-    <Resolution Name="IncorrectMessage">Method {0} passes parameter name '{1}' as the {2} argument to a {3} constructor. Replace this argument with a descriptive message and pass the parameter name in the correct position.</Resolution>
     <Resolution Name="IncorrectParameterName">Method {0} passes '{1}' as the {2} argument to a {3} constructor. Replace this argument with one of the method's parameter names. Note that the provided parameter name should have the exact casing as declared on the method.</Resolution>
    </Rule>
    <Rule TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033">
@@ -1187,9 +1100,6 @@
    </Rule>
    <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
     <Resolution Name="Default" />
-   </Rule>
-   <Rule TypeName="ParameterNamesShouldMatchBaseDeclaration" Category="Microsoft.Naming" CheckId="CA1725">
-    <Resolution Name="Default">In member {0}, change parameter name {1} to {2} in order to match the identifier as it has been declared in {3}.</Resolution>
    </Rule>
    <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
     <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Resolution>

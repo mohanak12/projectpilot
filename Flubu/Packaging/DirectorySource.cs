@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Flubu.Packaging
 {
@@ -26,10 +27,15 @@ namespace Flubu.Packaging
         {
             List<PackagedFileInfo> files = new List<PackagedFileInfo>();
 
-            foreach (string fileName in directoryFilesLister.ListFiles(directoryPath.ToString()))
+            string directoryPathString = directoryPath.ToString();
+            int directoryPathStringLength = directoryPathString.Length;
+            if (false == directoryPathString.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal))
+                directoryPathStringLength++;
+
+            foreach (string fileName in directoryFilesLister.ListFiles(directoryPathString))
             {
                 if (false == fileName.StartsWith(
-                    directoryPath.ToString(), 
+                    directoryPathString, 
                     StringComparison.OrdinalIgnoreCase))
                     throw new InvalidOperationException();
 
@@ -37,7 +43,7 @@ namespace Flubu.Packaging
                     continue;
 
                 LocalPath localPath = new LocalPath(
-                    fileName.Substring(directoryPath.ToString().Length + 1));
+                    fileName.Substring(directoryPathStringLength));
                 PackagedFileInfo packagedFileInfo = new PackagedFileInfo(new FullPath(fileName), localPath);
                 files.Add(packagedFileInfo);
             }
