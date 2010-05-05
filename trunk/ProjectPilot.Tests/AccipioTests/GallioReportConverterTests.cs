@@ -19,8 +19,8 @@ namespace ProjectPilot.Tests.AccipioTests
                                     @"-i=..\..\AccipioTests\Samples\LastTestResults.xml",
                                     "-o=TestLogs"
                                 };
-            GallioReportConverter gallioReportConverter = new GallioReportConverter();
-            Assert.AreEqual(0, gallioReportConverter.Execute(args));
+            ReportConverter reportConverter = new ReportConverter();
+            Assert.AreEqual(0, reportConverter.Execute(args));
 
             string[] files = Directory.GetFiles("TestLogs");
             Assert.IsTrue(files.Length > 0);
@@ -53,8 +53,29 @@ namespace ProjectPilot.Tests.AccipioTests
                                     "-i=..\\..\\..\\Data\\Samples\\AcceptanceTestResults.xml",
                                     "-o=TestLogs"
                                 };
-            GallioReportConverter gallioReportConverter = new GallioReportConverter();
-            Assert.AreEqual(0, gallioReportConverter.Execute(args));
+            ReportConverter reportConverter = new ReportConverter();
+            Assert.AreEqual(0, reportConverter.Execute(args));
+
+            HtmlTestReportGeneratorCommand cmd = new HtmlTestReportGeneratorCommand();
+            args = new string[]
+                       {
+                           "-i=TestLogs"
+                       };
+            Assert.AreEqual(0, cmd.Execute(args));
+        }
+
+        [Test]
+        public void TransformNUnitTestResults()
+        {
+            string[] args = new string[]
+                                {
+                                    "-i=..\\..\\..\\Data\\Samples\\Hsl.SsmTest.SystemTest.dll-results.xml",
+                                    "-o=TestLogs",
+                                    "-x=TestReportTransform.NUnit.xslt",
+                                    "-t=NUnit"
+                                };
+            ReportConverter reportConverter = new ReportConverter();
+            Assert.AreEqual(0, reportConverter.Execute(args));
 
             HtmlTestReportGeneratorCommand cmd = new HtmlTestReportGeneratorCommand();
             args = new string[]
@@ -75,8 +96,8 @@ namespace ProjectPilot.Tests.AccipioTests
                                     @"-i=..\..\AccipioTests\Samples\GallioTestResults1.xml",
                                     "-o=TestLogs"
                                 };
-            GallioReportConverter gallioReportConverter = new GallioReportConverter();
-            Assert.AreEqual(0, gallioReportConverter.Execute(args));
+            ReportConverter reportConverter = new ReportConverter();
+            Assert.AreEqual(0, reportConverter.Execute(args));
 
             string[] files = Directory.GetFiles("TestLogs");
             Assert.IsTrue(files.Length > 0);
@@ -108,8 +129,8 @@ namespace ProjectPilot.Tests.AccipioTests
                                     @"-i=..\..\AccipioTests\Samples\GallioTestResults1.xml",
                                     "-o=TestLogs"
                                 };
-            GallioReportConverter gallioReportConverter = new GallioReportConverter();
-            Assert.AreEqual(0, gallioReportConverter.Execute(args));
+            ReportConverter reportConverter = new ReportConverter();
+            Assert.AreEqual(0, reportConverter.Execute(args));
 
             string[] files = Directory.GetFiles("TestLogs");
             Assert.IsTrue(files.Length > 0);

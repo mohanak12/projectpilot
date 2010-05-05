@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{FBCD
 		Data\Samples\ccnet.stats.xml = Data\Samples\ccnet.stats.xml
 		Data\Samples\GallioReportSample.xml = Data\Samples\GallioReportSample.xml
 		Data\Samples\Hsl.Ganesha.DBAccess.csproj = Data\Samples\Hsl.Ganesha.DBAccess.csproj
+		Data\Samples\Hsl.SsmTest.SystemTest.dll-results.xml = Data\Samples\Hsl.SsmTest.SystemTest.dll-results.xml
 		Data\Samples\LocSample.cs = Data\Samples\LocSample.cs
 		Data\Samples\LogConfig.xml = Data\Samples\LogConfig.xml
 		Data\Samples\ProjectPilot.Framework.csproj = Data\Samples\ProjectPilot.Framework.csproj
