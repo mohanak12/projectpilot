@@ -16,7 +16,7 @@ namespace Accipio.Console
             this.args = args;
             AddCommand(new TestSuiteSchemaGeneratorCommand());
             AddCommand(new TestCodeGeneratorCommand());
-            AddCommand(new GallioReportConverter());
+            AddCommand(new ReportConverter());
             AddCommand(new HtmlTestReportGeneratorCommand());
         }
 

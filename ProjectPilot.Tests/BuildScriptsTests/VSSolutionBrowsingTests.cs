@@ -74,7 +74,7 @@ namespace ProjectPilot.Tests.BuildScriptsTests
             VSProjectInfo project = solution.FindProjectByName("Samples");
             Assert.IsInstanceOfType(typeof(VSSolutionFilesInfo), project);
             VSSolutionFilesInfo solutionFilesInfo = (VSSolutionFilesInfo) project;
-            Assert.AreEqual(17, solutionFilesInfo.Files.Count);
+            Assert.AreEqual(18, solutionFilesInfo.Files.Count);
         }
     }
 }
