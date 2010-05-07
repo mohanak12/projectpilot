@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Xml;
@@ -91,6 +92,7 @@ namespace Accipio.Console
                 fileName);
         }
 
+        [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         private DateTime GetTestRunEndTime()
         {
             XmlDocument xmlDocument = new XmlDocument();

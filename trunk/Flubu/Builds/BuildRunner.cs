@@ -156,7 +156,7 @@ namespace Flubu.Builds
                         {
                             VSProjectWithFileInfo info = (VSProjectWithFileInfo) projectInfo;
 
-                            string projectOutputPath = GetProjectOutputPath(info.ProjectName);
+                            string projectOutputPath = GetProjectOutputPath(info);
 
                             if (projectOutputPath == null)
                                 return;
@@ -536,12 +536,26 @@ namespace Flubu.Builds
         /// Gets the output path for a specified VisualStudio project. The output path is relative
         /// to the directory where the project file is located.
         /// </summary>
-        /// <param name="projectName">Name of the project.</param>
+        /// <param name="projectName">Project name.</param>
         /// <returns>The output path or <c>null</c> if the project is not compatibile.</returns>
         /// <exception cref="ArgumentException">The method could not extract the data from the project file.</exception>
         public string GetProjectOutputPath(string projectName)
         {
-            VSProjectWithFileInfo projectWithFileInfo = (VSProjectWithFileInfo) solution.FindProjectByName(projectName);
+            VSProjectWithFileInfo projectWithFileInfo = (VSProjectWithFileInfo)solution.FindProjectByName(projectName);
+            return GetProjectOutputPath(projectWithFileInfo);
+        }
+
+        /// <summary>
+        /// Gets the output path for a specified VisualStudio project. The output path is relative
+        /// to the directory where the project file is located.
+        /// </summary>
+        /// <param name="projectWithFileInfo">Project info.</param>
+        /// <returns>The output path or <c>null</c> if the project is not compatibile.</returns>
+        /// <exception cref="ArgumentException">The method could not extract the data from the project file.</exception>
+        public string GetProjectOutputPath(VSProjectWithFileInfo projectWithFileInfo)
+        {
+            if (projectWithFileInfo == null)
+                return null;
 
             // skip non-C# projects
             if (projectWithFileInfo.ProjectTypeGuid != VSProjectType.CSharpProjectType.ProjectTypeGuid)
@@ -555,14 +569,14 @@ namespace Flubu.Builds
                     FormatString(
                         "Could not find '{0}' configuration for the project '{1}'.",
                         condition,
-                        projectName));
+                        projectWithFileInfo.ProjectName));
 
             if (false == projectConfiguration.Properties.ContainsKey("OutputPath"))
                 throw new ArgumentException (
                     FormatString (
                         "Missing OutputPath for the '{0}' configuration of the project '{1}'.",
                         buildConfiguration,
-                        projectName));
+                        projectWithFileInfo.ProjectName));
 
             return projectConfiguration.Properties["OutputPath"];
         }
