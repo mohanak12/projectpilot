@@ -52,11 +52,7 @@ namespace Flubu.Tasks.Iis
             set { accessScript = value; }
         }
 
-        public bool AccessExecute
-        {
-            get { return accessExecute; }
-            set { accessExecute = value; }
-        }
+        public bool AccessExecute { get; set; }
 
         public string DefaultDoc
         {
@@ -146,27 +142,15 @@ namespace Flubu.Tasks.Iis
                     virtualDirEntry.Properties["Path"][0] = localPath;
                     virtualDirEntry.CommitChanges ();
 
-                    //foreach (PropertyValueCollection c in virtualDirEntry.Properties)
-                    //{
-                    //    environment.ReportMessage (String.Format ("'{0}', {1}", c.PropertyName, c.Count));
-                    //}
-
                     virtualDirEntry.Invoke ("AppCreate3", new object[] { 2, applicationPoolName, false });
 
-                    if (appFriendlyName != null)
-                        virtualDirEntry.Properties["AppFriendlyName"][0] = appFriendlyName;
-                    else
-                        virtualDirEntry.Properties["AppFriendlyName"][0] = virtualDirectoryName;
-
-                    //virtualDirEntry.Properties["AppIsolated"][0] = 2;
+                    virtualDirEntry.Properties["AppFriendlyName"][0] = appFriendlyName ?? virtualDirectoryName;
 
                     int authFlags = 0;
-                    if (this.allowAnonymous)
+                    if (allowAnonymous)
                         authFlags |= 1;
-                    if (this.allowAuthNtlm)
+                    if (allowAuthNtlm)
                         authFlags |= 4;
-                    //if (this.AuthBasic)
-                    //    Flags = Flags + 2;
 
                     virtualDirEntry.Properties["AuthFlags"][0] = authFlags;
                     if (anonymousUserName != null)
@@ -194,15 +178,14 @@ namespace Flubu.Tasks.Iis
             }
         }
 
-        private CreateVirtualDirectoryMode mode = CreateVirtualDirectoryMode.FailIfAlreadyExists;
+        private readonly CreateVirtualDirectoryMode mode = CreateVirtualDirectoryMode.FailIfAlreadyExists;
 
-        private string virtualDirectoryName;
+        private readonly string virtualDirectoryName;
         private string parentVirtualDirectoryName = @"IIS://localhost/W3SVC/1/Root";
-        private string localPath;
+        private readonly string localPath;
         private bool allowAnonymous = true;
         private bool allowAuthNtlm = true;
         private bool accessScript = true;
-        private bool accessExecute;
         private string anonymousUserName;
         private string anonymousUserPass;
         private string appFriendlyName;
@@ -210,7 +193,5 @@ namespace Flubu.Tasks.Iis
         private string defaultDoc;
         private bool enableDefaultDoc = true;
         private string applicationPoolName = "DefaultAppPool";
-
-        //private PropertyCollection virtualDirectoryProperties;
     }
 }

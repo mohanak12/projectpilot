@@ -11,10 +11,7 @@ namespace Flubu
         /// When set to <c>true</c>, the tasks are not really executed,
         /// instead just a log of activities is created.
         /// </summary>
-        public bool DryRun
-        {
-            get { return dryRun; } set { dryRun = value; }
-        }
+        public bool DryRun { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the execution environment runs in an interactive mode.
@@ -23,11 +20,7 @@ namespace Flubu
         /// the ability to influence certain aspects of the environment. One example is entering values
         /// for missing configuration settings.</remarks>
         /// <value><c>true</c> if the execution environment runs in an interactive mode; otherwise, <c>false</c>.</value>
-        public bool InteractiveMode
-        {
-            get { return interactiveMode; }
-            set { interactiveMode = value; }
-        }
+        public bool InteractiveMode { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether the script is running on Windows Server 2003.
@@ -85,11 +78,7 @@ namespace Flubu
         /// Gets or sets the name of the script.
         /// </summary>
         /// <value>The name of the script.</value>
-        public string ScriptName
-        {
-            get { return scriptName; }
-            set { scriptName = value; }
-        }
+        public string ScriptName { get; set; }
 
         /// <summary>
         /// Gets the Windows system root directory path.
@@ -129,6 +118,8 @@ namespace Flubu
         }
 
         public abstract string GetConfigurationSettingValue (string settingName);
+
+        public abstract bool IsConfigurationSettingDefined(string settingName);
 
         public void LogError(string message)
         {
@@ -210,9 +201,6 @@ namespace Flubu
         }
 
         private bool disposed;
-        private bool dryRun;
-        private bool interactiveMode;
-        private readonly List<IFlubuLogger> loggers = new List<IFlubuLogger>();        
-        private string scriptName;
+        private readonly List<IFlubuLogger> loggers = new List<IFlubuLogger>();
     }
 }

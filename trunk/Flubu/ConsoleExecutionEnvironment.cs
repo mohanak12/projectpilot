@@ -20,7 +20,7 @@ namespace Flubu
             string logFileName,
             int howManyOldLogsToKeep)
         {
-            this.ScriptName = scriptName;
+            ScriptName = scriptName;
 
             RollingFileAppender appender = new RollingFileAppender ();
             PatternLayout layout = new PatternLayout ("%date %message%newline");
@@ -35,8 +35,8 @@ namespace Flubu
 
             log4net.Config.BasicConfigurator.Configure (appender);
 
-            this.AddLogger(new Log4NetLogger(scriptName));
-            this.AddLogger(new MulticoloredConsoleLogger(System.Console.Out));
+            AddLogger(new Log4NetLogger(scriptName));
+            AddLogger(new MulticoloredConsoleLogger(Console.Out));
         }
 
         public override string GetConfigurationSettingValue (string settingName)
@@ -48,9 +48,9 @@ namespace Flubu
             {
                 if (InteractiveMode)
                 {
-                    System.Console.Out.Write("Enter value for setting '{0}': ", settingName);
-                    System.Console.Out.Flush();
-                    string val = System.Console.In.ReadLine();
+                    Console.Out.Write("Enter value for setting '{0}': ", settingName);
+                    Console.Out.Flush();
+                    string val = Console.In.ReadLine();
                     configurationSettings.Add(settingName, val);
                 }
                 else
@@ -64,6 +64,14 @@ namespace Flubu
             }
 
             return configurationSettings[settingName];
+        }
+
+        public override bool IsConfigurationSettingDefined(string settingName)
+        {
+            if (settingName == null)
+                throw new ArgumentNullException("settingName");
+
+            return configurationSettings.ContainsKey(settingName);
         }
 
         public override void SetConfigurationSettingValue (string settingName, string settingValue)
@@ -80,6 +88,6 @@ namespace Flubu
             return Console.In.ReadLine ();
         }
 
-        private Dictionary<string, string> configurationSettings = new Dictionary<string, string> ();
+        private readonly Dictionary<string, string> configurationSettings = new Dictionary<string, string> ();
     }
 }

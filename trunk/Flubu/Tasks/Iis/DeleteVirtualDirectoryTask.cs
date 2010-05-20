@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.DirectoryServices;
-using System.Text;
 
 namespace Flubu.Tasks.Iis
 {
@@ -50,8 +48,8 @@ namespace Flubu.Tasks.Iis
             }
         }
 
-        private string virtualDirectoryName;
-        private bool failIfNotExist;
+        private readonly string virtualDirectoryName;
+        private readonly bool failIfNotExist;
         private string parentVirtualDirectoryName = @"IIS://localhost/W3SVC/1/Root";
     }
 }
