@@ -115,7 +115,7 @@ namespace ProjectPilot.BuildScripts
             runner
                 .BuildProducts
                     .AddProject("accipio", "Accipio.Console", false)
-                    .AddProject("flubu", "Flubu", String.Empty, false);
+                    .AddProject("flubu", "Flubu", String.Empty, true);
             runner
                 .PackageBuildProduct("Accipio-{1}.zip", "Accipio-{1}", "accipio")
                 .CopyBuildProductToCCNet(@"packages\Accipio\Accipio-latest.zip")
