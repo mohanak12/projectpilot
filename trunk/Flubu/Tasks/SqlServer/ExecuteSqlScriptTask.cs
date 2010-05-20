@@ -1,7 +1,9 @@
 using System;
 using System.Data.SqlClient;
+using System.Diagnostics;
+using System.Globalization;
 using System.IO;
-using Microsoft.SqlServer.Management.Common;
+using System.Text;
 
 namespace Flubu.Tasks.SqlServer
 {
@@ -12,7 +14,7 @@ namespace Flubu.Tasks.SqlServer
             get
             {
                 return String.Format(
-                    System.Globalization.CultureInfo.InvariantCulture,
+                    CultureInfo.InvariantCulture,
                     "Execute SQL script '{0}'", 
                     scriptFilePath);
             }
@@ -40,28 +42,97 @@ namespace Flubu.Tasks.SqlServer
         {
             this.connectionString = connectionString;
             this.scriptFilePath = scriptFilePath;
-            this.commandText = commandText;
+
+            if (!string.IsNullOrEmpty(commandText))
+            {
+                string file = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+                using (StreamWriter writer = File.CreateText(file))
+                {
+                    writer.WriteLine(commandText);
+                }
+
+                this.scriptFilePath = file;
+                deleteTempScript = true;
+            }
         }
 
         protected override void DoExecute(IScriptExecutionEnvironment environment)
         {
-            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            SqlConnectionStringBuilder connStringBuilder = new SqlConnectionStringBuilder(connectionString);
+            // simple checks
+            if (!Path.GetExtension(scriptFilePath).Equals(".sql", StringComparison.OrdinalIgnoreCase))
+                throw new ArgumentException("The file doesn't end with .sql");
+
+            if (!File.Exists(scriptFilePath))
+                throw new FileNotFoundException("The file does not exist.", scriptFilePath);
+
+            // create cmd line
+            StringBuilder cmd =
+                new StringBuilder(string.Format(CultureInfo.InvariantCulture, "OSQL -S \"{0}\" -i \"{1}\" -n", connStringBuilder.DataSource, scriptFilePath));
+
+            if (connStringBuilder.IntegratedSecurity)
+                cmd.Append(" -E");
+            else
+                cmd.AppendFormat(CultureInfo.InvariantCulture, " -U {0} -P {1}", connStringBuilder.UserID, connStringBuilder.Password);
+
+            if (!string.IsNullOrEmpty(connStringBuilder.InitialCatalog))
             {
-                ServerConnection serverConnection = new ServerConnection(sqlConnection);
-                serverConnection.Connect();
-                Microsoft.SqlServer.Management.Smo.Server server = new Microsoft.SqlServer.Management.Smo.Server(serverConnection);
-
-                string sqlScriptText = commandText;
-
-                if (sqlScriptText == null)
-                    sqlScriptText = File.ReadAllText(scriptFilePath);
-
-                server.ConnectionContext.ExecuteNonQuery(sqlScriptText);
+                cmd.AppendFormat(CultureInfo.InvariantCulture, " -d \"{0}\"", connStringBuilder.InitialCatalog);
             }
+            
+            Env = environment;
+
+            // create the process
+            Process process = new Process
+            {
+                StartInfo =
+                {
+                    WorkingDirectory = Environment.CurrentDirectory,
+                    FileName = "cmd",
+                    CreateNoWindow = false,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardInput = true,
+                    RedirectStandardError = true
+                }
+            };
+            process.ErrorDataReceived += ProcessErrorDataReceived;
+            process.OutputDataReceived += ProcessOutputDataReceived;
+
+            // start the application
+            process.Start();
+            process.BeginErrorReadLine();
+            process.BeginOutputReadLine();
+            process.StandardInput.WriteLine("@ECHO OFF");
+            process.StandardInput.WriteLine(cmd.ToString());
+            process.StandardInput.WriteLine("EXIT");
+            process.StandardInput.Flush();
+            process.WaitForExit();
+            if (process.ExitCode != 0)
+                throw new RunnerFailedException(string.Format(CultureInfo.InvariantCulture, "OSQL exited with code {0}.", process.ExitCode));
+
+            //Reading output after waitforexit creates deadlock as available output buffer is fully filled
+            //output.Write(process.StandardOutput.ReadToEnd());
+            if (deleteTempScript)
+                File.Delete(scriptFilePath);
         }
 
-        private string connectionString;
-        private string scriptFilePath;
-        private string commandText;
+        private void ProcessOutputDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(e.Data))
+                Env.LogError(e.Data);
+        }
+
+        private void ProcessErrorDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(e.Data))
+                Env.LogError(e.Data);
+        }
+
+        private IScriptExecutionEnvironment Env { get; set; }
+
+        private readonly string connectionString;
+        private readonly string scriptFilePath;
+        private readonly bool deleteTempScript;
     }
 }

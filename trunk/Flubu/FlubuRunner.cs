@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
+using System.Messaging;
 using System.Security.AccessControl;
 using System.Text;
 using Flubu.Tasks;
@@ -241,6 +242,21 @@ namespace Flubu
             CreateMessageQueueMode mode)
         {
             CreateMessageQueueTask task = new CreateMessageQueueTask(messageQueuePath, isTransactional, mode);
+            return RunTask(task);
+        }
+
+        public TRunner CreateMessageQueue(
+            string messageQueuePath,
+            bool isTransactional,
+            CreateMessageQueueMode mode,
+            string userName,
+            MessageQueueAccessRights accessRights)
+        {
+            CreateMessageQueueTask task = new CreateMessageQueueTask(messageQueuePath, isTransactional, mode)
+                                              {
+                                                  UserName = userName,
+                                                  AccessRights = accessRights
+                                              };
             return RunTask(task);
         }
 

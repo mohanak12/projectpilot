@@ -1,9 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.SqlServer.Management.Common;
-using Microsoft.SqlServer.Management.Smo;
-using Microsoft.SqlServer.Management.Smo.Wmi;
+using System.ServiceProcess;
 
 namespace Flubu.Tasks.SqlServer
 {
@@ -27,13 +23,13 @@ namespace Flubu.Tasks.SqlServer
 
         protected override void DoExecute (IScriptExecutionEnvironment environment)
         {
-            ManagedComputer managedComputer = new ManagedComputer (machineName);
-            Service sqlServerService = managedComputer.Services["MSSQLSERVER"];
-
-            if (sqlServerService.ServiceState != ServiceState.Running)
-                sqlServerService.Start ();
+            using (ServiceController serviceController = new ServiceController("MSSQLSERVER", machineName))
+            {
+                if (serviceController.Status != ServiceControllerStatus.Running)
+                    serviceController.Start();
+            }
         }
 
-        private string machineName;
+        private readonly string machineName;
     }
 }
