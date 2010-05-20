@@ -43,9 +43,17 @@ namespace Flubu.Tasks.Iis
 
         protected override void DoExecute (IScriptExecutionEnvironment environment)
         {
-            string appPoolsRootName = @"IIS://localhost/W3SVC/AppPools";
+            string version = GetLocalIisVersionTask.GetIisVersion(environment, failIfNotExist);
+            int major = GetLocalIisVersionTask.GetMajorVersion(version);
+            if (major < 6 || major == 0)
+            {
+                environment.LogMessage("IIS does not support application pools.");
+                return;
+            }
 
-            using (DirectoryEntry parent = new DirectoryEntry (appPoolsRootName))
+            const string AppPoolsRootName = @"IIS://localhost/W3SVC/AppPools";
+
+            using (DirectoryEntry parent = new DirectoryEntry (AppPoolsRootName))
             {
                 DirectoryEntry applicationPoolEntry = null;
 

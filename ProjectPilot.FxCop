@@ -777,16 +777,34 @@
     <Modules>
      <Module Name="flubu.dll">
       <Namespaces>
-       <Namespace Name="Flubu.Tasks.SqlServer">
+       <Namespace Name="Flubu.Builds">
         <Types>
-         <Type Name="ExecuteSqlScriptTask">
+         <Type Name="BuildRunner`1">
           <Members>
-           <Member Name="#DoExecute(Flubu.IScriptExecutionEnvironment)">
+           <Member Name="#PrepareWebApplications()">
             <Messages>
-             <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Created="2010-05-19 12:29:29Z">
-              <Issue Name="TooGeneric">
-               <Item>'ExecuteSqlScriptTask.DoExecute(IScriptExecutionEnvironment)'</Item>
-               <Item>'ApplicationException'</Item>
+             <Message Id="System.Convert.ToInt32(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2010-05-20 09:22:01Z">
+              <Issue>
+               <Item>'Convert.ToInt32(string)'</Item>
+               <Item>'BuildRunner&lt;TRunner&gt;.PrepareWebApplications()'</Item>
+               <Item>'Convert.ToInt32(string, IFormatProvider)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="Flubu.Tasks.Iis">
+        <Types>
+         <Type Name="GetLocalIisVersionTask">
+          <Members>
+           <Member Name="#GetMinorVersion(System.String)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2010-05-20 09:22:01Z">
+              <Issue>
+               <Item>'GetLocalIisVersionTask.GetMinorVersion(string)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1068,9 +1086,6 @@
    </Rule>
    <Rule TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806">
     <Resolution Name="ObjectCreation">{0} creates a new instance of {1} which is never used. Pass the instance as an argument to another method, assign the instance to a variable, or remove the object creation if it is unnecessary.</Resolution>
-   </Rule>
-   <Rule TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201">
-    <Resolution Name="TooGeneric">{0} creates an exception of type {1}, an exception type that is not sufficiently specific and should never be raised by user code. If this exception instance might be thrown, use a different exception type.</Resolution>
    </Rule>
    <Rule TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004">
     <Resolution Name="Default">Consider a design where {0} doesn't require explicit type parameter {1} in any call to it.</Resolution>

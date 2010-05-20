@@ -40,9 +40,17 @@ namespace Flubu.Tasks.Iis
 
         protected override void DoExecute (IScriptExecutionEnvironment environment)
         {
-            string appPoolsRootName = @"IIS://localhost/W3SVC/AppPools";
+            string version = GetLocalIisVersionTask.GetIisVersion(environment, false);
+            int major = GetLocalIisVersionTask.GetMajorVersion(version);
+            if (major < 6 || major == 0)
+            {
+                environment.LogMessage("IIS does not support application pools.");
+                return;
+            } 
+            
+            const string AppPoolsRootName = @"IIS://localhost/W3SVC/AppPools";
 
-            using (DirectoryEntry parent = new DirectoryEntry (appPoolsRootName))
+            using (DirectoryEntry parent = new DirectoryEntry (AppPoolsRootName))
             {
                 DirectoryEntry applicationPoolEntry = null;
 
@@ -80,9 +88,12 @@ namespace Flubu.Tasks.Iis
                         applicationPoolEntry = parent.Children.Add (applicationPoolName, "IIsApplicationPool");
                     }
 
-                    applicationPoolEntry.InvokeSet(
-                        "ManagedPipelineMode", 
-                        new object[] { classicManagedPipelineMode ? 1 : 0 });
+                    if (major > 6)
+                    {
+                        applicationPoolEntry.InvokeSet(
+                            "ManagedPipelineMode",
+                            new object[] { classicManagedPipelineMode ? 1 : 0 });
+                    }
 
                     applicationPoolEntry.CommitChanges ();
                 }
@@ -98,6 +109,6 @@ namespace Flubu.Tasks.Iis
 
         private readonly string applicationPoolName;
         private bool classicManagedPipelineMode;
-        private CreateApplicationPoolMode mode;
+        private readonly CreateApplicationPoolMode mode;
     }
 }

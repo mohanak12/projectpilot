@@ -21,8 +21,8 @@ namespace Flubu.Builds
         public BuildRunner(string productId) : base (productId, @"logs\Flubu.Build.log", 0)
         {
             this.productId = productId;
-            this.productName = productId;
-            this.buildProducts = new BuildProductsRegistry<TRunner>(ReturnThisTRunner());
+            productName = productId;
+            buildProducts = new BuildProductsRegistry<TRunner>(ReturnThisTRunner());
 
             // add CCNet listener
             string ccnetListenerFilePath = Environment.GetEnvironmentVariable ("CCNetListenerFile");
@@ -66,7 +66,7 @@ namespace Flubu.Builds
         {
             get
             {
-                string dir = System.Environment.GetEnvironmentVariable("CCNetArtifactDirectory");
+                string dir = Environment.GetEnvironmentVariable("CCNetArtifactDirectory");
                 if (dir == null)
                     throw new InvalidOperationException("CCNetArtifactDirectory environment variable is missing.");
                 return dir;
@@ -77,7 +77,7 @@ namespace Flubu.Builds
         {
             get
             {
-                string ccnetBuildCondition = System.Environment.GetEnvironmentVariable("CCNetBuildCondition");
+                string ccnetBuildCondition = Environment.GetEnvironmentVariable("CCNetBuildCondition");
                 return ccnetBuildCondition != null;
             }
         }
@@ -86,7 +86,7 @@ namespace Flubu.Builds
         {
             get
             {
-                string hudsonEnv = System.Environment.GetEnvironmentVariable("BUILD_NUMBER");
+                string hudsonEnv = Environment.GetEnvironmentVariable("BUILD_NUMBER");
                 return hudsonEnv != null;
             }
         }
@@ -259,8 +259,8 @@ namespace Flubu.Builds
             // combine this with the CCNet artifacts directory
             destinationPath = Path.Combine(CcnetArtifactDirectory, destinationPath);
 
-            this.EnsureDirectoryPathExists(destinationPath, true);
-            this.CopyFile(lastZipPackageFileName, destinationPath, true);
+            EnsureDirectoryPathExists(destinationPath, true);
+            CopyFile(lastZipPackageFileName, destinationPath, true);
 
             return ReturnThisTRunner();
         }
@@ -407,7 +407,7 @@ namespace Flubu.Builds
                         string fxcopReportFileName = Path.GetFileName(fxReportPath);
                         try
                         {
-                            this.CopyFile(fxReportPath, Path.Combine(ccnetDir, fxcopReportFileName), true);
+                            CopyFile(fxReportPath, Path.Combine(ccnetDir, fxcopReportFileName), true);
                         }
                         catch (IOException)
                         {
@@ -441,12 +441,12 @@ namespace Flubu.Builds
             string reportFileName = string.Format(
                 CultureInfo.InvariantCulture,
                 "{0}.GendarmeReport.xml", 
-                this.ProductId);
+                ProductId);
             string gendarmeXmlReportFile = Path.Combine(reportDir, reportFileName);
 
-            this.ProgramRunner
+            ProgramRunner
                 .AddArgument("--html")
-                .AddArgument("{0}.GendarmeReport.html", this.ProductId)
+                .AddArgument("{0}.GendarmeReport.html", ProductId)
                 .AddArgument("--xml")
                 .AddArgument(gendarmeXmlReportFile)
                 .AddArgument("--severity")
@@ -475,7 +475,7 @@ namespace Flubu.Builds
                             outputPath),
                         projectAssemblyFileName);
 
-                    this.ProgramRunner.AddArgument(projectAssemblyFullPath);
+                    ProgramRunner.AddArgument(projectAssemblyFullPath);
                 });
 
             string gendarmePath = MakePathFromRootDir(LibDir + @"\Gendarme\gendarme.exe");
@@ -620,8 +620,8 @@ namespace Flubu.Builds
                 ScriptExecutionEnvironment.LogTaskFinished();
                 return ReturnThisTRunner();
             }
-            else
-                return FetchBuildVersion();
+
+            return FetchBuildVersion();
         }
 
         /// <summary>
@@ -759,17 +759,17 @@ namespace Flubu.Builds
             properties.Add("ScriptDBUserName", dbUserName);
             properties.Add("ScriptDBUserPassword", dbUserPassword);
 
-            string fileFilter = FormatString("{0}.*.sql", dbName);
+            FormatString("{0}.*.sql", dbName);
             string expandedFilesDirectory = MakePathFromRootDir(Path.Combine(dbScriptsDirectory, "expanded"));
 
             // create the "expanded" subdirectory if it doesn't already exist
             CreateDirectory(expandedFilesDirectory, false);
 
             // expand all .SQL files for this database and store them into a separate directory
-            this.ForEachFile(
+            ForEachFile(
                 dbScriptsDirectory, 
                 "*.sql", 
-                file => this.ExpandProperties(
+                file => ExpandProperties(
                   file, 
                   Path.Combine(expandedFilesDirectory, Path.GetFileName(file)),
                   Encoding.UTF8,
@@ -796,46 +796,52 @@ namespace Flubu.Builds
         /// <returns>The same instance of this <see cref="BuildRunner"/>.</returns>
         public TRunner PrepareWebApplications()
         {
-            foreach (KeyValuePair<string, VSProjectExtendedInfo> info in this.ProjectExtendedInfos)
+            foreach (KeyValuePair<string, VSProjectExtendedInfo> info in ProjectExtendedInfos)
             {
-                if (info.Value.IsWebProject)
+                if (!info.Value.IsWebProject) continue;
+
+                string projectName = info.Key;
+
+                if (info.Value.ApplicationPoolName != null)
                 {
-                    string projectName = info.Key;
-
-                    if (info.Value.ApplicationPoolName != null)
-                    {
-                        this.CreateApplicationPool(
-                            info.Value.ApplicationPoolName,
-                            CreateApplicationPoolMode.UpdateIfExists);
-                    }
-
-                    Uri webApplicationUrl = info.Value.WebApplicationUrl;
-                    if (0 != String.Compare(webApplicationUrl.Host, "localhost", StringComparison.OrdinalIgnoreCase))
-                        throw new ArgumentException(
-                            FormatString(
-                                "Cannot create the Web application '{0}'. Only localhost is currently supported.",
-                                webApplicationUrl));
-
-                    string virtualDirectoryName = webApplicationUrl.GetComponents(UriComponents.Path, UriFormat.SafeUnescaped);
-                    VSProjectWithFileInfo project = (VSProjectWithFileInfo) Solution.FindProjectByName(projectName);
-                    string localAppPath =
-                        Path.GetFullPath(
-                            MakePathFromRootDir(project.ProjectDirectoryPath));
-
-                    CreateVirtualDirectoryTask task = new CreateVirtualDirectoryTask(
-                        virtualDirectoryName,
-                        localAppPath,
-                        CreateVirtualDirectoryMode.UpdateIfExists);
-
-                    if (info.Value.ApplicationPoolName != null)
-                        task.ApplicationPoolName = info.Value.ApplicationPoolName;
-
-                    task.Execute(this.ScriptExecutionEnvironment);
-
-                    this.RegisterAspNet(
-                        virtualDirectoryName,
-                        this.ScriptExecutionEnvironment.Net20VersionNumber);
+                    CreateApplicationPool(
+                        info.Value.ApplicationPoolName,
+                        CreateApplicationPoolMode.UpdateIfExists);
                 }
+
+                Uri webApplicationUrl = info.Value.WebApplicationUrl;
+                if (0 != String.Compare(webApplicationUrl.Host, "localhost", StringComparison.OrdinalIgnoreCase))
+                    throw new ArgumentException(
+                        FormatString(
+                            "Cannot create the Web application '{0}'. Only localhost is currently supported.",
+                            webApplicationUrl));
+
+                string virtualDirectoryName = webApplicationUrl.GetComponents(UriComponents.Path, UriFormat.SafeUnescaped);
+                VSProjectWithFileInfo project = (VSProjectWithFileInfo) Solution.FindProjectByName(projectName);
+                string localAppPath =
+                    Path.GetFullPath(
+                        MakePathFromRootDir(project.ProjectDirectoryPath));
+
+                CreateVirtualDirectoryTask task = new CreateVirtualDirectoryTask(
+                    virtualDirectoryName,
+                    localAppPath,
+                    CreateVirtualDirectoryMode.UpdateIfExists);
+
+                if (info.Value.ApplicationPoolName != null)
+                {
+                    string majorVersion = ScriptExecutionEnvironment.GetConfigurationSettingValue(
+                        Tasks.Iis.GetLocalIisVersionTask.IisMajorVersion);
+
+                    int major = Convert.ToInt32(majorVersion, CultureInfo.InvariantCulture);
+                    if (major >= 6)
+                        task.ApplicationPoolName = info.Value.ApplicationPoolName;
+                }
+
+                task.Execute(ScriptExecutionEnvironment);
+
+                RegisterAspNet(
+                    virtualDirectoryName,
+                    ScriptExecutionEnvironment.Net20VersionNumber);
             }
 
             return ReturnThisTRunner();
@@ -971,10 +977,10 @@ namespace Flubu.Builds
 
         public TRunner SourceMonitor()
         {
-            string sourceMonitorProjectFile = MakePathFromRootDir(this.ProductId + ".smp");
+            string sourceMonitorProjectFile = MakePathFromRootDir(ProductId + ".smp");
             AssertFileExists("SourceMonitor project file", sourceMonitorProjectFile);
 
-            string copyOfProjectFile = MakePathFromRootDir(this.ProductId + ".copy.smp");
+            string copyOfProjectFile = MakePathFromRootDir(ProductId + ".copy.smp");
 
             CopyFile(sourceMonitorProjectFile, copyOfProjectFile, true);
 
@@ -988,7 +994,7 @@ namespace Flubu.Builds
                 sourceMonitorCommandFile,
                 sourceMonitorCommands);
 
-            this.ProgramRunner
+            ProgramRunner
                 .AddArgument("/C")
                 .AddArgument(sourceMonitorCommandFile)
                 .Run(MakePathFromRootDir(LibDir + @"\SourceMonitor\SourceMonitor.exe"));
@@ -1105,7 +1111,7 @@ namespace Flubu.Builds
         private readonly string productId;
         private string productName;
         private string productRootDir = String.Empty;
-        private Dictionary<string, VSProjectExtendedInfo> projectExtendedInfos = new Dictionary<string, VSProjectExtendedInfo>();
+        private readonly Dictionary<string, VSProjectExtendedInfo> projectExtendedInfos = new Dictionary<string, VSProjectExtendedInfo>();
         private VSSolution solution;
         private int testRuns;
     }
