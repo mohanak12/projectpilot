@@ -182,13 +182,14 @@ namespace Flubu.Builds
         public TRunner CompileSolution()
         {
             ScriptExecutionEnvironment.LogTaskStarted ("Compiling the solution");
+            string msbuildPath = ScriptExecutionEnvironment.GetDotNetFWDir(ScriptExecutionEnvironment.Net35VersionNumber);
 
             ProgramRunner
                 .AddArgument(MakePathFromRootDir(productId) + ".sln")
                 .AddArgument("/p:Configuration={0}", buildConfiguration)
                 .AddArgument("/p:Platform=Any CPU")
                 .AddArgument("/consoleloggerparameters:NoSummary")
-                .Run(@"C:\Windows\Microsoft.NET\Framework\v3.5\msbuild.exe");
+                .Run(Path.Combine(msbuildPath, @"msbuild.exe"));
 
             ScriptExecutionEnvironment.LogTaskFinished ();
             return ReturnThisTRunner ();
