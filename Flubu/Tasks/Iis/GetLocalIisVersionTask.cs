@@ -36,8 +36,12 @@ namespace Flubu.Tasks.Iis
 
         public static string GetIisVersion(IScriptExecutionEnvironment environment, bool failIfNotExist)
         {
-            string major = environment.GetConfigurationSettingValue(IisMajorVersion);
-            if (string.IsNullOrEmpty(major))
+            string major;
+            if (environment.IsConfigurationSettingDefined(IisMajorVersion))
+            {
+                major = environment.GetConfigurationSettingValue(IisMajorVersion);
+            }
+            else
             {
                 ExecuteTask(environment);
                 major = environment.GetConfigurationSettingValue(IisMajorVersion);
@@ -53,7 +57,7 @@ namespace Flubu.Tasks.Iis
                 return "0.0";
             }
 
-            string minor = environment.GetConfigurationSettingValue(IisMajorVersion);
+            string minor = environment.GetConfigurationSettingValue(IisMinorVersion);
             return major + "." + minor;
         }
 
