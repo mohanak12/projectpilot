@@ -87,6 +87,8 @@ namespace Flubu
 
         string GetConfigurationSettingValue (string settingName);
 
+        bool IsConfigurationSettingDefined(string settingName);
+
         string ReceiveInput (string prompt);
 
         void SetConfigurationSettingValue(string settingName, string settingValue);
