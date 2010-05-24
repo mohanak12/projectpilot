@@ -13,10 +13,12 @@ namespace Flubu.Tasks.SqlServer
         {
             get
             {
-                return String.Format(
-                    CultureInfo.InvariantCulture,
-                    "Execute SQL script '{0}'", 
-                    scriptFilePath);
+                if (string.IsNullOrEmpty(CommandText))
+                {
+                    return string.Format(CultureInfo.InvariantCulture, "Execute SQL script '{0}'", scriptFilePath);
+                }
+
+                return string.Format(CultureInfo.InvariantCulture, "Execute SQL command '{0}'", CommandText);
             }
         }
 
@@ -42,26 +44,22 @@ namespace Flubu.Tasks.SqlServer
         {
             this.connectionString = connectionString;
             this.scriptFilePath = scriptFilePath;
+            CommandText = commandText;
+            if (string.IsNullOrEmpty(commandText)) return;
 
-            if (!string.IsNullOrEmpty(commandText))
+            string file = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+            using (StreamWriter writer = File.CreateText(file))
             {
-                string file = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
-                using (StreamWriter writer = File.CreateText(file))
-                {
-                    writer.WriteLine(commandText);
-                }
-
-                this.scriptFilePath = file;
-                deleteTempScript = true;
+                writer.WriteLine(commandText);
             }
+
+            this.scriptFilePath = file;
+            deleteTempScript = true;
         }
 
         protected override void DoExecute(IScriptExecutionEnvironment environment)
         {
             SqlConnectionStringBuilder connStringBuilder = new SqlConnectionStringBuilder(connectionString);
-            // simple checks
-            if (!Path.GetExtension(scriptFilePath).Equals(".sql", StringComparison.OrdinalIgnoreCase))
-                throw new ArgumentException("The file doesn't end with .sql");
 
             if (!File.Exists(scriptFilePath))
                 throw new FileNotFoundException("The file does not exist.", scriptFilePath);
@@ -130,6 +128,8 @@ namespace Flubu.Tasks.SqlServer
         }
 
         private IScriptExecutionEnvironment Env { get; set; }
+
+        private string CommandText { get; set; }
 
         private readonly string connectionString;
         private readonly string scriptFilePath;
