@@ -75,6 +75,24 @@ namespace Flubu
         }
 
         /// <summary>
+        /// Gets the .NET version number for .NET 3.0.
+        /// </summary>
+        /// <value>.NET version number for .NET 3.0.</value>
+        public string Net35VersionNumber
+        {
+            get { return "v3.5"; }
+        }
+
+        /// <summary>
+        /// Gets the .NET version number for .NET 3.0.
+        /// </summary>
+        /// <value>.NET version number for .NET 3.0.</value>
+        public string Net40VersionNumber
+        {
+            get { return "v4.0.30319"; }
+        }
+
+        /// <summary>
         /// Gets or sets the name of the script.
         /// </summary>
         /// <value>The name of the script.</value>

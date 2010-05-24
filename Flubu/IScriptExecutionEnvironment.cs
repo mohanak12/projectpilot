@@ -1,5 +1,3 @@
-using System;
-
 namespace Flubu
 {
     public interface IScriptExecutionEnvironment : IFlubuLogger
@@ -52,6 +50,18 @@ namespace Flubu
         /// </summary>
         /// <value>.NET version number for .NET 3.0.</value>
         string Net30VersionNumber { get; }
+
+        /// <summary>
+        /// Gets the .NET version number for .NET 3.5.
+        /// </summary>
+        /// <value>.NET version number for .NET 3.5.</value>
+        string Net35VersionNumber { get; }
+
+        /// <summary>
+        /// Gets the .NET version number for .NET 4.0.
+        /// </summary>
+        /// <value>.NET version number for .NET 4.0.</value>
+        string Net40VersionNumber { get; }
 
         /// <summary>
         /// Gets the Windows system root directory path.
