@@ -181,6 +181,7 @@
     <Compile Include="Tasks\Iis\CreateApplicationPoolTask.cs" />
     <Compile Include="Tasks\Iis\CreateVirtualDirectoryMode.cs" />
     <Compile Include="Tasks\Iis\CreateVirtualDirectoryTask.cs" />
+    <Compile Include="Tasks\Iis\DeleteApplicationPoolTask.cs" />
     <Compile Include="Tasks\Iis\DeleteVirtualDirectoryTask.cs" />
     <Compile Include="Tasks\Iis\GetLocalIisVersionTask.cs" />
     <Compile Include="Tasks\Iis\RegisterAspNetTask.cs" />
@@ -190,6 +191,7 @@
     <Compile Include="Tasks\Misc\SleepTask.cs" />
     <Compile Include="Tasks\Msmq\CreateMessageQueueMode.cs" />
     <Compile Include="Tasks\Msmq\CreateMessageQueueTask.cs" />
+    <Compile Include="Tasks\Msmq\DeleteMessageQueueTask.cs" />
     <Compile Include="Tasks\Processes\KillProcessTask.cs" />
     <Compile Include="Tasks\Processes\RunProgramTask.cs" />
     <Compile Include="Tasks\Registry\EditRegistryValueTask.cs" />
@@ -216,6 +218,7 @@
     <Compile Include="Tasks\WindowsServices\ControlWindowsServiceTask.cs" />
     <Compile Include="Tasks\WindowsServices\InstallWindowsServiceMode.cs" />
     <Compile Include="Tasks\WindowsServices\InstallWindowsServiceTask.cs" />
+    <Compile Include="Tasks\WindowsServices\RemoveWindowsServiceTask.cs" />
     <Compile Include="Tasks\WindowsServices\SetWindowsServiceAccountTask.cs" />
     <Compile Include="Tasks\WindowsServices\StopWindowsServiceIfExistsTask.cs" />
     <Compile Include="Tasks\WindowsServices\UninstallWindowsServiceTask.cs" />
