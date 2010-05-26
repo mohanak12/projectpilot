@@ -1,17 +1,26 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Globalization;
 
 namespace Flubu
 {
     [Serializable]
-    public class RunnerFailedException : System.Exception
+    public class RunnerFailedException : Exception
     {
         public RunnerFailedException ()
         {
         }
 
         public RunnerFailedException (string message) : base (message)
+        {
+        }
+
+        public RunnerFailedException(string formatMessage, object[] arguments)
+            : base(string.Format(CultureInfo.InvariantCulture, formatMessage, arguments))
+        {
+        }
+
+        public RunnerFailedException(string formatMessage, object first)
+            : base(string.Format(CultureInfo.InvariantCulture, formatMessage, first))
         {
         }
 
