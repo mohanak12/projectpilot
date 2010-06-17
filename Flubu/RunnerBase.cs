@@ -3,6 +3,10 @@ using Flubu.Builds;
 
 namespace Flubu
 {
+    /// <summary>
+    /// Task Runner helper.
+    /// </summary>
+    /// <typeparam name="TRunner">Concrete runner <see cref="BuildRunner{TRunner}"/></typeparam>
     public abstract class RunnerBase<TRunner> : BuildRunner<TRunner>
         where TRunner : BuildRunner<TRunner>
     {
@@ -11,10 +15,20 @@ namespace Flubu
             Arguments = args;
         }
 
+        /// <summary>
+        /// Gets or sets Command line arguments pased to build runner.
+        /// </summary>
         public string[] Arguments { get; set; }
 
+        /// <summary>
+        /// Method that will configure available build targets.
+        /// </summary>
         public abstract void Configure();
 
+        /// <summary>
+        /// Target runner.
+        /// </summary>
+        /// <returns>0 if all ok.</returns>
         public virtual int Run()
         {
             try
