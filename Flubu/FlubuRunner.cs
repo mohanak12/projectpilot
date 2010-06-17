@@ -744,6 +744,56 @@ namespace Flubu
         }
 
         /// <summary>
+        /// Command line parser and runner helper. 
+        /// </summary>
+        /// <typeparam name="T">The concrete type of the runner.</typeparam>
+        /// <param name="runner">See <see cref="FlubuRunner{TRunner}"/></param>
+        /// <param name="arguments">Command line arguments.</param>
+        /// <returns>0 if success, otherwise error code is returned.</returns>
+        public static int Run<T>(FlubuRunner<T> runner, string[] arguments) where T : FlubuRunner<T>
+        {
+            try
+            {
+                // actual run
+                if (arguments.Length == 0)
+                {
+                    if (runner.DefaultTarget != null && !string.IsNullOrEmpty(runner.DefaultTarget.TargetName))
+                        runner.RunTarget(runner.DefaultTarget.TargetName);
+                    else
+                        runner.RunTarget("help");
+
+                    runner.Complete();
+                    return 0;
+                }
+
+                foreach (string argument in arguments)
+                {
+                    if (runner.HasTarget(argument)) continue;
+
+                    runner.ScriptExecutionEnvironment.LogError(
+                        "ERROR: The target '{0}' does not exist",
+                        argument);
+                    runner.RunTarget("help");
+                    return 2;
+                }
+
+                foreach (string argument in arguments)
+                {
+                    runner.RunTarget(argument);
+                }
+
+                runner.Complete();
+
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return 1;
+            }
+        }
+
+        /// <summary>
         /// Disposes the object.
         /// </summary>
         /// <param name="disposing">If <code>false</code>, cleans up native resources. 
