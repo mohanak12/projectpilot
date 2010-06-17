@@ -22,6 +22,15 @@ namespace Flubu.Tasks.WindowsServices
             this.serviceName = serviceName;
             this.mode = mode;
             this.timeout = timeout;
+            MachineName = ".";
+        }
+
+        public ControlWindowsServiceTask(string machineName, string serviceName, ControlWindowsServiceMode mode, TimeSpan timeout)
+        {
+            this.serviceName = serviceName;
+            this.mode = mode;
+            this.timeout = timeout;
+            MachineName = machineName;
         }
 
         public static void Execute (
@@ -34,9 +43,20 @@ namespace Flubu.Tasks.WindowsServices
             task.Execute (environment);
         }
 
+        public static void Execute(
+            IScriptExecutionEnvironment environment,
+            string machineName,
+            string serviceName,
+            ControlWindowsServiceMode mode,
+            TimeSpan timeout)
+        {
+            ControlWindowsServiceTask task = new ControlWindowsServiceTask(machineName, serviceName, mode, timeout);
+            task.Execute(environment);
+        }
+
         protected override void DoExecute (IScriptExecutionEnvironment environment)
         {
-            using (ServiceController serviceController = new ServiceController (serviceName))
+            using (ServiceController serviceController = new ServiceController (serviceName, MachineName))
             {
                 ServiceControllerStatus status = ServiceControllerStatus.Running;
                 switch (mode)
@@ -78,6 +98,8 @@ namespace Flubu.Tasks.WindowsServices
                 }
             }
         }
+
+        private string MachineName { get; set; }
 
         private string serviceName;
         private ControlWindowsServiceMode mode;

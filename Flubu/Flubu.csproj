@@ -160,6 +160,7 @@
     <Compile Include="ConsoleExecutionEnvironment.cs" />
     <Compile Include="FlubuRunner.cs" />
     <Compile Include="FlubuRunnerTarget.cs" />
+    <Compile Include="RunnerBase.cs" />
     <Compile Include="ScriptExecutionEnvironmentBase.cs" />
     <Compile Include="IScriptExecutionEnvironment.cs" />
     <Compile Include="ITask.cs" />
