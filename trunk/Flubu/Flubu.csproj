@@ -100,6 +100,7 @@
     <Compile Include="Builds\VSSolutionBrowsing\VSSolutionFileParser.cs" />
     <Compile Include="Builds\VSSolutionBrowsing\VSSolutionFilesInfo.cs" />
     <Compile Include="Deployment\ConcreteDeploymentRunner.cs" />
+    <Compile Include="Deployment\DeploymentBase.cs" />
     <Compile Include="Deployment\DeploymentModule.cs" />
     <Compile Include="Deployment\DeploymentModulesRegistry.cs" />
     <Compile Include="Deployment\DeploymentRunner.cs" />
@@ -160,7 +161,7 @@
     <Compile Include="ConsoleExecutionEnvironment.cs" />
     <Compile Include="FlubuRunner.cs" />
     <Compile Include="FlubuRunnerTarget.cs" />
-    <Compile Include="RunnerBase.cs" />
+    <Compile Include="Builds\BuildRunnerBase.cs" />
     <Compile Include="ScriptExecutionEnvironmentBase.cs" />
     <Compile Include="IScriptExecutionEnvironment.cs" />
     <Compile Include="ITask.cs" />

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-
-namespace Flubu.Deployment
+﻿namespace Flubu.Deployment
 {
     /// <summary>
     /// A specialization of the <see cref="FlubuRunner{TRunner}"/> oriented towards deploying 
