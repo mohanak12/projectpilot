@@ -1,13 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using Flubu.Tasks.Processes;
 
 namespace Flubu.Tasks.Build
 {
+    /// <summary>
+    /// Run tests with NUnit.
+    /// <example>
+    /// NUnitTask task = new NUnitTask(Path.Combine("Testing\\UnitTests\\bin", BuildConfiguration),
+    ///            "Hsl.PD.UnitTests.dll")
+    ///        {
+    ///            ExcludeCategories = "Cassini, LongTest",
+    ///            NUnitPath = MakePathFromRootDir(@"lib\NUnit\bin\net-2.0\nunit-console-x86.exe"),
+    ///        };
+    ///        task.Execute(ScriptExecutionEnvironment);
+    /// </example>
+    /// </summary>
     public class NUnitTask : TaskBase
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NUnitTask"/> class.
+        /// </summary>
+        /// <param name="workingDirectory">Working directory to use.</param>
+        /// <param name="assemblyToTest">Assembly to test.</param>
         public NUnitTask(string workingDirectory, string assemblyToTest)
         {
             NUnitPath = @"lib\NUnit\bin\net-2.0\nunit-console-x86.exe";
@@ -45,6 +61,9 @@ namespace Flubu.Tasks.Build
             }
         }
 
+        /// <summary>
+        /// Gets or sets tests categories that will be excluded from test.
+        /// </summary>
         public string ExcludeCategories { get; set; }
 
         /// <summary>

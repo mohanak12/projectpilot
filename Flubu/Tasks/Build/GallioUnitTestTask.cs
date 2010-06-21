@@ -7,9 +7,24 @@ namespace Flubu.Tasks.Build
 {
     /// <summary>
     /// Task for running unit tests with gallio echo runner.
+    /// <example>
+    /// GallioUnitTestTask task = new GallioUnitTestTask(
+    ///            Path.Combine("Hsl.PushDispatcherTest.SystemTest", GetProjectOutputPath("Hsl.PushDispatcherTest.SystemTest")),
+    ///            "Hsl.PushDispatcherTest.SystemTest.dll")
+    ///        {
+    ///            FixtureToRun = fixture,
+    ///            TestToRun = test
+    ///        };
+    ///        task.Execute(ScriptExecutionEnvironment);
+    /// </example>
     /// </summary>
     public class GallioUnitTestTask : TaskBase
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GallioUnitTestTask"/> class.
+        /// </summary>
+        /// <param name="workingDirectory">Working directory for tests.</param>
+        /// <param name="assemblyToTest">Assembly to test.</param>
         public GallioUnitTestTask(string workingDirectory, string assemblyToTest)
         {
             GallioEchoPath = ".\\lib\\Gallio\\bin\\Gallio.Echo.exe";
