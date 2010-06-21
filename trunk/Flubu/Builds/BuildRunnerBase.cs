@@ -1,4 +1,6 @@
-﻿namespace Flubu.Builds
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Flubu.Builds
 {
     /// <summary>
     /// Task Runner helper.
@@ -15,6 +17,7 @@
         /// <summary>
         /// Gets or sets Command line arguments pased to build runner.
         /// </summary>
+        [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public string[] Arguments { get; set; }
 
         /// <summary>

@@ -1,4 +1,6 @@
-﻿namespace Flubu.Deployment
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Flubu.Deployment
 {
     public abstract class DeploymentBase<TRunner> : DeploymentRunner<TRunner>
         where TRunner : DeploymentRunner<TRunner>
@@ -12,6 +14,7 @@
         /// <summary>
         /// Gets or sets Command line arguments pased to build runner.
         /// </summary>
+        [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
         public string[] Arguments { get; set; }
 
         /// <summary>
