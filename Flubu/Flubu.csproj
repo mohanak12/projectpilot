@@ -167,6 +167,9 @@
     <Compile Include="ITask.cs" />
     <Compile Include="TaskBase.cs" />
     <Compile Include="RunnerFailedException.cs" />
+    <Compile Include="Tasks\Build\GallioUnitTestTask.cs" />
+    <Compile Include="Tasks\Build\NCoverTask.cs" />
+    <Compile Include="Tasks\Build\NUnitTask.cs" />
     <Compile Include="Tasks\Configuration\LogScriptEnvironmentTask.cs" />
     <Compile Include="Tasks\Configuration\ReadConfigurationTask.cs" />
     <Compile Include="Tasks\EnterpriseServices\InstallAssemblyTask.cs" />

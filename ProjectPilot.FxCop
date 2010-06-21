@@ -777,58 +777,32 @@
     <Modules>
      <Module Name="flubu.dll">
       <Namespaces>
-       <Namespace Name="Flubu.Tasks.WindowsServices">
+       <Namespace Name="Flubu">
         <Types>
-         <Type Name="RemoveWindowsServiceTask">
+         <Type Name="FlubuRunner`1">
           <Members>
-           <Member Name="#CloseServiceHandle(System.IntPtr)">
+           <Member Name="#Run`1(Flubu.FlubuRunner`1&lt;!!0&gt;,System.String[])">
             <Messages>
-             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Created="2010-05-26 07:55:31Z">
+             <Message Id="System.String.StartsWith(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2010-06-21 07:58:06Z">
               <Issue>
-               <Item>'RemoveWindowsServiceTask.CloseServiceHandle(IntPtr)'</Item>
+               <Item>'FlubuRunner&lt;TRunner&gt;.Run&lt;T&gt;(FlubuRunner&lt;T&gt;, string[])'</Item>
+               <Item>'string.StartsWith(string)'</Item>
+               <Item>'string.StartsWith(string, StringComparison)'</Item>
               </Issue>
-             </Message>
-             <Message Id="return" TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901" Created="2010-05-26 07:55:31Z" FixCategory="NonBreaking">
-              <Issue Name="Return">
-               <Item>'RemoveWindowsServiceTask.CloseServiceHandle(IntPtr)'</Item>
-               <Item>0</Item>
-               <Item>32-bit</Item>
-               <Item>4</Item>
-               <Item>'void'</Item>
-              </Issue>
-              <Issue Name="Return">
-               <Item>'RemoveWindowsServiceTask.CloseServiceHandle(IntPtr)'</Item>
-               <Item>0</Item>
-               <Item>64-bit</Item>
-               <Item>4</Item>
-               <Item>'void'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#DeleteService(System.IntPtr)">
-            <Messages>
-             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Created="2010-05-26 07:55:31Z">
               <Issue>
-               <Item>'RemoveWindowsServiceTask.DeleteService(IntPtr)'</Item>
+               <Item>'FlubuRunner&lt;TRunner&gt;.Run&lt;T&gt;(FlubuRunner&lt;T&gt;, string[])'</Item>
+               <Item>'string.StartsWith(string)'</Item>
+               <Item>'string.StartsWith(string, StringComparison)'</Item>
               </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#OpenSCManager(System.String,System.String,System.Int32)">
-            <Messages>
-             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Created="2010-05-26 07:55:31Z">
               <Issue>
-               <Item>'RemoveWindowsServiceTask.OpenSCManager(string, string, int)'</Item>
+               <Item>'FlubuRunner&lt;TRunner&gt;.Run&lt;T&gt;(FlubuRunner&lt;T&gt;, string[])'</Item>
+               <Item>'string.StartsWith(string)'</Item>
+               <Item>'string.StartsWith(string, StringComparison)'</Item>
               </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#OpenService(System.IntPtr,System.String,System.Int32)">
-            <Messages>
-             <Message TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060" Created="2010-05-26 07:55:31Z">
               <Issue>
-               <Item>'RemoveWindowsServiceTask.OpenService(IntPtr, string, int)'</Item>
+               <Item>'FlubuRunner&lt;TRunner&gt;.Run&lt;T&gt;(FlubuRunner&lt;T&gt;, string[])'</Item>
+               <Item>'string.StartsWith(string)'</Item>
+               <Item>'string.StartsWith(string, StringComparison)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1141,12 +1115,6 @@
    </Rule>
    <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
     <Resolution Name="Default" />
-   </Rule>
-   <Rule TypeName="MovePInvokesToNativeMethodsClass" Category="Microsoft.Design" CheckId="CA1060">
-    <Resolution Name="Default">Because it is a P/Invoke method, {0} should be defined in a class named NativeMethods, SafeNativeMethods, or UnsafeNativeMethods.</Resolution>
-   </Rule>
-   <Rule TypeName="PInvokeDeclarationsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1901">
-    <Resolution Name="Return">As it is declared in your code, the return type of P/Invoke {0} will be {1} bytes wide on {2} platforms. This is not correct, as the actual native declaration of this API indicates it should be {3} bytes wide on {2} platforms. Consult the MSDN Platform SDK documentation for help determining what data type should be used instead of {4}.</Resolution>
    </Rule>
    <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
     <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Resolution>

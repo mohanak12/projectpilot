@@ -750,6 +750,8 @@ namespace Flubu
         /// <param name="runner">See <see cref="FlubuRunner{TRunner}"/></param>
         /// <param name="arguments">Command line arguments.</param>
         /// <returns>0 if success, otherwise error code is returned.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1000:DoNotDeclareStaticMembersOnGenericTypes")]
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public static int Run<T>(FlubuRunner<T> runner, string[] arguments) where T : FlubuRunner<T>
         {
             try
@@ -768,6 +770,8 @@ namespace Flubu
 
                 foreach (string argument in arguments)
                 {
+                    if (argument.StartsWith("-", StringComparison.OrdinalIgnoreCase) ||
+                        argument.StartsWith("/", StringComparison.OrdinalIgnoreCase)) continue;
                     if (runner.HasTarget(argument)) continue;
 
                     runner.ScriptExecutionEnvironment.LogError(
@@ -779,6 +783,8 @@ namespace Flubu
 
                 foreach (string argument in arguments)
                 {
+                    if (argument.StartsWith("-", StringComparison.OrdinalIgnoreCase) ||
+                        argument.StartsWith("/", StringComparison.OrdinalIgnoreCase)) continue;
                     runner.RunTarget(argument);
                 }
 
