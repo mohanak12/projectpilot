@@ -36,22 +36,32 @@ namespace Flubu.Tasks.Build
         /// Gets or sets unit test working directory.
         /// </summary>
         public string WorkingDirectory { get; set; }
-        
+
+        /// <summary>
+        /// Gets or sets the report directory.
+        /// </summary>
+        /// <value>The report directory.</value>
+        public string ReportDirectory
+        {
+            get { return reportDirectory; }
+            set { reportDirectory = value; }
+        }
+
         /// <summary>
         /// Gets or sets assembly to test.
         /// </summary>
         public string AssemblyToTest { get; set; }
-        
+
         /// <summary>
         /// Gets or sets full path to Gallio.Echo.exe (.\lib\Gallio\bin\Gallio.Echo.exe)
         /// </summary>
         public string GallioEchoPath { get; set; }
-        
+
         /// <summary>
         /// Gets or sets test fixtures to run. (Fixture1, Fixture2, Fixture2)
         /// </summary>
         public string FixtureToRun { get; set; }
-        
+
         /// <summary>
         /// Gets or sets tests to run. (Test1, Test2, Test3)
         /// </summary>
@@ -84,6 +94,9 @@ namespace Flubu.Tasks.Build
             argumentLineBuilder.AppendFormat("\"{0}\" ", "/verbosity:debug");
             argumentLineBuilder.AppendFormat("\"{0}\" ", "/rt:Html");
             argumentLineBuilder.AppendFormat("\"{0}\" ", "/rt:Xml");
+            argumentLineBuilder.AppendFormat("\"/wd:{0}\" ", WorkingDirectory);
+            argumentLineBuilder.AppendFormat("\"/rd:{0}\" ", ReportDirectory);
+            argumentLineBuilder.Append("\"/rnf:test-report-{0}-{1}\" ");
 
             string filter = null;
             if (!string.IsNullOrEmpty(FixtureToRun))
@@ -106,5 +119,7 @@ namespace Flubu.Tasks.Build
                                       };
             task.Execute(environment);
         }
+
+        private string reportDirectory = "Reports";
     }
 }
