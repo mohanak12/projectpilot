@@ -26,11 +26,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
         /// project.
         /// </summary>
         /// <value>The <see cref="VSProject"/> object .</value>
-        public VSProject Project
-        {
-            get { return project; }
-            set { project = value; }
-        }
+        public VSProject Project { get; set; }
 
         /// <summary>
         /// Gets the path to the directory where the project file is located.
@@ -97,7 +93,6 @@ namespace Flubu.Builds.VSSolutionBrowsing
             }
         }
 
-        private VSProject project;
         private readonly string projectFileName;
         public const string MSBuildNamespace = @"http://schemas.microsoft.com/developer/msbuild/2003";
     }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using log4net;
@@ -63,7 +64,10 @@ namespace Flubu.Builds.VSSolutionBrowsing
                 if (projectData.ProjectGuid == projectGuid)
                     return projectData;
 
-            throw new ArgumentException ("Project not found.");
+            throw new ArgumentException(string.Format(
+                CultureInfo.InvariantCulture,
+                "Project {0} not found.",
+                projectGuid));
         }
 
         public VSProjectInfo FindProjectByName(string projectName)
@@ -72,7 +76,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
                 if (projectData.ProjectName == projectName)
                     return projectData;
 
-            throw new ArgumentException("Project not found.");
+            throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Project {0} not found.", projectName));
         }
 
         /// <summary>
@@ -91,7 +95,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
         /// <returns>A <see cref="VSSolution"/> representing the solution.</returns>
         public static VSSolution Load (string fileName)
         {
-            log.DebugFormat("Load ('{0}')", fileName);
+            Log.DebugFormat("Load ('{0}')", fileName);
 
             VSSolution solution = new VSSolution (fileName);
 
@@ -101,18 +105,16 @@ namespace Flubu.Builds.VSSolutionBrowsing
                 {
                     VSSolutionFileParser parser = new VSSolutionFileParser(reader);
 
-                    string line;
+                    string line = parser.NextLine();
 
-                    line = parser.NextLine();
-
-                    Match solutionMatch = VSSolution.RegexSolutionVersion.Match (line);
+                    Match solutionMatch = RegexSolutionVersion.Match (line);
 
                     if (solutionMatch.Success == false)
                         parser.ThrowParserException("Not a solution file.");
 
                     solution.solutionVersion = decimal.Parse (
                         solutionMatch.Groups["version"].Value, 
-                        System.Globalization.CultureInfo.InvariantCulture);
+                        CultureInfo.InvariantCulture);
 
                     while (true)
                     {
@@ -122,16 +124,16 @@ namespace Flubu.Builds.VSSolutionBrowsing
                             break;
 
                         // exit the loop when 'Global' section appears
-                        Match globalMatch = VSSolution.RegexGlobal.Match (line);
+                        Match globalMatch = RegexGlobal.Match (line);
                         if (globalMatch.Success)
                             break;
 
-                        Match projectMatch = VSSolution.RegexProject.Match (line);
+                        Match projectMatch = RegexProject.Match (line);
 
                         if (projectMatch.Success == false)
                             parser.ThrowParserException (
                                 String.Format (
-                                    System.Globalization.CultureInfo.InvariantCulture,
+                                    CultureInfo.InvariantCulture,
                                     "Could not parse solution file (line {0}).", 
                                     parser.LineCount));
 
@@ -140,7 +142,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
                         string projectFileName = projectMatch.Groups["path"].Value;
                         Guid projectTypeGuid = new Guid (projectMatch.Groups["projectTypeGuid"].Value);
 
-                        VSProjectInfo project = null;
+                        VSProjectInfo project;
                         if (projectTypeGuid == VSProjectType.SolutionFolderProjectType.ProjectTypeGuid)
                         {
                             project = new VSSolutionFilesInfo(
@@ -189,14 +191,14 @@ namespace Flubu.Builds.VSSolutionBrowsing
 
         protected VSSolution (string fileName)
         {
-            this.solutionFileName = fileName;
+            solutionFileName = fileName;
         }
 
-        private List<VSProjectInfo> projects = new List<VSProjectInfo> ();
+        private readonly List<VSProjectInfo> projects = new List<VSProjectInfo> ();
         private VSProjectTypesDictionary projectTypesDictionary = new VSProjectTypesDictionary();
-        private string solutionFileName;
+        private readonly string solutionFileName;
         private decimal solutionVersion;
 
-        private static readonly ILog log = LogManager.GetLogger(typeof(VSSolution));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(VSSolution));
     }
 }

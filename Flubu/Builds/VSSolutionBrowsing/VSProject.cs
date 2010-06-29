@@ -74,17 +74,18 @@ namespace Flubu.Builds.VSSolutionBrowsing
         /// <returns>VSProject class containing project information.</returns>
         public static VSProject Load(string projectFileName)
         {
-            log.DebugFormat("Load ('{0}')", projectFileName);
+            Log.DebugFormat("Load ('{0}')", projectFileName);
 
             using (Stream stream = File.OpenRead (projectFileName))
             {
-                VSProject data = new VSProject(projectFileName);
-                data.propertiesDictionary = true;
+                VSProject data = new VSProject(projectFileName) { propertiesDictionary = true };
 
-                XmlReaderSettings xmlReaderSettings = new XmlReaderSettings();
-                xmlReaderSettings.IgnoreComments = true;
-                xmlReaderSettings.IgnoreProcessingInstructions = true;
-                xmlReaderSettings.IgnoreWhitespace = true;
+                XmlReaderSettings xmlReaderSettings = new XmlReaderSettings
+                                                          {
+                                                              IgnoreComments = true,
+                                                              IgnoreProcessingInstructions = true,
+                                                              IgnoreWhitespace = true
+                                                          };
 
                 using (XmlReader xmlReader = XmlReader.Create(stream, xmlReaderSettings))
                 {
@@ -122,7 +123,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
         public IList<VSProjectItem> GetSingleTypeItems(string getItemType)
         {
             List<VSProjectItem> returnList = new List<VSProjectItem>();
-            foreach (VSProjectItem item in this.Items)
+            foreach (VSProjectItem item in Items)
             {
                 if (item.ItemType == getItemType)
                     returnList.Add(item);
@@ -140,10 +141,10 @@ namespace Flubu.Builds.VSSolutionBrowsing
                 switch (xmlReader.Name)
                 {
                     case "PropertyGroup":
-                        if (this.propertiesDictionary == true)
+                        if (propertiesDictionary)
                         {
                             ReadPropertyGroup(xmlReader);
-                            this.propertiesDictionary = false;
+                            propertiesDictionary = false;
                         }
                         else
                         {
@@ -167,7 +168,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
         {
             VSProjectConfiguration configuration = new VSProjectConfiguration();
 
-            if (xmlReader["Condition"] != null && this.propertiesDictionary == false)
+            if (xmlReader["Condition"] != null && propertiesDictionary == false)
             {
                 configuration.Condition = xmlReader["Condition"];
             }
@@ -176,17 +177,17 @@ namespace Flubu.Builds.VSSolutionBrowsing
             
             while (xmlReader.NodeType != XmlNodeType.EndElement)
             {
-                if (this.propertiesDictionary == true)
+                if (propertiesDictionary)
                 {
-                    if (this.properties.ContainsKey(xmlReader.Name))
+                    if (properties.ContainsKey(xmlReader.Name))
                         throw new ArgumentException(
                             string.Format(
                                 CultureInfo.InvariantCulture,
                                 "Property '{0}' has already been added to the group. VS project '{1}'",
                                 xmlReader.Name, 
-                                this.ProjectFileName));
+                                ProjectFileName));
 
-                    this.properties.Add(xmlReader.Name, xmlReader.ReadElementContentAsString());
+                    properties.Add(xmlReader.Name, xmlReader.ReadElementContentAsString());
                 }
                 else
                 {
@@ -196,7 +197,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
                                 CultureInfo.InvariantCulture,
                                 "Property '{0}' has already been added to the group. VS project '{1}'",
                                 xmlReader.Name, 
-                                this.ProjectFileName));
+                                ProjectFileName));
 
                     configuration.Properties.Add(xmlReader.Name, xmlReader.ReadElementContentAsString());
                 }
@@ -245,11 +246,9 @@ namespace Flubu.Builds.VSSolutionBrowsing
             }
         }
 
-        private VSProjectItem ReadItem(XmlReader xmlReader, string itemType)
+        private static VSProjectItem ReadItem(XmlReader xmlReader, string itemType)
         {
-            VSProjectItem item = new VSProjectItem(itemType);
-
-            item.Item = xmlReader["Include"];
+            VSProjectItem item = new VSProjectItem(itemType) { Item = xmlReader["Include"] };
 
             if (false == xmlReader.IsEmptyElement)
             {
@@ -269,7 +268,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
             return item;
         }
 
-        private void ReadItemProperty(VSProjectItem item, XmlReader xmlReader)
+        private static void ReadItemProperty(VSProjectItem item, XmlReader xmlReader)
         {
             string propertyName = xmlReader.Name;
             string propertyValue = xmlReader.ReadElementContentAsString();
@@ -278,7 +277,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
 
         private readonly List<VSProjectConfiguration> configurations = new List<VSProjectConfiguration>();
         private readonly List<VSProjectItem> items = new List<VSProjectItem>();
-        private static readonly ILog log = LogManager.GetLogger(typeof(VSProject));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(VSProject));
         private readonly string projectFileName;
         private readonly Dictionary<string, string> properties = new Dictionary<string, string>();
         private bool propertiesDictionary;

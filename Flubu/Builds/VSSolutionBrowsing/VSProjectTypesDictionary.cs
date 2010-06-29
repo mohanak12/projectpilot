@@ -40,6 +40,6 @@ namespace Flubu.Builds.VSSolutionBrowsing
             return null;
         }
 
-        private Dictionary<Guid, VSProjectType> projectTypes = new Dictionary<Guid, VSProjectType>();
+        private readonly Dictionary<Guid, VSProjectType> projectTypes = new Dictionary<Guid, VSProjectType>();
     }
 }

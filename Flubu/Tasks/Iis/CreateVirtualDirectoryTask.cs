@@ -100,6 +100,34 @@ namespace Flubu.Tasks.Iis
             this.mode = mode;
         }
 
+        public static void Execute(
+            IScriptExecutionEnvironment environment,
+            string virtualDirectoryName,
+            string localPath,
+            CreateVirtualDirectoryMode mode)
+        {
+            CreateVirtualDirectoryTask task = new CreateVirtualDirectoryTask(virtualDirectoryName, localPath, mode);
+            task.Execute(environment);
+        }
+
+        public static void Execute(
+            IScriptExecutionEnvironment environment,
+            string virtualDirectoryName,
+            string localPath,
+            string applicationPool,
+            CreateVirtualDirectoryMode mode,
+            bool allowAnonymous,
+            bool allowAuthNtlm)
+        {
+            CreateVirtualDirectoryTask task = new CreateVirtualDirectoryTask(virtualDirectoryName, localPath, mode)
+                                                  {
+                                                      AllowAnonymous = allowAnonymous,
+                                                      AllowAuthNtlm = allowAuthNtlm,
+                                                      ApplicationPoolName = applicationPool
+                                                  };
+            task.Execute(environment);
+        }
+
         protected override void DoExecute (IScriptExecutionEnvironment environment)
         {
             string parentName = parentVirtualDirectoryName;
@@ -141,8 +169,9 @@ namespace Flubu.Tasks.Iis
 
                     virtualDirEntry.Properties["Path"][0] = localPath;
                     virtualDirEntry.CommitChanges ();
-
-                    virtualDirEntry.Invoke ("AppCreate3", new object[] { 2, applicationPoolName, false });
+                    
+                    if (!string.IsNullOrEmpty(applicationPoolName))
+                        virtualDirEntry.Invoke ("AppCreate3", new object[] { 2, applicationPoolName, false });
 
                     virtualDirEntry.Properties["AppFriendlyName"][0] = appFriendlyName ?? virtualDirectoryName;
 
