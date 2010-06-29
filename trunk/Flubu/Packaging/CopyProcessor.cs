@@ -20,6 +20,18 @@ namespace Flubu.Packaging
             return this;
         }
 
+        /// <summary>
+        /// Replace all occurences of source filename with newFileName.
+        /// </summary>
+        /// <param name="fileName">Source file name to replace.</param>
+        /// <param name="newFileName">Replace with new name.</param>
+        /// <returns>Returns <see cref="CopyProcessor"/>.</returns>
+        public CopyProcessor AddFileTransformation(string fileName, string newFileName)
+        {
+            fileTransformations.Add(fileName, newFileName);
+            return this;
+        }
+
         public IPackageDef Process(IPackageDef packageDef)
         {
             return (IPackageDef)ProcessPrivate(packageDef, true);
@@ -34,12 +46,9 @@ namespace Flubu.Packaging
             ICompositeFilesSource compositeFilesSource, 
             bool isRoot)
         {
-            CompositeFilesSource transformedCompositeSource;
-
-            if (isRoot)
-                transformedCompositeSource = new StandardPackageDef(compositeFilesSource.Id);
-            else
-                transformedCompositeSource = new CompositeFilesSource(compositeFilesSource.Id);
+            CompositeFilesSource transformedCompositeSource = isRoot
+                                                                  ? new StandardPackageDef(compositeFilesSource.Id)
+                                                                  : new CompositeFilesSource(compositeFilesSource.Id);
 
             foreach (IFilesSource filesSource in compositeFilesSource.ListChildSources())
             {
@@ -67,8 +76,16 @@ namespace Flubu.Packaging
                                 sourceFile.FullPath.ToString())));
                     }
 
-                    filesList.AddFile(new PackagedFileInfo(destinationFileName));
+                    string destFile = Path.GetFileName(destinationFileName.ToString());
+                    if (fileTransformations.ContainsKey(destFile))
+                    {
+                        destinationFileName = new FullPath(Path.Combine(
+                                                            Path.GetDirectoryName(destinationFileName.ToString()),
+                                                            fileTransformations[destFile]));
+                    }
 
+                    filesList.AddFile(new PackagedFileInfo(destinationFileName));
+                    
                     copier.Copy(sourceFile.FullPath.ToString(), destinationFileName.ToString());
                 }
 
@@ -95,7 +112,8 @@ namespace Flubu.Packaging
         private readonly ILogger logger;
         private readonly ICopier copier;
         private readonly string destinationRootDir;
-        private Dictionary<string, LocalPath> transformations = new Dictionary<string, LocalPath>();
+        private readonly Dictionary<string, LocalPath> transformations = new Dictionary<string, LocalPath>();
+        private readonly Dictionary<string, string> fileTransformations = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         private IFileFilter filter;
     }
 }
