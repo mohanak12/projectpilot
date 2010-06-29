@@ -21,9 +21,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
 
         public override void Parse (VSSolutionFileParser parser)
         {
-            string line;
-
-            line = parser.NextLine().Trim();
+            string line = parser.NextLine().Trim();
             if (line == "EndProject")
                 return;
 
@@ -48,6 +46,6 @@ namespace Flubu.Builds.VSSolutionBrowsing
                 parser.ThrowParserException("'EndProject' expected.");
         }
 
-        private List<string> files = new List<string>();
+        private readonly List<string> files = new List<string>();
     }
 }

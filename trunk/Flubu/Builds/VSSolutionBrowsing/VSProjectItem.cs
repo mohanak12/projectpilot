@@ -29,8 +29,8 @@ namespace Flubu.Builds.VSSolutionBrowsing
         }
 
         private string item;
-        private Dictionary<string, string> itemProperties = new Dictionary<string, string>();
-        private string itemType;
+        private readonly Dictionary<string, string> itemProperties = new Dictionary<string, string>();
+        private readonly string itemType;
         public const string Content = "Content";
         public const string CompileItem = "CompileItem";
         public const string NoneItem = "None";

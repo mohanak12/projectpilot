@@ -122,11 +122,11 @@ namespace Flubu.Builds.VSSolutionBrowsing
             return !Equals(left, right);
         }
 
-        private static VSProjectType cSharpProjectType = new VSProjectType(
+        private static readonly VSProjectType cSharpProjectType = new VSProjectType(
             new Guid("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"),
             "C# Project");
 
-        private static VSProjectType solutionFolderProjectType = new VSProjectType(
+        private static readonly VSProjectType solutionFolderProjectType = new VSProjectType(
             new Guid("{2150E333-8FDC-42A3-9474-1A3956D46DE8}"),
             "Solution Folder");
 

@@ -18,7 +18,7 @@ namespace Flubu.Builds.VSSolutionBrowsing
             get { return properties; }
         }
 
-        private Dictionary<string, string> properties = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> properties = new Dictionary<string, string>();
         private string condition;
     }
 }
