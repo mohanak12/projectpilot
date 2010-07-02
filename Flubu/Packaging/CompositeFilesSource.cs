@@ -41,7 +41,7 @@ namespace Flubu.Packaging
             return filesSources.Values;
         }
 
-        private Dictionary<string, IFilesSource> filesSources = new Dictionary<string, IFilesSource>();
+        private readonly Dictionary<string, IFilesSource> filesSources = new Dictionary<string, IFilesSource>();
         [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         private IFileFilter filter;
     }

@@ -49,7 +49,7 @@ namespace Flubu.Packaging
                     StringComparison.OrdinalIgnoreCase))
                     throw new InvalidOperationException();
 
-                if (false == LoggingHelper.LogIfFilteredOut(fileName, filter, logger))
+                if (false == LoggingHelper.LogIfFilteredOut(fileName, Filter, logger))
                     continue;
 
                 LocalPath localPath = new LocalPath(
@@ -63,14 +63,39 @@ namespace Flubu.Packaging
 
         public void SetFilter(IFileFilter filter)
         {
-            this.filter = filter;
+            Filter = filter;
         }
+
+        public static DirectorySource NoFilterSource(
+            ILogger logger,
+            IDirectoryFilesLister directoryFilesLister,
+            string id,
+            string directoryName,
+            bool recursive)
+        {
+            return new DirectorySource(logger, directoryFilesLister, id, directoryName, recursive);
+        }
+
+        public static DirectorySource WebFilterSource(
+            ILogger logger,
+            IDirectoryFilesLister directoryFilesLister,
+            string id,
+            string directoryName,
+            bool recursive)
+        {
+            DirectorySource source = new DirectorySource(logger, directoryFilesLister, id, directoryName, recursive);
+            source.SetFilter(new NegativeFilter(
+                    new RegexFileFilter(@"^.*\.(svc|asax|config|aspx|ascx|css|js|gif|PNG)$")));
+
+            return source;
+        }
+
+        private IFileFilter Filter { get; set; }
 
         private readonly ILogger logger;
         private readonly IDirectoryFilesLister directoryFilesLister;
         private readonly string id;
         private readonly FullPath directoryPath;
-        private IFileFilter filter;
-        private bool recursive = true;
+        private readonly bool recursive = true;
     }
 }
