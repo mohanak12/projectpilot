@@ -208,6 +208,8 @@
     <Compile Include="Tasks\SqlServer\EnsureSqlServerIsRunningTask.cs" />
     <Compile Include="Tasks\CustomRunnerTask.cs" />
     <Compile Include="Tasks\SqlServer\ExecuteSqlScriptTask.cs" />
+    <Compile Include="Tasks\Tests\AccipioReportTask.cs" />
+    <Compile Include="Tasks\Tests\AccipioTransformTask.cs" />
     <Compile Include="Tasks\Text\ExpandPropertiesTask.cs" />
     <Compile Include="Tasks\Text\PeekXmlTask.cs" />
     <Compile Include="Tasks\Msmq\PurgeMessageQueueTask.cs" />
