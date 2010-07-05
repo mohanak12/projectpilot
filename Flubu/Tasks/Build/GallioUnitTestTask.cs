@@ -20,6 +20,22 @@ namespace Flubu.Tasks.Build
     /// </summary>
     public class GallioUnitTestTask : TaskBase
     {
+        public static void Execute(IScriptExecutionEnvironment environment, string workingFolder, string assemblyToTest)
+        {
+            GallioUnitTestTask task = new GallioUnitTestTask(workingFolder, assemblyToTest);
+            task.Execute(environment);
+        }
+
+        public static void Execute(IScriptExecutionEnvironment environment, string workingFolder, string assemblyToTest, string fixtureToRun, string testToRun)
+        {
+            GallioUnitTestTask task = new GallioUnitTestTask(workingFolder, assemblyToTest)
+                                          {
+                                              FixtureToRun = fixtureToRun,
+                                              TestToRun = testToRun
+                                          };
+            task.Execute(environment);
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GallioUnitTestTask"/> class.
         /// </summary>
@@ -94,9 +110,8 @@ namespace Flubu.Tasks.Build
             argumentLineBuilder.AppendFormat("\"{0}\" ", "/verbosity:debug");
             argumentLineBuilder.AppendFormat("\"{0}\" ", "/rt:Html");
             argumentLineBuilder.AppendFormat("\"{0}\" ", "/rt:Xml");
-            argumentLineBuilder.AppendFormat("\"/wd:{0}\" ", WorkingDirectory);
+            argumentLineBuilder.Append("\"/rnf:LastTestResults\" ");
             argumentLineBuilder.AppendFormat("\"/rd:{0}\" ", ReportDirectory);
-            argumentLineBuilder.Append("\"/rnf:test-report-{0}-{1}\" ");
 
             string filter = null;
             if (!string.IsNullOrEmpty(FixtureToRun))

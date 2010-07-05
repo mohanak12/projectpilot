@@ -19,6 +19,12 @@ namespace Flubu.Tasks.Build
     /// </summary>
     public class NUnitTask : TaskBase
     {
+        public static void Execute(IScriptExecutionEnvironment environment, string workingFolder, string assemblyToTest)
+        {
+            NUnitTask task = new NUnitTask(workingFolder, assemblyToTest);
+            task.Execute(environment);
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="NUnitTask"/> class.
         /// </summary>
