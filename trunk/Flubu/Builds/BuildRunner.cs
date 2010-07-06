@@ -493,6 +493,11 @@ namespace Flubu.Builds
 
         public TRunner GenerateCommonAssemblyInfo()
         {
+            return GenerateCommonAssemblyInfo(true, true);
+        }
+
+        public TRunner GenerateCommonAssemblyInfo(bool generateConfigurationAttribute, bool generateCultureAttribute)
+        {
             ScriptExecutionEnvironment.LogTaskStarted("Generating CommonAssemblyInfo file");
 
             if (buildVersion == null)
@@ -516,22 +521,25 @@ using System.Runtime.InteropServices;
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: AssemblyConfigurationAttribute(""{0}"")]
-[assembly: AssemblyCompanyAttribute(""{1}"")]
-[assembly: AssemblyProductAttribute(""{2}"")]
-[assembly: AssemblyCopyrightAttribute(""{3}"")]
-[assembly: AssemblyTrademarkAttribute(""{4}"")]
-[assembly: AssemblyCultureAttribute("""")]
-[assembly: AssemblyFileVersionAttribute(""{5}"")]
-[assembly: AssemblyInformationalVersionAttribute(""{6}"")]
+[assembly: AssemblyCompanyAttribute(""{0}"")]
+[assembly: AssemblyProductAttribute(""{1}"")]
+[assembly: AssemblyCopyrightAttribute(""{2}"")]
+[assembly: AssemblyTrademarkAttribute(""{3}"")]
+[assembly: AssemblyFileVersionAttribute(""{4}"")]
+[assembly: AssemblyInformationalVersionAttribute(""{5}"")]
 [assembly : ComVisible(false)]",
-                        buildConfiguration,
                         companyName,
                         productName,
                         companyCopyright,
                         companyTrademark,
                         buildVersion,
                         buildVersion.ToString(2));
+
+                    if (generateConfigurationAttribute)
+                        writer.Write(@"[assembly: AssemblyConfigurationAttribute(""{0}"")]", buildConfiguration);
+
+                    if (generateCultureAttribute)
+                        writer.Write(@"[assembly: AssemblyCultureAttribute("""")]");
                 }
             }
 

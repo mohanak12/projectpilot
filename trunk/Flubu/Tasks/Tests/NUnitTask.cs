@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Text;
 using Flubu.Tasks.Processes;
 
-namespace Flubu.Tasks.Build
+namespace Flubu.Tasks.Tests
 {
     /// <summary>
     /// Run tests with NUnit.
