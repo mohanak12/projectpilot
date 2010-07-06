@@ -1,4 +1,4 @@
-﻿namespace Flubu.Tasks.Build
+﻿namespace Flubu.Tasks.Tests
 {
     /// <summary>
     /// Test tool used with NCover.
