@@ -3,6 +3,8 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 using Flubu.Tasks.Processes;
+using Flubu.Tasks.Registry;
+using Microsoft.Win32;
 
 namespace Flubu.Tasks.Tests
 {
@@ -100,8 +102,13 @@ namespace Flubu.Tasks.Tests
         protected override void DoExecute(IScriptExecutionEnvironment environment)
         {
             string ncoverdll = Path.Combine(NCoverRoot, "CoverLib.dll");
-            RunProgramTask task = new RunProgramTask("regsvr32.exe", "/s " + ncoverdll, new TimeSpan(0, 0, 0, 10));
-            task.Execute(environment);
+            bool shouldRegister = ShouldRegisterNCover(environment);
+
+            if (shouldRegister)
+            {
+                RunProgramTask regTask = new RunProgramTask("regsvr32.exe", "/s " + ncoverdll, new TimeSpan(0, 0, 0, 10));
+                regTask.Execute(environment);
+            }
 
             StringBuilder args = new StringBuilder();
             args.AppendFormat("{0} ", "//l Coverage.log");
@@ -133,14 +140,39 @@ namespace Flubu.Tasks.Tests
                     args.AppendFormat("\"/f:{0}\" ", filter);
             }
 
-            task = new RunProgramTask(NCoverExecutablePath, args.ToString(), new TimeSpan(0, 1, 0, 0))
+            RunProgramTask task = new RunProgramTask(NCoverExecutablePath, args.ToString(), new TimeSpan(0, 1, 0, 0))
                        {
                            WorkingDirectory = WorkingDirectory
                        };
             task.Execute(environment);
 
-            task = new RunProgramTask("regsvr32.exe", "/s /u " + ncoverdll, new TimeSpan(0, 0, 0, 10));
-            task.Execute(environment);
+            if (shouldRegister)
+            {
+                task = new RunProgramTask("regsvr32.exe", "/s /u " + ncoverdll, new TimeSpan(0, 0, 0, 10));
+                task.Execute(environment);
+            }
+        }
+
+        private static bool ShouldRegisterNCover(IScriptExecutionEnvironment environment)
+        {
+            GetRegistryValueTask task = new GetRegistryValueTask(
+                Microsoft.Win32.Registry.ClassesRoot,
+                "TypeLib\\{3FB1CC1E-1C17-4A37-9C18-BF3DB8F10E46}\\1.0",
+                string.Empty,
+                "NCoverRegistered");
+
+            try
+            {
+                task.Execute(environment);
+            }
+            catch (RunnerFailedException)
+            {
+                return true;
+            }
+
+            string val = environment.GetConfigurationSettingValue("NCoverRegistered");
+
+            return string.IsNullOrEmpty(val);
         }
 
         private string NCoverRoot { get; set; }
