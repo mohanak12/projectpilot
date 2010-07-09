@@ -332,6 +332,19 @@ namespace Flubu.Builds
         /// </returns>
         public TRunner FetchBuildVersion()
         {
+            return FetchBuildVersion(true);
+        }
+
+        /// <summary>
+        /// Fetches the build version, either from the local version info file or from CCNet
+        /// (if the build is running under CCNet).
+        /// </summary>
+        /// <param name="loadFromFile">If not running under CCNet, fetch version from file or not.</param>
+        /// <returns>
+        /// The same instance of this <see cref="TRunner"/>.
+        /// </returns>
+        public TRunner FetchBuildVersion(bool loadFromFile)
+        {
             ScriptExecutionEnvironment.LogTaskStarted("Fetching the build version");
 
             if (IsRunningUnderCruiseControl)
@@ -348,7 +361,7 @@ namespace Flubu.Builds
                 else
                     BuildVersion = new Version(match.Groups["version"].Value);
             }
-            else
+            else if (loadFromFile)
             {
                 string projectVersionFileName = MakePathFromRootDir(ProductId) + ".ProjectVersion.txt";
 
@@ -507,7 +520,7 @@ namespace Flubu.Builds
             {
                 using (StreamWriter writer = new StreamWriter(stream))
                 {
-                    writer.Write(
+                    writer.WriteLine(
                         @"using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -536,10 +549,10 @@ using System.Runtime.InteropServices;
                         buildVersion.ToString(2));
 
                     if (generateConfigurationAttribute)
-                        writer.Write(@"[assembly: AssemblyConfigurationAttribute(""{0}"")]", buildConfiguration);
+                        writer.WriteLine(@"[assembly: AssemblyConfigurationAttribute(""{0}"")]", buildConfiguration);
 
                     if (generateCultureAttribute)
-                        writer.Write(@"[assembly: AssemblyCultureAttribute("""")]");
+                        writer.WriteLine(@"[assembly: AssemblyCultureAttribute("""")]");
                 }
             }
 
