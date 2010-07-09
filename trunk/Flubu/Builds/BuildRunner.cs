@@ -506,10 +506,10 @@ namespace Flubu.Builds
 
         public TRunner GenerateCommonAssemblyInfo()
         {
-            return GenerateCommonAssemblyInfo(true, true);
+            return GenerateCommonAssemblyInfo(true, true, false);
         }
 
-        public TRunner GenerateCommonAssemblyInfo(bool generateConfigurationAttribute, bool generateCultureAttribute)
+        public TRunner GenerateCommonAssemblyInfo(bool generateConfigurationAttribute, bool generateCultureAttribute, bool generateAssemblyVersion)
         {
             ScriptExecutionEnvironment.LogTaskStarted("Generating CommonAssemblyInfo file");
 
@@ -547,6 +547,9 @@ using System.Runtime.InteropServices;
                         companyTrademark,
                         buildVersion,
                         buildVersion.ToString(2));
+
+                    if (generateAssemblyVersion)
+                        writer.WriteLine(@"[assembly: AssemblyVersionAttribute(""{0}.0.0"")]", buildVersion.ToString(2));
 
                     if (generateConfigurationAttribute)
                         writer.WriteLine(@"[assembly: AssemblyConfigurationAttribute(""{0}"")]", buildConfiguration);
