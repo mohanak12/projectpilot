@@ -131,6 +131,7 @@ namespace Flubu.Tasks.Tests
             RunProgramTask task = new RunProgramTask(GallioEchoPath, argumentLineBuilder.ToString(), new TimeSpan(0, 1, 0, 0))
                                       {
                                           WorkingDirectory = WorkingDirectory,
+                                          FailOnError = false,
                                       };
             task.Execute(environment);
         }

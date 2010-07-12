@@ -79,7 +79,7 @@ namespace Flubu.Tasks.Processes
             string arguments, 
             TimeSpan timeout)
         {
-            RunProgramTask task = new RunProgramTask (programFilePath, arguments, timeout);
+            RunProgramTask task = new RunProgramTask(programFilePath, arguments, timeout) { FailOnError = true };
             task.Execute (environment);
         }
 
@@ -108,8 +108,11 @@ namespace Flubu.Tasks.Processes
                 arguments, 
                 timeout,
                 userName, 
-                userDomain, 
-                password);
+                userDomain,
+                password)
+                {
+                    FailOnError = true,
+                };
             task.Execute (environment);
         }
 
@@ -160,13 +163,16 @@ namespace Flubu.Tasks.Processes
 
                 process.WaitForExit((int)timeout.TotalMilliseconds);
 
-                if (process.ExitCode != 0)
-                        throw new RunnerFailedException (
-                            String.Format (
-                                System.Globalization.CultureInfo.InvariantCulture,
-                                "The program '{0}' returned exit code {1}.",
-                                programFilePath, 
-                                process.ExitCode));
+                string message = String.Format(
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    "The program '{0}' returned exit code {1}.",
+                    programFilePath,
+                    process.ExitCode);
+                Console.WriteLine(message);
+                if (FailOnError && process.ExitCode != 0)
+                {
+                    throw new RunnerFailedException(message);
+                }
             }
         }
 
@@ -184,6 +190,12 @@ namespace Flubu.Tasks.Processes
         /// Gets or sets working directory for process. 
         /// </summary>
         public string WorkingDirectory { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether flubu should throw an exception when exit code of the process != 0.
+        /// </summary>
+        /// <value><c>true</c> if [fail on error]; otherwise, <c>false</c>.</value>
+        public bool FailOnError { get; set; }
 
         private readonly string programFilePath;
         private readonly string arguments;
