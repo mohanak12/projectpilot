@@ -37,6 +37,7 @@ namespace Flubu.Tasks.Tests
             NCoverRoot = Path.GetDirectoryName(NCoverExecutablePath);
             TestToolPath = @"lib\NUnit\bin\net-2.0\nunit-console-x86.exe";
             TestToolType = UnitTestToolType.NUnit;
+            OutputDirectory = workingDirectory;
         }
 
         /// <summary>
@@ -80,6 +81,11 @@ namespace Flubu.Tasks.Tests
         public string TestToRun { get; set; }
 
         /// <summary>
+        /// Gets or sets output directory.
+        /// </summary>
+        public string OutputDirectory { get; set; }
+
+        /// <summary>
         /// Gets the task description.
         /// </summary>
         /// <value>The task description.</value>
@@ -111,15 +117,20 @@ namespace Flubu.Tasks.Tests
             }
 
             StringBuilder args = new StringBuilder();
-            args.AppendFormat("{0} ", "//l Coverage.log");
-            args.AppendFormat("{0} ", "//x Coverage.xml");
-            args.AppendFormat("{0} ", "//a " + AssemblyToTest);
+            args.AppendFormat("//l {0} ", Path.Combine(OutputDirectory, "Coverage.log"));
+            args.AppendFormat("//x {0} ", Path.Combine(OutputDirectory, "Coverage.xml"));
+            args.AppendFormat("//a {0} ", AssemblyToTest);
             args.AppendFormat("{0} ", TestToolPath);
             args.AppendFormat("{0} ", AssemblyToTest);
 
             if (TestToolType == UnitTestToolType.NUnit && !string.IsNullOrEmpty(ExcludeCategories))
             {
                 args.AppendFormat("\"/exclude={0}\" ", ExcludeCategories);
+            }
+
+            if (TestToolType == UnitTestToolType.NUnit)
+            {
+                args.AppendFormat("\"/xml={0}\" ", Path.Combine(OutputDirectory, "NUnitReport.xml"));
             }
 
             if (TestToolType == UnitTestToolType.Gallio)
