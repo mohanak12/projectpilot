@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Text;
 using Flubu.Tasks.Processes;
@@ -27,14 +28,14 @@ namespace Flubu.Tasks.Build
         /// <summary>
         /// Gets assemblies to document.
         /// </summary>
-        public List<string> AssembliesToDocument { get; private set; }
+        public Collection<string> AssembliesToDocument { get; private set; }
 
         /// <summary>
         /// Gets or sets NDoc3 application path.
         /// </summary>
         public string NDoc3Path { get; set; }
 
-        public NDoc3Task(List<string> assembliesToDocument)
+        public NDoc3Task(Collection<string> assembliesToDocument)
         {
             NDoc3Path = "lib\\NDoc3\\NDoc3Console.exe";
             WorkingDirectory = ".";
@@ -45,7 +46,7 @@ namespace Flubu.Tasks.Build
         {
             WorkingDirectory = ".";
             NDoc3Path = "lib\\NDoc3\\NDoc3Console.exe";
-            AssembliesToDocument = new List<string>(arguments);
+            AssembliesToDocument = new Collection<string>(arguments);
         }
 
         /// <summary>
