@@ -777,32 +777,26 @@
     <Modules>
      <Module Name="flubu.dll">
       <Namespaces>
-       <Namespace Name="Flubu">
+       <Namespace Name="Flubu.Tasks.Build">
         <Types>
-         <Type Name="FlubuRunner`1">
+         <Type Name="NDoc3Task">
           <Members>
-           <Member Name="#Run`1(Flubu.FlubuRunner`1&lt;!!0&gt;,System.String[])">
+           <Member Name="#.ctor(System.Collections.Generic.List`1&lt;System.String&gt;)">
             <Messages>
-             <Message Id="System.String.StartsWith(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2010-06-21 07:58:06Z">
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2010-07-14 05:37:09Z">
               <Issue>
-               <Item>'FlubuRunner&lt;TRunner&gt;.Run&lt;T&gt;(FlubuRunner&lt;T&gt;, string[])'</Item>
-               <Item>'string.StartsWith(string)'</Item>
-               <Item>'string.StartsWith(string, StringComparison)'</Item>
+               <Item>'List&lt;string&gt;'</Item>
+               <Item>'NDoc3Task.NDoc3Task(List&lt;string&gt;)'</Item>
               </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#AssembliesToDocument">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2010-07-14 05:37:09Z">
               <Issue>
-               <Item>'FlubuRunner&lt;TRunner&gt;.Run&lt;T&gt;(FlubuRunner&lt;T&gt;, string[])'</Item>
-               <Item>'string.StartsWith(string)'</Item>
-               <Item>'string.StartsWith(string, StringComparison)'</Item>
-              </Issue>
-              <Issue>
-               <Item>'FlubuRunner&lt;TRunner&gt;.Run&lt;T&gt;(FlubuRunner&lt;T&gt;, string[])'</Item>
-               <Item>'string.StartsWith(string)'</Item>
-               <Item>'string.StartsWith(string, StringComparison)'</Item>
-              </Issue>
-              <Issue>
-               <Item>'FlubuRunner&lt;TRunner&gt;.Run&lt;T&gt;(FlubuRunner&lt;T&gt;, string[])'</Item>
-               <Item>'string.StartsWith(string)'</Item>
-               <Item>'string.StartsWith(string, StringComparison)'</Item>
+               <Item>'List&lt;string&gt;'</Item>
+               <Item>'NDoc3Task.AssembliesToDocument'</Item>
               </Issue>
              </Message>
             </Messages>
