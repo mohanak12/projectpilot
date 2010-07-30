@@ -140,7 +140,7 @@ namespace Flubu.Tasks.Configuration
                             "Configuration setting '{0}' has value '{1}'", 
                             settingName, 
                             node.InnerText);
-                    environment.SetConfigurationSettingValue (settingName.ToString (), node.InnerText);
+                    environment.SetConfigSetting (settingName.ToString (), node.InnerText);
                 }
             }
         }

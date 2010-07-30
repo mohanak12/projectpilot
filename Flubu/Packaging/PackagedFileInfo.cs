@@ -10,6 +10,11 @@ namespace Flubu.Packaging
             this.fullPath = fullPath;
         }
 
+        public PackagedFileInfo(string fullPath, string localPath)
+            : this (new FullPath(fullPath), new LocalPath(localPath))
+        {
+        }
+
         public PackagedFileInfo(FullPath fullPath)
         {
             //AssertIsFullPath(fullPath);

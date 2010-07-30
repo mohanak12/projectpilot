@@ -90,7 +90,7 @@ namespace Flubu.Tasks.Text
             XmlNode node = xmlDoc.SelectSingleNode("Configuration");
 
             if (node != null)
-                environment.SetConfigurationSettingValue(configurationSettingName, node.InnerText);
+                environment.SetConfigSetting(configurationSettingName, node.InnerText);
         }
 
         private string xmlFileName;

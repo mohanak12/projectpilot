@@ -71,7 +71,7 @@ namespace Flubu.Tasks.WindowsServices
                 "ServicesExist/{0}",
                 serviceName);
             CheckIfServiceExistsTask.Execute(environment, serviceName, configSettingName);
-            if (bool.Parse(environment.GetConfigurationSettingValue(configSettingName)) == false)
+            if (bool.Parse(environment.GetConfigSetting(configSettingName)) == false)
             {
                 if (FailIfNotExist)
                     throw new RunnerFailedException("Service {0} does not exist.", serviceName);

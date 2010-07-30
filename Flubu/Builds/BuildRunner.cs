@@ -860,7 +860,7 @@ using System.Runtime.InteropServices;
 
                 if (info.Value.ApplicationPoolName != null)
                 {
-                    string majorVersion = ScriptExecutionEnvironment.GetConfigurationSettingValue(
+                    string majorVersion = ScriptExecutionEnvironment.GetConfigSetting(
                         Tasks.Iis.GetLocalIisVersionTask.IisMajorVersion);
 
                     int major = Convert.ToInt32(majorVersion, CultureInfo.InvariantCulture);

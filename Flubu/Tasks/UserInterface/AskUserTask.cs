@@ -79,7 +79,7 @@ namespace Flubu.Tasks.UserInterface
             string input = environment.ReceiveInput (prompt);
 
             if (configurationSettingName != null)
-                environment.SetConfigurationSettingValue (configurationSettingName, input);
+                environment.SetConfigSetting (configurationSettingName, input);
         }
 
         private string prompt;
