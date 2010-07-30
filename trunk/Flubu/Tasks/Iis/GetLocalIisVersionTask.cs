@@ -37,14 +37,14 @@ namespace Flubu.Tasks.Iis
         public static string GetIisVersion(IScriptExecutionEnvironment environment, bool failIfNotExist)
         {
             string major;
-            if (environment.IsConfigurationSettingDefined(IisMajorVersion))
+            if (environment.IsConfigSettingDefined(IisMajorVersion))
             {
-                major = environment.GetConfigurationSettingValue(IisMajorVersion);
+                major = environment.GetConfigSetting(IisMajorVersion);
             }
             else
             {
                 ExecuteTask(environment);
-                major = environment.GetConfigurationSettingValue(IisMajorVersion);
+                major = environment.GetConfigSetting(IisMajorVersion);
             }
 
             if (string.IsNullOrEmpty(major))
@@ -57,7 +57,7 @@ namespace Flubu.Tasks.Iis
                 return "0.0";
             }
 
-            string minor = environment.GetConfigurationSettingValue(IisMinorVersion);
+            string minor = environment.GetConfigSetting(IisMinorVersion);
             return major + "." + minor;
         }
 
@@ -95,8 +95,8 @@ namespace Flubu.Tasks.Iis
 
             environment.LogMessage(
                 "Local IIS has version {0}.{1}",
-                environment.GetConfigurationSettingValue ("IIS/MajorVersion"),
-                environment.GetConfigurationSettingValue ("IIS/MinorVersion"));
+                environment.GetConfigSetting ("IIS/MajorVersion"),
+                environment.GetConfigSetting ("IIS/MinorVersion"));
         }
     }
 }

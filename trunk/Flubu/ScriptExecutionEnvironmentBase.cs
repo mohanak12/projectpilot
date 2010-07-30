@@ -135,9 +135,11 @@ namespace Flubu
             loggers.Add(logger);
         }
 
-        public abstract string GetConfigurationSettingValue (string settingName);
+        public abstract string GetConfigSetting (string settingName);
 
-        public abstract bool IsConfigurationSettingDefined(string settingName);
+        public abstract bool IsConfigSettingDefined(string settingName);
+
+        public abstract IEnumerable<KeyValuePair<string, string>> ListConfigSettings();
 
         public void LogError(string message)
         {
@@ -195,7 +197,7 @@ namespace Flubu
 
         public abstract string ReceiveInput (string prompt);
 
-        public abstract void SetConfigurationSettingValue (string settingName, string settingValue);
+        public abstract void SetConfigSetting (string settingName, string settingValue);
 
         /// <summary>
         /// Disposes the object.

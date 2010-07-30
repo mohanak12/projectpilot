@@ -39,13 +39,13 @@ namespace Flubu.Tasks.WindowsServices
                 {
                     // this should throw an exception if the service does not exist
                     System.Runtime.InteropServices.SafeHandle serviceHandle = serviceController.ServiceHandle;
-                    environment.SetConfigurationSettingValue (configurationSetting, "true");
+                    environment.SetConfigSetting (configurationSetting, "true");
                     environment.LogMessage("Windows service '{0}' exists.", serviceName);
                 }
             }
             catch (InvalidOperationException)
             {
-                environment.SetConfigurationSettingValue (configurationSetting, "false");
+                environment.SetConfigSetting (configurationSetting, "false");
                 environment.LogMessage(
                         "Windows service '{0}' does not exist.", 
                         serviceName);

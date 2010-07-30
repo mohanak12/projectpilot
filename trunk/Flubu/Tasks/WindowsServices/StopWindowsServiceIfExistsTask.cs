@@ -53,7 +53,7 @@ namespace Flubu.Tasks.WindowsServices
                 "ServicesExist/{0}", 
                 serviceName);
             CheckIfServiceExistsTask.Execute (environment, serviceName, configSettingName);
-            if (bool.Parse (environment.GetConfigurationSettingValue (configSettingName)) == true)
+            if (bool.Parse (environment.GetConfigSetting (configSettingName)) == true)
                 ControlWindowsServiceTask.Execute (
                     environment, 
                     serviceName,

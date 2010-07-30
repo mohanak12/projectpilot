@@ -58,7 +58,7 @@ namespace Flubu.Tasks.Registry
                             "Registry key '{0}' does not exist.", 
                             registryKeyPath));
 
-                environment.SetConfigurationSettingValue (
+                environment.SetConfigSetting (
                     configurationSettingName, 
                     Convert.ToString (key.GetValue (registryValueName), System.Globalization.CultureInfo.InvariantCulture));
             }

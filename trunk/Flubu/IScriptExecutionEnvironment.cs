@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+
 namespace Flubu
 {
     public interface IScriptExecutionEnvironment : IFlubuLogger
@@ -85,12 +88,15 @@ namespace Flubu
 
         void AddLogger(IFlubuLogger logger);
 
-        string GetConfigurationSettingValue (string settingName);
+        string GetConfigSetting (string settingName);
 
-        bool IsConfigurationSettingDefined(string settingName);
+        bool IsConfigSettingDefined(string settingName);
+
+        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
+        IEnumerable<KeyValuePair<string, string>> ListConfigSettings();
 
         string ReceiveInput (string prompt);
 
-        void SetConfigurationSettingValue(string settingName, string settingValue);
+        void SetConfigSetting(string settingName, string settingValue);
     }
 }

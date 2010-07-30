@@ -777,26 +777,16 @@
     <Modules>
      <Module Name="flubu.dll">
       <Namespaces>
-       <Namespace Name="Flubu.Tasks.Build">
+       <Namespace Name="Flubu">
         <Types>
-         <Type Name="NDoc3Task">
+         <Type Name="IScriptExecutionEnvironment">
           <Members>
-           <Member Name="#.ctor(System.Collections.Generic.List`1&lt;System.String&gt;)">
+           <Member Name="#ListConfigSettings()">
             <Messages>
-             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2010-07-14 05:37:09Z">
+             <Message TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006" Created="2010-07-30 06:37:21Z">
               <Issue>
-               <Item>'List&lt;string&gt;'</Item>
-               <Item>'NDoc3Task.NDoc3Task(List&lt;string&gt;)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#AssembliesToDocument">
-            <Messages>
-             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2010-07-14 05:37:09Z">
-              <Issue>
-               <Item>'List&lt;string&gt;'</Item>
-               <Item>'NDoc3Task.AssembliesToDocument'</Item>
+               <Item>'IScriptExecutionEnvironment.ListConfigSettings()'</Item>
+               <Item>'IEnumerable&lt;KeyValuePair&lt;string, string&gt;&gt;'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1078,6 +1068,9 @@
    </Rule>
    <Rule TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806">
     <Resolution Name="ObjectCreation">{0} creates a new instance of {1} which is never used. Pass the instance as an argument to another method, assign the instance to a variable, or remove the object creation if it is unnecessary.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006">
+    <Resolution Name="Default">Consider a design where {0} doesn't nest generic type {1}.</Resolution>
    </Rule>
    <Rule TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004">
     <Resolution Name="Default">Consider a design where {0} doesn't require explicit type parameter {1} in any call to it.</Resolution>

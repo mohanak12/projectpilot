@@ -39,7 +39,7 @@ namespace Flubu
             AddLogger(new MulticoloredConsoleLogger(Console.Out));
         }
 
-        public override string GetConfigurationSettingValue (string settingName)
+        public override string GetConfigSetting (string settingName)
         {
             if (settingName == null)
                 throw new ArgumentNullException ("settingName");                
@@ -66,7 +66,7 @@ namespace Flubu
             return configurationSettings[settingName];
         }
 
-        public override bool IsConfigurationSettingDefined(string settingName)
+        public override bool IsConfigSettingDefined(string settingName)
         {
             if (settingName == null)
                 throw new ArgumentNullException("settingName");
@@ -74,7 +74,12 @@ namespace Flubu
             return configurationSettings.ContainsKey(settingName);
         }
 
-        public override void SetConfigurationSettingValue (string settingName, string settingValue)
+        public override IEnumerable<KeyValuePair<string, string>> ListConfigSettings()
+        {
+            return configurationSettings;
+        }
+
+        public override void SetConfigSetting (string settingName, string settingValue)
         {
             if (settingName == null)
                 throw new ArgumentNullException ("settingName");                
