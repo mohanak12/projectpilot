@@ -46,22 +46,22 @@ namespace Flubu
         {
         }
 
-        public void LogRunnerFinished(bool success, TimeSpan buildDuration)
+        public void LogRunnerFinished(IFlubuRunner runner)
         {
-            AddMessageToQueue(success ? "BUILD SUCCESSFUL" : "BUILD FAILED");
+            AddMessageToQueue(runner.HasFailed ? "BUILD FAILED" : "BUILD SUCCESSFUL");
             if (this.projectTargetStack.Count > 0)
                 this.projectTargetStack.Pop ();
         }
 
-        public void LogTargetFinished()
+        public void LogTargetFinished(IFlubuRunnerTarget target)
         {
             if (this.projectTargetStack.Count > 0)
                 this.projectTargetStack.Pop ();
         }
 
-        public void LogTargetStarted(string targetName)
+        public void LogTargetStarted(IFlubuRunnerTarget target)
         {
-            this.projectTargetStack.Push(FormatMessage("Starting Target {0}", targetName));
+            this.projectTargetStack.Push(FormatMessage("Starting Target {0}", target.TargetName));
             this.messageQueue.Clear ();
             WriteQueueData();
         }

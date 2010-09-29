@@ -1,10 +1,34 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Flubu
 {
-    public class FlubuRunnerTarget<TRunner>
-        where TRunner : FlubuRunner<TRunner>
+    public interface IFlubuRunnerTarget
+    {
+        /// <summary>
+        /// Gets the description of the target.
+        /// </summary>
+        /// <value>The description of the target.</value>
+        string Description { get; }
+
+        ICollection<string> Dependencies { get; }
+
+        string TargetName { get; }
+
+        Stopwatch TargetStopwatch { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether this target is hidden. Hidden targets will not be
+        /// visible in the list of targets displayed to the user as help.
+        /// </summary>
+        /// <value><c>true</c> if this target is hidden; otherwise, <c>false</c>.</value>
+        bool IsHidden { get; }
+
+        void Execute();
+    }
+
+    public class FlubuRunnerTarget<TRunner> : IFlubuRunnerTarget where TRunner : FlubuRunner<TRunner>
     {
         public FlubuRunnerTarget(
             TRunner runner, 
@@ -43,6 +67,11 @@ namespace Flubu
             get { return targetName; }
         }
 
+        public Stopwatch TargetStopwatch
+        {
+            get { return targetStopwatch; }
+        }
+
         /// <summary>
         /// Specifies targets on which this target depends on.
         /// </summary>
@@ -50,23 +79,25 @@ namespace Flubu
         /// <returns>This same instance of <see cref="FlubuRunnerTarget{TRunner}"/>.</returns>
         public FlubuRunnerTarget<TRunner> DependsOn (params string[] targetNames)
         {
-            foreach (string targetName in targetNames)
-                dependencies.Add(targetName);
+            foreach (string dependentTargetName in targetNames)
+                dependencies.Add(dependentTargetName);
             return this;
         }
 
         public void Execute()
         {
-            runner.ScriptExecutionEnvironment.LogTargetStarted(this.targetName);
+            targetStopwatch.Start();
+            runner.ScriptExecutionEnvironment.LogTargetStarted(this);
 
             runner.MarkTargetAsExecuted(this);
-            runner.EnsureDependenciesExecuted(this.TargetName);
+            runner.EnsureDependenciesExecuted(TargetName);
 
             // we can have actionless targets (that only depend on other targets)
             if (targetAction != null)
                 targetAction(runner);
 
-            runner.ScriptExecutionEnvironment.LogTargetFinished();
+            TargetStopwatch.Stop();
+            runner.ScriptExecutionEnvironment.LogTargetFinished(this);
         }
 
         public FlubuRunnerTarget<TRunner> Do (Action<TRunner> targetAction)
@@ -101,7 +132,7 @@ namespace Flubu
         /// <returns>This same instance of <see cref="FlubuRunnerTarget{TRunner}"/>.</returns>
         public FlubuRunnerTarget<TRunner> SetAsHidden()
         {
-            this.isHidden = true;
+            isHidden = true;
             return this;
         }
 
@@ -111,5 +142,6 @@ namespace Flubu
         private readonly TRunner runner;
         private readonly string targetName;
         private Action<TRunner> targetAction;
+        private readonly Stopwatch targetStopwatch = new Stopwatch();
     }
 }

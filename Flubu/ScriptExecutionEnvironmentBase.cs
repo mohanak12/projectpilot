@@ -165,22 +165,22 @@ namespace Flubu
                 logger.LogMessage(format, args);
         }
 
-        public void LogRunnerFinished(bool success, TimeSpan buildDuration)
+        public void LogRunnerFinished(IFlubuRunner runner)
         {
             foreach (IFlubuLogger logger in loggers)
-                logger.LogRunnerFinished(success, buildDuration);
+                logger.LogRunnerFinished(runner);
         }
 
-        public void LogTargetFinished()
+        public void LogTargetFinished(IFlubuRunnerTarget target)
         {
             foreach (IFlubuLogger logger in loggers)
-                logger.LogTargetFinished();
+                logger.LogTargetFinished(target);
         }
 
-        public void LogTargetStarted(string targetName)
+        public void LogTargetStarted(IFlubuRunnerTarget target)
         {
             foreach (IFlubuLogger logger in loggers)
-                logger.LogTargetStarted(targetName);
+                logger.LogTargetStarted(target);
         }
 
         public void LogTaskFinished()
@@ -192,7 +192,7 @@ namespace Flubu
         public void LogTaskStarted(string taskDescription)
         {
             foreach (IFlubuLogger logger in loggers)
-                logger.LogTargetStarted(taskDescription);
+                logger.LogTaskStarted(taskDescription);
         }
 
         public abstract string ReceiveInput (string prompt);

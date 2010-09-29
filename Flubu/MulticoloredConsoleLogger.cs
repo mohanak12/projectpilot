@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Flubu
@@ -58,17 +59,20 @@ namespace Flubu
             WriteLine (ConsoleColor.DarkGray, format, args);
         }
 
-        public void LogRunnerFinished(bool success, TimeSpan buildDuration)
+        public void LogRunnerFinished(IFlubuRunner runner)
         {
             // reset the depth counter to make the build report non-indented
             executionDepthCounter = 0;
 
-            WriteLine (ConsoleColor.DarkGray, String.Empty);
-            if (success)
-                WriteLine (ConsoleColor.Green, "BUILD SUCCESSFUL");
-            else
-                WriteLine(ConsoleColor.Red, "BUILD FAILED");
+            LogTargetDurations(runner);
 
+            WriteLine (ConsoleColor.DarkGray, String.Empty);
+            if (runner.HasFailed)
+                WriteLine(ConsoleColor.Red, "BUILD FAILED");
+            else
+                WriteLine(ConsoleColor.Green, "BUILD SUCCESSFUL");
+
+            TimeSpan buildDuration = runner.BuildStopwatch.Elapsed;
             WriteLine(ConsoleColor.White, "Build finish time: {0:g}", DateTime.Now);
             WriteLine(
                 ConsoleColor.White, 
@@ -79,15 +83,20 @@ namespace Flubu
                 (int)buildDuration.TotalSeconds);
         }
 
-        public void LogTargetFinished()
+        public void LogTargetFinished(IFlubuRunnerTarget target)
         {
             executionDepthCounter--;
+            WriteLine(
+                ConsoleColor.White, 
+                "{0} finished (took {1} seconds)", 
+                target.TargetName,
+                (int)target.TargetStopwatch.Elapsed.TotalSeconds);
         }
 
-        public void LogTargetStarted(string targetName)
+        public void LogTargetStarted(IFlubuRunnerTarget target)
         {
             WriteLine(ConsoleColor.White, String.Empty);
-            WriteLine (ConsoleColor.White, "{0}:", targetName);
+            WriteLine (ConsoleColor.White, "{0}:", target.TargetName);
             executionDepthCounter++;
         }
 
@@ -98,7 +107,7 @@ namespace Flubu
 
         public void LogTaskStarted(string taskDescription)
         {
-            WriteLine (ConsoleColor.Gray, "TASK: {0}", taskDescription);
+            WriteLine (ConsoleColor.Gray, "{0}", taskDescription);
             executionDepthCounter++;
         }
 
@@ -132,6 +141,28 @@ namespace Flubu
                 }
 
                 disposed = true;
+            }
+        }
+
+        private void LogTargetDurations(IFlubuRunner runner)
+        {
+            WriteLine(ConsoleColor.White, String.Empty);
+
+            SortedList<string, IFlubuRunnerTarget> sortedTargets = new SortedList<string, IFlubuRunnerTarget>();
+
+            foreach (IFlubuRunnerTarget target in runner.Targets.Values)
+                sortedTargets.Add(target.TargetName, target);
+
+            foreach (IFlubuRunnerTarget target in sortedTargets.Values)
+            {
+                if (target.TargetStopwatch.ElapsedTicks > 0)
+                {
+                    WriteLine(
+                        ConsoleColor.Magenta,
+                        "Target {0} took {1} s", 
+                        target.TargetName, 
+                        (int)target.TargetStopwatch.Elapsed.TotalSeconds);
+                }
             }
         }
 
