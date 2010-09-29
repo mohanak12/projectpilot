@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using log4net;
 
 namespace Flubu
@@ -43,16 +41,17 @@ namespace Flubu
             log.InfoFormat(CultureInfo.InvariantCulture, format, args);
         }
 
-        public void LogRunnerFinished(bool success, TimeSpan buildDuration)
+        public void LogRunnerFinished(IFlubuRunner runner)
         {
             // reset the depth counter to make the build report non-indented
             executionDepthCounter = 0;
 
-            if (success)
-                log.Info("BUILD SUCCESSFUL");
-            else
+            if (runner.HasFailed)
                 log.Error("BUILD FAILED");
+            else
+                log.Info("BUILD SUCCESSFUL");
 
+            TimeSpan buildDuration = runner.BuildStopwatch.Elapsed;
             log.InfoFormat(CultureInfo.InvariantCulture, "Build finish time: {0:g}", DateTime.Now);
             log.InfoFormat(
                 CultureInfo.InvariantCulture, 
@@ -63,14 +62,19 @@ namespace Flubu
                 (int)buildDuration.TotalSeconds);
         }
 
-        public void LogTargetFinished()
+        public void LogTargetFinished(IFlubuRunnerTarget target)
         {
+            log.InfoFormat(
+                CultureInfo.InvariantCulture,
+                "{0} finished (took {1} seconds)",
+                target.TargetName,
+                (int)target.TargetStopwatch.Elapsed.TotalSeconds);
             executionDepthCounter--;
         }
 
-        public void LogTargetStarted(string targetName)
+        public void LogTargetStarted(IFlubuRunnerTarget target)
         {
-            log.InfoFormat(CultureInfo.InvariantCulture, "{0}:", targetName);
+            log.InfoFormat(CultureInfo.InvariantCulture, "{0}:", target.TargetName);
             executionDepthCounter++;
         }
 
@@ -81,7 +85,7 @@ namespace Flubu
 
         public void LogTaskStarted(string taskDescription)
         {
-            log.InfoFormat(CultureInfo.InvariantCulture, "TASK: {0}", taskDescription);
+            log.InfoFormat(CultureInfo.InvariantCulture, "{0}", taskDescription);
             executionDepthCounter++;
         }
 

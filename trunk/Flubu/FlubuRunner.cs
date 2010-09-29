@@ -26,11 +26,20 @@ using Microsoft.Win32;
 
 namespace Flubu
 {
+    public interface IFlubuRunner : IDisposable
+    {
+        Stopwatch BuildStopwatch { get; }
+
+        bool HasFailed { get; }
+
+        IDictionary<string, IFlubuRunnerTarget> Targets { get; }
+    }
+
     /// <summary>
     /// A base class for fluent building.
     /// </summary>
     /// <typeparam name="TRunner">The concrete type of the runner.</typeparam>
-    public class FlubuRunner<TRunner> : IDisposable
+    public class FlubuRunner<TRunner> : IFlubuRunner
         where TRunner : FlubuRunner<TRunner>
     {
         public FlubuRunner(string scriptName, string logFileName, int howManyOldLogsToKeep)
@@ -47,7 +56,7 @@ namespace Flubu
                 .SetDescription("Displays the available targets in the build")
                 .Do(TargetHelp);
 
-            buildTime.Start();
+            buildStopwatch.Start();
         }
 
         /// <summary>
@@ -59,6 +68,16 @@ namespace Flubu
         public FlubuRunnerTarget<TRunner> DefaultTarget
         {
             get { return defaultTarget; }
+        }
+
+        public bool HasFailed
+        {
+            get { return hasFailed; }
+        }
+
+        public Stopwatch BuildStopwatch
+        {
+            get { return buildStopwatch; }
         }
 
         public ExternalProgramRunner<TRunner> ProgramRunner
@@ -81,6 +100,11 @@ namespace Flubu
             get { return scriptExecutionEnvironment; }
         }
 
+        public IDictionary<string, IFlubuRunnerTarget> Targets
+        {
+            get { return targets; }
+        }
+
         public TRunner AddUserToGroup (string userName, string group)
         {
             AddUserToGroupTask.Execute(scriptExecutionEnvironment,  userName, group);
@@ -90,7 +114,7 @@ namespace Flubu
         public FlubuRunnerTarget<TRunner> AddTarget(string targetName)
         {
             FlubuRunnerTarget<TRunner> target = new FlubuRunnerTarget<TRunner>(ReturnThisTRunner(), targetName);
-            targets.Add(target.TargetName, target);
+            Targets.Add(target.TargetName, target);
             return target;
         }
 
@@ -330,7 +354,7 @@ namespace Flubu
 
         public TRunner EnsureDependenciesExecuted(string targetName)
         {
-            FlubuRunnerTarget<TRunner> target = targets[targetName];
+            IFlubuRunnerTarget target = Targets[targetName];
             foreach (string dependency in target.Dependencies)
             {
                 if (false == executedTargets.ContainsKey(dependency))
@@ -484,7 +508,7 @@ namespace Flubu
         /// </returns>
         public bool HasTarget(string targetName)
         {
-            return targets.ContainsKey(targetName);
+            return Targets.ContainsKey(targetName);
         }
 
         /// <summary>
@@ -586,10 +610,10 @@ namespace Flubu
         /// <returns>The same instance of this <see cref="TRunner"/>.</returns>
         public TRunner RunTarget(string targetName)
         {
-            if (false == targets.ContainsKey(targetName))
+            if (false == Targets.ContainsKey(targetName))
                 throw new ArgumentException(FormatString("The target '{0}' does not exist", targetName));
 
-            FlubuRunnerTarget<TRunner> target = targets[targetName];
+            IFlubuRunnerTarget target = Targets[targetName];
             target.Execute();
 
             return ReturnThisTRunner();
@@ -681,13 +705,13 @@ namespace Flubu
             Log("Targets:"); 
 
             // first sort the targets
-            SortedList<string, FlubuRunnerTarget<TRunner>> sortedTargets = new SortedList<string, FlubuRunnerTarget<TRunner>>();
+            SortedList<string, IFlubuRunnerTarget> sortedTargets = new SortedList<string, IFlubuRunnerTarget>();
 
-            foreach (FlubuRunnerTarget<TRunner> target in targets.Values)
+            foreach (IFlubuRunnerTarget target in Targets.Values)
                 sortedTargets.Add(target.TargetName, target);
 
             // now display them in sorted order
-            foreach (FlubuRunnerTarget<TRunner> target in sortedTargets.Values)
+            foreach (IFlubuRunnerTarget target in sortedTargets.Values)
                 if (false == target.IsHidden)
                     Log(
                         "  {0} : {1}",
@@ -810,7 +834,8 @@ namespace Flubu
             {
                 if (disposing)
                 {
-                    scriptExecutionEnvironment.LogRunnerFinished(!hasFailed, buildTime.Elapsed);
+                    buildStopwatch.Stop();
+                    scriptExecutionEnvironment.LogRunnerFinished(this);
 
                     Beep(hasFailed ? MessageBeepType.Error : MessageBeepType.Ok);
 
@@ -838,7 +863,7 @@ namespace Flubu
             return (TRunner) this;
         }
 
-        private Stopwatch buildTime = new Stopwatch();
+        private Stopwatch buildStopwatch = new Stopwatch();
         private FlubuRunnerTarget<TRunner> defaultTarget;
         private bool disposed;
         private ExternalProgramRunner<TRunner> programRunner;
@@ -847,6 +872,6 @@ namespace Flubu
         private IList<string> lastCopiedFilesList;
         private IScriptExecutionEnvironment scriptExecutionEnvironment;
         private List<IDisposable> stuffToDisposeOf = new List<IDisposable>();
-        private readonly Dictionary<string, FlubuRunnerTarget<TRunner>> targets = new Dictionary<string, FlubuRunnerTarget<TRunner>>();
+        private readonly Dictionary<string, IFlubuRunnerTarget> targets = new Dictionary<string, IFlubuRunnerTarget>();
     }
 }

@@ -14,14 +14,14 @@ namespace Flubu
         void LogMessage (string format, params object[] args);
 
         [SuppressMessage ("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "LogRunner")]
-        void LogRunnerFinished (bool success, TimeSpan buildDuration);
-        
-        void LogTargetFinished();
-        
-        void LogTargetStarted (string targetName);
-        
-        void LogTaskFinished();
-        
+        void LogRunnerFinished (IFlubuRunner runner);
+
+        void LogTargetStarted(IFlubuRunnerTarget target);
+
+        void LogTargetFinished(IFlubuRunnerTarget target);
+
         void LogTaskStarted(string taskDescription);
+
+        void LogTaskFinished();
     }
 }

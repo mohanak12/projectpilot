@@ -386,7 +386,7 @@ namespace Flubu.Builds
 
         public TRunner FxCop()
         {
-            ScriptExecutionEnvironment.LogTargetStarted("Running FxCop analysis");
+            ScriptExecutionEnvironment.LogTaskStarted("Running FxCop analysis");
 
             string fxProjectPath = MakePathFromRootDir(productId) + ".FxCop";
 
@@ -450,7 +450,7 @@ namespace Flubu.Builds
                 Fail("FxCop found violations in the code.");
             }
 
-            ScriptExecutionEnvironment.LogTargetFinished();
+            ScriptExecutionEnvironment.LogTaskFinished();
             return ReturnThisTRunner();
         }
 
