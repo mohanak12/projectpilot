@@ -35,6 +35,7 @@ namespace Flubu.Builds
         public string BuildConfiguration
         {
             get { return buildConfiguration; }
+            set { buildConfiguration = value; }
         }
 
         public string BuildDir
