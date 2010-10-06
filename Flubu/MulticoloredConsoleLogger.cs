@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 
 namespace Flubu
@@ -17,6 +18,8 @@ namespace Flubu
         public MulticoloredConsoleLogger(TextWriter writer)
         {
             this.writer = writer;
+            stopwatch.Start();
+            lastTimeMark = TimeSpan.Zero;
 
             if (IsConsoleOutput)
             {
@@ -171,19 +174,38 @@ namespace Flubu
             if (IsConsoleOutput)
                 Console.ForegroundColor = foregroundColor;
 
-            string indentation = new string (' ', executionDepthCounter * 3);
+            WriteTimeMark();
+
+            string indentation = new string(' ', executionDepthCounter * 3);
             writer.Write (indentation);
             writer.WriteLine (message);
         }
 
         private void WriteLine(ConsoleColor foregroundColor, string format, params object[] args)
         {
+            WriteTimeMark();
+
             if (IsConsoleOutput)
                 Console.ForegroundColor = foregroundColor;
 
-            string indentation = new string (' ', executionDepthCounter * 3);
+            string indentation = new string(' ', executionDepthCounter * 3);
             writer.Write(indentation);
             writer.WriteLine(format, args);
+        }
+
+        private void WriteTimeMark()
+        {
+            TimeSpan timeMark = stopwatch.Elapsed;
+            TimeSpan diff = (timeMark - lastTimeMark);
+            if (diff.TotalSeconds >= 2)
+            {
+                if (IsConsoleOutput)
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                writer.Write("{0,3}:", (int)diff.TotalSeconds);
+            }
+            else
+                writer.Write("    ");
+            lastTimeMark = timeMark;
         }
 
         private bool disposed;
@@ -191,5 +213,7 @@ namespace Flubu
         private readonly TextWriter writer;
         private ConsoleColor defaultForegroundColor;
         private ConsoleColor defaultBackgroundColor;
+        private Stopwatch stopwatch = new Stopwatch();
+        private TimeSpan lastTimeMark;
     }
 }
