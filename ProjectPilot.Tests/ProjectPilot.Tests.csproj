@@ -96,6 +96,7 @@
     </Compile>
     <Compile Include="AccipioTests\Reporting\HtmlTestReportTests.cs" />
     <Compile Include="AccipioTests\Reporting\GraphGenerationTests.cs" />
+    <Compile Include="FlubuTests\IisTests.cs" />
     <Compile Include="FlubuTests\PackagingTests.cs" />
     <Compile Include="Framework\ProjectPilotPortalTests.cs" />
     <Compile Include="AccipioTests\GallioReportConverterTests.cs" />

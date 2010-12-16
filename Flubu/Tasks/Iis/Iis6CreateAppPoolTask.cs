@@ -4,18 +4,24 @@ using System.IO;
 
 namespace Flubu.Tasks.Iis
 {
-    public class CreateApplicationPoolTask : TaskBase
+    public class Iis6CreateAppPoolTask : TaskBase, ICreateAppPoolTask
     {
-        public CreateApplicationPoolTask (string applicationPoolName, CreateApplicationPoolMode mode)
+        public string ApplicationPoolName
         {
-            this.applicationPoolName = applicationPoolName;
-            this.mode = mode;
+            get { return applicationPoolName; }
+            set { applicationPoolName = value; }
         }
 
         public bool ClassicManagedPipelineMode
         {
             get { return classicManagedPipelineMode; }
             set { classicManagedPipelineMode = value; }
+        }
+
+        public CreateApplicationPoolMode Mode
+        {
+            get { return mode; }
+            set { mode = value; }
         }
 
         public override string TaskDescription
@@ -27,15 +33,6 @@ namespace Flubu.Tasks.Iis
                     "Create application pool '{0}'.", 
                     applicationPoolName);
             }
-        }
-
-        public static void Execute(
-            IScriptExecutionEnvironment environment,
-            string applicationPoolName, 
-            CreateApplicationPoolMode mode)
-        {
-            CreateApplicationPoolTask task = new CreateApplicationPoolTask (applicationPoolName, mode);
-            task.Execute (environment);
         }
 
         protected override void DoExecute (IScriptExecutionEnvironment environment)
@@ -107,8 +104,8 @@ namespace Flubu.Tasks.Iis
             }
         }
 
-        private readonly string applicationPoolName;
+        private string applicationPoolName;
         private bool classicManagedPipelineMode;
-        private readonly CreateApplicationPoolMode mode;
+        private CreateApplicationPoolMode mode;
     }
 }

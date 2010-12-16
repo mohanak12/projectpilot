@@ -823,63 +823,6 @@ using System.Runtime.InteropServices;
         }
 
         /// <summary>
-        /// Prepares web applications in IIS for registered VisualStudio Web projects.
-        /// </summary>
-        /// <returns>The same instance of this <see cref="BuildRunner"/>.</returns>
-        public TRunner PrepareWebApplications()
-        {
-            foreach (KeyValuePair<string, VSProjectExtendedInfo> info in ProjectExtendedInfos)
-            {
-                if (!info.Value.IsWebProject) continue;
-
-                string projectName = info.Key;
-
-                if (info.Value.ApplicationPoolName != null)
-                {
-                    CreateApplicationPool(
-                        info.Value.ApplicationPoolName,
-                        CreateApplicationPoolMode.UpdateIfExists);
-                }
-
-                Uri webApplicationUrl = info.Value.WebApplicationUrl;
-                if (0 != String.Compare(webApplicationUrl.Host, "localhost", StringComparison.OrdinalIgnoreCase))
-                    throw new ArgumentException(
-                        FormatString(
-                            "Cannot create the Web application '{0}'. Only localhost is currently supported.",
-                            webApplicationUrl));
-
-                string virtualDirectoryName = webApplicationUrl.GetComponents(UriComponents.Path, UriFormat.SafeUnescaped);
-                VSProjectWithFileInfo project = (VSProjectWithFileInfo) Solution.FindProjectByName(projectName);
-                string localAppPath =
-                    Path.GetFullPath(
-                        MakePathFromRootDir(project.ProjectDirectoryPath));
-
-                CreateVirtualDirectoryTask task = new CreateVirtualDirectoryTask(
-                    virtualDirectoryName,
-                    localAppPath,
-                    CreateVirtualDirectoryMode.UpdateIfExists);
-
-                if (info.Value.ApplicationPoolName != null)
-                {
-                    string majorVersion = ScriptExecutionEnvironment.GetConfigSetting(
-                        Tasks.Iis.GetLocalIisVersionTask.IisMajorVersion);
-
-                    int major = Convert.ToInt32(majorVersion, CultureInfo.InvariantCulture);
-                    if (major >= 6)
-                        task.ApplicationPoolName = info.Value.ApplicationPoolName;
-                }
-
-                task.Execute(ScriptExecutionEnvironment);
-
-                RegisterAspNet(
-                    virtualDirectoryName,
-                    ScriptExecutionEnvironment.Net20VersionNumber);
-            }
-
-            return ReturnThisTRunner();
-        }
-
-        /// <summary>
         /// Registers the specified project as a web project.
         /// </summary>
         /// <param name="projectName">Name of the project.</param>

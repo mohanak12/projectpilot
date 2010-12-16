@@ -22,9 +22,6 @@ namespace ProjectPilot.BuildScripts
                     runner.AddTarget("unit.tests")
                         .SetDescription("Runs unit tests on the project")
                         .Do(r => r.RunTests("ProjectPilot.Tests", false)).DependsOn("load.solution");
-                    runner.AddTarget("prepare.web")
-                        .SetDescription("Prepares Web applications for the project")
-                        .Do(r => runner.PrepareWebApplications()).DependsOn("load.solution");
                     runner.AddTarget("package")
                         .SetDescription("Packages all the build products into ZIP files")
                         .Do(TargetPackage).DependsOn("load.solution");
@@ -33,7 +30,7 @@ namespace ProjectPilot.BuildScripts
                         .Do(r => r.SourceMonitor());
                     runner.AddTarget("rebuild")
                         .SetDescription("Rebuilds the project, runs tests and packages the build products.")
-                        .SetAsDefault().DependsOn("compile", "unit.tests", "package", "prepare.web");
+                        .SetAsDefault().DependsOn("compile", "unit.tests", "package");
 
                     // actual run
                     if (args.Length == 0)

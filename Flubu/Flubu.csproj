@@ -73,12 +73,19 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\log4net-1.2.10\bin\net\2.0\release\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\IIS7\Microsoft.Web.Administration.dll</HintPath>
+    </Reference>
     <Reference Include="NVelocity, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\NVelocity\NVelocity.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.EnterpriseServices" />
@@ -170,6 +177,17 @@
     <Compile Include="TaskBase.cs" />
     <Compile Include="RunnerFailedException.cs" />
     <Compile Include="Tasks\Build\NDoc3Task.cs" />
+    <Compile Include="Tasks\Iis\IControlAppPoolTask.cs" />
+    <Compile Include="Tasks\Iis\ICreateAppPoolTask.cs" />
+    <Compile Include="Tasks\Iis\IDeleteAppPoolTask.cs" />
+    <Compile Include="Tasks\Iis\IIisMaster.cs" />
+    <Compile Include="Tasks\Iis\IIisTasksFactory.cs" />
+    <Compile Include="Tasks\Iis\Iis6TasksFactory.cs" />
+    <Compile Include="Tasks\Iis\Iis7ControlAppPoolTask.cs" />
+    <Compile Include="Tasks\Iis\Iis7CreateAppPoolTask.cs" />
+    <Compile Include="Tasks\Iis\Iis7DeleteAppPoolTask.cs" />
+    <Compile Include="Tasks\Iis\Iis7TasksFactory.cs" />
+    <Compile Include="Tasks\Iis\IisMaster.cs" />
     <Compile Include="Tasks\Tests\GallioUnitTestTask.cs" />
     <Compile Include="Tasks\Tests\NCoverTask.cs" />
     <Compile Include="Tasks\Tests\NUnitTask.cs" />
@@ -185,12 +203,12 @@
     <Compile Include="Tasks\FileSystem\DeleteFilesTask.cs" />
     <Compile Include="Tasks\FileSystem\SetAccessRuleTask.cs" />
     <Compile Include="Tasks\Iis\ControlApplicationPoolAction.cs" />
-    <Compile Include="Tasks\Iis\ControlApplicationPoolTask.cs" />
+    <Compile Include="Tasks\Iis\Iis6ControlAppPoolTask.cs" />
     <Compile Include="Tasks\Iis\CreateApplicationPoolMode.cs" />
-    <Compile Include="Tasks\Iis\CreateApplicationPoolTask.cs" />
+    <Compile Include="Tasks\Iis\Iis6CreateAppPoolTask.cs" />
     <Compile Include="Tasks\Iis\CreateVirtualDirectoryMode.cs" />
     <Compile Include="Tasks\Iis\CreateVirtualDirectoryTask.cs" />
-    <Compile Include="Tasks\Iis\DeleteApplicationPoolTask.cs" />
+    <Compile Include="Tasks\Iis\Iis6DeleteAppPoolTask.cs" />
     <Compile Include="Tasks\Iis\DeleteVirtualDirectoryTask.cs" />
     <Compile Include="Tasks\Iis\GetLocalIisVersionTask.cs" />
     <Compile Include="Tasks\Iis\RegisterAspNetTask.cs" />
