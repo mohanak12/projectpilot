@@ -4,8 +4,26 @@ using System.IO;
 
 namespace Flubu.Tasks.Iis
 {
-    public class ControlApplicationPoolTask : TaskBase
+    public class Iis6ControlAppPoolTask : TaskBase, IControlAppPoolTask
     {
+        public string ApplicationPoolName
+        {
+            get { return applicationPoolName; }
+            set { applicationPoolName = value; }
+        }
+
+        public ControlApplicationPoolAction Action
+        {
+            get { return action; }
+            set { action = value; }
+        }
+
+        public bool FailIfNotExist
+        {
+            get { return failIfNotExist; }
+            set { failIfNotExist = value; }
+        }
+
         public override string TaskDescription
         {
             get
@@ -18,39 +36,8 @@ namespace Flubu.Tasks.Iis
             }
         }
 
-        public ControlApplicationPoolTask (
-            string applicationPoolName, 
-            ControlApplicationPoolAction action,
-            bool failIfNotExist)
-        {
-            this.applicationPoolName = applicationPoolName;
-            this.action = action;
-            this.failIfNotExist = failIfNotExist;
-        }
-
-        public static void Execute(
-            IScriptExecutionEnvironment environment,
-            string applicationPoolName,
-            ControlApplicationPoolAction action,
-            bool failIfNotExist)
-        {
-            ControlApplicationPoolTask task = new ControlApplicationPoolTask (
-                applicationPoolName, 
-                action,
-                failIfNotExist);
-            task.Execute (environment);
-        }
-
         protected override void DoExecute (IScriptExecutionEnvironment environment)
         {
-            string version = GetLocalIisVersionTask.GetIisVersion(environment, failIfNotExist);
-            int major = GetLocalIisVersionTask.GetMajorVersion(version);
-            if (major < 6 || major == 0)
-            {
-                environment.LogMessage("IIS does not support application pools.");
-                return;
-            }
-
             const string AppPoolsRootName = @"IIS://localhost/W3SVC/AppPools";
 
             using (DirectoryEntry parent = new DirectoryEntry (AppPoolsRootName))
@@ -92,3 +79,4 @@ namespace Flubu.Tasks.Iis
         private bool failIfNotExist;
     }
 }
+

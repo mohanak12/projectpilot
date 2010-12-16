@@ -166,15 +166,6 @@ namespace Flubu
             hasFailed = false;
         }
 
-        public TRunner ControlApplicationPool(
-            string applicationPoolName, 
-            ControlApplicationPoolAction action,
-            bool failIfNotExist)
-        {
-            ControlApplicationPoolTask.Execute(scriptExecutionEnvironment, applicationPoolName, action, failIfNotExist);
-            return ReturnThisTRunner();
-        }
-
         public TRunner ControlWindowsService(
             string serviceName, 
             ControlWindowsServiceMode mode, 
@@ -236,12 +227,6 @@ namespace Flubu
             bool overwrite)
         {
             CopyFileTask.Execute(scriptExecutionEnvironment, sourceFileName, destinationFileName, overwrite);
-            return ReturnThisTRunner();
-        }
-
-        public TRunner CreateApplicationPool(string applicationPoolName, CreateApplicationPoolMode mode)
-        {
-            CreateApplicationPoolTask.Execute(scriptExecutionEnvironment, applicationPoolName, mode);
             return ReturnThisTRunner();
         }
 
