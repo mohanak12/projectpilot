@@ -255,5 +255,86 @@ Added new scripts to the Script Library
 - Samples/Hosting/MethodSignatures.cs
 - Samples/Hosting/Classless.cs
 
+Changes in build v2.3.0.0
+Added command-line switch /verbose 
+Added command-line switch /dir 
+Added support for environment variables in script engine directive
+Added //css_searchdir directive
+Added interactive environment CSI
+Script caching algorithm for hosted script execution is extended to retain compiled script cache between the host application sessions.
+Changes in the CLR target selection approach ("Target Framework" instead of "CLR Version")
+Added new scripts to the Script Samples Library
+- Samples/Hosting/Sandboxing/*.cs    
+- Samples/Hello.js 
+- Samples/ErrorLevelTester.cs
 
+Changes in build v2.3.2
+Added preventing creation of cache directory if caching is disabled. (CSScript.CacheEnabled = false)
+Added fix for AsmHelper.InvokeInst failing to resolve type name when only method name specified.
+Added synchronization for "simultaneous" script loading/compilation for running from different threads/processes.
 
+Changes in build v2.4.0
+Implemented Interface Alignment (DuckTyping) 
+Added command-line switch /autoclass
+Added CS-Script launcher for Linux (csslinux.exe).
+Fixed problem with paths being internally converted into lowercase at runtime. 
+Added new scripts to the Samples Library
+  - Samples/HostingInterfaceAlignment/*.cs 
+CS-Script API changes and defect fixes
+  - AsmHelper extended with ScriptExecutionDomain property.
+  - Added preventing creation of cache directory if caching is disabled. (CSScript.CacheEnabled = false) 
+  - Added fix for AsmHelper.InvokeInst failing to resolve type name when only method name specified.
+  - Added synchronization for "simultaneous" script loading/compilation for running from different threads/processes.
+
+Changes in build v2.4.1
+Added /sconfig[:filename] command line argument extension to allow custom .NET config file name
+Added startup validation for css_config.exe to validate if tharget system has required .NET version installed
+All legasy scripts targeting .NET 1.1 moved from [cs-script]\Lib to [cs-script]\Lib\Bin\NET 1.1
+Added runtime assembly attribute "stamp" to distinguish script assemblies from the rest of the assembly set in hosted scenarios.
+Added new scripts to the Script Samples Library
+   Samples\ConfigFiles\*.*
+   Samples\Hosting\DetectingScriptCodeCalls\*.cs
+   
+Changes in build v2.4.2
+Fixed problem with CSScript.GlobalSettings.InMemoryAsssembly switch not being processed ar runtime.
+
+Changes in build v2.4.3
+Added //css_classless directive.
+
+Changes in build v2.4.4
+CSSCodeProvider.dll implementation changed to use v3.5 VB.NET compiler.
+
+Changes in build v2.5.0
+Added integration with NAnt
+Added Silverlight Player
+Added //css_classless directive
+Implemented Interface Alignment for script remote execution
+Usability improvements
+- Check for C# compiler (csc.exe) availability at the first start of css_config.exe
+- All tutorials are reworked to demonstrate all hosting scenarios and to be in accordance with the script hosting guideline.
+- Implementation of the Res.cs script for generating *.resources files is finalized.
+- CSSCodeProvider.dll updated to access VB compiler for .NET v3.5.
+Added new scripts to the Script/Samples Library
+- Lib/fkill.cs 
+- Lib/noCache.cs
+- Samples/Resourses/script.cs
+- Samples/linq.cs
+- Samples/NAnt/*.*
+- Samples/Silverlight/*.*
+
+Changes in build v2.5.0+
+ Fixed problem with AsmHelper.InvokeInst() failing to find type in the script when class name contains namespace.
+ CSScriptLibrary.dll is signed now.
+ During assembly probing files with expected file extensions do not have higher priority than any other files.
+ Implemented //css_co directive for passing compiler options string directly to the language compiler from the script file.
+ Added support for PostSharp AOP.
+ Added GetStaticMethodWithArgs to AsmHelper and Assembly to allow search and matching static methods with method arguments specified as Type[]
+ Added new scripts to the Script/Samples Library
+ - Hosting/ConditionalCompilation.cs 
+ - Added CompileErrors to the CompilerException class
+ - Added Simplified Sandboxing sample.
+ - Added CSScript.GetScriptTempFile()
+ - Added CSScript.GetScriptTempDir()
+ - Added Sandbox syntactic sugar class.
+ - //css_dir is always relative to the parent script location
+ - //css_dir and //css_res are now processed in all imported scripts too
