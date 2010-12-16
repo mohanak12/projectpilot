@@ -22,6 +22,7 @@
  </ProjectOptions>
  <Targets>
   <AssemblyReferenceDirectories>
+   <Directory>$(ProjectDir)/lib/IIS7/</Directory>
    <Directory>$(ProjectDir)/lib/Microsoft SQL Server/</Directory>
    <Directory>$(ProjectDir)/ProjectPilot.TestFramework/bin/Release/</Directory>
    <Directory>$(ProjectDir)/Scripts/</Directory>
@@ -777,16 +778,15 @@
     <Modules>
      <Module Name="flubu.dll">
       <Namespaces>
-       <Namespace Name="Flubu">
+       <Namespace Name="Flubu.Tasks.Iis">
         <Types>
-         <Type Name="IScriptExecutionEnvironment">
+         <Type Name="Iis7ControlAppPoolTask">
           <Members>
-           <Member Name="#ListConfigSettings()">
+           <Member Name="#DoExecute(Flubu.IScriptExecutionEnvironment)">
             <Messages>
-             <Message TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006" Created="2010-07-30 06:37:21Z">
-              <Issue>
-               <Item>'IScriptExecutionEnvironment.ListConfigSettings()'</Item>
-               <Item>'IEnumerable&lt;KeyValuePair&lt;string, string&gt;&gt;'</Item>
+             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2010-12-16 07:52:08Z">
+              <Issue Name="NoArguments">
+               <Item>'ArgumentOutOfRangeException'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1069,9 +1069,6 @@
    <Rule TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806">
     <Resolution Name="ObjectCreation">{0} creates a new instance of {1} which is never used. Pass the instance as an argument to another method, assign the instance to a variable, or remove the object creation if it is unnecessary.</Resolution>
    </Rule>
-   <Rule TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006">
-    <Resolution Name="Default">Consider a design where {0} doesn't nest generic type {1}.</Resolution>
-   </Rule>
    <Rule TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004">
     <Resolution Name="Default">Consider a design where {0} doesn't require explicit type parameter {1} in any call to it.</Resolution>
    </Rule>
@@ -1096,6 +1093,7 @@
    </Rule>
    <Rule TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208">
     <Resolution Name="IncorrectParameterName">Method {0} passes '{1}' as the {2} argument to a {3} constructor. Replace this argument with one of the method's parameter names. Note that the provided parameter name should have the exact casing as declared on the method.</Resolution>
+    <Resolution Name="NoArguments">Call the {0} constructor that contains a message and/or paramName parameter.</Resolution>
    </Rule>
    <Rule TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033">
     <Resolution Name="Default">Make {0} sealed (a breaking change if this class has previously shipped), implement the method non-explicitly, or implement a new method that exposes the functionality of {1} and is visible to derived classes.</Resolution>

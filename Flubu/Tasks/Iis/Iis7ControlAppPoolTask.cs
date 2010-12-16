@@ -58,7 +58,7 @@ namespace Flubu.Tasks.Iis
                             applicationPool.Recycle();
                             break;
                         default:
-                            throw new ArgumentOutOfRangeException();
+                            throw new NotSupportedException();
                     }
 
                     serverManager.CommitChanges();
