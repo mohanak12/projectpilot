@@ -2,7 +2,7 @@
 using System.Globalization;
 using Microsoft.Web.Administration;
 
-namespace Flubu.Tasks.Iis
+namespace Flubu.Tasks.Iis.Iis7
 {
     public class Iis7DeleteAppPoolTask : TaskBase, IDeleteAppPoolTask
     {

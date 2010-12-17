@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Flubu.Tasks.Iis
+﻿namespace Flubu.Tasks.Iis.Iis7
 {
     public class Iis7TasksFactory : IIisTasksFactory
     {
@@ -12,6 +10,11 @@ namespace Flubu.Tasks.Iis
         public ICreateAppPoolTask CreateAppPoolTask
         {
             get { return new Iis7CreateAppPoolTask(); }
+        }
+
+        public ICreateWebApplicationTask CreateApplicationTask
+        {
+            get { return new Iis7CreateWebApplicationTask(); }
         }
 
         public IDeleteAppPoolTask DeleteAppPoolTask
