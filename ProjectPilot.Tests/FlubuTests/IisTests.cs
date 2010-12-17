@@ -1,5 +1,6 @@
 using Flubu;
 using Flubu.Tasks.Iis;
+using Flubu.Tasks.Iis.Iis7;
 using MbUnit.Framework;
 
 namespace ProjectPilot.Tests.FlubuTests
@@ -46,6 +47,7 @@ namespace ProjectPilot.Tests.FlubuTests
             createAppPoolTask.Mode = CreateApplicationPoolMode.DoNothingIfExists;
             createAppPoolTask.Execute(environment);
 
+            controlAppPoolTask.Action = ControlApplicationPoolAction.Start;
             controlAppPoolTask.Execute(environment);
             controlAppPoolTask.Action = ControlApplicationPoolAction.Recycle;
             controlAppPoolTask.Execute(environment);
@@ -61,6 +63,16 @@ namespace ProjectPilot.Tests.FlubuTests
             {
                 Assert.AreEqual("Application 'something' already exists.", ex.Message);
             }
+
+            ICreateWebApplicationTask createVDirTask = iisTasksFactory.CreateApplicationTask;
+            createVDirTask.ApplicationPoolName = AppPoolName;
+            createVDirTask.AllowAnonymous = true;
+            createVDirTask.AnonymousUserName = "user";
+            createVDirTask.AnonymousUserPass = "pwd";
+            createVDirTask.LocalPath = @"..\..\..\ProjectPilot.Portal";
+            createVDirTask.ApplicationName = "ppilot";
+            createVDirTask.EnableDefaultDoc = false;
+            createVDirTask.Execute(environment);
 
             deleteAppPoolTask.FailIfNotExist = true;
             deleteAppPoolTask.Execute(environment);

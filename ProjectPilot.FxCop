@@ -157,6 +157,16 @@
  </Rules>
  <FxCopReport Version="1.36">
   <Namespaces>
+   <Namespace Name="Flubu.Tasks.Iis.IIs6">
+    <Messages>
+     <Message Id="IIs" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-12-17 08:29:54Z">
+      <Issue Name="Namespace">
+       <Item>IIs</Item>
+       <Item>Flubu.Tasks.Iis.IIs6</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
    <Namespace Name="ProjectPilot.Framework.CCNet">
     <Messages>
      <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-11-03 07:17:41Z">
@@ -774,31 +784,6 @@
      </Module>
     </Modules>
    </Target>
-   <Target Name="$(ProjectDir)/Flubu/bin/Release/Flubu.dll">
-    <Modules>
-     <Module Name="flubu.dll">
-      <Namespaces>
-       <Namespace Name="Flubu.Tasks.Iis">
-        <Types>
-         <Type Name="Iis7ControlAppPoolTask">
-          <Members>
-           <Member Name="#DoExecute(Flubu.IScriptExecutionEnvironment)">
-            <Messages>
-             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2010-12-16 07:52:08Z">
-              <Issue Name="NoArguments">
-               <Item>'ArgumentOutOfRangeException'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
-      </Namespaces>
-     </Module>
-    </Modules>
-   </Target>
    <Target Name="$(ProjectDir)/KillXml/bin/Release/KillXml.exe">
     <Modules>
      <Module Name="killxml.exe">
@@ -1075,6 +1060,7 @@
    <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
     <Resolution Name="Member">Correct the spelling of '{0}' in member name {1} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
     <Resolution Name="MemberParameterMoreMeaningfulName">In method {0}, consider providing a more meaningful name than parameter name {1}.</Resolution>
+    <Resolution Name="Namespace">Correct the spelling of '{0}' in namespace name '{1}'.</Resolution>
     <Resolution Name="Type">Correct the spelling of '{0}' in type name {1}.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldHaveCorrectSuffix" Category="Microsoft.Naming" CheckId="CA1710">
@@ -1093,7 +1079,6 @@
    </Rule>
    <Rule TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208">
     <Resolution Name="IncorrectParameterName">Method {0} passes '{1}' as the {2} argument to a {3} constructor. Replace this argument with one of the method's parameter names. Note that the provided parameter name should have the exact casing as declared on the method.</Resolution>
-    <Resolution Name="NoArguments">Call the {0} constructor that contains a message and/or paramName parameter.</Resolution>
    </Rule>
    <Rule TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033">
     <Resolution Name="Default">Make {0} sealed (a breaking change if this class has previously shipped), implement the method non-explicitly, or implement a new method that exposes the functionality of {1} and is visible to derived classes.</Resolution>
