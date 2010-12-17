@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Globalization;
-using Flubu.Tasks.Iis.IIs6;
+using Flubu.Tasks.Iis.Iis6;
 using Flubu.Tasks.Iis.Iis7;
 
 namespace Flubu.Tasks.Iis

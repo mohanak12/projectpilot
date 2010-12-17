@@ -1,4 +1,4 @@
-﻿namespace Flubu.Tasks.Iis.IIs6
+﻿namespace Flubu.Tasks.Iis.Iis6
 {
     public class Iis6TasksFactory : IIisTasksFactory
     {

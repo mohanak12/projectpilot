@@ -2,7 +2,7 @@ using System;
 using System.DirectoryServices;
 using System.IO;
 
-namespace Flubu.Tasks.Iis.IIs6
+namespace Flubu.Tasks.Iis.Iis6
 {
     public class Iis6CreateAppPoolTask : TaskBase, ICreateAppPoolTask
     {

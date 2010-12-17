@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Flubu.Tasks.Iis;
+using Flubu.Tasks.Iis.Iis6;
 
 namespace Flubu.Deployment
 {
@@ -12,7 +13,7 @@ namespace Flubu.Deployment
             string virtualDirectoryName)
         {
             this.sourcePath = sourcePath;
-            this.destinationPath = sourcePath;
+            destinationPath = sourcePath;
             this.virtualDirectoryName = virtualDirectoryName;
         }
 
@@ -27,7 +28,7 @@ namespace Flubu.Deployment
         }
 
         public WebApplicationDeploymentModule<TRunner> CustomizeWebApplication(
-            Action<CreateVirtualDirectoryTask> callback)
+            Action<Iis6CreateWebApplicationTask> callback)
         {
             customizeWebApplicationCallback = callback;
             return this;
@@ -43,10 +44,10 @@ namespace Flubu.Deployment
                 .CopyDirectoryStructure(sourceFullPath, destinationFullPath, true);
 
             // create virtual directory
-            CreateVirtualDirectoryTask task = new CreateVirtualDirectoryTask(
-                virtualDirectoryName,
-                destinationFullPath,
-                CreateVirtualDirectoryMode.UpdateIfExists);
+            Iis6CreateWebApplicationTask task = new Iis6CreateWebApplicationTask();
+            task.ApplicationName = virtualDirectoryName;
+            task.LocalPath = destinationFullPath;
+            task.Mode = CreateWebApplicationMode.UpdateIfExists;
 
             if (customizeWebApplicationCallback != null)
                 customizeWebApplicationCallback(task);
@@ -55,7 +56,7 @@ namespace Flubu.Deployment
             return this;
         }
 
-        private Action<CreateVirtualDirectoryTask> customizeWebApplicationCallback;
+        private Action<Iis6CreateWebApplicationTask> customizeWebApplicationCallback;
         private readonly string destinationPath;
         private readonly string sourcePath;
         private readonly string virtualDirectoryName;
