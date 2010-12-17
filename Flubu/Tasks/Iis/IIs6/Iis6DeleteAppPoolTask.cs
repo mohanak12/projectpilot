@@ -3,7 +3,7 @@ using System.DirectoryServices;
 using System.Globalization;
 using System.IO;
 
-namespace Flubu.Tasks.Iis.IIs6
+namespace Flubu.Tasks.Iis.Iis6
 {
     public class Iis6DeleteAppPoolTask : TaskBase, IDeleteAppPoolTask
     {

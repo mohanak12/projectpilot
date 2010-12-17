@@ -2,7 +2,7 @@ using System;
 using System.DirectoryServices;
 using System.IO;
 
-namespace Flubu.Tasks.Iis.IIs6
+namespace Flubu.Tasks.Iis.Iis6
 {
     // IIS metabase properties
     // http://msdn.microsoft.com/library/default.asp?url=/library/en-us/iissdk/html/bb9c0d25-d003-4ddd-8adb-8662de0a24ee.asp
