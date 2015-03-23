@@ -1,0 +1,1 @@
+ProjectPilot build server is located on HERMES SoftLab d.d. intranet in Maribor. It runs CruiseControl.NET. The URL of the project build page is http://firefly/ccnet/server/local/project/ProjectPilot/ViewProjectReport.aspx
